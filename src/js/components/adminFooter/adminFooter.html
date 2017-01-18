@@ -1,0 +1,5 @@
+
+<div class="admin__controls">
+	<a class="md-button secondary" ng-disabled="!$ctrl.canSave($ctrl.data)" ng-click="$ctrl.canSave($ctrl.data) && $ctrl.saveDraft($ctrl.data)">Save as Draft</a>
+	<a class="md-button primary" ng-disabled="!$ctrl.canApprove($ctrl.data)"  ng-click="$ctrl.canApprove($ctrl.data) && $ctrl.preview($ctrl.data)" ng-show="$ctrl.index == 6">Preview & Submit</a>
+</div>

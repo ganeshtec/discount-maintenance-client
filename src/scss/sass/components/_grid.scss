@@ -1,0 +1,88 @@
+//
+// Global Grid
+// --------------------------------------------------
+
+.grid{
+  @extend %flex;
+  @include flex-wrap(wrap);
+  @include flex(1 1 auto);
+  width: 100%;
+
+  &.isBound {
+    // max-width: $standard-width;
+    margin: $center-margin;
+
+    @media only screen and (max-width: $screen-md) {
+      max-width: 100%;
+    }
+  }
+    //flush grid container gets gutters
+    &.flush{
+      padding-right : $space-standard;
+      padding-left : $space-standard;
+    
+      //remove all gutters from child cols
+      &>[class*="col__"] { 
+        padding:0;
+      }
+    }
+}
+
+[class*='col__'] {
+  position: relative;
+  float: left;
+  box-sizing: border-box !important;
+  //cols split gutter width
+  padding: $space-standard;
+
+  // removes gutter from nested items
+  &>.grid{
+    margin-left: -$space-standard;
+    margin-right: -$space-standard;
+    width:auto;
+  }
+    //col option to inset copy
+  .inset{
+    padding:$space-standard;
+  }
+  
+  //col option to vertically align all items inside of col
+  &.vAlign{
+    display: flex;
+    align-items:center;
+  }
+}
+
+// Defaults ~ 
+
+
+
+// Mobile Landscape
+@media only screen and (min-width: $screen-xs) {
+  @include make-grid(xs);
+  @include make-default-grid();
+}
+
+// Tablet Portrait
+@media only screen and (min-width: $screen-sm) {
+  @include make-grid(sm);
+  @include make-default-grid();
+}
+
+// Tablet Landscape
+@media only screen and (min-width: $screen-md) {
+  @include make-grid(md);
+  @include make-default-grid();
+}
+
+// Desktop
+@media only screen and (min-width: $screen-lg) {
+  @include make-grid(lg);
+  @include make-default-grid();
+}
+
+// Desktop Wide & HD TV
+@media only screen and (min-width: $screen-xl) {
+  @include make-grid(xl);
+  @include make-default-grid();
+}

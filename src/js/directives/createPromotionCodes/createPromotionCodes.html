@@ -1,0 +1,16 @@
+<div class="md-text-field">
+	<div class="promotion__codes_heading">
+		<label class="promotion__codes__label">Promotion Codes</label>
+		<!-- <a href="" class="promotion__codes__btn md-button sm" ng-click="addPromoCode()">Add New Code</a> -->
+	</div>
+	<ul class="promotion__codes__list">
+		<li class="md-text-field promotion__codes__list__item">
+			<input type="text" id="promocodes" class="allCaps" name="promocodes" ng-model="data[0]" ng-change="data[0]=data[0].toUpperCase();" allow-pattern="(\d|[a-z A-Z\(\?\-\_\.\'\,\%\$\!\@\)])" placeholder="Create public promotion codes" title="Promotion Codes" ng-required="preview" ng-minlength="9" />
+			<span class='error-message' ng-show="promoform.promocodes.$invalid">
+				<span ng-show="promoform.promocodes.$error.required">Please enter a valid promotion code</span>
+			<span ng-show="promoform.promocodes.$error.minlength">Please enter a valid promotion code equal to or greater than 9 characters</span>
+			</span>
+			<!-- <a href="" class="promotion__codes__list__item__remove md-button sm" ng-click="removePromoCode($index)" ng-show="data.length > 1">Remove</a> -->
+		</li>
+	</ul>
+</div>

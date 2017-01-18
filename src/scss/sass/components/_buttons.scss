@@ -1,0 +1,76 @@
+//
+// Global Buttons
+// --------------------------------------------------
+
+// [role="button"],
+// input[type="submit"],
+// input[type="reset"],
+// input[type="button"],
+// button {
+//     -webkit-box-sizing: border-box;
+//        -moz-box-sizing: border-box;
+//             box-sizing: border-box;
+// }
+
+/* Reset `button` and button-style `input` default styles */
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+button {
+    background: none;
+    width: 100%;
+    border: 0;
+    color: inherit;
+    /* cursor: default; */
+    font: inherit;
+    line-height: normal;
+    overflow: visible;
+    padding: 0;
+    outline: none;
+    -webkit-appearance: button; /* for input */
+    -webkit-user-select: none; /* for button */
+       -moz-user-select: none;
+        -ms-user-select: none;
+}
+input::-moz-focus-inner,
+button::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+// /* Make `a` like a button */
+// [role="button"] {
+//     color: inherit;
+//     cursor: default;
+//     display: inline-block;
+//     text-align: center;
+//     text-decoration: none;
+//     white-space: pre;
+//     -webkit-user-select: none;
+//        -moz-user-select: none;
+//         -ms-user-select: none;
+// }
+
+.btn--reverse-brand, input.btn--reverse-brand { // white button, orange border, orange text
+  @include btn-secondary($reverse, $brand, 100%, 42px, $font-size-base);
+}
+
+.btn--reverse-light, input.btn--reverse-light { // white button, orange border, orange text
+  @include btn-secondary($reverse, $light, 100%, 42px, $font-size-base);
+}
+
+.btn--reverse-dark, input.btn--reverse-dark { // white button, dark border, dark text
+  @include btn-secondary($reverse, $dark, 100%, 42px, $font-size-base);
+}
+
+.btn--brand, input.btn--brand { // orange button - animated
+  @include btn-default($brand, $reverse, 100%, 38px, $font-size-base);
+}
+
+.btn--secondary, input.btn--secondary { // dark gray button - animated
+  @include btn-default($secondary, $reverse, 100%, 38px, $font-size-base);
+}
+
+.btn--light, input.btn--light { // light gray button - animated
+  @include btn-default($light, $dark, 100%, 38px, $font-size-base);
+}

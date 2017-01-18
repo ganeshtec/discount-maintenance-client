@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<BrowsersToExecute>
+	<!--Chrome, Firefox, internet explorer, Safari-->
+	<!--Windows 7, Windows XP,Windows 8, Windows 8.1, OS X 10.6-->
+	<Browser Name="Chrome"  Version="41" Platform="Windows 7" />
+	<Browser Name="Firefox"  Version="40" Platform="Windows 7" />
+	<Browser Name="internet explorer"  Version="11" Platform="Windows 7" />
+	<Browser Name="internet explorer"  Version="10" Platform="Windows 7" />
+	<Browser Name="internet explorer"  Version="9" Platform="Windows 7" />
+	
+</BrowsersToExecute>

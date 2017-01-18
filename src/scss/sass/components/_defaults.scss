@@ -1,0 +1,27 @@
+//
+// Global Defaults - UX Set Standards
+// --------------------------------------------------
+
+// % font on <html> to make it easy using ems. 
+// 1.4em is equal to 14px, 1em is equal to 10px, etc.
+html{
+  font-size: 62.5%; 
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  height: auto !important;
+}
+
+body{
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  color: $dark;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  border-bottom: 30px solid $faded;
+}
+
+fieldset[disabled], .disabled {
+  pointer-events: none !important;
+  cursor: not-allowed !important;
+  opacity: 0.25 !important;
+  filter: alpha(opacity = 25) !important;
+}

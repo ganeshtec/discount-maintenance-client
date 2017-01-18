@@ -1,0 +1,18 @@
+<div class="admin__header__content">
+	<a class="" href="#/promotion-dashboard" ng-href="#/promotion-dashboard">Back to Promotions List</a>
+</div>
+<div class="admin__header__content admin__header__content--bottom" ng-show="($ctrl.uistate != 'Compare')">
+	<h1 class="md-display-2">{{$ctrl.uistate}} Promotion 
+		<span class="" ng-show="$ctrl.promotype.name"> : {{$ctrl.promotype.name}}</span>
+		<br>
+		<span class="" ng-show="$ctrl.promotype.promoSubTypeDesc"> Type: {{$ctrl.promotype.promoSubTypeDesc}}</span>
+	</h1>
+	<p>All fields are required except where indicated otherwise.</p>
+</div>
+
+<div class="admin__header__content admin__header__content--bottom" ng-show="($ctrl.uistate == 'Compare')">
+	<h1 class="md-display-2">
+		Compare View
+	</h1>
+	
+</div>

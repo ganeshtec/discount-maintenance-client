@@ -1,0 +1,97 @@
+<form class="admin__promotion__form" name="promoForm" ng-cloak>
+	<fieldset ng-disabled="isDisabled">
+		<section class="admin__promotion__section" ng-show="index == 0 || preview">
+			<div class="md-text-field">
+				<label for="name">
+					Promotion Name {{isDisabled}}
+				</label>
+				<input type="text" id="name" name="name" ng-model="data.name" title="Promotion Name" placeholder="Enter 254 characters or less" ng-maxlength="254" ng-required="preview" allow-pattern="(\d|[a-z A-Z\_])" />
+				<span class='error-message' ng-show="promoForm.name.$invalid">
+					<span ng-show="promoForm.name.$error.required">
+						Please enter a valid promotion name
+					</span>
+					<span ng-show="promoForm.name.$error.maxlength">
+						Please enter a valid promotion name less than or equal to 254 characters
+					</span>
+				</span>
+			</div>
+			<div class="md-select md-select-space">
+				<label for="promotype">
+					Promotion Type
+				</label>
+				<select name="promotype" ng-options="promotype as promotype.promoSubTypeDesc for promotype in promotionSubTypes" ng-model="promoSubTypeObject" ng-change="getSelectedSubTypes()" ng-required=" preview">
+					<option value="">
+						-- Select a promotion type --
+					</option>
+				</select>
+				<span class='error-message' ng-show=" promoForm.promotype.$invalid">
+					<span ng-show="promoForm.promotype.$error.required">
+						Please select a valid promotion type
+					</span>
+				</span>
+			</div> 
+			<div class="md-select md-select-space">
+				<label for="method">
+					Redemption Method
+				</label>
+				<select ng-options="method.value as method.label for method in redemptionMethodTypes" ng-model="data.promoCdRqrd">
+					<option value="">
+						-- Select a redemption method --
+					</option>
+				</select>
+			</div> 
+			<promotion-code-specification ng-if="data.promoCdRqrd" test ="{{data.couponId}}" couponId="data.couponId" preview="preview" data="data.promoCdSpec" require="data.promoCdRqrd" promoform='promoForm'></promotion-code-specification>
+			<div class="md-text-field">
+				<label for="promocombo">
+					Combination with other promotions
+				</label>
+				<input type="text" name="promocombo" ng-model="data.promocombo" title="Promotion Combinations" placeholder="Combine with other promotions" disabled />
+			</div>
+			<div class="md-text-field">				
+				<label for="priority">
+					Priority
+				</label>
+			    <tool-tipper tooltiptitle="Priority">
+			        <p>
+			        	Assign a priority by entering a number between zero and one thousand. Zero is the lowest priority and one thousand is the highest priority. When multiple promotions are qualified for the same purchase condition, the one with the highest priority will be applied first.
+			        </p>
+			    </tool-tipper>
+				<input type="number" name="priority" ng-model="data.priority" min="0" max="1000" title="Priority" placeholder="Enter number  between 0 and 1000" ng-required="preview" allow-pattern="(\d)" />
+				<span class='error-message' ng-show="promoForm.priority.$invalid">
+					<span ng-show="promoForm.priority.$error.required">
+						Please enter a valid promotion priority (should be numeric)
+					</span>
+				<span ng-show="promoForm.priority.$error.max">
+					Please enter value below 1000
+				</span>
+				<span ng-show="promoForm.priority.$error.min">
+					Please enter value between 0 and 1000
+				</span>
+			</div>
+		</section>
+		<section class="admin__promotion__section" ng-show="index == 1 || preview">
+			<purchase-condition-rewards preview="preview" data="data" promoform="promoForm" is-disabled="isDisabled">
+			</purchase-condition-rewards>
+		</section>
+		<section class="admin__promotion__section" ng-show="index == 2 || preview">
+				<promo-location data="data.purchaseConds.locations" preview="preview" promoform="promoForm">
+				</promo-location>
+		</section>
+		<section class="admin__promotion__section" ng-show="index == 3 || preview">
+				<purchase-condition data="data.reward.details" preview="preview" qualuom = "data.purchaseConds.qualUOM" reward="data.reward" promoform="promoform"  purchase-condition="data.purchaseConds" is-disabled="isDisabled" promotype="data.promoSubTypeCd">
+				</purchase-condition>
+		</section>
+		<section class="admin__promotion__section" ng-show="index == 4 || preview">
+				<promo-description data="data">
+				</promo-description>
+		</section>
+		<section class="admin__promotion__section" ng-show="index == 5 || preview">
+				<redemption-limit data="data.redmptnLmt" promoform="promoForm">
+				</redemption-limit>
+		</section>
+		<section class="admin__promotion__section" ng-show="index == 6 || preview">
+				<promo-schedule data="data" preview="preview" promoform="promoForm">
+				</promo-schedule>
+		</section>
+	</fieldset>
+</form>

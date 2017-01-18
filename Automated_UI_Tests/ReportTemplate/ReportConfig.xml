@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Report>
+  <TestCaseReport>
+  <ReportHeader>
+    <var name="RptHeader" value="Automation Execution Report"/>
+    <var name="TCName" value="Test Case Name"/>
+    <var name="Environment" value="Environment"/>
+    <var name="HostName" value="Host Name"/>
+    <var name="BuildVersion" value="Build Version"/>
+    <var name="Browser" value="Browser"/>
+     <var name="HeaderLabel1" value="Browser"/>
+    <var name="Url" value="Url"/>
+  </ReportHeader>
+  <ReportStep>
+    <var name="Steps" value="Step No"/>
+    <var name="Description" value="Description"/>
+    <var name="ActualResult" value="Actual Result"/>
+    <var name="StepStatus" value="Status"/>
+  </ReportStep>
+  <ReportFooter>
+    <var name="StepsPassed" value="Steps passed"/>
+    <var name="StepsFailed" value="Steps failed"/>
+    <var name="ExecutionDate" value="Execution Date"/>
+    <var name="ExecutionMachine" value="Execution Machine"/>
+    <var name="TimeTaken" value="Time Taken"/>
+  </ReportFooter>
+  </TestCaseReport>
+  <SummaryReport>
+    <ReportHeader>
+      <var name="RptHeader" value="Homer Test Results"/>      
+    </ReportHeader>
+    <TestResult>
+      <var name="TCNo" value="Test Case No"/>
+      <var name="TCName" value="Test Case Name"/>
+      <var name="Browser" value="Browser"/>
+      <var name="Priority" value="Priority"/>
+      <var name="TCStatus" value="Test Case Status"/>
+    </TestResult>
+    <ReportFooter>
+      <var name="TCPassed" value="Test Cases Passed"/>
+      <var name="TCFailed" value="Test Cases Failed"/>
+      <var name="ExecutionDate" value="Execution Date"/>
+      <var name="ExecutionMachine" value="Execution Machine"/>
+      <var name="TimeTaken" value="Time Taken"/>
+    </ReportFooter>
+  </SummaryReport>
+</Report>

@@ -1,0 +1,111 @@
+ .md-toolbar {
+    position:relative;
+    font-family: 'Open Sans', sans-serif;
+    background-color:#2B3134;
+    box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.35);
+    padding:15px 20px;
+  }
+  .md-toolbar div {
+    display:inline-block;
+    vertical-align: middle;
+  }
+  .md-toolbar .brand span {
+    display:inline-block;
+    vertical-align: middle;
+  }
+  .md-toolbar .brand span img {
+    margin-right:20px;
+  }
+  .md-toolbar .brand h1 {
+    display:block;
+    margin:0;
+    padding:0;
+    font-size: 20px;
+    font-weight:400;
+    color:#EEEEEE;
+  }
+  .md-toolbar-search {
+ 
+  }
+  .md-toolbar-search input {
+    vertical-align:text-top;
+    border:solid 1px #DDDDDD;
+    min-width: 250px;
+    background-color:#EEEEEE;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 18px;
+    color:#555555;
+    padding:0 15px;
+    line-height: 46px;
+    position: relative;
+  }
+  .md-toolbar-search input:focus {
+    background-color:#FFFFFF;
+    outline:none;
+  }
+  .md-toolbar-search input.error {
+    color: red;
+	margin-top: 1px;
+  }
+  .md-toolbar-search .md-button {
+    vertical-align:text-top;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    line-height: 46px;
+    margin-left:-5px;
+  }
+  .md-toolbar-actions {
+    position:absolute;
+    top:13px;
+    right:20px;
+  }
+  .md-toolbar-actions a {
+    position:relative;
+    display:inline-block;
+    border-radius: 3px;
+    color:#FFFFFF;
+    font-size:24px;
+    line-height:53px;
+    min-width: 53px;
+    text-align: center;
+    margin-left:10px;
+  }
+  .md-toolbar-actions a .badge {
+    position:absolute;
+    top:2px;
+    right:2px;
+  }
+  .md-toolbar-actions a:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    text-decoration: none;
+  }
+  .md-toolbar-actions a.search:before {
+    font-family:"FontAwesome";
+    content: "\f002";
+  }
+  .md-toolbar-actions a.mail:before {
+    font-family:"FontAwesome";
+    content: "\f0e0";
+  }
+  .md-toolbar-actions a.notifications:before {
+    font-family:"FontAwesome";
+    content: "\f0f3";
+  }
+  .md-toolbar-actions a.profile:before {
+    font-family:"FontAwesome";
+    content: "\f007";
+  }
+  .md-toolbar-actions a.profile:before {
+    font-family:"FontAwesome";
+    content: "\f007";
+  }
+  .md-toolbar-actions a.shopping-cart:before {
+    font-family:"FontAwesome";
+    content: "\f07a";
+  }
+  .md-toolbar-actions a.logout:before {
+    font-family:"FontAwesome";
+    content: "\f023";
+  }

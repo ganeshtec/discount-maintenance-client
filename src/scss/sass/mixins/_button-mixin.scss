@@ -1,0 +1,113 @@
+//------------------------------------------------
+// Button mixins 
+
+// 2 types - btn-default, btn-secondary
+
+// btn-default takes the following variables:
+
+  //   $bgcolor,
+  //   $fontcolor, 
+  //   $btnwidth, 
+  //   $btnheight,
+  //   $fontsize
+
+  // example:
+  // .Some-Thing__btn { // orange button - animated
+  //   @include btn-default($brand, $reverse, 100%, 38px, $font-size-base);
+  // }
+
+// btn-secondary takes the following variables:
+
+  //  $bgcolor
+  //  $color, 
+  //  $btnwidth,
+  //  $btnheight,
+  //  $fontsize
+
+  // example:
+  // .Some-Thing__btn { // white button, orange border, orange text
+  //   @include btn-secondary($reverse, $brand, 100%, 42px, $font-size-base);
+  // }
+  
+// So you can build up the button with these params
+// The idea is that you can use a class to create a btn 
+// - like .btn--reverse-brand, or .btn--brand - 
+// or you can create your own class and build the button.
+//------------------------------------------------
+
+@mixin btn-default(
+  $bgcolor: $primary, 
+  $fontcolor: $reverse,  
+  $btnwidth: 100%, 
+  $btnheight: 38px,
+  $fontsize: $font-size-base
+  ) {
+
+  color: $fontcolor;
+  width: $btnwidth;
+  height: $btnheight;
+  font-size: $fontsize;
+
+  text-shadow: none;
+  text-decoration: none;
+
+  text-align: center;
+  // font-weight: bold;
+  // text-transform: uppercase;
+  line-height: 1em;
+  box-sizing: content-box;
+  $bordercolor: darken($bgcolor, 5%);
+  $borderheight: calc(#{$btnheight} * .1267);
+  margin-bottom: calc(#{$btnheight} * .1267);
+
+  @extend %flex;
+  @extend %align-items-center;
+  @extend %justify-center;
+  @include box-shadow(0 $borderheight 0 $bordercolor);
+  @include transition(box-shadow .1s ease-in-out);
+  & span {
+    @extend %flex;
+    @extend %justify-center;
+    @extend %align-items-center;
+    @include flex-grow(1);
+    height: $btnheight;
+    background-color: $bgcolor;
+    @include transition(background-color .2s ease-in-out, transform .1s ease-in-out);
+  }
+  &:active {
+    @include box-shadow(0 $borderheight 0 $bordercolor);
+    & span {
+      @include transform(translate(0, $borderheight));
+    }
+  }
+
+}
+
+@mixin btn-secondary(
+  $bgcolor: $reverse, 
+  $color: $brand,  
+  $btnwidth: 100%, 
+  $btnheight: 42px,
+  $fontsize: $font-size-base
+  ) {
+
+  color: $color;
+  width: $btnwidth;
+  height: $btnheight;
+  font-size: $fontsize;
+
+  text-shadow: none;
+  text-decoration: none;
+
+  text-align: center;
+  font-weight: bold;
+  text-transform: uppercase;
+  line-height: 1em;
+  box-sizing: border-box;
+  border: 3px solid $color;
+
+  @extend %flex;
+  @extend %align-items-center;
+  @extend %justify-center;
+}
+//------------------------------------------------

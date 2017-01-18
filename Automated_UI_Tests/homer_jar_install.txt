@@ -1,0 +1,4 @@
+Run below command on cmd after changing jar path. 
+"homer_library" jar is present in lib folder
+After installing this jar, please do maven->Update Project (ALt+F5)
+mvn install:install-file "-Dfile=C:\Maven Test\Jars\homer_library.jar" "-DgroupId=com.homer.homer_library" "-DartifactId=homer_library" "-Dversion=2.0" "-Dpackaging=jar"

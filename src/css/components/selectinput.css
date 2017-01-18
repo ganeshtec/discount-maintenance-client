@@ -1,0 +1,55 @@
+.md-select select{
+  font-family: 'Open Sans', sans-serif;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline:none;
+  width:100%;
+  line-height: 46px;
+  font-size: 18px;
+  color:#555555;
+  padding:0 40px 0 15px;
+  padding-right:40px;
+  vertical-align: middle;
+  background-color:#FFFFFF;
+  border:1px solid #DDDDDD;
+  border-radius: 2px;
+  cursor: pointer;
+}
+ .md-select-space {
+    margin:35px 0;
+  }
+  .md-select-margin-space {
+    margin-top:28px;
+  }
+.md-select {
+  position:relative;
+}
+.md-select:after {
+  content:"\f0d7";
+  font-family: 'FontAwesome';
+  font-size:20px;
+  color: #555555;
+  position: absolute;
+  right: 15px;
+  top: 42px;
+  z-index: 1;
+  text-align: center;
+  pointer-events: none;
+  box-sizing: border-box;
+  vertical-align: middle;
+}
+.md-select.missed:after {
+  color:#ED1C24;
+}
+.md-select.missed select {
+  border:1px solid #ED1C24;
+  background-color:#FEF4F4;
+  color:#ED1C24;
+}
+.md-select select:disabled {
+  background-color:#F5F5F5;
+  border:1px solid #F5F5F5;
+  color:#999999;
+  cursor: not-allowed;
+}

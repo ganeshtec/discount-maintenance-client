@@ -1,0 +1,63 @@
+  <div ng-show="categoryDataLoading" class= "merchmask">
+ 
+ <!-- <i width="10%" style= "z-index:2, color: #F96302; font-size:24px; display:inline-block" class ="fa fa-spinner fa-pulse fa-3x fa-fw"></i> -->
+ <!-- <i width="10%" style= "z-index:2, color: #FFF; font-size:50px; display:inline-block" class ="fa fa-spinner fa-pulse fa-3x fa-fw"></i> -->
+ <i width="10%" class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+ </div>
+ 
+ <table class="table category__table">
+ 	<tr class="category__table__row-nobottomborder">
+		  
+ 		<td colspan="4">
+ 			<div class="md-toolbar-search l">
+				 <label for="MerchHierarchy"><h3>Web Hierarchy</h3></label>
+ 				<input class="table__search" placeholder="Search and Add Category" type="text" ng-model="itemSearch" allow-pattern="(\d|[a-z A-Z\(\?\-\_\.\'\,\%\$\!\@\&\)])" />
+				<a class="md-button secondary no-padding" href="" ng-click="!itemSearch || isDisabled || search(itemSearch)">
+					Search
+				</a>
+ 				<ul class="table__search__results">
+					<li ng-repeat="item in searchResults | filter:itemSearch">
+						<a href="" ng-click="addItem(item.details)" class="table__search__results__item">
+							{{item.details.name}} | {{item.details.source}}
+						</a>
+					</li>
+					<li>
+						<a ng-show="searchResults.length" href="" ng-click="searchResults = []" class="table__search__results__item">
+							Close
+						</a>
+					</li>
+ 				</ul>
+                 <br>
+                 <span class='error-message' ng-show="showInvalidError">                   
+				    <span >Please enter a valid category </span>
+                 </span>
+ 			</div>
+ 		</td>    
+          
+ 	</tr>
+     
+ 	<tr class="category__table__row-notopborder">
+		<th>
+			Category Name
+		</th>
+		<th>
+			GUID 
+		</th>
+		<th>
+			&nbsp; 
+		</th>
+ 	</tr>
+ 	<tr ng-repeat="item in data track by $index" ng-class="{odd:($index % 2)}" ng-if="item.catalog == 'Web'">
+		<td>
+			{{item.name}}
+		</td>
+ 		<td>
+ 			{{item.id}}
+ 		</td>
+ 		<td class="r">
+			<a class="editOption thd-orange" ng-click="isDisabled || removePromoCode($index)" href="">
+				Remove
+			</a>
+ 		</td>
+ 	</tr>
+ </table>

@@ -1,0 +1,22 @@
+.category__table{
+    width: 100%;
+    margin: 35px 0;
+    box-shadow: 0 0 5px 0 rgba(0,0,0,0.15);
+    text-align: left;
+    background: #fff;
+}
+.category__table tr, .category__table td, .category__table th {
+    border-right: none !important;
+    border-left: none !important;
+    border-spacing: 0;
+    vertical-align: middle;
+}
+.category__table__browse{
+    text-align: right;
+}
+tr.category__table__row-notopborder, .category__table__row-notopborder td, .category__table__row-notopborder th {
+    border-top: none
+}
+tr.category__table__row-nobottomborder, .category__table__row-nobottomborder td, .category__table__row-nobottomborder th {
+    border-bottom: none
+}

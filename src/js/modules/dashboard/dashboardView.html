@@ -1,0 +1,189 @@
+<div class="admin" flex="100">
+	<div layout="row" class="padding-bottom-20">
+		<div flex="100">
+			<h1 class="pull-left md-display-2 admin__header__title">
+				Promotion List
+			</h1>
+			<a class="md-button" ng-href="#/promotion-admin"><i class="fa fa-plus"></i> Create New Promotion</a>
+		</div>
+	</div>
+	<div layout="row">
+		<div  class="admin__main">
+			<div class="admin__content">
+				<!-- Search Filter - Start -->
+				<div layout="row">
+					<div id="searchFilterContainer" flex="100">
+	 					<div class="md-toolbar-search">
+	 		 				<div id="searchFilterSearchBox">
+	 		 					<input id="searchFilterSearchBoxInput" class="table__search" placeholder="Search promotion name or keyword" type="text" ng-model="promotionName" allow-pattern="(\d|[a-zA-Z\(\?\-\_\.\"\'\*\,\%\$\!\@\)])" />
+	 		 				</div>
+	 						<div id="searchFilterSearchButton">
+	 							<a class="md-button secondary" href="" ng-click="updateKeyword()">Search</a>
+	 						</div>
+
+	 						<div id="searchFilterFilterButton">
+	 							<a class="md-button util__btn" href="" ng-click="showFilter=true">
+	 								<i class="fa fa-filter"></i> 
+	 								Filter
+	 							</a>
+	 
+								<div id="searchFilter" ng-show="showFilter">
+									<div id="searchFilterHeader">
+										<div id="searchFilterHeaderTitle">
+											<h1>Filter Table</h1>
+										</div>
+										<div id="searchFilterHeaderClose">
+											<i class="fa fa-times" ng-click="showFilter=false" aria-hidden="true"></i>
+										</div>
+									</div>
+									<hr class="clear" />
+
+									<div class="md-select md-select-space">
+										<label for="filterstatus">
+											Promotion Status
+										</label>
+										<select name="filterstatus" ng-model="filterstatus">
+											<option value="all" aria-label="Show All">Select All</option>
+											<option ng-repeat="status in statusList | orderBy : 'promoStatusDesc'" value="{{status.promoStatusCd}}" aria-label="{{status.promoStatusDesc}}">
+												{{status.promoStatusDesc}}
+											</option>
+										</select>
+									</div>
+
+									<div class="md-select md-select-space">
+										<label for="filtertype">
+											Promotion Type
+										</label>
+										<select name="filtertype" ng-model="filtertype">
+											<option value="all" aria-label="Show All">Select All</option>
+											<option ng-repeat="promo in promoList | orderBy : 'promoSubTypeDesc'" value="{{promo.promoSubTypeId}}" aria-label="{{promo.promoSubTypeDesc}}">
+												{{promo.promoSubTypeDesc}}
+											</option>
+										</select>
+									</div>
+
+									<div>
+										<md-button id="filterApplyButton" class="primary" ng-click="filter(showFilter=false)">Apply</md-button>
+										<md-button ng-click="showFilter=false">Cancel</md-button>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>  					
+				</div>
+				<div  class="error">{{errorMessage}}&nbsp;</div>
+				<!-- Search Filter - End -->
+
+
+				<div layout="row" class="utility__bar">
+					<div flex="40">
+						<!--Button/Link Small Group -->
+						<div class="md-button-group sm">
+				      <a class="md-button util__btn no-margin" ng-click="selectedCount == 1 && edit()" ng-disabled="selectedCount != 1"><i class="fa fa-pencil"></i> Edit</a>
+				      <a class="md-button util__btn"  ng-click="selectedCount == 1 && duplicate()" ng-disabled="selectedCount != 1"><i class="fa fa-clone"></i> Duplicate</a>
+				      <a class="md-button util__btn" ng-click="isActive() && selectedCount ==1 && deactivate()" ng-disabled="!isActive() || selectedCount!= 1" ><i class="fa fa-remove" ></i> Deactivate</a>
+				      <a class="md-button util__btn" ng-disabled="hasActive() ||selectedCount == 0" ng-click="selectedCount != 0 && !hasActive() && delete()"><i class="fa fa-trash"></i> Delete</a>
+						</div>
+					</div>
+					<div flex="30">
+						<!--Button/Link Small Group -->
+						<div class="md-button-group sm">
+				      <a class="md-button util__btn" ng-click="selectedCount == 2 && compare()" ng-disabled="selectedCount != 2"><i class="fa fa-pencil"></i> Compare</a>
+				      <a class="md-button util__btn" ng-disabled="true"><i class="fa fa-columns"></i> Vertical View</a>
+				      <a class="md-button util__btn" ng-disabled="selectedCount != 1" ng-click="selectedCount == 1 && setPromotionToView(sel)"><i class="fa fa-columns"></i> Horizontal View</a>
+						</div>
+					</div>
+					<div flex="20">
+						<!--Button/Link Small Group -->
+						<div class="md-button-group sm">
+				      <a class="md-button util__btn" ng-click="canSave() && save()" ng-disabled="!canSave()"><i class="fa fa-pencil"></i> Save</a>
+				      <a class="md-button util__btn" ng-click="refresh()"><i class="fa fa-refresh"></i> Refresh</a>
+						</div>
+					</div>
+					<div flex="10">
+						<!--Button/Link Small Group -->
+						<browse-catalog-btn data="promotionData" browse-catalog-overlay-config="browseCatalogOverlayConfig" />
+					</div>
+				</div>
+				<div layout="row">
+					<div flex="100">
+						<form name="promogrid" novalidate>
+							<table class="table c promotions">
+								<tr>
+									<th width="3%" class="padding-left-20"><md-checkbox ng-true-value="true"  aria-label="Select All Promotions" ng-change="toggleAll()" ng-false-value="false" ng-model="selectAll"></md-checkbox>
+									</th>  
+									<th width="{{header.width}}" ng-class="{'sortorder':(sortby== header.sortId),'reverse':(order=='desc')}" ng-repeat="header in headers" ng-click="sort(header.sortId)" >{{header.text}}</th>
+								</tr> 
+								<tr ng-repeat="wrapper in promotions " ng-class="{'disabledpromo':wrapper.disabled, 'odd':($index % 2)}" data-promoid ="{{wrapper.promotion.promoId}}">
+									<td class="padding-left-20">
+										<md-checkbox aria-label="Select {{wrapper.promotion.name}} Promotion" ng-true-value="true" ng-false-value="false"  ng-model="selected[wrapper.promotion.promoId]" /></md-checkbox>
+									</td>
+									<td>{{wrapper.promotion.promoId}}</td>
+									<td>
+					  					<input type="text" ng-disabled="wrapper.disabled"  class="promotionName" required ng-model="wrapper.promotion.name" required allow-pattern="(\d|[a-z A-Z\(\?\-\_\.\'\,\%\$\!\@\)])" />
+					  				</td>
+									<td width="8%">{{status[wrapper.promotion.status]}}</td>
+									<td class="l" width="15%">{{promoSubTypes[wrapper.promotion.promoSubTypeCd]}}</td>
+									<td><input  ng-disabled="wrapper.disabled"  type="date" required class="promotionDate" ng-model="wrapper.start" required /></td>
+									<td><input ng-disabled="wrapper.disabled"  type="date" required ng-min="wrapper.start" class="promotionDate" ng-model="wrapper.end" required /></td>
+									<td>{{wrapper.promotion.meta.createdBy|uppercase}}</td>
+									<td class="l">{{wrapper.promotion.meta.lastUpdatedBy|uppercase}}&nbsp;{{wrapper.promotion.meta.lastUpdated}}</td>
+									<td>{{wrapper.promotion.priority}}</td>
+
+								</tr>	
+							</table>
+							<div ng-if="nodata" class=" nopromotion">
+								No promotion found
+							</div>
+						</form>
+					</div>
+				</div>
+				<pagination ng-if="paginationReq"  onpagechange="updatePage" onsizechange="updateSize" config="paginationConfig"></pagination>
+				<div class="mask" ng-show="loading"></div>	 
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Promotion Admin -->
+
+<div class="admin" flex="100" ng-show="promotionData" id="promoTop">
+	<div layout="row">
+		<div flex="100">
+			<!-- Admin Header compontent -->
+			<div class="admin__header__content">
+				<a class="md-button secondary pull-right" ng-click="promotionData = ''">Cancel</a>
+			</div>
+			<div class="admin__header__content admin__header__content--bottom">
+				<h1 class="md-display-2">Edit Promotion 
+					<span class="" ng-show="promotionData.promotype.name"> : {{promotionData.promotype.name}}</span>
+					<br>
+					<span class="" ng-show="promotionData.promotype.promoSubTypeDesc"> Type: {{promotionData.promotype.promoSubTypeDesc}}</span>
+				</h1>
+				<p>All fields are required except where indicated otherwise.</p>
+			</div>
+		</div>
+	</div>
+	<form class="admin__promotion__form" name="promoForm">
+		<div layout="row" class="admin__main">
+			<div class="admin__sidepanel" flex="25">
+				<!-- Admin Subnavigation compontent -->
+				<admin-subnav data="sections"></admin-subnav>
+			</div>
+			<div class="admin__content" flex="75">
+				<!-- Admin Promotion Form -->
+				<admin-promotion-form data="promotionData" index="sectionInx" form-holder="formHolder" promo-form="promoForm" ng-if="promotionData"></admin-promotion-form>
+				<!-- Admin Promotion Form Controls -->
+				<admin-promotion-form-controls data="sections" index="sectionInx"></admin-promotion-form-controls>
+			</div>
+		</div>
+		<div layout="row">
+			<div flex="100">
+				<!-- Admin Footer compontent -->
+				<admin-footer ng-if="promotionData" data="promotionData" preview-overlay-config="previewOverlayConfig" previewdata="previewData" class="admin__footer" form-holder="formHolder" promo-form="promoForm" index="sectionInx"></admin-footer>
+			</div>
+		</div>
+	</form>
+</div>
+
+<promotion-preview data="promotionData" ng-if="previewOverlayConfig.isOpen" form-holder="previewFormHolder" preview-overlay-config="previewOverlayConfig" preview-data="previewData" promo-form="promoForm"></promotion-preview>

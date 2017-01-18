@@ -1,0 +1,156 @@
+.u{
+
+	// show & hide
+	&--show{
+		display: block !important;
+	}
+	&--hide{
+		display: none !important;
+	}
+
+  // default link style
+  &__default-link {
+    color: $alternate;
+    text-decoration: underline;
+  }
+
+
+	//text color
+  &__text--brand{
+    color: $brand; // orange
+  }
+  &__text--primary{
+    color: $primary; // dark gray
+  }
+	&__text--dark{
+		color: $dark; // almost black
+	}
+  &__text--reverse{
+    color: $reverse; // white
+  }
+  &__text--danger{
+  color: $danger; // red
+  }
+  &__text--alternate{
+    color: $alternate; // blue
+  }
+  &__text--success{
+    color: $brand; // green
+  }
+
+
+  &__text--warning{
+    color: $warning; // Yellow - don't use for text, only for icons.
+  }
+  &__text--light{
+    color: $light; // Light Gray - don't use for text, only for icons.
+  }
+
+
+  // font size
+  &__jumbo { // font: 48px
+    @extend %jumbo
+  }
+  &__xlarge { // font: 36px
+    @extend %xlarge
+  }
+  &__large { // font: 24px
+    @extend %large
+  }
+  &__medium { // font: 18px
+    @extend %medium
+  }
+  &__normal { // font: 14px
+    @extend %normal
+  }
+  &__legal { // font: 11px
+    @extend %legal
+  }
+
+// Typography - Text Styles */
+
+&__normal-weight {
+  @extend %normal-weight
+}
+&__bold {
+  @extend %bold
+}
+&__italic {
+  @extend %italic
+}
+&__caps {
+  @extend %caps
+}
+&__strike {
+  @extend %strike
+}
+&__underline {
+  @extend %underline
+}
+&__truncate {
+  /* Only works on single lines */
+  @extend %truncate
+}
+
+// FONT VARIANTS
+&__font-alternative { // GEORGIA
+  @extend %font-alternative
+}
+
+&__font-secondary { // HOMERVETICA-MED
+  @extend %font-secondary
+}
+
+/* CLEAR */
+
+  &__clearfix:after {
+    clear: both;
+    content: " ";
+    display: block;
+    font-size: 0;
+    height: 0;
+  }
+  &__clear {
+    @extend %clear
+  }
+  &__float-clear {
+    @extend %float-clear
+  }
+
+  /* DISPLAY */
+  &__flex {
+    @extend %flex
+  }
+  &__inline {
+    @extend %inline
+  }
+  &__block {
+    @extend %block;
+  }
+  &__inline-block {
+    @extend %inline-block;
+  }
+  &__cell {
+    @extend %cell
+  }
+
+  /* Floats */
+  &__left {
+    @extend %left
+  }
+  &__right {
+    @extend %right
+  }
+
+  /* Rotation */
+  &__rotate-90 {
+    @extend %rotate-90
+  }
+  &__rotate-180 {
+    @extend %rotate-180
+  }
+  &__flip {
+    @extend %flip
+  }
+
+}

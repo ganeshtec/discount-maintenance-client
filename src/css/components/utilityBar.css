@@ -1,0 +1,31 @@
+
+.utility__bar .md-button:first-child {
+  border-left-width: 1px;
+  border-radius: 3px 0 0 3px; } 
+
+.utility__bar .md-button:last-child {
+  border-radius: 0 3px 3px 0; } 
+
+.utility__bar .md-button.md-raised:not([disabled]) {
+  box-shadow: 0 0 0 0; } 
+
+.utility__bar{
+	margin-bottom: 1.5em; 
+}
+
+.util__btn{
+	background: #eee !important;
+	color: #666 !important;
+	text-transform: none;
+}
+
+.util__btn:hover{
+	background: #fff !important;
+	color: #000;
+}
+.filterHolder{
+	position :relative;
+	display: inline-block;
+	height: 1px;
+	width:1px;
+}

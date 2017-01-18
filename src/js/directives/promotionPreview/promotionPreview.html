@@ -1,0 +1,31 @@
+<overlay overlay-name="previewPanel" overlay-config="previewOverlayConfig">
+		<header>
+			<h1 class="Popup__Header__Title">Preview Promotion :{{previewData.data.name}}</h1>
+			<div ng-if="headerErrorMsg" class="preivewError headerError">
+				<div class="fa fa-exclamation-circle">{{headerErrorMsg}}</div>	
+			</div>
+		</header>
+		<content>
+			<div ng-if="errorMessages" class="preivewError">
+				<div ng-repeat="error in errorMessages">{{error.message}}</div>	
+			</div>
+			<div class="previewFormData"> 
+			 	<admin-promotion-form  form-holder="formHolder"  data="previewData.data" preview="{{true}}" index="sectionInx"></admin-promotion-form>
+			 </div>	
+			 <div class="previewStatus" ng-show="submitStatus">
+			 	<md-progress-circular md-mode="indeterminate" /><span>{{submitStatus}}<span>
+			 </div>	
+		</content>
+		
+		<footer>
+			<div class="clearfix">
+				<a class="md-button  secondary align-right pull-left" ng-click="close()">Cancel</a>
+				<a class="md-button primary pull-right" ng-disabled="submitStatus" ng-click="saveAndSubmit($event)"> Submit</a>
+			</div>	
+		</footer>
+</overlay>
+
+
+
+
+

@@ -1,0 +1,16 @@
+
+<div id="searchfilter" >
+	<h1>Promotion Filter<h1>
+	<div>Promotion status<div>
+	<select>
+		<option ng-repeat="status in statuslist" value="status.promoStatusCd">{{status.promoStatusDesc}}</option>
+	</select>
+	<div>Promotion type<div>
+	<select >
+		<option ng-repeat="promo in typelist"  value="promo.promoSubTypeCd">{{promo.promoSubTypeDesc}}</option>
+	</select>
+	<div>
+		<md-button ng-click="filter" >Apply</md-button>
+		<md-button ng-click="filter" >Cancel</md-button>
+	</div>
+</divl

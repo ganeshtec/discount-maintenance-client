@@ -1,0 +1,17 @@
+
+.admin__rail{
+	background: #F8F7EE;
+	border-left: 2px #ccc solid;
+	padding: 0 !important;
+}
+.admin__rail__list{
+   list-style:none;
+   cursor: pointer;
+}
+.admin__rail__list__item{
+	padding: 23px
+}
+.admin__rail__list__item--active{
+   background:#fff;
+   border-left: 2px solid #F96302;
+}

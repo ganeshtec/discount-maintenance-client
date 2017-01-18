@@ -1,0 +1,258 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="refresh" content="5" />
+		<style media="screen" type="text/css">
+		*{
+			padding:0px;
+			margin:0px;
+			border:0;
+		}
+		body
+		{
+			font-family:Arial, 
+			Verdana, 
+			sans-serfi; 
+			font-size:12px;
+		}
+		
+		.piechart
+		{
+			position: relative;    
+			width: 16em;    
+			height: 16em; 
+			margin:5px 30px 5px 30px;
+		}
+
+		.piechart img
+		{    
+			position: absolute;    
+			z-index: 1000;    
+			width: 16em;    
+			height: 16em;
+		}
+		.piechart.wedge
+		{    
+			width: 0;    
+			height: 0;
+		}
+		.piechart .box
+		{    
+			width: 8em;    
+			height: 8em;
+		}
+		.piechart div
+		{ 
+			position: absolute;
+		}
+		.piechart .quadrant0
+		{    
+			bottom: 8em;    
+			left: 8em;
+		}
+		.piechart .quadrant1
+		{   
+			right: 8em;   
+			bottom: 8em;
+		}
+		.piechart .quadrant2
+		{   
+			right: 8em;    
+			top: 8em;
+		}
+		.piechart .quadrant3
+		{    
+			left: 8em;    
+			top: 8em;
+		}
+
+		#table1{
+	
+			background:#ffffff;
+			border-left:solid 1px #eeeeee;
+			border-bottom:solid 1px #eeeeee;
+			margin:10px auto 0 auto;
+		}
+
+		#table1 td{
+			border-top:solid 1px #eeeeee;
+			border-right:solid 1px #eeeeee;
+			font-size:12px;
+			text-align:left;
+			padding-left:10px; 
+		}
+		.header{
+			background:#666666;
+			padding:8px !important;
+			color:#ffffff;
+			text-align:center;
+			text-transform:uppercase;
+			font-weight:bold;
+			font-size:18px;
+		}
+		
+		.secondLevelHeader{
+			background:#d1d1d1;
+			padding:8px !important;
+			color:#000000;
+			text-align:left;
+			font-weight:bold;
+			font-size:16px;	
+		}
+		
+		.thirdLevelHeader{
+			background:#eeeeee;
+			padding:5px !important;
+			color:#000000;
+			text-align:center;
+			font-weight:bold;
+			font-size:14px;
+		}
+
+		.table2 {
+			margin:15px auto 0 auto;
+			border-left:solid 1px #cccccc;
+			border-bottom:solid 1px #cccccc;
+			background:#eeeeee;
+		}
+
+		.table2 td.tblHead{
+			background:#666666;
+			color:#ffffff;
+			font-size:14px;
+			padding:5px;
+			font-weight:bold
+		}
+
+		.table2 td{
+			border-top:solid 1px #cccccc;
+			border-right:solid 1px #cccccc;
+			font-size:12px;
+			padding:8px;
+			/*width:10%;*/
+		}
+		
+		.footer{
+			width:900px;
+			margin:20px auto 0 auto;
+			background:#666666;
+			color:#ffffff;
+			padding:5px;
+			text-align:center;
+		}
+		
+		.red{
+			border-left:solid 15px #ad2d2d;
+			padding:0 0 0 15px;
+			margin:0 0 5px 0;
+		}
+
+		.green{
+			border-left:solid 15px #60782a;
+			padding:0 0 0 15px;
+		}
+
+		.table2 tr.fail{
+			color:#ad2d2d !important;
+		}
+
+		#table1 tr.fail{
+			color:#ad2d2d !important;
+		}
+
+		#table1 tr.pass{
+			color:#60782a !important;
+		}
+		
+		a{
+			color:#000000;
+			text-decoration:none;
+		}
+		a:hover{
+			color:#666666;
+			text-decoration:underline;
+		}
+
+		</style>
+	</head>
+<body> 
+
+<p align='center'> 
+	<table border='0' cellspacing='0' cellpadding="0" id='table1' width='900'>
+		<tr bgcolor='Black'> 
+			<td colspan='4' style="padding:0px">
+				<div class="header">##ReportTitle##</div>
+			</td> 
+		</tr> 
+		<tr> 
+			<td colspan='2' class="secondLevelHeader" style="border:none;">
+				&nbsp;Date & Time: ##DateTime##
+			</td>
+			<td colspan='2' style="text-align:right !important; border:none;" class="secondLevelHeader"> 
+				&nbsp;Url: ##URL##
+			</td> 
+		</tr> 
+		<tr bgcolor='#A6A6A6'> 
+			<td colspan='2' class="thirdLevelHeader" style="border:none;">
+				&nbsp;Time taken: ##TimeTaken##
+			</td>
+			<td colspan='2' style="text-align:right !important; border:none;" class="thirdLevelHeader"> 
+				&nbsp;Machine Name: ##MachineName##
+			</td> 
+		</tr> 
+		<tr bgcolor='#A6A6A6'> 
+			<td colspan='2' class="thirdLevelHeader" style="border:none;">
+				&nbsp;##Label1##: ##Value1##
+			</td>
+			<td colspan='2' style="text-align:right !important; border:none;" class="thirdLevelHeader"> 
+				&nbsp;##Label2##: ##Value2##
+			</td> 
+		</tr> 
+		<tr> 
+			<td colspan='4' class="secondLevelHeader">&nbsp;Summary of Test Results
+			</td>			
+		</tr> 
+		<tr>
+			<td style="padding:17px 8px;">&nbsp;Total Test Cases</td>
+			<td style="padding:17px 8px;">##TotalTestCases##</td>
+			<td colspan="2" rowspan="4" width="50%" >
+			<table cellpadding="0" cellspacing="0" border="0" style="float:right;">
+			<tr>
+				<td style="border:none;">
+					##PieChartDiv##
+				</td>
+				<td style="border:none; vertical-align:bottom; padding:0 20px 20px 0;">
+					<div class="red">Failed - (##FAILPercentage##)</div>
+					<div class="green">Passed - (##PASSPercentage##)</div>
+				</td>
+			</tr>
+			</table>
+			
+			
+			</td></tr>
+			<tr class="pass">
+				<td style="padding:17px 8px;">&nbsp;Passed </td>
+				<td style="padding:17px 8px;">##NoofTCPassed##</td>
+			</tr>
+			<tr class="fail">
+				<td style="padding:17px 8px;">&nbsp;Failed</td>
+				<td style="padding:17px 8px;">##NoofTCFailed##</td>
+			</tr>
+			<tr>
+				<td style="padding:17px 8px;">&nbsp;Success Rate (%)</td>
+				<td style="padding:17px 8px;">&nbsp;##SuccessRate##</td>
+			</tr>
+			</table>
+			<div style="width:900px; margin:0 auto;">
+			<table cellpadding="0" cellspacing="0" border="0" class="table2" width='100%'>
+				<tr> 
+					<td class="tblHead" width="60%">Test Case Name</td> 
+					<td class="tblHead" width="10%">Browser</td> 
+					<td class="tblHead" width="10%">Priority</td>
+					<td class="tblHead" width="10%">Test Result</td>
+				</tr>
+				##TCResultRows##		
+			</table>
+			</div>
+			<div class="footer">-- End of Report --</div>
+			</body></html>

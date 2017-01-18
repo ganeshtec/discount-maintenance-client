@@ -1,0 +1,7 @@
+inherit:�manifest-base.yml
+applications:
+- name: promotionmaintenanceuisku
+  host: promotionmaintenanceuisku-ad
+  instances: 1
+  env:
+    Node_env: 'AD'

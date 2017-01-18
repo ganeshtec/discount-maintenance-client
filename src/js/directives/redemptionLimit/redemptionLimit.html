@@ -1,0 +1,88 @@
+<div class="radio-spacing" >
+    <label for="priority">
+        Maximum redemption limits for this promotion
+    </label>
+    <tool-tipper tooltiptitle="Maximum redemption limits for this promotion">
+        <p>
+            This option limits the number of times that a promotion can be used in total, by all customers. This could be used to define a loss-leader style of promotion that limits redemption of the promotion to the first 100 qualifying orders. When the maximum redemption limit is reached, the promotion status changes to Suspended the next time the promotion is evaluated.
+        </p>
+        <p>&nbsp;</p>
+        <p>
+            As each order is evaluated for the promotion, the limit you specify is checked against submitted orders. If multiple orders are being evaluated just before the redemption limit is reached, the number of redeemed promotions can be higher than the limit you specify.
+        </p>
+    </tool-tipper>
+    <div class="md-radio">
+        <input type="radio" id="promomax_unlimit" name="promomax" ng-model="promomax" value="promounlimt" ng-change="promocheck(value)"/>
+        <label for="promomax_unlimit"><span><span></span></span>Unlimited</label>
+    </div>
+    <div class="md-radio">
+        <input type="radio" id="promomaxset" name="promomax" ng-model="promomax" value="promoset" ng-change="promocheck(value)"/>
+        <label for="promomaxset"><span><span></span></span>Set maximum redemption</label>
+    </div>
+</div>
+<div ng-if="promomax=='promoset'">
+    <div class="md-text-field md-text-field-padding">
+        <label for="promomaxredem">Maximum Redemptions</label>
+        <input type="text" id="promomaxredem" name="promomaxredem" ng-model="data.maxUsesOfPromo" title="promomaxredem" ng-required="true" allow-pattern="(\d)"  ng-pattern="/^[0-9]*$/"/>
+        <span class='error-message' ng-show="  promoform.promomaxredem.$invalid">
+                                <span ng-show="promoform.promomaxredem.$error.required">Please enter a valid redemption limit </span>
+                                <span ng-show="promoform.promomaxredem.$error.pattern">Please enter  numeric characters</span>
+        </span>
+    </div>
+</div>
+<div class="radio-spacing">
+    <label for="priority">
+        Maximum redemption on a single order
+    </label>
+    <tool-tipper tooltiptitle="Maximum redemption limits for this promotion">
+        <p>
+            This option limits the number of times that a promotion can be used in a single order. This could be used to define a promotion that limits the redemption of the promotion to the first 5 qualifying catalog entries in an order. This option has no effect on order level or shipping promotions.
+        </p>
+    </tool-tipper>
+    <div class="md-radio">
+        <input type="radio" id="ordermax_unlimit" name="ordermax" ng-model="ordermax" value="orderunlimt"  ng-change="orderCheck(value)"/>
+        <label for="ordermax_unlimit"><span><span></span></span>Unlimited</label>
+    </div>
+    <div class="md-radio">
+        <input type="radio" id="ordermaxredem" name="ordermax" ng-model="ordermax" value="setorder"  ng-change="orderCheck(value)"/>
+        <label for="ordermaxset"><span><span></span></span>Set maximum redemption</label>
+    </div>
+</div>
+<div ng-if="ordermax=='setorder'">
+    <div class="md-text-field md-text-field-padding">
+        <label for="maxordertext">Maximum Redemptions</label>
+        <input type="text" id="maxordertext" name="maxordertext" ng-model="data.maxUsesPerOrd" title="maxordertext" ng-required="true" allow-pattern="(\d)"  ng-pattern="/^[0-9]*$/"/>
+        <span class='error-message' ng-show=" promoform.maxordertext.$invalid">
+                                <span ng-show="promoform.maxordertext.$error.required">Please enter a valid redemption limit </span>
+                                <span ng-show="promoform.maxordertext.$error.pattern">Please enter  numeric characters</span>
+        </span>
+    </div>
+</div>
+<div class="radio-spacing">
+    <label for="priority">
+        Maximum redemption by a single customer
+    </label>
+    <tool-tipper tooltiptitle="Maximum redemption by a single customer">
+        <p>
+            This option limits the number of times that a promotion can be used by a single customer. This could be used to define a promotion that limits redemption of the promotion to a single use per customer.
+        </p>
+    </tool-tipper>
+    <div class="md-radio">
+        <input type="radio" id="custmax_unlimit" name="custmax" ng-model="custmax" value="custunlimt"  ng-change="custCheck(value)"/>
+        <label for="custmax_unlimit"><span><span></span></span>Unlimited</label>
+    </div>
+    <div class="md-radio">
+        <input type="radio" id="custmaxredem" name="custmax" ng-model="custmax" value="setcust"  ng-change="custCheck(value)"/>
+        <label for="custmaxset"><span><span></span></span>Set maximum redemption</label>
+    </div>
+</div>
+<div ng-if="custmax=='setcust'">
+    <div class="md-text-field md-text-field-padding">
+        <label for="maxcusttext">Maximum Redemptions</label>
+        <input type="text" id="maxcusttext" name="maxcusttext" ng-model="data.maxUsesPerCust" title="maxcusttext" ng-required="true" allow-pattern="(\d)"   ng-pattern="/^[0-9]*$/"/>
+        <span class='error-message' ng-show=" promoform.maxcusttext.$invalid">
+                                <span ng-show="promoform.maxcusttext.$error.required">Please enter a valid redemption limit </span>
+                                <span ng-show="promoform.maxcusttext.$error.pattern">Please enter  numeric characters</span>
+        </span>
+    </div>
+</div>

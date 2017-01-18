@@ -1,0 +1,26 @@
+<div class="admin" flex="100">
+	<div layout="row">
+		<div flex="100">
+			<!-- Admin Header compontent -->
+			<admin-header class="admin__header" promotype="promotionData" uistate="UiState" urls="urls"></admin-header>
+		</div>
+	</div>
+	<form class="admin__promotion__form" name="promoForm" ng-cloak>
+		<div layout="row" class="admin__main">
+			<div class="admin__content" flex="50" ng-repeat="promotion in promotions track by $index">
+				<h4>{{promotion.promoSubTypeDesc}} <span class="md-display-1" ng-show="$index == 0">(Read Only)</span></h4>
+				<admin-promotion-form  form-holder="formHolder"  data="promotion" preview="{{true}}" is-disabled="$index == 0"></admin-promotion-form>
+				<div layout="row">
+					<div flex="100">
+						<!-- Admin Footer compontent -->
+						<admin-footer ng-if="promotion" data="promotion" preview-overlay-config="previewOverlayConfig" previewdata="previewData" class="admin__footer" form-holder="formHolder" promo-form="promoForm" index="4" ng-hide="$index == 0"></admin-footer>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</form>
+	
+</div>
+<promotion-preview data="promotionData" ng-if="previewOverlayConfig.isOpen" form-holder="previewFormHolder" preview-overlay-config="previewOverlayConfig" preview-data="previewData" promo-form="promoForm"></promotion-preview>
+

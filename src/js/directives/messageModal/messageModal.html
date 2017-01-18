@@ -1,0 +1,16 @@
+<div id="messageModal" class="MaskPanel isClosed">
+	<section class="Popup Popup--{{modal.title | lowercase}}  no-pad {{modalSize}}"> 
+	
+		<header class="Popup__Header Popup__Header--{{modal.title | lowercase}}" flex="100">
+			<h1 class="Popup__Header__Title Popup__Header__Title--{{modal.title | lowercase}}">{{modal.title}}</h1>
+		</header>
+		
+		<div flex="100">
+			<p class="Popup__message no-margin" ng-show="modal.message">{{modal.message}}</p>
+		</div>
+		
+		<footer class="Popup__Footer" flex="100">
+			<button class="btn btn--{{modal.title | lowercase}} align-right" ng-click="close()">Close</button>
+		</footer>
+	</section>
+</div>

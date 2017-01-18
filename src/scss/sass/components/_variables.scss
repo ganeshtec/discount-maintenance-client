@@ -1,0 +1,117 @@
+//------------------------------------------------
+// GLOBAL VARIABLES
+
+// -----------------------------------------------
+// DEFAULTS
+$default-cursor: pointer;
+
+// -----------------------------------------------
+// PATHS
+$imageDir: "/HFApp/static/global/images/";
+$globalImageDir: "static/global/images/";
+
+//------------------------------------------------
+// POSITIONING
+$center-margin: 0 auto;
+
+//------------------------------------------------
+// STANDARD SPACING VARIABLES 
+$space-tiny: 3px;
+$space-xsmall: 6px;
+$space-standard: 9px;
+$space-small: 12px;
+$space-normal: 18px;
+$space-large: 24px;
+$space-xlarge: 30px;
+$space-jumbo: 36px;
+
+//------------------------------------------------
+// COLOR
+$brand: #f96302 !default; // thd-orange
+$primary: #777 !default; // dark-gray
+$dark: #333 !default; // near-black
+$reverse: #fff !default; // white
+$danger: #ed1c24 !default; // red
+$alternate: #3e7697 !default; // blue
+$success: #00ae4d !default; // green
+
+$secondary: #444 !default; // Not yet approved
+
+$light: #ccc !default; // Light gray - don't use for text, only for icons
+$warning: #ffc206 !default; // Yellow - don't use for text, only for icons
+
+$faded: #eee !default; 
+$lightest: #f4f4f4 !default;
+$transparent: transparent !default;
+
+//------------------------------------------------
+// WIDTH
+$standard-width: 960px;
+$standard-column-width: 100%;
+
+//------------------------------------------------
+// BORDERS
+$border-off: none;
+$hr-border: $light;
+$standard-border: 1px solid;
+$standard-border-radius: 3px;
+
+//------------------------------------------------
+// LINK
+$link-color: $alternate !default;
+$link-hover-color: darken($link-color, 15%) !default;
+
+//------------------------------------------------
+// TYPOGRAPHY
+$font-family-sans-serif: 'Helvetica Neue',Helvetica-,Arial,sans-serif !default;
+// $font-family-sans-serif: 'opensans-regular','Helvetica Neue',Helvetica-,Arial,sans-serif !default;
+$font-family-serif: Georgia, "Times New Roman-", Times, serif !default;
+$font-family-monospace: Monaco, Menlo, Consolas, "Courier- New", monospace !default;
+$font-family-base: $font-family-sans-serif !default;
+
+$font-size-base: 1.4rem;
+$legal: $font-size-base - 0.3; // ~1.1em
+$medium: $font-size-base + 0.4;  // ~1.8em
+$husky: $font-size-base + 0.7;  // ~2.1em
+$large: $font-size-base + 1;  // ~2.4em
+$xlarge: $font-size-base + 2.2; // ~3.6em
+$jumbo: $font-size-base + 3.4; // ~4.8em
+$xtreme: $font-size-base + 3.4; // ~4.8em
+
+//------------------------------------------------
+// STANDARD TEXT MIXINS = font-size/line-height
+
+@mixin text-jumbo { // font: 48px/42px
+  font-size: $jumbo;
+  line-height: 42px;
+}
+@mixin text-xlarge { // font: 36px/42px
+  font-size: $xlarge;
+  line-height: 42px;
+}
+@mixin text-large { // font: 24px/28px
+  font-size: $large;
+  line-height: 28px;
+}
+@mixin text-medium { // font: 18px/27px
+  font-size: $medium;
+  line-height: 27px;
+}
+@mixin text-normal { // font: 14px/21px
+  font-size: $font-size-base;
+  line-height: 21px;
+}
+@mixin text-legal { // font: 11px/17px
+  font-size: $legal;
+  line-height: 17px;
+}
+
+//------------------------------------------------
+// GRID
+
+$grid-columns: 12 !default;
+$screen-xs: 640px; // mobile landscape
+$screen-sm: 641px; // tablet portrate
+$screen-md: 959px; // tablet landscape
+$screen-lg: 960px; // Desktop
+$screen-xl: 1280px; // Large Desktop & HD TV

@@ -1,0 +1,377 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<style type="text/css">
+            *{
+                margin:0px;
+                padding:0px;
+            }
+            body{
+                font-family:Arial, Verdana, sans-serfi;
+				font-size:12px;
+                width:900px;
+                margin:0 auto;
+            }
+			table {
+				background:#ffffff;
+				border-left:solid 1px #eeeeee;
+				border-bottom:solid 1px #eeeeee;
+				margin:0 auto 0 auto;
+			}
+			td {
+                background:#ffffff;
+				border-top:solid 1px #eeeeee;
+				border-right:solid 1px #eeeeee;
+				font-size:12px;
+				text-align:left;
+				padding:8px;
+			}
+			th {
+				background:#d1d1d1;
+				padding:8px !important;
+				color:#000000;
+				text-align:left;
+				font-weight:bold;
+				font-size:16px;
+                border-right:solid 1px #999999;
+                border-bottom:solid 1px #999999;
+                border-top:solid 1px #999999;
+                border-bottom:solid 1px #999999;
+			}
+			.odd {
+				background: #cff;
+			}
+			.subHeading {
+				background-color: #DDEEF8;
+				font-weight:bold;
+				text-align:center;
+				font-size:17;
+				font-family:Calibri
+			}
+			.passAnchor {
+				color:Green;
+				font-weight:bold;
+				font-size:12;
+			}
+			.failAnchor {
+				color:Red;
+				font-weight:bold;
+				font-size:12;
+			}
+			.warningAnchor {
+				color:Purple;
+				font-weight:bold;
+				font-size:12;
+			}
+			.errorStatus {
+				color:Red;
+				font-weight:bold;
+				font-size:12;
+			}
+			.errorTd {
+				text-align:left;
+				color:Red;
+				font-weight:bold;
+				font-size:12;
+			}
+			.LeftAlign {
+				text-align:left;
+				font-size:13;
+				font-family:Calibri;
+				margin-left:0px;
+			}
+			.rptHeader {
+				color:White;
+				font-weight:bold;
+				font-size:17px;
+				font-family:Calibri;
+			}
+			.iterationRow {
+				background-color: #666666;
+				color:White;
+				text-align:center;
+				font-weight:bold;
+				font-size:16px;
+				font-family:Calibri;
+			}
+			.browserRow {
+				background-color:#666666;
+				color:White;
+				text-align:center;
+				font-weight:bold;
+				font-size:16px;
+				font-family:Calibri;
+			}			
+			.browserRowIteration {
+				background-color:#d1d1d1;
+				text-align:center;
+				font-weight:bold;
+				font-size:16px;
+				font-family:Calibri;
+				border-right:solid 1px #999999;
+                border-left:solid 1px #999999;
+                border-top:solid 1px #999999;
+				border-bottom:solid 1px #999999;
+			}
+            .header {
+				background:#666666;
+				padding:8px !important;
+				color:#ffffff;
+				text-align:center;
+				text-transform:uppercase;
+				font-weight:bold;
+				font-size:18px;
+			}
+			.secondLevelHeader {
+				background:#d1d1d1;
+				padding:8px !important;
+				color:#000000;
+				text-align:left;
+				font-weight:bold;
+				font-size:16px;
+			}
+			.thirdLevelHeader {
+				background:#eeeeee;
+				padding:5px !important;
+				color:#000000;
+				text-align:center;
+				font-weight:bold;
+				font-size:14px;
+			}
+			.footer {
+				width:900px;
+				margin:20px auto 0 auto;
+				background:#666666;
+				color:#ffffff;
+				padding:5px;
+				text-align:center;
+			}
+			
+		</style>
+		<title></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	</head>
+	<body>
+		<div style="width:900px; padding:10px 0 0 0;">
+			<div style="text-align:center;">
+                <div class="header">##RptHeader##</div>
+			</div>
+		</div>
+		<table id="tblRptHeader" border="0" cellpadding="0" cellspacing="0" style="width:900px;">
+			<thead>
+				<tr class="subHeading">
+					<th style="width:45%; border-left:solid 1px #999999;"> ##TCName##</th>
+					<th style="width:10%;">##Environment##</th>
+					<th style="width:20%;">##Browser##</th>
+					<th style="width:25%;">##Url##</th>
+				</tr>
+			</thead>
+			<tr>
+				<td>##TCNameValue##</td>
+				<td>##EnvironmentValue##</td>
+				<td>##BrowserValue##</td>
+				<td>##UrlValue##</td>
+			</tr>
+			<tr>
+				<td colspan="4">
+					<div style="float:left;width:50%;align:centre;" >
+						<b>##RptLabel1##</b> - ##RptValue1##
+					</div>
+					<div style="float:right;align:right;">
+						<b>##RptLabel2##</b> - ##RptValue2##
+					</div>
+				</td> 
+	        </tr>
+		</table>
+        <div style="height:10px; clear:both;"></div>
+        
+		<table id="tblSubHeader" style="width:900px;" border="0" cellpadding="0" cellspacing="0">
+			<tr id="trBrowserRow">
+	            <td colspan="4" class="browserRow"> Browser - ##Browser##
+              	</td>
+	        </tr>
+			<tr id="trGridBrowserRow">
+				<td colspan="4" class="browserRow">
+					<div style="float:left;width:50%;align:centre;" >
+						Browser - ##Browser##
+					</div>
+					<div style="float:right;width:50%;align:centre;">
+					Platform - ##Platform##
+					</div>
+				</td> 
+	        </tr>
+			<tr id="trBrowserRowIteration" >
+	            <td colspan="4" class="browserRowIteration"> Browser - ##Browser##
+              	</td>
+	        </tr>
+	        <tr id="trIterationRow">
+	            <td colspan="4" class="browserRow"> Iteration - ##IterationNo##
+              	</td>
+	        </tr>
+			<tr id="trSubHeader" class="subHeading">
+				<th style="width:10%; border-left:solid 1px #999999;">##Steps##</th>
+				<th style="width:42%;">##Description##</th>
+				<th style="width:42%;">##ActualResult##</th>
+				<th style="width:10%;">##StepStatus##</th>
+			</tr>
+			<tr id="trPASSRow">
+				<td style="text-align:center;">##StepNoValue##</td>
+				<td>
+					<p class="LeftAlign">##StepNoDesc##</p>
+				</td>
+				<td>
+					<p class="LeftAlign">##StepActualResult##</p>
+				</td>
+				<td>
+					<span class="passAnchor">PASS</span>
+				</td>
+			</tr>
+			<tr id="trPASSRowScreenshot">
+	            <td style="text-align:center;">
+                ##StepNoValue##
+              	</td>
+  	            <td>
+				<p class="LeftAlign">
+                ##StepNoDesc##
+				</p>
+              	</td>
+	            <td>
+				<p class="LeftAlign">
+                  ##StepActualResult##
+				</p>
+              	</td>
+				 <td>
+               <a class="passAnchor" target="_blank" href="##ScreenShotPath##">PASS</a>
+	        </td>
+	        </tr>
+	        <tr id="trFAILRow">
+            <td style="text-align:center;">
+              ##StepNoValue##
+            </td>
+            <td>
+    			<p class="LeftAlign">
+                  ##StepNoDesc##
+    			</p>
+            </td>
+	        <td>
+    			<p class="LeftAlign">
+                  ##StepActualResult##
+    			</p>
+            </td>
+	        <td>
+               <a class="failAnchor" target="_blank" href="##ScreenShotPath##">FAIL</a>
+	        </td>
+	        </tr>
+			<tr id="trFAILRowNoScreenShot">
+            <td style="text-align:center;">
+              ##StepNoValue##
+            </td>
+            <td>
+    			<p class="LeftAlign">
+                  ##StepNoDesc##
+    			</p>
+            </td>
+	        <td>
+    			<p class="LeftAlign">
+                  ##StepActualResult##
+    			</p>
+            </td>
+	        <td>
+               <span class="failAnchor">FAIL</span>
+	        </td>
+	        </tr>
+			<tr id="trErrorRow">
+            <td style="text-align:center;">
+              ##StepNoValue##
+            </td>
+            <td>
+    			<p class="errorTd">
+                  ##StepNoDesc##
+    			</p>
+            </td>
+	        <td>
+    			<p class="LeftAlign">
+                  ##StepActualResult##
+    			</p>
+            </td>
+	        <td>
+				<span class="failAnchor">FAIL</span>
+	        </td>
+	        </tr>
+			<tr id="trBrowserClosedRow">
+            <td style="text-align:center;">
+              ##StepNoValue##
+            </td>
+            <td>
+    			<p class="errorTd">
+                  ##StepNoDesc##
+    			</p>
+            </td>
+	        <td>
+    			<p class="LeftAlign">
+                  ##StepActualResult##
+    			</p>
+            </td>
+	        <td>
+				<span class="failAnchor">FAIL</span>
+	        </td>
+	        </tr>
+			<tr id="trWARNINGRowScreenshot">
+              <td style="text-align:center;">
+                ##StepNoValue##
+              </td>
+              <td class="LeftAlign">
+    			  <p class="LeftAlign">
+                    ##StepNoDesc##
+    			  </p>
+              </td>
+              <td class="LeftAlign">
+    			  <p class="LeftAlign">
+                    ##StepActualResult##
+    			  </p>
+              </td>
+	            <td>
+					<a class="warningAnchor" target="_blank" href="##ScreenShotPath##">WARNING</a>
+	            </td>
+	        </tr>
+	        <tr id="trWARNINGRow">
+              <td style="text-align:center;">
+                ##StepNoValue##
+              </td>
+              <td class="LeftAlign">
+    			  <p class="LeftAlign">
+                    ##StepNoDesc##
+    			  </p>
+              </td>
+              <td class="LeftAlign">
+    			  <p class="LeftAlign">
+                    ##StepActualResult##
+    			  </p>
+              </td>
+	            <td>
+	                <span class="warningAnchor">WARNING</span>
+	            </td>
+	        </tr>
+            </table>
+            <div style="height:10px; clear:both;"></div>
+			<table id="tblRptFooter" style="width:900px;" border="0" cellpadding="0" cellspacing="0">
+				<thead>
+					<tr class="subHeading">
+						<th style="width:15%; border-left:solid 1px #999999;">##StepsPassed##</th>
+						<th style="width:15%;">##StepsFailed##</th>
+						<th style="width:25%;">##ExecutionDate##</th>
+						<th style="width:25%;">##ExecutionMachine##</th>
+						<th style="width:20%;">##TimeTaken##</th>
+					</tr>
+				</thead>
+				<tr style="text-align:center;">
+					<td style="text-align:center;">##StepsPassedValue##</td>
+					<td style="text-align:center;">##StepsFailedValue##</td>
+					<td style="text-align:center;">##ExecutionDateValue##</td>
+					<td style="text-align:center;">##ExecutionMachineValue##</td>
+					<td style="text-align:center;">##TimeTakenValue##</td>
+				</tr>
+			</table>
+	</body>
+
+</html>

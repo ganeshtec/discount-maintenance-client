@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<GridNode>
+<!--Grid Multi Browser Execution-->
+<Node NodeUrl="http://localhost:xxxx/wd/hub" Browser="IE" Version="10" Platform="Windows" Execute="true" ExecuteonGrid="true"/>
+<Node NodeUrl="http://xxx.xxx.xxx.xxx:yyyy/wd/hub" Browser="Firefox" Version="25.0" Platform="Windows" Execute="true" ExecuteonGrid="true"/>
+<Node NodeUrl="http://xxx.xxx.xxx.xxx:yyyy/wd/hub" Browser="Chrome" Version="31.0.1650.57" Platform="Windows" Execute="true" ExecuteonGrid="true"/>
+
+<!--Grid Parallel Execution-->
+<!--<Node NodeUrl="http://localhost:xxxx/wd/hub" Browser="Chrome" Version="31.0.1650.57" Platform="Windows" Execute="true" ExecuteonGrid="false"/>
+<Node NodeUrl="http://xxx.xxx.xxx.xxx:yyyy/wd/hub" Browser="Chrome" Version="31.0.1650.57" Platform="Windows" Execute="true" ExecuteonGrid="true"/>
+<Node NodeUrl="http://xxx.xxx.xxx.xxx:yyyy/wd/hub" Browser="Chrome" Version="31.0.1650.57" Platform="Windows" Execute="true" ExecuteonGrid="true"/>-->
+
+</GridNode>

@@ -1,0 +1,79 @@
+<div class="md-text-field">
+    <label for="prefix">
+        Prefix 
+    </label>
+	<input type="text" id="prefix" class="allCaps" name="prefix" title="Prefix" ng-model="data.cdPrefix" placeholder="Please enter a valid Prefix pattern" ng-change="getRequestData(data, cdlength)" allow-pattern="(\d|[A-Z])" ng-pattern="/^[a-zA-Z0-9]+$/" ng-disabled="completed" />
+	<span class='error-message' ng-show="promoform.prefix.$invalid">
+		<span ng-show="promoform.prefix.$error.pattern">
+			Please enter a valid Prefix pattern. Alphanumeric characters only!
+		</span>
+	</span>   
+</div>
+<div class="md-text-field">
+	<label for="uniqcode">
+		Unique System-Generated Code Length
+	</label>
+	<input type="text" id="uniqcode" name="uniqcode" ng-model="cdlength" title="Unique Code" placeholder="Unique Code" ng-change="getRequestData(data, cdlength)" ng-required="true" allow-pattern="(\d)" ng-pattern="/^[0-9]*$/" ng-disabled="completed" />
+	<span class='error-message' ng-show=" promoform.uniqcode.$invalid">
+		<span ng-show="promoform.uniqcode.$error.pattern">
+			Please enter a valid code length. Numbers only!
+		</span>
+		<span ng-show="promoform.uniqcode.$error.required">
+			Please enter a valid unique code length.
+		</span>
+	</span>
+</div>
+<div class="md-text-field">
+	<label for="suffix">
+		Suffix
+	</label>
+	<input type="text" id="suffix" class="allCaps" name="suffix" title="Suffix" placeholder="Please enter a valid Suffix pattern" ng-model="data.cdSuffix" ng-change="getRequestData(data, cdlength)" allow-pattern="(\d|[A-Z])" ng-pattern="/^[a-zA-Z0-9]*$/" ng-disabled="completed" />
+	<span class='error-message' ng-show="promoform.suffix.$invalid">
+		<span ng-show="promoform.suffix.$error.pattern">
+			Please enter a valid Suffix pattern. Alphanumeric characters only!
+		</span>
+	</span>   
+</div>
+<div class="md-text-field">
+	<label for="uniquenumbercode">
+		Number of unique codes to be generated
+	</label>
+	<input type="number" id="uniquenumbercode" name="uniquenumbercode" ng-model="data.uniqueCdCnt" ng-init="data.uniqueCdCnt =data.uniqueCdCnt || 1" title="Number of Unique Code" placeholder="Number of Unique Code" ng-change="getRequestData(data, cdlength)" allow-pattern="(\d)" ng-pattern="/^[0-9]*$/" ng-disabled="completed" ng-max='uniquenumbercode'/>
+	<span class='error-message' ng-show="promoform.uniquenumbercode.$invalid">
+		<span ng-show="promoform.uniquenumbercode.$error.pattern">
+			Please enter a valid Number of unique codes. Numbers only!
+		</span>
+        <span ng-show="promoform.uniquenumbercode.$error.max">
+			Please enter a number less than possible unique code field.
+		</span>
+	</span>   
+</div>
+<div class="md-text-field">
+	<label for="uniquenumbercode">
+		Maximum number of possible unique codes
+	</label>
+	<p class="md-space">
+		{{uniquenumbercode}}
+	</p>
+</div>
+<div class="md-text-field">
+	<label for="uniquenumbercode">
+		Example Code 
+	</label>
+	<ul class="system__promocode">
+		<li ng-repeat="item in systemGenCodes">
+			{{item}}
+		</li>
+	</ul>
+</div>
+<div class="md-text-field" >
+	<label for="uniquenumbercode">
+		Code Generation Status 
+	</label>
+	<p class="md-space" ng-if="!completed">
+		Promotion codes have not yet been populated
+	</p>
+	<p class="md-space" ng-if="completed">
+		Promotion codes have been populated
+	</p>
+</div>

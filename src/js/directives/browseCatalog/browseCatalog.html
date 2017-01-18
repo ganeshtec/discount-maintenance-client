@@ -1,0 +1,77 @@
+<overlay overlay-name="browseCatalogPanel" overlay-config="browseCatalogOverlayConfig">
+<!-- 		<header id="browseCatalogHeader">
+			<h1 class="Popup__Header__Title">Browse Catalog</h1>
+		</header> -->
+		<header id="browseCatalogHeader">
+			<div id="browseCatalogHeaderTitle"><h1 class="Popup__Header__Title">Browse Catalog</h1></div>
+			<div id="browseCatalogHeaderClose"><i class="fa fa-times" ng-click="close()" aria-hidden="true"></i></div>
+			<div class="clear"></div>
+		</header>
+		<content>		
+		     <table class="table category__table">
+ 				<tr class="category__table__row-nobottomborder">
+ 					<td colspan="2">
+ 						<div class="md-toolbar-search l">
+ 							<input class="table__search" placeholder="Search and Add Sales catalog" type="text" ng-model="term" allow-pattern="(\d|[a-z A-Z\(\?\-\_\.\'\,\%\$\!\@\)])" />
+							<a class="md-button primary" href="" ng-click="searchCatalog(term)">
+								Search
+							</a>
+ 						</div>
+ 					</td>
+ 			  </tr>
+ 	       </table>
+ 	       <div>
+	 	       <table class="table catalogResults">
+	 	       		<tr ng-repeat="result in endecaCatalogResponse | filter:term">
+                      <td>	
+                      	<span ng-model="catalogResultsClick" ng-click="catalogResultsClick.parent=!catalogResultsClick.parent">				
+		 	       			<table id="{{parent.id}}" class="table catalogResultsParent">
+		 	         			<tr ng-repeat="parent in result.parent">
+		 	           				<td ng-style="indent({{parent.level}})">
+ 		 	           					<md-checkbox aria-label="Select {{parent.name}}" ng-click="addCategory($event,parent);" ng-model="data" /></md-checkbox>
+ 		 	           					<span class="catalogResultsTitleSpan">{{parent.name}}</span>
+ 		 	           				</td>
+ 		 	           				<td class="catalogResultsCaret">
+ 		 	           					<i class="fa fa-caret-up" ng-show="catalogResultsClick.parent"></i>
+ 		 	           					<i class="fa fa-caret-down" ng-show="!catalogResultsClick.parent"></i>
+ 		 	           				</td>
+		 	           			</tr>
+		 	                </table>
+	 	                </span>
+	 	                <span ng-show="catalogResultsClick.parent">
+ 		 	                <table id="{{result.details.id}}" class="table catalogResultsDetails" ng-show="catalogResultsClick.parent">
+ 		 	                  <tr ng-model="catalogResultsClick" ng-click="catalogResultsClick.details=!catalogResultsClick.details">
+ 		 	           				<td ng-style="indent({{result.parent.length + 1}})">
+ 		 	           					<md-checkbox aria-label="Select {{result.details.name}}" ng-click="addCategory($event,result.details);" ng-model="check" /></md-checkbox>
+ 		 	           					<span>{{result.details.name}}</span>
+ 		 	           				</td>
+ 		 	           				<td class="catalogResultsCaret">
+ 		 	           					<i class="fa fa-caret-up" ng-show="catalogResultsClick.details"></i>
+ 		 	           					<i class="fa fa-caret-down" ng-show="!catalogResultsClick.details"></i>
+ 		 	           				</td>
+ 		 	                  </tr>
+ 		 	                </table>
+ 		 	                <table id="{{child.id}}" class="table catalogResultsChild" ng-show="catalogResultsClick.details">
+ 		 	               		<tr ng-repeat="child in result.child">
+ 		 	           				<td ng-style="indent({{result.parent.length + 2}})">
+ 		 	           					<md-checkbox aria-label="Select {{child.name}}" ng-click="addCategory($event,child);" ng-model="box" /></md-checkbox>
+ 		 	           					<span>{{child.name}}</span>
+ 		 	           				</td>
+ 		 	           				<td class="catalogResultsCaret">
+ 		 	           					<i class="fa fa-caret-down"></i>
+ 		 	           				</td>
+ 		 	           			</tr>
+ 		 	           		</table>
+ 	 	           		</span>
+ 	 	           	  </td>
+	 	           	</tr>
+	 	         </table>
+ 	        </div>
+    	</content>
+		
+		<footer>
+			<div class="clearfix">
+				<a class="md-button secondary align-right pull-left" ng-click="close()">Cancel</a>
+			</div>	
+		</footer>
+</overlay>

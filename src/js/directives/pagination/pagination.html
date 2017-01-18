@@ -1,0 +1,23 @@
+<div class="paginationContainer">
+	<div class="paginationLength pull-left">
+		<span>Rows per page</span> 
+			<select ng-model="config.recordsPerPage" ng-change="changeSize()">  
+				<option value=5>5</option>
+				<option value=10>10</option>
+				<option value=25>25</option>
+				<option value=50>50</option>		
+			</select>
+		<span>{{rowStart}}-{{rowEnd}} of {{totalRecords}}</span>
+	</div>
+	<ul class="pagination">
+	    <li>
+	    	<a  href="javascript:;"  ng-if="config.currentPage != 1" ng-click="previous()">Previous</a>
+	    	<a   ng-if="config.currentPage == 1" class="disabled">Previous</a>
+	    </li>
+	    <li ng-repeat="page in pages" ><a href="javascript:;" ng-class="{'current':page.no==config.currentPage}" ng-click="setPage(page.no)">{{page.no}}</a></li>
+	    <li>
+	    	<a  ng-if="config.currentPage != totalPages" href="javascript:;" ng-click="next()">Next</a>
+	    	<a  ng-if="config.currentPage == totalPages" class="disabled">Next</a>
+	    </li>
+	</ul>
+</div>

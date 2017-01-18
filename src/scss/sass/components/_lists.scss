@@ -1,0 +1,85 @@
+
+// list block
+.list{
+	
+	// types
+	&--unstyled {
+		@include unstyled-list;
+	}
+
+
+	// childern
+	&__item {}
+
+	&__header {
+		margin-bottom: 15px;
+	}
+	&__item:first-of-type{
+		margin-bottom: -7px;
+	}
+	
+	&__link {
+		display: block;
+		padding: 7px 0
+	}
+
+	&__link--inline {
+		display: block;
+		padding: 5px 0
+	}
+
+	&__link:hover{
+		text-decoration: underline
+	}
+
+	&__link--inline:hover{
+    text-decoration: underline
+	}
+
+
+
+	// inline
+	&__item--inline {
+		float: left;
+		margin-right: $space-standard * 4;
+		display: inline-block;
+	}
+
+	&__item--inlineLegal{
+		float: left;
+		display: inline-block;
+		margin-right: $space-standard * 2;
+	}
+
+	&__item--inlineRight {
+		float: right;
+		margin-left: $space-standard * 4;
+	}
+}
+
+ol {
+  list-style-type: decimal;
+  @extend %p-left-xlarge;
+}
+
+.bulletList, .linkList, .numberList {
+  @extend %m-left-xlarge;
+  & li {
+    @extend %p-all-xsmall;
+  }
+  &.r li {
+    @extend %right;
+  }
+  &.c li {
+    @extend %text-center;
+    list-style-position: inside;
+  }
+}
+
+.bulletList, .linkList {
+  list-style-type: disc;
+}
+
+.numberList {
+  list-style-type: decimal;
+}

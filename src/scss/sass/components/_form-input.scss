@@ -1,0 +1,123 @@
+/* Input Form  */
+
+textarea:focus, 
+input:focus{
+  outline: none;
+}
+
+.input {
+  position:relative;
+  display: block;
+  height: 65px;
+  & .input__field {
+    top: 25px;
+    position:absolute;
+    border: 1px solid $light;
+    height: 40px;
+    width: 100%;
+    font-size: $font-size-base;
+    color: $primary;
+    @extend %p-horizontal-small;
+    -webkit-appearance: none; /* for box shadows to show on iOS */
+    box-sizing:border-box;
+    // z-index: 10;
+    &:focus {
+        border: 1px solid $dark;
+        border-bottom:4px solid $dark;
+        color: $dark;
+        + .input__label {
+          color: $dark;
+          font-weight: bold;
+        }
+    }
+  }
+  .input__label {
+    display: block;
+    padding: 0 1em;
+    color: $primary;
+    padding: 0;
+    margin-bottom: $space-standard;
+    width: 100%;
+    text-align: left;
+    -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    &.input__label--success {
+      color: $success;
+    }
+  }
+  &.input--error {
+    height: 85px;
+    & .input__field {
+      border: 1px solid $danger;
+      color: $danger;
+      -webkit-appearance: none; /* for box shadows to show on iOS */
+      box-sizing:border-box;
+      border: 1px solid $light;
+      border-bottom:4px solid $danger;
+      color: $danger;
+      background:url("#{$imagePath}error.svg") no-repeat center right content-box;
+      + .input__label {
+        color: $danger;
+      }
+      &:focus {
+        border: 1px solid $dark;
+        border-bottom:4px solid $dark;
+        color: $dark;
+        background: none;
+        + .input__label {
+          color: $dark;
+          }
+      }
+    }
+    &.input__label {
+      color: $danger;
+    }
+  .input-error__message {
+    position:relative;
+    top:45px;
+    color:$danger
+    }
+  }
+  &.input--success {
+    & .input__field {
+      border: 1px solid $success;
+      color: $success;
+      -webkit-appearance: none; /* for box shadows to show on iOS */
+      box-sizing:border-box;
+      border: 1px solid $light;
+      border-bottom:4px solid $success;
+      color: $success;
+      background:url("#{$imagePath}success.svg") no-repeat center right content-box;
+      + .input__label {
+        color: $success;
+      }
+      &:focus {
+        border: 1px solid $dark;
+        border-bottom:4px solid $dark;
+        color: $dark;
+        background: none;
+        + .input__label {
+          color: $dark;
+          }
+      }
+    }
+    &.input__label {
+      color: $success;
+    }
+  }
+  &.input--info {
+    & .input__field {
+      background:url("#{$imagePath}info.svg") no-repeat center right content-box;
+      &:focus {
+        border: 1px solid $light;
+        border-bottom:4px solid $dark;
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+.login__panel{
+	margin: 1em auto;
+}
+.login__panel__heading{
+	margin: 1em 0;
+}
+.login__panel__body{
+	padding: 1em;
+	background: #fff;
+	border: solid 1px #ccc;
+}
+.login__panel__form{
+	margin: 0 auto;
+}
+.login__panel__form__submit{
+	width: 100%;
+	margin: 35px 0;
+}
+.login__panel__alert-danger {
+    padding: 1em;
+    background: rgba(255, 0, 0, 0.1);
+}

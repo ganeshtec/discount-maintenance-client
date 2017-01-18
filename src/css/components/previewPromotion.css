@@ -1,0 +1,36 @@
+.previewFormData { 
+	padding: 0 20px 20px 20px; 
+}  
+
+.previewStatus{
+	height: 50px;
+	width:200px;
+	position:absolute;
+	top:50%;
+	left:50%;
+	padding: 20px;
+	background-color: #fff;
+
+}
+
+
+.preivewError{
+	background-color : rgba(237, 28, 36, 1);
+	color : #fff;
+	font-size : 18px;
+	padding : 20px ; 
+	margin-top : -15px;
+}
+
+.headerError{
+	margin :15px -15px -15px -15px;
+}
+.headerError .fa-exclamation-circle:before {
+    content: "\f06a";
+    padding-right: 20px;
+}
+
+
+.clearfix{
+ 	overflow : auto;
+ }

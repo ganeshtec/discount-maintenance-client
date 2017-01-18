@@ -1,0 +1,67 @@
+ <div ng-show="merchDataLoading" class= "merchmask">
+ 
+ <!-- <i width="10%" style= "z-index:2, color: #F96302; font-size:24px; display:inline-block" class ="fa fa-spinner fa-pulse fa-3x fa-fw"></i> -->
+ <!-- <i width="10%" style= "z-index:2, color: #FFF; font-size:50px; display:inline-block" class ="fa fa-spinner fa-pulse fa-3x fa-fw"></i> -->
+ <i width="10%" class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+ </div>
+ 
+ <table class="table category__table">
+ 	<tr class="category__table__row-nobottomborder">
+		 <label for="MerchHierarchy"><h3>Merch Hierarchy</h3></label> 
+		 <td width="35%">
+			  <div class="md-select">
+			  
+   					<select name="promotype" style="margin-top:28px"  ng-options=" dept as dept.id+'-'+dept.name for dept in departmentDetails track by dept.id" ng-model="selectedDept" ng-change="getClassesforSelectedDepartment(selectedDept)" ng-required=" preview">
+							<option value="">Select Department</option></select></div>
+ 
+		 </td>
+		 <td width="30%"> 
+
+			 		<div class="md-select">	
+ 
+						 		<select name="promotype" style="margin-top:28px" ng-options="clas as clas.merchandiseClassNumber+'-'+clas.merchandiseClassDescription for clas in classList track by clas.merchandiseClassNumber" ng-model="selectedClass" ng-change="getSubClasses(selectedClass)" ng-required=" preview">
+					<option value="">Select class</option></select> </div>
+		 </td>
+
+		 <td width="30%">
+			 	<div class="md-select">				
+	<select name="promotype" style="margin-top:28px" ng-options="
+subClass as subClass.merchandiseSubordinateClassNumber+'-'+subClass.merchandiseSubordinateClassDescription for subClass in  SubClassList track by subClass.merchandiseSubordinateClassNumber" ng-model="selectedSubClass" ng-change="getSelectedSubClass()" ng-required=" preview">
+					<option value="">Select subclass</option></select>	</div>
+		 </td>
+		 <td>
+			 	<a href="" class="md-button secondary " style="margin-top:28px" ng-click="showData()" >
+		Add
+	</a>
+		 </td>
+ 	</tr>
+ <tr class="category__table__row-notopborder">
+		<th>
+		Department
+		</th>
+		<th>
+			Class 
+		</th>
+		<th>
+			Sub Class 
+		</th>
+		<th>
+			&nbsp; 
+		</th>
+ 	</tr>
+ 	<tr ng-repeat="hierarchy in tableData" ng-class="{odd:($index % 2)}" >
+	 <td>{{hierarchy.deptNum}}-{{hierarchy.dept}}</td>
+	      <td>{{hierarchy.clasNum}}-{{hierarchy.clas}}</td>
+	      <td>{{hierarchy.subClasNum}}-{{hierarchy.subClass}}</td>
+ 		<td class="r">
+		 <a class="editOption thd-orange" ng-click="isDisabled || deleteRow($index)" href="">
+	     Delete
+	     </a>
+ 		</td>
+ 	</tr>
+ </table>
+ 
+ 
+ 
+ 
+ 

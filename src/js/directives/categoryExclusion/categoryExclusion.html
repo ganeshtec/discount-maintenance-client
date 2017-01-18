@@ -1,0 +1,59 @@
+<div layout="row">
+	<div flex="100">
+		<h3>Exclusion</h3>
+		<small>Options to exclude (optional)</small>
+	</div>
+</div>
+
+<div layout="row">
+	<ul class="collapse" flex="100">
+		<li class="collapse__content">
+			<label class="collapse__header" flex="100" ng-class="{active : isActive_1 || data.partnumbers.length > 0 }">
+			
+				<input type="checkbox" name="collapse" class="collapse__header__control" ng-model="isActive_1"/>
+				<i class="fa" ng-class="{'fa-chevron-up' : isActive_1, 'fa-chevron-down' : !isActive_1}"></i>
+				<span class="collapse__header__title">Items to Exclude</span>
+			</label>
+			<div class="collapse__item">
+				<h4 class="collapse__item__header">
+					Items to Exclude 
+				</h4>
+
+				  <div class="md-text-field">
+				<div class="md-radio">
+				<input type="radio" id="itemsoms_exclude" name="oms_excludeoption" ng-model="itemexclude"
+					title="Items/OMS ID's" value="itemoms"  ng-change="setExcludeItemType()"/>
+				<label for="itemsoms"><span><span></span></span>Items/OMS ID's</label>
+			</div>
+			<div class="md-radio">
+				<input type="radio" id="itemssku_exclude" name="sku_excludeoption" ng-model="itemexclude"
+					title="Items/SKU" value="itemsku" ng-change="setExcludeItemType()"/>
+				<label for="itemssku"><span><span></span></span>Items/SKU</label>
+			</div>
+
+			</div>
+
+
+				<!-- Item view Codes Component -->
+				<item-inclusion data="data.partnumbers" itemtype= "itemtype" purchaseoption="itemexclude" promoform="promoform"></item-inclusion>
+				
+			</div>
+		</li>
+
+		<li class="collapse__content">
+			<label class="collapse__header" flex="100" ng-class="{active : isActive_2 || data.hierarchies.length > 0 }">
+				<input type="checkbox" name="collapse" class="collapse__header__control" ng-model="isActive_2 "/>
+				<i class="fa" ng-class="{'fa-chevron-up' : isActive_2, 'fa-chevron-down' : !isActive_2}"></i>
+				<span class="collapse__header__title">Sub-Categories to Exclude</span>
+			</label>
+			<div class="collapse__item">
+				<h4 class="collapse__item__header">
+					Sub-Categories to Exclude
+				</h4>
+				<!-- Category view Codes Component -->
+				<category-view data="data.hierarchies" promoform="promoform"></category-view>
+			</div>
+		</li>
+
+	</ul>
+</div>

@@ -1,0 +1,20 @@
+<span class="tooltip"> 
+	<span class="tooltiphead">
+		<i class="tooltipicon fa fa-info-circle" aria-label="{{tooltiptitle}}" ng-click="showToolTip=!showToolTip"></i>
+	</span>
+
+
+    <span ng-show="showToolTip" class="tooltipbody">
+		<div class="tooltippoint">
+			&nbsp;
+		</div>
+		<div class="tooltipcontent">
+			<div class="tooltipmessage ax_default">
+				<ng-transclude></ng-transclude>
+			</div>
+			<div class="tooltipclose">
+				<i class="fa fa-close" aria-label="Close" ng-click="showToolTip=!showToolTip"></i>
+			</div>
+		</div>
+    </span>
+</span>

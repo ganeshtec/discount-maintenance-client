@@ -1,0 +1,7 @@
+inherit: manifest-base.yml
+applications:
+- name: promotionmaintenanceui
+  host: promotionmaintenanceui
+  instances: 2
+  env:
+    Node_env: 'PR'

@@ -1,0 +1,106 @@
+.md-text-field {
+    box-sizing: border-box;
+    position: relative;
+    margin: 35px 0;
+}
+
+.md-text-field-padding {
+    margin: 12px 0;
+    padding: 18px;
+}
+
+
+.md-text-field-border input[type=text]{
+    border:1px solid #DDDDDD !important;
+}
+.md-ext-field:first-of-type {
+    margin-top: 25px;
+}
+
+.md-text-field:last-of-type {
+    margin-bottom: 0;
+}
+
+.md-text-field input[type=text],
+.md-text-field input[type=password],
+.md-text-field input[type=tel],
+.md-text-field input[type=number],
+.md-text-field input[type=date] {
+    outline: none;
+    position: relative;
+    border: 1px solid #DDDDDD;
+    background-color: #FFFFFF;
+    border-radius: 2px;
+    padding: 10px;
+    font-size: 18px;
+    color: #222222;
+    /*min-width:320px;*/
+    min-width: 100%;
+    box-sizing: border-box;
+}
+
+.md-text-field input[type=text] + label,
+.md-text-field input[type=password] + label,
+.md-text-field input[type=tel] + label,
+.md-text-field input[type=number] + label,
+.md-text-field input[type=date] + label {
+    display: block;
+    position: absolute;
+    font-size: 16px;
+    color: #555555;
+    top: -25;
+}
+
+.md-text-field.missed input[type=text]:focus,
+.md-text-field input[type=text]:focus,
+.md-text-field input[type=password]:focus,
+.md-text-field input[type=tel]:focus,
+.md-text-field input[type=number]:focus,
+.md-text-field input[type=date]:focus {
+    border: 1px solid #00AF4D;
+    background-color: #FFFFFF;
+}
+
+.md-text-field input[type=text]:focus + label,
+.md-text-field.missed input[type=text]:focus + label,
+.md-text-field.missed input[type=password]:focus + label,
+.md-text-field input[type=tel]:focus + label,
+.md-text-field input[type=date]:focus + label {
+    color: #00AF4D;
+}
+
+.md-text-field.missed input[type=text],
+.md-text-field.missed input[type=password],
+.md-text-field.missed input[type=tel],
+.md-text-field.missed input[type=number],
+.md-text-field.missed input[type=date] {
+    border: 1px solid #ED1C24;
+    background-color: #FEF4F4;
+}
+
+.md-text-field.missed input[type=text] + label,
+.md-text-field.missed input[type=password] + label,
+.md-text-field.missed input[type=tel] + label,
+.md-text-field.missed input[type=data] + label {
+    color: #ED1C24;
+}
+
+.md-text-field input[type=text]:disabled,
+.md-text-field input[type=password]:disabled,
+.md-text-field input[type=tel]:disabled,
+.md-text-field input[type=number]:disabled,
+.md-text-field input[type=date]:disabled {
+    background-color: #F5F5F5;
+    color: #999999;
+    border: none;
+    cursor: not-allowed;
+}
+
+.md-text-field input[type=text]:disabled + label,
+.md-text-field input[type=password]:disabled,
+.md-text-field input[type=tel]:disabled + label,
+.md-text-field input[type=number]:disabled + label,
+.md-text-field input[type=date]:disabled + label {
+    color: #999999;
+    cursor: not-allowed;
+}

@@ -1,0 +1,77 @@
+.catalogResults md-checkbox.md-checked .md-icon {
+  background-color: green !important;
+  outline-color: green !important;
+}
+.catalogResultsParent tr td, .catalogResultsDetails tr td, .catalogResultsChild tr td {
+	padding: 0px;
+}
+
+.catalogResults tr tr:hover {
+    background-color: rgba(245, 245, 245, 1);
+}
+
+
+.catalogResultsDetails td {
+	margin-left: 50px;
+}   
+
+.catalogResultsChild td {
+	margin-left: 100px;
+}
+
+.catalogResultsCaret {
+	width: 20px;
+	padding: 0;	
+}
+
+.catalogResults .table, .catalogResults table, .catalogResults table tr, .catalogResults table tr td {
+	border: 0;	
+}
+
+
+.catalogResultsTitleSpan {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: normal;
+}
+
+
+ #browseCatalogHeader {
+     margin: auto;
+     width: 100%;
+     position: relative;
+ }
+ #browseCatalogHeaderTitle { 
+     width: 80%;
+     float: left;
+     height: 50px;
+ }
+ #browseCatalogHeaderTitle h1 { 
+     font-family: 'OpenSans-Light', 'Open Sans Light', 'Open Sans';
+     font-weight: 200;
+     font-style: normal;
+     font-size: 25px;
+ }
+ #browseCatalogHeaderClose {
+     position: absolute;
+     right: 20px;
+     height: 50px;
+     float: left;
+ }
+
+
+
+
+
+
+
+
+
+.category__table__row-nobottomborder {
+	background-color: rgba(245, 245, 245, 1);
+}
+
+.category__table__row-nobottomborder input {
+	width: 80%;
+	background-color: #fff !important;
+}

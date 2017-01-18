@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html ng-app="app">
+	<head>
+			<link rel="stylesheet" href="assets/css/vendor.css">
+			<link rel="stylesheet" href="assets/css/source.css">
+	</head>
+
+	<body ng-controller="MainCtrl">
+		<div class="app">
+			<header class="header header--bg" ng-include='"header.html"'></header>
+			<!-- ng-view -->
+			<div ng-view class="promo__container" fix-height></div>
+		</div>
+		<!-- Message Modal -->
+		<message-modal modal="messageModal"></message-modal>
+	</body>
+	<script src="assets/js/vendor.min.js"></script>
+	<script src="assets/js/source.min.js"></script>
+	<script src="assets/js/urls.js"></script>
+</html>

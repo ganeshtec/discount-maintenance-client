@@ -1,0 +1,15 @@
+<div class="MaskPanel ng-class:{'isClosed':!overlayConfig.isOpen}">
+	<div class="MaskPanel__Mask" ng-if="overlayConfig.isMaskable"></div>
+	<section class="Popup  wideView">
+		<header class="Popup__Header" flex="100">
+			<div ng-transclude="headerSlot"></div>
+		</header>
+		
+		<div ng-transclude="contentSlot" class="Popup_content"   > 
+		</div>
+		
+		<footer class="Popup__Footer" flex="100">	
+			<div ng-transclude="footerSlot"></div>
+		</footer>
+	</section>
+</div>

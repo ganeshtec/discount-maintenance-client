@@ -1,0 +1,10 @@
+// list mixin
+@mixin unstyled-list{
+  list-style-type: none;
+  margin:0;
+  padding:0;
+}
+
+@mixin inline-list{
+  float: left;
+}
