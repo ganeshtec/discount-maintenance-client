@@ -17,7 +17,7 @@ app.directive("merchHierarchyView",['merchHierarchyDataService','DataFactory','O
 				var getDepartementsPromise=merchHierarchyDataService.getAllDepartments();
 				getDepartementsPromise.then(
 						function(data){
-							scope.departmentListfromWebservice=data;
+							scope.departmentListfromWebservice=data.merchDepartments;
 							// START
 							var objearraySize=scope.departmentListfromWebservice.length;
 							scope.departmentDetails = [];
@@ -48,7 +48,7 @@ app.directive("merchHierarchyView",['merchHierarchyDataService','DataFactory','O
 					var getClassesPromise=merchHierarchyDataService.getAllClasses(scope.selectedDept.id);
 					getClassesPromise.then(
 							function(classdata) {
-								scope.classListfromWS = classdata;
+								scope.classListfromWS = classdata.merchClasses;
 								var classArraySize= scope.classListfromWS.length;
 								
 								for(var j=0;j<classArraySize;j++) {
@@ -78,7 +78,7 @@ app.directive("merchHierarchyView",['merchHierarchyDataService','DataFactory','O
 					var getSubClassesPromise=merchHierarchyDataService.getSubClasses(scope.selectedDept.id,scope.selectedClass.merchandiseClassNumber);
 					getSubClassesPromise.then(
 							function(subClassdata) {
-								scope.SubClassListfromWS = subClassdata;
+								scope.SubClassListfromWS = subClassdata.merchSubClasses;
 								var classArraySize= scope.SubClassListfromWS.length;
 								
 								for(var j=0;j<classArraySize;j++) {
