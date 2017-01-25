@@ -2,10 +2,10 @@
 	<tr class="category__table__row-nobottomborder">
 		<td colspan="4">
 			<div class="md-toolbar-search l">
-				<label for="MerchHierarchy"><h3>Store Location</h3></label>
+				<label for="StoreLocation"><h3>Store Location</h3></label>
 				<input class="table__search" placeholder="Search and Add Store Number" type="text" ng-model="itemSearch" ng-class="{'error': inValidStoreInfo}"
 					ng-change="clear()" allow-pattern="(\d|[a-z A-Z\(\?\-\_\.\'\,\%\$\!\@\)])" />
-				<a class="md-button secondary no-padding" href="" ng-click="!itemSearch || isDisabled || search(itemSearch)">
+				<a class="md-button secondary no-padding" href="" ng-click="search(itemSearch)">
 					Search
 				</a>
 				<ul>

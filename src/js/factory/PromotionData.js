@@ -38,7 +38,9 @@ app.factory('PromotionData', [function(){
 			"promoType": 0,
 			"purchaseConds": {
 				"isInclusionsOrExclusionsExist": false, // if has inclusion or exclusion set true
+				"channels": [87],
 				"qualUOM": 'Quantity',
+				//"qualUOM": null,
 				"locations": [],
 				"isTargetExist": false,
 				"sources": [

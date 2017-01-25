@@ -4,7 +4,7 @@
 			<div class="md-toolbar-search l">
 				<input class="table__search" placeholder="Search and Add Item OMS ID" type="text" ng-model="itemSearch" ng-class="{'error': inValidOmsInfo}"
 					ng-change="clear()" allow-pattern="(\d|[a-z A-Z\(\?\-\_\.\'\,\%\$\!\@\)])" />
-				<a class="md-button secondary no-padding" href="" ng-click="!itemSearch || isDisabled || search(itemSearch)">
+				<a class="md-button secondary no-padding" href="" ng-click="search(itemSearch)">
 					Search
 				</a>
 				<ul>
@@ -69,9 +69,9 @@
 	<tr class="category__table__row-nobottomborder">
 		<td colspan="4">
 			<div class="md-toolbar-search l">
-				<input class="table__search" placeholder="Search and Add Item Sku Number" type="text" ng-model="itemSkuSearch" ng-class="{'error': inValidOmsInfo}"
+				<input class="table__search" placeholder="Search and Add Item Sku Number" type="text" ng-model="itemSkuSearch" ng-class="{'error': inValidSkuInfo}"
 					ng-change="clear()" allow-pattern="(\d|[a-z A-Z\(\?\-\_\.\'\,\%\$\!\@\)])" />
-				<a class="md-button secondary no-padding" href="" ng-click="!itemSkuSearch || isDisabled || search(itemSkuSearch)">
+				<a class="md-button secondary no-padding" href="" ng-click="search(itemSkuSearch)">
 					Search 
 				</a>
 				<ul>
