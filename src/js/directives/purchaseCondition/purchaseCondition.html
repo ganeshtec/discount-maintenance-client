@@ -1,13 +1,15 @@
 
 <div ng-if="purchaseCondition.sources.length == 1">
-<div class="md-text-field" ng-init="qualuom = qualuom || 'Quantity'">
+<div class="md-text-field" ng-init="qualuom = data[0].qualUOM || 'Quantity'">
+
 	<label for="priority">Minimum purchase type</label>
 	<div class="md-radio">
-		<input type="radio" id="quantity" name="minpurchase" ng-model="qualuom" title="Quantity Purchase" value="Quantity" />
+		<input type="radio" id="quantity" name="minpurchase" ng-model="qualuom" title="Quantity Purchase" value="Quantity" ng-change="setQualUOM(qualuom)"/>
 		<label for="quantity"><span><span></span></span>Quantity purchase</label>
 	</div>
+		
 	<div class="md-radio">
-		<input type="radio" id="amount" name="minpurchase" ng-model="qualuom" title="Amount Spent" value="Amount" />
+		<input type="radio" id="amount" name="minpurchase" ng-model="qualuom" title="Amount Spent" value="Amount" ng-change="setQualUOM(qualuom)" />
 		<label for="amount"><span><span></span></span>Amount spent</label>
 	</div>
 </div>

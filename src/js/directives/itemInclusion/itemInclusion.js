@@ -21,11 +21,6 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory', 'skuTestRecor
 							$scope.isSkuSearch = false;
 						}
                     }
-
-
-
-
-
                 });
 
             },
@@ -41,42 +36,7 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory', 'skuTestRecor
 				scope.inValidOmsInfo = false;
 				scope.inValidSkuInfo = false;
 				scope.showInvalidError = false;
-				//scope.itemSkuSearch = '';
-				// var updatePartNumber = function(){
-				// 		var data = scope.data;
-				// 	if(!data.purchaseConds){
-				// 		data.purchaseConds ={};
-				// 	}
-				// 	if(!data.purchaseConds.sources){
-				// 		data.purchaseConds.sources =[]
-				// 	}
-				// 	if(data.purchaseConds.sources.length == 0){
-				// 		data.purchaseConds.sources.push({})
-				// 	}
-				// 	if(!data.purchaseConds.sources[0].inclusions){
-				// 		data.purchaseConds.sources[0].inclusions = {};
-				// 	}
-				// 	if(!data.purchaseConds.sources[0].inclusions.partnumbers){
-				// 		data.purchaseConds.sources[0].inclusions.partnumbers = [];
-				// 	}
-				// 	if(scope.validOmsInfo){
-				// 		for(var i=0;i<scope.validOmsInfo.length;i++){
-				// 			data.purchaseConds.sources[0].inclusions.partnumbers.push(scope.validOmsInfo[i].omsId)
-				// 		}
-				// 	}
-				// }
-
-
-
-				// function getData(){
-				// 	//Format omsId for request data
-				// 	omsData.omsIds = scope.data.reduce(function(data, item){
-				// 		return data.concat(item.inclusions.partnumbers);
-				// 	}, []);
-				// 	// Get Data
-				// 	getItemsByID(omsData)
-				// }
-
+			
 				function addItem(item) {
 
 					if (!scope.data) {
@@ -186,8 +146,6 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory', 'skuTestRecor
 					}
 				}
 
-
-
 				function getItemsByID(data, clicked) {
 
 					if (scope.isSkuSearch) {
@@ -289,28 +247,69 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory', 'skuTestRecor
 
 					console.log('removePromoCode: ', scope.data);
 				}
+				
+				function emptyCheck(data) {
+					if(!data || data==null || data=="") {
+						return true;
+					}
+				}
 
 				scope.search = function (data) {
+					console.log("Control inside search funtion");
+                    var result=emptyCheck(data);
+                    if(emptyCheck(data)) 
+                    {
+                        if(scope.isSkuSearch) 
+                        {
+                            scope.dataEmpty=true;
+                            console.log("____Data either Empty or NULL for SKU");
+                            DataFactory.messageModal.message = 'Please enter a valid SKU Number';
+                            DataFactory.messageModal.title = 'Warning';
+                            $('#messageModal').popup();
+                        }
+                        else
+                            {
+                            scope.dataEmpty=true;
+                            console.log("____Data either Empty or NULL for OMS");
+                            DataFactory.messageModal.message = 'Please enter Valid OMS Number';
+                            DataFactory.messageModal.title = 'Warning';
+                            $('#messageModal').popup();
+                            
+                            }
+                    }
+                    else
+                         if(scope.isSkuSearch)  
+                        {
+                            console.log("____Data Not EMPTY:: User Selected SKU Option");
+                            scope.dataEmpty=false;
+                            data = data.replace(/\s\s+/g, ' ').split(/[',',' ',', ']+/);
+                           // data = data.replace(/\s\s+/g, ' ').split(' ');
+                            validateItemData(data);
+                            skuData.skuIds = data;
+                        }
+                        else
+                            {
+                            console.log("____Data Not EMPTY:: User Selected OMS Option");
+                            scope.dataEmpty=false;
+                            data = data.replace(/\s\s+/g, ' ').split(/[',',' ',', ']+/);
+                            //data = data.replace(/\s\s+/g, ' ').split(' ');
+                            validateItemData(data);
+                            omsData.omsIds = data;
+                        
+                            }
+                
+                if (!scope.showInvalidError && !scope.dataEmpty ) {
+                    console.log("if loop for showIvalidError");
+                    if (scope.isSkuSearch) {
+                        console.log("I am going to call getItmeByID() inside that method getSkyIDs() will call "+skuData.skuIds);
+                        getItemsByID(skuData, true);
+                    } else {
+                        getItemsByID(omsData, true);
+                    }
 
-					data = data.replace(/\s\s+/g, ' ').split(' ');
 
-					validateItemData(data);
-
-					//check for sku related role and set in sku data array
-					if (scope.isSkuSearch) {
-						skuData.skuIds = data;
-					} else {
-						omsData.omsIds = data;
-					}
-					if (!scope.showInvalidError) {
-						if (scope.isSkuSearch) {
-							getItemsByID(skuData, true);
-						} else {
-							getItemsByID(omsData, true);
-						}
-
-
-					}
+                }
+					
 				}
 				scope.removeAll = function () {
 					if (scope.isSkuSearch) {

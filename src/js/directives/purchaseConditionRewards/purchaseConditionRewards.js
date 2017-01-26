@@ -72,10 +72,14 @@ app.directive('purchaseConditionRewards', [ 'SourceData',
                 }
                 
                 if (scope.data) {
-                    
+                	console.log("___Before Method exceution Condition Rewards data in ::"+JSON.stringify(scope.data));
 
-                    if (scope.data.purchaseConds.qualUOM == null && scope.data.reward.details && scope.data.reward.details.length > 0) {
+                   // if (scope.data.purchaseConds.qualUOM == null && scope.data.reward.details && scope.data.reward.details.length > 0) {
+                	 if (scope.data.reward.details && scope.data.reward.details.length > 0) {
+                    	
+                    	console.log("_______in PCR.js execution :: scope.data.reward.details[0].qualUOM ::"+scope.data.reward.details[0].qualUOM);
                         scope.data.purchaseConds.qualUOM = scope.data.reward.details[0].qualUOM;
+                        console.log("_______AFTER method exeution  Rewards  data in ::"+JSON.stringify(scope.data));
                     }
                 }
 
