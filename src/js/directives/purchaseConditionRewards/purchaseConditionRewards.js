@@ -1,6 +1,6 @@
 // Purpose is to build promotion code spec.
-app.directive('purchaseConditionRewards', [ 'SourceData',
-    function(SourceData) {
+app.directive('purchaseConditionRewards', [ 'SourceData','customerSegmentDataService','DataFactory',
+    function(SourceData,customerSegmentDataService,DataFactory) {
         return {
             restrict: 'E',
             templateUrl: 'purchaseConditionRewards.html',
@@ -12,6 +12,34 @@ app.directive('purchaseConditionRewards', [ 'SourceData',
             },
             
             link: function(scope, elem, attr) {
+            	
+            	// Customer Segment JS code
+            	console.log("Customer Segment");
+            	var getCusSegmentPromise=customerSegmentDataService.getAllSegments();
+				getCusSegmentPromise.then(
+						function(data){
+							scope.segmentListfromWebservice=data.merchDepartments;
+							// START
+							var objearraySize=scope.segmentListfromWebservice.length;
+							scope.segmentDetails = [];
+				        	console.log('----size of Segment array : '+objearraySize);
+				        	for (var i = 0; i < objearraySize; i++) { 
+				        		var segment = {};
+				        		
+				        			//department.id =  scope.departmentListfromWebservice[i].departmentNumber;
+				        			segment.name = scope.segmentListfromWebservice[i].departmentName;
+				        			scope.segmentDetails.push(segment);
+				        	}
+				        	
+							//END
+						},
+						function(error) {
+							//scope.merchDataLoading=false;
+							console.log("Segment Data not found from WS Call");
+						}
+				);
+				
+				// End of Customer Segment
 
                 scope.alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');
                 
@@ -82,6 +110,40 @@ app.directive('purchaseConditionRewards', [ 'SourceData',
                         console.log("_______AFTER method exeution  Rewards  data in ::"+JSON.stringify(scope.data));
                     }
                 }
+                
+              
+                
+                	
+                
+                 /*
+                	var getPromotionPromise = promotionDataService.getPromotionSubTypes();
+                    getPromotionPromise.then(
+                        function(data) {
+                            DataFactory.promotionSubTypes = data.promotionSubTypes;
+                            scope.promotionSubTypes =  DataFactory.promotionSubTypes;
+                        },
+                        function(error) {
+                            DataFactory.messageModal.message = error;
+                            DataFactory.messageModal.title = 'Error';
+                            $('#messageModal').popup();
+
+                        });
+                }*/
+                	
+              //  scope.promotionSubTypes = (DataFactory.promotionSubTypes) ? DataFactory.promotionSubTypes : getCustomerSegment();
+             /*   
+                function setCustomerSeg(){
+                    if(scope.promotionSubTypes && scope.data  && scope.data.promoSubTypeCd){
+                        $.each(scope.promotionSubTypes, function(i) {
+                            if (scope.promotionSubTypes[i].promoSubTypeCd == scope.data.promoSubTypeCd) {
+                                scope.promoSubTypeObject = scope.promotionSubTypes[i];
+                            }
+                        });
+                    }
+                }*/
+                	
+                
+                
 
             }
         }
