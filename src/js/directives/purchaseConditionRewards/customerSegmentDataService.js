@@ -12,8 +12,7 @@ app.service('customerSegmentDataService', ['$http', '$q', 'dataService', 'DataFa
 		console.log('getAll Customer Segments DataService');
 		var config= {
 				method: 'GET',
-				url: '/merchHierarchy/departments',
-				//url: 'http://discount-segmentation-api.apps-np.homedepot.com/segmentation',
+				url: '/customersegment/segments',
 		},
 		result=$q.defer();
 		

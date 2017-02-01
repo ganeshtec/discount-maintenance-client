@@ -51,7 +51,7 @@
 <div class="md-select md-select-space">
 <label for="promocustomersegment"><h3>Customer Segment</h3></label>
 
-<select name="promotype" ng-options=" dept as dept.name for dept in segmentDetails track by dept.id" ng-model="promoCustomerSegment" ng-change="" ng-required=" preview">
+<select name="promotype" ng-options=" segment as segment.name for segment in segmentDetails track by segment.id" ng-model="promoCustomerSegment" ng-change="" ng-required=" preview">
 					<option value="">
 						-- Select a Customer Segment --
 					</option>
