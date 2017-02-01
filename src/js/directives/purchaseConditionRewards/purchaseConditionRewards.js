@@ -12,22 +12,19 @@ app.directive('purchaseConditionRewards', [ 'SourceData','customerSegmentDataSer
             },
             
             link: function(scope, elem, attr) {
-            	
             	// Customer Segment JS code
             	console.log("Customer Segment");
             	var getCusSegmentPromise=customerSegmentDataService.getAllSegments();
 				getCusSegmentPromise.then(
 						function(data){
-							scope.segmentListfromWebservice=data.merchDepartments;
+							scope.segmentListfromWebservice=data.segments;
 							// START
 							var objearraySize=scope.segmentListfromWebservice.length;
 							scope.segmentDetails = [];
-				        	console.log('----size of Segment array : '+objearraySize);
 				        	for (var i = 0; i < objearraySize; i++) { 
 				        		var segment = {};
-				        		
-				        			//department.id =  scope.departmentListfromWebservice[i].departmentNumber;
-				        			segment.name = scope.segmentListfromWebservice[i].departmentName;
+				        			segment.name = scope.segmentListfromWebservice[i].name;
+				        			segment.id = scope.segmentListfromWebservice[i].id;
 				        			scope.segmentDetails.push(segment);
 				        	}
 				        	
@@ -75,9 +72,6 @@ app.directive('purchaseConditionRewards', [ 'SourceData','customerSegmentDataSer
                     }
                    
                 }
-               
-
-               
                 
                 scope.initializePurchaseOption = function(index,item,data){                	
                      
@@ -114,11 +108,8 @@ app.directive('purchaseConditionRewards', [ 'SourceData','customerSegmentDataSer
                 }
                 
                 if (scope.data) {
-                	console.log("___Before Method exceution Condition Rewards data in ::"+JSON.stringify(scope.data));
-
-                   // if (scope.data.purchaseConds.qualUOM == null && scope.data.reward.details && scope.data.reward.details.length > 0) {
+                	console.log("_______Before Method exceution Condition Rewards data in ::"+JSON.stringify(scope.data));
                 	 if (scope.data.reward.details && scope.data.reward.details.length > 0) {
-                    	
                     	console.log("_______in PCR.js execution :: scope.data.reward.details[0].qualUOM ::"+scope.data.reward.details[0].qualUOM);
                         scope.data.purchaseConds.qualUOM = scope.data.reward.details[0].qualUOM;
                         console.log("_______AFTER method exeution  Rewards  data in ::"+JSON.stringify(scope.data));
