@@ -39,6 +39,20 @@ app.directive('purchaseConditionRewards', [ 'SourceData','customerSegmentDataSer
 						}
 				);
 				
+                scope.locationChange = function(){
+                    if(scope.data.custSegment) {
+                        console.log(scope.data.custSegment);
+                    } else {
+                        console.log("no customer segment selected")
+                    }
+                }
+
+                scope.$watch('data.custSegment',function (){
+                    if(scope.data.custSegment){
+                    return scope.data.custSegment;
+                    }
+
+                });
 				// End of Customer Segment
 
                 scope.alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');
