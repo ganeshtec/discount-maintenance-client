@@ -1,3 +1,15 @@
+<div class="md-select md-select-space">
+<label for="promocustomersegment"><h3>Customer Segment</h3></label>
+
+<select name="promotype" ng-options="dept as dept.name for dept in segmentDetails track by dept.name" ng-model="data.custSegment" ng-change="locationChange()" ng-required=" preview">
+					<option value="">
+						-- Select a Customer Segment --
+					</option>
+</select>
+
+</div>
+
+
 <div ng-if="data.promoCdRqrd != false  && data.promoSubTypeCd != 'MultipleItemsPercentDiscount' && data.promoSubTypeCd != 'MultipleItemsValueDiscount'">
     <div class="md-text-field">
         <label for="name">Site wide promotion </label>
@@ -48,16 +60,7 @@
     </div>
 
 </div>
-<div class="md-select md-select-space">
-<label for="promocustomersegment"><h3>Customer Segment</h3></label>
 
-<select name="promotype" ng-options="dept as dept.name for dept in segmentDetails track by dept.name" ng-model="data.custSegment" ng-change="locationChange()" ng-required=" preview">
-					<option value="">
-						-- Select a Customer Segment --
-					</option>
-</select>
-
-</div>
 <!--<div ng-if="data.purchaseConds.sources.length > 1">
     <div class="md-text-field" ng-if="data.promoSubTypeCd=='MultipleItemsPercentDiscount'">
       <label for="percentoff">Percentage discount off each combination</label>
