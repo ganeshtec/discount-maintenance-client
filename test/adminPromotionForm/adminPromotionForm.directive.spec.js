@@ -41,7 +41,7 @@ describe('Unit testing adminPromotionForm.directive.spec.js', function() {
     $scope.index="0";
     $scope.data={};
     $scope.data.length=10;
-    console.log($scope);
+//    console.log($scope);
 
     var element = $compile("<admin-promotion-form data='data' index='index'></admin-promotion-form>")($scope);
     $rootScope.$digest();
@@ -55,11 +55,11 @@ describe('Unit testing adminPromotionForm.directive.spec.js', function() {
 	$scope.data= [];
 	$scope.promoform= [];
     var element = $compile("<admin-promotion-form data='data' promoform='promoform'></admin-promotion-form>")($scope);
-    console.log(element); 
+//    console.log(element); 
     $scope.$digest();
     var isolateScope = element.isolateScope();
     //console.log('_______element Value_IN_PurchaseCondition.directive.spec: ', element);
-    console.log(isolateScope);
+//    console.log(isolateScope);
     //spyOn(isolateScope, "getSelectedSubTypes");
     
     expect(element.html()).toContain("getSelectedSubTypes()");

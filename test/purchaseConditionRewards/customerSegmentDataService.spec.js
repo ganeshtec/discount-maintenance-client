@@ -2,7 +2,7 @@ describe('checking Customer Segment Data Service for 200 response code', functio
 	
 	var 
     $rootScope,
-    $scope,t 
+    $scope, 
     location,
     $httpBackend;
 	
