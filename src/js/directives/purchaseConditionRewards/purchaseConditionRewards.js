@@ -35,7 +35,7 @@ app.directive('purchaseConditionRewards', [ 'SourceData','customerSegmentDataSer
 						}
 				);
 
-                 scope.locationChange = function(){
+                 scope.onSegmentSelection = function(){
 
                       if(scope.data.custSegment){
                           scope.data.purchaseConds.customerSegmentId=scope.data.custSegment.id;

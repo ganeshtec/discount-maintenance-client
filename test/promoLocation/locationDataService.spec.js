@@ -1,4 +1,4 @@
-describe('checking location data service for 200 response code', function(){
+describe('____checking location data service for 200 response code', function(){
 	
 	var 
     $rootScope,
