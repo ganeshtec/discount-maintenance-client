@@ -30,14 +30,14 @@ describe('Unit testing adminPromotionForm.directive.spec.js', function() {
   it('Check validations for save as draft', function() {
     // Compile a piece of HTML containing the directive
 	$scope.data= new promoData();
-  console.log($scope.data);
+//  console.log($scope.data);
   $scope.holder = {};
  	//$scope.promoform= [];
   var element = $compile("<admin-promotion-form data='data' form-holder='holder'></admin-promotion-form>")($scope);
   $scope.$digest();
 	$isolatedScope = element.isolateScope();
    console.log('errors'); 
-   console.log($scope.holder.form.name.$valid);
+//   console.log($scope.holder.form.name.$valid);
    expect($scope.holder.form.$valid).toBe(true);
     var error = $scope.holder.form.$error;
     angular.forEach(error.required, function(field){
@@ -46,7 +46,7 @@ describe('Unit testing adminPromotionForm.directive.spec.js', function() {
            console.log(fieldName);
         }
     });
-    console.log('pattern');
+//    console.log('pattern');
        angular.forEach(error.pattern, function(field){
         if(field.$invalid){
             var fieldName = field.$name;
@@ -65,12 +65,12 @@ describe('Unit testing adminPromotionForm.directive.spec.js', function() {
   var element = $compile("<admin-promotion-form data='data' preview='true' form-holder='holder'></admin-promotion-form>")($scope);
   $scope.$digest();
   $isolatedScope = element.isolateScope();
-   console.log($scope.holder.form)
-   console.log($scope);
-   console.log('errors'); 
-   console.log($scope.holder.form.$valid)
-   console.log($scope.holder.form.name.$valid);
-   console.log($scope.holder.form.priority.$valid);
+//   console.log($scope.holder.form)
+//   console.log($scope);
+//   console.log('errors'); 
+//   console.log($scope.holder.form.$valid)
+//   console.log($scope.holder.form.name.$valid);
+//   console.log($scope.holder.form.priority.$valid);
      var error = $scope.holder.form.$error;
        angular.forEach(error.required, function(field){
         if(field.$invalid){

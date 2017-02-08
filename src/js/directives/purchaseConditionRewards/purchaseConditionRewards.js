@@ -13,7 +13,6 @@ app.directive('purchaseConditionRewards', [ 'SourceData','customerSegmentDataSer
             
             link: function(scope, elem, attr) {
             	// Customer Segment JS code
-            	console.log("Customer Segment");
             	var getCusSegmentPromise=customerSegmentDataService.getAllSegments();
 				getCusSegmentPromise.then(
 						function(data){
@@ -35,7 +34,13 @@ app.directive('purchaseConditionRewards', [ 'SourceData','customerSegmentDataSer
 							console.log("Segment Data not found from WS Call");
 						}
 				);
-				
+
+                 scope.onSegmentSelection = function(){
+
+                      if(scope.data.custSegment){
+                          scope.data.purchaseConds.customerSegmentId=scope.data.custSegment.id;
+                      }
+                 };  
 				// End of Customer Segment
 
                 scope.alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');

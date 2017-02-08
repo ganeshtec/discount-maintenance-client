@@ -282,7 +282,7 @@ app.service('utilService', ['$filter', function($filter){
     } 
 
     publicApi.requiredFieldsMissing = function(promotion){
-        return checkEmpty(promotion.name) || checkEmpty(promotion.startDt)|| checkEmpty(promotion.endDt)||  checkEmpty(promotion.promoSubTypeCd)
+        return checkEmpty(promotion.name) || checkEmpty(promotion.startDt)|| checkEmpty(promotion.endDt)||  checkEmpty(promotion.promoSubTypeCd) || promotion.purchaseConds.locations.length == 0; 
     }
     publicApi.invalidSysGenCode = function(promotion){
         if(promotion && promotion.promoCdSpec && promotion.promoCdSpec.systemGen){
