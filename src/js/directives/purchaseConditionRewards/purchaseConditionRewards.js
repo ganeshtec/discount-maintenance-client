@@ -10,8 +10,9 @@ app.directive('purchaseConditionRewards', [ 'SourceData','customerSegmentDataSer
                 preview: '=',
                 isDisabled: '='
             },
-            
+
             link: function(scope, elem, attr) {
+              
             	// Customer Segment JS code
             	var getCusSegmentPromise=customerSegmentDataService.getAllSegments();
 				getCusSegmentPromise.then(
@@ -20,13 +21,13 @@ app.directive('purchaseConditionRewards', [ 'SourceData','customerSegmentDataSer
 							// START
 							var objearraySize=scope.segmentListfromWebservice.length;
 							scope.segmentDetails = [];
-				        	for (var i = 0; i < objearraySize; i++) { 
+				        	for (var i = 0; i < objearraySize; i++) {
 				        		var segment = {};
 				        			segment.name = scope.segmentListfromWebservice[i].name;
 				        			segment.id = scope.segmentListfromWebservice[i].id;
 				        			scope.segmentDetails.push(segment);
 				        	}
-				        	
+
 							//END
 						},
 						function(error) {
@@ -40,64 +41,64 @@ app.directive('purchaseConditionRewards', [ 'SourceData','customerSegmentDataSer
                       if(scope.data.custSegment){
                           scope.data.purchaseConds.customerSegmentId=scope.data.custSegment.id;
                       }
-                 };  
+                 };
 				// End of Customer Segment
 
                 scope.alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');
-                
+
                 if (scope.data && scope.data.purchaseConds && scope.data.purchaseConds.sources && scope.data.purchaseConds.sources.length === 0) {
-                    
+
                     if(scope.data.promoSubTypeCd === 'MultipleItemsPercentDiscount' || scope.data.promoSubTypeCd === 'MultipleItemsValueDiscount') {
                          scope.data.purchaseConds.sources.push(new SourceData());
                         scope.data.purchaseConds.sources.push(new SourceData());
                     } else{
                         scope.data.purchaseConds.sources.push(new SourceData());
                     }
-                   
+
                 }
-                
+
                 if (scope.data && scope.data.purchaseConds && scope.data.purchaseConds.sources && scope.data.purchaseConds.sources.length === 1) {
                     if(scope.data.promoSubTypeCd === 'MultipleItemsPercentDiscount' || scope.data.promoSubTypeCd === 'MultipleItemsValueDiscount') {
                          scope.data.purchaseConds.sources.push(new SourceData());
-                        
+
                     }
-                   
+
                 }
-                
-                scope.initializePurchaseOption = function(index,item,data){                	
-                     
+
+                scope.initializePurchaseOption = function(index,item,data){
+
                     if(data.purchaseConds.sources[index].purchaseoption == 'category'){
-                         
+
                     	data.purchaseConds.sources[index].purchaseoption =  'category'
                     }
                     else if(data.purchaseConds.sources[index].purchaseoption == 'itemoms'){
 
-                          
+
                     	data.purchaseConds.sources[index].purchaseoption = 'itemoms'
                     }
                      else if(item.inclusions.partnumbers != null && item.inclusions.partnumbers.length > 0){
-                          
+
                            if(item.inclusions.itemtype == 'OMS') {
                                data.purchaseConds.sources[index].purchaseoption = 'itemoms'
                            } else  if(item.inclusions.itemtype == 'SKU') {
                                data.purchaseConds.sources[index].purchaseoption = 'itemsku'
                            } else{
-                                
+
                     	        data.purchaseConds.sources[index].purchaseoption =  'category'
-                            }   
-                    	
+                            }
+
                      }
                     else if(item.inclusions.hierarchies != null && item.inclusions.hierarchies.length > 0){
-                          
+
                     	data.purchaseConds.sources[index].purchaseoption = 'category'
-                    } 
+                    }
                     else{
-                         
+
                     	data.purchaseConds.sources[index].purchaseoption =  'category'
-                    }                   
+                    }
 
                 }
-                
+
                 if (scope.data) {
                 	console.log("_______Before Method exceution Condition Rewards data in ::"+JSON.stringify(scope.data));
                 	 if (scope.data.reward.details && scope.data.reward.details.length > 0) {
@@ -106,11 +107,11 @@ app.directive('purchaseConditionRewards', [ 'SourceData','customerSegmentDataSer
                         console.log("_______AFTER method exeution  Rewards  data in ::"+JSON.stringify(scope.data));
                     }
                 }
-                
-              
-                
-                	
-                
+
+
+
+
+
                  /*
                 	var getPromotionPromise = promotionDataService.getPromotionSubTypes();
                     getPromotionPromise.then(
@@ -125,9 +126,9 @@ app.directive('purchaseConditionRewards', [ 'SourceData','customerSegmentDataSer
 
                         });
                 }*/
-                	
+
               //  scope.promotionSubTypes = (DataFactory.promotionSubTypes) ? DataFactory.promotionSubTypes : getCustomerSegment();
-             /*   
+             /*
                 function setCustomerSeg(){
                     if(scope.promotionSubTypes && scope.data  && scope.data.promoSubTypeCd){
                         $.each(scope.promotionSubTypes, function(i) {
@@ -137,11 +138,10 @@ app.directive('purchaseConditionRewards', [ 'SourceData','customerSegmentDataSer
                         });
                     }
                 }*/
-                	
-                
-                
+
+
+
 
             }
         }
     }]);
-

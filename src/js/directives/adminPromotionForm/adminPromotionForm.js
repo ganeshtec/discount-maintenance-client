@@ -27,12 +27,11 @@ app.directive('adminPromotionForm', ['promotionSubTypes','promotionDataService',
 
                         });
                 }
-
                 scope.formHolder.form = scope.promoForm;
                 // scope.promotionSubTypes = new promotionSubTypes();
                 scope.promotionSubTypes = (DataFactory.promotionSubTypes) ? DataFactory.promotionSubTypes : getPomoSubTypes();
-                
-                
+
+
 
                 function setPromotionSubType(){
                     if(scope.promotionSubTypes && scope.data  && scope.data.promoSubTypeCd){
@@ -85,7 +84,7 @@ app.directive('adminPromotionForm', ['promotionSubTypes','promotionDataService',
                     }else{
                     	scope.data.purchaseConds.sources.splice(1, 1);
                     }
-					
+
                     if (scope.data.promoSubTypeCd.indexOf('Percent') != -1) {
                         scope.data.reward.type = 'PERCNTOFF';
                     } else {
