@@ -1,0 +1,12 @@
+---
+applications:
+  -
+    buildpack: "https://github.com/cloudfoundry/nodejs-buildpack"
+    command: "npm start"
+    disk_quota: 1G
+    host: promotionsadmin-ext-ad
+    instances: 1
+    memory: 256m
+    name: PromotionsMaintenanceExtUI
+    path: .
+    random-route: false
