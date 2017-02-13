@@ -1,7 +1,7 @@
-inherit:�manifest-base.yml
+inherit: manifest-base.yml
 applications:
-- name: promotionmaintenanceuisku
-  host: promotionmaintenanceuisku-ad
+- name: PromotionsMaintenanceExtUI
+  host: promotionsadmin-ext-ad
   instances: 1
   env:
     Node_env: 'AD'

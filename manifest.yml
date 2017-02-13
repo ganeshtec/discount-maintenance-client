@@ -1,11 +1,11 @@
 ---
 applications:
-- name: PromotionsMaintenanceSKUUI
+- name: PromotionsMaintenanceExtUI
   memory: 256m
   path: .
   buildpack: https://github.com/cloudfoundry/nodejs-buildpack
-  host: promotionsadminsku
+  host: promotionsadmin-ext-ad
   command: npm start
-  instances: 2
+  instances: 1
   disk_quota: 256m
   random-route: false
