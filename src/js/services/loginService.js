@@ -53,7 +53,7 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
                         status = "";
                         //deferred.resolve({ message: 'Success' });
                         redirectPage();
-                        //publicApi.authorizeUser(username,'login');
+                        publicApi.authorizeUser(username,'login');
                     }
 
 

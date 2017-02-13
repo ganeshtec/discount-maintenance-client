@@ -14,16 +14,21 @@
     "e2e": "protractor protractor.conf.js"
   },
   "dependencies": {
+    
+  },
+  "author": "Darryl Crockett",
+  "license": "MIT",
+  "devDependencies": {
     "angular": "1.5.5",
     "angular-animate": "1.5.0",
-    "angular-aria": "1.5.0",
+    "angular-aria": "1.5.0",    
     "angular-material": "1.0.5",
-    "angular-mocks": "1.5.5",
-    "angular-route": "1.5.5",
+    "angular-mocks": "^1.5.5",
+    "angular-route": "^1.5.5",
     "angular-cookies": "1.5.0",
     "browser-sync": "2.12.10",
     "del": "2.2.0",
-    "font-awesome": "4.6.3",
+    "font-awesome": "4.6.3",    
     "hapi": "13.5.0",
     "inert": "^3.2.0",
     "grunt": "^0.4.5",
@@ -58,11 +63,7 @@
     "karma-spec-reporter": "0.0.20",
     "lite-server": "2.2.0",
     "protractor": "3.1.1",
-    "karma-ng-html2js-preprocessor": "^1.0.0"
-  },
-  "author": "Darryl Crockett",
-  "license": "MIT",
-  "devDependencies": {
+   "karma-ng-html2js-preprocessor": "^1.0.0"
   },
   "engines": {
     "node": "^4.3.2",
