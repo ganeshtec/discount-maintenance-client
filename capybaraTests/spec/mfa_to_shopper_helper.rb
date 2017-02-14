@@ -41,12 +41,6 @@ def tomorrow
   future_date(1)
 end
 
-def wait_until_promo_submitted
-  wait_until { !page.find(modal_wrapper_id).visible? }
-rescue Capybara::TimeoutError
-  flunk 'Promo still transmitting after default wait time'
-end
-
 def sign_in
   visit "#{PROMO_UI_HOST}"
   if page.has_content? 'Please provide a valid user name and password.'
