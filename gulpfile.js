@@ -162,9 +162,13 @@ gulp.task('browser-sync', function () {
 gulp.task('test', ['srcbuild'], function(done) {
 	karma.start({
 		configFile: __dirname + '/karma.conf.js',
-		singleRun: false
+		singleRun: true,
 	}, function (code) {
-		console.log("DONE:" + code);
+		if (code === 1) {
+            done('karma: tests failed with code ' + code);
+        } else {
+            done();
+        }
 	});
 });
 
