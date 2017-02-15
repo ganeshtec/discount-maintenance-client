@@ -13,7 +13,7 @@ app.directive('purchaseConditionRewards', [ 'SourceData','customerSegmentDataSer
             
             link: function(scope, elem, attr) {
             	// Customer Segment JS code
-            	/*var getCusSegmentPromise=customerSegmentDataService.getAllSegments();
+            	var getCusSegmentPromise=customerSegmentDataService.getAllSegments();
 				getCusSegmentPromise.then(
 						function(data){
 							scope.segmentListfromWebservice=data.segments;
@@ -33,15 +33,15 @@ app.directive('purchaseConditionRewards', [ 'SourceData','customerSegmentDataSer
 							//scope.merchDataLoading=false;
 							console.log("Segment Data not found from WS Call");
 						}
-				);*/
+				);
 
-                 /*scope.onSegmentSelection = function(){
+                 scope.onSegmentSelection = function(){
 
                       if(scope.data.custSegment){
                           scope.data.purchaseConds.customerSegmentId=scope.data.custSegment.id;
                       }
                  };  
-*/				// End of Customer Segment
+				// End of Customer Segment
 
                 scope.alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');
                 
