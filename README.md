@@ -5,6 +5,9 @@ This repo contains the code for the modified Aurora Promotions UI to serve Store
 All new features added to this repo must be covered by both unit tests (following TDD) and also feature tests. These feature tests are located in the capybaraTests folder of this repo.
 ##### Running Feature Tests
   ```
-  ./capybaraTests bundle install
-  ./capybaraTests/bin/run_test.sh
+  cd capybaraTests
+  bundle install
+  ./bin/run_test.sh
+  
+  *** tests must be run from within capybaraTests folder ***
   ```
