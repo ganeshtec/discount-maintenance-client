@@ -1,10 +1,7 @@
 ---
   memory: 256m
   path: .
-  buildpack: https://github.com/cloudfoundry/nodejs-buildpack
-  command: node index.js
+  command: npm start
   instances: 1
-  disk_quota: 256m
+  disk_quota: 1G
   random-route: false
-  command: node index.js
- 

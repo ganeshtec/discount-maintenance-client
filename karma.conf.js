@@ -2,7 +2,7 @@ module.exports = function(config) {
 	config.set({
 		// base path that will be used to resolve all patterns (eg. files, exclude)
 		basePath: '',
-		
+
 		frameworks: ['jasmine'],
 		files: [
 			'node_modules/jquery/dist/jquery.min.js',
@@ -17,14 +17,14 @@ module.exports = function(config) {
 			'src/js/modules/**/*.js',
 			'src/js/services/*.js',
 			'src/js/factory/*.js',
-			'src/js/data/*.js', 
+			'src/js/data/*.js',
 			'src/js/defaults/*.js',
 			'src/js/components/**/*.html',
 			'src/js/components/**/*.js',
 			'src/js/directives/**/*.html',
 			'src/js/directives/**/*.js',
 			'node_modules/angular-mocks/angular-mocks.js',
-			'test/**/*.js'		
+			'test/**/*.js'
 		],
 
 
@@ -39,7 +39,7 @@ module.exports = function(config) {
 			"src/js/components/**/*.html": ["ng-html2js"]
 		},
 
-		ngHtml2JsPreprocessor: { 
+		ngHtml2JsPreprocessor: {
   			moduleName: 'app' ,
   			 cacheIdFromPath: function(filepath) {
   			 	var comps = filepath.split('/');
@@ -75,12 +75,12 @@ module.exports = function(config) {
 
 		// start these browsers
 		// available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-		browsers: ['Chrome'],
+		browsers: ['PhantomJS'],
 
 
 		// Continuous Integration mode
 		// if true, Karma captures browsers, runs the tests and exits
-		singleRun: false,
+		singleRun: true,
 
 		// Concurrency level
 		// how many browser should be started simultaneous
