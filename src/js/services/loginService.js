@@ -47,7 +47,7 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
                         $location.path("login");
 
                     } else {
-
+                    	console.log("___Control inside else loop____");		
                         $cookies.put('THDSSO', THDSSO, { 'domain': '.homedepot.com' });
                         $cookies.put('userName', username, { 'domain': '.homedepot.com' });
                         status = "";
@@ -55,7 +55,6 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
                         redirectPage();
                         publicApi.authorizeUser(username,'login');
                     }
-
 
                 }
                 return status;
@@ -78,10 +77,7 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
                 $location.path("promotion-dashboard");
             }
 
-
-
         }
-
 
         // Method to deactivate all sections, expected to have property .isActive
         publicApi.sessionValidate = function(ssoCookie,sourcepage) {
@@ -125,7 +121,6 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
                          
                     }
 
-
                 }
             }
 
@@ -145,8 +140,6 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
                 $location.path("login");
             }
 
-
-
         }
 
 
@@ -155,21 +148,6 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
             
 
             var deferred = $q.defer();
-            // $http({
-            //     method: 'XMLP',
-            //     url: urls.authorizeUrl + username,
-            //     //datatype : 'JSONP XML',
-            //     cache: false,
-            //     // headers: {
-
-            //     //     'Access-Control-Allow-Origin': '*',
-            //     //     'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
-            //     //     'Access-Control-Allow-Headers': 'X-Requested-With'
-            //     // }
-
-
-            // }).then(httpSuccess, httpError);
-            
              $http({
                 method: 'GET',
                 url:  urls.authorizeUrl + username,
@@ -200,22 +178,7 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
                         
                          
                     }
-                    
-                    
-                    
-                    
-                    // var data = response.data;
-                    // var xmlDoc = parseXml(data);
-                    // if (validateXml(xmlDoc)) {
-                       
-                    //     status = "";
-                    //     $location.path("promotion-dashboard");
-                    // } else {
-                       
-                    //     redirectPage();
-                    // }
-
-
+                 
                 }
             }
 
@@ -282,31 +245,7 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
                     }
                 }
                 return false;
-                
-                
-                // var permissionobj = xmlDoc.getElementsByTagName("description");
-                // for (var i = 0; i < permissionobj.length; i++) {
-                //     var childPermission = xmlDoc.getElementsByTagName("description")[i].childNodes[0].nodeValue;
-                //      var childId = xmlDoc.getElementsByTagName("id")[i].childNodes[0].nodeValue;
-                    
-                //     if (childPermission == 'SKU: Price and Cost Management' || childPermission == 'SKU: PriceCost-Stock Sku Perm Retl Admin'
-                //         || childPermission == 'SKU: PriceCost-Approve Stock Sku Perm Retl' || childPermission == 'SKU: PriceCost-Stock Sku Perm Retl Rqst'
-
-                //     ) {
-                //         return true;
-                //     }
-                //     if (childPermission == 'Price & Cost Management') {
-                //         var permissionVal = xmlDoc.getElementsByTagName("description")[i].nextSibling.nextSibling.childNodes[0].nextSibling.childNodes[0];
-                //         if (permissionVal == '"19"' || permissionVal == '"20"' || permissionVal == '"21"' || permissionVal == '"22"' || permissionVal == '"23"'
-                //             || permissionVal == '"26"' || permissionVal == '"27"' || permissionVal == '"28"') {
-                //             return true;
-                //         }
-
-
-                //     }
-                // }
-                
-
+             
             }
 
 
