@@ -12,7 +12,10 @@ app.directive('purchaseConditionRewards', [ 'SourceData','customerSegmentDataSer
             },
             
             link: function(scope, elem, attr) {
-            	// Customer Segment JS code
+            	
+
+            	
+                     	// Customer Segment JS code
             	var getCusSegmentPromise=customerSegmentDataService.getAllSegments();
 				getCusSegmentPromise.then(
 						function(data){
@@ -24,23 +27,37 @@ app.directive('purchaseConditionRewards', [ 'SourceData','customerSegmentDataSer
 				        		var segment = {};
 				        			segment.name = scope.segmentListfromWebservice[i].name;
 				        			segment.id = scope.segmentListfromWebservice[i].id;
+				        			
+				        	// If condition for Edit Customer Segment		
+				        			
+				        			if(scope.data.purchaseConds.customerSegmentId) {
+				        				if(scope.data.purchaseConds.customerSegmentId==scope.segmentListfromWebservice[i].id){
+				        					scope.data.custSegment=segment;
+				        				}
+				        			}
+				        			//segment.id = scope.segmentListfromWebservice[i].id;
 				        			scope.segmentDetails.push(segment);
 				        	}
 				        	
 							//END
 						},
 						function(error) {
-							//scope.merchDataLoading=false;
+							
 							console.log("Segment Data not found from WS Call");
 						}
 				);
 
                  scope.onSegmentSelection = function(){
-
+                	 console.log("Segment Value on Change: "+ scope.data.custSegment.id);
                       if(scope.data.custSegment){
-                          scope.data.purchaseConds.customerSegmentId=scope.data.custSegment.id;
+                    	  scope.data.purchaseConds.customerSegmentId=scope.data.custSegment.id;
                       }
+                      
                  };  
+                 
+               
+                 
+                 
 				// End of Customer Segment
 
                 scope.alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');
