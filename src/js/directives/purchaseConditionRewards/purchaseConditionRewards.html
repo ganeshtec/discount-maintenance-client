@@ -1,11 +1,17 @@
  <div class="md-select md-select-space">
 <label for="promocustomersegment"><h3>Customer Segment</h3></label>
 
-<select name="promotype" ng-options="segment as segment.name for segment in segmentDetails track by segment.name" ng-model="data.custSegment" ng-change="onSegmentSelection()" ng-required=" preview">
+<!-- <select name="segment" ng-options="segment as segment.name for segment in segmentDetails track by segment.name" ng-model="data.custSegment" ng-change="onSegmentSelection()" ng-required=" preview">
 					<option value="">
 						-- Select a Customer Segment --
 					</option>
-</select>
+</select>  -->
+
+<select name="segment" ng-options="segment as segment.name for segment in segmentDetails track by segment.name" ng-model="data.custSegment" ng-change="onSegmentSelection()" >
+					<option value="">
+						-- Select a Customer Segment --
+					</option>
+</select> 
 
 </div> 
 
@@ -28,20 +34,20 @@
     <div class="md-text-field">
         <h3>Inclusion</h3>
         <label ng-show="data.purchaseConds.sources.length > 1">Definition for "{{alphabet[$index]}}" *</label>
-        <div class="md-radio">
-            <input type="radio" id="itemsoms_{{$index}}" name="purchaseoption_{{$index}}" ng-model="data.purchaseConds.sources[$index].purchaseoption" title="Items/OMS ID's" value="itemoms"/>
+        <div class="">
+            <input type="radio" id="itemsoms_{{$index}}" name="purchaseoption1" ng-model="data.purchaseConds.sources[$index].purchaseoption" title="Items/OMS ID's" value="itemoms"/>
             <label for="itemsoms"><span><span></span></span>Items/OMS ID's</label>
         </div>
-         <div class="md-radio">
-            <input type="radio" id="itemssku_{{$index}}" name="purchaseoption_{{$index}}" ng-model="data.purchaseConds.sources[$index].purchaseoption" title="Items/SKU" value="itemsku"/>
+        <div class="">
+            <input  type="radio" id="itemssku_{{$index}}" name="purchaseoption2" ng-model="data.purchaseConds.sources[$index].purchaseoption" title="Items/SKU" value="itemsku"/>
             <label for="itemssku"><span><span></span></span>Items/SKU</label>
         </div>
-        <div class="md-radio">
-            <input type="radio" id="category_{{$index}}" name="purchaseoption_{{$index}}" ng-model="data.purchaseConds.sources[$index].purchaseoption" title="Category" value="category"/>
+        <div class="">
+            <input type="radio" id="category_{{$index}}" name="purchaseoption3" ng-model="data.purchaseConds.sources[$index].purchaseoption" title="Category" value="category"/>
             <label for="category"><span><span></span></span>Category </label>
         </div>
-        <div class="md-radio">
-            <input type="radio" id="brand_{{$index}}" name="purchaseoption_{{$index}}" ng-model="data.purchaseConds.sources[$index].purchaseoption" title="MFG Brand" value="Brand" ng-disabled="true"/>
+        <div class="">
+            <input type="radio" id="brand_{{$index}}" name="purchaseoption4" ng-model="data.purchaseConds.sources[$index].purchaseoption" title="MFG Brand" value="Brand" ng-disabled="true"/>
             <label for="brand"><span><span></span></span>MFG Brand</label>
         </div>
     </div>
