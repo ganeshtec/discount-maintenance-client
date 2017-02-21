@@ -150,7 +150,7 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
             var deferred = $q.defer();
              $http({
                 method: 'GET',
-                url:  urls.authorizeUrl + username,
+                url:  urls.authorizeUrl + username +'.json',
                 cache: false,
                 headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
 
@@ -167,7 +167,7 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
                    
                     
                      var data = response.data;
-                    if (data.valid != 'true') {
+                    if (data.length === 0) {
                         status = 'unauthorized';
                         redirectPage();
                     } else {

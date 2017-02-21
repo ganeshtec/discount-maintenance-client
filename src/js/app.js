@@ -9,6 +9,9 @@ app.config(function ($routeProvider,$locationProvider) {
 		.when('/promotion-admin/clone/:cloneid', {templateUrl: "promotionAdmin.html", controller: 'promotionAdminCtrl'})
 		.when('/login', {templateUrl: "login.html", controller: 'loginCtrl'})
 		.when("/promotion-dashboard", {templateUrl: "dashboardView.html",reloadOnSearch:false, controller: 'DashboardCtrl'})
+		.when("/promotion-digital", {templateUrl: "digitalCreateFormView.html",reloadOnSearch:false, controller: 'DashboardCtrl'})
+		.when("/promotion-mfa", {templateUrl: "mfaCreateFormView.html",reloadOnSearch:false, controller: 'DashboardCtrl'})
+
 		.otherwise({redirectTo: "/promotion-dashboard"});
 		  // use the HTML5 History API
        $locationProvider.html5Mode(false);
