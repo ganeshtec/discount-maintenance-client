@@ -9,10 +9,13 @@ app.directive('purchaseConditionRewards', [ 'SourceData','customerSegmentDataSer
                 promoform: '=',
                 preview: '=',
                 isDisabled: '='
-            },
+               },
             
             link: function(scope, elem, attr) {
-            	// Customer Segment JS code
+            	
+
+            	
+                     	// Customer Segment JS code
             	var getCusSegmentPromise=customerSegmentDataService.getAllSegments();
 				getCusSegmentPromise.then(
 						function(data){
@@ -24,23 +27,38 @@ app.directive('purchaseConditionRewards', [ 'SourceData','customerSegmentDataSer
 				        		var segment = {};
 				        			segment.name = scope.segmentListfromWebservice[i].name;
 				        			segment.id = scope.segmentListfromWebservice[i].id;
+				        			
+				        	// If condition for Edit Customer Segment		
+				        			
+				        			if(scope.data.purchaseConds.customerSegmentId) {
+				        				if(scope.data.purchaseConds.customerSegmentId==scope.segmentListfromWebservice[i].id){
+				        					scope.data.custSegment=segment;
+				        					//scope.data.custSegmentDisable = true;
+				        				}
+				        			}
+				        			//segment.id = scope.segmentListfromWebservice[i].id;
 				        			scope.segmentDetails.push(segment);
 				        	}
 				        	
 							//END
 						},
 						function(error) {
-							//scope.merchDataLoading=false;
+							
 							console.log("Segment Data not found from WS Call");
 						}
 				);
 
                  scope.onSegmentSelection = function(){
-
+                	 console.log("Segment Value on Change: "+ scope.data.custSegment.id);
                       if(scope.data.custSegment){
-                          scope.data.purchaseConds.customerSegmentId=scope.data.custSegment.id;
+                    	  scope.data.purchaseConds.customerSegmentId=scope.data.custSegment.id;
                       }
+                      
                  };  
+                 
+               
+                 
+                 
 				// End of Customer Segment
 
                 scope.alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');
@@ -98,18 +116,14 @@ app.directive('purchaseConditionRewards', [ 'SourceData','customerSegmentDataSer
 
                 }
                 
-                if (scope.data) {
-                	console.log("_______Before Method exceution Condition Rewards data in ::"+JSON.stringify(scope.data));
-                	 if (scope.data.reward.details && scope.data.reward.details.length > 0) {
-                    	console.log("_______in PCR.js execution :: scope.data.reward.details[0].qualUOM ::"+scope.data.reward.details[0].qualUOM);
-                        scope.data.purchaseConds.qualUOM = scope.data.reward.details[0].qualUOM;
-                        console.log("_______AFTER method exeution  Rewards  data in ::"+JSON.stringify(scope.data));
-                    }
-                }
-                
-              
-                
-                	
+//                if (scope.data) {
+//                	console.log("_______Before Method exceution Condition Rewards data in ::"+JSON.stringify(scope.data));
+//                	 if (scope.data.reward.details && scope.data.reward.details.length > 0) {
+//                    	console.log("_______in PCR.js execution :: scope.data.reward.details[0].qualUOM ::"+scope.data.reward.details[0].qualUOM);
+//                        scope.data.purchaseConds.qualUOM = scope.data.reward.details[0].qualUOM;
+//                        console.log("_______AFTER method exeution  Rewards  data in ::"+JSON.stringify(scope.data));
+//                    }
+//                }
                 
                  /*
                 	var getPromotionPromise = promotionDataService.getPromotionSubTypes();

@@ -1,7 +1,13 @@
  <div class="md-select md-select-space">
 <label for="promocustomersegment"><h3>Customer Segment</h3></label>
 
-<select name="segment" ng-options="segment as segment.name for segment in segmentDetails track by segment.name" ng-model="data.custSegment" ng-change="onSegmentSelection()" ng-required=" preview">
+<!-- <select name="segment" ng-options="segment as segment.name for segment in segmentDetails track by segment.name" ng-model="data.custSegment" ng-change="onSegmentSelection()" ng-required=" preview">
+					<option value="">
+						-- Select a Customer Segment --
+					</option>
+</select>  -->
+
+<select name="segment" ng-options="segment as segment.name for segment in segmentDetails track by segment.name" ng-model="data.custSegment" ng-change="onSegmentSelection()">
 					<option value="">
 						-- Select a Customer Segment --
 					</option>
