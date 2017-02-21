@@ -13,6 +13,13 @@ app.directive('adminPromotionForm', ['promotionSubTypes','promotionDataService',
                 formHolder: "=",
             },
             link: function(scope, $element, attrs) {
+
+                scope.viewProperties = {
+                    displayPromoDescription: false,
+                    displayStartTime: false,
+                    displayEndTime: false
+                }
+
                 function getPomoSubTypes(){
                     var getPromotionPromise = promotionDataService.getPromotionSubTypes();
                     getPromotionPromise.then(

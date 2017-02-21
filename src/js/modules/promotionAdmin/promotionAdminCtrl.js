@@ -64,9 +64,32 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams','$timeout','$cook
 			$scope.UiState = ($scope.comparemode) ? 'Compare' : ((data.promoId) ? 'Edit' : 'Create New');
 			$scope.editMode = ($scope.UiState === 'Edit');
 			
-			$scope.sections = new SECTIONS();
+			$scope.userType = $scope.authService.getUserType();
+			if ($scope.userType == "store") {
+				viewProperties = getStoreViewProperties();
+			}
+			if ($scope.userType == "online") {
+				viewProperties = getOnlineViewProperties();
+			}
+			$scope.sections = new SECTIONS("store");
 			$scope.section = promotionDataService.getSection($scope.sections);
 			$scope.sectionInx = $scope.sections.indexOf($scope.section);
+
+			function getStoreViewProperties() {
+				return {
+                    displayPromoDescription: false,
+                    displayStartTime: true,
+                    displayEndTime: false
+                }
+			}
+
+			function getOnlineViewProperties() {
+				return {
+                    displayPromoDescription: true,
+                    displayStartTime: true,
+                    displayEndTime: true
+                }
+			}
 
 			//get new data
 			if (!$scope.editMode) {

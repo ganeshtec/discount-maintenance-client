@@ -81,10 +81,10 @@ def create_cust_segment_discount(promotion)
     fill_in 'end', with: promotion.end_date 
 	click_on 'Preview & Submit'
 	click_on 'Submit'
+	sleep(12)
 	puts promotion.name + " Submit process begin"
 	expect(page).to have_content promotion.name
 	puts "Discount Found on Discount List"
-	sleep(12)
 end
 
 

@@ -7,7 +7,9 @@ app.directive('promoSchedule', ['$filter',
             scope: {
                 data: '=',
                 promoform: '=',
-                preview:'='
+                preview:'=',
+                displayStartTime: '<',
+                displayEndTime: '<'
             },
             controller: function($scope) {
                 $scope.$watch('data', function(nv, ov) {
@@ -27,6 +29,11 @@ app.directive('promoSchedule', ['$filter',
 
             },
             link: function(scope, $element, attrs) {
+
+                init() {
+                    $scope.displayEndTime = true;
+                }
+
                 scope.convertToString = function() {
                     if (scope.data) {
                         scope.data.startDt = $filter('date')(scope.startDt, 'yyyy-MM-dd HH:mm:ss');                     

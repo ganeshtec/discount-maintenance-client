@@ -47,7 +47,7 @@
 				</label>
 				<input type="text" name="promocombo" ng-model="data.promocombo" title="Promotion Combinations" placeholder="Combine with other promotions" disabled />
 			</div>
-			<div class="md-text-field">				
+			<div class="md-text-field" ng-if="online-user">				
 				<label for="priority">
 					Priority
 				</label>
@@ -82,7 +82,7 @@
 				</purchase-condition>
 		</section>
 		<section class="admin__promotion__section" ng-show="index == 4 || preview">
-				<promo-description data="data">
+				<promo-description data="data" dislay="viewProperties.displayPromoDescription">
 				</promo-description>
 		</section>
 		<section class="admin__promotion__section" ng-show="index == 5 || preview">
@@ -90,7 +90,7 @@
 				</redemption-limit>
 		</section>
 		<section class="admin__promotion__section" ng-show="index == 6 || preview">
-				<promo-schedule data="data" preview="preview" promoform="promoForm">
+				<promo-schedule data="data" preview="preview" promoform="promoForm" displayStartDate="true" displayEndDate="true" displayStartTime="viewProperties.displayStartTime" displayEndTime="false">
 				</promo-schedule>
 		</section>
 	</fieldset>
