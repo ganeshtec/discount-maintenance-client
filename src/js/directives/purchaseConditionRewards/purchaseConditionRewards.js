@@ -9,7 +9,7 @@ app.directive('purchaseConditionRewards', [ 'SourceData','customerSegmentDataSer
                 promoform: '=',
                 preview: '=',
                 isDisabled: '='
-            },
+               },
             
             link: function(scope, elem, attr) {
             	
@@ -33,6 +33,7 @@ app.directive('purchaseConditionRewards', [ 'SourceData','customerSegmentDataSer
 				        			if(scope.data.purchaseConds.customerSegmentId) {
 				        				if(scope.data.purchaseConds.customerSegmentId==scope.segmentListfromWebservice[i].id){
 				        					scope.data.custSegment=segment;
+				        					//scope.data.custSegmentDisable = true;
 				        				}
 				        			}
 				        			//segment.id = scope.segmentListfromWebservice[i].id;
@@ -115,18 +116,14 @@ app.directive('purchaseConditionRewards', [ 'SourceData','customerSegmentDataSer
 
                 }
                 
-                if (scope.data) {
-                	console.log("_______Before Method exceution Condition Rewards data in ::"+JSON.stringify(scope.data));
-                	 if (scope.data.reward.details && scope.data.reward.details.length > 0) {
-                    	console.log("_______in PCR.js execution :: scope.data.reward.details[0].qualUOM ::"+scope.data.reward.details[0].qualUOM);
-                        scope.data.purchaseConds.qualUOM = scope.data.reward.details[0].qualUOM;
-                        console.log("_______AFTER method exeution  Rewards  data in ::"+JSON.stringify(scope.data));
-                    }
-                }
-                
-              
-                
-                	
+//                if (scope.data) {
+//                	console.log("_______Before Method exceution Condition Rewards data in ::"+JSON.stringify(scope.data));
+//                	 if (scope.data.reward.details && scope.data.reward.details.length > 0) {
+//                    	console.log("_______in PCR.js execution :: scope.data.reward.details[0].qualUOM ::"+scope.data.reward.details[0].qualUOM);
+//                        scope.data.purchaseConds.qualUOM = scope.data.reward.details[0].qualUOM;
+//                        console.log("_______AFTER method exeution  Rewards  data in ::"+JSON.stringify(scope.data));
+//                    }
+//                }
                 
                  /*
                 	var getPromotionPromise = promotionDataService.getPromotionSubTypes();
