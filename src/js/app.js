@@ -3,6 +3,7 @@ var app = angular.module('app', ['ngRoute','ngMaterial','ngCookies']);
 
 app.config(function ($routeProvider,$locationProvider) {
 	$routeProvider
+	.when("/promotion-admin", {templateUrl: "promotionAdmin.html", controller: 'promotionAdminCtrl'})
 		.when("/promotion-admin", {templateUrl: "promotionAdmin.html", controller: 'promotionAdminCtrl'})
 		.when('/promotion-admin/:id', {templateUrl: "promotionAdmin.html", controller: 'promotionAdminCtrl'})
 		.when('/promotion-admin/compare/:promotionID1/:promotionID2', {templateUrl: "compareView.html", controller: 'compareViewCtrl'})

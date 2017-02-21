@@ -170,13 +170,13 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
                     if (data.length === 0) {
                         status = 'unauthorized';
                         redirectPage();
+                    
                     } else {
                         status = 'success';
                         if( sourcepage === 'login') {
                              $location.path("promotion-dashboard");
                         }
                         
-                         
                     }
                  
                 }
