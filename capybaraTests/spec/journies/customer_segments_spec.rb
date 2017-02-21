@@ -82,8 +82,9 @@ def create_cust_segment_discount(promotion)
 	click_on 'Preview & Submit'
 	click_on 'Submit'
 	puts promotion.name + " Submit process begin"
-	wait_until_promo_submitted
 	expect(page).to have_content promotion.name
+	puts "Discount Found on Discount List"
+	sleep(12)
 end
 
 
