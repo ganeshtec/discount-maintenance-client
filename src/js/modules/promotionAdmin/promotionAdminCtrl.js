@@ -46,11 +46,55 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams','$timeout','$cook
           });
 		}
     
-    function setPromoData(){
-    	$scope.promotionData = new PromotionData();
-			$scope.promotionData.meta.created = $scope.username;
-			$scope.promotionData.meta.lastUpdatedBy = $scope.username;
-    }
+	    function setPromoData(){
+	    	$scope.promotionData = new PromotionData();
+				$scope.promotionData.meta.created = $scope.username;
+				$scope.promotionData.meta.lastUpdatedBy = $scope.username;
+	    }
+
+	    function setViewProperties(userType) {
+	    	if (userType == "store") {
+				$scope.viewProperties = getStoreViewProperties();
+				}
+			if (userType == "online") {
+				$scope.viewProperties = getOnlineViewProperties();
+			}
+			console.log("scope.viewProperties", $scope.viewProperties);
+	    }
+
+	    function getStoreViewProperties() {
+			console.log("GET STORE VIEW PROPERTIES");
+			return {
+                displayPromoDescription: false,
+                displayRedemptionMethod: false,
+                displayCombinationPromo: false,
+                displayPriority: false,
+                dispalyOMSId: false,
+                displayMFGBrand: false,
+                displayWebHierarchy: false,
+                displayOMSIdExclusion: false,
+                displayExclusionSubCategories: false,
+                displayPaymentType: false,
+                displayScheduleTime: false
+            }
+		}
+
+		function getOnlineViewProperties() {
+			console.log("GET ONLINE VIEW PROPERTIES");
+			return {
+                displayPromoDescription: true,
+                displayRedemptionMethod: true,
+                displayCombinationPromo: true,
+                displayPriority: true,
+                displayOMSId: true,
+                displayMFGBrand: true,
+                displayWebHierarchy: true,
+                displayOMSIdExclusion: true,
+                displayExclusionSubCategories: true,
+                displayPaymentType: true,
+                displayScheduleTime: true
+            }
+		}
        
 
 		// Initializes Data Model
@@ -64,32 +108,16 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams','$timeout','$cook
 			$scope.UiState = ($scope.comparemode) ? 'Compare' : ((data.promoId) ? 'Edit' : 'Create New');
 			$scope.editMode = ($scope.UiState === 'Edit');
 			
-			$scope.userType = $scope.authService.getUserType();
-			if ($scope.userType == "store") {
-				viewProperties = getStoreViewProperties();
-			}
-			if ($scope.userType == "online") {
-				viewProperties = getOnlineViewProperties();
-			}
-			$scope.sections = new SECTIONS("store");
+			// $scope.userType = $scope.authService.getUserType();
+			$scope.userType = "store";
+
+			setViewProperties($scope.userType);
+			
+			$scope.sections = new SECTIONS($scope.userType);
 			$scope.section = promotionDataService.getSection($scope.sections);
 			$scope.sectionInx = $scope.sections.indexOf($scope.section);
+			console.log("$scope.sectionInx", $scope.sectionInx);
 
-			function getStoreViewProperties() {
-				return {
-                    displayPromoDescription: false,
-                    displayStartTime: true,
-                    displayEndTime: false
-                }
-			}
-
-			function getOnlineViewProperties() {
-				return {
-                    displayPromoDescription: true,
-                    displayStartTime: true,
-                    displayEndTime: true
-                }
-			}
 
 			//get new data
 			if (!$scope.editMode) {
@@ -125,7 +153,11 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams','$timeout','$cook
 		$scope.$watch('sections', function(model, oldModel){
 			if(model !== oldModel){
 				console.log('sections');
-				$scope.sectionInx = $scope.sections.indexOf(promotionDataService.getSection(model));
+				console.log("$scope.sectionInx before change", $scope.sectionInx);
+				console.log("model", model);
+				console.log("promotionDataService.getSection(model)", promotionDataService.getSection(model));
+				$scope.sectionInx = $scope.sections.indexOf(promotionDataService.getSection(model))
+				console.log("$scope.sectionInx after change", $scope.sectionInx);
 			}
 		}, true);
 

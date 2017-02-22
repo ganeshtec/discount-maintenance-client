@@ -14,6 +14,27 @@ app.directive('adminPromotionFormControls', ['stateService','$location','$anchor
 				scope.setActive(0);   
     		});
 			
+			scope.pageUp = function(index) {
+
+				for (var i = index; i < scope.data.length; i++) {
+					if (scope.data[i].shouldDisplay) {
+						scope.setActive(i);
+						return;
+					}
+				}
+				// What should the button do if this is the last visible form section?
+			}
+
+			scope.pageDown = function(index) {
+				for (var i = index; i >= 0; i--) {
+					if (scope.data[i].shouldDisplay) {
+						scope.setActive(i);
+						return;
+					}
+				}
+				// What should the button do if this is the first visible form section?
+			}
+
 			scope.setActive = function(index){
 				if(index >= 0 && index < scope.data.length){
 					scope.data = stateService.deactivateSection(scope.data);

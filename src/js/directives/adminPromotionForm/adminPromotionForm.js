@@ -11,14 +11,12 @@ app.directive('adminPromotionForm', ['promotionSubTypes','promotionDataService',
                 preview: '@',
                 isDisabled: '=',
                 formHolder: "=",
+                display: "=",
+                viewProp: "="
             },
             link: function(scope, $element, attrs) {
 
-                scope.viewProperties = {
-                    displayPromoDescription: false,
-                    displayStartTime: false,
-                    displayEndTime: false
-                }
+                console.log("viewProperties in adminPromotionForm", scope.viewProp);
 
                 function getPomoSubTypes(){
                     var getPromotionPromise = promotionDataService.getPromotionSubTypes();
@@ -35,10 +33,7 @@ app.directive('adminPromotionForm', ['promotionSubTypes','promotionDataService',
                         });
                 }
                 scope.formHolder.form = scope.promoForm;
-                // scope.promotionSubTypes = new promotionSubTypes();
                 scope.promotionSubTypes = (DataFactory.promotionSubTypes) ? DataFactory.promotionSubTypes : getPomoSubTypes();
-
-
 
                 function setPromotionSubType(){
                     if(scope.promotionSubTypes && scope.data  && scope.data.promoSubTypeCd){

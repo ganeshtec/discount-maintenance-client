@@ -8,9 +8,8 @@ app.directive('promoSchedule', ['$filter',
                 data: '=',
                 promoform: '=',
                 preview:'=',
-                displayStartTime: '<',
-                displayEndTime: '<'
-            },
+                viewProp: '='
+                },
             controller: function($scope) {
                 $scope.$watch('data', function(nv, ov) {
                     if (nv) {
@@ -30,9 +29,9 @@ app.directive('promoSchedule', ['$filter',
             },
             link: function(scope, $element, attrs) {
 
-                init() {
-                    $scope.displayEndTime = true;
-                }
+                // init() {
+                //     $scope.displayEndTime = true;
+                // }
 
                 scope.convertToString = function() {
                     if (scope.data) {

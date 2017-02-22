@@ -9,7 +9,8 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory', 'skuTestRecor
 				purchaseoption: '=',
 				itemtype: '=',
 				promoform: '=',
-				isDisabled: '='
+				isDisabled: '=',
+				viewProp: '='
 			},
 			controller: function ($scope) {
                 $scope.$watch('purchaseoption', function (nv, ov) {
@@ -25,6 +26,8 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory', 'skuTestRecor
 
             },
 			link: function (scope, $element, attrs) {
+
+				console.log('scope.purchaseoption', scope.purchaseoption);
 				var omsData = {};
 				var skuData = {};
 				var existingID = '';

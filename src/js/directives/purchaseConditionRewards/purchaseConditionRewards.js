@@ -8,7 +8,8 @@ app.directive('purchaseConditionRewards', [ 'SourceData','customerSegmentDataSer
                 data: '=',
                 promoform: '=',
                 preview: '=',
-                isDisabled: '='
+                isDisabled: '=',
+                viewProp: '='
                },
             
             link: function(scope, elem, attr) {
