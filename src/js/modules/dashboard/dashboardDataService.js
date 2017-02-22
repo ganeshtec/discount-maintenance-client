@@ -10,7 +10,7 @@ app.service('dashboardDataService', ['$http', '$q', 'dataService',
 				}
 				return data;
 			}, {});
-		console.log('promoData', promoData);
+
 		return promoData;
 	}
 

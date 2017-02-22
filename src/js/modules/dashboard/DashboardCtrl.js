@@ -293,7 +293,7 @@ app.controller('DashboardCtrl', ['$filter','$scope', 'DataFactory', 'promotionDa
 			 			all[promotions[i].promoId] = true; 
 			 		}
 			 		$scope.promotions = wrappers;
-			 		console.log($scope.promotions);
+
 			 		$scope.paginationConfig.recordsPerPage = data.criteria.page.size+""; 
 			 		$scope.paginationConfig.currentPage =  parseInt(curPage) ;
 			 		$scope.paginationConfig.totalRecords = data.totalCount || 0 ;			 		
@@ -405,7 +405,7 @@ app.controller('DashboardCtrl', ['$filter','$scope', 'DataFactory', 'promotionDa
 
 		$scope.selectedPromotions = [];
 		$scope.setPromotionToView = function(id){
-			console.log('$scope.promotions, id: ', $scope.promotions, id);
+
 			$scope.promotionData = dashboardDataService.getPromotionFromList($scope.promotions, id);
 			$scope.$broadcast('horizontalTabClicked');
 			

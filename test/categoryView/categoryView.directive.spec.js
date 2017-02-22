@@ -63,7 +63,7 @@ describe('Unit testing Promotion Header directive', function() {
       };
 
       
-      console.log("Spy function");
+
       var jasmineHelpers = new JasmineHelpers();
       
 	  

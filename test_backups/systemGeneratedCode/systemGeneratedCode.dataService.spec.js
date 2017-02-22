@@ -29,7 +29,7 @@ describe('Service: promotionDataService',function(){
             });
 
         promoservice.getSystemGenrateCodes(dataObj).success(function(response) {
-            console.log(response);
+
                 response = response;
             
         });

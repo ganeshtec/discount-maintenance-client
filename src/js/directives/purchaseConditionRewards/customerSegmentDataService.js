@@ -9,7 +9,7 @@ app.service('customerSegmentDataService', ['$http', '$q', 'dataService', 'DataFa
 	/*Customer Segment - START*/
 	
 	publicApi.getAllSegments = function() {
-		console.log('getAll Customer Segments DataService');
+
 		var config= {
 				method: 'GET',
 				url: '/customersegment/segments',
@@ -18,10 +18,10 @@ app.service('customerSegmentDataService', ['$http', '$q', 'dataService', 'DataFa
 		
 		dataService.httpRequest(config).then(
 				function(response){
-					console.log('getCustomerSegments ', response.data);
+
 					result.resolve(response.data);
 				},function(error){
-					console.log(error);
+
 					result.reject(error);
 			});
 	

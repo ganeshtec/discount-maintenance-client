@@ -23,10 +23,10 @@ app.service('promotionDataService', ['$http', '$q', 'dataService', 'DataFactory'
 			result = $q.defer();
 		dataService.httpRequest(config).then(
 			function(response){
-				console.log('getPromotionSubTypes', response.data);
+	
 				result.resolve(response.data);
 			},function(error){
-				console.log(error);
+
 				result.reject(error);
 		});
 		// result.resolve(new promotionSubTypes());
@@ -47,11 +47,11 @@ app.service('promotionDataService', ['$http', '$q', 'dataService', 'DataFactory'
 			result = $q.defer();
 			dataService.httpRequest(config).then(
 				function(response){
-					console.log(response.data);
+
 					result.resolve(response.data);
 					//result.resolve(new SourceData());
 				},function(error){
-					console.log(error);
+
 					result.reject(error);
 			});
 			return result.promise;
@@ -73,10 +73,10 @@ app.service('promotionDataService', ['$http', '$q', 'dataService', 'DataFactory'
 			result = $q.defer();
 			dataService.httpRequest(config).then(
 				function(response){
-					console.log(response);
+
 					result.resolve(response);
 				},function(error){
-					console.log(error);
+
 					result.reject(error);
 			});
 			return result.promise;
@@ -92,10 +92,10 @@ app.service('promotionDataService', ['$http', '$q', 'dataService', 'DataFactory'
 			result = $q.defer();
 			dataService.httpRequest(config).then(
 				function(response){
-					console.log(response);
+
 					result.resolve(response);
 				},function(error){
-					console.log(error);
+
 					result.reject(error);
 			});
 			return result.promise;
@@ -110,19 +110,19 @@ app.service('promotionDataService', ['$http', '$q', 'dataService', 'DataFactory'
 		result = $q.defer();
 		dataService.httpRequest(config).then(
 			function(response){
-				console.log(response);
+
 				result.resolve(response);
 			},function(error){
-				console.log(error);
+
 				result.reject(error);
 		});
 		return result.promise;
 	}
 	// sumit promotion
  	publicApi.submit = function(data){
- 		console.log('Data to be submitted');
+
  
- 	   console.log(JSON.stringify(data));
+
  		var config = {
  				method: 'POST',
  				url: '/cartPromotionsRequest/approve',
@@ -132,10 +132,10 @@ app.service('promotionDataService', ['$http', '$q', 'dataService', 'DataFactory'
  
  		dataService.httpRequest(config).then(
  			function(response){
- 					console.log(response);
+
    				    result.resolve(response);
  				},function(error){
- 					console.log(error);
+
  					result.reject(error);
  			});
  			return result.promise;
@@ -143,9 +143,8 @@ app.service('promotionDataService', ['$http', '$q', 'dataService', 'DataFactory'
 
 		// sumit promotion
 	publicApi.submit = function(data){
-		console.log('Data to be submitted');
 
-		console.log(JSON.stringify(data));
+
 		var config = {
 				method: 'POST',
 				url: '/cartPromotionsRequest/approve',
@@ -155,10 +154,10 @@ app.service('promotionDataService', ['$http', '$q', 'dataService', 'DataFactory'
 
 			dataService.httpRequest(config).then(
 				function(response){
-					console.log(response);
+
 					result.resolve(response);
 				},function(error){
-					console.log(error);
+
 					result.reject(error);
 			});
 			return result.promise;
@@ -190,10 +189,10 @@ app.service('promotionDataService', ['$http', '$q', 'dataService', 'DataFactory'
 			result = $q.defer();
 		dataService.httpRequest(config).then(
 			function(response){
-				console.log('promotionDataService - getPromotions - response.data=', response.data);
+			
 				result.resolve(response.data);
 			},function(error){
-				console.log('promotionDataService - getPromotions - error=', error);
+
 				result.reject(error);
 		});
 
@@ -211,10 +210,10 @@ app.service('promotionDataService', ['$http', '$q', 'dataService', 'DataFactory'
 		result = $q.defer();
 		dataService.httpRequest(config).then(
 			function(response){
-				console.log('promotionDataService - getDeactivations - response.data=', response.data);
+				
 				result.resolve(response.data);
 			}, function(error){
-				console.log('promotionDataService - getDeactivations - error=', error);
+				
 				result.reject(error);
 			}
 		);
@@ -229,10 +228,10 @@ app.service('promotionDataService', ['$http', '$q', 'dataService', 'DataFactory'
 			result = $q.defer();
 		dataService.httpRequest(config).then(
 			function(response){
-				console.log('promotionDataService - getPromotionSubTypes - response.data=', response.data);
+				
 				result.resolve(response.data);
 			},function(error){
-				console.log('promotionDataService - getPromotionSubTypes - error=', error);
+
 				result.reject(error);
 		});
 		// result.resolve(new promotionSubTypes());
@@ -249,10 +248,10 @@ app.service('promotionDataService', ['$http', '$q', 'dataService', 'DataFactory'
 			result = $q.defer();
 		dataService.httpRequest(config).then(
 			function(response){
-				console.log('promotionDataService - savePromotions - response.data=', response.data);
+				
 				result.resolve(response.data);
 			},function(error){
-				console.log('promotionDataService - savePromotions - error=', error);
+				
 				result.reject(error);
 		});
 		return result.promise;
@@ -268,10 +267,10 @@ app.service('promotionDataService', ['$http', '$q', 'dataService', 'DataFactory'
 			result = $q.defer();
 		dataService.httpRequest(config).then(
 			function(response){
-				console.log('deleted', response.data);
+
 				result.resolve(response.data);
 			},function(error){
-				console.log(error);
+
 				result.reject(error);
 		});
 		return result.promise;
@@ -284,10 +283,8 @@ app.service('promotionDataService', ['$http', '$q', 'dataService', 'DataFactory'
 			result = $q.defer();
 		dataService.httpRequest(config).then(
 			function(response){
-				console.log('promotionDataService - getAllStatus - response.data=', response.data);
 				result.resolve(response.data);
 			},function(error){
-				console.log('promotionDataService - getAllStatus - error=', error);
 				result.reject(error);
 		});
 		return result.promise;
@@ -300,10 +297,8 @@ app.service('promotionDataService', ['$http', '$q', 'dataService', 'DataFactory'
 			result = $q.defer();
 		dataService.httpRequest(config).then(
 			function(response){
-				console.log('couponRequestStatus', response.data);
 				result.resolve(response.data);
 			},function(error){
-				console.log(error);
 				result.reject(error);
 		});
 		return result.promise;

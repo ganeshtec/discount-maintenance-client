@@ -18,7 +18,7 @@ describe('Unit testing purchaseCondition.directive.spec.js', function() {
  
  
   it('Checks directive with the appropriate content.', function() {
-    // console.log($scope);
+
     $scope.data= [];
     // Compile a piece of HTML containing the directive
     var element = $compile("<purchase-condition data='data'></purchase-condition>")($scope);

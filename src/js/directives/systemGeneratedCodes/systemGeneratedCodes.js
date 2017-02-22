@@ -12,8 +12,7 @@ app.directive('systemGeneratedCodes', ['$filter', 'promotionDataService', 'DataF
      		completed:"="
 		},
 		link: function(scope, $element, attrs){ 
-			console.log('coupon status');
-			console.log(scope.completed);
+
 			function getSystemGenrateCodes(data){
 				var getPromotionPromise = promotionDataService.getSystemGenrateCodes(data);
 				getPromotionPromise.then(

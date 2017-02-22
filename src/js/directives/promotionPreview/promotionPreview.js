@@ -12,7 +12,7 @@ app.directive('promotionPreview', ["URL_CONFIG","promotionDataService","OverlayC
 			formHolder: "=",
 		},
 		link : function (scope, element, attrs) {
-			console.log('preview promotion');
+			
 			scope.close = function(){
 				// if a exisiting promotion is submitted then reload the page
 				if(scope.originalPromoId && scope.savedPromoId){
@@ -42,7 +42,7 @@ app.directive('promotionPreview', ["URL_CONFIG","promotionDataService","OverlayC
 				scope.headerErrorMsg = "";
 				delete scope.errorMessages ;
 				var promotion = scope.previewData.data;
-                console.log("promotion====>"+JSON.stringify(promotion));
+
 				utilService.setDefaultsForSaveAsDraft(promotion); 
   				utilService.transformPromotionRequest(promotion); 
   				var missing = utilService.requiredFieldsMissing(promotion);

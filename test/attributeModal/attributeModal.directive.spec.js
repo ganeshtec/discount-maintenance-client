@@ -16,22 +16,11 @@ describe('Unit testing attributeModal.directive.spec.js', function() {
     $scope = $rootScope.$new();
   }));
 
-  // it('Checks if modal is rendered.', function() {
-  //   $scope.modalData =[
-  //   { name:"item1"},
-  //    { name:"item2"}
-  //   ];
-    
-  //   $httpBackend.when('GET', 'views/core/main/main.html').respond(fakedMainResponse);
-    
-  //   console.log($scope);
 
-  //   // Compile a piece of HTML containing the directive
-  //   element = $compile("<attribute-modal modal='modalData'></attribute-modal>")($scope);
-  //   $scope.$digest();
-  //   // Check that the compiled element contains the templated content
-  //   expect(element.html()).toContain("#attributeModal");
-  // });
+  // Compile a piece of HTML containing the directive
+
+  // Check that the compiled element contains the templated content
+
 
 
 });

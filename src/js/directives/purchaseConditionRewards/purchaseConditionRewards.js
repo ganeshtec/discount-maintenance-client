@@ -44,12 +44,12 @@ app.directive('purchaseConditionRewards', [ 'SourceData','customerSegmentDataSer
 						},
 						function(error) {
 							
-							console.log("Segment Data not found from WS Call");
+
 						}
 				);
 
                  scope.onSegmentSelection = function(){
-                	 console.log("Segment Value on Change: "+ scope.data.custSegment.id);
+
                       if(scope.data.custSegment){
                     	  scope.data.purchaseConds.customerSegmentId=scope.data.custSegment.id;
                       }
@@ -116,43 +116,7 @@ app.directive('purchaseConditionRewards', [ 'SourceData','customerSegmentDataSer
 
                 }
                 
-//                if (scope.data) {
-//                	console.log("_______Before Method exceution Condition Rewards data in ::"+JSON.stringify(scope.data));
-//                	 if (scope.data.reward.details && scope.data.reward.details.length > 0) {
-//                    	console.log("_______in PCR.js execution :: scope.data.reward.details[0].qualUOM ::"+scope.data.reward.details[0].qualUOM);
-//                        scope.data.purchaseConds.qualUOM = scope.data.reward.details[0].qualUOM;
-//                        console.log("_______AFTER method exeution  Rewards  data in ::"+JSON.stringify(scope.data));
-//                    }
-//                }
-                
-                 /*
-                	var getPromotionPromise = promotionDataService.getPromotionSubTypes();
-                    getPromotionPromise.then(
-                        function(data) {
-                            DataFactory.promotionSubTypes = data.promotionSubTypes;
-                            scope.promotionSubTypes =  DataFactory.promotionSubTypes;
-                        },
-                        function(error) {
-                            DataFactory.messageModal.message = error;
-                            DataFactory.messageModal.title = 'Error';
-                            $('#messageModal').popup();
 
-                        });
-                }*/
-                	
-              //  scope.promotionSubTypes = (DataFactory.promotionSubTypes) ? DataFactory.promotionSubTypes : getCustomerSegment();
-             /*   
-                function setCustomerSeg(){
-                    if(scope.promotionSubTypes && scope.data  && scope.data.promoSubTypeCd){
-                        $.each(scope.promotionSubTypes, function(i) {
-                            if (scope.promotionSubTypes[i].promoSubTypeCd == scope.data.promoSubTypeCd) {
-                                scope.promoSubTypeObject = scope.promotionSubTypes[i];
-                            }
-                        });
-                    }
-                }*/
-                	
-                
                 
 
             }

@@ -37,7 +37,7 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams','$timeout','$cook
                    $scope.promotionData.status = 20;
               }
               $scope.promotionData.meta.lastUpdatedBy = $scope.username;
-              console.log(" the promo data is ===>" + JSON.stringify(data));
+            
           },
           function(error) {
               DataFactory.messageModal.message = error;
@@ -74,7 +74,7 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams','$timeout','$cook
                 if ($scope.clonemode) {
                     getPromotionByID(data.promoId);
                 }else if ($scope.comparemode) {
-                        console.log("promoID1 & promoID2 values ===>"+JSON.stringify(data));
+
 					    getPromotionByID(data.promotionID1);	
                         getPromotionByID(data.promotionID2);				
 							
@@ -101,7 +101,7 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams','$timeout','$cook
 		// Watch change in sections to set current section
 		$scope.$watch('sections', function(model, oldModel){
 			if(model !== oldModel){
-				console.log('sections');
+			
 				$scope.sectionInx = $scope.sections.indexOf(promotionDataService.getSection(model));
 			}
 		}, true);
