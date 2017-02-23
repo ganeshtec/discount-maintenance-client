@@ -3,6 +3,7 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
         var publicApi = {};
         var status = null;
         var urls = new URL_CONFIG();
+        var userPermissions = null;
 
         publicApi.getErrorStatus = function() {
             return status;
@@ -142,6 +143,9 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
 
         }
 
+        publicApi.getUserPermissions = function(){
+            return userPermissions;
+        }
 
         // Method to check user has authorization to see the applicaiton
         publicApi.authorizeUser = function(username,sourcepage) {
@@ -172,6 +176,7 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
                         redirectPage();
                     
                     } else {
+                        userPermissions = data;
                         status = 'success';
                         if( sourcepage === 'login') {
                              $location.path("promotion-dashboard");
