@@ -40,8 +40,10 @@ app.controller('MainCtrl', ['$scope', '$location', '$cookies', 'DataFactory', 'S
       $scope.logout = function () {
          
             $cookies.remove('THDSSO',{'domain': '.homedepot.com'});
-            $cookies.remove('userName',{'domain': '.homedepot.com'});            
+            $cookies.remove('userName',{'domain': '.homedepot.com'}); 
+            $cookies.remove('userPermissions',{'domain': '.homedepot.com'});           
             $cookies.put('logout', 'true',{'domain': '.homedepot.com'});
+
             loginService.setErrorStatus('');
             
            

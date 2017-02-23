@@ -12,7 +12,15 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams','$timeout','$cook
 		
 		if($cookies.get('userName') != null &&  $cookies.get('userName') != '') {
 			$scope.username = $cookies.get('userName');
-			}
+		}
+
+		if($cookies.get('userPermissions') != null) {
+			//$scope.userPermissions = JSON.parse($cookies.get('userPermissions'));
+			$scope.userPermissions = JSON.parse($cookies.get('userPermissions'));
+			console.log("User userPermissions :: ", $scope.userPermissions);
+			console.log("First user permission", $scope.userPermissions[0]);
+			console.log("User permission type", typeof($scope.userPermissions));
+		}
 
 		// Private Methods
 		// Method to get test data - Test Should return promotion record based on type
@@ -95,6 +103,12 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams','$timeout','$cook
             }
 		}
 
+		
+			// var userPermissions = loginService.getUserPermissions();
+			// console.log("User userPermissions :: ", userPermissions);
+		
+
+
 
 		// Initializes Data Model
 		function init(data){
@@ -108,6 +122,15 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams','$timeout','$cook
 			$scope.editMode = ($scope.UiState === 'Edit');
 			
 			// $scope.userType = $scope.authService.getUserType();
+			// var userPermissions = $cookies.get('UserPermissions'); 
+			// UserPermissions;//loginService.getUserPermissions();
+
+			// if (loginService.getUserPermissions() != null) {
+			// 	$scope.userPermissions = loginService.getUserPermissions();
+			// }
+
+
+			
 			$scope.userType = "online";
 
 			setViewProperties($scope.userType);

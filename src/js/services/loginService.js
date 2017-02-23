@@ -104,6 +104,7 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
                 if (response.data == null || response.data == undefined || response.data == '') {
                     $cookies.remove('THDSSO',{'domain': '.homedepot.com'});
                     $cookies.remove('userName',{'domain': '.homedepot.com'});
+                    $cookies.remove('userPermissions',{'domain': '.homedepot.com'});
             
                     status = 'invaliduser';
                     $location.path("login");
@@ -177,6 +178,8 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
                     
                     } else {
                         userPermissions = data;
+                        console.log("USER PERMISSIONS IN LOGIN SERVICE", userPermissions);
+                        $cookies.put('userPermissions', JSON.stringify(userPermissions));
                         status = 'success';
                         if( sourcepage === 'login') {
                              $location.path("promotion-dashboard");
@@ -203,7 +206,8 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
             function redirectPage() {
                 status = 'unauthorized';
                  $cookies.remove('THDSSO', { 'domain': '.homedepot.com' });
-                 $cookies.remove('userName', { 'domain': '.homedepot.com' });                
+                 $cookies.remove('userName', { 'domain': '.homedepot.com' }); 
+                 $cookies.remove('userPermissions',{'domain': '.homedepot.com'});               
                 $location.path("login");
             }
 

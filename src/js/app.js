@@ -3,8 +3,8 @@ var app = angular.module('app', ['ngRoute','ngMaterial','ngCookies']);
 
 app.config(function ($routeProvider,$locationProvider) {
 	$routeProvider
-		.when("/promotion-admin", {template: " ", controller: 'viewContextController'})
-		//.when("/promotion-admin", {templateUrl: "promotionAdmin.html", controller: 'promotionAdminCtrl'})
+		//.when("/promotion-admin", {template: " ", controller: 'viewContextController'})
+		.when("/promotion-admin", {templateUrl: "promotionAdmin.html", controller: 'promotionAdminCtrl'})
 		.when('/promotion-admin/:id', {templateUrl: "promotionAdmin.html", controller: 'promotionAdminCtrl'})
 		.when('/promotion-admin/compare/:promotionID1/:promotionID2', {templateUrl: "compareView.html", controller: 'compareViewCtrl'})
 		.when('/promotion-admin/clone/:cloneid', {templateUrl: "promotionAdmin.html", controller: 'promotionAdminCtrl'})
