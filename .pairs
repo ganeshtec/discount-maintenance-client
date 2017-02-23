@@ -3,17 +3,15 @@ Example:
 # place in project or home directory
 pairs:
         em: Evan Miller; emiller
-        sm: Shawna Mattison; smattison
         rs: Roman Sanchez; rsanchez
-        wm: Will Madison; wmadison
         ig: Immanuel Gooding; igooding
         sl: Spencer Lewis; slewis
-        kz: Konrad Zielinksi; kzielinski
         jd: Justin Doak
         cs: Coredelle Smith
         cb: Cliff Burchfield
-        ft: fitsum teshome
+        ft: Fitsum Teshome
         cd: Carl Domingue
+	gt: Ganesan Thangapandian
 email:
         prefix: pair
         domain: pivotallabs.com

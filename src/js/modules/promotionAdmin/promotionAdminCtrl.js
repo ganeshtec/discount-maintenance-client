@@ -55,10 +55,9 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams','$timeout','$cook
 	    function setViewProperties(userType) {
 	    	if (userType == "store") {
 				$scope.viewProperties = getStoreViewProperties();
-				}
-			if (userType == "online") {
+			} else if (userType == "online") {
 				$scope.viewProperties = getOnlineViewProperties();
-			}
+			} 
 			console.log("scope.viewProperties", $scope.viewProperties);
 	    }
 
@@ -95,7 +94,7 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams','$timeout','$cook
                 displayScheduleTime: true
             }
 		}
-       
+
 
 		// Initializes Data Model
 		function init(data){
@@ -109,7 +108,7 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams','$timeout','$cook
 			$scope.editMode = ($scope.UiState === 'Edit');
 			
 			// $scope.userType = $scope.authService.getUserType();
-			$scope.userType = "store";
+			$scope.userType = "online";
 
 			setViewProperties($scope.userType);
 			
