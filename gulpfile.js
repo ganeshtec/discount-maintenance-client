@@ -79,6 +79,10 @@ gulp.task('copy:urls', function() {
 	return gulp.src('env_config/dev/urls.js')
 		.pipe(gulp.dest("public/assets/js")); 
 });
+gulp.task('copy:qaUrls', function() {
+	return gulp.src('env_config/qa/urls.js')
+		.pipe(gulp.dest("public/assets/js")); 
+});
 /* Concat js files */
 gulp.task('concat:js', function() {
 	return gulp.src(input.source_js)
@@ -173,7 +177,7 @@ gulp.task('test', ['srcbuild'], function(done) {
 });
 
 gulp.task('srcbuild', ['concat:vendor-js', 'concat:js', 'build:vendor-css', 'build:css', 'copy:index', 'copy:html', 'copy:fonts']);
-gulp.task('build', gulpSequence('prebuild:clean', 'srcbuild'));
+gulp.task('build', gulpSequence('prebuild:clean', 'srcbuild', 'copy:qaUrls'));
 gulp.task('devbuild', gulpSequence('prebuild:clean', 'srcbuild', 'copy:urls'));
 gulp.task('dev', gulpSequence('prebuild:clean', 'srcbuild', 'copy:urls', 'develop', 'browser-sync'));
 gulp.task('serve', ['srcbuild'], reload);
