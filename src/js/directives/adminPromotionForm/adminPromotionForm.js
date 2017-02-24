@@ -17,6 +17,7 @@ app.directive('adminPromotionForm', ['promotionSubTypes','promotionDataService',
             link: function(scope, $element, attrs) {
 
                 console.log("viewProperties in adminPromotionForm", scope.viewProp);
+                //console.log("viewProperties in adminPromotionForm111 ", $scope.viewProperties);
 
                 function getPomoSubTypes(){
                     var getPromotionPromise = promotionDataService.getPromotionSubTypes();

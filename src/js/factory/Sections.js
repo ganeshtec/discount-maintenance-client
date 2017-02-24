@@ -1,8 +1,9 @@
 // Mock data for item level percent off promotion
-app.factory('SECTIONS', [function(){	
+app.factory('SECTIONS', ['ALLOWED_PERMISSION_IDS', function(ALLOWED_PERMISSION_IDS){	
 	var _construct = function SECTIONS(userType){
-
-		if (userType === "store") {
+		var allowedPermissionIDs=ALLOWED_PERMISSION_IDS();
+        console.log("Allowed Users in SECTIONS :: " + allowedPermissionIDs.STORE);
+		if (userType == allowedPermissionIDs.STORE) {
 			return [
 				{name:"Promotion Properties",isActive:true,shouldDisplay:true, link: 'promotion-properties', icon: 'fa-gear' },
 				{name:"Purchase Conditions",isActive:false,shouldDisplay:true, link: 'promotion-condition-rewards', icon: 'fa-money'},
@@ -12,7 +13,7 @@ app.factory('SECTIONS', [function(){
 				{name:"Redemption Limits",isActive:false,shouldDisplay:true, link: 'promotion-redemtion-limits', icon: 'fa-tachometer' },
 				{name:"Schedule",isActive:false,shouldDisplay:true, link: 'promotion-schedule', icon: 'fa-calendar'}
 			];
-		} else if (userType === "online") {
+		} else if (userType == allowedPermissionIDs.ONLINE) {
 			return [
 				{name:"Promotion Properties",isActive:true,shouldDisplay:true, link: 'promotion-properties', icon: 'fa-gear' },
 				{name:"Purchase Conditions",isActive:false,shouldDisplay:true, link: 'promotion-condition-rewards', icon: 'fa-money'},

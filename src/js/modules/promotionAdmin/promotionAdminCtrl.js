@@ -1,9 +1,10 @@
-app.controller('promotionAdminCtrl', ['$scope', '$routeParams','$timeout','$cookies','$location', 'loginService','promotionDataService', 'PromotionData', 'SECTIONS', 'DataFactory', 'createTestRecord','URL_CONFIG',
-	function ($scope, $routeParams,$timeout ,$cookies,$location,loginService,promotionDataService, PromotionData, SECTIONS, DataFactory, createTestRecord,URL_CONFIG) {
+app.controller('promotionAdminCtrl', ['$scope', '$routeParams','$timeout','$cookies','$location', 'loginService','promotionDataService', 'PromotionData', 'SECTIONS', 'DataFactory', 'createTestRecord','URL_CONFIG','ALLOWED_PERMISSION_IDS',
+	function ($scope, $routeParams,$timeout ,$cookies,$location,loginService,promotionDataService, PromotionData, SECTIONS, DataFactory, createTestRecord,URL_CONFIG,ALLOWED_PERMISSION_IDS) {
 		var promotionID = $routeParams.id || null;
 		var cloneId = $routeParams.cloneid || null;
 		var promotionID1 = $routeParams.promotionID1 || null;
 		var promotionID2 = $routeParams.promotionID2 || null;
+		var allowedPermissionIDs=ALLOWED_PERMISSION_IDS();
 		$scope.sections = [];
 
 		$scope.comparemode = (promotionID2) ? true : false;		
@@ -16,10 +17,14 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams','$timeout','$cook
 
 		if($cookies.get('userPermissions') != null) {
 			//$scope.userPermissions = JSON.parse($cookies.get('userPermissions'));
-			$scope.userPermissions = JSON.parse($cookies.get('userPermissions'));
-			console.log("User userPermissions :: ", $scope.userPermissions);
-			console.log("First user permission", $scope.userPermissions[0]);
-			console.log("User permission type", typeof($scope.userPermissions));
+			var userPermissions = JSON.parse($cookies.get('userPermissions'));
+			console.log("User userPermissions :: ", JSON.stringify(userPermissions));  //userPermissions["id"]);
+			console.log("User userPermissions :: ", userPermissions[0]["id"]);
+			$scope.userType = userPermissions[0]["id"];
+
+			// console.log("First user permission", $scope.userPermissions[0]);
+			// console.log("User permission type", typeof($scope.userPermissions));
+			//console.log("User Id== " + $scope.userPermissions.id[0]);
 		}
 
 		// Private Methods
@@ -61,9 +66,10 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams','$timeout','$cook
 	    }
 
 	    function setViewProperties(userType) {
-	    	if (userType == "store") {
+	    	console.log("User Type :: " + userType);
+	    	if (userType == allowedPermissionIDs.STORE) {
 				$scope.viewProperties = getStoreViewProperties();
-			} else if (userType == "online") {
+			} else if (userType == allowedPermissionIDs.ONLINE) {
 				$scope.viewProperties = getOnlineViewProperties();
 			} 
 			console.log("scope.viewProperties", $scope.viewProperties);
@@ -131,7 +137,7 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams','$timeout','$cook
 
 
 			
-			$scope.userType = "online";
+			//$scope.userType = "online";
 
 			setViewProperties($scope.userType);
 			
