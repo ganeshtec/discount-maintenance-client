@@ -6,6 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "dev": "gulp dev",
+    "build-ad": "gulp build-ad",
+    "build-qa": "gulp build-qa",
     "test": "gulp test",
     "build": "gulp build",
     "ci": "karma start --single-run --browsers Chrome --reporters dots",
