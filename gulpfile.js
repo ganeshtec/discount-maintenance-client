@@ -75,8 +75,12 @@ gulp.task('copy:index', function() {
 	return gulp.src("src/index.html")
 		.pipe(gulp.dest("public")); 
 });
-gulp.task('copy:urls', function() {
+gulp.task('copy:devUrls', function() {
 	return gulp.src('env_config/dev/urls.js')
+		.pipe(gulp.dest("public/assets/js")); 
+});
+gulp.task('copy:adUrls', function() {
+	return gulp.src('env_config/ad/urls.js')
 		.pipe(gulp.dest("public/assets/js")); 
 });
 gulp.task('copy:qaUrls', function() {
@@ -177,8 +181,9 @@ gulp.task('test', ['srcbuild'], function(done) {
 });
 
 gulp.task('srcbuild', ['concat:vendor-js', 'concat:js', 'build:vendor-css', 'build:css', 'copy:index', 'copy:html', 'copy:fonts']);
-gulp.task('build', gulpSequence('prebuild:clean', 'srcbuild', 'copy:qaUrls'));
-gulp.task('devbuild', gulpSequence('prebuild:clean', 'srcbuild', 'copy:urls'));
+gulp.task('build-qa', gulpSequence('prebuild:clean', 'srcbuild', 'copy:qaUrls'));
+gulp.task('build-ad', gulpSequence('prebuild:clean', 'srcbuild', 'copy:adUrls'));
+gulp.task('build-dev', gulpSequence('prebuild:clean', 'srcbuild', 'copy:devUrls'));
 gulp.task('dev', gulpSequence('prebuild:clean', 'srcbuild', 'copy:urls', 'develop', 'browser-sync'));
 gulp.task('serve', ['srcbuild'], reload);
 gulp.task('default', gulpSequence('prebuild:clean', 'srcbuild'));
