@@ -184,6 +184,6 @@ gulp.task('srcbuild', ['concat:vendor-js', 'concat:js', 'build:vendor-css', 'bui
 gulp.task('build-qa', gulpSequence('prebuild:clean', 'srcbuild', 'copy:qaUrls'));
 gulp.task('build-ad', gulpSequence('prebuild:clean', 'srcbuild', 'copy:adUrls'));
 gulp.task('build-dev', gulpSequence('prebuild:clean', 'srcbuild', 'copy:devUrls'));
-gulp.task('dev', gulpSequence('prebuild:clean', 'srcbuild', 'copy:urls', 'develop', 'browser-sync'));
+gulp.task('dev', gulpSequence('prebuild:clean', 'srcbuild', 'copy:devUrls', 'develop', 'browser-sync'));
 gulp.task('serve', ['srcbuild'], reload);
 gulp.task('default', gulpSequence('prebuild:clean', 'srcbuild'));
