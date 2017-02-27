@@ -148,7 +148,7 @@ gulp.task('develop', function () {
 			'server.js',
 			'karma.conf.js'
 		],
-		tasks: ['build']})
+		tasks: ['build-dev']})
 		.on('restart', function () {
 			console.log('restarted!')
 	})
