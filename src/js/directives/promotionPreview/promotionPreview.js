@@ -10,6 +10,7 @@ app.directive('promotionPreview', ["URL_CONFIG","promotionDataService","OverlayC
 			previewOverlayConfig:"=",
 			promoForm: "=",
 			formHolder: "=",
+			viewProp: "="
 		},
 		link : function (scope, element, attrs) {
 			console.log('preview promotion');

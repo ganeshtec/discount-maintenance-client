@@ -68,46 +68,30 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams','$timeout','$cook
 	    function setViewProperties(userType) {
 	    	console.log("User Type :: " + userType);
 	    	if (userType == allowedPermissionIDs.STORE) {
-				$scope.viewProperties = getStoreViewProperties();
+				$scope.viewProperties = getViewProperties(false);
 			} else if (userType == allowedPermissionIDs.ONLINE) {
-				$scope.viewProperties = getOnlineViewProperties();
+				$scope.viewProperties = getViewProperties(true);
 			} 
 			console.log("scope.viewProperties", $scope.viewProperties);
 	    }
 
-	    function getStoreViewProperties() {
+	    function getViewProperties(visiblity) {
 			console.log("GET STORE VIEW PROPERTIES");
 			return {
-                displayPromoDescription: false,
-                displayRedemptionMethod: false,
-                displayCombinationPromo: false,
-                displayPriority: false,
-                dispalyOMSId: false,
-                displayMFGBrand: false,
-                displayWebHierarchy: false,
-                displayOMSIdExclusion: false,
-                displayExclusionSubCategories: false,
-                displayPaymentType: false,
-                displayScheduleTime: false
+                displayPromoDescription: visiblity,
+                displayRedemptionMethod: visiblity,
+                displayCombinationPromo: visiblity,
+                displayPriority: visiblity,
+                displayOMSId: visiblity,
+                displayMFGBrand: visiblity,
+                displayWebHierarchy: visiblity,
+                displayOMSIdExclusion: visiblity,
+                displayExclusionSubCategories: visiblity,
+                displayPaymentType: visiblity,
+                displayScheduleTime: visiblity
             }
 		}
 
-		function getOnlineViewProperties() {
-			console.log("GET ONLINE VIEW PROPERTIES");
-			return {
-                displayPromoDescription: true,
-                displayRedemptionMethod: true,
-                displayCombinationPromo: true,
-                displayPriority: true,
-                displayOMSId: true,
-                displayMFGBrand: true,
-                displayWebHierarchy: true,
-                displayOMSIdExclusion: true,
-                displayExclusionSubCategories: true,
-                displayPaymentType: true,
-                displayScheduleTime: true
-            }
-		}
 
 		
 			// var userPermissions = loginService.getUserPermissions();

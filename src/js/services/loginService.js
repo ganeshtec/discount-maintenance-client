@@ -31,6 +31,7 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
                 if (response.data == null || response.data == undefined || response.data == '') {
                     $cookies.remove('THDSSO', { 'domain': '.homedepot.com' });
                     $cookies.remove('userName', { 'domain': '.homedepot.com' });
+                    $cookies.remove('userPermissions',{'domain': '.homedepot.com'});
 
                     status = 'invaliduser';
 
@@ -42,6 +43,7 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
                     if (THDSSO == null || THDSSO == 'null' || resstatus == 'INVALID_CREDENTIALS' || resstatus == 'PASSWORD_EXPIRED') {
                         $cookies.remove('THDSSO', { 'domain': '.homedepot.com' });
                         $cookies.remove('userName', { 'domain': '.homedepot.com' });
+                        $cookies.remove('userPermissions',{'domain': '.homedepot.com'});
 
                         status = 'invaliduser';
 

@@ -2,8 +2,8 @@
 app.factory('ALLOWED_PERMISSION_IDS', [function() {
     var _construct = function ALLOWED_PERMISSION_IDS() {
         var data = {
-            "STORE": 133,
-            "ONLINE": 132
+            "STORE": 228,
+            "ONLINE": 229
 
         };
 
