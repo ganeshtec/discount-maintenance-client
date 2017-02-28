@@ -2,7 +2,6 @@
 app.factory('SECTIONS', ['ALLOWED_PERMISSION_IDS', function(ALLOWED_PERMISSION_IDS){	
 	var _construct = function SECTIONS(userType){
 		var allowedPermissionIDs=ALLOWED_PERMISSION_IDS();
-        console.log("Allowed Users in SECTIONS :: " + allowedPermissionIDs.STORE);
 		if (userType == allowedPermissionIDs.STORE) {
 			return [
 				{name:"Promotion Properties",isActive:true,shouldDisplay:true, link: 'promotion-properties', icon: 'fa-gear' },
