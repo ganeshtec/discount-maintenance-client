@@ -76,7 +76,7 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams','$timeout','$cook
 	    }
 
 	    function getViewProperties(visiblity) {
-			console.log("GET STORE VIEW PROPERTIES");
+			//console.log("GET STORE VIEW PROPERTIES");
 			return {
                 displayPromoDescription: visiblity,
                 displayRedemptionMethod: visiblity,
