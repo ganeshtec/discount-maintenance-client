@@ -5,7 +5,7 @@ app.factory('URL_CONFIG', [function() {
 
             "dashboardUiUrl": "https://promotionsadmin.apps-zb.homedepot.com",
             "serviceUrl": "https://promotionsws.apps-zb.homedepot.com/v1",
-            "authorizeUrl" : "https://promotionsws.apps-zb.homedepot.com/v1/authorization/isAuthorized.json?userid=",
+            "authorizeUrl" : "https://promotionsws.apps-zb.homedepot.com/v1/authorization/isAuthorized/",
             "endecaUrl": "https://origin-thdws.gcp-prod.homedepot.com/TA2/facet"
 
         };

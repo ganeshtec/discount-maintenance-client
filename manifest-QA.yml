@@ -1,7 +1,7 @@
 inherit: manifest-base.yml
 applications:
-- name: promotionmaintenanceui
-  host: promotionmaintenanceui-qa
+- name: PromotionsMaintenanceExtUI
+  host: promotionsadmin-ext-qa
   instances: 2
   env:
     Node_env: 'QA'

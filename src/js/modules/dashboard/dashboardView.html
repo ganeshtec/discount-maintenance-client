@@ -88,7 +88,7 @@
 					<div flex="40">
 						<!--Button/Link Small Group -->
 						<div class="md-button-group sm">
-				      <a class="md-button util__btn no-margin" ng-click="selectedCount == 1 && edit()" ng-disabled="selectedCount != 1"><i class="fa fa-pencil"></i> Edit</a>
+				      <a class="md-button util__btn no-margin" href="" ng-click="selectedCount == 1 && edit()" ng-disabled="selectedCount != 1"><i class="fa fa-pencil"></i> Edit</a>
 				      <a class="md-button util__btn"  ng-click="selectedCount == 1 && duplicate()" ng-disabled="selectedCount != 1"><i class="fa fa-clone"></i> Duplicate</a>
 				      <a class="md-button util__btn" ng-click="isActive() && selectedCount ==1 && deactivate()" ng-disabled="!isActive() || selectedCount!= 1" ><i class="fa fa-remove" ></i> Deactivate</a>
 				      <a class="md-button util__btn" ng-disabled="hasActive() ||selectedCount == 0" ng-click="selectedCount != 0 && !hasActive() && delete()"><i class="fa fa-trash"></i> Delete</a>
