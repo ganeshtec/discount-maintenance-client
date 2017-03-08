@@ -1,5 +1,5 @@
 <ul class="admin__subnav">
-	<li ng-repeat="item in data" ng-class="{'admin__subnav__item--active': item.isActive}" class="admin__subnav__item" ng-show="item.shouldDisplay">
+	<li ng-repeat="item in data" ng-class="{'admin__subnav__item--active': item.isActive}" class="admin__subnav__item">
 		<a ng-click="setActive(item)" class="admin__subnav__link">
 			<i class="fa {{item.icon}} admin__subnav__link__icon icon-large"></i>
 			{{item.name}}

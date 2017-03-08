@@ -1,11 +1,11 @@
 <div class="admin__promotion__form__controls">
-	<a href="" class="md-button secondary admin__promotion__form__controls--left" ng-click="setActive(index-1)" ng-show="index>0">
+	<a href="" class="md-button secondary admin__promotion__form__controls--left" ng-click="pageDown(index-1)" ng-show="index>0">
 		Back
 	</a>
 	<!--  <a href="" class="md-button secondary admin__promotion__form__controls--right" ng-click="setActive(index + 1)" ng-show="index<data.length-1">
 		Next
 	</a> -->
-	<button href="" class="md-button secondary admin__promotion__form__controls--right" ng-click="setActive(index + 1)" ng-show="index<data.length-1">
+	<button href="" class="md-button secondary admin__promotion__form__controls--right" ng-click="pageUp(index + 1)" ng-show="index<data.length-1">
 		Next
 	</button> 
 </div>

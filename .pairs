@@ -5,15 +5,14 @@ pairs:
         em: Evan Miller; emiller
         rs: Roman Sanchez; rsanchez
         sl: Spencer Lewis; slewis
-        ft: Fitsum Teshome; fteshome
         wt: William Tabor; wtabor
-        cd: Carl Domingue; cdomingue
         cs: Coredelle Smith; csmith
         jd: Justin Doak; jdoak
         ig: Immanuel Gooding; igooding
         nw: Nageswararao Kanchepu; nkanchepu
         gt: Ganesan Thangapandian; gthangapandian
         cb: Clifford Burchfield; cburchfield
+        sk: Sravanthi Kedarisetti; skedarisetti
 email:
         prefix: pair
         domain: pivotallabs.com

@@ -19,28 +19,28 @@
 					Items to Exclude 
 				</h4>
 
-				  <div class="md-text-field">
+			<div class="md-text-field">
+				<div class="md-radio" ng-show="viewProp.displayOMSIdExclusion">
+					<input type="radio" id="itemsoms_exclude" name="oms_excludeoption" ng-model="itemexclude"
+						title="Items/OMS ID's" value="itemoms"  ng-change="setExcludeItemType()"/>
+					<label for="itemsoms"><span><span></span></span>Items/OMS ID's</label>
+				</div>
 				<div class="md-radio">
-				<input type="radio" id="itemsoms_exclude" name="oms_excludeoption" ng-model="itemexclude"
-					title="Items/OMS ID's" value="itemoms"  ng-change="setExcludeItemType()"/>
-				<label for="itemsoms"><span><span></span></span>Items/OMS ID's</label>
-			</div>
-			<div class="md-radio">
-				<input type="radio" id="itemssku_exclude" name="sku_excludeoption" ng-model="itemexclude"
-					title="Items/SKU" value="itemsku" ng-change="setExcludeItemType()"/>
-				<label for="itemssku"><span><span></span></span>Items/SKU</label>
-			</div>
+					<input type="radio" id="itemssku_exclude" name="sku_excludeoption" ng-model="itemexclude"
+						title="Items/SKU" value="itemsku" ng-change="setExcludeItemType()"/>
+					<label for="itemssku"><span><span></span></span>Items/SKU</label>
+				</div>
 
 			</div>
 
 
 				<!-- Item view Codes Component -->
-				<item-inclusion data="data.partnumbers" itemtype= "itemtype" purchaseoption="itemexclude" promoform="promoform"></item-inclusion>
+				<item-inclusion data="data.partnumbers" itemtype= "itemtype" purchaseoption="itemexclude" promoform="promoform" view-prop="viewProp"></item-inclusion>
 				
 			</div>
 		</li>
 
-		<li class="collapse__content">
+		<li class="collapse__content" ng-show="viewProp.displayExclusionSubCategories">
 			<label class="collapse__header" flex="100" ng-class="{active : isActive_2 || data.hierarchies.length > 0 }">
 				<input type="checkbox" name="collapse" class="collapse__header__control" ng-model="isActive_2 "/>
 				<i class="fa" ng-class="{'fa-chevron-up' : isActive_2, 'fa-chevron-down' : !isActive_2}"></i>

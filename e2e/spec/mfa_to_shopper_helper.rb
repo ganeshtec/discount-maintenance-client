@@ -41,11 +41,21 @@ def tomorrow
   future_date(1)
 end
 
-def sign_in
+def online_sign_in
   visit "#{PROMO_UI_HOST}"
   if page.has_content? 'Please provide a valid user name and password.'
-    fill_in 'j_username', with: ENV['USER_ID']
-    fill_in 'j_password', with: ENV['USER_PASSWORD']
+    fill_in 'j_username', with: ENV['ONLINE_USER_ID']
+    fill_in 'j_password', with: ENV['ONLINE_USER_PASSWORD']
+    #binding.pry
+    click_on 'Sign In'
+  end
+end
+
+def store_sign_in
+  visit "#{PROMO_UI_HOST}"
+  if page.has_content? 'Please provide a valid user name and password.'
+    fill_in 'j_username', with: ENV['STORE_USER_ID']
+    fill_in 'j_password', with: ENV['STORE_USER_PASSWORD']
     #binding.pry
     click_on 'Sign In'
   end

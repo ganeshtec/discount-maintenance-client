@@ -5,6 +5,7 @@ app.controller('loginCtrl', ['$scope', '$routeParams', '$location','$cookies', '
         $scope.showError = loginService.getErrorStatus() || null;
         $scope.submit = function() {
             $cookies.remove('logout', { 'domain': '.homedepot.com' });
+            $cookies.remove('userPermissions',{'domain': '.homedepot.com'});
             loginService.authenticate($scope.name, $scope.password).then(function(data) {
                 $scope.showError = data;
             });

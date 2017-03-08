@@ -3,6 +3,7 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
         var publicApi = {};
         var status = null;
         var urls = new URL_CONFIG();
+        var userPermissions = null;
 
         publicApi.getErrorStatus = function() {
             return status;
@@ -30,6 +31,7 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
                 if (response.data == null || response.data == undefined || response.data == '') {
                     $cookies.remove('THDSSO', { 'domain': '.homedepot.com' });
                     $cookies.remove('userName', { 'domain': '.homedepot.com' });
+                    $cookies.remove('userPermissions',{'domain': '.homedepot.com'});
 
                     status = 'invaliduser';
 
@@ -41,6 +43,7 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
                     if (THDSSO == null || THDSSO == 'null' || resstatus == 'INVALID_CREDENTIALS' || resstatus == 'PASSWORD_EXPIRED') {
                         $cookies.remove('THDSSO', { 'domain': '.homedepot.com' });
                         $cookies.remove('userName', { 'domain': '.homedepot.com' });
+                        $cookies.remove('userPermissions',{'domain': '.homedepot.com'});
 
                         status = 'invaliduser';
 
@@ -103,6 +106,7 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
                 if (response.data == null || response.data == undefined || response.data == '') {
                     $cookies.remove('THDSSO',{'domain': '.homedepot.com'});
                     $cookies.remove('userName',{'domain': '.homedepot.com'});
+                    $cookies.remove('userPermissions',{'domain': '.homedepot.com'});
             
                     status = 'invaliduser';
                     $location.path("login");
@@ -142,6 +146,9 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
 
         }
 
+        publicApi.getUserPermissions = function(){
+            return userPermissions;
+        }
 
         // Method to check user has authorization to see the applicaiton
         publicApi.authorizeUser = function(username,sourcepage) {
@@ -150,7 +157,7 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
             var deferred = $q.defer();
              $http({
                 method: 'GET',
-                url:  urls.authorizeUrl + username,
+                url:  urls.authorizeUrl + username +'.json',
                 cache: false,
                 headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
 
@@ -167,16 +174,19 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
                    
                     
                      var data = response.data;
-                    if (data.valid != 'true') {
+                    if (data.length === 0) {
                         status = 'unauthorized';
                         redirectPage();
+                    
                     } else {
+                        userPermissions = data;
+                        console.log("USER PERMISSIONS IN LOGIN SERVICE", userPermissions);
+                        $cookies.put('userPermissions', JSON.stringify(userPermissions));
                         status = 'success';
                         if( sourcepage === 'login') {
                              $location.path("promotion-dashboard");
                         }
                         
-                         
                     }
                  
                 }
@@ -198,7 +208,8 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
             function redirectPage() {
                 status = 'unauthorized';
                  $cookies.remove('THDSSO', { 'domain': '.homedepot.com' });
-                 $cookies.remove('userName', { 'domain': '.homedepot.com' });                
+                 $cookies.remove('userName', { 'domain': '.homedepot.com' }); 
+                 $cookies.remove('userPermissions',{'domain': '.homedepot.com'});               
                 $location.path("login");
             }
 

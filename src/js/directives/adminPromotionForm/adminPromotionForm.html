@@ -3,7 +3,7 @@
 		<section class="admin__promotion__section" ng-show="index == 0 || preview">
 			<div class="md-text-field">
 				<label for="name">
-					Promotion Name {{isDisabled}}
+					Promotion Name {{isDisabled}} {{userType}}
 				</label>
 				<input type="text" id="name" name="name" ng-model="data.name" title="Promotion Name" placeholder="Enter 254 characters or less" ng-maxlength="254" ng-required="preview" allow-pattern="(\d|[a-z A-Z\_])" />
 				<span class='error-message' ng-show="promoForm.name.$invalid">
@@ -30,7 +30,7 @@
 					</span>
 				</span>
 			</div> 
-			<div class="md-select md-select-space">
+			<div class="md-select md-select-space" ng-show="viewProp.displayRedemptionMethod">
 				<label for="method">
 					Redemption Method
 				</label>
@@ -41,13 +41,14 @@
 				</select>
 			</div> 
 			<promotion-code-specification ng-if="data.promoCdRqrd" test ="{{data.couponId}}" couponId="data.couponId" preview="preview" data="data.promoCdSpec" require="data.promoCdRqrd" promoform='promoForm'></promotion-code-specification>
-			<div class="md-text-field">
+			<div class="md-text-field" ng-show="viewProp.displayCombinationPromo">
 				<label for="promocombo">
 					Combination with other promotions
 				</label>
 				<input type="text" name="promocombo" ng-model="data.promocombo" title="Promotion Combinations" placeholder="Combine with other promotions" disabled />
 			</div>
-			<div class="md-text-field">				
+			<div class="md-text-field" ng-show="viewProp.displayPriority">	
+
 				<label for="priority">
 					Priority
 				</label>
@@ -70,7 +71,7 @@
 			</div>
 		</section>
 		<section class="admin__promotion__section" ng-show="index == 1 || preview">
-			<purchase-condition-rewards preview="preview" data="data" promoform="promoForm" is-disabled="isDisabled">
+			<purchase-condition-rewards preview="preview" data="data" view-prop="viewProp" promoform="promoForm" is-disabled="isDisabled">
 			</purchase-condition-rewards>
 		</section>
 		<section class="admin__promotion__section" ng-show="index == 2 || preview">
@@ -81,7 +82,7 @@
 				<purchase-condition data="data.reward.details" preview="preview" qualuom = "data.purchaseConds.qualUOM" reward="data.reward" promoform="promoform"  purchase-condition="data.purchaseConds" is-disabled="isDisabled" promotype="data.promoSubTypeCd">
 				</purchase-condition>
 		</section>
-		<section class="admin__promotion__section" ng-show="index == 4 || preview">
+		<section class="admin__promotion__section" ng-show="viewProp.displayPromoDescription && (index == 4 || preview)">
 				<promo-description data="data">
 				</promo-description>
 		</section>
@@ -90,7 +91,7 @@
 				</redemption-limit>
 		</section>
 		<section class="admin__promotion__section" ng-show="index == 6 || preview">
-				<promo-schedule data="data" preview="preview" promoform="promoForm">
+				<promo-schedule data="data" preview="preview" promoform="promoForm" view-prop="viewProp">
 				</promo-schedule>
 		</section>
 	</fieldset>
