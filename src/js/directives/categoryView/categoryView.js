@@ -45,8 +45,6 @@ app.directive('categoryView', ['categoryDataService', 'DataFactory','OverlayConf
 				 	DataFactory.messageModal.title = 'Warning';
 				 	$('#messageModal').popup();
 				 }
-				
-				console.log('Add item', scope.data);
 			}
 			
 		scope.$on('addedCategory', function (event,item) {

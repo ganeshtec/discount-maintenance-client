@@ -8,7 +8,6 @@ app.directive('pagination',['$anchorScroll',function($anchorScroll){
 			onsizechange :"&"
 		},
 		controller : function(){
-			console.log('controller');
 		},
 		link : function (scope, element, attrs) {
 			scope.pages = [];
@@ -20,8 +19,7 @@ app.directive('pagination',['$anchorScroll',function($anchorScroll){
 				// Number of rows to be displayed in a page
 				var  recordsPerPage = parseInt(config.recordsPerPage || 5); 
 				// Number of pages to diplay between next and previous buttons
-				var paginationLength = parseInt(config.paginationLength || 5); 
-				console.log("pagination - page length=" + config.paginationLength);
+				var paginationLength = parseInt(config.paginationLength || 5);
 				// Total number of records
 				var totalRecords = parseInt(config.totalRecords || 30);
 				//Number of rcords displayed in the last Page
@@ -65,7 +63,6 @@ app.directive('pagination',['$anchorScroll',function($anchorScroll){
 					scope.onpagechange()(no);
 				}
 				scope.isCurrentPage = function(no){
-					console.log('pagination - isCurrentPage - is current');
 					return scope.config.currentPage == no;
 				}
 				scope.pages = [];
@@ -81,7 +78,6 @@ app.directive('pagination',['$anchorScroll',function($anchorScroll){
 				
 				$anchorScroll();
 				
-
 			}
 			
 			scope.repaint();

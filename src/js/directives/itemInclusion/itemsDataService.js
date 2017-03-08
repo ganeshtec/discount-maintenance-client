@@ -8,8 +8,6 @@ app.service('itemsDataService', ['$http', '$q', 'dataService', 'DataFactory',
 		var publicApi = {};
 
 		publicApi.getOmsIdCodes = function (data) {
-			console.log('getOmsIdCodes ', data);
-
 			var config = {
 				method: 'POST',
 				url: '/omsInfo/validate.json',
@@ -18,10 +16,8 @@ app.service('itemsDataService', ['$http', '$q', 'dataService', 'DataFactory',
 				result = $q.defer();
 			dataService.httpRequest(config).then(
 				function (response) {
-					console.log(response.data);
 					result.resolve(response.data);
 				}, function (error) {
-					console.log(error);
 					result.reject(error);
 				}
 			);
@@ -37,7 +33,7 @@ app.service('itemsDataService', ['$http', '$q', 'dataService', 'DataFactory',
 		};
 
 		publicApi.getSkuIdCodes = function (data) {
-			console.log('getSkuIdCodes ', data);
+
 
 			var config = {
 				method: 'POST',
@@ -47,10 +43,8 @@ app.service('itemsDataService', ['$http', '$q', 'dataService', 'DataFactory',
 				result = $q.defer();
 			dataService.httpRequest(config).then(
 				function (response) {
-					console.log(response.data);
 					result.resolve(response.data);
 				}, function (error) {
-					console.log(error);
 					result.reject(error);
 				}
 			);
@@ -58,13 +52,10 @@ app.service('itemsDataService', ['$http', '$q', 'dataService', 'DataFactory',
 		}
 
 		publicApi.getSkuIDs = function (data) {
-			console.log(" the skuids ", data);
 			var skuIDs = [];
 			for (var i = 0; i < data.length; i++) {
-				console.log("inside for ", data[i]);
 				skuIDs.push(parseInt(data[i]));
 			}
-			console.log("return array", skuIDs);
 			return skuIDs;
 		};
 

@@ -21,17 +21,6 @@ app.directive('categoryExclusion', [
 
 			}
 
-			console.log(" the skcope data ===>",scope.data);
-			console.log(" the skcope data itemtype ===>",scope.data.itemtype);
-			console.log("View Prop displayOMSIdExclusion --", scope.viewProp.displayOMSIdExclusion);
-			
-			// if(scope.data) {
-			// 	if(scope.data.itemtype && scope.data.itemtype == 'SKU') {
-			// 		scope.itemexclude = 'itemsku';
-					
-			// 	} else {
-			// 		scope.itemexclude = 'itemoms';
-			// 	}
 			if(scope.viewProp.displayOMSIdExclusion)
 			{
 				if(scope.data) {

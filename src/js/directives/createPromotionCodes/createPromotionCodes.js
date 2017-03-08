@@ -10,8 +10,6 @@ app.directive('createPromotionCodes', ['PROMOCODE',
                 preview:'='
             },
             link: function(scope, $element, attrs) {
-                console.log('create');
-                 console.log(scope.preview);
                 if (!scope.data) {
                     scope.data = [];
                 }

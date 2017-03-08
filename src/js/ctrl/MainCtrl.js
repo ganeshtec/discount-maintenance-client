@@ -17,7 +17,6 @@ app.controller('MainCtrl', ['$scope', '$location', '$cookies', 'DataFactory', 'S
 			// Watch change in sections to set current section
   		$scope.$watch('sections', function(model, oldModel){
   			if(model !== oldModel){
-  				console.log('sections');
   				$scope.sectionInx = $scope.sections.indexOf(promotionDataService.getSection(model));
   			}
   		}, true);

@@ -26,7 +26,6 @@ app.directive(
 									scope.validStoreInfo = [];
 									scope.inValidStoreInfo = false;
 									scope.showInvalidError = false;
-									// scope.required = true;
 
 									scope.addStoretest = addStore;
 
@@ -43,7 +42,6 @@ app.directive(
 													+ existingID
 											DataFactory.messageModal.title = 'Warning';
 											$('#messageModal').popup();
-											console.log('!addStore: ', item);
 										}
 
 									}
@@ -52,12 +50,10 @@ app.directive(
 										scope.data = scope.validStoreInfo.reduce(function(data, item) {
 															return data.concat(item.storeNumber);
 														}, []);
-										console.log('Check items: ',scope.data);
 									}
 									function setStoreData(data, clicked) {
 										existingID = '';
-										console.log("Inside SetStore data is ",
-												data);
+									
 										if (!scope.validStoreInfo.length && scope.data && !scope.itemSearch) {
 											$.extend(true,
 													scope.validStoreInfo,
@@ -86,7 +82,6 @@ app.directive(
 									}
 
 									function getStoresByID(data, clicked) {
-										console.log("Service call starting getStoresByID");
 										var tempData = {};
 										tempData.storeNumbers = locationDataService
 												.getStoreIds(data.storeNumbers)
@@ -136,18 +131,14 @@ app.directive(
 									scope.removePromoCode = function(index) {
 										scope.validStoreInfo.splice(index, 1);
 										setData();
-										console.log('removePromoCode: ',
-												scope.data);
 									}
 
 									scope.search = function(data) {
 										if (!data || data == null || data == "") {
-											console.log("Null Check");
 											DataFactory.messageModal.message = 'Please enter a valid Store Number';
 											DataFactory.messageModal.title = 'Warning';
 											$('#messageModal').popup();
 										} else {
-											console.log('Search Items: ', data);
 											data = data.replace(/\s\s+/g, ' ')
 													.split(/[',',' ',', ']+/);
 										

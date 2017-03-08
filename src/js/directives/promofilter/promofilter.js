@@ -8,7 +8,6 @@ app.directive('promofilter', function(){
 			onfilter :"&" ,
 		},
 		controller : function(){
-			console.log('controller');
 		},
 		link : function (scope, element, attrs) {
 			scope.pages = [];
