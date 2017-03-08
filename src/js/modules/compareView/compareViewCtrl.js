@@ -17,7 +17,6 @@ app.controller('compareViewCtrl', ['$scope', '$routeParams','$timeout','$cookies
 		function getPromotionTest(type){
 			return promotionDataService.getPromotionTest(type);
 		}
-		// getPromotionTest(false);
 		// Method to get promotion by id - Test Should return promotion record
 		function getPromotionByID(id){
           
@@ -39,7 +38,6 @@ app.controller('compareViewCtrl', ['$scope', '$routeParams','$timeout','$cookies
 		// Initializes Data Model
 		function init(){
 	    //checking the session validation.
-	    // isValidSession();
             
 			$scope.validData = {};
 			$scope.messageModal = {};		

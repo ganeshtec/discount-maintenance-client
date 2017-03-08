@@ -27,12 +27,6 @@ app.service('adminSubnavService', ['SECTIONS', function(SECTIONS){
 	publicApi.getSections = function(){
 		return SECTIONS;
 	}
-	// Takes sections, Test return section flagged as active
-	// publicApi.getSection = function(sections){
-	// 	var section = $.grep(sections, function(e){return e.isActive === true;});
-	// 	return section[0] || {};
-	// }
-
 	return publicApi;
 	
 }]);

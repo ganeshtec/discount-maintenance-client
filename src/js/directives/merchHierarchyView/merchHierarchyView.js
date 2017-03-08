@@ -97,11 +97,8 @@ app.directive("merchHierarchyView", ['merchHierarchyDataService', 'DataFactory',
 				scope.tableData = $.extend(true, [], scope.tableData);
 
 				if (scope.data && scope.data.length > 0) {
-					//for(var i=0;i<scope.data.length>0;i++){
 					for (var i = 0; i < scope.data.length; i++) {
 						if (scope.data[i].catalog === "Merch") {
-							//var merchNames=scope.data[i].name.split("~");
-							//var merchIds=scope.data[i].id.split("~");
 
 							var tableObject = prepareTableData(scope.data[i]);
 
@@ -135,7 +132,6 @@ app.directive("merchHierarchyView", ['merchHierarchyDataService', 'DataFactory',
 						if (subclsNum) { subclsNum = subclsNum } else { subclsNum = ""; }
 					}
 
-					//dcsId=dptNum+"~"+clsNum+"~"+subclsNum;
 					dcsId = dptNum + delimeter + clsNum + delimeter + subclsNum;
 
 					return dcsId;

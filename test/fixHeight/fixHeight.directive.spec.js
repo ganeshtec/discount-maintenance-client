@@ -37,8 +37,7 @@ describe('Unit testing fix height directive', function() {
     // Compile a piece of HTML containing the directive
     var element = $compile("<div style='height:1750px'><div fix-height>min-height</div>")($scope);
     $scope.$digest();
-   
-    //checkj if the min-height is set 
+
     expect(element.html()).toContain("min-height");
 
   });

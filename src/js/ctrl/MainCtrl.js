@@ -50,19 +50,5 @@ app.controller('MainCtrl', ['$scope', '$location', '$cookies', 'DataFactory', 'S
           
       }
 
-      // get promo subtypes
-  		// var getPromotionPromise = promotionDataService.getPromotionSubTypes();
-    //   getPromotionPromise.then(
-    //       function(data) {
-    //           DataFactory.promotionSubTypes = data.promotionSubTypes;
-    //       },
-    //       function(error) {
-    //           DataFactory.messageModal.message = error;
-    //           DataFactory.messageModal.title = 'Error';
-    //           $('#messageModal').popup();
-
-    //       });
-
-        
 
 }]);

@@ -34,8 +34,7 @@ app.component('adminFooter', {
 			utilService.setDefaultsForSaveAsDraft(tempData); 
   			utilService.transformPromotionRequest(tempData); 
   			inprogress = true;
-			// this.data = utilService.calculatePurchaseCondition(this.data);
-			// this.data.status = '20'; // Status code for draft
+
 			var promise = promotionDataService.saveAsDraft(tempData);
 			promise.then(
 				function(data){
@@ -52,7 +51,6 @@ app.component('adminFooter', {
 		this.preview = function(data) {
 			this.previewdata.data = $.extend(true, {}, data);
 			this.previewOverlayConfig.open();
-			// this.data = utilService.calculatePurchaseCondition(this.data);
 		}
 		this.canSave = function(promotion){
 			return utilService.canSaveAsDraft(promotion) && !inprogress;

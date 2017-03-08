@@ -49,7 +49,6 @@ app.service('promotionDataService', ['$http', '$q', 'dataService', 'DataFactory'
 				function(response){
 
 					result.resolve(response.data);
-					//result.resolve(new SourceData());
 				},function(error){
 
 					result.reject(error);
@@ -234,7 +233,6 @@ app.service('promotionDataService', ['$http', '$q', 'dataService', 'DataFactory'
 
 				result.reject(error);
 		});
-		// result.resolve(new promotionSubTypes());
 		return result.promise;
 	},
 	publicApi.savePromotions = function(promotions){

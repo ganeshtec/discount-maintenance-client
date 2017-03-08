@@ -34,7 +34,6 @@ app.directive('allowPattern', [
           			// If the keyCode char does not match the allowed Regex Pattern, then don't allow the input into the field.
  
                     if (!keyCodeChar.match(new RegExp(attrs.allowPattern, "i"))) {
-            			// event.preventDefault();
                         var initVal = $(this).val();
                         outputVal = initVal.replace(/[^0-9 a-zA-Z\(\?\-\_\.\"\'\*\,\%\$\!\@\)]/g,"");
                         if (initVal != outputVal) {

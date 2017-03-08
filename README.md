@@ -12,6 +12,27 @@ All new features added to this repo must be covered by both unit tests (followin
   bundle install
   ./bin/run_test.sh
   
-  *** tests must be run from within capybaraTests folder ***
+  *** tests must be run from within e2e folder ***
   *** Promo UI and WS must both be running               ***
   ```
+
+// Old Repo
+# Clone master branch 
+git clone git@github.homedepot.com:Pricing/Promotion_Maintenance_Extended_UI.git
+
+# Go into directory
+cd Promotion_Maintenance_Extended_UI
+
+# Install dependencies using npm
+npm install
+
+
+# Build and run locally
+npm run dev
+
+# Run unit tests
+npm run test
+
+# Run e2e tests
+npm run e2e // run on separate console
+

@@ -2,16 +2,6 @@
 // Global Buttons
 // --------------------------------------------------
 
-// [role="button"],
-// input[type="submit"],
-// input[type="reset"],
-// input[type="button"],
-// button {
-//     -webkit-box-sizing: border-box;
-//        -moz-box-sizing: border-box;
-//             box-sizing: border-box;
-// }
-
 /* Reset `button` and button-style `input` default styles */
 input[type="submit"],
 input[type="reset"],
@@ -38,18 +28,6 @@ button::-moz-focus-inner {
     padding: 0;
 }
 
-// /* Make `a` like a button */
-// [role="button"] {
-//     color: inherit;
-//     cursor: default;
-//     display: inline-block;
-//     text-align: center;
-//     text-decoration: none;
-//     white-space: pre;
-//     -webkit-user-select: none;
-//        -moz-user-select: none;
-//         -ms-user-select: none;
-// }
 
 .btn--reverse-brand, input.btn--reverse-brand { // white button, orange border, orange text
   @include btn-secondary($reverse, $brand, 100%, 42px, $font-size-base);

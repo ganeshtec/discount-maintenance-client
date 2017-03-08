@@ -1,7 +1,6 @@
 'use strict';
 
 const Hapi = require('hapi');
-// const Good = require('good');
 const Inert = require('inert');
 const config = require('./config/settings');
 const server = new Hapi.Server();
@@ -40,28 +39,3 @@ server.start(() => {
   server.log('info', 'Server running at: ' + server.info.uri);
 
 });
-
-// Good console - Log messages
-// server.register([
-//     {
-//         register: Good,
-//         options: {
-//             reporters: [{
-//                 reporter: require('good-console'),
-//                 events: {
-//                     response: '*',
-//                     log: '*'
-//                 }
-// 			}]
-//         }
-// 	}
-// ], (err) => {
-//     if (err) {
-//         throw err; // something bad happened loading the plugin
-//     }
-
-//     server.start(() => {
-//         server.log('info', 'Server running at: ' + server.info.uri);
-
-//     });
-// });

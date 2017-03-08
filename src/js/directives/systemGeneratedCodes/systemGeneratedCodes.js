@@ -39,10 +39,7 @@ app.directive('systemGeneratedCodes', ['$filter', 'promotionDataService', 'DataF
 				if(!cdlength){
 					cdlength = 1;
 				}
-				// if(!data.uniqueCdCnt){
-				// 	data.uniqueCdCnt = 1;
-				// }
-				
+			
 				if(data && cdlength && data.uniqueCdCnt){
 					data.cdPrefix = data.cdPrefix.toUpperCase();
 					data.cdSuffix = data.cdSuffix.toUpperCase();

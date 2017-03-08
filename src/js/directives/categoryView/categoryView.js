@@ -79,8 +79,6 @@ app.directive('categoryView', ['categoryDataService', 'DataFactory','OverlayConf
 								scope.categoryDataLoading = false;
 								
 								scope.searchResults = data.data;
-								
-								//TODO: check why this is here , there is a typo
 							
 								if(data.data.length == 0) {
 									DataFactory.messageModal.message = 'Category not found';
@@ -94,7 +92,7 @@ app.directive('categoryView', ['categoryDataService', 'DataFactory','OverlayConf
 								DataFactory.messageModal.title = 'Error';
 								$('#messageModal').popup();
 							});
-							//scope.categoryDataLoading = false;
+						
 			}
 		}
 	};
