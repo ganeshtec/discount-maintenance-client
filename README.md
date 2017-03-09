@@ -23,7 +23,7 @@ git clone git@github.homedepot.com:Pricing/Promotion_Maintenance_Extended_UI.git
 cd Promotion_Maintenance_Extended_UI
 
 # Install dependencies using npm
-npm install
+npm install (may require sudo npm install)
 
 # Build and run locally
 npm run dev
