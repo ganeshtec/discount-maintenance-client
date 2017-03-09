@@ -17,7 +17,6 @@ app.controller('MainCtrl', ['$scope', '$location', '$cookies', 'DataFactory', 'S
 			// Watch change in sections to set current section
   		$scope.$watch('sections', function(model, oldModel){
   			if(model !== oldModel){
-  				console.log('sections');
   				$scope.sectionInx = $scope.sections.indexOf(promotionDataService.getSection(model));
   			}
   		}, true);
@@ -51,19 +50,5 @@ app.controller('MainCtrl', ['$scope', '$location', '$cookies', 'DataFactory', 'S
           
       }
 
-      // get promo subtypes
-  		// var getPromotionPromise = promotionDataService.getPromotionSubTypes();
-    //   getPromotionPromise.then(
-    //       function(data) {
-    //           DataFactory.promotionSubTypes = data.promotionSubTypes;
-    //       },
-    //       function(error) {
-    //           DataFactory.messageModal.message = error;
-    //           DataFactory.messageModal.title = 'Error';
-    //           $('#messageModal').popup();
-
-    //       });
-
-        
 
 }]);

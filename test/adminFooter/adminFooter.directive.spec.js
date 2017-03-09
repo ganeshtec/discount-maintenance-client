@@ -23,7 +23,6 @@ describe('Unit testing adminFooter.directive.spec.js', function() {
     var element = $compile("<admin-footer data='promotionData'></admin-footer>")($scope);
     $scope.$digest();
     // Check that the compiled element contains the templated content
-    //expect(element.html()).toContain("Cancel");
     expect(element.html()).toContain("Preview");
     expect(element.html()).toContain("Save as Draft");
   });
@@ -34,7 +33,6 @@ describe('Unit testing adminFooter.directive.spec.js', function() {
     element = $compile("<admin-footer data='promotionData'></admin-footer>")($scope);
     $scope.$digest();
     // Check that the compiled element contains the templated content
-    //expect(element.html()).toContain("Cancel");
     expect(element.html()).toContain("Save as Draft");
     expect(element.html()).toContain("Submit");
   });
@@ -44,15 +42,6 @@ describe('Unit testing adminFooter.directive.spec.js', function() {
 	  var data = $scope.promotionData;
     var isolateScope = element.controller("adminFooter");
     expect(element.html()).toContain("Save as Draft");
-    //spyOn(isolateScope, "saveDraft");
-    //TODO use a different selector 
-    //element.find('.md-button')[1].click()
-   // expect(isolateScope.saveDraft).toHaveBeenCalled();
-
-    //spyOn(isolateScope, "cancel");
-    //TODO use a different selector 
-    //element.find('.md-button')[0].click()
-    //expect(isolateScope.cancel).toHaveBeenCalled();
 
   }); 
 

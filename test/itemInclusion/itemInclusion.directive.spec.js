@@ -22,19 +22,9 @@ describe('Unit testing itemInclusion.directive.spec.js', function() {
     var element = $compile("<item-inclusion data='itemData'></item-inclusion>")($scope);
     $scope.$digest();
     $isolatedScope = element.isolateScope();
-    //console.log('BEFORE_______element Value_IN_ItemInclusion.directive.spec: %O', element);
-    //$isolatedScope.addItemForTesting({"skuNumber":"1213324"});
+
     var item= {"omsId": "202716986", "skuDescription": "WALL MOUNT 2-HANDLE ELEGANT SPOUT BA", "skuNumber": "1001299255", "prodName": "SDTR180 80 Grit Red Detail Triangle 5 Pack"}
     	
-    //$isolatedScope.addItemForTesting(item);
-    //console.log('AFTER_______element Value_IN_ItemInclusion.directive.spec: %O', element);
-    //$isolatedScope.setData();
-   // $scope.$digest();
-    // Check that the compiled element contains the templated content
-    //expect(element.html()).toContain("1001299255");
-    //expect(element.html()).toContain("1001299255");
-    //expect(element.html()).toContain("WALL MOUNT 2-HANDLE ELEGANT SPOUT BA");
-  
     
     
   });
@@ -45,14 +35,11 @@ describe('Unit testing itemInclusion.directive.spec.js', function() {
     var element = $compile("<item-inclusion data='itemData'></item-inclusion>")($scope);
     $scope.$digest();
     $isolatedScope = element.isolateScope();
-    //$isolatedScope.addItem({"skuNumber":"1213324"});
-    //$scope.$digest();
-    //expect(element.html()).toContain("1213324");
+
     $isolatedScope.removePromoCode(0);
     $isolatedScope.removeAll();
     $isolatedScope.clear();
-    //$scope.$digest();
-    //expect(element.html()).not.toContain("1213324");
+
   });
   
 // test conditions for item skus
@@ -60,12 +47,12 @@ describe('Unit testing itemInclusion.directive.spec.js', function() {
 // test condition validate the place holder for item sku search.
   
   it('Checks if sku item placeholder works', function() {
-	//var itemData = [];
+
 	
 	// Contain a piece of HTML containing the Directive  
 	var element = $compile("<item-inclusion></item-inclusion>")($scope);
 	$scope.$digest();
-	//$isolateScope = element.isolateScope();
+
 	
 	expect(element.html()).toContain("Search and Add Item Sku Number");
 	  
@@ -78,7 +65,7 @@ describe('Unit testing itemInclusion.directive.spec.js', function() {
 	// Contain a piece of HTML containing the Directive  
 		var element = $compile("<item-inclusion></item-inclusion>")($scope);
 		$scope.$digest();
-		//var $isolateScope = element.isolateScope();
+
 		
 		expect(element.html()).toContain("Please enter a valid Sku Number");
 	  

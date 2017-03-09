@@ -18,7 +18,6 @@ describe('Unit testing Promotion Header directive', function() {
 
   it('Checks if heading is constructed according to input data  ', function() {
     // Compile a piece of HTML containing the directive
-    //TODO change when the sample json is removed from catergoryView.js
     
     $scope.items = [
         {
@@ -34,8 +33,7 @@ describe('Unit testing Promotion Header directive', function() {
       ]
     var element = $compile("<category-view data='items'></category-view>>")($scope);
     $rootScope.$digest();
-    //TODO modify after constructing proper input
-    // Check that the compiled element contains the templated content
+
     expect(element.html()).toContain("Search and Add Category");
   }); 
 
@@ -63,7 +61,7 @@ describe('Unit testing Promotion Header directive', function() {
       };
 
       
-      console.log("Spy function");
+
       var jasmineHelpers = new JasmineHelpers();
       
 	  
@@ -89,9 +87,8 @@ describe('Unit testing Promotion Header directive', function() {
      });
  
    $rootScope.$digest();
-   //TODO use a different selector
+
    expect(element.html()).toContain("Search");
-  //expect(isolateScope.search).toHaveBeenCalled();
 
    
 

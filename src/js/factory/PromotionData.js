@@ -25,23 +25,15 @@ app.factory('PromotionData', [function(){
 			 "promoCdSpec": {
 						"type": "Public", // Private sys gen, Public user gen
 						"genType": "user", // user || system generated
-						// "systemGen": { // only if syst gen
-						// 	"uniqueCdCnt": "1",
-						// 	"cdPrefix": "",
-						// 	"cdSuffix": ""
-						// },
-						// "promoCodes": [ ], // only if user
 					"cdLength": ""
 			},
 			"promoSubTypeCd": "",
 			"promoSubTypeDesc": "",
 			"promoType": 0,
 			"purchaseConds": {
-				//"customerSegmentId": "",
 				"isInclusionsOrExclusionsExist": false, // if has inclusion or exclusion set true
 				"channels": [87],
 				"qualUOM": 'Quantity',
-				//"qualUOM": null,
 				"locations": [],
 				"isTargetExist": false,
 				"sources": [

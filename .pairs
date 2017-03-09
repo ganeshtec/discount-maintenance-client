@@ -4,15 +4,15 @@ Example:
 pairs:
         em: Evan Miller; emiller
         rs: Roman Sanchez; rsanchez
-        ig: Immanuel Gooding; igooding
         sl: Spencer Lewis; slewis
-        jd: Justin Doak
-        cs: Coredelle Smith
-        cb: Cliff Burchfield
-        ft: Fitsum Teshome
-        cd: Carl Domingue
-	gt: Ganesan Thangapandian
-        nk: Nageswararao Kanchepu
+        wt: William Tabor; wtabor
+        cs: Coredelle Smith; csmith
+        jd: Justin Doak; jdoak
+        ig: Immanuel Gooding; igooding
+        nw: Nageswararao Kanchepu; nkanchepu
+        gt: Ganesan Thangapandian; gthangapandian
+        cb: Clifford Burchfield; cburchfield
+        sk: Sravanthi Kedarisetti; skedarisetti
 email:
         prefix: pair
         domain: pivotallabs.com

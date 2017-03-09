@@ -4,7 +4,7 @@ app.controller('compareViewCtrl', ['$scope', '$routeParams','$timeout','$cookies
 		var promotionID1 = $routeParams.promotionID1 || null;
 		var promotionID2 = $routeParams.promotionID2 || null;
 
-		console.log('promotionID, promotionID1, promotionID2: ', promotionID, promotionID1, promotionID2);
+
 		$scope.sections = [];
 		$scope.previewData = { data :{}};
 		$scope.previewOverlayConfig = OverlayConfigFactory.getInstance();
@@ -17,7 +17,6 @@ app.controller('compareViewCtrl', ['$scope', '$routeParams','$timeout','$cookies
 		function getPromotionTest(type){
 			return promotionDataService.getPromotionTest(type);
 		}
-		// getPromotionTest(false);
 		// Method to get promotion by id - Test Should return promotion record
 		function getPromotionByID(id){
           
@@ -25,7 +24,7 @@ app.controller('compareViewCtrl', ['$scope', '$routeParams','$timeout','$cookies
       getPromotionPromise.then(
           function(data) {
               $scope.promotions.push(data);
-              console.log(" the promo data is ===>" + JSON.stringify(data));
+              
           },
           function(error) {
               DataFactory.messageModal.message = error;
@@ -39,7 +38,6 @@ app.controller('compareViewCtrl', ['$scope', '$routeParams','$timeout','$cookies
 		// Initializes Data Model
 		function init(){
 	    //checking the session validation.
-	    // isValidSession();
             
 			$scope.validData = {};
 			$scope.messageModal = {};		
@@ -63,7 +61,7 @@ app.controller('compareViewCtrl', ['$scope', '$routeParams','$timeout','$cookies
 		// Watch change in sections to set current section
 		$scope.$watch('sections', function(model, oldModel){
 			if(model !== oldModel){
-				console.log('sections');
+				
 				$scope.sectionInx = $scope.sections.indexOf(promotionDataService.getSection(model));
 			}
 		}, true);

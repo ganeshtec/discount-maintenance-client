@@ -29,7 +29,7 @@ describe('Unit testing adminHeader.directive.spec.js', function() {
     $scope.uistate="Edit";
     $scope.promotype={};
     $scope.promotype.promoSubTypeDesc="Promo type";
-    // console.log($scope);
+
     var element = $compile("<admin-header uistate='uistate' promotype='promotype'></admin-header>")($scope);
     $rootScope.$digest();
     // Check that the compiled element contains the templated content

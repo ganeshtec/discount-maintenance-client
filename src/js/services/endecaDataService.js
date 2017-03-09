@@ -17,10 +17,10 @@ app.service('endecaDataService', ['$http', '$q', 'dataService',
 		result = $q.defer();
 		dataService.httpRequest(config).then(
 			function(response){
-				console.log('getSalesCatalog', response.data);
+				
 				result.resolve(response.data);
 			},function(error){
-				console.log(error);
+				
 				result.reject(error);
 		});
 		

@@ -20,12 +20,10 @@ describe('Unit testing promoLocation.directive.spec.js', function() {
 // test condition validate the place holder for store location search.
   
   it('Checks if store location placeholder works', function() {
-	//var itemSearch= [];
 	
 	// Contain a piece of HTML containing the Directive  
 	var element = $compile("<promo-location></promo-location>")($scope);
 	$scope.$digest();
-	//$isolateScope = element.isolateScope();
 	
 	expect(element.html()).toContain("Search and Add Store Number");
 	  
@@ -34,12 +32,10 @@ describe('Unit testing promoLocation.directive.spec.js', function() {
 // test condition validate error message for store location search.
   
   it('Checks if store location placeholder works', function() {
-	//var itemSearch= [];
 	
 	// Contain a piece of HTML containing the Directive  
 	var element = $compile("<promo-location></promo-location>")($scope);
 	$scope.$digest();
-	//$isolateScope = element.isolateScope();
 	
 	expect(element.html()).toContain("Please enter a valid Store Number");
 	  

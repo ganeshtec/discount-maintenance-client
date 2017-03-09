@@ -50,7 +50,7 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
                         $location.path("login");
 
                     } else {
-                    	console.log("___Control inside else loop____");		
+		
                         $cookies.put('THDSSO', THDSSO, { 'domain': '.homedepot.com' });
                         $cookies.put('userName', username, { 'domain': '.homedepot.com' });
                         status = "";

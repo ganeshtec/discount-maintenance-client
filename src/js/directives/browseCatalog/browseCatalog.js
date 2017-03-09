@@ -4,8 +4,6 @@ app.directive('browseCatalog', ['endecaDataService', 'DataFactory',
 		restrict : 'E',
 		templateUrl : 'browseCatalog.html',
 		link : function (scope, element, attrs) {			
-			console.log('browseCatalog:directive :: browse catalog');
-			console.log(scope.browseCatalogOverlayConfig);
 			
 			scope.data = $.extend(true, [], scope.data);
 			

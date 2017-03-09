@@ -7,7 +7,6 @@ app.directive('browseCatalogBtn',[
 							
 							scope.browseCatalog = function(event){
 								scope.$emit('btnBrowseOnClick');
-								console.log('browseCatalog');	
 								
 							}					
 							

@@ -55,11 +55,7 @@ app.service('utilService', ['$filter', function($filter){
                  delete promotion.promoCdSpec;
             }   
         }
-        /**
-        if(!promotion.meta.createdBy || promotion.meta.createdBy == null){
-            promotion.meta.createdBy = "PROMO_ADMIN_UI"
-        }
-        **/
+       
         if(!promotion.meta.action || promotion.meta.action == null){
             promotion.meta.action = "create";
         }else if(promotion.meta.action ){
@@ -76,27 +72,13 @@ app.service('utilService', ['$filter', function($filter){
         if(promotion.reward){
             promotion.reward.method = rewardMethodMappoing[promotion.promoSubTypeCd];
         }
-        /**
-        //TODO: check if this is right
-        if((promotion.meta && promotion.meta.lastUpdatedTS) == null){
-            promotion.meta.lastUpdatedTS = new Date();
-        }
-        //TODO set from cookie
-        if((promotion.meta && promotion.meta.lastupdatedUser) == null){
-            promotion.meta.lastupdatedUser = "PROMO_ADMIN_UI";
-        }
-        **/
+
         if (promotion.promoSubTypeCd.indexOf('Percent') != -1) {
                 promotion.reward.type = 'PERCNTOFF';
         } else {
                 promotion.reward.type = 'AMTOFF';
         }
            
-        /**
-        if(promotion.purchaseConds && !promotion.purchaseConds.qualUOM){
-            promotion.purchaseConds.qualUOM = "Amount";
-        }
-        **/
         if(promotion.purchaseConds){
             if(promotion.purchaseConds.targets && promotion.purchaseConds.targets.length == 0){
                 delete promotion.purchaseConds.targets;
@@ -199,9 +181,9 @@ app.service('utilService', ['$filter', function($filter){
 	// Method to deactivate all sections, expected to have property .isActive
 	publicApi.calculatePurchaseCondition = function(data){
         publicApi.convertStringToInteger(data);
-        console.log("cal rewards ==>", data.reward.details);
+        
         data.reward.details = $filter('orderBy')(data.reward.details, 'min');
-        console.log("cal rewards after sort==>", data.reward.details);
+        
 
         var minPurchaseQty= -1;
 		$(data.reward.details).each(function(i, val){
@@ -209,15 +191,11 @@ app.service('utilService', ['$filter', function($filter){
             var detailsObject1 = data.reward.details[i];
             
             minPurchaseQty = data.reward.details[0].min;
-            // if( detailsObject1.min <minPurchaseQty  || minPurchaseQty == -1 ){
-            //     console.log(" the min prucahse qts --->"+detailsObject1.min);
-            //     console.log(" the min prucahse qtsminPurchaseQty --->"+minPurchaseQty);
-            //     minPurchaseQty = detailsObject1.min;
-            // }
+         
             var maxValue ;
             if(data.reward.details.length == (i+1)){
                 maxValue = -1;
-                //detailsObject1.seq = i+1; // to set seq only for last element in array
+
             } else {
               
             var detailsObject2 = data.reward.details[i+1];
@@ -232,13 +210,11 @@ app.service('utilService', ['$filter', function($filter){
             
             }
            
-                        //TODO: remove for testing
-            //detailsObject1.min = 1;
-            
+
             detailsObject1.max = maxValue;
             detailsObject1.seq = i+1;
             detailsObject1.qualUOM = data.purchaseConds.qualUOM;
-            console.log("cal details ==>",data.reward.details);
+            
 		});
         
          

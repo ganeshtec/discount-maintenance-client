@@ -1,7 +1,6 @@
 app.factory('purchaseCondition', [function(){	
 	var _construct = function purchaseCondition(){
 		var data = {
-                //"qualUOM": "Quantity",
 				"qualUOM": null,
                 "min": null,
                 "max": -1,

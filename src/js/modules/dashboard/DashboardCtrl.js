@@ -107,12 +107,7 @@ app.controller('DashboardCtrl', ['$filter','$scope', 'DataFactory', 'promotionDa
 				for(var i=0;i<invalid.length;i++){					
 					var promos={};
 					promos.id = invalid[i].invalidInput.promoId;
-					/**
-					promos.errors=[];
-					for(var j=0;j<invalid[i].errorDetails.length;j++){
-						promos.errors.push(invalid[i].errorDetails[j].message);
-					}	
-					**/
+
 					//Displaying  invalid id and not the actual message
 					resp.invalid.push(promos.id);
 				}
@@ -121,14 +116,7 @@ app.controller('DashboardCtrl', ['$filter','$scope', 'DataFactory', 'promotionDa
 		}
 
 		$scope.save = function(){
-			/**
-			var modifiedFields =  $('.promotions .ng-dirty');
-			var promoToSave = {};  
-			for(var i=0;i<modifiedFields.length;i++){
-				var field = modifiedFields[i];
-				var promoId = $(field).parent().parent().data('promoid');
-				promoToSave[promoId] = true;
-			}**/
+
 			var promotions = $scope.promotions;
 			var req = [];
 			var dupcheck = {};
@@ -293,7 +281,7 @@ app.controller('DashboardCtrl', ['$filter','$scope', 'DataFactory', 'promotionDa
 			 			all[promotions[i].promoId] = true; 
 			 		}
 			 		$scope.promotions = wrappers;
-			 		console.log($scope.promotions);
+
 			 		$scope.paginationConfig.recordsPerPage = data.criteria.page.size+""; 
 			 		$scope.paginationConfig.currentPage =  parseInt(curPage) ;
 			 		$scope.paginationConfig.totalRecords = data.totalCount || 0 ;			 		
@@ -405,7 +393,7 @@ app.controller('DashboardCtrl', ['$filter','$scope', 'DataFactory', 'promotionDa
 
 		$scope.selectedPromotions = [];
 		$scope.setPromotionToView = function(id){
-			console.log('$scope.promotions, id: ', $scope.promotions, id);
+
 			$scope.promotionData = dashboardDataService.getPromotionFromList($scope.promotions, id);
 			$scope.$broadcast('horizontalTabClicked');
 			

@@ -9,7 +9,6 @@ app.service('merchHierarchyDataService', ['$http', '$q', 'dataService', 'DataFac
 	/*Departments - START*/
 	
 	publicApi.getAllDepartments = function() {
-		console.log('getAllDepartments Function in Merch Hierarchy DataService');
 		var config= {
 				method: 'GET',
 				url: '/merchHierarchy/departments',
@@ -19,10 +18,8 @@ app.service('merchHierarchyDataService', ['$http', '$q', 'dataService', 'DataFac
 		
 		dataService.httpRequest(config).then(
 				function(response){
-					console.log('getDepartments ', response.data);
 					result.resolve(response.data);
 				},function(error){
-					console.log(error);
 					result.reject(error);
 			});
 	
@@ -32,7 +29,6 @@ app.service('merchHierarchyDataService', ['$http', '$q', 'dataService', 'DataFac
 	
 	/*Classes - START*/
 	publicApi.getAllClasses = function(dept) {
-		console.log('getAllClasses Function in Merch Hierarchy DataService');
 		var config= {
 				method: 'GET',
 				url:'/merchHierarchy/classes/'+dept,
@@ -41,10 +37,8 @@ app.service('merchHierarchyDataService', ['$http', '$q', 'dataService', 'DataFac
 		
 		dataService.httpRequest(config).then(
 				function(response){
-					console.log('getClasses ', response.data);
 					result.resolve(response.data);
 				},function(error){
-					console.log(error);
 					result.reject(error);
 			});
 		
@@ -54,9 +48,7 @@ app.service('merchHierarchyDataService', ['$http', '$q', 'dataService', 'DataFac
 	
 	
 	/*Subclasses - START*/
-	publicApi.getSubClasses = function(deptId,ClassId) {
-		console.log('getSubClasses Function in Merch Hierarchy DataService');
-		
+	publicApi.getSubClasses = function(deptId,ClassId) {	
 		var config= {
 				method: 'GET',
 				url:'/merchHierarchy/subclasses/'+deptId+'/'+ClassId,
@@ -64,10 +56,8 @@ app.service('merchHierarchyDataService', ['$http', '$q', 'dataService', 'DataFac
 		result=$q.defer();
 		dataService.httpRequest(config).then(
 				function(response){
-					console.log('getSubClasses ', response.data);
 					result.resolve(response.data);
 				},function(error){
-					console.log(error);
 					result.reject(error);
 			});
 		return result.promise

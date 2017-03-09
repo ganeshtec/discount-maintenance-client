@@ -27,7 +27,6 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory', 'skuTestRecor
             },
 			link: function (scope, $element, attrs) {
 
-				console.log('scope.purchaseoption', scope.purchaseoption);
 				var omsData = {};
 				var skuData = {};
 				var existingID = '';
@@ -48,14 +47,12 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory', 'skuTestRecor
 					if (scope.data.indexOf(item.omsId) === -1) {
 						scope.validOmsInfo.push(item);
 						setData();
-						console.log('addItem: ', item);
 					}
 					else {
 						existingID += item.omsId + ', ';
 						DataFactory.messageModal.message = 'Following item/s are already added: ' + existingID
 						DataFactory.messageModal.title = 'Warning';
 						$('#messageModal').popup();
-						console.log('!addItem: ', item);
 					}
 
 				}
@@ -68,14 +65,12 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory', 'skuTestRecor
 					if (scope.data.indexOf(sku.skuNumber) === -1) {
 						scope.validSkuInfo.push(sku);
 						setSkuData();
-						console.log('addsku: ', sku);
 					}
 					else {
 						existingID += sku.skuNumber + ', ';
 						DataFactory.messageModal.message = 'Following Sku/s are already added: ' + existingID
 						DataFactory.messageModal.title = 'Warning';
 						$('#messageModal').popup();
-						console.log('!addsku: ', sku);
 					}
 
 				}
@@ -85,7 +80,6 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory', 'skuTestRecor
 					scope.data = scope.validOmsInfo.reduce(function (data, item) {
 						return data.concat(item.omsId);
 					}, []);
-					console.log('Check items: ', scope.data);
 				}
 
 				function setSkuData() {
@@ -94,12 +88,10 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory', 'skuTestRecor
 					scope.data = scope.validSkuInfo.reduce(function (data, sku) {
 						return data.concat(sku.skuNumber);
 					}, []);
-					console.log('Check items: ', scope.data);
 				}
 				function setItemData(data, clicked) {
 					existingID = '';
 
-					// scope.searchResults = (scope.itemSearch) ? $.extend(true, [], data.validOmsInfo) : [];
 					if (!scope.validOmsInfo.length && scope.data && !scope.itemSearch) {
 						$.extend(true, scope.validOmsInfo, data.validOmsInfo);
 					}
@@ -126,7 +118,6 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory', 'skuTestRecor
 				function setSkuValidData(data, clicked) {
 					existingID = '';
 
-					// scope.searchResults = (scope.itemSkuSearch) ? $.extend(true, [], data.validOmsInfo) : [];
 					if (!scope.validSkuInfo.length && scope.data && !scope.itemSkuSearch) {
 						$.extend(true, scope.validSkuInfo, data.validSkuInfo);
 					}
@@ -162,7 +153,6 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory', 'skuTestRecor
 						itemPromise.then(
 							function (data) {
 								setSkuValidData(data, clicked);
-								// updatePartNumber();
 							},
 							function (error) {
 								DataFactory.messageModal.message = error;
@@ -181,7 +171,6 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory', 'skuTestRecor
 						itemPromise.then(
 							function (data) {
 								setItemData(data, clicked);
-								// updatePartNumber();
 							},
 							function (error) {
 								DataFactory.messageModal.message = error;
@@ -221,7 +210,6 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory', 'skuTestRecor
 
 				if (scope.data && scope.data.length) {
 
-					// getData();
 					if (scope.itemtype == 'SKU') {
 						scope.isSkuSearch = true;
 					}
@@ -248,7 +236,6 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory', 'skuTestRecor
 						setData();
 					}
 
-					console.log('removePromoCode: ', scope.data);
 				}
 				
 				function emptyCheck(data) {
@@ -258,14 +245,12 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory', 'skuTestRecor
 				}
 
 				scope.search = function (data) {
-					console.log("Control inside search funtion");
                     var result=emptyCheck(data);
                     if(emptyCheck(data)) 
                     {
                         if(scope.isSkuSearch) 
                         {
                             scope.dataEmpty=true;
-                            console.log("____Data either Empty or NULL for SKU");
                             DataFactory.messageModal.message = 'Please enter a valid SKU Number';
                             DataFactory.messageModal.title = 'Warning';
                             $('#messageModal').popup();
@@ -273,7 +258,6 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory', 'skuTestRecor
                         else
                             {
                             scope.dataEmpty=true;
-                            console.log("____Data either Empty or NULL for OMS");
                             DataFactory.messageModal.message = 'Please enter Valid OMS Number';
                             DataFactory.messageModal.title = 'Warning';
                             $('#messageModal').popup();
@@ -283,28 +267,22 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory', 'skuTestRecor
                     else
                          if(scope.isSkuSearch)  
                         {
-                            console.log("____Data Not EMPTY:: User Selected SKU Option");
                             scope.dataEmpty=false;
                             data = data.replace(/\s\s+/g, ' ').split(/[',',' ',', ']+/);
-                           // data = data.replace(/\s\s+/g, ' ').split(' ');
                             validateItemData(data);
                             skuData.skuIds = data;
                         }
                         else
                             {
-                            console.log("____Data Not EMPTY:: User Selected OMS Option");
                             scope.dataEmpty=false;
                             data = data.replace(/\s\s+/g, ' ').split(/[',',' ',', ']+/);
-                            //data = data.replace(/\s\s+/g, ' ').split(' ');
                             validateItemData(data);
                             omsData.omsIds = data;
                         
                             }
                 
                 if (!scope.showInvalidError && !scope.dataEmpty ) {
-                    console.log("if loop for showIvalidError");
                     if (scope.isSkuSearch) {
-                        console.log("I am going to call getItmeByID() inside that method getSkyIDs() will call "+skuData.skuIds);
                         getItemsByID(skuData, true);
                     } else {
                         getItemsByID(omsData, true);

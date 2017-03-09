@@ -13,8 +13,6 @@ app.directive('promotionCodeSpecification', ['promotionDataService', 'PROMOCODE'
             },
             link: function(scope, $element, attrs) {
                 scope.data = scope.data || new PROMOCODE();
-                console.log('promocode spec')
-                console.log(scope);
                 scope.$watch('data.type', function(model, oldModel) {
                   if (model === 'Public') {
                       delete scope.data.systemGen;

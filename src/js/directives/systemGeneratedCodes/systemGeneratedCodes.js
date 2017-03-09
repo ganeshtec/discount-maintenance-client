@@ -12,8 +12,7 @@ app.directive('systemGeneratedCodes', ['$filter', 'promotionDataService', 'DataF
      		completed:"="
 		},
 		link: function(scope, $element, attrs){ 
-			console.log('coupon status');
-			console.log(scope.completed);
+
 			function getSystemGenrateCodes(data){
 				var getPromotionPromise = promotionDataService.getSystemGenrateCodes(data);
 				getPromotionPromise.then(
@@ -40,10 +39,7 @@ app.directive('systemGeneratedCodes', ['$filter', 'promotionDataService', 'DataF
 				if(!cdlength){
 					cdlength = 1;
 				}
-				// if(!data.uniqueCdCnt){
-				// 	data.uniqueCdCnt = 1;
-				// }
-				
+			
 				if(data && cdlength && data.uniqueCdCnt){
 					data.cdPrefix = data.cdPrefix.toUpperCase();
 					data.cdSuffix = data.cdSuffix.toUpperCase();
