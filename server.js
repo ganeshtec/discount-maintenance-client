@@ -6,7 +6,7 @@ var Inert = require('inert');
 var server = new Hapi.Server();
 server.connection({ 
 	host: 'localhost', 
-	port: 3000
+	port: 8002
 });
 
 // Static public route
