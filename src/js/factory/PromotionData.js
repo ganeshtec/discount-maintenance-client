@@ -37,7 +37,7 @@ app.factory('PromotionData', [function(){
 			"promoSubTypeDesc": "",
 			"promoType": 0,
 			"purchaseConds": {
-				//"customerSegmentId": "",
+				"customerSegmentId": 0,
 				"isInclusionsOrExclusionsExist": false, // if has inclusion or exclusion set true
 				"channels": [87],
 				"qualUOM": 'Quantity',
