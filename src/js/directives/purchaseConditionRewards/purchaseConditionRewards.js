@@ -50,11 +50,6 @@ app.directive('purchaseConditionRewards', [ 'SourceData','customerSegmentDataSer
 				);
 
                  scope.onSegmentSelection = function(){
-<<<<<<< HEAD
-
-=======
-                	
->>>>>>> bug/customerSegmentUneditable/#141410117
                       if(scope.data.custSegment){
                         scope.data.purchaseConds.customerSegmentId=scope.data.custSegment.id;
                       }
