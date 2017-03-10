@@ -31,10 +31,7 @@ app.factory('PromotionData', [function(){
 			"promoSubTypeDesc": "",
 			"promoType": 0,
 			"purchaseConds": {
-<<<<<<< HEAD
-=======
 				"customerSegmentId": 0,
->>>>>>> bug/customerSegmentUneditable/#141410117
 				"isInclusionsOrExclusionsExist": false, // if has inclusion or exclusion set true
 				"channels": [87],
 				"qualUOM": 'Quantity',
