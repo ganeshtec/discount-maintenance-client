@@ -50,9 +50,13 @@ app.directive('purchaseConditionRewards', [ 'SourceData','customerSegmentDataSer
 				);
 
                  scope.onSegmentSelection = function(){
-
                       if(scope.data.custSegment){
-                    	  scope.data.purchaseConds.customerSegmentId=scope.data.custSegment.id;
+                        scope.data.purchaseConds.customerSegmentId=scope.data.custSegment.id;
+                      }
+                      else
+                      {
+                         scope.data.purchaseConds.customerSegmentId = 0;
+
                       }
                       
                  };  
