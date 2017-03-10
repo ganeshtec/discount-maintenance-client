@@ -2,9 +2,9 @@
   "name": "promo-admin-ui",
   "version": "1.0.0",
   "description": "Promotions Admin UI",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node index.js",
     "dev": "gulp dev",
     "build-ad": "gulp build-ad",
     "build-qa": "gulp build-qa",
