@@ -76,10 +76,16 @@ app.directive('purchaseConditionRewards', [ 'SourceData','customerSegmentDataSer
                 }
                 
                 if (scope.data && scope.data.purchaseConds && scope.data.purchaseConds.sources && scope.data.purchaseConds.sources.length === 1) {
-                    if(scope.data.promoSubTypeCd === 'MultipleItemsPercentDiscount' || scope.data.promoSubTypeCd === 'MultipleItemsValueDiscount') {
-                         scope.data.purchaseConds.sources.push(new SourceData());
+                    console.log("Has 1 source");
+                    console.log(scope.data.purchaseConds.sources);
+                    scope.data.purchaseConds.sources.push(new SourceData());
+                    console.log(scope.data.purchaseConds.sources);
+                    // if(scope.data.promoSubTypeCd === 'MultipleItemsPercentDiscount' || scope.data.promoSubTypeCd === 'MultipleItemsValueDiscount') {
+                    //      scope.data.purchaseConds.sources.push(new SourceData());
                         
-                    }
+                    // } else {
+                    //     scope.data.purchaseConds.sources.push(new SourceData());
+                    // }
                    
                 }
                 
