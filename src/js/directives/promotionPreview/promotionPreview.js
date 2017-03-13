@@ -43,7 +43,6 @@ app.directive('promotionPreview', ["URL_CONFIG","promotionDataService","OverlayC
 				scope.headerErrorMsg = "";
 				delete scope.errorMessages ;
 				var promotion = scope.previewData.data;
-
 				utilService.setDefaultsForSaveAsDraft(promotion); 
   				utilService.transformPromotionRequest(promotion); 
   				var missing = utilService.requiredFieldsMissing(promotion);
