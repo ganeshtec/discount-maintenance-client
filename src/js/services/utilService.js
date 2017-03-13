@@ -78,12 +78,11 @@ app.service('utilService', ['$filter', function($filter){
         } else {
                 promotion.reward.type = 'AMTOFF';
         }
-           
         if(promotion.purchaseConds){
-            if(promotion.purchaseConds.targets && promotion.purchaseConds.targets.length == 0){
+            if(promotion.purchaseConds.targets && promotion.purchaseConds.targets.length === 0){
                 delete promotion.purchaseConds.targets;
             }
-            if(promotion.purchaseConds.sources && promotion.purchaseConds.sources.length == 0){
+            if(promotion.purchaseConds.sources && promotion.purchaseConds.sources.length === 0){
                 delete promotion.purchaseConds.sources;
             }
         }
@@ -122,6 +121,7 @@ app.service('utilService', ['$filter', function($filter){
                     }
                 }
             }
+
             //No promotions with targets for now
             delete promotion.purchaseConds.targets
     }

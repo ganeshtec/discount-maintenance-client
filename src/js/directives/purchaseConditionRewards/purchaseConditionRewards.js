@@ -87,7 +87,6 @@ app.directive('purchaseConditionRewards', [ 'SourceData','customerSegmentDataSer
                          scope.data.purchaseConds.sources.push(new SourceData());
                         
                     }
-                   
                 }
                 
                 scope.initializePurchaseOption = function(index,item,data){                	

@@ -34,7 +34,6 @@ app.component('adminFooter', {
 			utilService.setDefaultsForSaveAsDraft(tempData); 
   			utilService.transformPromotionRequest(tempData); 
   			inprogress = true;
-
 			var promise = promotionDataService.saveAsDraft(tempData);
 			promise.then(
 				function(data){
