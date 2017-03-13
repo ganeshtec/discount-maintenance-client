@@ -36,7 +36,10 @@ app.directive('purchaseConditionRewards', [ 'SourceData','customerSegmentDataSer
 				        					scope.data.custSegment=segment;
 				        					//scope.data.custSegmentDisable = true;
 				        				}
-				        			}
+                                      }else{
+                                          //scope.data.custSegment=0;
+                                          scope.data.purchaseConds.customerSegmentId = 0; 
+                                      }
 				        			//segment.id = scope.segmentListfromWebservice[i].id;
 				        			scope.segmentDetails.push(segment);
 				        	}
