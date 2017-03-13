@@ -78,13 +78,11 @@ app.service('utilService', ['$filter', function($filter){
         } else {
                 promotion.reward.type = 'AMTOFF';
         }
-        console.log("Inside transformPromotionRequest()");
-        console.log(promotion);
         if(promotion.purchaseConds){
-            if(promotion.purchaseConds.targets && promotion.purchaseConds.targets.length == 0){
+            if(promotion.purchaseConds.targets && promotion.purchaseConds.targets.length === 0){
                 delete promotion.purchaseConds.targets;
             }
-            if(promotion.purchaseConds.sources && promotion.purchaseConds.sources.length == 0){
+            if(promotion.purchaseConds.sources && promotion.purchaseConds.sources.length === 0){
                 delete promotion.purchaseConds.sources;
             }
         }
@@ -123,8 +121,7 @@ app.service('utilService', ['$filter', function($filter){
                     }
                 }
             }
-            console.log("Inside transformPromotionRequest()");
-            console.log(promotion);
+
             //No promotions with targets for now
             delete promotion.purchaseConds.targets
     }
@@ -225,6 +222,7 @@ app.service('utilService', ['$filter', function($filter){
         if(data.purchaseConds && data.purchaseConds.sources){
             $(data.purchaseConds.sources).each(function(i, source){
                 if (data.purchaseConds.qualUOM == "Quantity") {
+                    console.log('inside if qualUOM == Quantity');
                     delete source.minTotalPrice;
 
                     if (source.minPurchaseQty == null) {
@@ -234,6 +232,8 @@ app.service('utilService', ['$filter', function($filter){
                 }else{
                     delete  source.minPurchaseQty;
                     source.minTotalPrice = minPurchaseQty; 
+
+                    console.log('after Delete source.minpurhcaseqty transformProm '+promotion);
                 }
             } )
         }
