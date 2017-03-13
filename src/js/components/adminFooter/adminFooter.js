@@ -31,13 +31,9 @@ app.component('adminFooter', {
 				modalService.showAlert('Error',"Please fix all validation errors");
 				return;
 			}
-		    console.log("before calling saveAsDraft");
-			console.log(tempData);
 			utilService.setDefaultsForSaveAsDraft(tempData); 
   			utilService.transformPromotionRequest(tempData); 
   			inprogress = true;
-			console.log("right before calling saveAsDraft");
-			console.log(tempData);
 			var promise = promotionDataService.saveAsDraft(tempData);
 			promise.then(
 				function(data){

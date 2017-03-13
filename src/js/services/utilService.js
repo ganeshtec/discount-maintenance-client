@@ -222,7 +222,6 @@ app.service('utilService', ['$filter', function($filter){
         if(data.purchaseConds && data.purchaseConds.sources){
             $(data.purchaseConds.sources).each(function(i, source){
                 if (data.purchaseConds.qualUOM == "Quantity") {
-                    console.log('inside if qualUOM == Quantity');
                     delete source.minTotalPrice;
 
                     if (source.minPurchaseQty == null) {
@@ -232,8 +231,6 @@ app.service('utilService', ['$filter', function($filter){
                 }else{
                     delete  source.minPurchaseQty;
                     source.minTotalPrice = minPurchaseQty; 
-
-                    console.log('after Delete source.minpurhcaseqty transformProm '+promotion);
                 }
             } )
         }
