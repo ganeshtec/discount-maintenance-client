@@ -1,8 +1,8 @@
 // Mock data for item level dollar off promotion
 app.factory('createTestRecord', [function() {
-		var _construct = function createTestRecord() {
-				var data = {
-			
+        var _construct = function createTestRecord() {
+                var data = {
+            
  "promoId": 293,
  "promoSubTypeDesc": "Amount off an order - OrderLevelValueDiscount",
  "promoType": "ORDERPROMO",
@@ -106,9 +106,9 @@ app.factory('createTestRecord', [function() {
 
 
 
-	};
-				return data;
-		};
+    };
+                return data;
+        };
 
-		return _construct;
+        return _construct;
 }]);

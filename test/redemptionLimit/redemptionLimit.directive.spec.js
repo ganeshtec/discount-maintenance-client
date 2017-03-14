@@ -19,7 +19,7 @@ describe('Unit testing  redemption-limit directive', function() {
   //check if the directive is rendereds
   it('Checks if the content is rendered', function() {
      $scope.data= [];
-	 $scope.promoform= [];
+     $scope.promoform= [];
     // Compile a piece of HTML containing the directive
     element = $compile("<redemption-limit data='data' promoform='promoform'><redemption-limit>")($scope);
     $scope.$digest();

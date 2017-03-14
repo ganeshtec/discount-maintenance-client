@@ -20,47 +20,47 @@ describe('Unit testing promoLocation.directive.spec.js', function() {
 // test condition validate the place holder for store location search.
   
   it('Checks if store location placeholder works', function() {
-	
-	// Contain a piece of HTML containing the Directive  
-	var element = $compile("<promo-location></promo-location>")($scope);
-	$scope.$digest();
-	
-	expect(element.html()).toContain("Search and Add Store Number");
-	  
+    
+    // Contain a piece of HTML containing the Directive  
+    var element = $compile("<promo-location></promo-location>")($scope);
+    $scope.$digest();
+    
+    expect(element.html()).toContain("Search and Add Store Number");
+      
   });
   
 // test condition validate error message for store location search.
   
   it('Checks if store location placeholder works', function() {
-	
-	// Contain a piece of HTML containing the Directive  
-	var element = $compile("<promo-location></promo-location>")($scope);
-	$scope.$digest();
-	
-	expect(element.html()).toContain("Please enter a valid Store Number");
-	  
+    
+    // Contain a piece of HTML containing the Directive  
+    var element = $compile("<promo-location></promo-location>")($scope);
+    $scope.$digest();
+    
+    expect(element.html()).toContain("Please enter a valid Store Number");
+      
   });
 
   
 // test conditions for store location search functionality
   
   it('Checks if store  search functionality defined', function() {
-	  
-	  var itemSearch = [];
-	 
-	// Contain a piece of HTML containing the Directive  
-		var element = $compile("<promo-location data='itemSearch'></promo-location>")($scope);
-		$scope.$digest();
-		this.$isolateScope = element.isolateScope();
-		spyOn(this.$isolateScope, "search").and.callThrough();
-		
-		this.$isolateScope.search('121');
-		
-		expect(this.$isolateScope.search).toHaveBeenCalled();
-		
-		expect(this.$isolateScope.inValidStoreInfo).not.toBe(undefined);
-		expect(this.$isolateScope.showInvalidError).not.toBe(undefined);
-	  
+      
+      var itemSearch = [];
+     
+    // Contain a piece of HTML containing the Directive  
+        var element = $compile("<promo-location data='itemSearch'></promo-location>")($scope);
+        $scope.$digest();
+        this.$isolateScope = element.isolateScope();
+        spyOn(this.$isolateScope, "search").and.callThrough();
+        
+        this.$isolateScope.search('121');
+        
+        expect(this.$isolateScope.search).toHaveBeenCalled();
+        
+        expect(this.$isolateScope.inValidStoreInfo).not.toBe(undefined);
+        expect(this.$isolateScope.showInvalidError).not.toBe(undefined);
+      
   });
 
 

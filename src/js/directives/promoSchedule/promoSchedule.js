@@ -1,37 +1,37 @@
 // Purpose is to build promotion code spec.
 app.directive('promoSchedule', ['$filter',
-    function($filter) {
+    function ($filter) {
         return {
             restrict: 'E',
             templateUrl: 'promoSchedule.html',
             scope: {
                 data: '=',
                 promoform: '=',
-                preview:'=',
+                preview: '=',
                 viewProp: '='
-                },
-            controller: function($scope) {
-                $scope.$watch('data', function(nv, ov) {
+            },
+            controller: function ($scope) {
+                $scope.$watch('data', function (nv, ov) {
                     if (nv) {
                         if (nv.startDt) {
-                            $scope.startDt = new Date(nv.startDt.split(" ")[0].replace(/-/g, '\/'));
+                            $scope.startDt = new Date(nv.startDt.split(' ')[0].replace(/-/g, '\/'));
                         }
                         if (nv.endDt) {
-                            $scope.endDt = new Date(nv.endDt.split(" ")[0].replace(/-/g, '\/'));
+                            $scope.endDt = new Date(nv.endDt.split(' ')[0].replace(/-/g, '\/'));
                         }
-                        $scope.starttime = "3:00 AM";
-                        $scope.endtime = "2:59 AM";
+                        $scope.starttime = '3:00 AM';
+                        $scope.endtime = '2:59 AM';
 
 
                     }
                 });
 
             },
-            link: function(scope, $element, attrs) {
+            link: function (scope, $element, attrs) {
 
-                scope.convertToString = function() {
+                scope.convertToString = function () {
                     if (scope.data) {
-                        scope.data.startDt = $filter('date')(scope.startDt, 'yyyy-MM-dd HH:mm:ss');                     
+                        scope.data.startDt = $filter('date')(scope.startDt, 'yyyy-MM-dd HH:mm:ss');
                         scope.data.endDt = $filter('date')(scope.endDt, 'yyyy-MM-dd HH:mm:ss');
                         if (scope.data.endDt === scope.data.startDt) {
                             scope.promoform.end.$invalid = true;
@@ -42,9 +42,9 @@ app.directive('promoSchedule', ['$filter',
 
                 };
 
-                scope.isendDateInvalid = function() {
+                scope.isendDateInvalid = function () {
                     if (scope.data) {
-                        if(!scope.data.endDt || !scope.data.startDt){
+                        if (!scope.data.endDt || !scope.data.startDt) {
                             return false;
                         }
                         var isValid = scope.data.endDt > scope.data.startDt; // invalid
@@ -61,4 +61,5 @@ app.directive('promoSchedule', ['$filter',
 
             }
         };
-    }]);
+    }
+]);

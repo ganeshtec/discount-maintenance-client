@@ -34,8 +34,8 @@ describe('Unit testing purchaseCondition.directive.spec.js', function() {
       $isolatedScope.addPurchaseCondition();
       expect($isolatedScope.data.length).toEqual(2);
     });
-	
-	it('remove function in purchaseCondition array', function() {   
+    
+    it('remove function in purchaseCondition array', function() {   
       expect($isolatedScope.data.length).toEqual(2);
       $isolatedScope.removePurchaseCondition($isolatedScope.data.length-1);
       expect($isolatedScope.data.length).toEqual(1);

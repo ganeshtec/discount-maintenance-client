@@ -1,18 +1,19 @@
 // Purpose is to build promotion data.
-app.directive('createPromotionCodes', ['PROMOCODE',
-    function(PROMOCODE) {
+app.directive('createPromotionCodes', [
+    function () {
         return {
             restrict: 'E',
             templateUrl: 'createPromotionCodes.html',
             scope: {
                 data: '=',
                 promoform: '=',
-                preview:'='
+                preview: '='
             },
-            link: function(scope, $element, attrs) {
+            link: function (scope) {
                 if (!scope.data) {
                     scope.data = [];
                 }
             }
         };
-    }]);
+    }
+]);

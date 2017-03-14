@@ -4,48 +4,50 @@
 */
 
 app.service('categoryDataService', ['$http', '$q', 'dataService', 'DataFactory', 'URL_CONFIG',
-	function ($http, $q, dataService, DataFactory, URL_CONFIG) {
-		var publicApi = {};
-		var urls = new URL_CONFIG();
+    function ($http, $q, dataService, DataFactory, URL_CONFIG) {
+        var publicApi = {};
+        var urls = new URL_CONFIG();
 
 
 
-		publicApi.getCategories = function (data) {
-			result = $q.defer();
+        publicApi.getCategories = function (data) {
+            result = $q.defer();
 
-			var url = urls.endecaUrl + '?term=' + data + '&type=category&callback=JSON_CALLBACK';
+            var url = urls.endecaUrl + '?term=' + data + '&type=category&callback=JSON_CALLBACK';
 
-			$http.jsonp(url)
-				.success(function (data) {
-					result.resolve(data.results);
-				});
-			return result.promise;
-		}
-
-
-		publicApi.getCategoriesSearch = function (data) {
+            $http.jsonp(url)
+                .success(function (data) {
+                    result.resolve(data.results);
+                });
+            return result.promise;
+        }
 
 
-			var config = {
-				method: 'GET',
-				url: '/webhierarchy/search?node=' + data
-
-			},
-				result = $q.defer();
-
-			dataService.httpRequest(config).then(
-				function (response) {
-
-					result.resolve(response);
-				}, function (error) {
-					result.reject(error);
-				}
-			);
+        publicApi.getCategoriesSearch = function (data) {
 
 
-			return result.promise;
-		}
+            var config = {
+                    method: 'GET',
+                    url: '/webhierarchy/search?node=' + data
+
+                },
+                result = $q.defer();
+
+            dataService.httpRequest(config).then(
+                function (response) {
+
+                    result.resolve(response);
+                },
+                function (error) {
+                    result.reject(error);
+                }
+            );
 
 
-		return publicApi;
-	}]);
+            return result.promise;
+        }
+
+
+        return publicApi;
+    }
+]);

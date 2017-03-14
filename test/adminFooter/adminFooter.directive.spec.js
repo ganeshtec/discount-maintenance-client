@@ -18,7 +18,7 @@ describe('Unit testing adminFooter.directive.spec.js', function() {
   }));
 
   it('Checks if content renders.', function() {
-	  $scope.promotionData = { reward:{details :[]}}
+      $scope.promotionData = { reward:{details :[]}}
     // Compile a piece of HTML containing the directive
     var element = $compile("<admin-footer data='promotionData'></admin-footer>")($scope);
     $scope.$digest();
@@ -38,8 +38,8 @@ describe('Unit testing adminFooter.directive.spec.js', function() {
   });
 
   it('Checks if content is constructed according to input data.', function() {
-	  $scope.promotionData = { reward:{details :[]}}
-	  var data = $scope.promotionData;
+      $scope.promotionData = { reward:{details :[]}}
+      var data = $scope.promotionData;
     var isolateScope = element.controller("adminFooter");
     expect(element.html()).toContain("Save as Draft");
 

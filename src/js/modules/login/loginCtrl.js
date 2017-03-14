@@ -25,7 +25,7 @@ app.controller('loginCtrl', ['$scope', '$routeParams', '$location','$cookies', '
             } else {
 
                 loginService.setErrorStatus('invalidsession');
-                $location.path("login");
+                $location.path('login');
 
             }
 

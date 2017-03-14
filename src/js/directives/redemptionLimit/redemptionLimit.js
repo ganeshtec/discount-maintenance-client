@@ -14,13 +14,13 @@ app.directive('redemptionLimit', [
                 $scope.$watch('data', function(nv, ov) {
                     if (nv) {
                         if (nv.maxUsesPerCust != '-1') {
-                            $scope.custmax = "setcust";
+                            $scope.custmax = 'setcust';
                         }
                         if (nv.maxUsesOfPromo != '-1') {
-                            $scope.promomax = "promoset";
+                            $scope.promomax = 'promoset';
                         }
                         if (nv.maxUsesPerOrd != '-1') {
-                            $scope.ordermax = "setorder";
+                            $scope.ordermax = 'setorder';
                         }
 
                     }
@@ -34,9 +34,9 @@ app.directive('redemptionLimit', [
             },
             link: function(scope, $element, attrs) {
 
-                scope.promomax = "promounlimt";
-                scope.ordermax = "orderunlimt";
-                scope.custmax = "custunlimt";
+                scope.promomax = 'promounlimt';
+                scope.ordermax = 'orderunlimt';
+                scope.custmax = 'custunlimt';
 
                 scope.promocheck = function() {
                     if (scope.promomax === 'promounlimt') {

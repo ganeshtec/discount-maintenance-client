@@ -3,7 +3,7 @@ describe('Unit test for dataService', function() {
       $rootScope,
       $scope,
       dataService,
-	  promotionDataService,
+      promotionDataService,
       $httpBackend;
 
   // Load the myApp module, which contains the directive
@@ -16,9 +16,9 @@ describe('Unit test for dataService', function() {
     $rootScope = _$rootScope_;
     $scope = $rootScope.$new();
     dataService = _dataService_;
-	promotionDataService = _promotionDataService_;
+    promotionDataService = _promotionDataService_;
     $httpBackend = _$httpBackend_;
-	var reponse = {};
+    var reponse = {};
      // backend definition common for all tests 
     var authRequestHandler = $httpBackend.when('POST', '/couponRequest/preview')
                             .respond(200,reponse);

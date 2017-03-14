@@ -1,25 +1,25 @@
 // Main Controller for root scope
 app.controller('MainCtrl', ['$scope', '$location', '$cookies', 'DataFactory', 'SECTIONS', 'promotionDataService','loginService', 'OverlayConfigFactory',
     function($scope, $location, $cookies, DataFactory, SECTIONS, promotionDataService,loginService,OverlayConfigFactory) {
-	    $scope.messageModal = DataFactory.messageModal;
-	    $scope.username = '';	    
-			$scope.previewData = { data :{}};
-			$scope.formHolder = {};
-			$scope.previewFormHolder = {};
-			$scope.previewOverlayConfig = OverlayConfigFactory.getInstance();
-			$scope.previewOverlayConfig.mask(true);
-			if($cookies.get('userName') != null &&  $cookies.get('userName') != '') {
-			   $scope.username = $cookies.get('userName');
-			}
+        $scope.messageModal = DataFactory.messageModal;
+        $scope.username = '';        
+            $scope.previewData = { data :{}};
+            $scope.formHolder = {};
+            $scope.previewFormHolder = {};
+            $scope.previewOverlayConfig = OverlayConfigFactory.getInstance();
+            $scope.previewOverlayConfig.mask(true);
+            if($cookies.get('userName') != null &&  $cookies.get('userName') != '') {
+               $scope.username = $cookies.get('userName');
+            }
       $scope.sections = new SECTIONS();
       $scope.section = promotionDataService.getSection($scope.sections);
       $scope.sectionInx = $scope.sections.indexOf($scope.section);
-			// Watch change in sections to set current section
-  		$scope.$watch('sections', function(model, oldModel){
-  			if(model !== oldModel){
-  				$scope.sectionInx = $scope.sections.indexOf(promotionDataService.getSection(model));
-  			}
-  		}, true);
+            // Watch change in sections to set current section
+          $scope.$watch('sections', function(model, oldModel){
+              if(model !== oldModel){
+                  $scope.sectionInx = $scope.sections.indexOf(promotionDataService.getSection(model));
+              }
+          }, true);
         
            
           //session invalidation check

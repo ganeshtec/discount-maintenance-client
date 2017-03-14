@@ -38,8 +38,8 @@ describe('Unit testing Promotion Header directive', function() {
   }); 
 
   it('check if search promotions work', function() {
-	  
-	// Test helpers
+      
+    // Test helpers
       var JasmineHelpers = function () {
 
           var deferredSuccess = function (args) {
@@ -64,7 +64,7 @@ describe('Unit testing Promotion Header directive', function() {
 
       var jasmineHelpers = new JasmineHelpers();
       
-	  
+      
    $scope.items = [
         {
           'name': 'Sample Name and Description 1',

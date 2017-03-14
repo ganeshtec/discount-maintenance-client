@@ -17,12 +17,12 @@ describe('Unit test for promotionDataService', function() {
     promotionDataService = _promotionDataService_;
     $httpBackend = _$httpBackend_;
     var reponse = {};
-	var submitResponse = {};
+    var submitResponse = {};
      // backend definition common for all tests 
     var authRequestHandler = $httpBackend.when('POST', '/cartPromotionsRequest')
                             .respond(200,reponse);
-							
-							  // backend definition common for all tests 
+                            
+                              // backend definition common for all tests 
     var submitAuthRequestHandler = $httpBackend.when('POST', '/cartPromotionsRequest/approve')
                             .respond(200,submitResponse);
     

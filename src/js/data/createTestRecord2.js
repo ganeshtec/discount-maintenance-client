@@ -1,26 +1,26 @@
 // Mock data for item level dollar off promotion
 app.factory('createTestRecord2', [function() {
-		var _construct = function createTestRecord() {
-				var data = {
-						"couponId": 0,
-						"endDt":"string",
-						"exclsve": 0,
-						"expireDtExtDays": 0,
-						"isSitewideDeal": true,
-						"longDesc":"string",
-						"meta": {
-							"action":"string",
-							"created": {
-								"chronology": {},
-								"millis": 0
-							},
-							"lastUpdated": {
-								"chronology": {},
-								"millis": 0
-							},
-							"lastUpdatedBy":"string",
-							"originated": {
-								"chronology": {},
+        var _construct = function createTestRecord() {
+                var data = {
+                        "couponId": 0,
+                        "endDt":"string",
+                        "exclsve": 0,
+                        "expireDtExtDays": 0,
+                        "isSitewideDeal": true,
+                        "longDesc":"string",
+                        "meta": {
+                            "action":"string",
+                            "created": {
+                                "chronology": {},
+                                "millis": 0
+                            },
+                            "lastUpdated": {
+                                "chronology": {},
+                                "millis": 0
+                            },
+                            "lastUpdatedBy":"string",
+                            "originated": {
+        						"chronology": {},
 								"millis": 0
 							},
 							"schemaVer":"string"
