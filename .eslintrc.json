@@ -4,7 +4,8 @@
     },
     "globals": {
         "app": 1,
-        "$": 1
+        "$": 1,
+        "angular": 1
     },
     "extends": "eslint:recommended",
     "rules": {

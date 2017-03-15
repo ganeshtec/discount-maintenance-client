@@ -10,11 +10,11 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                 index: '=',
                 preview: '@',
                 isDisabled: '=',
-                formHolder: "=",
-                display: "=",
-                viewProp: "="
+                formHolder: '=',
+                display: '=',
+                viewProp: '='
             },
-            link: function (scope, $element, attrs) {
+            link: function (scope) {
 
                 function getPomoSubTypes() {
                     var getPromotionPromise = promotionDataService.getPromotionSubTypes();

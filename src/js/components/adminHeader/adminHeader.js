@@ -1,9 +1,8 @@
 app.component('adminHeader', {
-	bindings: {
-		promotype: '<',
-		uistate: '<',
-		urls: '<'
-	},
-	templateUrl: 'adminHeader.html',
-   
+    bindings: {
+        promotype: '<',
+        uistate: '<',
+        urls: '<'
+    },
+    templateUrl: 'adminHeader.html',
 });

@@ -34,7 +34,7 @@ app.service('merchHierarchyDataService', ['$http', '$q', 'dataService', 'DataFac
                 method: 'GET',
                 url: '/merchHierarchy/classes/' + dept,
             }
-            result = $q.defer();
+            var result = $q.defer();
 
             dataService.httpRequest(config).then(
                 function (response) {
@@ -55,7 +55,7 @@ app.service('merchHierarchyDataService', ['$http', '$q', 'dataService', 'DataFac
                 method: 'GET',
                 url: '/merchHierarchy/subclasses/' + deptId + '/' + ClassId,
             }
-            result = $q.defer();
+            var result = $q.defer();
             dataService.httpRequest(config).then(
                 function (response) {
                     result.resolve(response.data);
