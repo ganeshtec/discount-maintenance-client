@@ -135,7 +135,7 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                     var subClassName;
                     var classNumber;
                     var subClassNumber;
-                    var tableData = []
+                    var tableObject;
                     var jsondata = {};
                     if (scope.selectedDept == null) {
                         DataFactory.messageModal.message = 'No Department Selected  , Please select  Department';
@@ -155,7 +155,7 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                             jsondata.id = scope.selectedDept.id + delimeter + classNumber + delimeter + subClassNumber;
                             jsondata.catalog = 'Merch';
 
-                            var tableObject = prepareTableData(jsondata);
+                            tableObject = prepareTableData(jsondata);
 
                             scope.data.push(jsondata);
 
@@ -184,46 +184,27 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                             }
                             var duplicatecheck = checkForDuplicateEntry();
                             if (duplicatecheck == true) {
-
                                 DataFactory.messageModal.message = 'Duplicate Entry Please Select Another Combination:';
                                 DataFactory.messageModal.title = 'Warning';
                                 $('#messageModal').popup();
                             } else {
-
-
-
                                 className = scope.selectedClass == null ? '' : scope.selectedClass.merchandiseClassDescription;
-                                if (className) {
-                                    className = className;
-                                } else {
-                                    className = '';
-                                }
+                                className = className ? className : '';
+
                                 subClassName = scope.selectedSubClass == null ? '' : scope.selectedSubClass.merchandiseSubordinateClassDescription;
-                                if (subClassName) {
-                                    subClassName = subClassName;
-                                } else {
-                                    subClassName = '';
-                                }
-                                 classNumber = scope.selectedClass == null ? '' : scope.selectedClass.merchandiseClassNumber;
-
-                                if (classNumber) {
-                                    classNumber = classNumber
-                                } else {
-                                    classNumber = ''
-                                }
-                                 subClassNumber = scope.selectedSubClass == null ? '' : scope.selectedSubClass.merchandiseSubordinateClassNumber;
-
-                                if (subClassNumber) {
-                                    subClassNumber = subClassNumber
-                                } else {
-                                    subClassNumber = '';
-                                }
+                                subClassName = subClassName ? subClassName : '';
+                                
+                                classNumber = scope.selectedClass == null ? '' : scope.selectedClass.merchandiseClassNumber;
+                                classNumber = classNumber ? classNumber : '';
+                                
+                                subClassNumber = scope.selectedSubClass == null ? '' : scope.selectedSubClass.merchandiseSubordinateClassNumber;
+                                subClassNumber = subClassNumber ? subClassNumber : '';
 
                                 jsondata.name = scope.selectedDept.name + delimeter + className + delimeter + subClassName;
                                 jsondata.id = scope.selectedDept.id + delimeter + classNumber + delimeter + subClassNumber;
                                 jsondata.catalog = 'Merch';
 
-                                var tableObject = prepareTableData(jsondata);
+                                tableObject = prepareTableData(jsondata);
 
                                 scope.data.push(jsondata);
 
@@ -296,25 +277,14 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                     return false;
                 }
                 scope.deleteRow = function (index) {
-
-                    var temp = scope.data[index].name + '-' + scope.data[index].id + '-' + scope.data[index].catalog;
                     var idResult = prepareJsondata(scope.tableData[index]);
-
                     for (var j = 0; j < scope.data.length; j++) {
                         if (scope.data[j].id === idResult) {
                             scope.data.splice(j, 1);
                         }
                     }
-
                     scope.tableData.splice(index, 1);
-
                 }
-
-                function deleteDataArray() {
-
-                }
-
-
             }
         };
 
