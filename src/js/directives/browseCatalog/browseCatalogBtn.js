@@ -3,9 +3,9 @@ app.directive('browseCatalogBtn', [
         return {
             restrict: 'E',
             templateUrl: 'browseCatalogBtn.html',
-            link: function (scope, elem, attrs) {
+            link: function (scope) {
 
-                scope.browseCatalog = function (event) {
+                scope.browseCatalog = function () {
                     scope.$emit('btnBrowseOnClick');
 
                 }

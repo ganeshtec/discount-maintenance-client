@@ -8,7 +8,7 @@ app.directive('promofilter', function () {
             onfilter: '&',
         },
         controller: function () {},
-        link: function (scope, element, attrs) {
+        link: function (scope) {
             scope.pages = [];
             scope.apply = function () {
                 scope.onFilter()(scope.status, scope.type);

@@ -12,9 +12,7 @@ app.directive('overlay',
                 overlayConfig: '='
             },
             replace: true,
-            link: function (scope, $element, attrs) {
-                var tempData = $.extend(true, {}, scope.data),
-                    $mask;
+            link: function (scope, $element) {
                 var $popup = $element.find('.Popup');
                 var adjust = function () {
                     var content = $element.find('.Popup_content');
@@ -22,7 +20,7 @@ app.directive('overlay',
                     $popup.css('margin-left', (($popup.outerWidth() / 2) * -1));
                     $popup.css('margin-top', (($popup.outerHeight() / 2) * -1));
                 }
-                scope.$watch('overlayConfig.isOpen', function (newVal, oldVal) {
+                scope.$watch('overlayConfig.isOpen', function () {
                     adjust();
                 });
             }

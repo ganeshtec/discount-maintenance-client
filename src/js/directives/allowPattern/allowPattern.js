@@ -5,10 +5,10 @@ app.directive('allowPattern', [
             scope: {
                 data: '='
             },
-            compile: function (tElement, tAttrs) {
+            compile: function () {
                 return function (scope, element, attrs) {
                     // Handle key events
-                    element.bind('blur', function (event) {
+                    element.bind('blur', function () {
                         var initVal = $(this).val();
                         var outputVal;
                         if ($(this).hasClass('buyAorB')) {

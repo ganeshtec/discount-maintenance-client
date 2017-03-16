@@ -11,7 +11,7 @@ app.service('categoryDataService', ['$http', '$q', 'dataService', 'DataFactory',
 
 
         publicApi.getCategories = function (data) {
-            result = $q.defer();
+            var result = $q.defer();
 
             var url = urls.endecaUrl + '?term=' + data + '&type=category&callback=JSON_CALLBACK';
 

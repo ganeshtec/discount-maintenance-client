@@ -10,7 +10,7 @@ app.directive('categoryView', ['categoryDataService', 'DataFactory', 'OverlayCon
                 isDisabled: '='
 
             },
-            link: function (scope, $element, attrs) {
+            link: function (scope) {
                 scope.categoryDataLoading = false;
                 scope.data = $.extend(true, [], scope.data);
                 scope.searchResults = [];
@@ -25,7 +25,7 @@ app.directive('categoryView', ['categoryDataService', 'DataFactory', 'OverlayCon
                     data.id = item.source;
                     data.catalog = 'Web';
 
-                    index = -1;
+                    var index = -1;
                     if (!scope.data) {
                         scope.data = [];
                     }

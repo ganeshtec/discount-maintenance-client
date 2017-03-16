@@ -2,7 +2,7 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$co
     function ($scope, $routeParams, $timeout, $cookies, $location, loginService, promotionDataService, PromotionData, SECTIONS, DataFactory, createTestRecord, URL_CONFIG, ALLOWED_PERMISSION_IDS) {
         var promotionID = $routeParams.id || null;
         var cloneId = $routeParams.cloneid || null;
-        var promotionID1 = $routeParams.promotionID1 || null;
+        // var promotionID1 = $routeParams.promotionID1 || null;
         var promotionID2 = $routeParams.promotionID2 || null;
         var allowedPermissionIDs = ALLOWED_PERMISSION_IDS();
         $scope.sections = [];
@@ -20,11 +20,6 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$co
             $scope.userType = userPermissions[0]['id'];
         }
 
-        // Private Methods
-        // Method to get test data - Test Should return promotion record based on type
-        function getPromotionTest(type) {
-            return promotionDataService.getPromotionTest(type);
-        }
         // Method to get promotion by id - Test Should return promotion record
         function getPromotionByID(id) {
 
@@ -107,7 +102,7 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$co
                 if ($scope.clonemode) {
                     getPromotionByID(data.promoId);
                 } else if ($scope.comparemode) {
-                    getPromotionByID(data.promotionID1);
+                    // getPromotionByID(data.promotionID1);
                     getPromotionByID(data.promotionID2);
 
                 } else {

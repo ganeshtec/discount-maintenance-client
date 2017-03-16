@@ -1,6 +1,6 @@
 // Purpose is to build promotion code spec.
-app.directive('purchaseConditionRewards', ['SourceData', 'customerSegmentDataService', 'DataFactory',
-    function (SourceData, customerSegmentDataService, DataFactory) {
+app.directive('purchaseConditionRewards', ['SourceData', 'customerSegmentDataService',
+    function (SourceData, customerSegmentDataService) {
         return {
             restrict: 'E',
             templateUrl: 'purchaseConditionRewards.html',
@@ -12,7 +12,7 @@ app.directive('purchaseConditionRewards', ['SourceData', 'customerSegmentDataSer
                 viewProp: '='
             },
 
-            link: function (scope, elem, attr) {
+            link: function (scope) {
                 // Customer Segment JS code
                 var getCusSegmentPromise = customerSegmentDataService.getAllSegments();
                 getCusSegmentPromise.then(
@@ -40,9 +40,8 @@ app.directive('purchaseConditionRewards', ['SourceData', 'customerSegmentDataSer
 
                         //END
                     },
-                    function (error) {
-
-
+                    function () {
+                        // Should we have some error handling logic here?
                     }
                 );
 
@@ -53,12 +52,7 @@ app.directive('purchaseConditionRewards', ['SourceData', 'customerSegmentDataSer
                         scope.data.purchaseConds.customerSegmentId = 0;
 
                     }
-
                 };
-
-
-
-
                 // End of Customer Segment
 
                 scope.alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');

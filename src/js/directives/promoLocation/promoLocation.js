@@ -15,10 +15,10 @@ app.directive(
                     promoform: '=',
                     preview: '='
                 },
-                controller: function ($scope) {
+                controller: function () {
 
                 },
-                link: function (scope, $element, attrs) {
+                link: function (scope) {
                     var storeData = {};
                     var existingID = '';
                     scope.searchResults = [];

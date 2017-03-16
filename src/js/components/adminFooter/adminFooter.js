@@ -42,7 +42,7 @@ app.component('adminFooter', {
                         modalService.savedAlert('Success', 'Promotion saved-' + data.data.promoId);
                     }
                 },
-                function (error) {
+                function () {
                     inprogress = false;
                     modalService.showAlert('Error', 'Unable to save promotion');
                 }

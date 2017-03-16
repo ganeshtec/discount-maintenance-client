@@ -12,7 +12,7 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
             formHolder: '=',
             viewProp: '='
         },
-        link: function (scope, element, attrs) {
+        link: function (scope, element) {
 
             scope.close = function () {
                 // if a exisiting promotion is submitted then reload the page
@@ -89,15 +89,15 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                                 scope.savedPromoId = data.data.promoId;
                                 scope.previewData.data.promoId = data.data.promoId;
                                 scope.submit(scope.previewData.data).then(
-                                    function (response) {
+                                    function () {
                                         clickableSaveBtn(event);
                                     },
-                                    function (error) {
+                                    function () {
                                         clickableSaveBtn(event);
                                     });
                             }
                         },
-                        function (error) {
+                        function () {
                             scope.submitStatus = '';
                             setError('ERROR: Unable to submit promotion.');
                             clickableSaveBtn(event);
@@ -107,7 +107,7 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                 if (needsValidation) {
                     var validatePromise = promotionDataService.validate(promotion);
                     scope.submitStatus = 'Validating promotion';
-                    validatePromise.then(function (data) {
+                    validatePromise.then(function () {
                         save();
                     }, function (res) {
                         var data = res.data;
@@ -135,7 +135,7 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                     utilService.transformPromotionRequest(promotion);
                     var promise = promotionDataService.submit(promotion);
                     promise.then(
-                        function (data) {
+                        function () {
                             scope.submitStatus = '';
                             scope.previewOverlayConfig.close();
                             window.location = '#/promotion-dashboard';

@@ -11,7 +11,7 @@ app.directive('systemGeneratedCodes', ['$filter', 'promotionDataService', 'DataF
                 promoform: '=',
                 completed: '='
             },
-            link: function (scope, $element, attrs) {
+            link: function (scope) {
 
                 function getSystemGenrateCodes(data) {
                     var getPromotionPromise = promotionDataService.getSystemGenrateCodes(data);

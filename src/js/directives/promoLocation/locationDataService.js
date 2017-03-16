@@ -1,5 +1,5 @@
-app.service('locationDataService', ['$http', '$q', 'dataService', 'DataFactory',
-    function ($http, $q, dataService, DataFactory) {
+app.service('locationDataService', ['$http', '$q', 'dataService',
+    function ($http, $q, dataService) {
         var publicApi = {};
 
         publicApi.getStoreIdCodes = function (data) {

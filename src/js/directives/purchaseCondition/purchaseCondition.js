@@ -15,7 +15,7 @@ app.directive('purchaseCondition', ['purchaseCondition',
                 promotype: '='
             },
 
-            link: function (scope, $element, attrs) {
+            link: function (scope) {
 
                 scope.setQualUOM = function (qualuom) {
                     var temp = qualuom;

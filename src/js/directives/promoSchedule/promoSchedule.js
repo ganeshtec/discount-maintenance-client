@@ -11,7 +11,7 @@ app.directive('promoSchedule', ['$filter',
                 viewProp: '='
             },
             controller: function ($scope) {
-                $scope.$watch('data', function (nv, ov) {
+                $scope.$watch('data', function (nv) {
                     if (nv) {
                         if (nv.startDt) {
                             $scope.startDt = new Date(nv.startDt.split(' ')[0].replace(/-/g, '\/'));
@@ -21,13 +21,11 @@ app.directive('promoSchedule', ['$filter',
                         }
                         $scope.starttime = '3:00 AM';
                         $scope.endtime = '2:59 AM';
-
-
                     }
                 });
 
             },
-            link: function (scope, $element, attrs) {
+            link: function (scope) {
 
                 scope.convertToString = function () {
                     if (scope.data) {

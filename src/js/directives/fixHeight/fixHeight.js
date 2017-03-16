@@ -4,7 +4,7 @@ app.directive('fixHeight', ['$timeout', function ($timeout) {
         scope: {
             subtract: '='
         },
-        link: function (scope, $element, attrs) {
+        link: function (scope, $element) {
             $timeout(function () {
                 var height = window.innerHeight / 1.75;
                 $element.css('min-height', height);

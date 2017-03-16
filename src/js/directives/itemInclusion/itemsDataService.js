@@ -3,8 +3,8 @@
 	Services that will handle data http request to web services
 */
 
-app.service('itemsDataService', ['$http', '$q', 'dataService', 'DataFactory',
-    function ($http, $q, dataService, DataFactory) {
+app.service('itemsDataService', ['$http', '$q', 'dataService',
+    function ($http, $q, dataService) {
         var publicApi = {};
 
         publicApi.getOmsIdCodes = function (data) {

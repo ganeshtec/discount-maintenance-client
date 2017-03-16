@@ -1,10 +1,9 @@
 /**
  * 
  */
-app.service('merchHierarchyDataService', ['$http', '$q', 'dataService', 'DataFactory', 'URL_CONFIG',
-    function ($http, $q, dataService, DataFactory, URL_CONFIG) {
+app.service('merchHierarchyDataService', ['$http', '$q', 'dataService',
+    function ($http, $q, dataService) {
         var publicApi = {};
-        var resourceUrl = '';
 
         /*Departments - START*/
 

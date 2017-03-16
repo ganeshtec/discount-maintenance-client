@@ -104,9 +104,9 @@ app.controller('DashboardCtrl', ['$filter', '$scope', 'DataFactory', 'promotionD
             }
             if (invalid && invalid.length > 0) {
                 resp.invalid = []
-                for (var i = 0; i < invalid.length; i++) {
+                for (var j = 0; j < invalid.length; j++) {
                     var promos = {};
-                    promos.id = invalid[i].invalidInput.promoId;
+                    promos.id = invalid[j].invalidInput.promoId;
 
                     //Displaying  invalid id and not the actual message
                     resp.invalid.push(promos.id);
@@ -221,7 +221,7 @@ app.controller('DashboardCtrl', ['$filter', '$scope', 'DataFactory', 'promotionD
                     showAlert('Error', 'Unable to deactivate promotion :' + JSON.stringify(resp.invalid));
                 }
                 $scope.loading = false;
-            }, function (error) {
+            }, function () {
                 $scope.loading = false;
                 $scope.searchWithUrlParams();
             })
@@ -280,7 +280,6 @@ app.controller('DashboardCtrl', ['$filter', '$scope', 'DataFactory', 'promotionD
                 return false;
             }
             var modifiedFields = $('.promotions .ng-invalid');
-            var promoToSave = {};
             var promoId = $(field).parent().parent().data('promoid');
             for (var i = 0; i < modifiedFields.length; i++) {
                 var field = modifiedFields[i];
@@ -290,7 +289,7 @@ app.controller('DashboardCtrl', ['$filter', '$scope', 'DataFactory', 'promotionD
             }
             var disabledFields = angular.element('.promotions input[disabled]');
             for (var j = 0; j < disabledFields.length; j++) {
-                var field = disabledFields[j];
+                field = disabledFields[j];
                 if ($scope.selected[promoId]) {
                     return false;
                 }
@@ -386,7 +385,7 @@ app.controller('DashboardCtrl', ['$filter', '$scope', 'DataFactory', 'promotionD
             return promotionSubTypes;
         }
         // this gets triggered whenever the url changes ,see app.js for route configuration
-        $scope.$on('$routeUpdate', function (scope, next, current) {
+        $scope.$on('$routeUpdate', function () {
             $scope.searchWithUrlParams();
         });
         $scope.edit = function (id) {
@@ -407,7 +406,7 @@ app.controller('DashboardCtrl', ['$filter', '$scope', 'DataFactory', 'promotionD
             }
             return editable[promotion.status]
         }
-        $scope.filter = function (showFilter) {
+        $scope.filter = function () {
             var params = {};
             params.type = $scope.filtertype;
             params.status = $scope.filterstatus;

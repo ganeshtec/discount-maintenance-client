@@ -15,10 +15,7 @@ app.controller('compareViewCtrl', ['$scope', '$routeParams', '$timeout', '$cooki
         $scope.promotions = [];
 
         // Private Methods
-        // Method to get test data - Test Should return promotion record based on type
-        function getPromotionTest(type) {
-            return promotionDataService.getPromotionTest(type);
-        }
+
         // Method to get promotion by id - Test Should return promotion record
         function getPromotionByID(id) {
 

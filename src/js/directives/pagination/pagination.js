@@ -8,7 +8,7 @@ app.directive('pagination', ['$anchorScroll', function ($anchorScroll) {
             onsizechange: '&'
         },
         controller: function () {},
-        link: function (scope, element, attrs) {
+        link: function (scope) {
             scope.pages = [];
             var config = scope.config;
             scope.repaint = function () {

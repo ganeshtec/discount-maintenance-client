@@ -1,6 +1,6 @@
 // Purpose is to build promotion data.
-app.directive('itemInclusion', ['itemsDataService', 'DataFactory', 'skuTestRecord',
-    function (itemsDataService, DataFactory, skuTestRecord) {
+app.directive('itemInclusion', ['itemsDataService', 'DataFactory',
+    function (itemsDataService, DataFactory) {
         return {
             restrict: 'E',
             templateUrl: 'itemInclusion.html',
@@ -13,7 +13,7 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory', 'skuTestRecor
                 viewProp: '='
             },
             controller: function ($scope) {
-                $scope.$watch('purchaseoption', function (nv, ov) {
+                $scope.$watch('purchaseoption', function (nv) {
                     if (nv) {
 
                         if (nv === 'itemsku') {
@@ -25,7 +25,7 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory', 'skuTestRecor
                 });
 
             },
-            link: function (scope, $element, attrs) {
+            link: function (scope) {
 
                 var omsData = {};
                 var skuData = {};
@@ -165,7 +165,7 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory', 'skuTestRecor
 
                         var tempData = {};
                         tempData.omsIds = itemsDataService.getOmsIDs(data.omsIds)
-                        var itemPromise = itemsDataService.getOmsIdCodes(tempData);
+                        itemPromise = itemsDataService.getOmsIdCodes(tempData);
 
                         itemPromise.then(
                             function (data) {
@@ -244,7 +244,6 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory', 'skuTestRecor
                 }
 
                 scope.search = function (data) {
-                    var result = emptyCheck(data);
                     if (emptyCheck(data)) {
                         if (scope.isSkuSearch) {
                             scope.dataEmpty = true;

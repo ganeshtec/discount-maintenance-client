@@ -1,6 +1,6 @@
 // Purpose is to build promotion code spec.
-app.directive('promotionCodeSpecification', ['promotionDataService', 'PROMOCODE',
-    function (promotionDataService, PROMOCODE) {
+app.directive('promotionCodeSpecification', ['promotionDataService', 'PROMOCODE', 'DataFactory',
+    function (promotionDataService, PROMOCODE, DataFactory) {
         return {
             restrict: 'E',
             templateUrl: 'promotionCodeSpecification.html',
@@ -11,9 +11,9 @@ app.directive('promotionCodeSpecification', ['promotionDataService', 'PROMOCODE'
                 preview: '=',
                 couponid: '='
             },
-            link: function (scope, $element, attrs) {
+            link: function (scope) {
                 scope.data = scope.data || new PROMOCODE();
-                scope.$watch('data.type', function (model, oldModel) {
+                scope.$watch('data.type', function (model) {
                     if (model === 'Public') {
                         delete scope.data.systemGen;
                         scope.data.genType = 'user';

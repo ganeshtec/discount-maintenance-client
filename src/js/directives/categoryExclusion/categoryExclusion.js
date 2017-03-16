@@ -10,7 +10,7 @@ app.directive('categoryExclusion', [
                 itemtype: '=',
                 viewProp: '='
             },
-            link: function (scope, $element, attrs) {
+            link: function (scope) {
                 scope.search = function () {
                     if (scope.itemexclude === 'itemsku') {
                         scope.itemtype = 'SKU';

@@ -11,7 +11,7 @@ app.directive('redemptionLimit', [
 
             },
             controller: function($scope) {
-                $scope.$watch('data', function(nv, ov) {
+                $scope.$watch('data', function(nv) {
                     if (nv) {
                         if (nv.maxUsesPerCust != '-1') {
                             $scope.custmax = 'setcust';
@@ -32,7 +32,7 @@ app.directive('redemptionLimit', [
                 });
 
             },
-            link: function(scope, $element, attrs) {
+            link: function(scope) {
 
                 scope.promomax = 'promounlimt';
                 scope.ordermax = 'orderunlimt';

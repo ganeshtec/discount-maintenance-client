@@ -4,7 +4,7 @@ app.directive('tableSort', [function(){
         scope : {
             columnProp : '='
         },            
-        link : function (scope, element, attrs) {
+        link : function (scope, element) {
             scope.reverse = true;
             // Ordering data table
             element.bind('click', function(columnProp) {

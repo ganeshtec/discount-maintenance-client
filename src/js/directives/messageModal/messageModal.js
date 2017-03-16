@@ -7,7 +7,7 @@ app.directive('messageModal', [function () {
         scope: {
             modal: '='
         },
-        link: function (scope, element, attrs) {
+        link: function (scope) {
             scope.close = function () {
                 $('#messageModal').popup('close');
             };

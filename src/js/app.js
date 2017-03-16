@@ -19,7 +19,7 @@ app.config(function ($routeProvider,$locationProvider) {
     $locationProvider.hashPrefix('');
 });
 app.run(function($rootScope, $cookies, $location) {
-    $rootScope.$on('$locationChangeStart', function(event, next, current) {
+    $rootScope.$on('$locationChangeStart', function() {
         if (!($cookies.get('THDSSO'))) {
             $location.path('login');
         }

@@ -1,10 +1,9 @@
 /**
  * Customer Segment Data Service to call the API
  */
-app.service('customerSegmentDataService', ['$http', '$q', 'dataService', 'DataFactory', 'URL_CONFIG',
-    function ($http, $q, dataService, DataFactory, URL_CONFIG) {
+app.service('customerSegmentDataService', ['$http', '$q', 'dataService',
+    function ($http, $q, dataService) {
         var publicApi = {};
-        var resourceUrl = '';
 
         /*Customer Segment - START*/
 
