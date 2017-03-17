@@ -191,10 +191,10 @@ gulp.task('test', ['srcbuild'], function (done) {
     });
 });
 
-gulp.task('srcbuild', ['concat:vendor-js', 'concat:js', 'build:vendor-css', 'build:css', 'copy:index', 'copy:html', 'copy:fonts']);
-gulp.task('build-qa', gulpSequence('prebuild:clean', 'lint', 'srcbuild', 'copy:qaUrls'));
-gulp.task('build-ad', gulpSequence('prebuild:clean', 'lint', 'srcbuild', 'copy:adUrls'));
-gulp.task('build-dev', gulpSequence('prebuild:clean', 'lint', 'srcbuild', 'copy:devUrls'));
-gulp.task('dev', gulpSequence('prebuild:clean', 'lint', 'srcbuild', 'copy:devUrls', 'develop', 'browser-sync'));
+gulp.task('srcbuild', ['lint', 'concat:vendor-js', 'concat:js', 'build:vendor-css', 'build:css', 'copy:index', 'copy:html', 'copy:fonts']);
+gulp.task('build-qa', gulpSequence('prebuild:clean', 'srcbuild', 'copy:qaUrls'));
+gulp.task('build-ad', gulpSequence('prebuild:clean', 'srcbuild', 'copy:adUrls'));
+gulp.task('build-dev', gulpSequence('prebuild:clean', 'srcbuild', 'copy:devUrls'));
+gulp.task('dev', gulpSequence('prebuild:clean', 'srcbuild', 'copy:devUrls', 'develop', 'browser-sync'));
 gulp.task('serve', ['srcbuild'], reload);
 gulp.task('default', gulpSequence('prebuild:clean', 'srcbuild'));
