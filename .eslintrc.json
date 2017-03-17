@@ -11,7 +11,9 @@
         "beforeEach": true,
         "expect": true,
         "module": true,
-        "inject": true
+        "inject": true,
+        "require": true,
+        "__dirname": true
     },
     "extends": "eslint:recommended",
     "rules": {

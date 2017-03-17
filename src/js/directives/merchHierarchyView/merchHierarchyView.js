@@ -12,7 +12,6 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
             },
             link: function (scope) {
                 var delimeter = '>>';
-
                 var getDepartementsPromise = merchHierarchyDataService.getAllDepartments();
                 getDepartementsPromise.then(
                     function (data) {
@@ -32,9 +31,7 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                     function () {}
                 );
                 // Classes code STARTs
-
                 scope.getClassesforSelectedDepartment = function () {
-
                     scope.classList = [];
                     scope.SubClassList = [];
                     if (scope.selectedDept && scope.selectedDept != null) {
@@ -59,7 +56,6 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                             });
                     }
                 }
-
                 // getSubClassess Method - START
                 scope.getSubClasses = function () {
 
@@ -89,8 +85,6 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                     }
                 }
                 // getSubClassess Method - START
-
-
                 scope.deps = [];
                 scope.data = $.extend(true, [], scope.data);
                 scope.tableData = $.extend(true, [], scope.tableData);
@@ -120,13 +114,9 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                         var clsNum = dataObject.clasNum || '';
                         var subclsNum = dataObject.subClasNum  || '';
                     }
-
                     dcsId = dptNum + delimeter + clsNum + delimeter + subclsNum;
-
                     return dcsId;
                 }
-
-
                 scope.selectedOption = [];
                 scope.browseCatalogOverlayConfig = OverlayConfigFactory.getInstance();
                 scope.browseCatalogOverlayConfig.mask(true);
@@ -142,23 +132,16 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                         DataFactory.messageModal.title = 'Warning';
                         $('#messageModal').popup();
                     } else {
-
                         if (scope.tableData.length === 0) {
-
-
                             className = scope.selectedClass ? scope.selectedClass.merchandiseClassDescription : '';
                             subClassName = scope.selectedSubClass ? scope.selectedSubClass.merchandiseSubordinateClassDescription : ''; 
                             classNumber = scope.selectedClass ? scope.selectedClass.merchandiseClassNumber : '';
                             subClassNumber = scope.selectedSubClass ? scope.selectedSubClass.merchandiseSubordinateClassNumber : '';
-
                             jsondata.name = scope.selectedDept.name + delimeter + className + delimeter + subClassName;
                             jsondata.id = scope.selectedDept.id + delimeter + classNumber + delimeter + subClassNumber;
                             jsondata.catalog = 'Merch';
-
                             tableObject = prepareTableData(jsondata);
-
                             scope.data.push(jsondata);
-
                             scope.tableData.push({
                                 'dept': tableObject.dept,
                                 'clas': tableObject.clas,
@@ -167,9 +150,7 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                                 'clasNum': tableObject.clasNum,
                                 'subClasNum': tableObject.subClasNum
                             });
-
                         } else {
-
                             if (scope.selectedClass == null) {
                                 scope.selectedClass = {
                                     merchandiseClassDescription: '',
@@ -216,10 +197,8 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                                     'clasNum': tableObject.clasNum,
                                     'subClasNum': tableObject.subClasNum
                                 });
-
                             }
                         }
-
                     }
                     scope.dept = '';
                     scope.deptNum = '';
@@ -228,35 +207,24 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                     scope.subClass = '';
                     scope.subClasNum = '';
                 }
-
                 function prepareTableData(dataObject) {
                     var tempdata = {};
                     if (dataObject && dataObject != null) {
-
                         var nameArray = dataObject.name.split(delimeter);
                         var idArray = dataObject.id.split(delimeter);
-
-
-
                         if (nameArray.length > 0) {
-
-
                             tempdata.dept = nameArray[0] == null ? '' : nameArray[0];
                             tempdata.clas = nameArray[1] == null ? '' : nameArray[1];
                             tempdata.subClass = nameArray[2] == null ? '' : nameArray[2];
                         }
-
                         if (idArray.length > 0) {
                             tempdata.deptNum = idArray[0] == null ? '' : idArray[0];
                             tempdata.clasNum = idArray[1] == null ? '' : idArray[1];
                             tempdata.subClasNum = idArray[2] == null ? '' : idArray[2];
                         }
-
                     }
                     return tempdata;
                 }
-
-
                 function checkForDuplicateEntry() {
                     for (i = 0; i < scope.tableData.length; i++) {
                         if (scope.selectedDept.name == scope.tableData[i].dept) {
@@ -271,7 +239,6 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                                     return true;
                                 }
                             }
-
                         }
                     }
                     return false;

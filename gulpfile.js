@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 var gulp = require('gulp');
 var del = require('del');
 var browserSync = require('browser-sync');
@@ -10,106 +11,115 @@ var sass = require('gulp-sass');
 var nodemon = require('gulp-nodemon');
 var karma = require('karma').Server;
 var flatten = require('gulp-flatten');
+var eslint = require('gulp-eslint');
 
-input = {
-    'source_html': [
-        "src/include/*.html",
-        "src/js/**/*.html"
-    ],
-    'source_js': [
+var input = {
+        'source_html': [
+            'src/include/*.html',
+            'src/js/**/*.html'
+        ],
+        'source_js': [
             'src/js/**/*.js'
-    ],
-    'source_css': [
+        ],
+        'source_css': [
             'src/**/*.css'
-    ],
-    'vendor_css': [
+        ],
+        'vendor_css': [
             'node_modules/angular-material/angular-material.min.css',
             'node_modules/font-awesome/css/font-awesome.min.css'
-    ],
-    'static_assets': [
+        ],
+        'static_assets': [
             'src/**/*'
-    ],
-    'js_lib': [
+        ],
+        'js_lib': [
             'node_modules/jquery/dist/jquery.min.js',
             'node_modules/angular/angular.min.js',
             'node_modules/angular-animate/angular-animate.min.js',
             'node_modules/angular-aria/angular-aria.min.js',
             'node_modules/angular-material/angular-material.min.js',
-      'node_modules/angular-cookies/angular-cookies.min.js',
+            'node_modules/angular-cookies/angular-cookies.min.js',
             'node_modules/angular-route/angular-route.min.js'
-    ],
-    'fonts': [
+        ],
+        'fonts': [
             'node_modules/font-awesome/fonts/*'
-    ],
-    'cleanup_items': [
+        ],
+        'cleanup_items': [
             'public/**/*'
-    ]
-},
-output = {
-    'css': 'public/assets/css',
-    'javascript': 'public/assets/js',
-    'images': 'public/assets/images',
-    'fonts': 'public/assets/fonts',
-    'html': 'public'
-}
+        ]
+    },
+    output = {
+        'css': 'public/assets/css',
+        'javascript': 'public/assets/js',
+        'images': 'public/assets/images',
+        'fonts': 'public/assets/fonts',
+        'html': 'public'
+    }
 
 /* Pre-build clean */
-gulp.task('prebuild:clean', function() {
+gulp.task('prebuild:clean', function () {
     return del(input.cleanup_items);
 });
 
 /* Copy fonts */
-gulp.task('copy:fonts', function() {
+gulp.task('copy:fonts', function () {
     return gulp.src(input.fonts)
-        .pipe(gulp.dest(output.fonts)); 
+        .pipe(gulp.dest(output.fonts));
 });
 
 /* Copy fonts */
-gulp.task('copy:html', function() {
+gulp.task('copy:html', function () {
     return gulp.src(input.source_html)
         .pipe(flatten())
-        .pipe(gulp.dest(output.html)); 
+        .pipe(gulp.dest(output.html));
 });
 /* Copy fonts */
-gulp.task('copy:index', function() {
-    return gulp.src("src/index.html")
-        .pipe(gulp.dest("public")); 
+gulp.task('copy:index', function () {
+    return gulp.src('src/index.html')
+        .pipe(gulp.dest('public'));
 });
-gulp.task('copy:devUrls', function() {
+gulp.task('copy:devUrls', function () {
     return gulp.src('env_config/dev/urls.js')
-        .pipe(gulp.dest("public/assets/js")); 
+        .pipe(gulp.dest('public/assets/js'));
 });
-gulp.task('copy:adUrls', function() {
+gulp.task('copy:adUrls', function () {
     return gulp.src('env_config/ad/urls.js')
-        .pipe(gulp.dest("public/assets/js")); 
+        .pipe(gulp.dest('public/assets/js'));
 });
-gulp.task('copy:qaUrls', function() {
+gulp.task('copy:qaUrls', function () {
     return gulp.src('env_config/qa/urls.js')
-        .pipe(gulp.dest("public/assets/js")); 
+        .pipe(gulp.dest('public/assets/js'));
 });
 /* Concat js files */
-gulp.task('concat:js', function() {
+gulp.task('concat:js', function () {
     return gulp.src(input.source_js)
         .pipe(concat('source.min.js'))
         .pipe(gulp.dest(output.javascript));
 });
 
 /* Concat js files */
-gulp.task('concat:vendor-js', function() {
+gulp.task('concat:vendor-js', function () {
     return gulp.src(input.js_lib)
         .pipe(concat('vendor.min.js'))
         .pipe(gulp.dest(output.javascript));
 });
 
+/* Lint js files in /src */
+gulp.task('lint', function () {
+    return gulp.src(['src/js/**/*.js', '!node_modules/**'])
+        .pipe(eslint())
+        .pipe(eslint.format())
+        .pipe(eslint.failAfterError());
+});
+
 /* Build vendor css */
-gulp.task('build:vendor-css', function() {
+gulp.task('build:vendor-css', function () {
     return gulp.src(input.vendor_css)
         .pipe(concat('vendor.css'))
         .pipe(gulp.dest(output.css));
 });
 
 /* Compile scss to css */
-gulp.task('build:css', function() {
+gulp.task('build:css', function () {
     return gulp.src(input.source_css)
         .pipe(sass())
         .pipe(concat('source.css'))
@@ -117,7 +127,7 @@ gulp.task('build:css', function() {
 });
 
 /* Convert html to js */
-gulp.task('html2js', function() {
+gulp.task('html2js', function () {
     return gulp.src(input.source_html)
         .pipe(ngHtml2Js({
             moduleName: 'component-templates'
@@ -127,7 +137,7 @@ gulp.task('html2js', function() {
         .pipe(gulp.dest(output.javascript));
 });
 /* Watch files w/o server */
-gulp.task('watch', ['srcbuild'], function() {
+gulp.task('watch', ['srcbuild'], function () {
     browserSync({
         server: {
             baseDir: 'public'
@@ -137,7 +147,7 @@ gulp.task('watch', ['srcbuild'], function() {
 });
 
 gulp.task('develop', function () {
-    nodemon({ 
+    nodemon({
         script: 'server.js',
         ext: 'html js scss css',
         ignore: [
@@ -148,9 +158,10 @@ gulp.task('develop', function () {
             'server.js',
             'karma.conf.js'
         ],
-        tasks: ['build-dev']})
-        .on('restart', function () {
-            console.log('restarted!')
+        tasks: ['build-dev']
+    })
+    .on('restart', function () {
+        console.log('restarted!')
     })
 })
 
@@ -158,7 +169,7 @@ gulp.task('develop', function () {
 /* Start browser-sync */
 gulp.task('browser-sync', function () {
     browserSync({
-        proxy: "localhost:8001",
+        proxy: 'localhost:8001',
         port: 8002,
         notify: false,
         host: 'localhost.homedepot.com',
@@ -167,7 +178,7 @@ gulp.task('browser-sync', function () {
 });
 
 /* Run unit tests, but run build first */
-gulp.task('test', ['srcbuild'], function(done) {
+gulp.task('test', ['srcbuild'], function (done) {
     karma.start({
         configFile: __dirname + '/karma.conf.js',
         singleRun: true,
@@ -181,9 +192,9 @@ gulp.task('test', ['srcbuild'], function(done) {
 });
 
 gulp.task('srcbuild', ['concat:vendor-js', 'concat:js', 'build:vendor-css', 'build:css', 'copy:index', 'copy:html', 'copy:fonts']);
-gulp.task('build-qa', gulpSequence('prebuild:clean', 'srcbuild', 'copy:qaUrls'));
-gulp.task('build-ad', gulpSequence('prebuild:clean', 'srcbuild', 'copy:adUrls'));
-gulp.task('build-dev', gulpSequence('prebuild:clean', 'srcbuild', 'copy:devUrls'));
-gulp.task('dev', gulpSequence('prebuild:clean', 'srcbuild', 'copy:devUrls', 'develop', 'browser-sync'));
+gulp.task('build-qa', gulpSequence('prebuild:clean', 'lint', 'srcbuild', 'copy:qaUrls'));
+gulp.task('build-ad', gulpSequence('prebuild:clean', 'lint', 'srcbuild', 'copy:adUrls'));
+gulp.task('build-dev', gulpSequence('prebuild:clean', 'lint', 'srcbuild', 'copy:devUrls'));
+gulp.task('dev', gulpSequence('prebuild:clean', 'lint', 'srcbuild', 'copy:devUrls', 'develop', 'browser-sync'));
 gulp.task('serve', ['srcbuild'], reload);
 gulp.task('default', gulpSequence('prebuild:clean', 'srcbuild'));
