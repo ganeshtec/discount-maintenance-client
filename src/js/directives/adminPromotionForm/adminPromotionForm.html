@@ -86,7 +86,7 @@
 				<promo-description data="data">
 				</promo-description>
 		</section>
-		<section class="admin__promotion__section" ng-show="index == 5 || preview">
+		<section class="admin__promotion__section" ng-show="viewProp.displayRedemptionLimits && (index == 5 || preview)">
 				<redemption-limit data="data.redmptnLmt" promoform="promoForm">
 				</redemption-limit>
 		</section>

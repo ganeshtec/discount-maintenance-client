@@ -59,19 +59,20 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$co
             }
         }
 
-        function getViewProperties(visiblity) {
+        function getViewProperties(visibility) {
             return {
-                displayPromoDescription: visiblity,
-                displayRedemptionMethod: visiblity,
-                displayCombinationPromo: visiblity,
-                displayPriority: visiblity,
-                displayOMSId: visiblity,
-                displayMFGBrand: visiblity,
-                displayWebHierarchy: visiblity,
-                displayOMSIdExclusion: visiblity,
-                displayExclusionSubCategories: visiblity,
-                displayPaymentType: visiblity,
-                displayScheduleTime: visiblity
+                displayPromoDescription: visibility,
+                displayRedemptionLimits: visibility,
+                displayRedemptionMethod: visibility,
+                displayCombinationPromo: visibility,
+                displayPriority: visibility,
+                displayOMSId: visibility,
+                displayMFGBrand: visibility,
+                displayWebHierarchy: visibility,
+                displayOMSIdExclusion: visibility,
+                displayExclusionSubCategories: visibility,
+                displayPaymentType: visibility,
+                displayScheduleTime: visibility,
             }
         }
 

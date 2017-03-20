@@ -9,7 +9,7 @@ app.factory('SECTIONS', ['ALLOWED_PERMISSION_IDS', function(ALLOWED_PERMISSION_I
                 {name:'Location',isActive:false,shouldDisplay:true, link: 'promotion-location', icon: 'fa-globe'},
                 {name:'Rewards',isActive:false,shouldDisplay:true, link: 'promotion-rewards', icon: 'fa-gift'},
                 {name:'Descriptions',isActive:false,shouldDisplay:false, link: 'promotion-descriptions', icon: 'fa-pencil-square-o'},
-                {name:'Redemption Limits',isActive:false,shouldDisplay:true, link: 'promotion-redemtion-limits', icon: 'fa-tachometer' },
+                {name:'Redemption Limits',isActive:false,shouldDisplay:false, link: 'promotion-redemtion-limits', icon: 'fa-tachometer' },
                 {name:'Schedule',isActive:false,shouldDisplay:true, link: 'promotion-schedule', icon: 'fa-calendar'}
             ];
         } else if (userType == allowedPermissionIDs.ONLINE) {
