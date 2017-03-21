@@ -70,12 +70,14 @@ def create_cust_segment_discount_store(promotion)
     fill_in 'value', with: promotion.amount_off
 	click_button 'Next'
 
-    #fill_in 'shortdesc', with: promotion.desc_short
-	#fill_in 'longdesc', with: promotion.desc_long
-	#puts " S & L Description added SUCCESSFULLY"
-	#click_button 'Next'
+	# This was removed along with the "Descriptions" tab
+    # fill_in 'shortdesc', with: promotion.desc_short
+	# fill_in 'longdesc', with: promotion.desc_long
+	# puts " S & L Description added SUCCESSFULLY"
+	# click_button 'Next'
 
-	click_button 'Next'
+	# This was removed along with the "Redemption Limits" tab
+	# click_button 'Next'
 
 	fill_in 'start', with: promotion.start_date 
     fill_in 'end', with: promotion.end_date 

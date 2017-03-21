@@ -1,5 +1,8 @@
 app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$cookies', '$location', 'loginService', 'promotionDataService', 'PromotionData', 'SECTIONS', 'DataFactory', 'createTestRecord', 'URL_CONFIG', 'ALLOWED_PERMISSION_IDS',
     function ($scope, $routeParams, $timeout, $cookies, $location, loginService, promotionDataService, PromotionData, SECTIONS, DataFactory, createTestRecord, URL_CONFIG, ALLOWED_PERMISSION_IDS) {
+
+        var $this = this;
+
         var promotionID = $routeParams.id || null;
         var cloneId = $routeParams.cloneid || null;
         // var promotionID1 = $routeParams.promotionID1 || null;
@@ -51,7 +54,7 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$co
             $scope.promotionData.meta.lastUpdatedBy = $scope.username;
         }
 
-        function setViewProperties(userType) {
+        $this.setViewProperties = function(userType) {
             if (userType == allowedPermissionIDs.STORE) {
                 $scope.viewProperties = getViewProperties(false);
             } else if (userType == allowedPermissionIDs.ONLINE) {
@@ -76,21 +79,16 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$co
             }
         }
 
-
         // Initializes Data Model
         function init(data) {
             //checking the session validation.
-
-
             $scope.validData = {};
             $scope.messageModal = {};
 
             $scope.UiState = ($scope.comparemode) ? 'Compare' : ((data.promoId) ? 'Edit' : 'Create New');
             $scope.editMode = ($scope.UiState === 'Edit');
-
-
-
-            setViewProperties($scope.userType);
+            
+            $this.setViewProperties($scope.userType);
 
             $scope.sections = new SECTIONS($scope.userType);
             $scope.section = promotionDataService.getSection($scope.sections);
