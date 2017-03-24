@@ -12,13 +12,21 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                 isDisabled: '=',
                 formHolder: '=',
                 display: '=',
-                viewProp: '='
+                viewProp: '=',
+                promoMfa: '='
             },
             link: function (scope) {
 
-                function getPomoSubTypes() {
-                    var getPromotionPromise = promotionDataService.getPromotionSubTypes();
-                    getPromotionPromise.then(
+                function getPromoSubTypes() {
+                    var getPromotionPromise;
+                    if(scope.promoMfa===true){
+                        DataFactory.promotionSubTypes = promotionDataService.getPromotionSubTypesForMFA();
+                        scope.promotionSubTypes = DataFactory.promotionSubTypes;
+                    }
+                    else {
+                        getPromotionPromise = promotionDataService.getPromotionSubTypes();   
+                     
+                        getPromotionPromise.then(
                         function (data) {
                             DataFactory.promotionSubTypes = data.promotionSubTypes;
                             scope.promotionSubTypes = DataFactory.promotionSubTypes;
@@ -29,9 +37,11 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                             $('#messageModal').popup();
 
                         });
+                    }
                 }
+
                 scope.formHolder.form = scope.promoForm;
-                scope.promotionSubTypes = (DataFactory.promotionSubTypes) ? DataFactory.promotionSubTypes : getPomoSubTypes();
+                getPromoSubTypes();
 
                 function setPromotionSubType() {
                     if (scope.promotionSubTypes && scope.data && scope.data.promoSubTypeCd) {

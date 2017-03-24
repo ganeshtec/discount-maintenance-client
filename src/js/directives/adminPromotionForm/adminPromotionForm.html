@@ -29,7 +29,26 @@
 						Please select a valid promotion type
 					</span>
 				</span>
-			</div> 
+			</div>
+
+			<!-- Promotion Type  for MFA user  START-->
+			<div class="md-select md-select-space">
+				<label for="promotype">
+					Promotion Type
+				</label>
+				<select name="promotype" ng-options="promotype as promotype.promoSubTypeDesc for promotype in promotionSubTypes" ng-model="promoSubTypeObject" ng-change="getSelectedSubTypes()" ng-required=" preview">
+					<option value="">
+						-- Select a promotion type --
+					</option>
+				</select>
+				<span class='error-message' ng-show=" promoForm.promotype.$invalid">
+					<span ng-show="promoForm.promotype.$error.required">
+						Please select a valid promotion type
+					</span>
+				</span>
+			</div>
+			<!-- Promotion Type  for MFA user  END-->
+
 			<div class="md-select md-select-space" ng-show="viewProp.displayRedemptionMethod">
 				<label for="method">
 					Redemption Method

@@ -13,20 +13,21 @@ app.service('promotionDataService', ['$http', '$q', 'dataService', 'DataFactory'
             return result;
         }
 
-        publicApi.getPromotionSubTypes = function () {
-            var config = {
-                    method: 'GET',
-                    url: '/promotionTypes/promotionSubTypes/adminUI.json',
-                },
-                result = $q.defer();
-            dataService.httpRequest(config).then(
-                function (response) {
-                    result.resolve(response.data);
-                },
-                function (error) {
-                    result.reject(error);
-                });
-            return result.promise;
+        publicApi.getPromotionSubTypesForMFA = function() {
+            return [{
+                'promoSubTypeCd': 'ProductLevelPerItemPercentDiscount',
+                'promoSubTypeDesc': 'Multi-SKU Bulk',
+                'promoType': 'ITEMPROMO',
+                'promoTypeCode': 10,
+                'promoSubTypeId': 25
+            } ,
+            {
+                'promoSubTypeCd': 'ProductLevelPerItemPercentDiscount',
+                'promoSubTypeDesc': 'Customer Segmentation',
+                'promoType': 'ITEMPROMO',
+                'promoTypeCode': 10,
+                'promoSubTypeId': 25
+            }];
         }
 
         publicApi.getRedemptionMethodTypes = function () {
