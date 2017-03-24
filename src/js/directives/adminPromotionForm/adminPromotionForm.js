@@ -19,7 +19,7 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
 
                 function getPromoSubTypes() {
                     var getPromotionPromise;
-                    if(scope.promoMfa===true){
+                    if(scope.promoMfa){
                         DataFactory.promotionSubTypes = promotionDataService.getPromotionSubTypesForMFA();
                         scope.promotionSubTypes = DataFactory.promotionSubTypes;
                     }
