@@ -10,7 +10,8 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
             previewOverlayConfig: '=',
             promoForm: '=',
             formHolder: '=',
-            viewProp: '='
+            viewProp: '=',
+            promoMfa: '='
         },
         link: function (scope, element) {
 
