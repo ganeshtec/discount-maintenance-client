@@ -127,11 +127,11 @@
 									<td class="padding-left-20">
 										<md-checkbox aria-label="Select {{wrapper.promotion.name}} Promotion" ng-true-value="true" ng-false-value="false"  ng-model="selected[wrapper.promotion.promoId]" /></md-checkbox>
 									</td>
-									<td>{{wrapper.promotion.promoId}}</td>
+									<td class='dashboard-promo-id'>{{wrapper.promotion.promoId}}</td>
 									<td>
 					  					<input type="text" ng-disabled="wrapper.disabled"  class="promotionName" required ng-model="wrapper.promotion.name" required allow-pattern="(\d|[a-z A-Z\(\?\-\_\.\'\,\%\$\!\@\)])" />
 					  				</td>
-									<td width="8%">{{status[wrapper.promotion.status]}}</td>
+									<td width="8%" class='dashboard-promo-status'>{{status[wrapper.promotion.status]}}</td>
 									<td class="l" width="15%">{{promoSubTypes[wrapper.promotion.promoSubTypeCd]}}</td>
 									<td><input  ng-disabled="wrapper.disabled"  type="date" required class="promotionDate" ng-model="wrapper.start" required /></td>
 									<td><input ng-disabled="wrapper.disabled"  type="date" required ng-min="wrapper.start" class="promotionDate" ng-model="wrapper.end" required /></td>
