@@ -44,8 +44,18 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                 getPromoSubTypes();
 
                 function setPromotionSubType() {
+                                  
                     if (scope.promotionSubTypes && scope.data && scope.data.promoSubTypeCd) {
                         $.each(scope.promotionSubTypes, function (i) {
+                            if(scope.data.purchaseConds.customerSegmentId==null && scope.data.promoSubTypeCd=='ProductLevelPerItemPercentDiscount') {
+                                scope.promoSubTypeObject = scope.promotionSubTypes[0];
+                            }
+
+                            else{
+                                scope.promoSubTypeObject = scope.promotionSubTypes[1];
+                            }
+
+
                             if (scope.promotionSubTypes[i].promoSubTypeCd == scope.data.promoSubTypeCd) {
                                 scope.promoSubTypeObject = scope.promotionSubTypes[i];
                             }
