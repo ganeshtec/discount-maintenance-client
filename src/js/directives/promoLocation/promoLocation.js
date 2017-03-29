@@ -17,6 +17,8 @@ app.directive(
                 },
                 controller: function () {
 
+
+
                 },
                 link: function (scope) {
                     var storeData = {};
@@ -25,6 +27,7 @@ app.directive(
                     scope.validStoreInfo = [];
                     scope.inValidStoreInfo = false;
                     scope.showInvalidError = false;
+
 
                     scope.addStoretest = addStore;
 
@@ -81,10 +84,14 @@ app.directive(
                         }
                     }
 
-                    function getStoresByID(data, clicked) {
+                    function getStoresByID(data, location, clicked) {
                         var tempData = {};
-                        tempData.storeNumbers = locationDataService
-                            .getStoreIds(data.storeNumbers)
+
+                        if(location == 'stores' ) { 
+                            
+                            tempData.locationNumbers = locationDataService
+                            .getStoreIds(data.locationNumbers)
+
                         var locationPromise = locationDataService
                             .getStoreIdCodes(tempData);
 
@@ -101,6 +108,20 @@ app.directive(
                                     $('#messageModal')
                                         .popup();
                                 });
+
+
+                        }
+                        else
+                        {
+                            tempData.locationNumbers=locationDataService.getStoreIds(data.locationNumbers)
+                                console.log("__tempData.locationNumbers after service call ::"+tempData.locationNumbers);
+                           // getStoresFromMarkets(tempData);
+                        var locationPromise = locationDataService
+                            .getStoresFromMarkets(tempData);
+
+                        }
+
+                        
                     }
 
                     function validateStoreData(data) {
@@ -133,22 +154,65 @@ app.directive(
                         setData();
                     }
 
-                    scope.search = function (data) {
-                        if (!data || data == null || data == '') {
-                            DataFactory.messageModal.message = 'Please enter a valid Store Number';
-                            DataFactory.messageModal.title = 'Warning';
-                            $('#messageModal').popup();
-                        } else {
+                    scope.search = function (data,location) {
+
+                        if(location =='stores' ) {
+                            console.log("__#_#_#_#_#__Location selected is::"+location)
+
+                            
+                         if (!data || data == null || data == '') {
+                             DataFactory.messageModal.message = 'Please enter a valid Store Number';
+                             DataFactory.messageModal.title = 'Warning';
+                             $('#messageModal').popup();
+                         } else {
+
+                            console.log("____Store ELSE ");
                             data = data.replace(/\s\s+/g, ' ')
                                 .split(/[',',' ',', ']+/);
 
                             filterStoreData(data);
                             validateStoreData(data);
-                            storeData.storeNumbers = data;
+                            storeData.locationNumbers = data;
                             if (!scope.showInvalidError) {
-                                getStoresByID(storeData, true);
+                                console.log("__Stores Search after validations storeData is::"+JSON.stringify(storeData))
+                                console.log("___ Json value::"+scope.data);
+                                getStoresByID(storeData, location, true);
                             }
+                         }
+
                         }
+
+                       // else if(location =='markets' )  {
+                        else {
+                             console.log("_!_!_!_!_Location selected is::"+location)
+                        
+                            if (!data || data == null || data == '') {
+                            DataFactory.messageModal.message = 'Please enter a valid Market Number';
+                            DataFactory.messageModal.title = 'Warning';
+                            $('#messageModal').popup();
+                        } else {
+                        //     data = data.replace(/\s\s+/g, ' ')
+                        //         .split(/[',',' ',', ']+/);
+
+                        //     filterStoreData(data);
+                        //     validateStoreData(data);
+                        //     storeData.locationNumbers = data;
+                        //     if (!scope.showInvalidError) {
+                        //         console.log("__Market Search after Validations storeData is::"+JSON.stringify(storeData))
+                        //         getStoresByID(storeData, true);
+                        //     }
+                        }
+
+
+                        }
+                        
+                    }
+
+                    function setLocationOpted(locOption) {
+                        console.log("___setLocationOpted FUNCTION  User Selected ::"+locOption);
+                        data.locations=locOption;
+
+
                     }
 
                     /* method added to ignore store values > 5 */
