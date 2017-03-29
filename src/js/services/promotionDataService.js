@@ -15,14 +15,14 @@ app.service('promotionDataService', ['$http', '$q', 'dataService', 'DataFactory'
 
         publicApi.getPromotionSubTypesForMFA = function() {
             return [{
-                'promoSubTypeCd': 'ProductLevelPerItemPercentDiscount',
+                'promoSubTypeCd': 'ProductLevelPerItemPercentDiscountMSB',
                 'promoSubTypeDesc': 'Multi-SKU Bulk',
                 'promoType': 'ITEMPROMO',
                 'promoTypeCode': 10,
                 'promoSubTypeId': 25
             } ,
             {
-                'promoSubTypeCd': 'ProductLevelPerItemPercentDiscount',
+                'promoSubTypeCd': 'ProductLevelPerItemPercentDiscountCS',
                 'promoSubTypeDesc': 'Customer Segmentation',
                 'promoType': 'ITEMPROMO',
                 'promoTypeCode': 10,

@@ -46,6 +46,9 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
 
                 scope.headerErrorMsg = '';
                 delete scope.errorMessages;
+                if (scope.previewData.data.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountCS' || scope.previewData.data.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB') {
+                    scope.previewData.data.promoSubTypeCd = 'ProductLevelPerItemPercentDiscount';
+                }
                 var promotion = scope.previewData.data;
                 utilService.setDefaultsForSaveAsDraft(promotion);
                 utilService.transformPromotionRequest(promotion);
