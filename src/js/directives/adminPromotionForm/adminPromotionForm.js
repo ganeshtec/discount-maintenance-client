@@ -43,28 +43,46 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                 scope.formHolder.form = scope.promoForm;
                 getPromoSubTypes();
 
-                function setPromotionSubType() {
-                                  
+                function setPromotionSubType(watch) {
+                    
+                   // console.log('scope.promotionSubTypes', scope.promotionSubTypes);
+                  // console.log("_____scope.data", scope.data);
                     if (scope.promotionSubTypes && scope.data && scope.data.promoSubTypeCd) {
                         $.each(scope.promotionSubTypes, function (i) {
-                            if(scope.data.purchaseConds.customerSegmentId==null && scope.data.promoSubTypeCd=='ProductLevelPerItemPercentDiscount') {
-                                scope.promoSubTypeObject = scope.promotionSubTypes[0];
+
+                            if(scope.promoMfa && scope.data.promoId && scope.data.promoId != 0 && !watch) {
+                              //  console.log("Store User Logged in::"+scope.promoMfa);
+                                // scope.promoSubTypeObject = (scope.data.custSegment && scope.data.purchaseConds.customerSegmentId)
+                                //     ? 'ProductLevelPerItemPercentDiscountCS'
+                                //     : 'ProductLevelPerItemPercentDiscountMSB';
+
+
+                                if(scope.data.purchaseConds.customerSegmentId && scope.data.purchaseConds.customerSegmentId !=0) {
+                                           // console.log("Promotion Type is CS::");
+                                    scope.promoSubTypeObject=scope.promotionSubTypes[1];
+                                }
+                                else {
+                                            //console.log("Promotion Type is MSB::");
+                                    scope.promoSubTypeObject=scope.promotionSubTypes[0];
+                                }
+
+                            } else {
+                                if (scope.promotionSubTypes[i].promoSubTypeCd == scope.data.promoSubTypeCd) {
+                                    scope.promoSubTypeObject = scope.promotionSubTypes[i];
+                                }
                             }
 
-                            else{
-                                scope.promoSubTypeObject = scope.promotionSubTypes[1];
-                            }
-
-
-                            if (scope.promotionSubTypes[i].promoSubTypeCd == scope.data.promoSubTypeCd) {
-                                scope.promoSubTypeObject = scope.promotionSubTypes[i];
-                            }
+                             
+                            // if (scope.promotionSubTypes[i].promoSubTypeCd == scope.data.promoSubTypeCd) {
+                            //     scope.promoSubTypeObject = scope.promotionSubTypes[i];
+                            // }
                         });
                     }
+                    //console.log("scope.promoSubTypeObject END", scope.promoSubTypeObject);
                 }
 
                 scope.$watch('data.promoSubTypeCd', function () {
-                    setPromotionSubType();
+                    setPromotionSubType(true);
                     if (scope.promoSubTypeObject && scope.promoSubTypeObject.promoSubTypeObject) {
                         scope.getSelectedSubTypes();
                     }
