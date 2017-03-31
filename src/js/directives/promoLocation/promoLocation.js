@@ -27,17 +27,15 @@ app.directive(
                     scope.validStoreInfo = [];
                     scope.inValidStoreInfo = false;
                     scope.showInvalidError = false;
-                    //scope.data.locations = 'stores';
-             
                     scope.addStoretest = addStore;
 
+                    /* Adding stores data to the table */
                     function addStore(item) {
                         if (!scope.data) {
                             scope.data = [];
                         }
                         if (scope.data.indexOf(item.storeNumber) === -1) {
                             scope.validStoreInfo.push(item);
-
                             setData();
                         } else {
                             existingID += item.storeNumber + ', ';
@@ -50,18 +48,18 @@ app.directive(
                     }
 
                     function setData() {
+
+                        var templocation = scope.data.locations;
+ 
                         scope.data = scope.validStoreInfo.reduce(function (data, item) {
                             return data.concat(item.storeNumber);
                         }, []);
 
-                        scope.data.locations='stores';
-
+                        scope.data.locations = templocation;
                     }
 
                     function setStoreData(data, clicked) {
                         existingID = '';
-
-                        
 
                         if (!scope.validStoreInfo.length && scope.data && !scope.itemSearch) {
                             $.extend(true,
@@ -89,11 +87,9 @@ app.directive(
                             $('#messageModal').popup();
                         }
                     }
-
+                    /* Data Service Call for Edit to display the selected store data */
                     function getStoresByIdEdit(data,clicked) {
                         var tempData = {};
-                          //console.log('___data value in getStoreByID  fot Stores::',data);
-                           // console.log("Inside Store DataService call..")
                         tempData.locationNumbers = locationDataService
                             .getStoreIds(data.locationNumbers)
 
@@ -114,20 +110,17 @@ app.directive(
                                         .popup();
                                 });
                     }
-
+                    /* Data Service Call for Store & Market Search  */
                     function getStoresByID(data, location, clicked) {
 
-                        //console.log('___data value in getStoreByID ::',data,location,clicked);
+            
                         var tempData = {};
                         var locationPromise = {};
 
-                        if(location == 'stores' ) { 
-
-                            // console.log('___data value in getStoreByID  fot Stores::',data);
-                            //console.log("Inside Store DataService call..")
-                            tempData.locationNumbers = locationDataService
+                        tempData.locationNumbers = locationDataService
                             .getStoreIds(data.locationNumbers)
 
+                        if(location == 'stores' ) { 
                             locationPromise = locationDataService
                             .getStoreIdCodes(tempData);
 
@@ -149,12 +142,7 @@ app.directive(
                         }
                         else
                         {
-                            // console.log('___data value in getStoreByID for Markets ::',data);
-                            //console.log("Market selected to call Data service::",data.locationMarketNumbers)
-                            tempData.locationNumbers=locationDataService
-                            .getStoreIds(data.locationNumbers)
-                               // console.log("__tempData.locationNumbers after service call ::"+tempData.locationNumbers);
-                           
+                                                 
                             locationPromise = locationDataService
                             .getStoresFromMarkets(tempData);
 
@@ -171,6 +159,7 @@ app.directive(
                                     $('#messageModal')
                                         .popup();
                                 });    
+
 
                         }
                 
@@ -195,16 +184,7 @@ app.directive(
                     }
 
                     if (scope.data && scope.data.length) {
-                        // getData();
-                        //var location = 'stores';
-                        //var location = 'markets';
-                        //storeData.storeNumbers = scope.data;
-                        storeData.locationNumbers = scope.data;
-                        //marketData.locationMarketNumbers = scope.data
-                        //console.log("Store Scope Data to getStoreIds::" +  JSON.stringify(storeData));
-                       // console.log("Market Scope Data to getStoreIds::" +  JSON.stringify(marketData));
-                        //getStoresByID(storeData, location, true)
-                        //getStoresByID(marketData, location, true)
+                        storeData.locationNumbers = scope.data;        
                         getStoresByIdEdit(storeData, true)
                     }
 
@@ -218,58 +198,44 @@ app.directive(
                     scope.search = function (data,location) {
 
                         if(location =='stores' ) {
-                           // console.log("__#_#_#_#_#__Location selected is::"+location)
-                            
+        
                             if (!data || data == null || data == '') {
                                 DataFactory.messageModal.message = 'Please enter a valid Store Number';
                                 DataFactory.messageModal.title = 'Warning';
                                 $('#messageModal').popup();
                             } else {
-
-                           // console.log("____Store ELSE ");
                                 data = data.replace(/\s\s+/g, ' ')
                             .split(/[',',' ',', ']+/);
 
                                 filterStoreData(data);
                                 validateStoreData(data);
-                            //console.log("Successfull till validateStoreData")
                                 storeData.locationNumbers = data;
 
                                 if (!scope.showInvalidError) {
-                                //console.log("__Stores Search after validations storeData is::"+JSON.stringify(storeData))
-                               // console.log("___ Json value::"+scope.data);
                                     getStoresByID(storeData, location, true);
                                 }
                             }
 
                         }
-
-                       // else if(location =='markets' )  {
+           
                         else {
                             if (!data || data == null || data == '') {
                                 DataFactory.messageModal.message = 'Please enter a valid Market Number';
                                 DataFactory.messageModal.title = 'Warning';
                                 $('#messageModal').popup();
-                            } else {
+                            } 
+                            else {
                                 data = data.replace(/\s\s+/g, ' ')
                                 .split(/[',',' ',', ']+/);
 
                                 filterStoreData(data);
                                 validateStoreData(data);
-                           // storeData.locationNumbers = data;
                                 storeData.locationNumbers = data;
-                           //marketData.locationMarketNumbers = data;
-                              
-                                if (!scope.showInvalidError) {
-                               // console.log("__Market Search after Validations storeData is::"+JSON.stringify(marketData))
-                                //getStoresByID(marketData, location, true);
+                                if (!scope.showInvalidError) {   
                                     getStoresByID(storeData, location, true);
                                 }
                             }
-
-
-                        }
-                        
+                        }              
                     }
 
                 

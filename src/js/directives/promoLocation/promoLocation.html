@@ -1,9 +1,7 @@
 <!-- Markets code START -->
 
 			
-			<div class="md-text-field" ng-init="data.locations='stores'">
-								<h1>{{data.locations}}</h1>
-								
+			<div class="md-text-field" ng-init="data.locations='markets'">
 				<label for="location">Location Types</label>
 				<div class="md-radio">
 					<input type="radio" id="markets" name="locations" ng-model="data.locations" title="markets" value="markets"/>
@@ -80,6 +78,9 @@
 		<th>
 			Store Name
 		</th>
+		<th>
+			Market Number
+		</th>
 		<th class="r">
 			<a class="editOption thd-orange" ng-if="validStoreInfo && validStoreInfo.length >0" ng-click="removeAll()" href="">
 				Remove All
@@ -93,6 +94,9 @@
 		</td>
 		<td>
 			{{item.storeName}}
+		</td>
+		<td>
+		    {{item.marketNumber}}
 		</td>
 		<td class="r">
 			<a class="editOption thd-orange" ng-click="isDisabled || removePromoCode($index)" href="">
@@ -108,6 +112,9 @@
 		<th>
 			Store Name
 		</th>
+		<th>
+			Market Number
+		</th>
 		<th class="r">
 			<a class="editOption thd-orange" ng-if="validStoreInfo && validStoreInfo.length >0" ng-click="removeAll()" href="">
 				Remove All
@@ -122,6 +129,10 @@
 		<td>
 			{{item.storeName}}
 		</td>
+		<td>
+		    {{item.marketNumber}}
+		</td>
+
 		<td class="r">
 			<a class="editOption thd-orange" ng-click="isDisabled || removePromoCode($index)" href="">
 				Remove

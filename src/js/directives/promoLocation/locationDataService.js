@@ -3,7 +3,7 @@ app.service('locationDataService', ['$http', '$q', 'dataService',
         var publicApi = {};
 
         publicApi.getStoreIdCodes = function (data) {
-            //console.log("getStores dataService is executing..."+JSON.stringify(data));
+            
             var config = {
                     method: 'POST',
                     //url: '/store/validate.json',
@@ -15,7 +15,7 @@ app.service('locationDataService', ['$http', '$q', 'dataService',
             dataService.httpRequest(config).then(
                 function (response) {
                     result.resolve(response.data);
-                    // console.log("Store call Response::: "+ JSON.stringify(response.data));
+                    
                 },
                 function (error) {
                     result.reject(error);
@@ -33,7 +33,7 @@ app.service('locationDataService', ['$http', '$q', 'dataService',
         }
 
         publicApi.getStoresFromMarkets= function (data) {
-            //console.log("getStoresFromMarkets is executing..."+JSON.stringify(data));
+           
             var config = {
                     method: 'POST',
                     //url: '/store/validate.json',
@@ -46,7 +46,7 @@ app.service('locationDataService', ['$http', '$q', 'dataService',
             dataService.httpRequest(config).then(
                 function (response) {
                     result.resolve(response.data);
-                    //console.log("Market Response::: "+ JSON.stringify(response.data));
+                    
                 },
                 function (error) {
                     result.reject(error);
