@@ -1,4 +1,3 @@
-// Mock data for item level percent off promotion
 app.factory('URL_CONFIG', [function() {
     var _construct = function URL_CONFIG() {
         var data = {
