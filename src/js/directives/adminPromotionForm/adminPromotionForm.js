@@ -19,24 +19,24 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
 
                 function getPromoSubTypes() {
                     var getPromotionPromise;
-                    if(scope.promoMfa){
+                    if (scope.promoMfa) {
                         DataFactory.promotionSubTypes = promotionDataService.getPromotionSubTypesForMFA();
                         scope.promotionSubTypes = DataFactory.promotionSubTypes;
                     }
                     else {
-                        getPromotionPromise = promotionDataService.getPromotionSubTypes();   
-                     
-                        getPromotionPromise.then(
-                        function (data) {
-                            DataFactory.promotionSubTypes = data.promotionSubTypes;
-                            scope.promotionSubTypes = DataFactory.promotionSubTypes;
-                        },
-                        function (error) {
-                            DataFactory.messageModal.message = error;
-                            DataFactory.messageModal.title = 'Error';
-                            $('#messageModal').popup();
+                        getPromotionPromise = promotionDataService.getPromotionSubTypes();
 
-                        });
+                        getPromotionPromise.then(
+                            function (data) {
+                                DataFactory.promotionSubTypes = data.promotionSubTypes;
+                                scope.promotionSubTypes = DataFactory.promotionSubTypes;
+                            },
+                            function (error) {
+                                DataFactory.messageModal.message = error;
+                                DataFactory.messageModal.title = 'Error';
+                                $('#messageModal').popup();
+
+                            });
                     }
                 }
 
@@ -44,26 +44,25 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                 getPromoSubTypes();
 
                 function setPromotionSubType(watch) {
-                    
-                   // console.log('scope.promotionSubTypes', scope.promotionSubTypes);
-                  // console.log("_____scope.data", scope.data);
+
+                    // console.log('scope.promotionSubTypes', scope.promotionSubTypes);
+                    // console.log("_____scope.data", scope.data);
                     if (scope.promotionSubTypes && scope.data && scope.data.promoSubTypeCd) {
                         $.each(scope.promotionSubTypes, function (i) {
 
-                            if(scope.promoMfa && scope.data.promoId && scope.data.promoId != 0 && !watch) {
-                              //  console.log("Store User Logged in::"+scope.promoMfa);
-                                // scope.promoSubTypeObject = (scope.data.custSegment && scope.data.purchaseConds.customerSegmentId)
-                                //     ? 'ProductLevelPerItemPercentDiscountCS'
-                                //     : 'ProductLevelPerItemPercentDiscountMSB';
+                            if (scope.promoMfa && scope.data.promoId && scope.data.promoId != 0 && !watch) {
+                                //    console.log("Store User Logged in::"+scope.promoMfa);
+                                //     scope.promoSubTypeObject = (scope.data.custSegment && scope.data.purchaseConds.customerSegmentId)
+                                //         ? 'ProductLevelPerItemPercentDiscountCS'
+                                //         : 'ProductLevelPerItemPercentDiscountMSB';
 
+                                if (scope.data.purchaseConds.customerSegmentId && scope.data.purchaseConds.customerSegmentId != 0) {
 
-                                if(scope.data.purchaseConds.customerSegmentId && scope.data.purchaseConds.customerSegmentId !=0) {
-                                           // console.log("Promotion Type is CS::");
-                                    scope.promoSubTypeObject=scope.promotionSubTypes[1];
+                                    scope.promoSubTypeObject = scope.promotionSubTypes[1];
                                 }
                                 else {
-                                            //console.log("Promotion Type is MSB::");
-                                    scope.promoSubTypeObject=scope.promotionSubTypes[0];
+
+                                    scope.promoSubTypeObject = scope.promotionSubTypes[0];
                                 }
 
                             } else {
@@ -72,13 +71,11 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                                 }
                             }
 
-                             
-                            // if (scope.promotionSubTypes[i].promoSubTypeCd == scope.data.promoSubTypeCd) {
-                            //     scope.promoSubTypeObject = scope.promotionSubTypes[i];
-                            // }
+
+
                         });
                     }
-                    //console.log("scope.promoSubTypeObject END", scope.promoSubTypeObject);
+
                 }
 
                 scope.$watch('data.promoSubTypeCd', function () {
@@ -106,9 +103,14 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                 scope.showMaximumDiscount = false;
 
                 scope.getSelectedSubTypes = function () {
+
+                    if (scope.promoSubTypeObject.promoSubTypeCd == "ProductLevelPerItemPercentDiscountMSB") {
+                        scope.data.purchaseConds.customerSegmentId = 0;
+                    }
                     scope.data.promoSubTypeCd = scope.promoSubTypeObject.promoSubTypeCd;
                     scope.data.promoSubTypeDesc = scope.promoSubTypeObject.promoSubTypeDesc;
                     scope.data.promoType = scope.promoSubTypeObject.promoType;
+
 
                     //AP-573-Promo validations - Buy A And B, get % off both
                     if (scope.data.promoSubTypeCd.indexOf('MultipleItemsPercentDiscount') != -1 || scope.data.promoSubTypeCd.indexOf('MultipleItemsValueDiscount') != -1) {
