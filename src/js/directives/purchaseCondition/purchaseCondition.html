@@ -47,7 +47,7 @@
 				</td>
 				<td class="md-text-field">
 						<input type="text" id="value" name="value_{{$index}}" ng-model="item.value" ng-required="preview" allow-pattern="^[\d.]+$"  ng-if="reward.type=='AMTOFF'"/>
-                        <input type="text" id="value" name="value_{{$index}}" ng-model="item.value" ng-required="preview" allow-pattern="(\d)"  ng-if="reward.type=='PERCNTOFF'"/>
+                        <input type="text" id="value" name="value_{{$index}}" ng-model="item.value" ng-required="preview" allow-pattern="^[\d.]+$"  ng-if="reward.type=='PERCNTOFF'"/>
 							<span class='error-message' ng-show="promoform['value_' + $index].$invalid || preview">
 									<span ng-show="promoform['value_' + $index].$error.required" ng-if="reward.type=='AMTOFF'">Please enter a valid amount</span>
 									<span ng-show="promoform['value_' + $index].$error.required" ng-if="reward.type=='PERCNTOFF'">Please enter a valid percentage</span>
