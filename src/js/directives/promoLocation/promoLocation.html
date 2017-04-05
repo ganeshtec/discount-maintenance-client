@@ -31,9 +31,9 @@
 			<div class="md-toolbar-search l">
 				<label for="StoreLocation" ng-if="data.locations=='stores'" ><h3>Store Location</h3></label>
 				<label for="MarketLocation" ng-if="data.locations=='markets'"><h3>Market Location</h3></label>
-				<input class="table__search" ng-show="data.locations=='stores'" placeholder="Search and Add Store Number" type="text" ng-model="itemSearch" ng-class="{'error': inValidStoreInfo}"
+				<input class="table__search" ng-show="data.locations=='stores'" placeholder="Search and Add Store Number" type="text" ng-model="locationSearch" ng-class="{'error': inValidStoreInfo}"
 					ng-change="clear()" allow-pattern="(\d|[a-z A-Z\(\?\-\_\.\'\,\%\$\!\@\)])" />
-				<a class="md-button secondary no-padding" href="" ng-show="data.locations=='stores'" ng-click="search(itemSearch,data.locations)">
+				<a class="md-button secondary no-padding" href="" ng-show="data.locations=='stores'" ng-click="search(locationSearch,data.locations)">
 					Search
 				</a>
 				<ul>
@@ -43,9 +43,9 @@
 				    </span>
 					</span>
 				</ul>
-				<input class="table__search" ng-show="data.locations=='markets'" placeholder="Search and Add Market Number" type="text" ng-model="itemSearch" ng-class="{'error': inValidStoreInfo}"
+				<input class="table__search" ng-show="data.locations=='markets'" placeholder="Search and Add Market Number" type="text" ng-model="locationSearch" ng-class="{'error': inValidMarketInfo}"
 					ng-change="clear()" allow-pattern="(\d|[a-z A-Z\(\?\-\_\.\'\,\%\$\!\@\)])" />
-				<a class="md-button secondary no-padding" ng-show="data.locations=='markets'" href="" ng-click="search(itemSearch,data.locations)">
+				<a class="md-button secondary no-padding" ng-show="data.locations=='markets'" href="" ng-click="search(locationSearch,data.locations)">
 					Search
 				</a>
 				<ul>
@@ -100,7 +100,7 @@
 		    {{item.marketNumber}}
 		</td>
 		<td class="r">
-			<a class="editOption thd-orange" ng-click="isDisabled || removePromoCode($index)" href="">
+			<a class="editOption thd-orange" ng-click="isDisabled || removeStore($index)" href="">
 				Remove
 			</a>
 		</td>
@@ -135,7 +135,7 @@
 		</td>
 
 		<td class="r">
-			<a class="editOption thd-orange" ng-click="isDisabled || removePromoCode($index)" href="">
+			<a class="editOption thd-orange" ng-click="isDisabled || removeStore($index)" href="">
 				Remove
 			</a>
 		</td>

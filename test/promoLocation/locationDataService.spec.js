@@ -1,4 +1,4 @@
-describe('____checking location data service for 200 response code', function(){
+describe('checking location data service service for 200 response code', function(){
     
     var 
     $rootScope,
@@ -9,7 +9,7 @@ describe('____checking location data service for 200 response code', function(){
        // Load the myApp module, which contains the directive
   beforeEach(module('app'));
  
-     it('Return a get 200 response code  from a Service function ', inject(function($httpBackend) {
+     it('Return a get 200 response code from a  store Service function ', inject(function($httpBackend) {
          
         var postdata = {
                    "storeNumbers":[8119,121,1111]
