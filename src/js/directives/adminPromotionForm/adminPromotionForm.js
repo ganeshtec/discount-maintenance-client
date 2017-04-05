@@ -104,7 +104,7 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
 
                 scope.getSelectedSubTypes = function () {
 
-                    if (scope.promoSubTypeObject.promoSubTypeCd == "ProductLevelPerItemPercentDiscountMSB") {
+                    if (scope.promoSubTypeObject.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB') {
                         scope.data.purchaseConds.customerSegmentId = 0;
                     }
                     scope.data.promoSubTypeCd = scope.promoSubTypeObject.promoSubTypeCd;
