@@ -26,8 +26,9 @@ app.directive(
                     scope.searchResults = [];
                     scope.validStoreInfo = [];
                     scope.inValidStoreInfo = false;
+                   // scope.inValidMarketInfo = false;
                     scope.showInvalidError = false;
-                    scope.addStoretest = addStore;
+                    scope.addStoretest = scope.addStore;
                     
 
                     scope.search = function (data, location) {
@@ -113,7 +114,7 @@ app.directive(
                         locationPromise
                                 .then(
                                 function (data) {
-                                    setStoreData(data,
+                                    scope.setStoreData(data,
                                         clicked);
                                 },
                                 function (error) {
@@ -125,7 +126,7 @@ app.directive(
                     }
                     
 
-                    function setStoreData(data, clicked) {
+                    scope.setStoreData = function (data, clicked) {
                         existingID = '';
                         var invalidIds;
                         
@@ -138,17 +139,22 @@ app.directive(
                         if (data.validStoreInfo &&
                             scope.locationSearch) {
                             for (var i = 0; i < data.validStoreInfo.length; i++) {
-                                addStore(data.validStoreInfo[i]);
+                                scope.addStore(data.validStoreInfo[i]);
                             }
                         }
                         //invalidIds = checkForInvalidLocations(data,clicked);
-                        invalidIds = checkForInvalidLocations(data);
-                        printErrorMessageForInvalidLocations(invalidIds,data,clicked);
+                        invalidIds = scope.checkForInvalidLocations(data);
+                        scope.printErrorMessageForInvalidLocations(invalidIds,data,clicked);
                     }
 
                         /* if invalid Data set to item search */
                     //function checkForInvalidLocations(data,clicked) {
-                    function checkForInvalidLocations(data) {
+                    scope.checkForInvalidLocations = function (data) {
+
+                        // console.log('checkForInvalidLocations:: '+ JSON.stringify(data));
+
+                        // console.log('Data inValidMarketInfo:: '+ JSON.stringify(data.inValidMarketInfo));
+                        // console.log('Data inValidStoreInfo:: '+ JSON.stringify(data.inValidStoreInfo));
                         if(data.inValidStoreInfo){
                             scope.locationSearch = [data.inValidStoreInfo
                             .toString().replace(/,/g, ' ')]
@@ -160,22 +166,28 @@ app.directive(
                             scope.locationSearch = [data.inValidMarketInfo
                             .toString().replace(/,/g, ' ')]
                             scope.inValidMarketInfo = (scope.locationSearch.length > 0);
+                          //  console.log('Invalid Market '+ data.inValidMarketInfo);
                             return data.inValidMarketInfo;
                           
                         }
                         else {
                             scope.locationSearch = [];
+                            return [];
                         }
                     }
                           
-                    function printErrorMessageForInvalidLocations(invalidIds,data,clicked) {
+                    scope.printErrorMessageForInvalidLocations = function (invalidIds,data,clicked) {
+                       // console.log('In ValidIds:: '+ JSON.stringify(invalidIds));
+                       // console.log('Data :: '+ JSON.stringify(data));
+                       // console.log('clicked::: '+ clicked);
                         var locationprint;
-                        if(data.inValidStoreInfo.length > 0 ){
+                        if(data.inValidStoreInfo) {
                             locationprint = 'store';
                         }
-                        else if(data.inValidMarketInfo.length > 0){
+                        else if(data.inValidMarketInfo){
                             locationprint = 'market';
                         }
+
                         
                         if (clicked && invalidIds &&
                             invalidIds.length > 0) {
@@ -184,10 +196,12 @@ app.directive(
                             DataFactory.messageModal.title = 'Warning';
                             $('#messageModal').popup();
                         }
+                        
                     }
 
                     /* Adding stores data to the table */
-                    function addStore(item) {
+                    scope.addStore = function (item) {
+                        //console.log("Store Number:: "+ item.storeNumber);
                         if (!scope.data) {
                             scope.data = [];
                         }

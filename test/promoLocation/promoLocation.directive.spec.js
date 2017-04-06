@@ -14,34 +14,13 @@ fdescribe('Unit testing promoLocation.directive.spec.js', function () {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
     $scope = $rootScope.$new();
+    
     var itemSearch = [];
-
-
     var element = $compile("<promo-location data='itemSearch'></promo-location>")($scope);
     $scope.$digest();
-
     this.$isolateScope = element.isolateScope();
   }));
 
-
-
-  // test conditions for store location search functionality  //TEST - 4
-
-  // it('Checks if store  search functionality defined', function() {
-
-  //   var itemSearch = [];
-
-  // // Contain a piece of HTML containing the Directive  
-  //     var element = $compile("<promo-location data='itemSearch'></promo-location>")($scope);
-  //     $scope.$digest();
-  //     this.$isolateScope = element.isolateScope();
-  //     spyOn(this.$isolateScope, "search").and.callThrough();
-  //     this.$isolateScope.search('121345');
-  //     expect(this.$isolateScope.search).toHaveBeenCalled();      
-  //     expect(this.$isolateScope.inValidStoreInfo).toBe(false);
-  //     expect(this.$isolateScope.showInvalidError).toBe(false);
-
-  //  });  
 
 
 
@@ -89,7 +68,7 @@ fdescribe('Unit testing promoLocation.directive.spec.js', function () {
 
   it("Test for formatToCommaSeparatedList method for comma seperated input", function () {
 
-    expect(this.$isolateScope.formatToCommaSeparatedList("1, 4, 5")).toEqual(['1', '4', '5']);
+    expect(this.$isolateScope.formatToCommaSeparatedList("121, 4, 5")).toEqual(['121', '4', '5']);
 
   });
 
@@ -124,7 +103,88 @@ fdescribe('Unit testing promoLocation.directive.spec.js', function () {
 
   });
 
+  // it("Checks for checkForInvalidLocations method returns the valid results ", function () {
+
+  //   invalidData={"inValidMarketInfo":[121]};
+    
+  //   expect(this.$isolateScope.checkForInvalidLocations(invalidData)).toEqual(121);
+
+
+  // });
+
   
+  // fit("Checks for printErrorMessageForInvalidLocations method returns the valid results ", function () {
+
+  //   this.$isolateScope.data={"inValidStoreInfo":[121]};
+
+  //   invalidData    = this.$isolateScope.data;
+
+  //   //spyOn('$messageModal','popup').andReturn(false);
+  //   spyOn(this.$isolateScope, "printErrorMessageForInvalidLocations").and.callThrough();
+
+  //   this.$isolateScope.printErrorMessageForInvalidLocations('1',invalidData,true);
+
+    
+  //   expect(messageModal.popup).toHaveBeenCalled();
+
+
+  // });
+
+  it("Checks for checkForInvalidLocations method returns the valid results ", function () {
+
+    this.$isolateScope.data  = {"validStoreInfo": [{"storeNumber": 121,"storeName": "CUMBERLAND","marketNumber": 337}],"inValidStoreInfo": [1,2]};
+           
+    expect(this.$isolateScope.checkForInvalidLocations(this.$isolateScope.data)).toEqual([1,2]);
+
+
+  });
+
+  it("Checks for checkForInvalidLocations method returns the valid results with inValidMarketInfo ", function () {
+
+    this.$isolateScope.data  = {"validStoreInfo": [{"storeNumber": 121,"storeName": "CUMBERLAND","marketNumber": 337}],"inValidMarketInfo": [1,2]};
+           
+    expect(this.$isolateScope.checkForInvalidLocations(this.$isolateScope.data)).toEqual([1,2]);
+
+
+  });
+
+  it("Checks for checkForInvalidLocations method returns the valid results without inValidStoreInfo and inValidMarketInfo ", function () {
+
+    this.$isolateScope.data  = {"validStoreInfo": [{"storeNumber": 121,"storeName": "CUMBERLAND","marketNumber": 337}]};
+           
+    expect(this.$isolateScope.checkForInvalidLocations(this.$isolateScope.data)).toEqual([]);
+
+
+  });
+
+  fit("Checks for setStoreData method returns the valid results ", function () {
+
+
+
+    this.$isolateScope.data  = {"validStoreInfo": [{"storeNumber": 121,"storeName": "CUMBERLAND","marketNumber": 337}]};
+
+    spyOn(this.$isolateScope, "setStoreData").and.callThrough();
+
+    this.$isolateScope.setStoreData(this.$isolateScope.data,true);
+
+    // spyOn(this.$isolateScope, "addStore").and.callThrough();
+    // this.$isolateScope.addStore('121');
+
+    //this.$isolateScope.addStore(this.$isolateScope.data);
+           
+    expect(this.$isolateScope.checkForInvalidLocations(this.$isolateScope.data)).toEqual([]);
+
+    //expect(this.$isolateScope.addStore).toHaveBeenCalled();
+
+    expect(this.$isolateScope.setStoreData).toHaveBeenCalled();
+
+
+  });
+
+
+
+
+
 
 
 
