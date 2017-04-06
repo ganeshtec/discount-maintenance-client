@@ -25,6 +25,9 @@ describe('Unit test for promotionDataService', function() {
                               // backend definition common for all tests 
     var submitAuthRequestHandler = $httpBackend.when('POST', '/cartPromotionsRequest/approve')
                             .respond(200,submitResponse);
+
+    var getPromotionSubTypes = $httpBackend.when('GET', '/promotionTypes/promotionSubTypes/adminUI.json')
+                            .respond(200,submitResponse);                             
     
   }));
 
@@ -36,6 +39,12 @@ describe('Unit test for promotionDataService', function() {
   
    it('Check if submit method executes in promotiondataservice ', function() {
     var promise = promotionDataService.submit();
+    $httpBackend.flush();
+    $scope.$digest();
+  });
+
+   it('Check if getPromotionSubTypes method executes in promotiondataservice ', function() {
+    var promise = promotionDataService.getPromotionSubTypes();
     $httpBackend.flush();
     $scope.$digest();
   });
