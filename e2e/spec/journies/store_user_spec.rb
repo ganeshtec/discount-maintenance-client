@@ -78,10 +78,12 @@ def create_cust_segment_discount_store(promotion)
 	sleep(12)
 	puts promotion.name + " Submit process begins for Store User"
 	page.has_content?(promotion.name)
-	puts promotion.name + " Submit process ends for Store User"	
+	puts promotion.name + " Submit process ends for Store User"
+	sleep(12)
 end
 
 def edit_cust_segment_discount_store()
+	edited_promo_name = "EDITED Test Promo " + rand(999999999).to_s
 	puts "Editing for discount - STORE USER"
 	store_sign_in
 	sleep(5)
@@ -96,6 +98,7 @@ def edit_cust_segment_discount_store()
 	puts "Edit Button Clicked::"
 
 	puts "Properties page"
+	fill_in 'name', with: edited_promo_name
     click_button 'Next'
 
     choose("purchaseoption2")
@@ -112,20 +115,21 @@ def edit_cust_segment_discount_store()
 	puts "Rewards page"
     click_button 'Next'
 
-	fill_in 'start', with: promotion.start_date 
-    fill_in 'end', with: promotion.end_date 
+	# fill_in 'start', with: promotion.start_date 
+    # fill_in 'end', with: promotion.end_date 
 	sleep(3)
 	click_on 'Preview & Submit'
 	sleep(3)
 	click_on 'Submit'
 	
-	puts promotion.name + " Submit process begins for Store User"
-	page.has_content?(promotion.name)
-	puts promotion.name + " Submit process ends for Store User"	
+	puts edited_promo_name + " Submit process begins for Store User"
+	page.has_content?(edited_promo_name)
+	puts edited_promo_name + " Submit process ends for Store User"	
 	sleep(12)
 end
 
 def edit_MSB_discount_store()
+	edited_promo_name = "EDITED Test Promo " + rand(999999999).to_s
 	puts "Editing to change customer segment discount to MSB disocunt - STORE USER"
 	store_sign_in
 	sleep(5)
@@ -140,7 +144,9 @@ def edit_MSB_discount_store()
 	puts "Edit Button Clicked::"
 
 	puts "Properties page"
-	select('Customer Segmentation', :from => 'promotype')
+	fill_in 'name', with: edited_promo_name
+	sleep(5)
+	select('Multi-SKU Bulk', :from => 'promotype')
     click_button 'Next'
 
     choose("purchaseoption2")
@@ -164,8 +170,8 @@ def edit_MSB_discount_store()
 	sleep(3)
 	click_on 'Submit'
 	
-	puts promotion.name + " Submit process begins for Store User"
-	page.has_content?(promotion.name)
-	puts promotion.name + " Submit process ends for Store User"	
+	puts edited_promo_name + " Submit process begins for Store User"
+	page.has_content?(edited_promo_name)
+	puts edited_promo_name + " Submit process ends for Store User"	
 	sleep(12)
 end

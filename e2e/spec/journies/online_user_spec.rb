@@ -69,13 +69,15 @@ def create_discount_online(promotion)
     fill_in 'end', with: promotion.end_date 
 	click_on 'Preview & Submit'
 	click_on 'Submit'
-	sleep(12)
+	sleep(10)
 	puts promotion.name + " Submit process begins for Online User"
 	page.has_content?(promotion.name)
 	puts promotion.name + " Submit process ends for Online User"
+	sleep(12)
 end
 
 def edit_discount_online()
+	edited_promo_name = "EDITED Test Promo " + rand(999999999).to_s
 	puts "Editing for discount - ONLINE USER"
 	online_sign_in
 	sleep(5)
@@ -90,6 +92,7 @@ def edit_discount_online()
 	puts "Edit Button Clicked::"
 
 	puts "Properties page"
+	fill_in 'name', with: edited_promo_name
     click_button 'Next'
 
     choose("purchaseoption2")
@@ -119,10 +122,9 @@ def edit_discount_online()
 	sleep(10)
 	click_on 'Submit'
 	
-	puts promotion.name + " Submit process begins for Online User"
-	page.has_content?(promotion.name)
-	puts promotion.name + " Submit process ends for Online User"	
+	puts edited_promo_name + " Submit process begins for Online User"
+	page.has_content?(edited_promo_name)
+	puts edited_promo_name + " Submit process ends for Online User"	
 
 	sleep(12)
-
 end
