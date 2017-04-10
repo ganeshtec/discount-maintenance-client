@@ -129,7 +129,7 @@ app.directive(
                     scope.setStoreData = function (data, clicked) {
                         existingID = '';
                         var invalidIds;
-                        
+                                              
 
                         if (!scope.validStoreInfo.length && scope.data && !scope.locationSearch) {
                             $.extend(true,
@@ -157,7 +157,7 @@ app.directive(
                         // console.log('Data inValidStoreInfo:: '+ JSON.stringify(data.inValidStoreInfo));
                         if(data.inValidStoreInfo){
                             scope.locationSearch = [data.inValidStoreInfo
-                            .toString().replace(/,/g, ' ')]
+                                .toString().replace(/,/g, ' ')]
                             scope.inValidStoreInfo = (scope.locationSearch.length > 0);
                             return data.inValidStoreInfo;
                            
@@ -201,7 +201,7 @@ app.directive(
 
                     /* Adding stores data to the table */
                     scope.addStore = function (item) {
-                        //console.log("Store Number:: "+ item.storeNumber);
+                                            
                         if (!scope.data) {
                             scope.data = [];
                         }

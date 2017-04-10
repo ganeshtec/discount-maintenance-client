@@ -1,4 +1,4 @@
-fdescribe('Unit testing promoLocation.directive.spec.js', function () {
+describe('Unit testing promoLocation.directive.spec.js', function () {
   var $compile,
     $rootScope,
     $scope,
@@ -20,31 +20,6 @@ fdescribe('Unit testing promoLocation.directive.spec.js', function () {
     $scope.$digest();
     this.$isolateScope = element.isolateScope();
   }));
-
-
-
-
-
-  // test conditions for market location search functionality    //TEST - 8
-
-  // it('Checks if market  search functionality defined', function() {
-
-  //     var itemSearch = [];
-
-  //   // Contain a piece of HTML containing the Directive  
-  //       var element = $compile("<promo-location data='itemSearch'></promo-location>")($scope);
-  //       $scope.$digest();
-  //       this.$isolateScope = element.isolateScope();
-  //       spyOn(this.$isolateScope, "search").and.callThrough();
-
-  //       this.$isolateScope.search('1');
-
-  //       expect(this.$isolateScope.search).toHaveBeenCalled();
-
-  //       expect(this.$isolateScope.inValidStoreInfo).not.toBe(undefined);
-  //       expect(this.$isolateScope.showInvalidError).not.toBe(undefined);
-
-  // });
 
   //Verify error is thrown when item already exists
   //Verify item is added to item table if data service response is valid
@@ -157,35 +132,21 @@ fdescribe('Unit testing promoLocation.directive.spec.js', function () {
 
   });
 
-  fit("Checks for setStoreData method returns the valid results ", function () {
+  it("Calls setStoreData", function () {
 
-
-
-    this.$isolateScope.data  = {"validStoreInfo": [{"storeNumber": 121,"storeName": "CUMBERLAND","marketNumber": 337}]};
+    var storeData  = {"validStoreInfo": [{"storeNumber": 121,"storeName": "CUMBERLAND","marketNumber": 337}]};
+    this.$isolateScope.data = [];
+    this.$isolateScope.locationSearch = 121;
 
     spyOn(this.$isolateScope, "setStoreData").and.callThrough();
 
-    this.$isolateScope.setStoreData(this.$isolateScope.data,true);
-
-    // spyOn(this.$isolateScope, "addStore").and.callThrough();
-    // this.$isolateScope.addStore('121');
-
-    //this.$isolateScope.addStore(this.$isolateScope.data);
+    this.$isolateScope.setStoreData(storeData,true);
            
-    expect(this.$isolateScope.checkForInvalidLocations(this.$isolateScope.data)).toEqual([]);
-
-    //expect(this.$isolateScope.addStore).toHaveBeenCalled();
+    expect(this.$isolateScope.checkForInvalidLocations(storeData)).toEqual([]);
 
     expect(this.$isolateScope.setStoreData).toHaveBeenCalled();
 
-
   });
-
-
-
-
-
-
 
 
 });
