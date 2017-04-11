@@ -14,9 +14,7 @@ app.directive('purchaseConditionRewards', ['SourceData', 'customerSegmentDataSer
 
             link: function (scope) {
                 // Customer Segment JS code
-                if (scope.data.purchaseConds.customerSegmentId === null || scope.data.purchaseConds.customerSegmentId === undefined ) {
-                    scope.data.purchaseConds.customerSegmentId = 0;
-                }
+
                 var getCusSegmentPromise = customerSegmentDataService.getAllSegments();
                 getCusSegmentPromise.then(
                     function (data) {
