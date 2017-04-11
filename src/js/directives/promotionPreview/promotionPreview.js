@@ -10,7 +10,8 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
             previewOverlayConfig: '=',
             promoForm: '=',
             formHolder: '=',
-            viewProp: '='
+            viewProp: '=',
+            promoMfa: '='
         },
         link: function (scope, element) {
 
@@ -45,6 +46,13 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
 
                 scope.headerErrorMsg = '';
                 delete scope.errorMessages;
+                if (scope.previewData.data.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB' && scope.previewData.data.custSegment) {
+                    delete scope.previewData.data.custSegment;
+                    scope.previewData.data.purchaseConds.customerSegmentId = 0;
+                }
+                if (scope.previewData.data.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountCS' || scope.previewData.data.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB') {
+                    scope.previewData.data.promoSubTypeCd = 'ProductLevelPerItemPercentDiscount';
+                }
                 var promotion = scope.previewData.data;
                 utilService.setDefaultsForSaveAsDraft(promotion);
                 utilService.transformPromotionRequest(promotion);

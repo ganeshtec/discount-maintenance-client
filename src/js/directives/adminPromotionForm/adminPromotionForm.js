@@ -12,39 +12,74 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                 isDisabled: '=',
                 formHolder: '=',
                 display: '=',
-                viewProp: '='
+                viewProp: '=',
+                promoMfa: '='
             },
             link: function (scope) {
 
-                function getPomoSubTypes() {
-                    var getPromotionPromise = promotionDataService.getPromotionSubTypes();
-                    getPromotionPromise.then(
-                        function (data) {
-                            DataFactory.promotionSubTypes = data.promotionSubTypes;
-                            scope.promotionSubTypes = DataFactory.promotionSubTypes;
-                        },
-                        function (error) {
-                            DataFactory.messageModal.message = error;
-                            DataFactory.messageModal.title = 'Error';
-                            $('#messageModal').popup();
+                function getPromoSubTypes() {
+                    var getPromotionPromise;
+                    if (scope.promoMfa) {
+                        DataFactory.promotionSubTypes = promotionDataService.getPromotionSubTypesForMFA();
+                        scope.promotionSubTypes = DataFactory.promotionSubTypes;
+                    }
+                    else {
+                        getPromotionPromise = promotionDataService.getPromotionSubTypes();
 
-                        });
-                }
-                scope.formHolder.form = scope.promoForm;
-                scope.promotionSubTypes = (DataFactory.promotionSubTypes) ? DataFactory.promotionSubTypes : getPomoSubTypes();
+                        getPromotionPromise.then(
+                            function (data) {
+                                DataFactory.promotionSubTypes = data.promotionSubTypes;
+                                scope.promotionSubTypes = DataFactory.promotionSubTypes;
+                            },
+                            function (error) {
+                                DataFactory.messageModal.message = error;
+                                DataFactory.messageModal.title = 'Error';
+                                $('#messageModal').popup();
 
-                function setPromotionSubType() {
-                    if (scope.promotionSubTypes && scope.data && scope.data.promoSubTypeCd) {
-                        $.each(scope.promotionSubTypes, function (i) {
-                            if (scope.promotionSubTypes[i].promoSubTypeCd == scope.data.promoSubTypeCd) {
-                                scope.promoSubTypeObject = scope.promotionSubTypes[i];
-                            }
-                        });
+                            });
                     }
                 }
 
+                scope.formHolder.form = scope.promoForm;
+                getPromoSubTypes();
+
+                function setPromotionSubType(watch) {
+
+                    // console.log('scope.promotionSubTypes', scope.promotionSubTypes);
+                    // console.log("_____scope.data", scope.data);
+                    if (scope.promotionSubTypes && scope.data && scope.data.promoSubTypeCd) {
+                        $.each(scope.promotionSubTypes, function (i) {
+
+                            if (scope.promoMfa && scope.data.promoId && scope.data.promoId != 0 && !watch) {
+                                //    console.log("Store User Logged in::"+scope.promoMfa);
+                                //     scope.promoSubTypeObject = (scope.data.custSegment && scope.data.purchaseConds.customerSegmentId)
+                                //         ? 'ProductLevelPerItemPercentDiscountCS'
+                                //         : 'ProductLevelPerItemPercentDiscountMSB';
+
+                                if (scope.data.purchaseConds.customerSegmentId && scope.data.purchaseConds.customerSegmentId != 0) {
+
+                                    scope.promoSubTypeObject = scope.promotionSubTypes[1];
+                                }
+                                else {
+
+                                    scope.promoSubTypeObject = scope.promotionSubTypes[0];
+                                }
+
+                            } else {
+                                if (scope.promotionSubTypes[i].promoSubTypeCd == scope.data.promoSubTypeCd) {
+                                    scope.promoSubTypeObject = scope.promotionSubTypes[i];
+                                }
+                            }
+
+
+
+                        });
+                    }
+
+                }
+
                 scope.$watch('data.promoSubTypeCd', function () {
-                    setPromotionSubType();
+                    setPromotionSubType(true);
                     if (scope.promoSubTypeObject && scope.promoSubTypeObject.promoSubTypeObject) {
                         scope.getSelectedSubTypes();
                     }
@@ -68,9 +103,14 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                 scope.showMaximumDiscount = false;
 
                 scope.getSelectedSubTypes = function () {
+
+                    if (scope.promoSubTypeObject.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB') {
+                        scope.data.purchaseConds.customerSegmentId = 0;
+                    }
                     scope.data.promoSubTypeCd = scope.promoSubTypeObject.promoSubTypeCd;
                     scope.data.promoSubTypeDesc = scope.promoSubTypeObject.promoSubTypeDesc;
                     scope.data.promoType = scope.promoSubTypeObject.promoType;
+
 
                     //AP-573-Promo validations - Buy A And B, get % off both
                     if (scope.data.promoSubTypeCd.indexOf('MultipleItemsPercentDiscount') != -1 || scope.data.promoSubTypeCd.indexOf('MultipleItemsValueDiscount') != -1) {
