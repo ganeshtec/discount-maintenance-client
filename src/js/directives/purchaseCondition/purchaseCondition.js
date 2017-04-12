@@ -42,6 +42,17 @@ app.directive('purchaseCondition', ['purchaseCondition',
 
                 }
 
+                scope.roundPercentage = function(dataIndex) {
+                    console.log("value type: ", typeof(scope.data[dataIndex].value));
+                    if (scope.data[dataIndex].value >= 100) {
+                        scope.data[dataIndex].value = '100';
+                    } else if (scope.data[dataIndex].value <= 0) {
+                        scope.data[dataIndex].value = '0';
+                    } else {
+                        scope.data[dataIndex].value = parseFloat(scope.data[dataIndex].value).toFixed(2);
+                    }
+                }
+
 
             }
         };

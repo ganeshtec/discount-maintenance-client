@@ -41,9 +41,19 @@ describe('Unit testing purchaseCondition.directive.spec.js', function() {
         expect($isolatedScope.data.length).toEqual(1);
     }); 
   
-  
-    
+    it('rounds percentages to two decimal places', function() {
+        $isolatedScope.data[1] = {};
 
+        $isolatedScope.data[1].value = '50.759';
+        $isolatedScope.roundPercentage(1);
+        expect($isolatedScope.data[1].value).toEqual('50.76');
 
+        $isolatedScope.data[1].value = '45.94212';
+        $isolatedScope.roundPercentage(1);
+        expect($isolatedScope.data[1].value).toEqual('45.94');
 
+        $isolatedScope.data[1].value = '150';
+        $isolatedScope.roundPercentage(1);
+        expect($isolatedScope.data[1].value).toEqual('100');
+    });
 });
