@@ -2,18 +2,20 @@ describe('Unit testing promo schedule directive', function() {
   var $compile,
       $rootScope,
       $scope,
-      element;
+      element,
+      leadTimeService;
 
   // Load the myApp module, which contains the directive
   beforeEach(module('app'));
 
   // Store references to $rootScope and $compile
   // so they are available to all tests in this describe block
-  beforeEach(inject(function(_$compile_, _$rootScope_ ){
+  beforeEach(inject(function(_$compile_, _$rootScope_, _leadTimeService_ ){
     // The injector unwraps the underscores (_) from around the parameter names when matching
     $compile = _$compile_;
     $rootScope = _$rootScope_;
     $scope = $rootScope.$new();
+    leadTimeService = _leadTimeService_;
   }));
 
   //TODO: rewrite test after the directive code fetches data from back end
@@ -28,14 +30,17 @@ describe('Unit testing promo schedule directive', function() {
   });
 
 
-  it('Sets leadTime from WS if MSB discount', function() {
-
-    var itemSearch = [];  
-    var element = $compile("<promo-location data='itemSearch'></promo-location>")($scope);
+  fit('Sets leadTime from WS if MSB discount', function() {
+    $scope.data = {};
+    var element = $compile("<promo-schedule data='data'><promo-schedule>")($scope);
     $scope.$digest();
     this.$isolateScope = element.isolateScope();
-    this.$isolateScope.promoSubTypeCd = 'ProductLevelPerItemPercentDiscountMSB'
-    spyOn(this.$isolateScope.fetchLeadTime()).and.Return(3);
+    this.$isolateScope.data.promoSubTypeCd = 'ProductLevelPerItemPercentDiscountMSB'
+    leadTimeService.fetchLeadTime = jasmine.createSpy().and.callFake(function() {
+      return 3;
+    });
+
+    // spyOn(leadTimeService.publicApi, 'fetchLeadTime').and.ReturnValue(3);
 
     expect(this.$isolateScope.getLeadTime()).toEqual(3);
 
@@ -44,7 +49,7 @@ describe('Unit testing promo schedule directive', function() {
   it('Sets leadTime to zero if CS discount', function() {
 
     var itemSearch = [];  
-    var element = $compile("<promo-location data='itemSearch'></promo-location>")($scope);
+    element = $compile("<promo-schedule data='data'><promo-schedule>")($scope);
     $scope.$digest();
     this.$isolateScope = element.isolateScope();
     this.$isolateScope.promoSubTypeCd = 'ProductLevelPerItemPercentDiscountCS'

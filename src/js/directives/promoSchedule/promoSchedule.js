@@ -1,6 +1,6 @@
 // Purpose is to build promotion code spec.
-app.directive('promoSchedule', ['$filter', 'leadeTimeService', 
-    function ($filter) {
+app.directive('promoSchedule', ['$filter', 'leadTimeService', 
+    function ($filter , leadTimeService) {
         return {
             restrict: 'E',
             templateUrl: 'promoSchedule.html',
@@ -29,8 +29,8 @@ app.directive('promoSchedule', ['$filter', 'leadeTimeService',
 
                 scope.convertToString = function () {
                     if (scope.data) {
-                        scope.data.startDt = $filter('date')(scope.startDt, 'yyyy-MM-dd HH:mm:ss');
-                        scope.data.endDt = $filter('date')(scope.endDt, 'yyyy-MM-dd HH:mm:ss');
+                        scope.data.startDt = $filter('date')(scope.startDt, 'yyyy-MM-dd');
+                        scope.data.endDt = $filter('date')(scope.endDt, 'yyyy-MM-dd');
                         if (scope.data.endDt === scope.data.startDt) {
                             scope.promoform.end.$invalid = true;
                             scope.promoform.end.$error.min = true;
@@ -40,33 +40,35 @@ app.directive('promoSchedule', ['$filter', 'leadeTimeService',
 
                 };
 
-                scope.isendDateInvalid = function () {
-                    scope.getLeadTime();
-                    if (scope.data) {
-                        if (!scope.data.endDt || !scope.data.startDt) {
-                            return false;
-                        }
-                        var isValid = scope.data.endDt > scope.data.startDt; // invalid
-                        if (scope.promoform && scope.promoform.end) {
-                            scope.promoform.end.$valid = isValid;
-                            scope.promoform.end.$invalid = !isValid;
-                        }
-                        return !isValid
-
+                scope.isEndDateInvalid = function () {
+                    minEndDate = scope.getMinEndDate();
+                    console.log("earliest possible end date - " + minEndDate)
+                    console.log("input end date - " + scope.data.endDt)
+                    if (scope.data.endDt < minEndDate) {
+                        console.log("FAILS Validation, End Date needs to account for " + scope.data.leadTime + " lead time.");
+                        // trigger error message here
                     }
-
                 };
 
-                scope.getLeadTime = function () {
-                    if(scope.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB') {
-                        var getLeadTimePromise = leadTimeService.fetchLeadTime();
-                        console.log("Lead Time:"  , getLeadTimePromise)
-                       // scope.leadTime = 
+                scope.getMinEndDate = function () {
+                    scope.getLeadTime();
+                    today = new Date();
+                    minEndDate = today.setDate(today.getDate() + scope.data.leadTime);
+                    return $filter('date')(minEndDate, 'yyyy-MM-dd');
+                }
 
+                scope.getLeadTime = function () {
+                 
+                    if(scope.data.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB') {
+                        var getLeadTimePromise = leadTimeService.fetchLeadTime();
+                        getLeadTimePromise.then(function(data){
+                            scope.data.leadTime = data;
+                        })
                     }
                     else {
-                        scope.leadTime = 0
+                        scope.data.leadTime = 0
                     }
+                    return scope.data.leadTime;
                 }
 
 

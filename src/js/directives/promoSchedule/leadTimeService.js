@@ -7,7 +7,6 @@ app.service('leadTimeService', ['$http', '$q', 'dataService',
         var config = {
                     method: 'GET',
                     url: '/labels/leadTime',
-
                 },
                 result = $q.defer();
 
@@ -21,8 +20,6 @@ app.service('leadTimeService', ['$http', '$q', 'dataService',
 
             return result.promise;
         }
-
-
         return publicApi;
     }
 ]);
