@@ -1,4 +1,4 @@
-describe('Unit testing  promo schedule directive', function() {
+describe('Unit testing promo schedule directive', function() {
   var $compile,
       $rootScope,
       $scope,
@@ -27,18 +27,35 @@ describe('Unit testing  promo schedule directive', function() {
     expect(element.html()).toContain('End Date');
   });
 
-    //TODO: Check why time component is not considered when forming date obj.
-  it('Checks if date is converted to text', function() {
-    $scope.data = {};
-    $scope.data.startDt = "2016-01-01 00:00:00";
-    $scope.data.endDt = "2016-01-10 00:00:00";
-    // Compile a piece of HTML containing the directive
-    element = $compile("<promo-schedule data='data'><promo-schedule>")($scope);
+
+  it('Sets leadTime from WS if MSB discount', function() {
+
+    var itemSearch = [];  
+    var element = $compile("<promo-location data='itemSearch'></promo-location>")($scope);
     $scope.$digest();
-    angular.element(element.find('input')[0]).triggerHandler('blur');
-    expect($scope.data.startDt).toBe("2016-01-01 00:00:00");
-    expect($scope.data.endDt).toBe("2016-01-10 00:00:00");
-  });
+    this.$isolateScope = element.isolateScope();
+    this.$isolateScope.promoSubTypeCd = 'ProductLevelPerItemPercentDiscountMSB'
+    spyOn(this.$isolateScope.fetchLeadTime()).and.Return(3);
+
+    expect(this.$isolateScope.getLeadTime()).toEqual(3);
+
+  })
+
+  it('Sets leadTime to zero if CS discount', function() {
+
+    var itemSearch = [];  
+    var element = $compile("<promo-location data='itemSearch'></promo-location>")($scope);
+    $scope.$digest();
+    this.$isolateScope = element.isolateScope();
+    this.$isolateScope.promoSubTypeCd = 'ProductLevelPerItemPercentDiscountCS'
+    spyOn(this.$isolateScope.fetchLeadTime())
+
+    expect(this.$isolateScope.getLeadTime()).toEqual(0)
+    expect(this.$isolateScope.fetchLeadTime()).isNotCalled();
+
+  })
+
+  
 
 
 });

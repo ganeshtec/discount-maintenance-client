@@ -1,5 +1,5 @@
 // Purpose is to build promotion code spec.
-app.directive('promoSchedule', ['$filter',
+app.directive('promoSchedule', ['$filter', 'leadeTimeService', 
     function ($filter) {
         return {
             restrict: 'E',
@@ -41,6 +41,7 @@ app.directive('promoSchedule', ['$filter',
                 };
 
                 scope.isendDateInvalid = function () {
+                    scope.getLeadTime();
                     if (scope.data) {
                         if (!scope.data.endDt || !scope.data.startDt) {
                             return false;
@@ -55,6 +56,18 @@ app.directive('promoSchedule', ['$filter',
                     }
 
                 };
+
+                scope.getLeadTime = function () {
+                    if(scope.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB') {
+                        var getLeadTimePromise = leadTimeService.fetchLeadTime();
+                        console.log("Lead Time:"  , getLeadTimePromise)
+                       // scope.leadTime = 
+
+                    }
+                    else {
+                        scope.leadTime = 0
+                    }
+                }
 
 
             }
