@@ -51,9 +51,5 @@ describe('Unit testing purchaseCondition.directive.spec.js', function() {
         $isolatedScope.data[1].value = '45.94212';
         $isolatedScope.roundPercentage(1);
         expect($isolatedScope.data[1].value).toEqual('45.94');
-
-        $isolatedScope.data[1].value = '150';
-        $isolatedScope.roundPercentage(1);
-        expect($isolatedScope.data[1].value).toEqual('100');
     });
 });
