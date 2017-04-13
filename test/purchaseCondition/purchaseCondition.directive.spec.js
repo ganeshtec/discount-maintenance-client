@@ -1,55 +1,76 @@
-describe('Unit testing purchaseCondition.directive.spec.js', function() {
+describe('purchaseCondition', function () {
     var $compile,
         $rootScope,
         $scope,
         element;
 
-  // Load the myApp module, which contains the directive
+    // Load the myApp module, which contains the directive
     beforeEach(module('app'));
 
     // Store references to $rootScope and $compile
     // so they are available to all tests in this describe block
-    beforeEach(inject(function(_$compile_, _$rootScope_){
-      // The injector unwraps the underscores (_) from around the parameter names when matching
+    beforeEach(inject(function (_$compile_, _$rootScope_) {
+        // The injector unwraps the underscores (_) from around the parameter names when matching
         $compile = _$compile_;
         $rootScope = _$rootScope_;
         $scope = $rootScope.$new();
     }));
- 
- 
-    it('Checks directive with the appropriate content.', function() {
 
-        $scope.data= [];
+
+    it('Checks directive with the appropriate content.', function () {
+
+        $scope.data = [];
         // Compile a piece of HTML containing the directive
         var element = $compile('<purchase-condition data=\'data\'></purchase-condition>')($scope);
         $scope.$digest();
         $isolatedScope = element.isolateScope();
 
-    // Check that the compiled element contains the templated content
-    //  expect(element.html()).toContain("Add New Condition");
+        // Check that the compiled element contains the templated content
+        //  expect(element.html()).toContain("Add New Condition");
     });
- 
-   
-    it('adding object in purchaseCondition array', function() {
+
+
+    it('adding object in purchaseCondition array', function () {
         $isolatedScope.addPurchaseCondition();
         expect($isolatedScope.data.length).toEqual(2);
     });
-    
-    it('remove function in purchaseCondition array', function() {   
+
+    it('remove function in purchaseCondition array', function () {
         expect($isolatedScope.data.length).toEqual(2);
-        $isolatedScope.removePurchaseCondition($isolatedScope.data.length-1);
+        $isolatedScope.removePurchaseCondition($isolatedScope.data.length - 1);
         expect($isolatedScope.data.length).toEqual(1);
-    }); 
-  
-    it('rounds percentages to two decimal places', function() {
-        $isolatedScope.data[1] = {};
+    });
 
-        $isolatedScope.data[1].value = '50.759';
-        $isolatedScope.roundPercentage(1);
-        expect($isolatedScope.data[1].value).toEqual('50.76');
+    it('rounds percentages to two decimal places', function () {
+        $isolatedScope.data[0] = {};
 
-        $isolatedScope.data[1].value = '45.94212';
-        $isolatedScope.roundPercentage(1);
-        expect($isolatedScope.data[1].value).toEqual('45.94');
+        $isolatedScope.data[0].value = '50.759';
+        $isolatedScope.roundPercentage(0);
+        expect($isolatedScope.data[0].value).toEqual('50.76');
+
+        $isolatedScope.data[0].value = '45.94202';
+        $isolatedScope.roundPercentage(0);
+        expect($isolatedScope.data[0].value).toEqual('45.94');
+    });
+
+    it('properly validates percentages within range', function () {
+        spyOn($isolatedScope, 'roundPercentage');
+
+        $isolatedScope.data[0] = {};
+        $isolatedScope.data[0].value = '50.75';
+        $isolatedScope.validatePercentage(0);
+        expect($isolatedScope.whateverPropertyMeansTheresAnError).toEqual(WhateverMeansTheresNOTAnError);
+    });
+
+    it('sets error message for invalid percentages', function () {
+        spyOn($isolatedScope, 'roundPercentage');
+        
+        $isolatedScope.data[0].value = '122.52';
+        $isolatedScope.validatePercentage(0);
+        expect($isolatedScope.whateverPropertyMeansTheresAnError).toEqual(WhateverMeansTheresAnError);
+
+        $isolatedScope.data[0].value = '-43.30';
+        $isolatedScope.validatePercentage(0);
+        expect($isolatedScope.whateverPropertyMeansTheresAnError).toEqual(WhateverMeansTheresAnError);
     });
 });

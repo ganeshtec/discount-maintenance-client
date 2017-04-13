@@ -93,7 +93,7 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                     promise.then(
                         function (data) {
                             if (data.data.promoId) {
-                                scope.submitStatus = 'Submiting promotion';
+                                scope.submitStatus = 'Submitting promotion';
                                 scope.savedPromoId = data.data.promoId;
                                 scope.previewData.data.promoId = data.data.promoId;
                                 scope.submit(scope.previewData.data).then(

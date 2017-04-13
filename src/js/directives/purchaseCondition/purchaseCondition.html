@@ -46,13 +46,17 @@
 						
 				</td>
 				<td class="md-text-field">
-						<input type="text" id="value" name="value_{{$index}}" ng-model="item.value" ng-required="preview" ng-blur="roundPercentage($index)" allow-pattern="^[\d.]+$"  ng-if="reward.type=='AMTOFF'"/>
-                        <input type="text" id="value" name="value_{{$index}}" ng-model="item.value" ng-required="preview" ng-blur="roundPercentage($index)" allow-pattern="^[\d.]+$"  ng-if="reward.type=='PERCNTOFF'"/>
+						<input type="number" id="value" name="value_{{$index}}" ng-model="item.value" ng-required="preview" max="100" min="0" ng-blur="validatePercentage($index)" allow-pattern="^[\d.]+$" ng-if="reward.type=='AMTOFF'"/>
+                        <input type="number" id="value" name="value_{{$index}}" ng-model="item.value" ng-required="preview" max="100" min="0" ng-blur="validatePercentage($index)" allow-pattern="^[\d.]+$" ng-if="reward.type=='PERCNTOFF'"/>
 							<span class='error-message' ng-show="promoform['value_' + $index].$invalid || preview">
 									<span ng-show="promoform['value_' + $index].$error.required" ng-if="reward.type=='AMTOFF'">Please enter a valid amount</span>
 									<span ng-show="promoform['value_' + $index].$error.required" ng-if="reward.type=='PERCNTOFF'">Please enter a valid percentage</span>
                                     <span ng-show="promoform['value_' + $index].$error.pattern">Please enter  valid number</span>
-							</span> 
+									<span ng-show="promoform['value_' + $index].$error.max">
+										Please enter a value below 100
+									</span>
+							</span>
+							
 				</td>
 				<td class="md-text-field">
 
@@ -74,7 +78,7 @@
       <label for="percentoff">Percentage discount off each combination</label>
       <input type="text" ng-model="data[0].value" name="percentoff" ng-required="preview" required allow-pattern="(\d)" />
       <span class='error-message' ng-show="promoform.percentoff.$invalid ">
-			<span ng-show="promoform.percentoff.$error.required">Please enter a valid  discount amount</span>
+			<span ng-show="promoform.percentoff.$error.required">Please enter a valid discount amount</span>
             
 	</span>
     </div>
