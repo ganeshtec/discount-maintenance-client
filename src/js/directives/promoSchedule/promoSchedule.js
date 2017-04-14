@@ -46,7 +46,10 @@ app.directive('promoSchedule', ['$filter', 'leadTimeService',
                     console.log("input end date - " + scope.data.endDt)
                     if (scope.data.endDt < minEndDate) {
                         console.log("FAILS Validation, End Date needs to account for " + scope.data.leadTime + " lead time.");
+                        return true;
                         // trigger error message here
+                    } else {
+                        return false;
                     }
                 };
 

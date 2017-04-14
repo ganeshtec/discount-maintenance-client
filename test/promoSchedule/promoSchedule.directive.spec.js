@@ -30,12 +30,12 @@ describe('Unit testing promo schedule directive', function() {
   });
 
 
-  fit('Sets leadTime from WS if MSB discount', function() {
+  it('Sets leadTime from WS if MSB discount', function() {
     $scope.data = {};
     var element = $compile("<promo-schedule data='data'><promo-schedule>")($scope);
     $scope.$digest();
     this.$isolateScope = element.isolateScope();
-    this.$isolateScope.data.promoSubTypeCd = 'ProductLevelPerItemPercentDiscountMSB'
+    this.$isolateScope.promoSubTypeCd = 'ProductLevelPerItemPercentDiscountMSB'
     leadTimeService.fetchLeadTime = jasmine.createSpy().and.callFake(function() {
       return 3;
     });
@@ -60,7 +60,37 @@ describe('Unit testing promo schedule directive', function() {
 
   })
 
-  
+  fit('Determines if the input end date is valid', function() {
+    $scope.data = {
+      leadTime: 3,
+      minEndDate: new Date(),
+      promoSubTypeCd: 'ProductLevelPerItemPercentDiscountCS'
+    };
+    element = $compile("<promo-schedule data='data'><promo-schedule>")($scope);
+    $scope.$digest();
+    this.$isolateScope = element.isolateScope();
 
+    this.$isolateScope.promoSubTypeCd = 'ProductLevelPerItemPercentDiscountCS';
+    this.$isolateScope.minEndDate = new Date();
+
+    this.$isolateScope.leadTime = 3;
+    console.log(this.$isolateScope.leadTime);
+
+    spyOn(this.$isolateScope, 'getMinEndDate').and.callFake(function() {
+      return;
+    });
+
+    expect(this.$isolateScope.isEndDateInvalid(), true);
+
+    // this.$isolateScope.promoSubTypeCd = 'ProductLevelPerItemPercentDiscountCS';
+    // this.$isolateScope.minEndDate = new Date();
+    
+this.$isolateScope.minEndDate = new Date();
+
+    // this.$isolateScope.leadTime = 0;
+
+    // expect(this.$isolateScope.isEndDateInvalid(), false);
+
+  })
 
 });
