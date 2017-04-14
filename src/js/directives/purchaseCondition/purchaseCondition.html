@@ -46,14 +46,17 @@
 						
 				</td>
 				<td class="md-text-field">
-						<input type="number" id="value" name="value_{{$index}}" ng-model="item.value" ng-required="preview" max="100" min="0" ng-blur="validatePercentage($index)" allow-pattern="^[\d.]+$" ng-if="reward.type=='AMTOFF'"/>
-                        <input type="number" id="value" name="value_{{$index}}" ng-model="item.value" ng-required="preview" max="100" min="0" ng-blur="validatePercentage($index)" allow-pattern="^[\d.]+$" ng-if="reward.type=='PERCNTOFF'"/>
+						<input type="number" id="value" name="value_{{$index}}" ng-model="item.value" ng-required="preview" max="100" min="00.01" ng-blur="validatePercentage($index)" allow-pattern="^[\d.]+$" ng-if="reward.type=='AMTOFF'"/>
+                        <input type="number" id="value" name="value_{{$index}}" ng-model="item.value" ng-required="preview" max="100" min="00.01" ng-blur="validatePercentage($index)" allow-pattern="^[\d.]+$" ng-if="reward.type=='PERCNTOFF'"/>
 							<span class='error-message' ng-show="promoform['value_' + $index].$invalid || preview">
 									<span ng-show="promoform['value_' + $index].$error.required" ng-if="reward.type=='AMTOFF'">Please enter a valid amount</span>
 									<span ng-show="promoform['value_' + $index].$error.required" ng-if="reward.type=='PERCNTOFF'">Please enter a valid percentage</span>
                                     <span ng-show="promoform['value_' + $index].$error.pattern">Please enter  valid number</span>
 									<span ng-show="promoform['value_' + $index].$error.max">
-										Please enter a value below 100
+										Please enter a value below or equal to 100
+									</span>
+									<span ng-show="promoform['value_' + $index].$error.min">
+										Please enter a value above 0
 									</span>
 							</span>
 							

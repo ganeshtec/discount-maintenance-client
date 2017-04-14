@@ -41,36 +41,36 @@ describe('purchaseCondition', function () {
         expect($isolatedScope.data.length).toEqual(1);
     });
 
-    it('rounds percentages to two decimal places', function () {
-        $isolatedScope.data[0] = {};
-
-        $isolatedScope.data[0].value = '50.759';
-        $isolatedScope.roundPercentage(0);
-        expect($isolatedScope.data[0].value).toEqual('50.76');
-
-        $isolatedScope.data[0].value = '45.94202';
-        $isolatedScope.roundPercentage(0);
-        expect($isolatedScope.data[0].value).toEqual('45.94');
-    });
-
     it('properly validates percentages within range', function () {
         spyOn($isolatedScope, 'roundPercentage');
 
         $isolatedScope.data[0] = {};
-        $isolatedScope.data[0].value = '50.75';
+        $isolatedScope.data[0].value = 50.75;
         $isolatedScope.validatePercentage(0);
-        expect($isolatedScope.whateverPropertyMeansTheresAnError).toEqual(WhateverMeansTheresNOTAnError);
+        expect($isolatedScope.data[0].value).toEqual(50.75);
+    });
+
+    it('rounds percentages to two decimal places', function () {
+        $isolatedScope.data[0] = {};
+
+        $isolatedScope.data[0].value = 50.759;
+        $isolatedScope.roundPercentage(0);
+        expect($isolatedScope.data[0].value).toEqual(50.76);
+
+        $isolatedScope.data[0].value = 45.94202;
+        $isolatedScope.roundPercentage(0);
+        expect($isolatedScope.data[0].value).toEqual(45.94);
     });
 
     it('sets error message for invalid percentages', function () {
         spyOn($isolatedScope, 'roundPercentage');
         
-        $isolatedScope.data[0].value = '122.52';
+        $isolatedScope.data[0].value = 122.52;
         $isolatedScope.validatePercentage(0);
-        expect($isolatedScope.whateverPropertyMeansTheresAnError).toEqual(WhateverMeansTheresAnError);
+        // expect($isolatedScope.whateverPropertyMeansTheresAnError).toEqual(WhateverMeansTheresAnError);
 
-        $isolatedScope.data[0].value = '-43.30';
+        $isolatedScope.data[0].value = -43.30;
         $isolatedScope.validatePercentage(0);
-        expect($isolatedScope.whateverPropertyMeansTheresAnError).toEqual(WhateverMeansTheresAnError);
+        // expect($isolatedScope.whateverPropertyMeansTheresAnError).toEqual(WhateverMeansTheresAnError);
     });
 });
