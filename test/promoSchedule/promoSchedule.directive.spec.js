@@ -40,5 +40,10 @@ describe('Unit testing  promo schedule directive', function() {
     expect($scope.data.endDt).toBe("2016-01-10 00:00:00");
   });
 
+  it('Sets the earliest start date to today', function() {
+    var expectedStartDateLimit = new Date();
+    expectedStartDateLimit.setDate(scope.startDateLimit.getDate() - 1);
+    expect($scope.startDateLimit).toBe(expectedStartDateLimit);
+  });
 
 });

@@ -43,14 +43,8 @@ app.directive('purchaseCondition', ['purchaseCondition',
                 }
 
                 scope.validatePercentage = function (dataIndex) {
-
                     scope.data[dataIndex].value = scope.data[dataIndex].value;
-
                     scope.roundPercentage(dataIndex);
-
-                    // if (scope.data[dataIndex].value) {
-                    //     scope.data[dataIndex].value = parseFloat(scope.data[dataIndex].value).toFixed();
-                    // }
                 }
 
                 scope.roundPercentage = function (dataIndex) {

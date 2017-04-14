@@ -61,16 +61,4 @@ describe('purchaseCondition', function () {
         $isolatedScope.roundPercentage(0);
         expect($isolatedScope.data[0].value).toEqual(45.94);
     });
-
-    it('sets error message for invalid percentages', function () {
-        spyOn($isolatedScope, 'roundPercentage');
-        
-        $isolatedScope.data[0].value = 122.52;
-        $isolatedScope.validatePercentage(0);
-        // expect($isolatedScope.whateverPropertyMeansTheresAnError).toEqual(WhateverMeansTheresAnError);
-
-        $isolatedScope.data[0].value = -43.30;
-        $isolatedScope.validatePercentage(0);
-        // expect($isolatedScope.whateverPropertyMeansTheresAnError).toEqual(WhateverMeansTheresAnError);
-    });
 });

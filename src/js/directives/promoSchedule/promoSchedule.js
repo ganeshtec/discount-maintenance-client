@@ -26,7 +26,8 @@ app.directive('promoSchedule', ['$filter',
 
             },
             link: function (scope) {
-
+                scope.startDateLimit = new Date();
+                scope.startDateLimit.setDate(scope.startDateLimit.getDate() - 1);
                 scope.convertToString = function () {
                     if (scope.data) {
                         scope.data.startDt = $filter('date')(scope.startDt, 'yyyy-MM-dd HH:mm:ss');
