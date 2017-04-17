@@ -320,6 +320,11 @@ app.service('utilService', ['$filter', function ($filter) {
             promotion.promoTypeCd = 10;
         }
     }
-    return publicApi;
+    
+    publicApi.isPromotionActive = function(promotion) {
+        
+        return null;
+    }
 
+    return publicApi;
 }]);

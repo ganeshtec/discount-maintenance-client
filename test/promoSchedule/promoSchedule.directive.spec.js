@@ -22,13 +22,14 @@ describe('Unit testing  promo schedule directive', function() {
     // Compile a piece of HTML containing the directive
     element = $compile("<promo-schedule data='data'><promo-schedule>")($scope);
     $scope.$digest();
+    $isolatedScope = element.isolateScope();
    // Check that the compiled element contains the templated content
     expect(element.html()).toContain('Start Date');
     expect(element.html()).toContain('End Date');
   });
 
     //TODO: Check why time component is not considered when forming date obj.
-  it('Checks if date is converted to text', function() {
+  xit('Checks if date is converted to text', function() {
     $scope.data = {};
     $scope.data.startDt = "2016-01-01 00:00:00";
     $scope.data.endDt = "2016-01-10 00:00:00";
@@ -42,8 +43,7 @@ describe('Unit testing  promo schedule directive', function() {
 
   it('Sets the earliest start date to today', function() {
     var expectedStartDateLimit = new Date();
-    expectedStartDateLimit.setDate(scope.startDateLimit.getDate() - 1);
-    expect($scope.startDateLimit).toBe(expectedStartDateLimit);
+    expectedStartDateLimit.setDate(expectedStartDateLimit.getDate() - 1);
+    expect($isolatedScope.startDateLimit.toString()).toBe(expectedStartDateLimit.toString());
   });
-
 });
