@@ -1,6 +1,6 @@
 // Purpose is to build promotion code spec.
-app.directive('promoSchedule', ['$filter', 'leadTimeService', 
-    function ($filter , leadTimeService) {
+app.directive('promoSchedule', ['$filter', 'leadTimeService',
+    function ($filter, leadTimeService) {
         return {
             restrict: 'E',
             templateUrl: 'promoSchedule.html',
@@ -35,46 +35,49 @@ app.directive('promoSchedule', ['$filter', 'leadTimeService',
                             scope.promoform.end.$invalid = true;
                             scope.promoform.end.$error.min = true;
                         }
+                        scope.validateEndDate();
                     }
 
 
                 };
 
-                scope.isEndDateInvalid = function () {
-                    minEndDate = scope.getMinEndDate();
-                    console.log("earliest possible end date - " + minEndDate)
-                    console.log("input end date - " + scope.data.endDt)
-                    if (scope.data.endDt < minEndDate) {
-                        console.log("FAILS Validation, End Date needs to account for " + scope.data.leadTime + " lead time.");
-                        return true;
-                        // trigger error message here
-                    } else {
-                        return false;
-                    }
-                };
+                scope.validateEndDate = function (data) {
+                    if (scope.data.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB') {
+                        leadTimePromise = leadTimeService.fetchLeadTime();
+                        leadTimePromise.then(function (value) {
+                            minEndDate = scope.getMinEndDate(value);
+                            isValid = scope.isEndDateValid(minEndDate);
+                            if(!isValid) {
+                                scope.promoform.end.$invalid = true;
+                                scope.promoform.end.$error.leadTime = true;
+                                return true;
+                            } else {
+                                scope.promoform.end.$invalid = false;
+                                scope.promoform.end.$error.leadTime = false;
+                                return false;
+                            }
+                        }
+                    )} else {
+                        scope.promoform.end.$invalid = false;
+                        scope.promoform.end.$error.leadTime = false;
+                        return false
+                    } 
+                }
 
-                scope.getMinEndDate = function () {
-                    scope.getLeadTime();
+                scope.getMinEndDate = function (value) {
                     today = new Date();
-                    minEndDate = today.setDate(today.getDate() + scope.data.leadTime);
-                    return $filter('date')(minEndDate, 'yyyy-MM-dd');
+                    minEndDate = $filter('date')(today.setDate(today.getDate() + value), 'yyyy-MM-dd');
+                    scope.data.minEndDate = minEndDate;
+                    return minEndDate;
                 }
 
-                scope.getLeadTime = function () {
-                 
-                    if(scope.data.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB') {
-                        var getLeadTimePromise = leadTimeService.fetchLeadTime();
-                        getLeadTimePromise.then(function(data){
-                            scope.data.leadTime = data;
-                        })
+                scope.isEndDateValid = function (minDate) {
+                    if (scope.data.endDt < minDate) {
+                        return false;
+                    } else {
+                        return true;
                     }
-                    else {
-                        scope.data.leadTime = 0
-                    }
-                    return scope.data.leadTime;
-                }
-
-
+                };
             }
         };
     }

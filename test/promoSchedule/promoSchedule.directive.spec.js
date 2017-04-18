@@ -16,6 +16,12 @@ describe('Unit testing promo schedule directive', function() {
     $rootScope = _$rootScope_;
     $scope = $rootScope.$new();
     leadTimeService = _leadTimeService_;
+
+    $scope.data = {
+    };
+    element = $compile("<promo-schedule data='data'><promo-schedule>")($scope);
+    $scope.$digest();
+    this.$isolateScope = element.isolateScope();
   }));
 
   //TODO: rewrite test after the directive code fetches data from back end
@@ -30,67 +36,53 @@ describe('Unit testing promo schedule directive', function() {
   });
 
 
-  it('Sets leadTime from WS if MSB discount', function() {
-    $scope.data = {};
-    var element = $compile("<promo-schedule data='data'><promo-schedule>")($scope);
-    $scope.$digest();
-    this.$isolateScope = element.isolateScope();
-    this.$isolateScope.promoSubTypeCd = 'ProductLevelPerItemPercentDiscountMSB'
-    leadTimeService.fetchLeadTime = jasmine.createSpy().and.callFake(function() {
-      return 3;
-    });
 
-    // spyOn(leadTimeService.publicApi, 'fetchLeadTime').and.ReturnValue(3);
-
-    expect(this.$isolateScope.getLeadTime()).toEqual(3);
-
-  })
-
-  it('Sets leadTime to zero if CS discount', function() {
-
-    var itemSearch = [];  
-    element = $compile("<promo-schedule data='data'><promo-schedule>")($scope);
-    $scope.$digest();
-    this.$isolateScope = element.isolateScope();
-    this.$isolateScope.promoSubTypeCd = 'ProductLevelPerItemPercentDiscountCS'
-    spyOn(this.$isolateScope.fetchLeadTime())
-
-    expect(this.$isolateScope.getLeadTime()).toEqual(0)
-    expect(this.$isolateScope.fetchLeadTime()).isNotCalled();
-
-  })
-
-  fit('Determines if the input end date is valid', function() {
-    $scope.data = {
-      leadTime: 3,
-      minEndDate: new Date(),
-      promoSubTypeCd: 'ProductLevelPerItemPercentDiscountCS'
-    };
-    element = $compile("<promo-schedule data='data'><promo-schedule>")($scope);
-    $scope.$digest();
-    this.$isolateScope = element.isolateScope();
-
-    this.$isolateScope.promoSubTypeCd = 'ProductLevelPerItemPercentDiscountCS';
-    this.$isolateScope.minEndDate = new Date();
-
-    this.$isolateScope.leadTime = 3;
-    console.log(this.$isolateScope.leadTime);
-
-    spyOn(this.$isolateScope, 'getMinEndDate').and.callFake(function() {
-      return;
-    });
-
-    expect(this.$isolateScope.isEndDateInvalid(), true);
-
-    // this.$isolateScope.promoSubTypeCd = 'ProductLevelPerItemPercentDiscountCS';
-    // this.$isolateScope.minEndDate = new Date();
+  it('isEndDateValid function should return true when end date is greater than minimun end date', function() {
     
-this.$isolateScope.minEndDate = new Date();
+    this.$isolateScope.data.endDt = '2017-05-10'
+    this.$isolateScope.data.promoSubTypeCd = 'ProductLevelPerItemPercentDiscountCS';  
+    this.$isolateScope.data.leadTime = 0; 
 
-    // this.$isolateScope.leadTime = 0;
+    expect(this.$isolateScope.isEndDateValid('2017-05-08')).toEqual(true);
 
-    // expect(this.$isolateScope.isEndDateInvalid(), false);
+  })
 
+  it('isEndDateValid function should return false when end date is less than minimum end date', function() {
+    
+    this.$isolateScope.data.endDt = '2017-03-10'
+    this.$isolateScope.data.promoSubTypeCd = 'ProductLevelPerItemPercentDiscountCS';
+    this.$isolateScope.data.leadTime = 0; 
+
+    expect(this.$isolateScope.isEndDateValid('2017-05-08')).toEqual(false);
+  })
+
+it('Calls lead time service for MSB', function() {
+  this.$isolateScope.promoform = {};
+  this.$isolateScope.promoform.end = {};
+  this.$isolateScope.promoform.end.$invalid = {};
+  this.$isolateScope.promoform.end.$error = {};
+  this.$isolateScope.data.promoSubTypeCd = 'ProductLevelPerItemPercentDiscountMSB';
+
+  spyOn(leadTimeService, 'fetchLeadTime').and.callFake(function(){
+      return {then: function(callback) { return callback(3)}
+    }})
+
+    this.$isolateScope.validateEndDate();
+
+    expect(this.$isolateScope.data.minEndDate).toEqual(this.$isolateScope.getMinEndDate(3));
+
+})
+
+it('Does not call lead time Service for CS', function() {
+  this.$isolateScope.promoform = {};
+  this.$isolateScope.promoform.end = {};
+  this.$isolateScope.promoform.end.$invalid = {};
+  this.$isolateScope.promoform.end.$error = {};
+  this.$isolateScope.data.promoSubTypeCd = 'ProductLevelPerItemPercentDiscountCS';
+
+  this.$isolateScope.validateEndDate(this.$isolateScope);
+
+  expect(this.$isolateScope.promoform.end.$invalid).toEqual(false);
   })
 
 });

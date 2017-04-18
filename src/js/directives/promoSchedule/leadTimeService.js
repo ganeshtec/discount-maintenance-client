@@ -4,7 +4,7 @@ app.service('leadTimeService', ['$http', '$q', 'dataService',
 
         publicApi.fetchLeadTime = function (data) {
 
-        var config = {
+            var config = {
                     method: 'GET',
                     url: '/labels/leadTime',
                 },
