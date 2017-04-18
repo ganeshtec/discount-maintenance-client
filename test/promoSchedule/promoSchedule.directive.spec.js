@@ -61,6 +61,8 @@ it('Calls lead time service for MSB', function() {
   this.$isolateScope.promoform.end = {};
   this.$isolateScope.promoform.end.$invalid = {};
   this.$isolateScope.promoform.end.$error = {};
+  this.$isolateScope.formHolder = {};
+  this.$isolateScope.formHolder.form = {};
   this.$isolateScope.data.promoSubTypeCd = 'ProductLevelPerItemPercentDiscountMSB';
 
   spyOn(leadTimeService, 'fetchLeadTime').and.callFake(function(){
@@ -78,6 +80,8 @@ it('Does not call lead time Service for CS', function() {
   this.$isolateScope.promoform.end = {};
   this.$isolateScope.promoform.end.$invalid = {};
   this.$isolateScope.promoform.end.$error = {};
+  this.$isolateScope.formHolder = {};
+  this.$isolateScope.formHolder.form = {};
   this.$isolateScope.data.promoSubTypeCd = 'ProductLevelPerItemPercentDiscountCS';
 
   this.$isolateScope.validateEndDate(this.$isolateScope);
