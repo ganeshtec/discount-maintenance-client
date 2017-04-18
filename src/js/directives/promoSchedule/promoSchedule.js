@@ -1,6 +1,8 @@
+/* eslint-disable no-unused-vars */
+
 // Purpose is to build promotion code spec.
-app.directive('promoSchedule', ['$filter',
-    function ($filter) {
+app.directive('promoSchedule', ['$filter', 'leadTimeService',
+    function ($filter, leadTimeService) {
         return {
             restrict: 'E',
             templateUrl: 'promoSchedule.html',
@@ -8,7 +10,8 @@ app.directive('promoSchedule', ['$filter',
                 data: '=',
                 promoform: '=',
                 preview: '=',
-                viewProp: '='
+                viewProp: '=',
+                formHolder: '='
             },
             controller: function ($scope) {
                 $scope.$watch('data', function (nv) {
@@ -30,34 +33,56 @@ app.directive('promoSchedule', ['$filter',
                 scope.startDateLimit.setDate(scope.startDateLimit.getDate() - 1);
                 scope.convertToString = function () {
                     if (scope.data) {
-                        scope.data.startDt = $filter('date')(scope.startDt, 'yyyy-MM-dd HH:mm:ss');
-                        scope.data.endDt = $filter('date')(scope.endDt, 'yyyy-MM-dd HH:mm:ss');
+                        scope.data.startDt = $filter('date')(scope.startDt, 'yyyy-MM-dd');
+                        scope.data.endDt = $filter('date')(scope.endDt, 'yyyy-MM-dd');
                         if (scope.data.endDt === scope.data.startDt) {
                             scope.promoform.end.$invalid = true;
                             scope.promoform.end.$error.min = true;
                         }
+                        scope.validateEndDate();
                     }
-
-
                 };
 
-                scope.isendDateInvalid = function () {
-                    if (scope.data) {
-                        if (!scope.data.endDt || !scope.data.startDt) {
-                            return false;
+                scope.validateEndDate = function (data) {
+                    if (scope.data.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB') {
+                        var leadTimePromise = leadTimeService.fetchLeadTime();
+                        leadTimePromise.then(function (value) {
+                            var minEndDate = scope.getMinEndDate(value);
+                            var isValid = scope.isEndDateValid(minEndDate);
+                            if(!isValid) {
+                                scope.promoform.end.$invalid = true;
+                                scope.formHolder.form.$valid = false;
+                                scope.promoform.end.$error.leadTime = true;
+                                return true;
+                            } else {
+                                scope.promoform.end.$invalid = false;
+                                scope.formHolder.form.$valid = true;
+                                scope.promoform.end.$error.leadTime = false;
+                                return false;
+                            }
                         }
-                        var isValid = scope.data.endDt > scope.data.startDt; // invalid
-                        if (scope.promoform && scope.promoform.end) {
-                            scope.promoform.end.$valid = isValid;
-                            scope.promoform.end.$invalid = !isValid;
-                        }
-                        return !isValid
+                    )} else {
+                        scope.promoform.end.$invalid = false;
+                        scope.formHolder.form.$valid = true;
+                        scope.promoform.end.$error.leadTime = false;
+                        return false
+                    } 
+                }
 
+                scope.getMinEndDate = function (value) {
+                    var today = new Date();
+                    var minEndDate = $filter('date')(today.setDate(today.getDate() + value), 'yyyy-MM-dd');
+                    scope.data.minEndDate = minEndDate;
+                    return minEndDate;
+                }
+
+                scope.isEndDateValid = function (minDate) {
+                    if (scope.data.endDt < minDate) {
+                        return false;
+                    } else {
+                        return true;
                     }
-
                 };
-
-
             }
         };
     }
