@@ -321,10 +321,10 @@ app.service('utilService', ['$filter', function ($filter) {
         }
     }
     
-    publicApi.isPromotionActive = function(promotion) {
+    // publicApi.isPromotionActive = function() {
         
-        return null;
-    }
+    //     return null;
+    // }
 
     return publicApi;
 }]);

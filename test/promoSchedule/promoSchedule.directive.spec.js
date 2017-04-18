@@ -54,9 +54,8 @@ describe('Unit testing promo schedule directive', function() {
     expectedStartDateLimit.setDate(expectedStartDateLimit.getDate() - 1);
     expect($isolatedScope.startDateLimit.toString()).toBe(expectedStartDateLimit.toString());
   });
-});
 
-  it('isEndDateValid function should return true when end date is greater than minimun end date', function() {
+  it('isEndDateValid function should return true when end date is greater than minimum end date', function() {
     
     this.$isolateScope.data.endDt = '2017-05-10'
     this.$isolateScope.data.promoSubTypeCd = 'ProductLevelPerItemPercentDiscountCS';  
@@ -92,20 +91,24 @@ it('Calls lead time service for MSB', function() {
 
     expect(this.$isolateScope.data.minEndDate).toEqual(this.$isolateScope.getMinEndDate(3));
 
-})
+  })
 
-it('Does not call lead time Service for CS', function() {
-  this.$isolateScope.promoform = {};
-  this.$isolateScope.promoform.end = {};
-  this.$isolateScope.promoform.end.$invalid = {};
-  this.$isolateScope.promoform.end.$error = {};
-  this.$isolateScope.formHolder = {};
-  this.$isolateScope.formHolder.form = {};
-  this.$isolateScope.data.promoSubTypeCd = 'ProductLevelPerItemPercentDiscountCS';
+  it('Does not call lead time Service for CS', function() {
+    this.$isolateScope.promoform = {};
+    this.$isolateScope.promoform.end = {};
+    this.$isolateScope.promoform.end.$invalid = {};
+    this.$isolateScope.promoform.end.$error = {};
+    this.$isolateScope.formHolder = {};
+    this.$isolateScope.formHolder.form = {};
+    this.$isolateScope.data.promoSubTypeCd = 'ProductLevelPerItemPercentDiscountCS';
 
-  this.$isolateScope.validateEndDate(this.$isolateScope);
+    this.$isolateScope.validateEndDate(this.$isolateScope);
 
-  expect(this.$isolateScope.promoform.end.$invalid).toEqual(false);
+    expect(this.$isolateScope.promoform.end.$invalid).toEqual(false);
+  })
+
+  it('Sets minEndDate to today if no lead time value is passed', function() {
+
   })
 
 });

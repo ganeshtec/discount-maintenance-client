@@ -62,16 +62,28 @@ app.directive('promoSchedule', ['$filter', 'leadTimeService',
                             }
                         }
                     )} else {
-                        scope.promoform.end.$invalid = false;
-                        scope.formHolder.form.$valid = true;
-                        scope.promoform.end.$error.leadTime = false;
-                        return false
+                        var minEndDate = scope.getMinEndDate();
+                        var isValid = scope.isEndDateValid(minEndDate);
+                        console.log("minEndDate", minEndDate);
+                        console.log("scope.data.endDt", scope.data.endDt);
+                        if(!isValid) {
+                            scope.promoform.end.$invalid = true;
+                            scope.formHolder.form.$valid = false;
+                            scope.promoform.end.$error.min = true;
+                            return true;
+                        } else {
+                            scope.promoform.end.$invalid = false;
+                            scope.formHolder.form.$valid = true;
+                            return false;
+                        }
                     } 
                 }
 
                 scope.getMinEndDate = function (value) {
                     var today = new Date();
-                    var minEndDate = $filter('date')(today.setDate(today.getDate() + value), 'yyyy-MM-dd');
+                    var minEndDate = value ?
+                        $filter('date')(today.setDate(today.getDate() + value), 'yyyy-MM-dd') :
+                        $filter('date')(scope.data.startDt, 'yyyy-MM-dd');
                     scope.data.minEndDate = minEndDate;
                     return minEndDate;
                 }
