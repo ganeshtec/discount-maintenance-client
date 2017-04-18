@@ -10,7 +10,8 @@ app.directive('promoSchedule', ['$filter', 'leadTimeService',
                 data: '=',
                 promoform: '=',
                 preview: '=',
-                viewProp: '='
+                viewProp: '=',
+                formHolder: '='
             },
             controller: function ($scope) {
                 $scope.$watch('data', function (nv) {
@@ -49,16 +50,19 @@ app.directive('promoSchedule', ['$filter', 'leadTimeService',
                             var isValid = scope.isEndDateValid(minEndDate);
                             if(!isValid) {
                                 scope.promoform.end.$invalid = true;
+                                scope.formHolder.form.$valid = false;
                                 scope.promoform.end.$error.leadTime = true;
                                 return true;
                             } else {
                                 scope.promoform.end.$invalid = false;
+                                scope.formHolder.form.$valid = true;
                                 scope.promoform.end.$error.leadTime = false;
                                 return false;
                             }
                         }
                     )} else {
                         scope.promoform.end.$invalid = false;
+                        scope.formHolder.form.$valid = true;
                         scope.promoform.end.$error.leadTime = false;
                         return false
                     } 
