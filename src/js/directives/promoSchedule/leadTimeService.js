@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 app.service('leadTimeService', ['$http', '$q', 'dataService',
     function ($http, $q, dataService) {
         var publicApi = {};

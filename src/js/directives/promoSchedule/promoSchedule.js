@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+
 // Purpose is to build promotion code spec.
 app.directive('promoSchedule', ['$filter', 'leadTimeService',
     function ($filter, leadTimeService) {
@@ -37,16 +39,14 @@ app.directive('promoSchedule', ['$filter', 'leadTimeService',
                         }
                         scope.validateEndDate();
                     }
-
-
                 };
 
                 scope.validateEndDate = function (data) {
                     if (scope.data.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB') {
-                        leadTimePromise = leadTimeService.fetchLeadTime();
+                        var leadTimePromise = leadTimeService.fetchLeadTime();
                         leadTimePromise.then(function (value) {
-                            minEndDate = scope.getMinEndDate(value);
-                            isValid = scope.isEndDateValid(minEndDate);
+                            var minEndDate = scope.getMinEndDate(value);
+                            var isValid = scope.isEndDateValid(minEndDate);
                             if(!isValid) {
                                 scope.promoform.end.$invalid = true;
                                 scope.promoform.end.$error.leadTime = true;
@@ -65,8 +65,8 @@ app.directive('promoSchedule', ['$filter', 'leadTimeService',
                 }
 
                 scope.getMinEndDate = function (value) {
-                    today = new Date();
-                    minEndDate = $filter('date')(today.setDate(today.getDate() + value), 'yyyy-MM-dd');
+                    var today = new Date();
+                    var minEndDate = $filter('date')(today.setDate(today.getDate() + value), 'yyyy-MM-dd');
                     scope.data.minEndDate = minEndDate;
                     return minEndDate;
                 }
