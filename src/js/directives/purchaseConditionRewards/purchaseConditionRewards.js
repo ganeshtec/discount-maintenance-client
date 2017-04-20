@@ -14,11 +14,11 @@ app.directive('purchaseConditionRewards', ['SourceData', 'customerSegmentDataSer
 
             link: function (scope) {
                 // Customer Segment JS code
+
                 var getCusSegmentPromise = customerSegmentDataService.getAllSegments();
                 getCusSegmentPromise.then(
                     function (data) {
                         scope.segmentListfromWebservice = data.segments;
-                        // START
                         var objearraySize = scope.segmentListfromWebservice.length;
                         scope.segmentDetails = [];
                         for (var i = 0; i < objearraySize; i++) {
@@ -37,8 +37,6 @@ app.directive('purchaseConditionRewards', ['SourceData', 'customerSegmentDataSer
                             }
                             scope.segmentDetails.push(segment);
                         }
-
-                        //END
                     },
                     function () {
                         // Should we have some error handling logic here?

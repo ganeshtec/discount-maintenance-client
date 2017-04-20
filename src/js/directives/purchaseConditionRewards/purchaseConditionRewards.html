@@ -1,15 +1,17 @@
- <div class="md-select md-select-space">
-<label for="promocustomersegment"><h3>Customer Segment</h3></label>
+
+<div class="md-select md-select-space" ng-if="data.promoSubTypeCd=='ProductLevelPerItemPercentDiscountCS' || data.purchaseConds.customerSegmentId!=0 && data.promoSubTypeCd=='ProductLevelPerItemPercentDiscount'">
+    <label for="promocustomersegment"><h3>Customer Segment</h3></label>
 
 
 
-<select name="segment" ng-options="segment as segment.name for segment in segmentDetails track by segment.name" ng-model="data.custSegment" ng-change="onSegmentSelection()">
+    <select name="segment" ng-options="segment as segment.name for segment in segmentDetails track by segment.name" ng-model="data.custSegment"
+        ng-change="onSegmentSelection()">
 					<option value="">
 						-- Select a Customer Segment --
 					</option>
-</select> 
+</select>
 
-</div> 
+</div>
 
 
 <div ng-if="data.promoCdRqrd != false  && data.promoSubTypeCd != 'MultipleItemsPercentDiscount' && data.promoSubTypeCd != 'MultipleItemsValueDiscount'">
@@ -31,67 +33,49 @@
         <h3>Inclusion</h3>
         <label ng-show="data.purchaseConds.sources.length > 1">Definition for "{{alphabet[$index]}}" *</label>
         <div class="" ng-show="viewProp.displayOMSId">
-            <input type="radio" id="itemsoms_{{$index}}" name="purchaseoption1" ng-model="data.purchaseConds.sources[$index].purchaseoption" title="Items/OMS ID's" value="itemoms"/>
+            <input type="radio" id="itemsoms_{{$index}}" name="purchaseoption1" ng-model="data.purchaseConds.sources[$index].purchaseoption"
+                title="Items/OMS ID's" value="itemoms" />
             <label for="itemsoms"><span><span></span></span>Items/OMS ID's</label>
         </div>
         <div class="">
-            <input  type="radio" id="itemssku_{{$index}}" name="purchaseoption2" ng-model="data.purchaseConds.sources[$index].purchaseoption" title="Items/SKU" value="itemsku"/>
+            <input type="radio" id="itemssku_{{$index}}" name="purchaseoption2" ng-model="data.purchaseConds.sources[$index].purchaseoption"
+                title="Items/SKU" value="itemsku" />
             <label for="itemssku"><span><span></span></span>Items/SKU</label>
         </div>
         <div class="">
-            <input type="radio" id="category_{{$index}}" name="purchaseoption3" ng-model="data.purchaseConds.sources[$index].purchaseoption" title="Category" value="category"/>
+            <input type="radio" id="category_{{$index}}" name="purchaseoption3" ng-model="data.purchaseConds.sources[$index].purchaseoption"
+                title="Category" value="category" />
             <label for="category"><span><span></span></span>Category </label>
         </div>
         <div class="" ng-show="viewProp.displayMFGBrand">
-            <input type="radio" id="brand_{{$index}}" name="purchaseoption4" ng-model="data.purchaseConds.sources[$index].purchaseoption" title="MFG Brand" value="Brand" ng-disabled="true"/>
+            <input type="radio" id="brand_{{$index}}" name="purchaseoption4" ng-model="data.purchaseConds.sources[$index].purchaseoption"
+                title="MFG Brand" value="Brand" ng-disabled="true" />
             <label for="brand"><span><span></span></span>MFG Brand</label>
         </div>
     </div>
     <!-- Item view Codes Component -->
     <!--<item-inclusion data="item.inclusions.partnumbers" is-disabled="isDisabled" promoform="promoform" ng-show="data.purchaseConds.sources[$index].purchaseoption == 'itemoms'"></item-inclusion>-->
-     <item-inclusion data="item.inclusions.partnumbers" itemtype="item.inclusions.itemtype" purchaseoption="data.purchaseConds.sources[$index].purchaseoption" is-disabled="isDisabled" promoform="promoform" ng-show="data.purchaseConds.sources[$index].purchaseoption == 'itemoms' || data.purchaseConds.sources[$index].purchaseoption == 'itemsku'"></item-inclusion>
+    <item-inclusion data="item.inclusions.partnumbers" itemtype="item.inclusions.itemtype" purchaseoption="data.purchaseConds.sources[$index].purchaseoption"
+        is-disabled="isDisabled" promoform="promoform" ng-show="data.purchaseConds.sources[$index].purchaseoption == 'itemoms' || data.purchaseConds.sources[$index].purchaseoption == 'itemsku'"></item-inclusion>
     <!-- Category view Codes Component -->
     <category-view data="item.inclusions.hierarchies" is-disabled="isDisabled" promoform="promoform" ng-show="data.purchaseConds.sources[$index].purchaseoption == 'category' && viewProp.displayWebHierarchy"></category-view>
-     <!-- NXK8980  MerchCategory-CodeChanges-START -->
-      <merch-hierarchy-view data="item.inclusions.hierarchies" is-disabled="isDisabled" promoform="promoform" ng-show="data.purchaseConds.sources[$index].purchaseoption == 'category'"> </merch-hierarchy-view>
+    <!-- NXK8980  MerchCategory-CodeChanges-START -->
+    <merch-hierarchy-view data="item.inclusions.hierarchies" is-disabled="isDisabled" promoform="promoform" ng-show="data.purchaseConds.sources[$index].purchaseoption == 'category'">
+    </merch-hierarchy-view>
     <!-- NXK8980  MerchCategory-CodeChanges-END -->
-    <category-exclusion data="item.exclusions" itemtype="item.exclusions.itemtype" is-disabled="isDisabled" promoform="promoform" view-prop="viewProp" ng-show="data.purchaseConds.sources[$index].purchaseoption == 'category'"></category-exclusion>
+    <category-exclusion data="item.exclusions" itemtype="item.exclusions.itemtype" is-disabled="isDisabled" promoform="promoform"
+        view-prop="viewProp" ng-show="data.purchaseConds.sources[$index].purchaseoption == 'category'"></category-exclusion>
     <div class="md-text-field" ng-if="data.purchaseConds.sources.length > 1">
         <label for="promocombo">Quantity of "{{alphabet[$index]}}"</label>
-        <input type="number" class="buyAorB" name="minPurchaseQty" ng-model="item.minPurchaseQty" title="Quantity of {{alphabet[$index]}}" placeholder="Quantity of {{alphabet[$index]}}" allow-pattern="(^[0-9]\d*$)" ng-init="item.minPurchaseQty=  item.minPurchaseQty || 1" />
+        <input type="number" class="buyAorB" name="minPurchaseQty" ng-model="item.minPurchaseQty" title="Quantity of {{alphabet[$index]}}"
+            placeholder="Quantity of {{alphabet[$index]}}" allow-pattern="(^[0-9]\d*$)" ng-init="item.minPurchaseQty=  item.minPurchaseQty || 1"
+        />
     </div>
 
 </div>
 
-<!--<div ng-if="data.purchaseConds.sources.length > 1">
-    <div class="md-text-field" ng-if="data.promoSubTypeCd=='MultipleItemsPercentDiscount'">
-      <label for="percentoff">Percentage discount off each combination</label>
-      <input type="text" ng-model="data.reward.details[0].value" name="percentoff" ng-required="preview" required allow-pattern="(\d)" />
-      <span class='error-message' ng-show="promoform.percentoff.$invalid ">
-			<span ng-show="promoform.percentoff.$error.required">Please enter a valid  discount amount</span>
-            
-	</span>
-    </div>
-
-    <div class="md-text-field" ng-if="data.promoSubTypeCd=='MultipleItemsValueDiscount'">
-      <label for="amountoff">Amount off each combination</label>
-      <input type="text" ng-model="data.reward.details[0].value" name="amountoff" ng-required="preview" required allow-pattern="^[\d.]+$" />
-       <span class='error-message' ng-show="promoform.amountoff.$invalid ">
-			<span ng-show="promoform.amountoff.$error.required">Please enter a valid amount</span>
-            
-	</span>
-    </div>
-
-    <div class="md-text-field">
-      <label for="maxdiscount">Maximum discount amount</label>
-      <input type="text" ng-model="data.reward.details[0].maxAllowedVal"   name="maxdiscount" allow-pattern="^[\d.]+$" />
-    </div> 
-</div>-->
-
-<!--<purchase-condition data="data.reward.details" preview="preview" qualuom = "data.purchaseConds.qualUOM" reward="data.reward" promoform="promoform" purchase-condition="data.purchaseConds" is-disabled="isDisabled" ng-if="data.purchaseConds.sources.length == 1"></purchase-condition>-->
-
-
 <div class="md-text-field" ng-show="viewProp.displayPaymentType">
-	<label for="promocombo">Target payment type</label>
-	<input type="text" name="promocombo" ng-model="data.promocombo" title="Promotion Combiantions" placeholder="Any payment type" disabled/>
+    <label for="promocombo">Target payment type</label>
+    <input type="text" name="promocombo" ng-model="data.promocombo" title="Promotion Combiantions" placeholder="Any payment type"
+        disabled/>
 </div>

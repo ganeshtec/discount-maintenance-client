@@ -57,7 +57,9 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$co
         $this.setViewProperties = function(userType) {
             if (userType == allowedPermissionIDs.STORE) {
                 $scope.viewProperties = getViewProperties(false);
+                $scope.promotionSubTypesForMFA = true;
             } else if (userType == allowedPermissionIDs.ONLINE) {
+                $scope.promotionSubTypesForMFA = false;
                 $scope.viewProperties = getViewProperties(true);
             }
         }

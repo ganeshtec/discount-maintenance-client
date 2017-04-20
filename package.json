@@ -9,6 +9,7 @@
     "build-ad": "gulp build-ad",
     "build-qa": "gulp build-qa",
     "build-dev": "gulp build-dev",
+    "build-prod": "gulp build-prod",
     "test": "gulp test",
     "ci": "karma start --single-run --browsers Chrome --reporters dots",
     "update-webdriver": "webdriver-manager update",

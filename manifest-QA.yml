@@ -1,7 +1,7 @@
 inherit: manifest-base.yml
 applications:
 - name: PromotionsMaintenanceExtUI
-  host: promotionsadmin-ext-qa
+  host: discount-engine-qa
   instances: 2
   env:
     Node_env: 'QA'

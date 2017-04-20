@@ -1,7 +1,7 @@
 inherit: manifest-base.yml
 applications:
 - name: PromotionsMaintenanceExtUI
-  host: promotionsadmin-ext-ad
+  host: discount-engine-ad
   instances: 1
   env:
     Node_env: 'AD'

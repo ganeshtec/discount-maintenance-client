@@ -1,4 +1,3 @@
-// used to run tests in karma
 app.factory('URL_CONFIG', [function(){    
     var _construct = function URL_CONFIG(){
         var data = {

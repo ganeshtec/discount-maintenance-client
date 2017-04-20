@@ -222,11 +222,7 @@ app.service('utilService', ['$filter', function ($filter) {
             $(data.purchaseConds.sources).each(function (i, source) {
                 if (data.purchaseConds.qualUOM == 'Quantity') {
                     delete source.minTotalPrice;
-
-                    if (source.minPurchaseQty == null) {
-                        source.minPurchaseQty = minPurchaseQty;
-                    }
-
+                    source.minPurchaseQty = minPurchaseQty;
                 } else {
                     delete source.minPurchaseQty;
                     source.minTotalPrice = minPurchaseQty;

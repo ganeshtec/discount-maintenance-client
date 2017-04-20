@@ -29,7 +29,8 @@
 						Please select a valid promotion type
 					</span>
 				</span>
-			</div> 
+			</div>
+
 			<div class="md-select md-select-space" ng-show="viewProp.displayRedemptionMethod">
 				<label for="method">
 					Redemption Method
@@ -91,7 +92,7 @@
 				</redemption-limit>
 		</section>
 		<section class="admin__promotion__section" ng-show="index == 6 || preview">
-				<promo-schedule data="data" preview="preview" promoform="promoForm" view-prop="viewProp">
+				<promo-schedule data="data" preview="preview" promoform="promoForm" form-holder="formHolder" view-prop="viewProp">
 				</promo-schedule>
 		</section>
 	</fieldset>
