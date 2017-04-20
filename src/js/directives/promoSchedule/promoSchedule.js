@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 
 // Purpose is to build promotion code spec.
-app.directive('promoSchedule', ['$filter', 'leadTimeService',
-    function ($filter, leadTimeService) {
+app.directive('promoSchedule', ['$filter', 'leadTimeService', 'validationService',
+    function ($filter, leadTimeService, validationService) {
         return {
             restrict: 'E',
             templateUrl: 'promoSchedule.html',
@@ -11,7 +11,8 @@ app.directive('promoSchedule', ['$filter', 'leadTimeService',
                 promoform: '=',
                 preview: '=',
                 viewProp: '=',
-                formHolder: '='
+                formHolder: '=',
+                validationErrors: '='
             },
             controller: function ($scope) {
                 $scope.$watch('data', function (nv) {
@@ -26,22 +27,27 @@ app.directive('promoSchedule', ['$filter', 'leadTimeService',
                         $scope.endtime = '2:59 AM';
                     }
                 });
+            
+            
 
             },
             link: function (scope) {
-                scope.startDateLimit = new Date();
-                scope.startDateLimit.setDate(scope.startDateLimit.getDate() - 1);
+                // scope.startDateLimit = new Date();
+                // scope.startDateLimit.setDate(scope.startDateLimit.getDate() - 1);
+
+                scope.validatePromotion = function() {
+                    scope.validationErrors = validationService.validatePromotion(scope.data);
+                };
+                
                 scope.convertToString = function () {
                     if (scope.data) {
                         scope.data.startDt = $filter('date')(scope.startDt, 'yyyy-MM-dd');
                         scope.data.endDt = $filter('date')(scope.endDt, 'yyyy-MM-dd');
-                        if (scope.data.endDt === scope.data.startDt) {
-                            scope.promoform.end.$invalid = true;
-                            scope.promoform.end.$error.min = true;
-                        }
-                        scope.validateEndDate();
                     }
+                    scope.validatePromotion();
                 };
+
+              
 
                 scope.validateEndDate = function (data) {
                     if (scope.data.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB') {

@@ -4,10 +4,11 @@
             <label for="promoname">Start Date</label>
             <input class="" type="date" ng-model="startDt" placeholder="yyyy-MM-dd" name="start" min="{{startDateLimit}}" max="9999-12-31" ng-required="preview"
             ng-blur="convertToString()" />
-            <span class='error-message' ng-show="promoform.start.$invalid">
-              <span ng-show="promoform.start.$error.required">Please enter a valid start date</span>
-              <span ng-show="promoform.start.$error.min">Start date cannot be earlier than today</span>
-            </span>
+            <!--<span class='error-message' ng-show="promoform.start.$invalid">-->
+                <span class='error-message' ng-show="validationErrors.startDt.isError">{{validationErrors.startDt.message}}</span>
+              <!--<span ng-show="promoform.start.$error.required">Please enter a valid start date</span>
+              <span ng-show="promoform.start.$error.min">Start date cannot be earlier than today</span>-->
+            <!--</span>-->
 
         </div>
     </div>
@@ -25,11 +26,12 @@
 
             <input class="" type="date" ng-model="endDt" placeholder="yyyy-MM-dd" name="end" max="9999-12-31" ng-required="preview"
             ng-blur="convertToString()" />
-            <span class='error-message' ng-show="promoform.end.$invalid">
+            <span class='error-message' ng-show="validationErrors.endDt.isError">{{validationErrors.endDt.message}}</span>
+            <!--<span class='error-message' ng-show="promoform.end.$invalid">
                 <span ng-show="promoform.end.$error.required">Please enter a valid end date.</span>
                 <span ng-show="promoform.end.$error.min">End date must be after start date.</span>
                 <span ng-show="promoform.end.$error.leadTime">Please enter a valid end date. Earliest possible MSB end date is {{data.minEndDate}}.</span>
-            </span>
+            </span>-->
         </div>
     </div>
     <div flex="50" ng-show="viewProp.displayScheduleTime">

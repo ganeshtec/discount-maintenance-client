@@ -24,31 +24,6 @@ describe('Unit testing promo schedule directive', function() {
     this.$isolateScope = element.isolateScope();
   }));
 
-  //TODO: rewrite test after the directive code fetches data from back end
-  it('Checks if the content  is rendered', function() {
-    $scope.data = {};
-    // Compile a piece of HTML containing the directive
-    element = $compile("<promo-schedule data='data'><promo-schedule>")($scope);
-    $scope.$digest();
-    $isolatedScope = element.isolateScope();
-   // Check that the compiled element contains the templated content
-    expect(element.html()).toContain('Start Date');
-    expect(element.html()).toContain('End Date');
-  });
-
-    //TODO: Check why time component is not considered when forming date obj.
-  xit('Checks if date is converted to text', function() {
-    $scope.data = {};
-    $scope.data.startDt = "2016-01-01 00:00:00";
-    $scope.data.endDt = "2016-01-10 00:00:00";
-    // Compile a piece of HTML containing the directive
-    element = $compile("<promo-schedule data='data'><promo-schedule>")($scope);
-    $scope.$digest();
-    angular.element(element.find('input')[0]).triggerHandler('blur');
-    expect($scope.data.startDt).toBe("2016-01-01 00:00:00");
-    expect($scope.data.endDt).toBe("2016-01-10 00:00:00");
-  });
-
   it('Sets the earliest start date to today', function() {
     var expectedStartDateLimit = new Date();
     expectedStartDateLimit.setDate(expectedStartDateLimit.getDate() - 1);
