@@ -26,12 +26,10 @@
 
             <input class="" type="date" ng-model="endDt" placeholder="yyyy-MM-dd" name="end" max="9999-12-31" ng-required="preview"
             ng-blur="convertToString()" />
-            <span class='error-message' ng-show="validationErrors.endDt.isError">{{validationErrors.endDt.message}}</span>
-            <!--<span class='error-message' ng-show="promoform.end.$invalid">
-                <span ng-show="promoform.end.$error.required">Please enter a valid end date.</span>
-                <span ng-show="promoform.end.$error.min">End date must be after start date.</span>
-                <span ng-show="promoform.end.$error.leadTime">Please enter a valid end date. Earliest possible MSB end date is {{data.minEndDate}}.</span>
-            </span>-->
+            <span class='error-message' ng-show="validationErrors.endDt.isError">{{validationErrors.endDt.message}} </span>
+            <span class='error-message' ng-show="validationErrors.endDtLeadTime.isError">{{validationErrors.endDtLeadTime.message}}</span>
+           
+            
         </div>
     </div>
     <div flex="50" ng-show="viewProp.displayScheduleTime">

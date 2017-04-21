@@ -44,7 +44,7 @@ app.directive('promoSchedule', ['$filter', 'leadTimeService', 'validationService
                         scope.data.startDt = $filter('date')(scope.startDt, 'yyyy-MM-dd');
                         scope.data.endDt = $filter('date')(scope.endDt, 'yyyy-MM-dd');
                     }
-                    scope.validatePromotion();
+                    scope.validatePromotion(scope.data);
                 };
 
               

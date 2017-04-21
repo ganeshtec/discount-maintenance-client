@@ -3,24 +3,26 @@ fdescribe('validationService', function () {
         $rootScope,
         $scope,
         $filter,
-        validationService;
+        validationService,
+        leadTimeService;
 
     // Load the myApp module, which contains the directive
     beforeEach(module('app'));
     // Store references to $rootScope and $compile
     // so they are available to all tests in this describe block
-    beforeEach(inject(function (_$compile_, _$rootScope_, _validationService_, _$filter_) {
+    beforeEach(inject(function (_$compile_, _$rootScope_, _validationService_, _$filter_, _leadTimeService_) {
         // The injector unwraps the underscores (_) from around the parameter names when matching
         $compile = _$compile_;
         $rootScope = _$rootScope_;
         $scope = $rootScope.$new();
         validationService = _validationService_;
         $filter = _$filter_;
+        leadTimeService = _leadTimeService_;
 
     }));
 
     it('Returns a startDt errors object with isError and message properties', function () {
-       
+
         var today = $filter('date')(new Date(), 'yyyy-MM-dd');
         var response = validationService.validateStartDate(today);
         expect(response.isError).toBeDefined();
@@ -31,7 +33,7 @@ fdescribe('validationService', function () {
         var pastDate = new Date();
         pastDate.setDate(pastDate.getDate() - 1);
         pastDate = $filter('date')(pastDate, 'yyyy-MM-dd');
-        
+
         var response = validationService.validateStartDate(pastDate);
         expect(response.isError).toBe(true);
         expect(response.message).not.toBe('');
@@ -57,7 +59,7 @@ fdescribe('validationService', function () {
         var pastDate = new Date();
         pastDate.setDate(pastDate.getDate() - 1);
         pastDate = $filter('date')(pastDate, 'yyyy-MM-dd');
-        
+
         var response = validationService.validateEndDate(pastDate);
         expect(response.isError).toBe(true);
         expect(response.message).not.toBe('');
@@ -75,6 +77,48 @@ fdescribe('validationService', function () {
     it('Returns isError as false and empty error message when selected End date is today', function () {
         var today = $filter('date')(new Date(), 'yyyy-MM-dd');
         var response = validationService.validateEndDate(today);
+        expect(response.isError).toBe(false);
+        expect(response.message).toBe('');
+    })
+
+    it('Returns isError as true and non empty error message when promo is MSB and end date is less than today + lead time', function () {
+        var promoSubTypeCd = 'ProductLevelPerItemPercentDiscountMSB';
+        var today = $filter('date')(new Date(), 'yyyy-MM-dd');
+        var leadtime = 3;
+        var endDt = new Date();
+        endDt.setDate(endDt.getDate() + leadtime - 1);
+        endDt = $filter('date')(endDt, 'yyyy-MM-dd');
+
+        console.log("endDt", endDt)
+
+        // var startDt = new Date();
+        // // startDt.setDate(startDt.getDate() - leadtime - 1);
+        // startDt = $filter('date')(startDt, 'yyyy-MM-dd');
+
+        console.log("end date:  ", endDt)
+
+
+        spyOn(leadTimeService, 'fetchLeadTime').and.callFake(function () {
+            return {
+                then: function (callback) { return callback(3) }
+            }
+        })
+
+        validationService.validateLeadTime(promoSubTypeCd, endDt, function(response) {
+            expect(response.isError).toBe(true);
+            expect(response.message).not.toBe('');
+        });
+
+    });
+
+    xit('Returns isError as false and empty error message when promo is MSB and end date is greater than today + lead time', function () {
+        var promoSubTypeCd = 'ProductLevelPerItemPercentDiscountMSB';
+        var today = $filter('date')(new Date(), 'yyyy-MM-dd');
+        var leadtime = 3;
+        var endDt = new Date();
+        endDt.setDate(endDt.getDate() + leadtime);
+        endDt = $filter('date')(endDt, 'yyyy-MM-dd');
+        var response = validationService.validateLeadTime(promoSubTypeCd, endDt);
         expect(response.isError).toBe(false);
         expect(response.message).toBe('');
     })
