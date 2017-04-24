@@ -16,7 +16,7 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
 
         if (startDt < today) {
             startDateErrors.isError = true;
-            startDateErrors.message = 'Sravanthi hates this.';
+            startDateErrors.message = 'Start date cannot be earlier than today';
         }
 
         return startDateErrors;
@@ -32,7 +32,7 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
 
         if (endDt < today) {
             endDateErrors.isError = true;
-            endDateErrors.message = 'Sravanthi hates this too.';
+            endDateErrors.message = 'End date cannot be earlier than today';
         }
 
         return endDateErrors;
@@ -56,7 +56,7 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
                 var isValid = publicApi.isEndDateValid(minEndDate, endDt);
                 if (!isValid) {
                     endDtLeadTimeError.isError = true;
-                    endDtLeadTimeError.message = 'Will hates this MSB.';
+                    endDtLeadTimeError.message = 'Please enter a valid end date.Earliest possible MSB end date is ' + minEndDate;
                     processErrorMessage(endDtLeadTimeError);
                 }
                 return endDtLeadTimeError;
@@ -80,6 +80,23 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
         }
     };
 
+
+    publicApi.validateEndDtWithStartDt = function(startDt, endDt) {
+        
+        var endDtLessThanStartErr = {
+            isError: false,
+            message: ''
+        };
+
+        if(endDt < startDt)
+        {
+            endDtLessThanStartErr.isError = true;
+            endDtLessThanStartErr.message = 'End date must be after Start date.'
+        }
+
+        return endDtLessThanStartErr;
+    }
+
     publicApi.validatePromotion = function (promotion) {
         var validationErrors = {};
         validationErrors.startDt = publicApi.validateStartDate(promotion.startDt);
@@ -87,6 +104,9 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
         publicApi.validateLeadTime(promotion.promoSubTypeCd, promotion.endDt, function (errorMsg) {
             validationErrors.endDtLeadTime = errorMsg;
         });
+
+        validationErrors.endDtLessStartDt = publicApi.validateEndDtWithStartDt(promotion.startDt, promotion.endDt);
+
         return validationErrors;
     }
 

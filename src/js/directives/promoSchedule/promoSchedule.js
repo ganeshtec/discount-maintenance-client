@@ -32,8 +32,6 @@ app.directive('promoSchedule', ['$filter', 'leadTimeService', 'validationService
 
             },
             link: function (scope) {
-                // scope.startDateLimit = new Date();
-                // scope.startDateLimit.setDate(scope.startDateLimit.getDate() - 1);
 
                 scope.validatePromotion = function() {
                     scope.validationErrors = validationService.validatePromotion(scope.data);
@@ -47,60 +45,7 @@ app.directive('promoSchedule', ['$filter', 'leadTimeService', 'validationService
                     scope.validatePromotion(scope.data);
                 };
 
-              
 
-                scope.validateEndDate = function (data) {
-                    if (scope.data.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB') {
-                        var leadTimePromise = leadTimeService.fetchLeadTime();
-                        leadTimePromise.then(function (value) {
-                            var minEndDate = scope.getMinEndDate(value);
-                            var isValid = scope.isEndDateValid(minEndDate);
-                            if(!isValid) {
-                                scope.promoform.end.$invalid = true;
-                                scope.formHolder.form.$valid = false;
-                                scope.promoform.end.$error.leadTime = true;
-                                return true;
-                            } else {
-                                scope.promoform.end.$invalid = false;
-                                scope.formHolder.form.$valid = true;
-                                scope.promoform.end.$error.leadTime = false;
-                                return false;
-                            }
-                        }
-                    )} else {
-                        var minEndDate = scope.getMinEndDate();
-                        var isValid = scope.isEndDateValid(minEndDate);
-                        console.log("minEndDate", minEndDate);
-                        console.log("scope.data.endDt", scope.data.endDt);
-                        if(!isValid) {
-                            scope.promoform.end.$invalid = true;
-                            scope.formHolder.form.$valid = false;
-                            scope.promoform.end.$error.min = true;
-                            return true;
-                        } else {
-                            scope.promoform.end.$invalid = false;
-                            scope.formHolder.form.$valid = true;
-                            return false;
-                        }
-                    } 
-                }
-
-                scope.getMinEndDate = function (value) {
-                    var today = new Date();
-                    var minEndDate = value ?
-                        $filter('date')(today.setDate(today.getDate() + value), 'yyyy-MM-dd') :
-                        $filter('date')(scope.data.startDt, 'yyyy-MM-dd');
-                    scope.data.minEndDate = minEndDate;
-                    return minEndDate;
-                }
-
-                scope.isEndDateValid = function (minDate) {
-                    if (scope.data.endDt < minDate) {
-                        return false;
-                    } else {
-                        return true;
-                    }
-                };
             }
         };
     }
