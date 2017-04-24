@@ -34,14 +34,14 @@
                             <label for="j_username">
                                 User ID
                             </label>
-                            <input type="text" name="name" ng-model="name" title="Name" id="j_username" placeholder="User ID"/>
+                            <input type="text" name="name" ng-model="name" title="Name" id="j_username" placeholder="User ID" ng-keypress="($event.keyCode === 13) && submit()"/>
                         </div>
 
                         <div class="md-text-field">
                             <label for="j_password">
                                 Password
                             </label>
-                            <input type="password" name="password" ng-model="password" title="Password" id="j_password" placeholder="Password"/>
+                            <input type="password" name="password" ng-model="password" title="Password" id="j_password" placeholder="Password" ng-keypress="($event.keyCode === 13) && submit()"/>
                         </div>
                         <a href="#" type="submit" class="md-button login__panel__form__submit" id="loginSubmit" ng-click="submit()" flex="100">Sign In</a>
                     </form>
