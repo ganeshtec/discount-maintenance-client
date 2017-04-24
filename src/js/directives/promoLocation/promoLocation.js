@@ -26,7 +26,6 @@ app.directive(
                     scope.searchResults = [];
                     scope.validStoreInfo = [];
                     scope.inValidStoreInfo = false;
-                   // scope.inValidMarketInfo = false;
                     scope.showInvalidError = false;
                     scope.addStoretest = scope.addStore;
                     
@@ -36,7 +35,6 @@ app.directive(
                         if (scope.checkForEmptyValues(data,location)) {
 
                             data = scope.formatToCommaSeparatedList(data);
-                            //scope.stripChars(data,18);
                     
                             if(scope.isLocationDataValid(data)){
                                 storeData.locationNumbers = data;
@@ -101,7 +99,6 @@ app.directive(
                     
                     /* Data Service Call for Store & Market Search  */
                     function getStoresByID(data, location, clicked) {
-                    //console.log("Control inside getStoresByID Function::");
                         var tempData = {};
                         var locationPromise = {};
 
@@ -142,19 +139,11 @@ app.directive(
                                 scope.addStore(data.validStoreInfo[i]);
                             }
                         }
-                        //invalidIds = checkForInvalidLocations(data,clicked);
                         invalidIds = scope.checkForInvalidLocations(data);
                         scope.printErrorMessageForInvalidLocations(invalidIds,data,clicked);
                     }
 
-                        /* if invalid Data set to item search */
-                    //function checkForInvalidLocations(data,clicked) {
                     scope.checkForInvalidLocations = function (data) {
-
-                        // console.log('checkForInvalidLocations:: '+ JSON.stringify(data));
-
-                        // console.log('Data inValidMarketInfo:: '+ JSON.stringify(data.inValidMarketInfo));
-                        // console.log('Data inValidStoreInfo:: '+ JSON.stringify(data.inValidStoreInfo));
                         if(data.inValidStoreInfo){
                             scope.locationSearch = [data.inValidStoreInfo
                                 .toString().replace(/,/g, ' ')]
@@ -166,7 +155,6 @@ app.directive(
                             scope.locationSearch = [data.inValidMarketInfo
                             .toString().replace(/,/g, ' ')]
                             scope.inValidMarketInfo = (scope.locationSearch.length > 0);
-                          //  console.log('Invalid Market '+ data.inValidMarketInfo);
                             return data.inValidMarketInfo;
                           
                         }
@@ -177,9 +165,6 @@ app.directive(
                     }
                           
                     scope.printErrorMessageForInvalidLocations = function (invalidIds,data,clicked) {
-                       // console.log('In ValidIds:: '+ JSON.stringify(invalidIds));
-                       // console.log('Data :: '+ JSON.stringify(data));
-                       // console.log('clicked::: '+ clicked);
                         var locationprint;
                         if(data.inValidStoreInfo) {
                             locationprint = 'store';
