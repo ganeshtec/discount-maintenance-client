@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 
 // Purpose is to build promotion code spec.
-app.directive('promoSchedule', ['$filter', 'leadTimeService', 'validationService',
-    function ($filter, leadTimeService, validationService) {
+app.directive('promoSchedule', ['$filter', 'validationService',
+    function ($filter, validationService) {
         return {
             restrict: 'E',
             templateUrl: 'promoSchedule.html',
@@ -33,10 +33,15 @@ app.directive('promoSchedule', ['$filter', 'leadTimeService', 'validationService
             },
             link: function (scope) {
 
+              
                 scope.validatePromotion = function() {
                     scope.validationErrors = validationService.validatePromotion(scope.data);
                 };
                 
+                if(scope.data.startDt || scope.data.endDt){
+                scope.validatePromotion(scope.data);
+                }
+
                 scope.convertToString = function () {
                     if (scope.data) {
                         scope.data.startDt = $filter('date')(scope.startDt, 'yyyy-MM-dd');
@@ -45,6 +50,8 @@ app.directive('promoSchedule', ['$filter', 'leadTimeService', 'validationService
                     scope.validatePromotion(scope.data);
                 };
 
+
+               
 
             }
         };

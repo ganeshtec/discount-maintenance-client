@@ -1,5 +1,7 @@
 
 <div ng-if="$ctrl.purchaseCondition.sources.length == 1">
+
+
 <div class="md-text-field" ng-init="qualuom = $ctrl.data[0].qualUOM || 'Quantity'">
 
 	<label for="priority">Minimum purchase type</label>
@@ -18,7 +20,7 @@
 <table class="table category__table">
 		<tr class="category__table__row-nobottomborder">
 				<td colspan="3">
-						<a href="" class="purchaseCondition__btn md-button" ng-click="$ctrl.isDisabled || $ctrl.addPurchaseCondition()">Add New Condition</a>
+						<a href="" class="purchaseCondition__btn md-button" ng-click="$ctrl.addPurchaseCondition()">Add New Condition</a>
 				</td>
 		</tr>
 		<tr class="odd">
@@ -48,7 +50,7 @@
 				</td>
 				<td class="md-text-field">
 						<input type="number" id="value" name="value_{{$index}}" ng-model="item.value" ng-required="$ctrl.preview" max="100" min="00.01" ng-blur="$ctrl.validatePercentage($index)" allow-pattern="^[\d.]+$" ng-if="$ctrl.reward.type=='AMTOFF'"/>
-                        <input type="number" id="value" name="value_{{$index}}" ng-model="item.value" ng-required="$ctrl.preview" max="100" min="00.01" ng-blur="v$ctrl.alidatePercentage($index)" allow-pattern="^[\d.]+$" ng-if="$ctrl.reward.type=='PERCNTOFF'"/>
+                        <input type="number" id="value" name="value_{{$index}}" ng-model="item.value" ng-required="$ctrl.preview" max="100" min="00.01" ng-blur="$ctrl.validatePercentage($index)" allow-pattern="^[\d.]+$" ng-if="$ctrl.reward.type=='PERCNTOFF'"/>
 							<span class='error-message' ng-show="$ctrl.promoform['value_' + $index].$invalid || $ctrl.preview">
 									<span ng-show="$ctrl.promoform['value_' + $index].$error.required" ng-if="$ctrl.reward.type=='AMTOFF'">Please enter a valid amount</span>
 									<span ng-show="$ctrl.promoform['value_' + $index].$error.required" ng-if="$ctrl.reward.type=='PERCNTOFF'">Please enter a valid percentage</span>
@@ -71,7 +73,7 @@
 
 
 				</td>
-				<td class="md-text-field"> <a ng-click="$ctrl.isDisabled || $ctrl.removePurchaseCondition($index)">Remove</a>
+				<td class="md-text-field"> <a ng-click="$ctrl.isDisabled || $ctrl.removePurchaseCondition(index)">Remove</a>
 				</td>
 		</tr>
 </table>
@@ -80,7 +82,7 @@
 <div ng-if="$ctrl.purchaseCondition.sources.length > 1">
     <div class="md-text-field" ng-if="$ctrl.promotype=='MultipleItemsPercentDiscount'">
       <label for="percentoff">Percentage discount off each combination</label>
-      <input type="text" ng-model="data[0].value" name="percentoff" ng-required="$ctrl.preview" required allow-pattern="(\d)" />
+      <input type="text" ng-model="$ctrl.data[0].value" name="percentoff" ng-required="$ctrl.preview" required allow-pattern="(\d)" />
       <span class='error-message' ng-show="$ctrl.promoform.percentoff.$invalid ">
 			<span ng-show="$ctrl.promoform.percentoff.$error.required">Please enter a valid discount amount</span>
             
@@ -89,7 +91,7 @@
 
     <div class="md-text-field" ng-if="$ctrl.promotype=='MultipleItemsValueDiscount'">
       <label for="amountoff">Amount off each combination</label>
-      <input type="text" ng-model="data[0].value" name="amountoff" ng-required="$ctrl.preview" required allow-pattern="^[\d.]+$" />
+      <input type="text" ng-model="$ctrl.data[0].value" name="amountoff" ng-required="$ctrl.preview" required allow-pattern="^[\d.]+$" />
        <span class='error-message' ng-show="$ctrl.promoform.amountoff.$invalid ">
 			<span ng-show="$ctrl.promoform.amountoff.$error.required">Please enter a valid amount</span>
             
@@ -98,7 +100,7 @@
 
     <div class="md-text-field">
       <label for="maxdiscount">Maximum discount amount</label>
-      <input type="text" ng-model="data[0].maxAllowedVal"   name="maxdiscount" allow-pattern="^[\d.]+$" />
+      <input type="text" ng-model="$ctrl.data[0].maxAllowedVal"   name="maxdiscount" allow-pattern="^[\d.]+$" />
     </div>
 	
 </div>

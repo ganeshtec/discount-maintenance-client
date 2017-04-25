@@ -1,6 +1,6 @@
 // Purpose is to build promotion data
-app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService', 'validationService', 'redemptionMethodTypes', 'DataFactory', 'itemCategorySourceData',
-    function (promotionSubTypes, promotionDataService, validationService, redemptionMethodTypes, DataFactory, itemCategorySourceData) {
+app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService', 'redemptionMethodTypes', 'DataFactory', 'itemCategorySourceData',
+    function (promotionSubTypes, promotionDataService, redemptionMethodTypes, DataFactory, itemCategorySourceData) {
 
         return {
             restrict: 'E',
@@ -143,7 +143,6 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
 
                 // redemtion method types
                 scope.redemptionMethodTypes = new redemptionMethodTypes();
-
 
             }
         };
