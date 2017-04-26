@@ -1,64 +1,41 @@
-describe('purchaseCondition', function () {
-    var $compile,
-        $rootScope,
-        $scope,
-        element;
+fdescribe('purchaseCondition', function () {
+
+    var $componentController;
 
     // Load the myApp module, which contains the directive
     beforeEach(module('app'));
 
-    // Store references to $rootScope and $compile
-    // so they are available to all tests in this describe block
-    beforeEach(inject(function (_$compile_, _$rootScope_) {
-        // The injector unwraps the underscores (_) from around the parameter names when matching
-        $compile = _$compile_;
-        $rootScope = _$rootScope_;
-        $scope = $rootScope.$new();
-    }));
+    beforeEach(inject(function(_$componentController_) {
+    $componentController = _$componentController_;
+    ctrl = $componentController('purchaseCondition',null, {
+         data: [],
+         });
 
-
-    it('Checks directive with the appropriate content.', function () {
-
-        $scope.data = [];
-        // Compile a piece of HTML containing the directive
-        var element = $compile('<purchase-condition data=\'data\'></purchase-condition>')($scope);
-        $scope.$digest();
-        $isolatedScope = element.isolateScope();
-
-        // Check that the compiled element contains the templated content
-        //  expect(element.html()).toContain("Add New Condition");
-    });
+  }));
 
 
     it('adding object in purchaseCondition array', function () {
-        $isolatedScope.addPurchaseCondition();
-        expect($isolatedScope.data.length).toEqual(2);
+
+        ctrl.addPurchaseCondition();
+        expect(ctrl.data.length).toEqual(2);
     });
 
     it('remove function in purchaseCondition array', function () {
-        expect($isolatedScope.data.length).toEqual(2);
-        $isolatedScope.removePurchaseCondition($isolatedScope.data.length - 1);
-        expect($isolatedScope.data.length).toEqual(1);
+        ctrl.addPurchaseCondition();
+        ctrl.removePurchaseCondition(ctrl.data.length - 1);
+        expect(ctrl.data.length).toEqual(1);
     });
 
-    it('properly validates percentages within range', function () {
-        spyOn($isolatedScope, 'roundPercentage');
-
-        $isolatedScope.data[0] = {};
-        $isolatedScope.data[0].value = 50.75;
-        $isolatedScope.validatePercentage(0);
-        expect($isolatedScope.data[0].value).toEqual(50.75);
-    });
 
     it('rounds percentages to two decimal places', function () {
-        $isolatedScope.data[0] = {};
+        ctrl.data[0] = {};
 
-        $isolatedScope.data[0].value = 50.759;
-        $isolatedScope.roundPercentage(0);
-        expect($isolatedScope.data[0].value).toEqual(50.76);
+        ctrl.data[0].value = 50.759;
+        ctrl.roundPercentage(0);
+        expect(ctrl.data[0].value).toEqual(50.76);
 
-        $isolatedScope.data[0].value = 45.94202;
-        $isolatedScope.roundPercentage(0);
-        expect($isolatedScope.data[0].value).toEqual(45.94);
+        ctrl.data[0].value = 45.94202;
+        ctrl.roundPercentage(0);
+        expect(ctrl.data[0].value).toEqual(45.94);
     });
 });

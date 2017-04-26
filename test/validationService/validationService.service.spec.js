@@ -1,4 +1,4 @@
-fdescribe('validationService', function () {
+describe('validationService', function () {
     var $compile,
         $rootScope,
         $scope,
@@ -153,6 +153,22 @@ fdescribe('validationService', function () {
         var response = validationService.validateEndDtWithStartDt(startDt, endDt);
         expect(response.isError).toBe(true);
         expect(response.message).not.toBe('');
+    });
+
+    fit('Returns isError as true and non empty error message when selected minimum quantity threshold is 0', function () {
+        var rewards = [{min:0,max:2},{min:2,max:3},{min:0,max:25}]
+
+        var response = validationService.validateMinimunQty(rewards);
+        expect(response[0].isError).toBe(true);
+        expect(response[0].message).not.toBe('');
+    });
+
+    fit('Returns isError as false and empty error message when selected minimum quantity threshold is other than 0', function () {
+        var rewards = [{min:0,max:2},{min:2,max:3},{min:0,max:25}]
+
+        var response = validationService.validateMinimunQty(rewards);
+        expect(response[1].isError).toBe(false);
+        expect(response[1].message).toBe('');
     });
 
 

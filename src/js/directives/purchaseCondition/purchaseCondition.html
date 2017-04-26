@@ -39,8 +39,8 @@
 
 		<tr ng-repeat="item in $ctrl.data track by $index" ng-class="{odd:($index % 2)}">
 			 <td class="md-text-field">
-						<input type="text" id="minamount" name="minamount_{{$index}}" ng-model="item.min" ng-required="$ctrl.preview" allow-pattern="(\d)" ng-if="qualuom == 'Quantity'"/>
-                        <input type="text" id="minamount" name="minamount_{{$index}}" ng-model="item.min" ng-required="$ctrl.preview" allow-pattern="^[\d.]+$" ng-if="qualuom == 'Amount'"/>
+						<input type="text" id="minamount" name="minamount_{{$index}}" ng-model="item.min" ng-required="$ctrl.preview" allow-pattern="(\d)" min = "1" ng-if="qualuom == 'Quantity'"/>
+                        <input type="text" id="minamount" name="minamount_{{$index}}" ng-model="item.min" ng-required="$ctrl.preview" allow-pattern="^[\d.]+$" min = "1" ng-if="qualuom == 'Amount'"/>
 						 <span class='error-message' ng-show="$ctrl.promoform['minamount_' + $index].$invalid ">
 								 <span ng-show="$ctrl.promoform['minamount_' + $index].$error.required" ng-if="qualuom == 'Amount'">Please enter a valid minimum purchase amount</span>
 								 <span ng-show="$ctrl.promoform['minamount_' + $index].$error.required" ng-if="qualuom == 'Quantity'">Please enter a valid minimum purchase quantity</span>
@@ -49,8 +49,8 @@
 						
 				</td>
 				<td class="md-text-field">
-						<input type="number" id="value" name="value_{{$index}}" ng-model="item.value" ng-required="$ctrl.preview" max="100" min="00.01" ng-blur="$ctrl.validatePercentage($index)" allow-pattern="^[\d.]+$" ng-if="$ctrl.reward.type=='AMTOFF'"/>
-                        <input type="number" id="value" name="value_{{$index}}" ng-model="item.value" ng-required="$ctrl.preview" max="100" min="00.01" ng-blur="$ctrl.validatePercentage($index)" allow-pattern="^[\d.]+$" ng-if="$ctrl.reward.type=='PERCNTOFF'"/>
+						<input type="text" id="value" name="value_{{$index}}" ng-model="item.value" ng-required="$ctrl.preview" ng-blur="$ctrl.roundPercentage($index)" allow-pattern="^[\d.]+$" ng-if="$ctrl.reward.type=='AMTOFF'"/>
+                        <input type="text" id="value" name="value_{{$index}}" ng-model="item.value" ng-required="$ctrl.preview" ng-blur="$ctrl.roundPercentage($index)" allow-pattern="^[\d.]+$" ng-if="$ctrl.reward.type=='PERCNTOFF'"/>
 							<span class='error-message' ng-show="$ctrl.promoform['value_' + $index].$invalid || $ctrl.preview">
 									<span ng-show="$ctrl.promoform['value_' + $index].$error.required" ng-if="$ctrl.reward.type=='AMTOFF'">Please enter a valid amount</span>
 									<span ng-show="$ctrl.promoform['value_' + $index].$error.required" ng-if="$ctrl.reward.type=='PERCNTOFF'">Please enter a valid percentage</span>

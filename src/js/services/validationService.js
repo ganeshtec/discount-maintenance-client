@@ -97,15 +97,49 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
         return endDtLessThanStartErr;
     }
 
+    publicApi.validateMinimunQty = function (rewards) {
+        var arrlength = rewards.length;
+
+        var minQtyError = [];
+
+        for(var i=0; i< arrlength; i++)
+        {
+         
+            if (rewards[i].min == 0) {
+                minQtyErrObj = {
+                isError: true,
+                message: 'Zero is not valid'
+                };
+                minQtyError.push(minQtyErrObj);
+            }
+
+            else
+
+            {
+                minQtyErrObj = {
+                isError: false,
+                message: ''
+                };
+                minQtyError.push(minQtyErrObj);
+            }           
+                     
+        } 
+
+        return minQtyError;
+ 
+    }
+
     publicApi.validatePromotion = function (promotion) {
         var validationErrors = {};
+        console.log("PROMOTION", promotion);
         validationErrors.startDt = publicApi.validateStartDate(promotion.startDt);
         validationErrors.endDt = publicApi.validateEndDate(promotion.endDt);
         publicApi.validateLeadTime(promotion.promoSubTypeCd, promotion.endDt, function (errorMsg) {
             validationErrors.endDtLeadTime = errorMsg;
         });
-
         validationErrors.endDtLessStartDt = publicApi.validateEndDtWithStartDt(promotion.startDt, promotion.endDt);
+        validationErrors.minQtyThreshold = publicApi.validateMinimunQty(promotion.reward.details)
+
 
         return validationErrors;
     }
