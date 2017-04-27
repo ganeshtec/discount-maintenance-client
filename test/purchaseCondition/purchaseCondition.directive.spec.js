@@ -5,10 +5,17 @@ fdescribe('purchaseCondition', function () {
     // Load the myApp module, which contains the directive
     beforeEach(module('app'));
 
-    beforeEach(inject(function(_$componentController_) {
+    beforeEach(inject(function(_$componentController_ ) {
     $componentController = _$componentController_;
     ctrl = $componentController('purchaseCondition',null, {
-         data: [],
+         data: {
+             reward: 
+             {details: []} },
+        
+        validationErrors : {minQtyThreshold :
+                            {isError: false,
+                             message: ''}} ,
+         
          });
 
   }));
@@ -17,25 +24,40 @@ fdescribe('purchaseCondition', function () {
     it('adding object in purchaseCondition array', function () {
 
         ctrl.addPurchaseCondition();
-        expect(ctrl.data.length).toEqual(2);
+        expect(ctrl.data.reward.details.length).toEqual(2);
     });
 
     it('remove function in purchaseCondition array', function () {
         ctrl.addPurchaseCondition();
-        ctrl.removePurchaseCondition(ctrl.data.length - 1);
-        expect(ctrl.data.length).toEqual(1);
+        ctrl.removePurchaseCondition(ctrl.data.reward.details.length - 1);
+        expect(ctrl.data.reward.details.length).toEqual(1);
     });
 
 
     it('rounds percentages to two decimal places', function () {
-        ctrl.data[0] = {};
-
-        ctrl.data[0].value = 50.759;
+        ctrl.data.reward.details[0].value = 50.759;
         ctrl.roundPercentage(0);
-        expect(ctrl.data[0].value).toEqual(50.76);
+        expect(ctrl.data.reward.details[0].value).toEqual(50.76);
 
-        ctrl.data[0].value = 45.94202;
+        ctrl.data.reward.details[0].value = 45.94202;
         ctrl.roundPercentage(0);
-        expect(ctrl.data[0].value).toEqual(45.94);
+        expect(ctrl.data.reward.details[0].value).toEqual(45.94);
+    });
+
+
+    it('Returns isError as true and non empty error message when selected minimum quantity threshold is 0', function () {
+        ctrl.data.reward.details = [{min:0,value:12,maxAllowedVal:2},{min:2,value:25,maxAllowedVal:3},{min:0,value:120,maxAllowedVal:25}]
+        ctrl.validatePromotion();
+        
+        expect(ctrl.validationErrors.minQtyThreshold[0].isError).toBe(true);
+        expect(ctrl.validationErrors.minQtyThreshold[0].message).not.toBe('');
+    });
+
+    it('Returns isError as false and empty error message when selected minimum quantity threshold is other than 0', function () {
+        ctrl.data.reward.details = [{min:0,value:12,maxAllowedVal:2},{min:2,value:25,maxAllowedVal:3},{min:0,value:120,maxAllowedVal:25}]
+        ctrl.validatePromotion();
+        
+        expect(ctrl.validationErrors.minQtyThreshold[1].isError).toBe(false);
+        expect(ctrl.validationErrors.minQtyThreshold[1].message).toBe('');
     });
 });

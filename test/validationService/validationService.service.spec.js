@@ -1,4 +1,4 @@
-describe('validationService', function () {
+fdescribe('validationService', function () {
     var $compile,
         $rootScope,
         $scope,
@@ -155,21 +155,54 @@ describe('validationService', function () {
         expect(response.message).not.toBe('');
     });
 
-    fit('Returns isError as true and non empty error message when selected minimum quantity threshold is 0', function () {
-        var rewards = [{min:0,max:2},{min:2,max:3},{min:0,max:25}]
+    it('Returns isError as true and non empty error message when selected minimum quantity threshold is 0', function () {
+        var rewards = [{min:0,value:12,maxAllowedVal:2},{min:2,value:25,maxAllowedVal:3},{min:0,value:120,maxAllowedVal:25}]
 
         var response = validationService.validateMinimumQty(rewards);
         expect(response[0].isError).toBe(true);
         expect(response[0].message).not.toBe('');
     });
 
-    fit('Returns isError as false and empty error message when selected minimum quantity threshold is other than 0', function () {
-        var rewards = [{min:0,max:2},{min:2,max:3},{min:0,max:25}]
+    it('Returns isError as false and empty error message when selected minimum quantity threshold is other than 0', function () {
+        var rewards = [{min:0,value:12,maxAllowedVal:2},{min:2,value:25,maxAllowedVal:3},{min:0,value:120,maxAllowedVal:25}]
 
         var response = validationService.validateMinimumQty(rewards);
         expect(response[1].isError).toBe(false);
         expect(response[1].message).toBe('');
     });
+
+    it('Returns isError as true and non empty error message when selected maximum percentage is greater than 100', function () {
+        var rewards = [{min:0,value:12,maxAllowedVal:2},{min:2,value:25,maxAllowedVal:3},{min:0,value:120,maxAllowedVal:25}]
+
+        var response = validationService.validateMaxPercentage(rewards);
+        expect(response[2].isError).toBe(true);
+        expect(response[2].message).not.toBe('');
+    });
+
+    it('Returns isError as false and empty error message when selected maximum percentage is less than 100', function () {
+        var rewards = [{min:0,value:12,maxAllowedVal:2},{min:2,value:25,maxAllowedVal:3},{min:0,value:120,maxAllowedVal:25}]
+
+        var response = validationService.validateMaxPercentage(rewards);
+        expect(response[1].isError).toBe(false);
+        expect(response[1].message).toBe('');
+        expect(response[0].isError).toBe(false);
+        expect(response[0].message).toBe('');
+        expect(response[2].isError).toBe(true);
+        expect(response[2].message).not.toBe('');
+    });
+
+        it('Returns isError as true and non empty error message when selected maximum percentage is less than 0.01', function () {
+        var rewards = [{min:0,value:12,maxAllowedVal:2},{min:0,value:120,maxAllowedVal:0},{min:0,value:120,maxAllowedVal:25}]
+
+        var response = validationService.validateMaxPercentage(rewards);
+        expect(response[1].isError).toBe(true);
+        expect(response[1].message).not.toBe('');
+        expect(response[0].isError).toBe(false);
+        expect(response[0].message).toBe('');
+        expect(response[2].isError).toBe(true);
+        expect(response[2].message).not.toBe('');
+    });
+
 
 
 

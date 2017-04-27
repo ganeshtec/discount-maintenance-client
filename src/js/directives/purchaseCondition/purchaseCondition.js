@@ -26,8 +26,6 @@ function PurchaseConditionController(validationService) {
     this.roundPercentage = roundPercentage;
     var publicApi = {};
 
-   //  console.log("data", this.data.reward.details);
-
     function setQualUOM(qualuom) {
         var temp = qualuom;
         this.data.reward.details[0].qualUOM = temp;
@@ -37,36 +35,27 @@ function PurchaseConditionController(validationService) {
             }
         }
     }
-
-
+     
+   
     function addPurchaseCondition() {
         this.data.reward.details = this.data.reward.details || [];
         var condition = new PurchaseConditionController();
         this.data.reward.details.push(condition);
-       // this.validatePromotion();
-
     }
 
-    function validatePromotion() {
-        console.log("data", this.data.reward.details);
-        
-        this.validationErrors = validationService.validatePromotion(this.data);
-       console.log("validation error", this.validationErrors.minQtyThreshold)
-      
+    function validatePromotion() {     
+        this.validationErrors = validationService.validatePromotion(this.data);    
     };
 
     function removePurchaseCondition(index) {
-
         this.data.reward.details.splice(index, 1);
     }
 
     if (this.data && !this.data.reward.details.length) {
-
         this.addPurchaseCondition();
     }
 
     function roundPercentage(dataIndex) {
-
         if (this.data.reward.details[dataIndex].value) {
             this.data.reward.details[dataIndex].value = parseFloat((Math.round(this.data.reward.details[dataIndex].value * 100) / 100).toFixed(2));
         }

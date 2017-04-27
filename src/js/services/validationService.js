@@ -14,7 +14,7 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
 
         var today = $filter('date')(new Date(), 'yyyy-MM-dd');
 
-        if (startDt < today) {
+        if (startDt < today && startDt) {
             startDateErrors.isError = true;
             startDateErrors.message = 'Start date cannot be earlier than today';
         }
@@ -30,15 +30,13 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
 
         var today = $filter('date')(new Date(), 'yyyy-MM-dd');
 
-        if (endDt < today) {
+        if (endDt < today && endDt) {
             endDateErrors.isError = true;
             endDateErrors.message = 'End date cannot be earlier than today';
         }
 
         return endDateErrors;
     }
-
-
 
     publicApi.validateLeadTime = function (promoSubTypeCd, endDt, processErrorMessage) {
         var endDtLeadTimeError = {
@@ -54,7 +52,7 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
             leadTimePromise.then(function (value) {
                 var minEndDate = publicApi.getMinEndDate(value);
                 var isValid = publicApi.isEndDateValid(minEndDate, endDt);
-                if (!isValid) {
+                if (!isValid && endDt) {
                     endDtLeadTimeError.isError = true;
                     endDtLeadTimeError.message = 'Please enter a valid end date.Earliest possible MSB end date is ' + minEndDate;
                     processErrorMessage(endDtLeadTimeError);
@@ -68,7 +66,7 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
     publicApi.getMinEndDate = function (value) {
         var today = new Date();
         var minEndDate = $filter('date')(today.setDate(today.getDate() + value), 'yyyy-MM-dd')
-        //scope.data.minEndDate = minEndDate;
+
         return minEndDate;
     };
 
@@ -81,15 +79,14 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
     };
 
 
-    publicApi.validateEndDtWithStartDt = function(startDt, endDt) {
-        
+    publicApi.validateEndDtWithStartDt = function (startDt, endDt) {
+
         var endDtLessThanStartErr = {
             isError: false,
             message: ''
         };
 
-        if(endDt < startDt)
-        {
+        if (endDt < startDt) {
             endDtLessThanStartErr.isError = true;
             endDtLessThanStartErr.message = 'End date must be after Start date.'
         }
@@ -98,52 +95,76 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
     }
 
     publicApi.validateMinimumQty = function (rewards) {
-        //console.log(rewards.length);
-        // console.log(promotion.reward);
+
         var arrlength = rewards.length;
-        
 
         var minQtyError = [];
 
-        for(var i=0; i< arrlength; i++)
-        {
-         
+        for (var i = 0; i < arrlength; i++) {
+
             if (rewards[i].min == 0) {
                 minQtyErrObj = {
-                isError: true,
-                message: 'Zero is not valid'
+                    isError: true,
+                    message: 'Zero is not valid'
                 };
                 minQtyError.push(minQtyErrObj);
             }
 
-            else
-
-            {
+            else {
                 minQtyErrObj = {
-                isError: false,
-                message: ''
+                    isError: false,
+                    message: ''
                 };
                 minQtyError.push(minQtyErrObj);
-            }           
-                     
-        } 
+            }
+
+        }
 
         return minQtyError;
- 
+
+    }
+
+    publicApi.validateMaxPercentage = function (rewards) {
+
+        var arrlength = rewards.length;
+
+        var maxPercentage = [];
+
+        for (var i = 0; i < arrlength; i++) {
+
+            if ((rewards[i].value > 100 || rewards[i].value == 0)) {
+                maxPrctObj = {
+                    isError: true,
+                    message: 'Please enter a value between 0.01 and 100'
+                };
+                maxPercentage.push(maxPrctObj);
+            }
+
+            else {
+                maxPrctObj = {
+                    isError: false,
+                    message: ''
+                };
+                maxPercentage.push(maxPrctObj);
+            }
+
+        }
+
+        return maxPercentage;
+
     }
 
     publicApi.validatePromotion = function (promotion) {
         var validationErrors = {};
-        console.log("PROMOTION", promotion);
+
         validationErrors.startDt = publicApi.validateStartDate(promotion.startDt);
         validationErrors.endDt = publicApi.validateEndDate(promotion.endDt);
         publicApi.validateLeadTime(promotion.promoSubTypeCd, promotion.endDt, function (errorMsg) {
             validationErrors.endDtLeadTime = errorMsg;
         });
         validationErrors.endDtLessStartDt = publicApi.validateEndDtWithStartDt(promotion.startDt, promotion.endDt);
-        validationErrors.minQtyThreshold = publicApi.validateMinimumQty (promotion.reward.details);
-       
-
+        validationErrors.minQtyThreshold = publicApi.validateMinimumQty(promotion.reward.details);
+        validationErrors.maxPercentage = publicApi.validateMaxPercentage(promotion.reward.details);
 
         return validationErrors;
     }
