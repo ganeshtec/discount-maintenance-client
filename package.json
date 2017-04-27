@@ -20,13 +20,14 @@
     "angular": "1.5.5",
     "angular-animate": "1.5.0",
     "angular-aria": "1.5.0",
+    "angular-cookies": "1.5.0",
     "angular-material": "1.0.5",
     "angular-mocks": "1.5.5",
     "angular-route": "1.5.5",
-    "angular-cookies": "1.5.0",
     "font-awesome": "4.6.3",
     "hapi": "13.5.0",
-    "inert": "^3.2.0"
+    "inert": "^3.2.0",
+    "karma-junit-reporter": "^1.2.0"
   },
   "author": "Darryl Crockett",
   "license": "MIT",
