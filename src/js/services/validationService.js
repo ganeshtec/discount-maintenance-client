@@ -97,8 +97,11 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
         return endDtLessThanStartErr;
     }
 
-    publicApi.validateMinimunQty = function (rewards) {
+    publicApi.validateMinimumQty = function (rewards) {
+        //console.log(rewards.length);
+        // console.log(promotion.reward);
         var arrlength = rewards.length;
+        
 
         var minQtyError = [];
 
@@ -138,7 +141,8 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
             validationErrors.endDtLeadTime = errorMsg;
         });
         validationErrors.endDtLessStartDt = publicApi.validateEndDtWithStartDt(promotion.startDt, promotion.endDt);
-        validationErrors.minQtyThreshold = publicApi.validateMinimunQty(promotion.reward.details)
+        validationErrors.minQtyThreshold = publicApi.validateMinimumQty (promotion.reward.details);
+       
 
 
         return validationErrors;

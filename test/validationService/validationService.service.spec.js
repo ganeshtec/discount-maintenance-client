@@ -158,7 +158,7 @@ describe('validationService', function () {
     fit('Returns isError as true and non empty error message when selected minimum quantity threshold is 0', function () {
         var rewards = [{min:0,max:2},{min:2,max:3},{min:0,max:25}]
 
-        var response = validationService.validateMinimunQty(rewards);
+        var response = validationService.validateMinimumQty(rewards);
         expect(response[0].isError).toBe(true);
         expect(response[0].message).not.toBe('');
     });
@@ -166,7 +166,7 @@ describe('validationService', function () {
     fit('Returns isError as false and empty error message when selected minimum quantity threshold is other than 0', function () {
         var rewards = [{min:0,max:2},{min:2,max:3},{min:0,max:25}]
 
-        var response = validationService.validateMinimunQty(rewards);
+        var response = validationService.validateMinimumQty(rewards);
         expect(response[1].isError).toBe(false);
         expect(response[1].message).toBe('');
     });
