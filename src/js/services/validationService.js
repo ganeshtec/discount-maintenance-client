@@ -38,21 +38,21 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
         return endDateErrors;
     }
 
-    publicApi.validateLeadTime = function (promoSubTypeCd, endDt, processErrorMessage) {
+    publicApi.validateLeadTime = function (promoSubTypeCd, startDt, endDt, processErrorMessage) {
         var endDtLeadTimeError = {
             isError: false,
             message: ''
         };
 
-        var today = $filter('date')(new Date(), 'yyyy-MM-dd');
 
         if (promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB') {
             var leadTimePromise = leadTimeService.fetchLeadTime();
-
-            leadTimePromise.then(function (value) {
-                var minEndDate = publicApi.getMinEndDate(value);
-                var isValid = publicApi.isEndDateValid(minEndDate, endDt);
-                if (!isValid && endDt) {
+            leadTimePromise.then(function (leadTime) {
+                var minEndDate = publicApi.getMinEndDate(leadTime, startDt);
+                var isValid = publicApi.isEndDateValid(startDt, endDt);
+                console.log("IS Valid:: ", isValid);
+                //if (!isValid && endDt && startDt) {
+                if (!isValid && endDt && startDt) {
                     endDtLeadTimeError.isError = true;
                     endDtLeadTimeError.message = 'Please enter a valid end date.Earliest possible MSB end date is ' + minEndDate;
                     processErrorMessage(endDtLeadTimeError);
@@ -63,15 +63,20 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
         }
     }
 
-    publicApi.getMinEndDate = function (value) {
-        var today = new Date();
-        var minEndDate = $filter('date')(today.setDate(today.getDate() + value), 'yyyy-MM-dd')
+    publicApi.getMinEndDate = function (leadTime, startDt) {
+       var today = new Date();
 
+      console.log("___Today date ::",today);
+    
+        var startdate = new Date(startDt);
+        console.log("___starte date entered after construction using new Date::",startdate);
+        //var minEndDate = $filter('date')(today.setDate(today.getDate() + leadTime), 'yyyy-MM-dd')
+        var minEndDate = $filter('date')(startdate.setDate(startdate.getDate() + leadTime), 'yyyy-MM-dd')
         return minEndDate;
     };
 
-    publicApi.isEndDateValid = function (minDate, endDt) {
-        if (endDt < minDate) {
+    publicApi.isEndDateValid = function (startDt, endDt) {
+        if (endDt < startDt) {
             return false;
         } else {
             return true;
@@ -159,7 +164,7 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
 
         validationErrors.startDt = publicApi.validateStartDate(promotion.startDt);
         validationErrors.endDt = publicApi.validateEndDate(promotion.endDt);
-        publicApi.validateLeadTime(promotion.promoSubTypeCd, promotion.endDt, function (errorMsg) {
+        publicApi.validateLeadTime(promotion.promoSubTypeCd,promotion.startDt, promotion.endDt, function (errorMsg) {
             validationErrors.endDtLeadTime = errorMsg;
         });
         validationErrors.endDtLessStartDt = publicApi.validateEndDtWithStartDt(promotion.startDt, promotion.endDt);

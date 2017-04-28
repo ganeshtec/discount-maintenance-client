@@ -1,4 +1,4 @@
-fdescribe('purchaseCondition', function () {
+describe('purchaseCondition', function () {
 
     var $componentController;
 

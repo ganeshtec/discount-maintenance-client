@@ -1,4 +1,4 @@
-fdescribe('validationService', function () {
+describe('validationService', function () {
     var $compile,
         $rootScope,
         $scope,
@@ -81,7 +81,7 @@ fdescribe('validationService', function () {
         expect(response.message).toBe('');
     })
 
-    it('Returns isError as true and non empty error message when promo is MSB and end date is less than today + lead time', function () {
+    fit('Returns isError as true and non empty error message when promo is MSB and end date is less than start(today) + lead time', function () {
         var promoSubTypeCd = 'ProductLevelPerItemPercentDiscountMSB';
         var today = $filter('date')(new Date(), 'yyyy-MM-dd');
         var leadtime = 3;
@@ -103,11 +103,13 @@ fdescribe('validationService', function () {
 
     });
 
-    it('Returns isError as false and empty error message when promo is MSB and end date is greater than today + lead time', function () {
+    fit('Returns isError as false and empty error message when promo is MSB and end date is greater than start(today) + lead time', function () {
         var promoSubTypeCd = 'ProductLevelPerItemPercentDiscountMSB';
         var today = $filter('date')(new Date(), 'yyyy-MM-dd');
+        //console.log("Date::", today.getDate());
         var leadtime = 3;
         var endDt = new Date();
+        console.log("endDate::", endDt.getDate());
         endDt.setDate(endDt.getDate() + leadtime + 1);
         endDt = $filter('date')(endDt, 'yyyy-MM-dd');
 
@@ -118,7 +120,7 @@ fdescribe('validationService', function () {
             }
         })
 
-        validationService.validateLeadTime(promoSubTypeCd, endDt, function(response) {
+        validationService.validateLeadTime(promoSubTypeCd,today, endDt, function(response) {
             expect(response.isError).toBe(false);
             expect(response.message).toBe('');
         });
