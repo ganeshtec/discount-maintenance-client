@@ -200,6 +200,7 @@ gulp.task('build-prod', gulpSequence('prebuild:clean', 'srcbuild', 'copy:prodUrl
 gulp.task('build-qa', gulpSequence('prebuild:clean', 'srcbuild', 'copy:qaUrls'));
 gulp.task('build-ad', gulpSequence('prebuild:clean', 'srcbuild', 'copy:adUrls'));
 gulp.task('build-dev', gulpSequence('prebuild:clean', 'srcbuild', 'copy:devUrls'));
+gulp.task('package', gulpSequence('build-dev'));
 gulp.task('dev', gulpSequence('prebuild:clean', 'srcbuild', 'copy:devUrls', 'develop', 'browser-sync'));
 gulp.task('serve', ['srcbuild'], reload);
 gulp.task('default', gulpSequence('prebuild:clean', 'srcbuild'));
