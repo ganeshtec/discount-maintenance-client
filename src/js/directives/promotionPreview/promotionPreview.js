@@ -15,6 +15,7 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
         },
         link: function (scope, element) {
 
+            
             scope.close = function () {
                 // if a exisiting promotion is submitted then reload the page
                 if (scope.originalPromoId && scope.savedPromoId) {
@@ -135,6 +136,7 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
 
             }
             scope.submit = function (promotion) {
+                console.log("Preview Data:: ", promotion.data);
                 if (promotion.status == 20 && promotion.promoSubTypeCd == 20 &&
                     promotion.promoTypeCd == 10) {
                     promotion.errorMessage = 'ERROR: Unable to Submit Promotion with Draft Default Values';
