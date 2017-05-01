@@ -2,7 +2,8 @@ app.component('promoLabels', {
     templateUrl: 'promoLabels.html',
     bindings: {
         data: '=',
-        promotype: '='
+        promotype: '=',
+        promoform: '='
         },
     controller: PromoLabelsController
 });
@@ -24,13 +25,10 @@ function PromoLabelsController() {
     // }
 
    
-    // function removePurchaseCondition(index) {
-    //     this.data.reward.details.splice(index, 1);
-    // }
-
-    // if (this.data && !this.data.reward.details.length) {
-    //     this.addPurchaseCondition();
-    // }
+   
+    if (this.data && !this.data.labels) {
+    this.data.labels = this.data.labels;
+    }
 
     
 

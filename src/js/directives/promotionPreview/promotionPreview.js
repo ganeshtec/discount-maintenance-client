@@ -136,7 +136,7 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
 
             }
             scope.submit = function (promotion) {
-                console.log("Preview Data:: ", promotion.data);
+                console.log("Preview Data:: ", promotion);
                 if (promotion.status == 20 && promotion.promoSubTypeCd == 20 &&
                     promotion.promoTypeCd == 10) {
                     promotion.errorMessage = 'ERROR: Unable to Submit Promotion with Draft Default Values';
