@@ -91,7 +91,13 @@
 				<redemption-limit data="data.redmptnLmt" promoform="promoForm">
 				</redemption-limit>
 		</section>
-		<section class="admin__promotion__section" ng-show="index == 6 || preview">
+
+		<section class ="admin__promotion__section" ng-show="index == 6 || preview">
+			<promo-Labels data ="data" preview="preview" promoform="promoForm">
+			</promo-Labels>
+		</section>
+
+		<section class="admin__promotion__section" ng-show="index == 7 || preview">
 				<promo-schedule data="data" preview="preview" promoform="promoForm" form-holder="formHolder" view-prop="viewProp">
 				</promo-schedule>
 		</section>

@@ -1,10 +1,9 @@
-<section class="admin__promotion__section" ng-show="index == 0 || preview">
-    <div class="md-text-field">
-        <label for="name">
-            Label Printing & Text
-        </label>
-        <input type="checkbox" id="name" name="name" ng-model="data.name" title="Label Name" placeholder="Enter 254 characters or less" ng-maxlength="254" ng-required="preview" allow-pattern="(\d|[a-z A-Z\_])" />
-        <span class='error-message' ng-show="promoForm.name.$invalid">
-        </span>
+
+<p>testing for label print</p>
+<div class="md-text-field" ng-init="data.locations='markets'">
+    <label for="location">Location Types</label>
+    <div class="md-radio">
+        <input type="radio" id="location" name="location" ng-model="data.locations" title="location" value="location" />
+        <label for="location"><span><span></span></span>location</label>
     </div>
-</section>
+</div>
