@@ -11,7 +11,9 @@ var sass = require('gulp-sass');
 var nodemon = require('gulp-nodemon');
 var karma = require('karma').Server;
 var flatten = require('gulp-flatten');
-var eslint = require('gulp-eslint');
+var eslint = require('gulp-eslint');;
+var tar = require('gulp-tar');
+var gzip = require('gulp-gzip');
 
 var input = {
         'source_html': [
@@ -195,11 +197,19 @@ gulp.task('test', ['srcbuild'], function (done) {
     });
 });
 
-gulp.task('srcbuild', ['concat:vendor-js', 'concat:js', 'build:vendor-css', 'build:css', 'copy:index', 'copy:html', 'copy:fonts']);
+gulp.task('buildArtifact', () =>
+    gulp.src('public/*')
+        .pipe(tar('archive.tar'))
+        .pipe(gzip())
+        .pipe(gulp.dest('public'))
+);
+
+gulp.task('srcbuild', ['lint', 'concat:vendor-js', 'concat:js', 'build:vendor-css', 'build:css', 'copy:index', 'copy:html', 'copy:fonts']);
 gulp.task('build-prod', gulpSequence('prebuild:clean', 'srcbuild', 'copy:prodUrls'));
 gulp.task('build-qa', gulpSequence('prebuild:clean', 'srcbuild', 'copy:qaUrls'));
 gulp.task('build-ad', gulpSequence('prebuild:clean', 'srcbuild', 'copy:adUrls'));
 gulp.task('build-dev', gulpSequence('prebuild:clean', 'srcbuild', 'copy:devUrls'));
+gulp.task('package', gulpSequence('build-dev', 'buildArtifact'));
 gulp.task('dev', gulpSequence('prebuild:clean', 'srcbuild', 'copy:devUrls', 'develop', 'browser-sync'));
 gulp.task('serve', ['srcbuild'], reload);
 gulp.task('default', gulpSequence('prebuild:clean', 'srcbuild'));
