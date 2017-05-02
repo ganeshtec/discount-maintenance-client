@@ -52,12 +52,11 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
                 var isValid = publicApi.isEndDateValid(startDt, endDt);
                 if (!isValid && endDt && startDt) {
                     endDtLeadTimeError.isError = true;
-                    endDtLeadTimeError.message = 'Please enter a valid end date.Earliest possible MSB end date is ' + minEndDate;
+                    endDtLeadTimeError.message = 'Please enter a valid end date. Earliest possible MSB end date is ' + minEndDate;
                     processErrorMessage(endDtLeadTimeError);
                 }
                 return endDtLeadTimeError;
-            }
-            )
+            })
         }
     }
 
