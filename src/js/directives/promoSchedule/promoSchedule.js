@@ -20,15 +20,15 @@ function PromoScheduleController($filter, $scope, validationService) {
     $scope.$watch('data', function (nv) {
         if (nv) {
             if (nv.startDt) {
-                    $scope.startDt = new Date(nv.startDt.split(' ')[0].replace(/-/g, '\/'));
+                $scope.startDt = new Date(nv.startDt.split(' ')[0].replace(/-/g, '\/'));
             }
-                if (nv.endDt) {
-                    $scope.endDt = new Date(nv.endDt.split(' ')[0].replace(/-/g, '\/'));
-                }
-                $scope.starttime = '3:00 AM';
-                $scope.endtime = '2:59 AM';
+            if (nv.endDt) {
+                $scope.endDt = new Date(nv.endDt.split(' ')[0].replace(/-/g, '\/'));
             }
-        });
+            $scope.starttime = '3:00 AM';
+            $scope.endtime = '2:59 AM';
+        }
+    });
 
 
 
