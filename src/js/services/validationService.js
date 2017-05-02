@@ -50,8 +50,6 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
             leadTimePromise.then(function (leadTime) {
                 var minEndDate = publicApi.getMinEndDate(leadTime, startDt);
                 var isValid = publicApi.isEndDateValid(startDt, endDt);
-                console.log("IS Valid:: ", isValid);
-                //if (!isValid && endDt && startDt) {
                 if (!isValid && endDt && startDt) {
                     endDtLeadTimeError.isError = true;
                     endDtLeadTimeError.message = 'Please enter a valid end date.Earliest possible MSB end date is ' + minEndDate;
@@ -64,13 +62,8 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
     }
 
     publicApi.getMinEndDate = function (leadTime, startDt) {
-       var today = new Date();
-
-      console.log("___Today date ::",today);
-    
+        // var today = new Date();
         var startdate = new Date(startDt);
-        console.log("___starte date entered after construction using new Date::",startdate);
-        //var minEndDate = $filter('date')(today.setDate(today.getDate() + leadTime), 'yyyy-MM-dd')
         var minEndDate = $filter('date')(startdate.setDate(startdate.getDate() + leadTime), 'yyyy-MM-dd')
         return minEndDate;
     };
@@ -100,7 +93,7 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
     }
 
     publicApi.validateMinimumQty = function (rewards) {
-
+        var minQtyErrObj;
         var arrlength = rewards.length;
 
         var minQtyError = [];
@@ -130,7 +123,7 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
     }
 
     publicApi.validateMaxPercentage = function (rewards) {
-
+        var maxPrctObj;
         var arrlength = rewards.length;
 
         var maxPercentage = [];

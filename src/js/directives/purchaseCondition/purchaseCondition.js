@@ -24,7 +24,6 @@ function PurchaseConditionController(validationService) {
     this.removePurchaseCondition = removePurchaseCondition;
     this.validatePromotion = validatePromotion;
     this.roundPercentage = roundPercentage;
-    var publicApi = {};
 
     function setQualUOM(qualuom) {
         var temp = qualuom;
@@ -45,7 +44,7 @@ function PurchaseConditionController(validationService) {
 
     function validatePromotion() {     
         this.validationErrors = validationService.validatePromotion(this.data);    
-    };
+    }
 
     function removePurchaseCondition(index) {
         this.data.reward.details.splice(index, 1);
@@ -61,7 +60,7 @@ function PurchaseConditionController(validationService) {
         }
     }
 
-};
+}
 
 
 

@@ -32,15 +32,12 @@ function PromoScheduleController($filter, validationService) {
     //     }
     // });
 
-
-
     this.validatePromotion = validatePromotion;
     this.convertToString = convertToString;
 
-
     function validatePromotion() {
         this.validationErrors = validationService.validatePromotion(this.data);
-    };
+    }
 
     if (this.data.startDtFmt || this.data.endDtFmt) {
         this.validatePromotion(this.data);
@@ -52,10 +49,10 @@ function PromoScheduleController($filter, validationService) {
             this.data.endDt = $filter('date')(this.data.endDtFmt, 'yyyy-MM-dd');          
         }
         this.validatePromotion(this.data);
-    };
+    }
 
 
-};
+}
 
 
 
