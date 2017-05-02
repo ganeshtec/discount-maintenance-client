@@ -111,6 +111,14 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                     scope.data.promoSubTypeDesc = scope.promoSubTypeObject.promoSubTypeDesc;
                     scope.data.promoType = scope.promoSubTypeObject.promoType;
 
+                    if (scope.promoSubTypeObject.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountCS') {
+                        console.log("Inside Cust Segment for printLabel:: ");
+                        scope.data.printLabel = false;
+                    }
+                    else{
+                        scope.data.printLabel = true;
+                    }
+
 
                     //AP-573-Promo validations - Buy A And B, get % off both
                     if (scope.data.promoSubTypeCd.indexOf('MultipleItemsPercentDiscount') != -1 || scope.data.promoSubTypeCd.indexOf('MultipleItemsValueDiscount') != -1) {
