@@ -23,7 +23,7 @@
 					<div id="searchFilterContainer" flex="100">
 	 					<div class="md-toolbar-search">
 	 		 				<div id="searchFilterSearchBox">
-	 		 					<input id="searchFilterSearchBoxInput" class="table__search" placeholder="Search promotion name or keyword" type="text" ng-model="promotionName" allow-pattern="(\d|[a-zA-Z\(\?\-\_\.\"\'\*\,\%\$\!\@\)])" />
+	 		 					<input id="searchFilterSearchBoxInput" class="table__search" placeholder="Search promotion name or keyword" type="text" ng-model="promotionName" ng-keypress="($event.keyCode === 13) && updateKeyword()" allow-pattern="(\d|[a-z A-Z\_])" />
 	 		 				</div>
 	 						<div id="searchFilterSearchButton">
 	 							<a class="md-button secondary" href="" ng-click="updateKeyword()">Search</a>

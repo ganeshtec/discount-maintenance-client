@@ -1,0 +1,103 @@
+{
+"projectInfo": {
+	"name": "Promo-Admin-UI",
+	"versionStrategy": "tracker",
+    "fmsNumber": "IT-08105",
+    "cdTemplate": "CD0001003",
+	"language": "js"
+},
+
+
+"artifact": {
+	"artifactoryDomain": "https://maven.artifactory.homedepot.com/artifactory",
+	"artifactoryRepoKey": "libs-release-local",
+	"artifactoryRepoKeySnapshot": "libs-snapshot-local",
+	"artifactoryGroup": "com/homedepot/pricing/promo-admin",
+	"artifactType": "tar.gz"
+},
+
+
+"fortify":{
+	"foldersToScan": "src",
+	"emailList": "e9w3d9v7m8a6f1r3@thdengops.slack.com"
+},
+
+"github": {
+	"org": "Pricing",
+	"repo": "Promotion_Maintenance_Extended_UI",
+	"URL": "https://github.homedepot.com/api/v3/repos"
+},
+
+"tracker": {
+	"projectId": 1902595
+},
+
+"slack": {
+	"channel": "#snowshoe-devs",
+	"botName": "DeployBot",
+	"emoji": ":robot_face:"
+},
+
+
+"environments": {
+	"AD": {
+		"cf": {
+			"apiEndpoint": "api.run-np.homedepot.com",
+			"domain": "apps-np.homedepot.com",
+			"space": "pricing",
+			"org": "ad"
+		},
+		"artifactCategory": "snapshot",
+		"manualDeployEnvs":["qa", "qp"],
+		"associatedBranchName": "master",
+		"createChange": "True"
+	},
+
+	"qa": {
+		"cf": {
+			"apiEndpoint": "api.run-np.homedepot.com",
+			"domain": "apps-np.homedepot.com",
+			"space": "qa",
+			"org": "ci"
+		},
+		"artifactCategory": "snapshot",
+		"manualDeployLink": "https://ln0e9d.homedepot.com:9443/job/CI-HelloWorld/job/CI_Deploy/parambuild/?delay=0sec&ENVIRONMENT=qa&CF_USER=&CF_PWD=",
+		"associatedBranchName": "develop"
+	},
+
+	"qp": {
+		"cf": {
+			"apiEndpoint": "api.run-np.homedepot.com",
+			"domain": "apps-np.homedepot.com",
+			"space": "qp",
+			"org": "ci"
+		},
+		"artifactCategory": "snapshot",
+		"manualDeployLink": "https://ln0e9d.homedepot.com:9443/job/CI-HelloWorld/job/CI_Deploy/parambuild/?delay=0sec&ENVIRONMENT=qp&CF_USER=&CF_PWD=",
+		"associatedBranchName": "develop"
+	},
+
+	"staging": {
+		"cf": {
+			"apiEndpoint": "api.run-np.homedepot.com",
+			"domain": "apps-np.homedepot.com",
+			"space": "staging",
+			"org": "ci"
+		},
+		"artifactCategory": "release",
+		"associatedBranchName": "develop"
+	},
+
+	"production": {
+		"cf": {
+			"apiEndpoint": "api.run-np.homedepot.com",
+			"domain": "apps-np.homedepot.com",
+			"org": "ci",
+			"space": "production"
+		},
+		"artifactCategory": "release",
+		"manualDeployLink": "https://ln0e9d.homedepot.com:9443/job/CI-HelloWorld/job/CI_Deploy/parambuild/?delay=0sec&ENVIRONMENT=production&CF_USER=&CF_PWD=",
+		"associatedBranchName": "master"
+	}
+}
+}

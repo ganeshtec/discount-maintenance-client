@@ -10,8 +10,8 @@
 		  
  		<td colspan="4">
  			<div class="md-toolbar-search l">
-				 <label for="MerchHierarchy"><h3>Web Hierarchy</h3></label>
- 				<input class="table__search" placeholder="Search and Add Category" type="text" ng-model="itemSearch" allow-pattern="(\d|[a-z A-Z\(\?\-\_\.\'\,\%\$\!\@\&\)])" />
+				<label for="MerchHierarchy"><h3>Web Hierarchy</h3></label>
+ 				<input class="table__search" placeholder="Search and Add Category" type="text" ng-model="itemSearch" ng-keypress="($event.keyCode === 13) && (!itemSearch || isDisabled || search(itemSearch))" allow-pattern="(\d|[a-z A-Z\(\?\-\_\.\'\,\%\$\!\@\&\)])" />
 				<a class="md-button secondary no-padding" href="" ng-click="!itemSearch || isDisabled || search(itemSearch)">
 					Search
 				</a>

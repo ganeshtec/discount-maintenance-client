@@ -2,8 +2,8 @@
 	<tr class="category__table__row-nobottomborder">
 		<td colspan="4">
 			<div class="md-toolbar-search l">
-				<input class="table__search" placeholder="Search and Add Item OMS ID" type="text" ng-model="itemSearch" ng-class="{'error': inValidOmsInfo}"
-					ng-change="clear()" allow-pattern="(\d|[a-z A-Z\(\?\-\_\.\'\,\%\$\!\@\)])" />
+				<input class="table__search" placeholder="Search and Add Item OMS ID" type="text" ng-model="itemSearch" ng-keypress="($event.keyCode === 13) && search(itemSearch)"
+				ng-class="{'error': inValidOmsInfo}" ng-change="clear()" allow-pattern="(\d|[a-z A-Z\(\?\-\_\.\'\,\%\$\!\@\)])" />
 				<a class="md-button secondary no-padding" href="" ng-click="search(itemSearch)">
 					Search
 				</a>
@@ -69,8 +69,8 @@
 	<tr class="category__table__row-nobottomborder">
 		<td colspan="4">
 			<div class="md-toolbar-search l">
-				<input class="table__search" placeholder="Search and Add Item Sku Number" type="text" ng-model="itemSkuSearch" ng-class="{'error': inValidSkuInfo}"
-					ng-change="clear()" allow-pattern="(\d|[a-z A-Z\(\?\-\_\.\'\,\%\$\!\@\)])" />
+				<input class="table__search" placeholder="Search and Add Item Sku Number" type="text" ng-model="itemSkuSearch" ng-keypress="($event.keyCode === 13) && search(itemSkuSearch)"
+				ng-class="{'error': inValidSkuInfo}" ng-change="clear()" allow-pattern="(\d|[a-z A-Z\(\?\-\_\.\'\,\%\$\!\@\)])" />
 				<a class="md-button secondary no-padding" href="" ng-click="search(itemSkuSearch)">
 					Search 
 				</a>

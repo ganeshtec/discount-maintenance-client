@@ -2,17 +2,18 @@ app.service('locationDataService', ['$http', '$q', 'dataService',
     function ($http, $q, dataService) {
         var publicApi = {};
 
-        publicApi.getStoreIdCodes = function (data) {
-
+        publicApi.getStoreIdCodes = function (data, location) {
+  
             var config = {
                     method: 'POST',
-                    url: '/store/validate.json',
+                    url: location=='stores'? '/location/store/validate.json':'/location/market/validate.json',
                     data: data
                 },
                 result = $q.defer();
             dataService.httpRequest(config).then(
                 function (response) {
                     result.resolve(response.data);
+                    
                 },
                 function (error) {
                     result.reject(error);
@@ -27,7 +28,8 @@ app.service('locationDataService', ['$http', '$q', 'dataService',
                 storeIDs.push(parseInt(data[i]));
             }
             return storeIDs;
-        };
+        }
+
 
 
         return publicApi;
