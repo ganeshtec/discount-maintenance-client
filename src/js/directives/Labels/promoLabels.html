@@ -7,4 +7,8 @@
         <input type="checkbox" id="label" ng-disabled="$ctrl.data.promoSubTypeCd=='ProductLevelPerItemPercentDiscountCS'" name="label" ng-model="$ctrl.data.labels" title="label" value="true"/>
         <label for="label"><span><span></span></span>Print Labels</label>
     </div>
+    <div class="md-textarea">
+        <label for="labelText">Label Text (optional)</label>
+        <textarea id="labelText" name="labelText" ng-model="data.labelText" title="Label Text" ng-disabled="$ctrl.data.promoSubTypeCd=='ProductLevelPerItemPercentDiscountCS'" rows="1" allow-pattern="(\d|[a-z A-Z\(\?\-\_\.\'\,\%\$\!\@\)])"></textarea>
+    </div>
 </div>
