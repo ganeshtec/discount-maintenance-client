@@ -14,23 +14,21 @@ app.component('promoSchedule', {
 
 });
 
-PromoScheduleController.$inject = ['$filter', 'validationService'];
+PromoScheduleController.$inject = ['$filter', '$scope','validationService'];
 
-function PromoScheduleController($filter, validationService) {
-
-
-    // $scope.$watch('data', function (nv) {
-    //     if (nv) {
-    //         if (nv.startDt) {
-    //             $scope.startDt = new Date(nv.startDt.split(' ')[0].replace(/-/g, '\/'));
-    //         }
-    //         if (nv.endDt) {
-    //             $scope.endDt = new Date(nv.endDt.split(' ')[0].replace(/-/g, '\/'));
-    //         }
-    //         $scope.starttime = '3:00 AM';
-    //         $scope.endtime = '2:59 AM';
-    //     }
-    // });
+function PromoScheduleController($filter, $scope, validationService) {
+    $scope.$watch('data', function (nv) {
+        if (nv) {
+            if (nv.startDt) {
+                    $scope.startDt = new Date(nv.startDt.split(' ')[0].replace(/-/g, '\/'));
+            }
+                if (nv.endDt) {
+                    $scope.endDt = new Date(nv.endDt.split(' ')[0].replace(/-/g, '\/'));
+                }
+                $scope.starttime = '3:00 AM';
+                $scope.endtime = '2:59 AM';
+            }
+        });
 
 
 
@@ -40,7 +38,7 @@ function PromoScheduleController($filter, validationService) {
 
     function validatePromotion() {
         this.validationErrors = validationService.validatePromotion(this.data);
-    };
+    }
 
     if (this.data.startDtFmt || this.data.endDtFmt) {
         this.validatePromotion(this.data);
@@ -52,10 +50,10 @@ function PromoScheduleController($filter, validationService) {
             this.data.endDt = $filter('date')(this.data.endDtFmt, 'yyyy-MM-dd');          
         }
         this.validatePromotion(this.data);
-    };
+    }
 
 
-};
+}
 
 
 

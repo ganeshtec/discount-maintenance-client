@@ -9,7 +9,7 @@ app.service('leadTimeService', ['$http', '$q', 'dataService',
                     method: 'GET',
                     url: '/labels/leadTime',
                 },
-            result = $q.defer();
+                result = $q.defer();
 
             dataService.httpRequest(config).then(
                 function (response) {
