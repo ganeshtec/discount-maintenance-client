@@ -8,16 +8,18 @@ describe('purchaseCondition', function () {
     beforeEach(inject(function(_$componentController_ ) {
     $componentController = _$componentController_;
     ctrl = $componentController('purchaseCondition',null, {
-         data: {
-             reward: 
-             {details: []} },
-        
-        validationErrors : {minQtyThreshold :
-                            {isError: false,
-                             message: ''}} ,
-         
-         });
-
+        data: {
+            reward: {
+                details: []
+            }
+        },
+        validationErrors : {
+            minQtyThreshold :{ 
+                isError: false,
+                message: ''
+            }
+        },
+    });
   }));
 
 

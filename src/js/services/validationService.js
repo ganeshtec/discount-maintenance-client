@@ -16,52 +16,84 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
 
         if (startDt < today && startDt) {
             startDateErrors.isError = true;
-            startDateErrors.message = 'Start date cannot be earlier than today';
+            startDateErrors.message = 'Start date cannot be earlier than today.';
         }
 
         return startDateErrors;
     }
 
-    publicApi.validateEndDate = function (endDt) {
-        var endDateErrors = {
+    publicApi.validateEndDate = function (startDt, endDt) {
+        var endDateError = {
             isError: false,
             message: ''
         };
-
         var today = $filter('date')(new Date(), 'yyyy-MM-dd');
 
-        if (endDt < today && endDt) {
-            endDateErrors.isError = true;
-            endDateErrors.message = 'End date cannot be earlier than today';
+        if (endDt) {
+            if (endDt < today) {
+                endDateError.isError = true;
+                endDateError.message = 'End date cannot be earlier than today.';
+            } else if (endDt < startDt) {
+                endDateError.isError = true;
+                endDateError.message = 'End date cannot be before start date.';
+            }
         }
 
-        return endDateErrors;
+        return endDateError;
     }
 
-    publicApi.validateLeadTime = function (promoSubTypeCd, startDate, endDt,  processErrorMessage) {
-        var endDtLeadTimeError = {
+    publicApi.validateMSBEndDate = function (startDt, endDt) {
+        console.log("MSB END DATE VALIDATION");
+        var endDateError = {
             isError: false,
             message: ''
         };
+        // var today = $filter('date')(new Date(), 'yyyy-MM-dd');
 
-        if (promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB') {
-            var leadTimePromise = leadTimeService.fetchLeadTime();
-            leadTimePromise.then(function (leadTime) {
-                var minEndDate = publicApi.getMinEndDate(startDate,leadTime);
-                var isValid = publicApi.isEndDateValid(minEndDate, endDt);
-                if (!isValid && endDt) {
-                    endDtLeadTimeError.isError = true;
-                    endDtLeadTimeError.message = 'Please enter a valid end date. Earliest possible MSB end date is ' + minEndDate;
-                    processErrorMessage(endDtLeadTimeError);
-                }
-                return endDtLeadTimeError;
-            })
-        }
+        var leadTimePromise = leadTimeService.fetchLeadTime();
+        leadTimePromise.then(function (leadTime) {
+            var minEndDate = publicApi.getMinEndDate(startDt,leadTime);
+            console.log('minEndDate', minEndDate);
+            var isValid = publicApi.isEndDateValid(minEndDate, endDt);
+
+            if (endDt < minEndDate) {
+                
+            }
+
+            if (!isValid && endDt) {
+                endDateError.isError = true;
+                endDateError.message = 'Please enter a valid end date. Earliest possible MSB end date is ' + minEndDate + '.';
+                // processErrorMessage(endDateError);
+            }
+            return endDateError;
+        })
+        return endDateError;
     }
 
+    // publicApi.validateLeadTime = function (promoSubTypeCd, startDate, endDt,  processErrorMessage) {
+    //     var endDtLeadTimeError = {
+    //         isError: false,
+    //         message: ''
+    //     };
+
+    //     if (promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB') {
+    //         var leadTimePromise = leadTimeService.fetchLeadTime();
+    //         leadTimePromise.then(function (leadTime) {
+    //             var minEndDate = publicApi.getMinEndDate(startDate,leadTime);
+    //             var isValid = publicApi.isEndDateValid(minEndDate, endDt);
+    //             if (!isValid && endDt) {
+    //                 endDtLeadTimeError.isError = true;
+    //                 endDtLeadTimeError.message = 'Please enter a valid end date. Earliest possible MSB end date is ' + minEndDate;
+    //                 processErrorMessage(endDtLeadTimeError);
+    //             }
+    //             return endDtLeadTimeError;
+    //         })
+    //     }
+    // }
+
     publicApi.getMinEndDate = function (startDt,leadTime) {
-        var startdate = new Date(startDt);
-        var minEndDate = $filter('date')(startdate.setDate(startdate.getDate() + leadTime), 'yyyy-MM-dd')
+        var startDate = startDt ? new Date(startDt) : new Date();
+        var minEndDate = $filter('date')(startDate.setDate(startDate.getDate() + leadTime), 'yyyy-MM-dd')
         return minEndDate;
     };
 
@@ -91,17 +123,16 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
 
     publicApi.validateMinimumQty = function (rewards) {
         var minQtyErrObj;
-        var arrlength = rewards.length;
-        var minQtyError = [];
+        var minQtyErrors = [];
 
-        for (var i = 0; i < arrlength; i++) {
+        for (var i = 0; i < rewards.length; i++) {
 
             if (rewards[i].min == 0) {
                 minQtyErrObj = {
                     isError: true,
                     message: 'Zero is not valid'
                 };
-                minQtyError.push(minQtyErrObj);
+                minQtyErrors.push(minQtyErrObj);
             }
 
             else {
@@ -109,28 +140,27 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
                     isError: false,
                     message: ''
                 };
-                minQtyError.push(minQtyErrObj);
+                minQtyErrors.push(minQtyErrObj);
             }
 
         }
 
-        return minQtyError;
+        return minQtyErrors;
 
     }
 
     publicApi.validateMaxPercentage = function (rewards) {
         var maxPrctObj;
-        var arrlength = rewards.length;
-        var maxPercentage = [];
+        var maxPercentageErrors = [];
 
-        for (var i = 0; i < arrlength; i++) {
+        for (var i = 0; i < rewards.length; i++) {
 
             if ((rewards[i].value > 100 || rewards[i].value == 0)) {
                 maxPrctObj = {
                     isError: true,
                     message: 'Please enter a value between 0.01 and 100'
                 };
-                maxPercentage.push(maxPrctObj);
+                maxPercentageErrors.push(maxPrctObj);
             }
 
             else {
@@ -138,12 +168,12 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
                     isError: false,
                     message: ''
                 };
-                maxPercentage.push(maxPrctObj);
+                maxPercentageErrors.push(maxPrctObj);
             }
 
         }
 
-        return maxPercentage;
+        return maxPercentageErrors;
 
     }
 
@@ -151,11 +181,18 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
         var validationErrors = {};
 
         validationErrors.startDt = publicApi.validateStartDate(promotion.startDt);
-        validationErrors.endDt = publicApi.validateEndDate(promotion.endDt);
-        publicApi.validateLeadTime(promotion.promoSubTypeCd, promotion.startDt, promotion.endDt, function (errorMsg) {
-            validationErrors.endDtLeadTime = errorMsg;
-        });
-        validationErrors.endDtLessStartDt = publicApi.validateEndDtWithStartDt(promotion.startDt, promotion.endDt);
+        // validationErrors.endDt = publicApi.validateEndDate(promotion.promoSubTypeCd, promotion.startDt, promotion.endDt);
+
+        console.log('subtypecd:', promotion.promoSubTypeCd);
+
+        validationErrors.endDt = promotion.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB'
+            ? publicApi.validateMSBEndDate(promotion.startDt, promotion.endDt)
+            : publicApi.validateEndDate(promotion.startDt, promotion.endDt);
+
+        // publicApi.validateLeadTime(promotion.promoSubTypeCd, promotion.startDt, promotion.endDt, function (errorMsg) {
+        //     validationErrors.endDtLeadTime = errorMsg;
+        // });
+        // validationErrors.endDtLessStartDt = publicApi.validateEndDtWithStartDt(promotion.startDt, promotion.endDt);
         validationErrors.minQtyThreshold = publicApi.validateMinimumQty(promotion.reward.details);
         validationErrors.maxPercentage = publicApi.validateMaxPercentage(promotion.reward.details);
 
