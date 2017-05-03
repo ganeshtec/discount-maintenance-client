@@ -80,7 +80,7 @@
 				</promo-location>
 		</section>
 		<section class="admin__promotion__section" ng-show="index == 3 || preview">
-				<purchase-condition data="data.reward.details" preview="preview" qualuom = "data.purchaseConds.qualUOM" reward="data.reward" promoform="promoform"  purchase-condition="data.purchaseConds" is-disabled="isDisabled" promotype="data.promoSubTypeCd">
+				<purchase-condition data="data" preview="preview" qualuom = "data.purchaseConds.qualUOM" promoform="promoForm" validation-errors="validationErrors" purchase-condition="data.purchaseConds" is-disabled="isDisabled" promotype="data.promoSubTypeCd">
 				</purchase-condition>
 		</section>
 		<section class="admin__promotion__section" ng-show="viewProp.displayPromoDescription && (index == 4 || preview)">
@@ -92,7 +92,7 @@
 				</redemption-limit>
 		</section>
 		<section class="admin__promotion__section" ng-show="index == 6 || preview">
-				<promo-schedule data="data" preview="preview" promoform="promoForm" form-holder="formHolder" view-prop="viewProp">
+				<promo-schedule data="data" preview="preview" promoform="promoForm" form-holder="formHolder" view-prop="viewProp" start-dt ="startDt" validation-errors="validationErrors" >
 				</promo-schedule>
 		</section>
 	</fieldset>
