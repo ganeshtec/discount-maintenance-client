@@ -18,7 +18,7 @@ describe('utilService', function() {
 
     }));
     
-    xit('determines if a promotion is active', function() {
+    it('determines if a promotion is active', function() {
         var activePromo = {}
         activePromo.startDt = "2017-04-18 00:00:00";
         expect(utilService.isPromotionActive(activePromo)).toBe(true);
@@ -27,5 +27,4 @@ describe('utilService', function() {
         inactivePromo.startDt = "";
         expect(utilService.isPromotionActive(inactivePromo)).toBe(false);
     });
-
 });

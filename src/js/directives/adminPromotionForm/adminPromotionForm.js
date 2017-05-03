@@ -45,23 +45,15 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
 
                 function setPromotionSubType(watch) {
 
-                    // console.log('scope.promotionSubTypes', scope.promotionSubTypes);
-                    // console.log("_____scope.data", scope.data);
+
                     if (scope.promotionSubTypes && scope.data && scope.data.promoSubTypeCd) {
                         $.each(scope.promotionSubTypes, function (i) {
 
                             if (scope.promoMfa && scope.data.promoId && scope.data.promoId != 0 && !watch) {
-                                //    console.log("Store User Logged in::"+scope.promoMfa);
-                                //     scope.promoSubTypeObject = (scope.data.custSegment && scope.data.purchaseConds.customerSegmentId)
-                                //         ? 'ProductLevelPerItemPercentDiscountCS'
-                                //         : 'ProductLevelPerItemPercentDiscountMSB';
 
                                 if (scope.data.purchaseConds.customerSegmentId && scope.data.purchaseConds.customerSegmentId != 0) {
-
                                     scope.promoSubTypeObject = scope.promotionSubTypes[1];
-                                }
-                                else {
-
+                                } else {
                                     scope.promoSubTypeObject = scope.promotionSubTypes[0];
                                 }
 
@@ -70,9 +62,6 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                                     scope.promoSubTypeObject = scope.promotionSubTypes[i];
                                 }
                             }
-
-
-
                         });
                     }
 
@@ -141,7 +130,7 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                     }
                 }
 
-                // redemtion method types
+                // redemption method types
                 scope.redemptionMethodTypes = new redemptionMethodTypes();
 
             }
