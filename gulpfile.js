@@ -204,7 +204,7 @@ gulp.task('buildArtifact', () =>
         .pipe(gulp.dest('public'))
 );
 
-gulp.task('srcbuild', ['concat:vendor-js', 'concat:js', 'build:vendor-css', 'build:css', 'copy:index', 'copy:html', 'copy:fonts']);
+gulp.task('srcbuild', ['lint','concat:vendor-js', 'concat:js', 'build:vendor-css', 'build:css', 'copy:index', 'copy:html', 'copy:fonts']);
 gulp.task('build-prod', gulpSequence('prebuild:clean', 'srcbuild', 'copy:prodUrls'));
 gulp.task('build-qa', gulpSequence('prebuild:clean', 'srcbuild', 'copy:qaUrls'));
 gulp.task('build-ad', gulpSequence('prebuild:clean', 'srcbuild', 'copy:adUrls'));
