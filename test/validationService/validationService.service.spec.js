@@ -81,7 +81,7 @@ describe('validationService', function () {
         expect(response.message).toBe('');
     })
 
-    fit('Returns isError as true and non empty error message when promo is MSB and end date is less than start(today) + lead time', function () {
+    it('Returns isError as true and non empty error message when promo is MSB and end date is less than start(today) + lead time', function () {
         var promoSubTypeCd = 'ProductLevelPerItemPercentDiscountMSB';
         var today = $filter('date')(new Date(), 'yyyy-MM-dd');
         var leadtime = 3;
@@ -103,7 +103,7 @@ describe('validationService', function () {
 
     });
 
-    fit('Returns isError as false and empty error message when promo is MSB and end date is greater than start(today) + lead time', function () {
+    it('Returns isError as false and empty error message when promo is MSB and end date is greater than start(today) + lead time', function () {
         var promoSubTypeCd = 'ProductLevelPerItemPercentDiscountMSB';
         var today = $filter('date')(new Date(), 'yyyy-MM-dd');
         //console.log("Date::", today.getDate());
