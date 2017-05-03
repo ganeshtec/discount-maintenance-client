@@ -4,7 +4,7 @@ app.component('promoLabels', {
         data: '=',
         promotype: '=',
         promoform: '='
-        },
+    },
     controller: PromoLabelsController
 });
 
@@ -14,8 +14,8 @@ function PromoLabelsController() {
 
   //  this.addPurchaseCondition = addPurchaseCondition;
   //  var publicApi = {};
-  this.data.printLabel = true;
+    this.data.printLabel = true;
 
     
 
-};
+}
