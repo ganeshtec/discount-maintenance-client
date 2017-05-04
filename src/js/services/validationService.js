@@ -30,12 +30,12 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
         var today = $filter('date')(new Date(), 'yyyy-MM-dd');
 
         if (endDt) {
-            if (endDt < today) {
-                endDateError.isError = true;
-                endDateError.message = 'End date cannot be earlier than today.';
-            } else if (endDt < startDt) {
+            if (endDt < startDt) {
                 endDateError.isError = true;
                 endDateError.message = 'End date cannot be before start date.';
+            } else if (endDt < today) {
+                endDateError.isError = true;
+                endDateError.message = 'End date cannot be earlier than today.';
             }
         }
 
@@ -77,39 +77,41 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
         var minQtyErrors = [];
 
         for (var i = 0; i < rewards.length; i++) {
-
-            if (rewards[i].min == 0) {
+            // null and undefined checks are necessary here. I tried to check
+            // "if (rewards[i].min)", but when the value is 0, it evaluates to falsey.
+            if (rewards[i].min != null
+                && rewards[i].min != undefined
+                && rewards[i].min <= 0) {
                 minQtyErrObj = {
                     isError: true,
-                    message: 'Zero is not valid'
+                    message: 'Minimum purchase quantity must be greater than zero.'
                 };
                 minQtyErrors.push(minQtyErrObj);
-            }
-
-            else {
+            } else {
                 minQtyErrObj = {
                     isError: false,
                     message: ''
                 };
                 minQtyErrors.push(minQtyErrObj);
             }
-
         }
-
         return minQtyErrors;
-
     }
 
-    publicApi.validateMaxPercentage = function (rewards) {
+    publicApi.validatePercentOff = function (rewards) {
         var maxPrctObj;
         var maxPercentageErrors = [];
 
         for (var i = 0; i < rewards.length; i++) {
-
-            if ((rewards[i].value > 100 || rewards[i].value == 0)) {
+            // null and undefined checks are necessary here. I tried to check
+            // "if (rewards[i].value)", but when the value is 0, it evaluates to falsey.
+            if (rewards[i].value != null 
+                && rewards[i].value != undefined 
+                && (rewards[i].value > 99.9 || rewards[i].value < 0.01)) {
+                
                 maxPrctObj = {
                     isError: true,
-                    message: 'Please enter a value between 0.01 and 100'
+                    message: 'Please enter a value between 0.01 and 99.9.'
                 };
                 maxPercentageErrors.push(maxPrctObj);
             }
@@ -121,7 +123,6 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
                 };
                 maxPercentageErrors.push(maxPrctObj);
             }
-
         }
 
         return maxPercentageErrors;
@@ -131,11 +132,13 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
         var validationErrors = {};
 
         validationErrors.startDt = publicApi.validateStartDate(promotion.startDt);
+        // Calls the appropriate end date validation based on whether or not the discount is MSB
         validationErrors.endDt = promotion.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB'
             ? publicApi.validateMSBEndDate(promotion.startDt, promotion.endDt)
             : publicApi.validateEndDate(promotion.startDt, promotion.endDt);
+        
         validationErrors.minQtyThreshold = publicApi.validateMinimumQty(promotion.reward.details);
-        validationErrors.maxPercentage = publicApi.validateMaxPercentage(promotion.reward.details);
+        validationErrors.percentOff = publicApi.validatePercentOff(promotion.reward.details);
 
         return validationErrors;
     }

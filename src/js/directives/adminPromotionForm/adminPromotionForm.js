@@ -1,6 +1,6 @@
 // Purpose is to build promotion data
-app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService', 'redemptionMethodTypes', 'DataFactory', 'itemCategorySourceData',
-    function (promotionSubTypes, promotionDataService, redemptionMethodTypes, DataFactory, itemCategorySourceData) {
+app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService', 'redemptionMethodTypes', 'validationService', 'DataFactory', 'itemCategorySourceData',
+    function (promotionSubTypes, promotionDataService, redemptionMethodTypes, validationService, DataFactory, itemCategorySourceData) {
 
         return {
             restrict: 'E',

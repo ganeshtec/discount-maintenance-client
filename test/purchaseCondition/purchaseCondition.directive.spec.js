@@ -5,7 +5,7 @@ describe('purchaseCondition', function () {
     // Load the myApp module, which contains the directive
     beforeEach(module('app'));
 
-    beforeEach(inject(function(_$componentController_ ) {
+    beforeEach(inject(function(_$componentController_) {
     $componentController = _$componentController_;
     ctrl = $componentController('purchaseCondition',null, {
         data: {
@@ -48,7 +48,7 @@ describe('purchaseCondition', function () {
 
 
     it('Returns isError as true and non empty error message when selected minimum quantity threshold is 0', function () {
-        ctrl.data.reward.details = [{min:0,value:12,maxAllowedVal:2},{min:2,value:25,maxAllowedVal:3},{min:0,value:120,maxAllowedVal:25}]
+        ctrl.data.reward.details = [{min:0,value:12,maxAllowedVal:2},{min:2,value:25,maxAllowedVal:3},{min:0,value:120,maxAllowedVal:25}];
         ctrl.validatePromotion();
         
         expect(ctrl.validationErrors.minQtyThreshold[0].isError).toBe(true);
@@ -56,9 +56,9 @@ describe('purchaseCondition', function () {
     });
 
     it('Returns isError as false and empty error message when selected minimum quantity threshold is other than 0', function () {
-        ctrl.data.reward.details = [{min:0,value:12,maxAllowedVal:2},{min:2,value:25,maxAllowedVal:3},{min:0,value:120,maxAllowedVal:25}]
+        ctrl.data.reward.details = [{min:0,value:12,maxAllowedVal:2},{min:2,value:25,maxAllowedVal:3},{min:0,value:120,maxAllowedVal:25}];
         ctrl.validatePromotion();
-        
+
         expect(ctrl.validationErrors.minQtyThreshold[1].isError).toBe(false);
         expect(ctrl.validationErrors.minQtyThreshold[1].message).toBe('');
     });

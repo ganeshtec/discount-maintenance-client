@@ -1,4 +1,3 @@
-
 app.component('purchaseCondition', {
     templateUrl: 'purchaseCondition.html',
     bindings: {
