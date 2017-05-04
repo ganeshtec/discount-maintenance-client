@@ -55,17 +55,18 @@ describe('validationService', function () {
         expect(response.message).toBe('');
     })
 
-    it('returns isError as true and non empty error message when selected End date is in the past', function () {
+    it('returns isError as true and non empty error message when selected end date is in the past', function () {
         var pastDate = new Date();
         pastDate.setDate(pastDate.getDate() - 1);
         pastDate = $filter('date')(pastDate, 'yyyy-MM-dd');
+        var startDate = undefined;
 
-        var response = validationService.validateEndDate(pastDate);
+        var response = validationService.validateEndDate(startDate, pastDate);
         expect(response.isError).toBe(true);
         expect(response.message).not.toBe('');
     })
 
-    it('returns isError as false and empty error message when selected End date is in the future', function () {
+    it('returns isError as false and empty error message when selected end date is in the future', function () {
         var futureDate = new Date();
         futureDate.setDate(futureDate.getDate() + 1);
         futureDate = $filter('date')(futureDate, 'yyyy-MM-dd');
@@ -74,7 +75,7 @@ describe('validationService', function () {
         expect(response.message).toBe('');
     })
 
-    it('returns isError as false and empty error message when selected End date is today', function () {
+    it('returns isError as false and empty error message when selected end date is today', function () {
         var today = $filter('date')(new Date(), 'yyyy-MM-dd');
         var response = validationService.validateEndDate(today);
         expect(response.isError).toBe(false);

@@ -1,4 +1,4 @@
-fdescribe('Promo schedule', function() {
+xdescribe('Promo schedule', function() {
 
   var $componentController;
 
@@ -9,13 +9,13 @@ fdescribe('Promo schedule', function() {
     $componentController = _$componentController_;
 
     ctrl = $componentController('promoSchedule',null, {
-        data: {
-          startDt: ,
-          endDt: 
-            // reward: {
-            //     details: []
-            // }
-        }
+        // data: {
+        //   startDt: ,
+        //   endDt: 
+        //     // reward: {
+        //     //     details: []
+        //     // }
+        // }
         // validationErrors : {
         //     minQtyThreshold :{ 
         //         isError: false,

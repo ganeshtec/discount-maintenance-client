@@ -43,83 +43,34 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
     }
 
     publicApi.validateMSBEndDate = function (startDt, endDt) {
-        console.log("MSB END DATE VALIDATION");
         var endDateError = {
             isError: false,
             message: ''
         };
-        // var today = $filter('date')(new Date(), 'yyyy-MM-dd');
 
         var leadTimePromise = leadTimeService.fetchLeadTime();
         leadTimePromise.then(function (leadTime) {
             var minEndDate = publicApi.getMinEndDate(startDt,leadTime);
-            console.log('minEndDate', minEndDate);
-            var isValid = publicApi.isEndDateValid(minEndDate, endDt);
-
-            if (endDt < minEndDate) {
-                
-            }
-
-            if (!isValid && endDt) {
-                endDateError.isError = true;
-                endDateError.message = 'Please enter a valid end date. Earliest possible MSB end date is ' + minEndDate + '.';
-                // processErrorMessage(endDateError);
+            if (endDt) {
+                if (endDt < minEndDate) {
+                    endDateError.isError = true;
+                    endDateError.message = 'Please enter a valid end date. Earliest possible MSB end date is ' + minEndDate + '.';
+                }
             }
             return endDateError;
         })
         return endDateError;
     }
 
-    // publicApi.validateLeadTime = function (promoSubTypeCd, startDate, endDt,  processErrorMessage) {
-    //     var endDtLeadTimeError = {
-    //         isError: false,
-    //         message: ''
-    //     };
-
-    //     if (promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB') {
-    //         var leadTimePromise = leadTimeService.fetchLeadTime();
-    //         leadTimePromise.then(function (leadTime) {
-    //             var minEndDate = publicApi.getMinEndDate(startDate,leadTime);
-    //             var isValid = publicApi.isEndDateValid(minEndDate, endDt);
-    //             if (!isValid && endDt) {
-    //                 endDtLeadTimeError.isError = true;
-    //                 endDtLeadTimeError.message = 'Please enter a valid end date. Earliest possible MSB end date is ' + minEndDate;
-    //                 processErrorMessage(endDtLeadTimeError);
-    //             }
-    //             return endDtLeadTimeError;
-    //         })
-    //     }
-    // }
-
     publicApi.getMinEndDate = function (startDt,leadTime) {
-        var startDate = startDt ? new Date(startDt) : new Date();
+        var today = $filter('date')(new Date(), 'yyyy-MM-dd');
+        // setting new Date with startDt assumes UTC, so it is off depending on the time of day.
+        // With this logic, before 8EST the end date is one day too soon.
+        // We could make it "leadTime + 1", but minEndDate would be one day too far after 8pm EST.
+        var startDate = (startDt && startDt >= today) ? new Date(startDt) : new Date();
         var minEndDate = $filter('date')(startDate.setDate(startDate.getDate() + leadTime), 'yyyy-MM-dd')
         return minEndDate;
     };
-
-    publicApi.isEndDateValid = function (minDate, endDt) {
-        if (endDt < minDate) {
-            return false;
-        } else {
-            return true;
-        }
-    };
-
-
-    publicApi.validateEndDtWithStartDt = function (startDt, endDt) {
-
-        var endDtLessThanStartErr = {
-            isError: false,
-            message: ''
-        };
-
-        if (endDt < startDt) {
-            endDtLessThanStartErr.isError = true;
-            endDtLessThanStartErr.message = 'End date must be after Start date.'
-        }
-
-        return endDtLessThanStartErr;
-    }
 
     publicApi.validateMinimumQty = function (rewards) {
         var minQtyErrObj;
@@ -174,25 +125,15 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
         }
 
         return maxPercentageErrors;
-
     }
 
     publicApi.validatePromotion = function (promotion) {
         var validationErrors = {};
 
         validationErrors.startDt = publicApi.validateStartDate(promotion.startDt);
-        // validationErrors.endDt = publicApi.validateEndDate(promotion.promoSubTypeCd, promotion.startDt, promotion.endDt);
-
-        console.log('subtypecd:', promotion.promoSubTypeCd);
-
         validationErrors.endDt = promotion.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB'
             ? publicApi.validateMSBEndDate(promotion.startDt, promotion.endDt)
             : publicApi.validateEndDate(promotion.startDt, promotion.endDt);
-
-        // publicApi.validateLeadTime(promotion.promoSubTypeCd, promotion.startDt, promotion.endDt, function (errorMsg) {
-        //     validationErrors.endDtLeadTime = errorMsg;
-        // });
-        // validationErrors.endDtLessStartDt = publicApi.validateEndDtWithStartDt(promotion.startDt, promotion.endDt);
         validationErrors.minQtyThreshold = publicApi.validateMinimumQty(promotion.reward.details);
         validationErrors.maxPercentage = publicApi.validateMaxPercentage(promotion.reward.details);
 
