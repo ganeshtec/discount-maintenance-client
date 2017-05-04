@@ -112,7 +112,7 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                     scope.data.promoType = scope.promoSubTypeObject.promoType;
 
                     if (scope.promoSubTypeObject.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountCS') {
-                        console.log("Inside Cust Segment for printLabel:: ");
+                        
                         scope.data.printLabel = false;
                     }
                     else{

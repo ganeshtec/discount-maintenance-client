@@ -44,7 +44,7 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                 }
 
                 unclickableSaveBtn(event);
-
+                
                 scope.headerErrorMsg = '';
                 delete scope.errorMessages;
                 if (scope.previewData.data.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB' && scope.previewData.data.custSegment) {
@@ -54,6 +54,12 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                 if (scope.previewData.data.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountCS' || scope.previewData.data.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB') {
                     scope.previewData.data.promoSubTypeCd = 'ProductLevelPerItemPercentDiscount';
                 }
+
+                if(scope.previewData.data.promoSubTypeCd == 'ProductLevelPerItemPercentDiscount' && scope.previewData.data.custSegment){
+                    console.log('Inside Save & Submit PrintLabel Review');
+                    scope.previewData.data.printLabel = false;
+                }
+                
                 var promotion = scope.previewData.data;
                 utilService.setDefaultsForSaveAsDraft(promotion);
                 utilService.transformPromotionRequest(promotion);
@@ -136,7 +142,16 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
 
             }
             scope.submit = function (promotion) {
-                console.log("Preview Data:: ", promotion);
+                console.log('Promotion Data Before:: ', promotion);
+                console.log('Promotion Preview DataTest:::', scope.previewData);
+                console.log('Promotion Preview promoSubTypeCd:::', scope.previewData.data.promoSubTypeCd);
+
+                // if(scope.previewData.data.promoSubTypeCd == 'ProductLevelPerItemPercentDiscount' && scope.previewData.data.custSegment){
+                //     console.log('Inside PrintLabel Review');
+                //     scope.previewData.data.printLabel = false;
+                // }
+                // console.log('Promotion Data After:: ', promotion);
+
                 if (promotion.status == 20 && promotion.promoSubTypeCd == 20 &&
                     promotion.promoTypeCd == 10) {
                     promotion.errorMessage = 'ERROR: Unable to Submit Promotion with Draft Default Values';
