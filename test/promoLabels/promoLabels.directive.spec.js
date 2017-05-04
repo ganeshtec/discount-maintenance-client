@@ -18,7 +18,7 @@ describe('promoLabels', function () {
   }));
 
 
-    fit('to check printLabel checkbox checked by default', function () {
+    it('to check printLabel checkbox checked by default', function () {
 
        // ctrl.data.printLabel = true;
        

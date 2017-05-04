@@ -59,9 +59,9 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                         scope.previewData.data.promoSubTypeCd = 'ProductLevelPerItemPercentDiscount';
                     }
 
-                    if(scope.previewData.data.promoSubTypeCd == 'ProductLevelPerItemPercentDiscount' && scope.previewData.data.custSegment){
-                    console.log('Inside Save & Submit PrintLabel Review');
-                    scope.previewData.data.printLabel = false;
+                    if(scope.previewData.data.promoSubTypeCd == 'ProductLevelPerItemPercentDiscount' && scope.previewData.data.custSegment) {
+                    
+                        scope.previewData.data.printLabel = false;
                     }
                     var promotion = scope.previewData.data;
                     utilService.setDefaultsForSaveAsDraft(promotion);
