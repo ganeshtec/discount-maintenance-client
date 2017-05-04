@@ -2,7 +2,7 @@
 "projectInfo": {
 	"name": "Promo-Admin-UI",
 	"versionStrategy": "tracker",
-    "fmsNumber": "IT-123456",
+    "fmsNumber": "IT-08105",
     "cdTemplate": "CD0001001",
 	"language": "js"
 },
@@ -40,7 +40,7 @@
 
 
 "environments": {
-	"AD": {
+	"development": {
 		"cf": {
 			"apiEndpoint": "api.run-np.homedepot.com",
 			"domain": "apps-np.homedepot.com",

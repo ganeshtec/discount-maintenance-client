@@ -152,7 +152,6 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                 // redemtion method types
                 scope.redemptionMethodTypes = new redemptionMethodTypes();
 
-
             }
         };
     }]);

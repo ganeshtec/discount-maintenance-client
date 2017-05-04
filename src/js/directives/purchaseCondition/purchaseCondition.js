@@ -1,49 +1,67 @@
-// Purpose is to build purchase conditions.
-app.directive('purchaseCondition', ['purchaseCondition',
-    function (purchaseCondition) {
-        return {
-            restrict: 'E',
-            templateUrl: 'purchaseCondition.html',
-            scope: {
-                data: '=',
-                reward: '=',
-                qualUOM: '=',
-                promoform: '=',
-                preview: '=',
-                isDisabled: '=',
-                purchaseCondition: '=',
-                promotype: '='
-            },
 
-            link: function (scope) {
+app.component('purchaseCondition', {
+    templateUrl: 'purchaseCondition.html',
+    bindings: {
+        data: '=',
+        qualUOM: '=',
+        promoform: '=',
+        preview: '=',
+        isDisabled: '=',
+        purchaseCondition: '=',
+        promotype: '=',
+        validationErrors: '='
 
-                scope.setQualUOM = function (qualuom) {
-                    var temp = qualuom;
-                    scope.data.qualUOM = temp;
-                    if (scope.data) {
-                        for (var i = 0; i < scope.data.length; i++) {
-                            scope.data[i].qualUOM = qualuom;
-                        }
-                    }
+    },
+    controller: PurchaseConditionController
+});
 
-                }
-                scope.addPurchaseCondition = function () {
-                    scope.data = scope.data || [];
-                    var condition = new purchaseCondition();
-                    scope.data.push(condition);
-                }
+PurchaseConditionController.$inject = ['validationService'];
 
-                scope.removePurchaseCondition = function (index) {
-                    scope.data.splice(index, 1);
-                }
+function PurchaseConditionController(validationService) {
 
-                if (scope.data && !scope.data.length) {
-                    scope.addPurchaseCondition();
+    this.setQualUOM = setQualUOM;
+    this.addPurchaseCondition = addPurchaseCondition;
+    this.removePurchaseCondition = removePurchaseCondition;
+    this.validatePromotion = validatePromotion;
+    this.roundPercentage = roundPercentage;
+    //var publicApi = {};
 
-                }
-
-
+    function setQualUOM(qualuom) {
+        var temp = qualuom;
+        this.data.reward.details[0].qualUOM = temp;
+        if (this.data.reward.details) {
+            for (var i = 0; i < this.data.reward.details.length; i++) {
+                this.data.reward.details[i].qualUOM = qualuom;
             }
-        };
+        }
     }
-]);
+     
+   
+    function addPurchaseCondition() {
+        this.data.reward.details = this.data.reward.details || [];
+        var condition = new PurchaseConditionController();
+        this.data.reward.details.push(condition);
+    }
+
+    function validatePromotion() {     
+        this.validationErrors = validationService.validatePromotion(this.data);    
+    }
+
+    function removePurchaseCondition(index) {
+        this.data.reward.details.splice(index, 1);
+    }
+
+    if (this.data && !this.data.reward.details.length) {
+        this.addPurchaseCondition();
+    }
+
+    function roundPercentage(dataIndex) {
+        if (this.data.reward.details[dataIndex].value) {
+            this.data.reward.details[dataIndex].value = parseFloat((Math.round(this.data.reward.details[dataIndex].value * 100) / 100).toFixed(2));
+        }
+    }
+
+}
+
+
+

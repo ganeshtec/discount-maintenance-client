@@ -45,16 +45,6 @@ describe('Unit testing adminPromotionForm.directive.spec.js', function () {
     $scope.formHolder = [];
     $scope.promotionSubTypesForMFA = true;
 
-    // Compile a piece of HTML containing the directive
-    element = $compile("<admin-promotion-form data='promotionData' promo-form='promoForm' form-holder='formHolder'> </admin-promotion-form>")($scope);
-    $scope.$digest();
-
-    this.$isolatedScope = element.isolateScope();
-    var data = 1;
-    // Check that the compiled element contains the templated content
-   // console.log(view.html());
-    expect(element.html()).toContain("Promotion Type");
-
   });
 
 
