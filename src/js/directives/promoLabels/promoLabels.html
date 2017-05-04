@@ -9,6 +9,6 @@
     </div>
     <div class="md-textarea">		
         <label for="labelText">Label Text (optional)</label>		
-        <textarea id="labelText" name="labelText" title="labelText" ng-disabled="$ctrl.data.promoSubTypeCd=='ProductLevelPerItemPercentDiscountCS' || !$ctrl.data.printLabel" rows="1" allow-pattern="(\d|[a-z A-Z\(\?\-\_\.\'\,\%\$\!\@\)])" ng-maxlength="11"></textarea>		
+        <input type="text" id="labelText" name="labelText" title="labelText" ng-model="$ctrl.data.labelText" ng-disabled="$ctrl.data.promoSubTypeCd=='ProductLevelPerItemPercentDiscountCS' || !$ctrl.data.printLabel" rows="1" allow-pattern="(\d|[a-z A-Z\(\?\-\_\.\'\,\%\$\!\@\)])" maxlength="11" placeholder="Please enter 11 characters or less"></input>		
     </div>
 </div>
