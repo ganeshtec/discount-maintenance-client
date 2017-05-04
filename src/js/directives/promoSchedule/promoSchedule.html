@@ -2,18 +2,19 @@
     <div flex="50">
         <div class="md-text-field" flex="80">
             <label for="promoname">Start Date</label>
-            <input class="" type="date" ng-model="startDt" placeholder="yyyy-MM-dd" name="start" min="2013-01-01" max="9999-12-31" ng-required="preview"
-            ng-blur="convertToString()" />
-            <span class='error-message' ng-show="promoform.start.$invalid">
-              <span ng-show="promoform.start.$error.required">Please enter a valid start date</span>
+            <input class="" type="date" ng-model="$ctrl.data.startDtFmt" placeholder="yyyy-MM-dd" name="start" min="{{$ctrl.startDateLimit}}" max="9999-12-31" ng-required="$ctrl.preview"
+            ng-blur="$ctrl.convertToString()" />
+            <span class='error-message' ng-show="promoform.start.$invalid">-->
+            <span ng-show="promoform.start.$error.required">Please enter a valid start date</span>      
             </span>
+            <span class='error-message' ng-show="$ctrl.validationErrors.startDt.isError">{{$ctrl.validationErrors.startDt.message}}</span>
 
         </div>
     </div>
-    <div flex="50" ng-show="viewProp.displayScheduleTime">
+    <div flex="50" ng-show="$ctrl.viewProp.displayScheduleTime">
         <div class="md-text-field md-text-field-border" flex="80">
             <label for="promomaxredem">Start Time (EST)</label>
-            <input type="text" id="starttime" name="starttime" ng-model="starttime" disabled/>
+            <input type="text" id="starttime" name="starttime" ng-model="$ctrl.starttime" disabled/>
         </div>
     </div>
 </div>
@@ -21,19 +22,14 @@
     <div flex="50">
         <div class="md-text-field" flex="80">
             <label for="promoname">End Date</label>
-
-            <input class="" type="date" ng-model="endDt" placeholder="yyyy-MM-dd" name="end" ng-min="startDt" max="9999-12-31" ng-required="preview"
-            ng-blur="convertToString()" />
-            <span class='error-message' ng-show="promoform.end.$invalid">
-             <span ng-show="promoform.end.$error.required">Please enter a valid end date</span>
-            <span ng-show="promoform.end.$error.min">Please enter a valid end date.End date must be larger than start date.</span>
-            <span ng-show="promoform.end.$error.leadTime">Please enter a valid end date. Earliest possible MSB end date is {{data.minEndDate}}.</span>
-            </span>
-
-
+            <input class="" type="date" ng-model="$ctrl.data.endDtFmt" placeholder="yyyy-MM-dd" name="end" max="9999-12-31" ng-required="$ctrl.preview"
+            ng-blur="$ctrl.convertToString()" />
+            <span class='error-message' ng-show="$ctrl.validationErrors.endDt.isError">{{$ctrl.validationErrors.endDt.message}} </span>
+            <span class='error-message' ng-show="$ctrl.validationErrors.endDtLeadTime.isError">{{$ctrl.validationErrors.endDtLeadTime.message}}</span>
+            <span class='error-message' ng-show="$ctrl.validationErrors.endDtLessStartDt.isError">{{$ctrl.validationErrors.endDtLessStartDt.message}}</span>
         </div>
     </div>
-    <div flex="50" ng-show="viewProp.displayScheduleTime">
+    <div flex="50" ng-show="$ctrl.viewProp.displayScheduleTime">
         <div class="md-text-field md-text-field-border" flex="80">
             <label for="promomaxredem">End Time (EST)</label>
             <input type="text" id="andtime" name="endtime" ng-model="endtime" disabled/>
