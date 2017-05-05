@@ -40,7 +40,8 @@ var input = {
             'node_modules/angular-aria/angular-aria.min.js',
             'node_modules/angular-material/angular-material.min.js',
             'node_modules/angular-cookies/angular-cookies.min.js',
-            'node_modules/angular-route/angular-route.min.js'
+            'node_modules/angular-route/angular-route.min.js',
+            'node_modules/moment/moment.js'
         ],
         'fonts': [
             'node_modules/font-awesome/fonts/*'
