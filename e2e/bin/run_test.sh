@@ -10,3 +10,4 @@ export ONLINE_USER_ID ONLINE_USER_PASSWORD STORE_USER_ID STORE_USER_PASSWORD
 
 
 bundle exec rspec --format doc
+#bundle exec rspec ./spec/journies/store_user_spec.rb
