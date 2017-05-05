@@ -14,7 +14,7 @@ function PromoLabelsController() {
 
   //  this.addPurchaseCondition = addPurchaseCondition;
   //  var publicApi = {};
-    this.data.printLabel = true;
+   // this.data.printLabel = true;
 
     
 
