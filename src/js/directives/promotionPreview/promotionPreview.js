@@ -55,8 +55,12 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                         delete scope.previewData.data.custSegment;
                         scope.previewData.data.purchaseConds.customerSegmentId = 0;
                     }
-                    if (scope.previewData.data.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountCS' || scope.previewData.data.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB') {
+                    if ( scope.previewData.data.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB') {
                         scope.previewData.data.promoSubTypeCd = 'ProductLevelPerItemPercentDiscount';
+                    }
+
+                    if(scope.previewData.data.promoSubTypeCd == 'OrderLevelPercentDiscountCS') {
+                        scope.previewData.data.promoSubTypeCd = 'OrderLevelPercentDiscount';
                     }
                     var promotion = scope.previewData.data;
                     utilService.setDefaultsForSaveAsDraft(promotion);
