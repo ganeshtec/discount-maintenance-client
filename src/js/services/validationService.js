@@ -38,6 +38,21 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
         return endDateErrors;
     }
 
+    publicApi.validatePriority = function(priority) {
+        var priorityErrors = {
+            isError: false,
+            message: ''
+        };
+
+
+        if(priority && (priority < 0 || priority > 1000 || priority % 1 != 0)) {
+            priorityErrors.isError = true;
+            priorityErrors.message = 'Enter number between 0 and 1000';
+        }
+
+        return priorityErrors;
+    }
+
     publicApi.validateLeadTime = function (promoSubTypeCd, startDate, endDt,  processErrorMessage) {
         var endDtLeadTimeError = {
             isError: false,
@@ -164,6 +179,7 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
         validationErrors.endDtLessStartDt = publicApi.validateEndDtWithStartDt(promotion.startDt, promotion.endDt);
         validationErrors.minQtyThreshold = publicApi.validateMinimumQty(promotion.reward.details);
         validationErrors.maxPercentage = publicApi.validateMaxPercentage(promotion.reward.details);
+        validationErrors.priorityRange = publicApi.validatePriority(promotion.priority);
 
         return validationErrors;
     }

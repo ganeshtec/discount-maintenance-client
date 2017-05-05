@@ -96,7 +96,7 @@ describe('validationService', function () {
             }
         })
 
-        validationService.validateLeadTime(promoSubTypeCd, endDt, function(response) {
+        validationService.validateLeadTime(promoSubTypeCd, endDt, function (response) {
             expect(response.isError).toBe(true);
             expect(response.message).not.toBe('');
         });
@@ -106,10 +106,10 @@ describe('validationService', function () {
     it('Returns isError as false and empty error message when promo is MSB and end date is greater than start(today) + lead time', function () {
         var promoSubTypeCd = 'ProductLevelPerItemPercentDiscountMSB';
         var today = $filter('date')(new Date(), 'yyyy-MM-dd');
-        //console.log("Date::", today.getDate());
+        
         var leadtime = 3;
         var endDt = new Date();
-        console.log("endDate::", endDt.getDate());
+        
         endDt.setDate(endDt.getDate() + leadtime + 1);
         endDt = $filter('date')(endDt, 'yyyy-MM-dd');
 
@@ -120,7 +120,7 @@ describe('validationService', function () {
             }
         })
 
-        validationService.validateLeadTime(promoSubTypeCd,today, endDt, function(response) {
+        validationService.validateLeadTime(promoSubTypeCd, today, endDt, function (response) {
             expect(response.isError).toBe(false);
             expect(response.message).toBe('');
         });
@@ -132,7 +132,7 @@ describe('validationService', function () {
         endDt.setDate(endDt.getDate() + 5);
         endDt = $filter('date')(endDt, 'yyyy-MM-dd');
 
-        var startDt= new Date();
+        var startDt = new Date();
         startDt.setDate(startDt.getDate() + 3);
         startDt = $filter('date')(startDt, 'yyyy-MM-dd');
 
@@ -143,11 +143,11 @@ describe('validationService', function () {
     });
 
     it('Returns isError as true and non empty error message when selected End date is less than Start date', function () {
-        var endDt= new Date();
+        var endDt = new Date();
         endDt.setDate(endDt.getDate() + 5);
         endDt = $filter('date')(endDt, 'yyyy-MM-dd');
 
-        var startDt= new Date();
+        var startDt = new Date();
         startDt.setDate(startDt.getDate() + 7);
         startDt = $filter('date')(startDt, 'yyyy-MM-dd');
 
@@ -158,7 +158,7 @@ describe('validationService', function () {
     });
 
     it('Returns isError as true and non empty error message when selected minimum quantity threshold is 0', function () {
-        var rewards = [{min:0,value:12,maxAllowedVal:2},{min:2,value:25,maxAllowedVal:3},{min:0,value:120,maxAllowedVal:25}]
+        var rewards = [{ min: 0, value: 12, maxAllowedVal: 2 }, { min: 2, value: 25, maxAllowedVal: 3 }, { min: 0, value: 120, maxAllowedVal: 25 }]
 
         var response = validationService.validateMinimumQty(rewards);
         expect(response[0].isError).toBe(true);
@@ -166,7 +166,7 @@ describe('validationService', function () {
     });
 
     it('Returns isError as false and empty error message when selected minimum quantity threshold is other than 0', function () {
-        var rewards = [{min:0,value:12,maxAllowedVal:2},{min:2,value:25,maxAllowedVal:3},{min:0,value:120,maxAllowedVal:25}]
+        var rewards = [{ min: 0, value: 12, maxAllowedVal: 2 }, { min: 2, value: 25, maxAllowedVal: 3 }, { min: 0, value: 120, maxAllowedVal: 25 }]
 
         var response = validationService.validateMinimumQty(rewards);
         expect(response[1].isError).toBe(false);
@@ -174,7 +174,7 @@ describe('validationService', function () {
     });
 
     it('Returns isError as true and non empty error message when selected maximum percentage is greater than 100', function () {
-        var rewards = [{min:0,value:12,maxAllowedVal:2},{min:2,value:25,maxAllowedVal:3},{min:0,value:120,maxAllowedVal:25}]
+        var rewards = [{ min: 0, value: 12, maxAllowedVal: 2 }, { min: 2, value: 25, maxAllowedVal: 3 }, { min: 0, value: 120, maxAllowedVal: 25 }]
 
         var response = validationService.validateMaxPercentage(rewards);
         expect(response[2].isError).toBe(true);
@@ -182,7 +182,7 @@ describe('validationService', function () {
     });
 
     it('Returns isError as false and empty error message when selected maximum percentage is less than 100', function () {
-        var rewards = [{min:0,value:12,maxAllowedVal:2},{min:2,value:25,maxAllowedVal:3},{min:0,value:120,maxAllowedVal:25}]
+        var rewards = [{ min: 0, value: 12, maxAllowedVal: 2 }, { min: 2, value: 25, maxAllowedVal: 3 }, { min: 0, value: 120, maxAllowedVal: 25 }]
 
         var response = validationService.validateMaxPercentage(rewards);
         expect(response[1].isError).toBe(false);
@@ -193,8 +193,8 @@ describe('validationService', function () {
         expect(response[2].message).not.toBe('');
     });
 
-        it('Returns isError as true and non empty error message when selected maximum percentage is less than 0.01', function () {
-        var rewards = [{min:0,value:12,maxAllowedVal:2},{min:0,value:120,maxAllowedVal:0},{min:0,value:120,maxAllowedVal:25}]
+    it('Returns isError as true and non empty error message when selected maximum percentage is less than 0.01', function () {
+        var rewards = [{ min: 0, value: 12, maxAllowedVal: 2 }, { min: 0, value: 120, maxAllowedVal: 0 }, { min: 0, value: 120, maxAllowedVal: 25 }]
 
         var response = validationService.validateMaxPercentage(rewards);
         expect(response[1].isError).toBe(true);
@@ -205,6 +205,46 @@ describe('validationService', function () {
         expect(response[2].message).not.toBe('');
     });
 
+    it('Returns isError as false and empty error message when priority is between 0 and 1000', function () {
+        var priority = 5
+
+        var response = validationService.validatePriority(priority);
+        expect(response.isError).toBe(false);
+        expect(response.message).toBe('');
+    });
+
+
+    it('Returns isError as true and non empty error message when priority is more than 1000', function () {
+        var priority = 1001
+
+        var response = validationService.validatePriority(priority);
+        expect(response.isError).toBe(true);
+        expect(response.message).not.toBe('');
+    });
+
+    it('Returns isError as true and non empty error message when priority is more than 1000', function () {
+        var priority = 2000
+
+        var response = validationService.validatePriority(priority);
+        expect(response.isError).toBe(true);
+        expect(response.message).not.toBe('');
+    });
+
+    it('Returns isError as true and non empty error message when priority is less than 0', function () {
+        var priority = -1
+
+        var response = validationService.validatePriority(priority);
+        expect(response.isError).toBe(true);
+        expect(response.message).not.toBe('');
+    });
+
+    it('Returns isError as true and non empty error message when priority is there are decimal points', function () {
+        var priority = 2.4
+
+        var response = validationService.validatePriority(priority);
+        expect(response.isError).toBe(true);
+        expect(response.message).not.toBe('');
+    });
 
 
 

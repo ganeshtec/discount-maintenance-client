@@ -1,6 +1,6 @@
 // Purpose is to build promotion data
-app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService', 'redemptionMethodTypes', 'DataFactory', 'itemCategorySourceData',
-    function (promotionSubTypes, promotionDataService, redemptionMethodTypes, DataFactory, itemCategorySourceData) {
+app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService', 'redemptionMethodTypes', 'validationService','DataFactory', 'itemCategorySourceData',
+    function (promotionSubTypes, promotionDataService, redemptionMethodTypes, validationService, DataFactory, itemCategorySourceData) {
 
         return {
             restrict: 'E',
@@ -13,7 +13,8 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                 formHolder: '=',
                 display: '=',
                 viewProp: '=',
-                promoMfa: '='
+                promoMfa: '=',
+                validationErrors: '='
             },
             link: function (scope) {
 
@@ -63,8 +64,6 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                                 }
                             }
 
-
-
                         });
                     }
 
@@ -89,6 +88,10 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                 function addSources() {
                     scope.data.purchaseConds.sources.push(new itemCategorySourceData());
                 }
+
+                scope.validatePromotion = function(){
+                    scope.validationErrors = validationService.validatePromotion(scope.data);
+                };
 
 
                 scope.showMaximumDiscount = false;
