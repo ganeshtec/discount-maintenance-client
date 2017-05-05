@@ -30,11 +30,8 @@ function PromoScheduleController($filter, $scope, validationService) {
         }
     });
 
-
-
     this.validatePromotion = validatePromotion;
     this.convertToString = convertToString;
-
 
     function validatePromotion() {
         this.validationErrors = validationService.validatePromotion(this.data);

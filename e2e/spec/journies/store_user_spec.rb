@@ -10,8 +10,9 @@ describe 'MFA makes a customer segment discount that is persisted', type: :featu
 			redemption_method: "Qualifying Purchases",
 			customer_segment:  "Roofing Pantry Loaders",
 			inclusion:         "itemssku",
+			priority:		   "10",
 			item_sku:          "100091",
-			store_location:    "123",
+			market_location:    "1",
 			rewards_quantity:  "100",
 			amount_off:        "99",
 			desc_long:         "long description",
@@ -46,6 +47,9 @@ def create_cust_segment_discount_store(promotion)
 	fill_in 'name', with: promotion.name
 	sleep(5)
 	select('Customer Segmentation', :from => 'promotype')
+	
+	fill_in 'priority', with: promotion.priority
+
     click_button 'Next'
 
     select('Small Roofers', :from => 'segment')
@@ -55,12 +59,13 @@ def create_cust_segment_discount_store(promotion)
     choose("purchaseoption2")
 
 	
+	
     fill_in 'Search and Add Item Sku Number', with: promotion.item_sku
     puts "PROMOTION inclusion Item Sku After Search"
     click_on 'Search'
     click_button 'Next'
  
-    fill_in 'Search and Add Store Number', with: promotion.store_location
+    fill_in 'Search and Add Market Number', with: promotion.market_location
     click_on 'Search'
 
 	click_button 'Next'
