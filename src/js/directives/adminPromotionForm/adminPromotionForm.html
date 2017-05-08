@@ -5,7 +5,7 @@
 				<label for="name">
 					Promotion Name {{isDisabled}} {{userType}}
 				</label>
-				<input type="text" id="name" name="name" ng-model="data.name" title="Promotion Name" placeholder="Enter 254 characters or less" ng-maxlength="254" ng-required="preview" allow-pattern="(\d|[a-z A-Z\_])" />
+				<input type="text" id="name" name="name" ng-model="data.name" title="Promotion Name" placeholder="Enter 254 characters or fewer" ng-maxlength="254" ng-required="preview" allow-pattern="(\d|[a-z A-Z\_])" />
 				<span class='error-message' ng-show="promoForm.name.$invalid">
 					<span ng-show="promoForm.name.$error.required">
 						Please enter a valid promotion name
@@ -99,8 +99,16 @@
 				<redemption-limit data="data.redmptnLmt" promoform="promoForm">
 				</redemption-limit>
 		</section>
-		<section class="admin__promotion__section" ng-show="index == 6 || preview">
-				<promo-schedule data="data" preview="preview" promoform="promoForm" form-holder="formHolder" view-prop="viewProp" start-dt ="startDt" validation-errors="validationErrors" >
+
+
+		<section class ="admin__promotion__section" ng-show="index == 6 || preview">
+			<promo-labels data ="data" preview="preview" promoform="promoForm">
+			</promo-labels>
+		</section>
+
+		<section class="admin__promotion__section" ng-show="index == 7 || preview">
+				<promo-schedule data="data" preview="preview" promoform="promoForm" form-holder="formHolder" view-prop="viewProp">
+
 				</promo-schedule>
 		</section>
 	</fieldset>

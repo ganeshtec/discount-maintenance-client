@@ -45,18 +45,10 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                 getPromoSubTypes();
 
                 function setPromotionSubType(watch) {
-
-                    // console.log('scope.promotionSubTypes', scope.promotionSubTypes);
-                    // console.log("_____scope.data", scope.data);
                     if (scope.promotionSubTypes && scope.data && scope.data.promoSubTypeCd) {
                         $.each(scope.promotionSubTypes, function (i) {
 
                             if (scope.promoMfa && scope.data.promoId && scope.data.promoId != 0 && !watch) {
-                                //    console.log("Store User Logged in::"+scope.promoMfa);
-                                //     scope.promoSubTypeObject = (scope.data.custSegment && scope.data.purchaseConds.customerSegmentId)
-                                //         ? 'ProductLevelPerItemPercentDiscountCS'
-                                //         : 'ProductLevelPerItemPercentDiscountMSB';
-
                                 if (scope.data.purchaseConds.customerSegmentId && scope.data.purchaseConds.customerSegmentId != 0) {
 
                                     scope.promoSubTypeObject = scope.promotionSubTypes[1];
@@ -76,7 +68,6 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                     }
 
                 }
-
                 scope.$watch('data.promoSubTypeCd', function () {
                     setPromotionSubType(true);
                     if (scope.promoSubTypeObject && scope.promoSubTypeObject.promoSubTypeObject) {
@@ -113,6 +104,14 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                     scope.data.promoSubTypeCd = scope.promoSubTypeObject.promoSubTypeCd;
                     scope.data.promoSubTypeDesc = scope.promoSubTypeObject.promoSubTypeDesc;
                     scope.data.promoType = scope.promoSubTypeObject.promoType;
+
+                    if (scope.promoSubTypeObject.promoSubTypeCd == 'OrderLevelPercentDiscountCS') {
+                        
+                        scope.data.printLabel = false;
+                    }
+                    else{
+                        scope.data.printLabel = true;
+                    }
 
 
                     //AP-573-Promo validations - Buy A And B, get % off both
