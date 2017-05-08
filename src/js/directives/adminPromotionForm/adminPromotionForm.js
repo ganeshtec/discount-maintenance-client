@@ -105,7 +105,7 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                     scope.data.promoSubTypeDesc = scope.promoSubTypeObject.promoSubTypeDesc;
                     scope.data.promoType = scope.promoSubTypeObject.promoType;
 
-                    if (scope.promoSubTypeObject.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountCS') {
+                    if (scope.promoSubTypeObject.promoSubTypeCd == 'OrderLevelPercentDiscountCS') {
                         
                         scope.data.printLabel = false;
                     }
