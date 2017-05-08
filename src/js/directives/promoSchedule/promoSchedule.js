@@ -30,6 +30,11 @@ function PromoScheduleController($filter, $scope, validationService) {
         }
     });
 
+    this.setDatesOnEdit = function() {
+        this.data.startDtFmt = this.data.startDt ? moment(this.data.startDt).toDate() : undefined;
+        this.data.endDtFmt = this.data.endDt ? moment(this.data.endDt).toDate() : undefined;
+    }
+
     this.validatePromotion = function() {
         this.validationErrors = validationService.validatePromotion(this.data);
     }
@@ -41,5 +46,6 @@ function PromoScheduleController($filter, $scope, validationService) {
         }
     }
 
+    this.setDatesOnEdit();
 
 }

@@ -10,10 +10,7 @@ describe('Promo schedule', function() {
     $componentController = _$componentController_;
     $filter = _$filter_;
     ctrl = $componentController('promoSchedule',null, {
-        data: {
-          startDtFmt: new Date(),
-          endDtFmt: new Date()
-        },
+        data: {},
         validationErrors : {
             minQtyThreshold :{ 
                 isError: false,
@@ -34,5 +31,17 @@ describe('Promo schedule', function() {
     expect(ctrl.data.startDt).toEqual(expectedStringStartDate);
     expect(ctrl.data.endDt).toEqual(expectedStringEndDate);
   });
+
+  it('sets startDtFmt and endDtFmt when editing a discount.', function() {
+    ctrl.data.startDt = "2017-03-15";
+    ctrl.data.endDt = "2017-04-10";
+    var expectedDateTypeStartDate = moment(ctrl.data.startDt).toDate();
+    var expectedDateTypeEndDate = moment(ctrl.data.endDt).toDate();
+
+    ctrl.setDatesOnEdit();
+
+    expect(ctrl.data.startDtFmt).toEqual(expectedDateTypeStartDate);
+    expect(ctrl.data.endDtFmt).toEqual(expectedDateTypeEndDate);
+  })
 
 });
