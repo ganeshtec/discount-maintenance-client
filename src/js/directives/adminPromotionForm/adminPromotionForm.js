@@ -17,7 +17,7 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                 validationErrors: '='
             },
             link: function (scope) {
-
+                    
                 function getPromoSubTypes() {
                     var getPromotionPromise;
                     if (scope.promoMfa) {
@@ -47,17 +47,13 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                 function setPromotionSubType(watch) {
                     if (scope.promotionSubTypes && scope.data && scope.data.promoSubTypeCd) {
                         $.each(scope.promotionSubTypes, function (i) {
-
-                            if (scope.promoMfa && scope.data.promoId && scope.data.promoId != 0 && !watch) {
+                            if (scope.promoMfa &&  !watch) {
                                 if (scope.data.purchaseConds.customerSegmentId && scope.data.purchaseConds.customerSegmentId != 0) {
-
                                     scope.promoSubTypeObject = scope.promotionSubTypes[1];
                                 }
                                 else {
-
                                     scope.promoSubTypeObject = scope.promotionSubTypes[0];
                                 }
-
                             } else {
                                 if (scope.promotionSubTypes[i].promoSubTypeCd == scope.data.promoSubTypeCd) {
                                     scope.promoSubTypeObject = scope.promotionSubTypes[i];
@@ -66,7 +62,6 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
 
                         });
                     }
-
                 }
                 scope.$watch('data.promoSubTypeCd', function () {
                     setPromotionSubType(true);
