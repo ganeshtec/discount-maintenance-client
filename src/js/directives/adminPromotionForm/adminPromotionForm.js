@@ -41,6 +41,7 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                     }
                 }
 
+
                 scope.formHolder.form = scope.promoForm;
                 getPromoSubTypes();
 
@@ -105,7 +106,7 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                     scope.data.promoSubTypeDesc = scope.promoSubTypeObject.promoSubTypeDesc;
                     scope.data.promoType = scope.promoSubTypeObject.promoType;
 
-                    if (scope.promoSubTypeObject.promoSubTypeCd == 'OrderLevelPercentDiscountCS') {
+                    if (scope.promoSubTypeObject.promoSubTypeCd == 'OrderLevelPercentDiscount') {
                         
                         scope.data.printLabel = false;
                     }

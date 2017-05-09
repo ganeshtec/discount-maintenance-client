@@ -60,13 +60,10 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                     }
 
 
-                    if(scope.previewData.data.promoSubTypeCd == 'ProductLevelPerItemPercentDiscount' && scope.previewData.data.custSegment) {
                     
-                        scope.previewData.data.printLabel = false;
-                    }
-                    if(scope.previewData.data.promoSubTypeCd == 'OrderLevelPercentDiscountCS') {
-                        scope.previewData.data.promoSubTypeCd = 'OrderLevelPercentDiscount';
-                    }
+                    // if(scope.previewData.data.promoSubTypeCd == 'OrderLevelPercentDiscount') {
+                    //     scope.previewData.data.promoSubTypeCd = 'OrderLevelPercentDiscount';
+                    // }
                     var promotion = scope.previewData.data;
                     utilService.setDefaultsForSaveAsDraft(promotion);
                     utilService.transformPromotionRequest(promotion);
