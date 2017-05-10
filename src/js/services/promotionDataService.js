@@ -22,7 +22,7 @@ app.service('promotionDataService', ['$http', '$q', 'dataService', 'DataFactory'
                 'promoSubTypeId': 25
             } ,
             {
-                'promoSubTypeCd': 'OrderLevelPercentDiscountCS',
+                'promoSubTypeCd': 'OrderLevelPercentDiscount',
                 'promoSubTypeDesc': 'Customer Segmentation',
                 'promoType': 'ORDERPROMO',
                 'promoTypeCode': 20,
