@@ -1,4 +1,4 @@
-fdescribe('promoLabels', function () {
+describe('promoLabels', function () {
 
     var $componentController;
     
