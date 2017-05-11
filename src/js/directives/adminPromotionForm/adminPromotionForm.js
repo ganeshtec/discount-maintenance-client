@@ -48,7 +48,7 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                     if (scope.promotionSubTypes && scope.data && scope.data.promoSubTypeCd) {
                         $.each(scope.promotionSubTypes, function (i) {
                             if (scope.promoMfa &&  !watch) {
-                                if (scope.data.purchaseConds.customerSegmentId && scope.data.purchaseConds.customerSegmentId != 0) {
+                                if (scope.data.promoType=='ORDERPROMO' && scope.data.promoSubTypeCd=='OrderLevelPercentDiscount') {
                                     scope.promoSubTypeObject = scope.promotionSubTypes[1];
                                 }
                                 else {
@@ -100,7 +100,7 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                     scope.data.promoSubTypeDesc = scope.promoSubTypeObject.promoSubTypeDesc;
                     scope.data.promoType = scope.promoSubTypeObject.promoType;
 
-                    if (scope.promoSubTypeObject.promoSubTypeCd == 'OrderLevelPercentDiscountCS') {
+                    if (scope.promoSubTypeObject.promoSubTypeCd == 'OrderLevelPercentDiscount') {
                         
                         scope.data.printLabel = false;
                     }

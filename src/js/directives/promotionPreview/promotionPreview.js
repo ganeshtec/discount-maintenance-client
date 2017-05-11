@@ -64,9 +64,6 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                     
                         scope.previewData.data.printLabel = false;
                     }
-                    if(scope.previewData.data.promoSubTypeCd == 'OrderLevelPercentDiscountCS') {
-                        scope.previewData.data.promoSubTypeCd = 'OrderLevelPercentDiscount';
-                    }
                     var promotion = scope.previewData.data;
                     utilService.setDefaultsForSaveAsDraft(promotion);
                     utilService.transformPromotionRequest(promotion);
