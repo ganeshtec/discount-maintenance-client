@@ -3,8 +3,9 @@
 	Services that will handle setting common state of ui properties
 */
 
-app.service('utilService', ['$filter', function ($filter) {
+app.service('utilService', ['$filter', 'leadTimeService', function ($filter,leadTimeService) {
     var publicApi = {};
+     var leadTimeValue;
     var rewardMethodMappoing = {
         'ProductLevelPercentDiscount': 'ALLAFFECTEDITMS',
         'CategoryLevelValueDiscount': 'ALLAFFECTEDITMS',
@@ -320,11 +321,33 @@ app.service('utilService', ['$filter', function ($filter) {
             promotion.promoTypeCd = 10;
         }
     }
-    
-    // publicApi.isPromotionActive = function() {
-        
-    //     return null;
-    // }
 
+  
+
+     publicApi.getPromoStatus = function (promotion) {
+       var leadTimePromise =leadTimeService.fetchLeadTime();
+        leadTimePromise.then(function (leadTime) {
+            leadTimeValue=leadTime
+            console.log("____Lead time value from service::", leadTimeValue);
+        });
+        var endDateAsItIs= promotion.endDt;
+        console.log("#_#__#_____Promotion End Date as it is ::               ",endDateAsItIs);
+
+        var today = new Date();
+        var endDate = new Date(promotion.endDt);
+        console.log("today Date as it is ::                                 ",today);
+        console.log("control inside getPromoStatus:: and status of Promo::  ",promotion.status);
+        console.log("Promotion printLabel::                                 ",promotion.printLabel);
+        console.log("Lead time value from service::                         ",leadTimeValue);
+        console.log("today Date after trimming::                            ",today);
+        console.log("Promotion End Date::                                   ",endDate);
+        console.log("difference between today and Promo End Date is::       ",endDate.getDate()-today.getDate());
+       
+        // if(leadTimeValue==3 && promotion.status==61 && promotion.printLabel==true){
+        //     return ture;
+        // }
+
+
+    } 
     return publicApi;
 }]);

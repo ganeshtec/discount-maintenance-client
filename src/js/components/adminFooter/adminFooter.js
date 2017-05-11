@@ -11,6 +11,11 @@ app.component('adminFooter', {
     controller: function FooterCtrl(PromotionData, utilService, promotionDataService, modalService) {
         var tempData = $.extend(true, {}, this.data);
         var inprogress = false;
+       // var isEndDtWithInLeadTime=false;
+       if(tempData) {
+             var isEndDtWithInLeadTime=utilService.getPromoStatus(tempData);
+       }
+       
         this.cancel = function () {
             this.data = $.extend(true, {}, tempData);
         }
@@ -53,10 +58,13 @@ app.component('adminFooter', {
             this.previewOverlayConfig.open();
         }
         this.canSave = function (promotion) {
+            //$ctrl.canSave($ctrl.data)
+          
             return utilService.canSaveAsDraft(promotion) && !inprogress;
         }
 
         this.canApprove = function (promotion) {
+            console.log("______can canApprove function return value::",utilService.canApprove(promotion) && !inprogress && isEndDtWithInLeadTime);
             return utilService.canApprove(promotion) && !inprogress;
         }
     }
