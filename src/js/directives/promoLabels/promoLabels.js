@@ -12,10 +12,8 @@ app.component('promoLabels', {
 
 function PromoLabelsController() {
 
-  //  this.addPurchaseCondition = addPurchaseCondition;
-  //  var publicApi = {};
-   // this.data.printLabel = true;
 
-    // this.data.labelText = '';    
+
+  
 
 }
