@@ -198,7 +198,7 @@ gulp.task('test', ['srcbuild'], function (done) {
 });
 
 gulp.task('buildArtifact', () =>
-    gulp.src('public/*')
+    gulp.src('*')
         .pipe(tar('archive.tar'))
         .pipe(gzip())
         .pipe(gulp.dest('public'))
