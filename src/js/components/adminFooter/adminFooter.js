@@ -13,7 +13,8 @@ app.component('adminFooter', {
         var inprogress = false;
        // var isEndDtWithInLeadTime=false;
        if(tempData) {
-             var isEndDtWithInLeadTime=utilService.getPromoStatus(tempData);
+             var isEndDtWithInLeadTime=utilService.isSubmitElgibleForDisable(tempData);
+             console.log("__-Value::",isEndDtWithInLeadTime);
        }
        
         this.cancel = function () {
@@ -65,6 +66,7 @@ app.component('adminFooter', {
 
         this.canApprove = function (promotion) {
             console.log("______can canApprove function return value::",utilService.canApprove(promotion) && !inprogress && isEndDtWithInLeadTime);
+            //console.log(" utilService.isSubmitElgibleForDisable(tempData)::",utilService.isSubmitElgibleForDisable(promotion));
             return utilService.canApprove(promotion) && !inprogress;
         }
     }

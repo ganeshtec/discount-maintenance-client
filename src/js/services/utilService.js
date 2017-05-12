@@ -322,17 +322,12 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter,lead
         }
     }
 
-  
-
-     publicApi.getPromoStatus = function (promotion) {
+     publicApi.isSubmitElgibleForDisable = function (promotion) {
+         var result= false;
        var leadTimePromise =leadTimeService.fetchLeadTime();
         leadTimePromise.then(function (leadTime) {
-            leadTimeValue=leadTime
-            console.log("____Lead time value from service::", leadTimeValue);
-        });
-        var endDateAsItIs= promotion.endDt;
-        console.log("#_#__#_____Promotion End Date as it is ::               ",endDateAsItIs);
-
+        leadTimeValue=leadTime
+       // console.log("____Lead time value from service::", leadTimeValue);
         var today = new Date();
         var endDate = new Date(promotion.endDt);
         console.log("today Date as it is ::                                 ",today);
@@ -342,12 +337,16 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter,lead
         console.log("today Date after trimming::                            ",today);
         console.log("Promotion End Date::                                   ",endDate);
         console.log("difference between today and Promo End Date is::       ",endDate.getDate()-today.getDate());
+              console.log("____Lead Time Value::",leadTimeValue);
+        if(endDate.getDate()-today.getDate() <=leadTimeValue && promotion.status==61 &&   promotion.printLabel==true) {
+            result= true;
+        }
+        });
+
+      
+
+        return result;
        
-        // if(leadTimeValue==3 && promotion.status==61 && promotion.printLabel==true){
-        //     return ture;
-        // }
-
-
     } 
     return publicApi;
 }]);
