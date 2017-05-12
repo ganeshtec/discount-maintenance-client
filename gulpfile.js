@@ -198,10 +198,10 @@ gulp.task('test', ['srcbuild'], function (done) {
 });
 
 gulp.task('buildArtifact', () =>
-    gulp.src('*')
+    gulp.src(['!./node_modules/**', 'node_modules','**' ])
         .pipe(tar('archive.tar'))
         .pipe(gzip())
-        .pipe(gulp.dest('dist'))
+        .pipe(gulp.dest('public'))
 );
 
 gulp.task('srcbuild', ['lint','concat:vendor-js', 'concat:js', 'build:vendor-css', 'build:css', 'copy:index', 'copy:html', 'copy:fonts']);
