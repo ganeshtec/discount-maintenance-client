@@ -41,6 +41,7 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                     }
                 }
 
+
                 scope.formHolder.form = scope.promoForm;
                 getPromoSubTypes();
 

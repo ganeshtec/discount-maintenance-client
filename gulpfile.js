@@ -201,7 +201,7 @@ gulp.task('buildArtifact', () =>
     gulp.src('*')
         .pipe(tar('archive.tar'))
         .pipe(gzip())
-        .pipe(gulp.dest('public'))
+        .pipe(gulp.dest('dist'))
 );
 
 gulp.task('srcbuild', ['lint','concat:vendor-js', 'concat:js', 'build:vendor-css', 'build:css', 'copy:index', 'copy:html', 'copy:fonts']);
