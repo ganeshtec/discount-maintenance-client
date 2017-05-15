@@ -3,9 +3,8 @@
 	Services that will handle setting common state of ui properties
 */
 
-app.service('utilService', ['$filter', 'leadTimeService', function ($filter,leadTimeService) {
+app.service('utilService', ['$filter', 'leadTimeService', function ($filter, leadTimeService) {
     var publicApi = {};
-     var leadTimeValue;
     var rewardMethodMappoing = {
         'ProductLevelPercentDiscount': 'ALLAFFECTEDITMS',
         'CategoryLevelValueDiscount': 'ALLAFFECTEDITMS',
@@ -322,31 +321,18 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter,lead
         }
     }
 
-     publicApi.isSubmitElgibleForDisable = function (promotion) {
-         var result= false;
-       var leadTimePromise =leadTimeService.fetchLeadTime();
-        leadTimePromise.then(function (leadTime) {
-        leadTimeValue=leadTime
-       // console.log("____Lead time value from service::", leadTimeValue);
-        var today = new Date();
-        var endDate = new Date(promotion.endDt);
-        console.log("today Date as it is ::                                 ",today);
-        console.log("control inside getPromoStatus:: and status of Promo::  ",promotion.status);
-        console.log("Promotion printLabel::                                 ",promotion.printLabel);
-        console.log("Lead time value from service::                         ",leadTimeValue);
-        console.log("today Date after trimming::                            ",today);
-        console.log("Promotion End Date::                                   ",endDate);
-        console.log("difference between today and Promo End Date is::       ",endDate.getDate()-today.getDate());
-              console.log("____Lead Time Value::",leadTimeValue);
-        if(endDate.getDate()-today.getDate() <=leadTimeValue && promotion.status==61 &&   promotion.printLabel==true) {
-            result= true;
-        }
+    publicApi.isSubmitEligibleForDisable = function (promotion) {
+        var leadTimePromise = leadTimeService.fetchLeadTime();
+        return leadTimePromise.then(function (leadTime) {
+            var today = new Date();
+            var endDate = new Date(promotion.endDt);
+            if (endDate.getDate() - today.getDate() <= leadTime && promotion.status == 61 && promotion.printLabel === true) {
+                return true;
+            }
+            return false;
         });
-
-      
-
-        return result;
-       
-    } 
+        
+    }
+    
     return publicApi;
 }]);

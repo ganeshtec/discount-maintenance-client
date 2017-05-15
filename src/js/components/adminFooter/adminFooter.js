@@ -8,15 +8,17 @@ app.component('adminFooter', {
         formHolder: '='
     },
     templateUrl: 'adminFooter.html',
-    controller: function FooterCtrl(PromotionData, utilService, promotionDataService, modalService) {
+    controller: function FooterCtrl(PromotionData, utilService, leadTimeService, promotionDataService, modalService) {
         var tempData = $.extend(true, {}, this.data);
         var inprogress = false;
-       // var isEndDtWithInLeadTime=false;
-       if(tempData) {
-             var isEndDtWithInLeadTime=utilService.isSubmitElgibleForDisable(tempData);
-             console.log("__-Value::",isEndDtWithInLeadTime);
-       }
-       
+        var isEndDtWithinLeadTime = false;
+        if (tempData) {
+            var isEndDtWithinLeadTimePromise = utilService.isSubmitEligibleForDisable(tempData);
+            isEndDtWithinLeadTimePromise.then(function (value) {
+                isEndDtWithinLeadTime = value;
+            })
+        }
+
         this.cancel = function () {
             this.data = $.extend(true, {}, tempData);
         }
@@ -54,20 +56,20 @@ app.component('adminFooter', {
                 }
             )
         }
+
         this.preview = function (data) {
             this.previewdata.data = $.extend(true, {}, data);
             this.previewOverlayConfig.open();
         }
         this.canSave = function (promotion) {
             //$ctrl.canSave($ctrl.data)
-          
+
             return utilService.canSaveAsDraft(promotion) && !inprogress;
         }
 
         this.canApprove = function (promotion) {
-            console.log("______can canApprove function return value::",utilService.canApprove(promotion) && !inprogress && isEndDtWithInLeadTime);
-            //console.log(" utilService.isSubmitElgibleForDisable(tempData)::",utilService.isSubmitElgibleForDisable(promotion));
-            return utilService.canApprove(promotion) && !inprogress;
+            return utilService.canApprove(promotion) && !inprogress && !isEndDtWithinLeadTime;
         }
+
     }
 });
