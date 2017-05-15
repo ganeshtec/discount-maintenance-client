@@ -22,29 +22,25 @@ describe('validationService', function () {
     }));
 
     it('returns a startDt errors object with isError and message properties.', function () {
-        var today = moment();
+        var today = moment().toDate();
 
         validationService.validateStartDate(today, function(response) {
             expect(response.isError).toBeDefined();
             expect(response.message).toBeDefined();
         });
-        
     });
 
     it('returns a start date error when selected start date is in the past.', function () {
-        var pastDate = moment().subtract(3, 'days');
-        // pastDate = $filter('date')(pastDate, 'yyyy-MM-dd');
+        var pastStartDate = moment().subtract(3, 'days').toDate();
 
-        validationService.validateStartDate(pastDate, function(response) {
+        validationService.validateStartDate(pastStartDate, function(response) {
             expect(response.isError).toBe(true);
             expect(response.message).not.toBe('');
         });
     })
 
     it('returns a false/empty start date error when selected start date is in the future.', function () {
-        var futureDate = new Date();
-        futureDate.setDate(futureDate.getDate() + 1);
-        futureDate = $filter('date')(futureDate, 'yyyy-MM-dd');
+        var futureDate = moment().add(3, 'days').toDate();
 
         validationService.validateStartDate(futureDate, function(response) {
             expect(response.isError).toBe(false);
@@ -53,7 +49,8 @@ describe('validationService', function () {
     })
 
     it('returns a false/empty start date error when selected start date is today.', function () {
-        var today = $filter('date')(new Date(), 'yyyy-MM-dd');
+        var today = moment().toDate();
+
         validationService.validateStartDate(today, function(response) {
             expect(response.isError).toBe(false);
             expect(response.message).toBe('');
@@ -61,21 +58,18 @@ describe('validationService', function () {
     })
 
     it('returns an end date error when selected end date is in the past.', function () {
-        var pastDate = new Date();
-        pastDate.setDate(pastDate.getDate() - 1);
-        pastDate = $filter('date')(pastDate, 'yyyy-MM-dd');
+        var pastDate = moment().subtract(2, 'days').toDate();
         var startDate = undefined;
 
-        validationService.validateEndDate(undefined, pastDate, function(response) {
+        validationService.validateEndDate(startDate, pastDate, function(response) {
             expect(response.isError).toBe(true);
             expect(response.message).not.toBe('');
         });
     })
 
     it('returns a false/empty end date error when selected end date is in the future.', function () {
-        var futureDate = new Date();
-        futureDate.setDate(futureDate.getDate() + 1);
-        futureDate = $filter('date')(futureDate, 'yyyy-MM-dd');
+        var futureDate = moment().add(1, 'days').toDate();
+
         validationService.validateEndDate(undefined, futureDate, function(response) {
             expect(response.isError).toBe(false);
             expect(response.message).toBe('');
@@ -84,7 +78,7 @@ describe('validationService', function () {
     })
 
     it('returns a false/empty end date error when selected end date is today.', function () {
-        var today = $filter('date')(new Date(), 'yyyy-MM-dd');
+        var today = moment().toDate();
 
         validationService.validateEndDate(undefined, today, function(response) {
             expect(response.isError).toBe(false);
@@ -93,12 +87,8 @@ describe('validationService', function () {
     });
 
     it('returns an end date error when an MSB discount\'s end date is earlier than start date plus lead time.', function () {
-        var promoSubTypeCd = 'ProductLevelPerItemPercentDiscountMSB';
-        var today = $filter('date')(new Date(), 'yyyy-MM-dd');
         var leadtime = 3;
-        var endDt = new Date();
-        endDt.setDate(endDt.getDate() + leadtime - 1);
-        endDt = $filter('date')(endDt, 'yyyy-MM-dd');
+        var endDt = moment().add(leadtime - 1, 'days').toDate();
 
 
         spyOn(leadTimeService, 'fetchLeadTime').and.callFake(function () {
@@ -114,13 +104,10 @@ describe('validationService', function () {
 
     });
 
-    it('returns a false/empty end date error when an MSB discount\'s end date is after start date plus lead time.', function () {
-        var today = $filter('date')(new Date(), 'yyyy-MM-dd');
+    it('returns a false/empty end date error when a MSB discount\'s end date is after start date plus lead time.', function () {
+        var today = moment().toDate();
         var leadtime = 3;
-        var endDt = new Date();
-        endDt.setDate(endDt.getDate() + leadtime);
-        endDt = $filter('date')(endDt, 'yyyy-MM-dd');
-
+        var endDt = moment(today).add(leadtime).toDate();
 
         spyOn(leadTimeService, 'fetchLeadTime').and.callFake(function () {
             return {
@@ -136,14 +123,8 @@ describe('validationService', function () {
     });
 
     it('returns a false/empty end date error message when selected end date is after start date.', function () {
-        var endDt = new Date();
-        endDt.setDate(endDt.getDate() + 5);
-        endDt = $filter('date')(endDt, 'yyyy-MM-dd');
-
-        var startDt= new Date();
-        startDt.setDate(startDt.getDate() + 3);
-        startDt = $filter('date')(startDt, 'yyyy-MM-dd');
-
+        var endDt = moment().add(5, 'days').toDate();
+        var startDt= moment().add(3, 'days').toDate();
 
         validationService.validateEndDate(startDt, endDt, function(response) {
             expect(response.isError).toBe(false);
@@ -153,13 +134,8 @@ describe('validationService', function () {
     });
 
     it('returns an end date error when selected end date is earlier than start date.', function () {
-        var endDt = new Date();
-        endDt.setDate(endDt.getDate() + 5);
-        endDt = $filter('date')(endDt, 'yyyy-MM-dd');
-
-        var startDt = new Date();
-        startDt.setDate(startDt.getDate() + 7);
-        startDt = $filter('date')(startDt, 'yyyy-MM-dd');
+        var endDt = moment().add(5, 'days').toDate();
+        var startDt = moment().add(7, 'days').toDate();
 
         validationService.validateEndDate(startDt, endDt, function(response) {
             expect(response.isError).toBe(true);
@@ -169,20 +145,17 @@ describe('validationService', function () {
 
     it('sets minimum end date to today plus lead time when no start date is selected.', function() {
         var leadTime = 3;
-        var today = new Date();
-        var expectedMinEndDate = $filter('date')(today.setDate(today.getDate() + leadTime), 'yyyy-MM-dd');
+        var expectedMinEndDate = moment().add(leadTime, 'days').toDate();
 
         validationService.getMinEndDate(undefined, leadTime, function(response) {
             expect(response).toEqual(expectedMinEndDate);
         });
     })
 
-    it('sets minimum end date to today plus lead time when a start date is selected.', function() {
+    fit('sets minimum end date to today plus lead time when a start date is selected.', function() {
         var leadTime = 3;
-        var startDate = new Date();
-        startDate.setDate(startDate.getDate() + 5);
-        var expectedMinEndDate = $filter('date')(new Date().setDate(startDate.getDate() + leadTime), 'yyyy-MM-dd');
-        startDate = $filter('date')(startDate, 'yyyy-MM-dd');
+        var startDate = moment().add(5, 'days').toDate();
+        var expectedMinEndDate = moment(startDate).add(leadTime, 'days').toDate();
 
         validationService.getMinEndDate(startDate, leadTime, function(response) {
             expect(response).toEqual(expectedMinEndDate);

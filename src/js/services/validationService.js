@@ -12,10 +12,9 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
             message: ''
         };
 
-        // NEED TO REFACTOR THIS TO COMPARE THE TODAY MOMENT OBJECT TO START DATE
         var today = moment();
 
-        if (startDt < today && startDt) {
+        if(startDt && today.isAfter(startDt)) {
             startDateErrors.isError = true;
             startDateErrors.message = 'Start date cannot be earlier than today.';
         }
@@ -28,13 +27,13 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
             isError: false,
             message: ''
         };
-        var today = $filter('date')(new Date(), 'yyyy-MM-dd');
+        var today = moment();
 
         if (endDt) {
-            if (endDt < startDt) {
+            if (moment(endDt).isBefore(startDt)){
                 endDateError.isError = true;
                 endDateError.message = 'End date cannot be before start date.';
-            } else if (endDt < today) {
+            } else if (today.isAfter(endDt)) {
                 endDateError.isError = true;
                 endDateError.message = 'End date cannot be earlier than today.';
             }
@@ -52,8 +51,9 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
         var leadTimePromise = leadTimeService.fetchLeadTime();
         leadTimePromise.then(function (leadTime) {
             var minEndDate = publicApi.getMinEndDate(startDt,leadTime);
+
             if (endDt) {
-                if (endDt < minEndDate) {
+                if (moment(endDt).isBefore(minEndDate)) {
                     endDateError.isError = true;
                     endDateError.message = 'Please enter a valid end date. Earliest possible MSB end date is ' + minEndDate + '.';
                 }
