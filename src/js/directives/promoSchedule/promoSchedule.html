@@ -3,7 +3,7 @@
         <div class="md-text-field" flex="80">
             <label for="promoname">Start Date</label>
             <input class="" type="date" ng-model="$ctrl.data.startDtFmt" placeholder="yyyy-MM-dd" name="start" min="{{$ctrl.startDateLimit}}" max="9999-12-31" ng-required="$ctrl.preview"
-            ng-blur="$ctrl.convertToString(); $ctrl.validatePromotion()" />
+            ng-blur="$ctrl.validatePromotion()" />
             <span class='error-message' ng-show="promoform.start.$invalid">-->
             <span ng-show="promoform.start.$error.required">Please enter a valid start date</span>      
             </span>

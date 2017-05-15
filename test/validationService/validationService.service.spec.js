@@ -1,4 +1,4 @@
-describe('validationService.', function () {
+describe('validationService', function () {
     var $compile,
         $rootScope,
         $scope,
@@ -22,8 +22,8 @@ describe('validationService.', function () {
     }));
 
     it('returns a startDt errors object with isError and message properties.', function () {
+        var today = moment();
 
-        var today = $filter('date')(new Date(), 'yyyy-MM-dd');
         validationService.validateStartDate(today, function(response) {
             expect(response.isError).toBeDefined();
             expect(response.message).toBeDefined();
@@ -32,9 +32,8 @@ describe('validationService.', function () {
     });
 
     it('returns a start date error when selected start date is in the past.', function () {
-        var pastDate = new Date();
-        pastDate.setDate(pastDate.getDate() - 1);
-        pastDate = $filter('date')(pastDate, 'yyyy-MM-dd');
+        var pastDate = moment().subtract(3, 'days');
+        // pastDate = $filter('date')(pastDate, 'yyyy-MM-dd');
 
         validationService.validateStartDate(pastDate, function(response) {
             expect(response.isError).toBe(true);

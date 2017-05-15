@@ -37,12 +37,11 @@ function PromoScheduleController($filter, $scope, validationService) {
 
     this.validatePromotion = function() {
         this.validationErrors = validationService.validatePromotion(this.data);
-    }
-    
-    this.convertToString = function() {
-        if (this.data) {
-            this.data.startDt = $filter('date')(this.data.startDtFmt, 'yyyy-MM-dd');
-            this.data.endDt = $filter('date')(this.data.endDtFmt, 'yyyy-MM-dd');          
+        if (this.validationErrors.startDt.isError = false) {
+            this.data.startDt = moment(this.data.startDtFmt).format('YYYY MM DD');
+        }
+        if (this.validationErrors.endDt.isError = false) {
+            this.data.endDt = moment(this.data.endDtFmt).format('YYYY MM DD');
         }
     }
 

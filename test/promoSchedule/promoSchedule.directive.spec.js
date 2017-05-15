@@ -21,17 +21,6 @@ describe('Promo schedule', function() {
 
   }));
 
-  it('converts dates to strings.', function() {
-    ctrl.data.startDtFmt = new Date(2017, 8, 10);
-    ctrl.data.endDtFmt = new Date(2017, 9, 12);
-    ctrl.convertToString();
-    var expectedStringStartDate = $filter('date')(ctrl.data.startDtFmt, 'yyyy-MM-dd');
-    var expectedStringEndDate = $filter('date')(ctrl.data.endDtFmt, 'yyyy-MM-dd');
-
-    expect(ctrl.data.startDt).toEqual(expectedStringStartDate);
-    expect(ctrl.data.endDt).toEqual(expectedStringEndDate);
-  });
-
   it('sets startDtFmt and endDtFmt when editing a discount.', function() {
     ctrl.data.startDt = "2017-03-15";
     ctrl.data.endDt = "2017-04-10";

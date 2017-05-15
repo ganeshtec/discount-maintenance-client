@@ -12,7 +12,8 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
             message: ''
         };
 
-        var today = $filter('date')(new Date(), 'yyyy-MM-dd');
+        // NEED TO REFACTOR THIS TO COMPARE THE TODAY MOMENT OBJECT TO START DATE
+        var today = moment();
 
         if (startDt < today && startDt) {
             startDateErrors.isError = true;
@@ -63,12 +64,12 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
     }
 
     publicApi.getMinEndDate = function (startDt,leadTime) {
-        var today = $filter('date')(new Date(), 'yyyy-MM-dd');
+        var today = moment();
         // setting new Date with startDt assumes UTC, so it is off depending on the time of day.
         // With this logic, before 8EST the end date is one day too soon.
         // We could make it "leadTime + 1", but minEndDate would be one day too far after 8pm EST.
-        var startDate = (startDt && startDt >= today) ? new Date(startDt) : new Date();
-        var minEndDate = $filter('date')(startDate.setDate(startDate.getDate() + leadTime), 'yyyy-MM-dd')
+        var startDate = (startDt && startDt >= today) ? moment(startDt) : today;
+        var minEndDate = moment(startDate).add(leadTime, 'days');
         return minEndDate;
     };
 
@@ -130,12 +131,11 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
 
     publicApi.validatePromotion = function (promotion) {
         var validationErrors = {};
-
-        validationErrors.startDt = publicApi.validateStartDate(promotion.startDt);
+        validationErrors.startDt = publicApi.validateStartDate(promotion.startDtFmt);
         // Calls the appropriate end date validation based on whether or not the discount is MSB
         validationErrors.endDt = promotion.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB'
-            ? publicApi.validateMSBEndDate(promotion.startDt, promotion.endDt)
-            : publicApi.validateEndDate(promotion.startDt, promotion.endDt);
+            ? publicApi.validateMSBEndDate(promotion.startDtFmt, promotion.endDtFmt)
+            : publicApi.validateEndDate(promotion.startDtFmt, promotion.endDtFmt);
         
         validationErrors.minQtyThreshold = publicApi.validateMinimumQty(promotion.reward.details);
         validationErrors.percentOff = publicApi.validatePercentOff(promotion.reward.details);
