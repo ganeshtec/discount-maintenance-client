@@ -130,6 +130,10 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                     }
                 }
 
+                scope.validatePromotion = function() {
+                    scope.validationErrors = validationService.validatePromotion(scope.data);
+                }
+
                 // redemption method types
                 scope.redemptionMethodTypes = new redemptionMethodTypes();
 

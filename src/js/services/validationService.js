@@ -13,8 +13,7 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
         };
 
         var today = moment();
-
-        if(startDt && today.isAfter(startDt)) {
+        if(startDt && moment(startDt).isBefore(today, 'day')) {
             startDateErrors.isError = true;
             startDateErrors.message = 'Start date cannot be earlier than today.';
         }
@@ -30,10 +29,10 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
         var today = moment();
 
         if (endDt) {
-            if (moment(endDt).isBefore(startDt)){
+            if (moment(endDt).isBefore(startDt, 'day')){
                 endDateError.isError = true;
                 endDateError.message = 'End date cannot be before start date.';
-            } else if (today.isAfter(endDt)) {
+            } else if (moment(endDt).isBefore(today, 'day')) {
                 endDateError.isError = true;
                 endDateError.message = 'End date cannot be earlier than today.';
             }
@@ -53,9 +52,9 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
             var minEndDate = publicApi.getMinEndDate(startDt,leadTime);
 
             if (endDt) {
-                if (moment(endDt).isBefore(minEndDate)) {
+                if (moment(endDt).isBefore(minEndDate, 'day')) {
                     endDateError.isError = true;
-                    endDateError.message = 'Please enter a valid end date. Earliest possible MSB end date is ' + minEndDate + '.';
+                    endDateError.message = 'Please enter a valid end date. Earliest possible MSB end date is ' + minEndDate.format('MM/DD/YYYY') + '.';
                 }
             }
             return endDateError;
@@ -65,10 +64,7 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
 
     publicApi.getMinEndDate = function (startDt,leadTime) {
         var today = moment();
-        // setting new Date with startDt assumes UTC, so it is off depending on the time of day.
-        // With this logic, before 8EST the end date is one day too soon.
-        // We could make it "leadTime + 1", but minEndDate would be one day too far after 8pm EST.
-        var startDate = (startDt && startDt >= today) ? moment(startDt) : today;
+        var startDate = (startDt && today.isBefore(startDt, 'days')) ? moment(startDt) : today;
         var minEndDate = moment(startDate).add(leadTime, 'days');
         return minEndDate;
     };
@@ -136,7 +132,6 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
         validationErrors.endDt = promotion.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB'
             ? publicApi.validateMSBEndDate(promotion.startDtFmt, promotion.endDtFmt)
             : publicApi.validateEndDate(promotion.startDtFmt, promotion.endDtFmt);
-        
         validationErrors.minQtyThreshold = publicApi.validateMinimumQty(promotion.reward.details);
         validationErrors.percentOff = publicApi.validatePercentOff(promotion.reward.details);
 

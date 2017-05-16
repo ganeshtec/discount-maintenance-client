@@ -19,7 +19,7 @@
 				<label for="promotype">
 					Promotion Type
 				</label>
-				<select name="promotype" ng-options="promotype as promotype.promoSubTypeDesc for promotype in promotionSubTypes" ng-model="promoSubTypeObject" ng-change="getSelectedSubTypes()" ng-required=" preview">
+				<select name="promotype" ng-options="promotype as promotype.promoSubTypeDesc for promotype in promotionSubTypes" ng-model="promoSubTypeObject" ng-change="getSelectedSubTypes(); validatePromotion()" ng-required=" preview">
 					<option value="">
 						-- Select a promotion type --
 					</option>

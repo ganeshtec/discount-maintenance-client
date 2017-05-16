@@ -37,10 +37,10 @@ function PromoScheduleController($filter, $scope, validationService) {
 
     this.validatePromotion = function() {
         this.validationErrors = validationService.validatePromotion(this.data);
-        if (this.validationErrors.startDt.isError = false) {
+        if (this.validationErrors.startDt.isError === false) {
             this.data.startDt = moment(this.data.startDtFmt).format('YYYY MM DD');
         }
-        if (this.validationErrors.endDt.isError = false) {
+        if (this.validationErrors.endDt.isError === false) {
             this.data.endDt = moment(this.data.endDtFmt).format('YYYY MM DD');
         }
     }

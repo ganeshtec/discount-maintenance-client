@@ -152,7 +152,7 @@ describe('validationService', function () {
         });
     })
 
-    fit('sets minimum end date to today plus lead time when a start date is selected.', function() {
+    it('sets minimum end date to today plus lead time when a start date is selected.', function() {
         var leadTime = 3;
         var startDate = moment().add(5, 'days').toDate();
         var expectedMinEndDate = moment(startDate).add(leadTime, 'days').toDate();
