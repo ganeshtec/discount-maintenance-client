@@ -1,5 +1,5 @@
-app.controller('DashboardCtrl', ['$filter', '$scope', 'DataFactory', 'promotionDataService', '$location', '$routeParams', '$mdDialog', 'dashboardDataService', 'OverlayConfigFactory',
-    function ($filter, $scope, DataFactory, promotionDataService, $location, routeParams, $mdDialog, dashboardDataService, OverlayConfigFactory) {
+app.controller('DashboardCtrl', ['$filter', 'leadTimeService', '$scope', 'DataFactory', 'promotionDataService', '$location', '$routeParams', '$mdDialog', 'dashboardDataService', 'OverlayConfigFactory',
+    function ($filter, leadTimeService, $scope, DataFactory, promotionDataService, $location, routeParams, $mdDialog, dashboardDataService, OverlayConfigFactory) {
         var DEFAULT_RECORDS_PER_PG = 10,
             LEAST_RECORDS_PER_PG = 5; //smallest value in the records per page selectbox 
         $scope.selected = {};
@@ -210,20 +210,58 @@ app.controller('DashboardCtrl', ['$filter', '$scope', 'DataFactory', 'promotionD
             });
         }
 
+        $scope.isInLeadTime = function(endDate, leadTime) {
+            var today = new Date();
+            if (endDate.getDate() - today.getDate() <= leadTime){
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        $scope.eligibleLabelForDeactivate = function(labelFlag, status, inLeadTime) {
+            if (labelFlag && status == 61 && !inLeadTime) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
         $scope.deactivate = function () {
-            var deactivatePromise = promotionDataService.deactivate($scope.sel[0]);
-            $scope.loading = true;
-            deactivatePromise.then(function (data) {
-                var resp = checkForValid(data);
-                if (resp.valid && !resp.invalid) {
-                    showAlert('Success', 'Deactivated successfully', $scope.searchWithUrlParams);
-                } else if (resp.invalid) {
-                    showAlert('Error', 'Unable to deactivate promotion :' + JSON.stringify(resp.invalid));
-                }
-                $scope.loading = false;
-            }, function () {
-                $scope.loading = false;
-                $scope.searchWithUrlParams();
+            var promoPromise = promotionDataService.getPromotionByID($scope.sel[0]);
+            var leadTimePromise = leadTimeService.fetchLeadTime();
+            var promo;
+            var inLeadTime;
+            var endDate;
+            promoPromise.then(function (data) {
+                promo = data;
+                endDate = new Date(data.endDt);
+                leadTimePromise.then(function (data) {
+                    inLeadTime = $scope.isInLeadTime(endDate, data);
+                    if ($scope.eligibleLabelForDeactivate(promo.printLabel, promo.status, inLeadTime)) {
+                        var today = new Date();
+                        var newEndDate = new Date();
+                        newEndDate.setDate(today.getDate() + data);
+                        promo.endDt = $filter('date')(newEndDate, 'yyyy-MM-dd HH:mm:ss');
+                        promotionDataService.saveAsDraft(promo);
+                        showAlert('Success', promo.name + ' will end on ' + promo.endDt.split(' ')[0] + ' to account for labeling lead time', $scope.searchWithUrlParams);
+                    } else {
+                        var deactivatePromise = promotionDataService.deactivate($scope.sel[0]);
+                        $scope.loading = true;
+                        deactivatePromise.then(function (data) {
+                            var resp = checkForValid(data);
+                            if (resp.valid && !resp.invalid) {
+                                showAlert('Success', 'Deactivated successfully', $scope.searchWithUrlParams);
+                            } else if (resp.invalid) {
+                                showAlert('Error', 'Unable to deactivate promotion :' + JSON.stringify(resp.invalid));
+                            }
+                            $scope.loading = false;
+                        }, function () {
+                            $scope.loading = false;
+                            $scope.searchWithUrlParams();
+                        })
+                    }
+                })
             })
         };
 
@@ -346,7 +384,7 @@ app.controller('DashboardCtrl', ['$filter', '$scope', 'DataFactory', 'promotionD
                     $scope.status[status.promoStatusCd] = status.promoStatusDesc || '';
                 }
             },
-            function () {}
+            function () { }
         )
 
 
