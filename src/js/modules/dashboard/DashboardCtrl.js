@@ -227,6 +227,14 @@ app.controller('DashboardCtrl', ['$filter', 'leadTimeService', '$scope', 'DataFa
             }
         }
 
+        $scope.cannotBeDeactivated = function(labelFlag, status, inLeadTime) {
+            if (labelFlag && status == 61 && inLeadTime) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
         $scope.deactivate = function () {
             var promoPromise = promotionDataService.getPromotionByID($scope.sel[0]);
             var leadTimePromise = leadTimeService.fetchLeadTime();
@@ -245,7 +253,10 @@ app.controller('DashboardCtrl', ['$filter', 'leadTimeService', '$scope', 'DataFa
                         promo.endDt = $filter('date')(newEndDate, 'yyyy-MM-dd HH:mm:ss');
                         promotionDataService.saveAsDraft(promo);
                         showAlert('Success', promo.name + ' will end on ' + promo.endDt.split(' ')[0] + ' to account for labeling lead time', $scope.searchWithUrlParams);
-                    } else {
+                    } if ($scope.cannotBeDeactivated(promo.printLabel, promo.status, inLeadTime)) {
+                        showAlert('Failure', 'This discount is already scheduled to end on ' + promo.endDt.split(' ')[0] + ' and cannot be deactivated earlier due to the time to remove labels.', $scope.searchWithUrlParams);
+                    }
+                    else {
                         var deactivatePromise = promotionDataService.deactivate($scope.sel[0]);
                         $scope.loading = true;
                         deactivatePromise.then(function (data) {

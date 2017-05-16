@@ -28,8 +28,10 @@ describe('DashboardCtrl', function () {
             expect($scope.eligibleLabelForDeactivate(true, 61, true)).toEqual(false);
         });
 
-        // it('Determines no action can be taken on MSB with label if within lead time', function() {
-            
-        // });
+        it('Determines no action can be taken on MSB with label if within lead time', function() {
+            expect($scope.cannotBeDeactivated(true, 61, true)).toEqual(true);
+            expect($scope.cannotBeDeactivated(true, 61, false)).toEqual(false);
+            expect($scope.cannotBeDeactivated(true, 52, true)).toEqual(false);
+        });
     });
 });
