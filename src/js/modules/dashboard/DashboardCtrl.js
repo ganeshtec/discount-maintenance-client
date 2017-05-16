@@ -212,7 +212,8 @@ app.controller('DashboardCtrl', ['$filter', 'leadTimeService', '$scope', 'DataFa
 
         $scope.isInLeadTime = function(endDate, leadTime) {
             var today = new Date();
-            if (endDate.getDate() - today.getDate() <= leadTime){
+            var leadTimeSec = leadTime * 24 * 60 * 60 * 1000;
+            if (endDate.getTime() - today.getTime() <= leadTimeSec){
                 return true;
             } else {
                 return false;
