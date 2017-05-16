@@ -290,6 +290,7 @@ textarea {
 }
 
 md-dialog.md-default-theme.md-transition-in {
+  max-width: 300px;
   position: fixed !important;
   top: 50% !important;
   left: 50% !important;
