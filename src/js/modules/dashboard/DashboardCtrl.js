@@ -236,6 +236,14 @@ app.controller('DashboardCtrl', ['$filter', 'leadTimeService', '$scope', 'DataFa
             }
         }
 
+        $scope.constructAndSavePromo = function(leadTime, promo) {
+            var today = new Date();
+            var newEndDate = new Date();
+            newEndDate.setDate(today.getDate() + leadTime);
+            promo.endDt = $filter('date')(newEndDate, 'yyyy-MM-dd HH:mm:ss');
+            promotionDataService.saveAsDraft(promo);
+        }
+
         $scope.deactivate = function () {
             var promoPromise = promotionDataService.getPromotionByID($scope.sel[0]);
             var leadTimePromise = leadTimeService.fetchLeadTime();
@@ -245,18 +253,15 @@ app.controller('DashboardCtrl', ['$filter', 'leadTimeService', '$scope', 'DataFa
             promoPromise.then(function (data) {
                 promo = data;
                 endDate = new Date(data.endDt);
-                leadTimePromise.then(function (data) {
-                    inLeadTime = $scope.isInLeadTime(endDate, data);
+                leadTimePromise.then(function (leadTime) {
+                    inLeadTime = $scope.isInLeadTime(endDate, leadTime);
                     if ($scope.eligibleLabelForDeactivate(promo.printLabel, promo.status, inLeadTime)) {
-                        var today = new Date();
-                        var newEndDate = new Date();
-                        newEndDate.setDate(today.getDate() + data);
-                        promo.endDt = $filter('date')(newEndDate, 'yyyy-MM-dd HH:mm:ss');
-                        promotionDataService.saveAsDraft(promo);
-                        showAlert('Success', promo.name + ' will end on ' + promo.endDt.split(' ')[0] + ' to account for labeling lead time.', $scope.searchWithUrlParams);
+                        $scope.constructAndSavePromo(leadTime, promo);
+                        showAlert('Success', promo.name + ' will end on ' + promo.endDt.split(' ')[0] + ' to account for labeling lead time.');
                         return;
                     } if ($scope.cannotBeDeactivated(promo.printLabel, promo.status, inLeadTime)) {
-                        showAlert('Failure', 'This discount is already scheduled to end on ' + promo.endDt.split(' ')[0] + ' and cannot be deactivated earlier due to the time to remove labels.', $scope.searchWithUrlParams);
+                        showAlert('Failure', 'This discount is already scheduled to end on ' + promo.endDt.split(' ')[0] + ' and cannot be deactivated earlier due to the time to remove labels.');
+                        return;
                     } else {
                         var deactivatePromise = promotionDataService.deactivate($scope.sel[0]);
                         $scope.loading = true;
