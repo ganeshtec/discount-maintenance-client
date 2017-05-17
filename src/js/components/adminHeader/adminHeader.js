@@ -1,8 +1,26 @@
 app.component('adminHeader', {
     bindings: {
+        data: '=',
         promotype: '<',
         uistate: '<',
-        urls: '<'
+        urls: '<',
     },
     templateUrl: 'adminHeader.html',
+    controller: HeaderController
 });
+
+function HeaderController(utilService) {
+    var ctrl = this;
+    ctrl.utilService = utilService;
+    ctrl.isEndDtWithinLeadTime = false;
+    ctrl.$onInit = function () {
+        var isEndDtWithinLeadTimePromise = ctrl.utilService.isSubmitEligibleForDisable(ctrl.data);
+        isEndDtWithinLeadTimePromise.then(function (value) {
+            ctrl.isEndDtWithinLeadTime = value;
+        })
+        var leadTimePromise = ctrl.utilService.getLeadTime();
+        leadTimePromise.then(function (leadtimeValue) {
+            ctrl.leadTime = leadtimeValue;
+        });
+    }
+}

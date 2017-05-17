@@ -5,6 +5,7 @@
 
 app.service('utilService', ['$filter', 'leadTimeService', function ($filter, leadTimeService) {
     var publicApi = {};
+    this.leadTime;
     var rewardMethodMappoing = {
         'ProductLevelPercentDiscount': 'ALLAFFECTEDITMS',
         'CategoryLevelValueDiscount': 'ALLAFFECTEDITMS',
@@ -331,8 +332,13 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
             }
             return false;
         });
-        
     }
-    
+
+    publicApi.getLeadTime = function () {
+        return leadTimeService.fetchLeadTime();
+    }
+
+
+
     return publicApi;
 }]);

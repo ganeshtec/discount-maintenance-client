@@ -2,7 +2,7 @@
 	<div layout="row">
 		<div flex="100">
 			<!-- Admin Header compontent -->
-			<admin-header class="admin__header" promotype="promotionData" qa-page-type="{{UiState}}" uistate="UiState" urls="urls"></admin-header>
+			<admin-header class="admin__header"  ng-if="promotionData" data="promotionData" promotype="promotionData" qa-page-type="{{UiState}}" uistate="UiState" urls="urls"></admin-header>
 		</div>
 	</div>
 	<form class="admin__promotion__form" name="promoForm">
