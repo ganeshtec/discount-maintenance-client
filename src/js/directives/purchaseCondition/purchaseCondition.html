@@ -63,9 +63,14 @@
 									</span>
 							</span>
 							<span class='error-message' ng-show="$ctrl.validationErrors.maxPercentage[$index].isError">{{$ctrl.validationErrors.maxPercentage[$index].message}}	</span>			
-											
-							
-							
+							<!-- <span class='tooltip' ng-show="$ctrl.validationErrors.percentageWarning[$index].isError">{{$ctrl.validationErrors.percentageWarning[$index].message}}	</span> -->				
+							<tool-tipper tooltiptitle="Priority" ng-show="$ctrl.validationErrors.percentageWarning[$index].isError">
+			        		<p>
+			        		<!-- Assign a priority by entering a number between zero and one thousand. Zero is the lowest priority and one thousand is the highest priority. When multiple promotions are qualified for the same purchase condition, the one with the highest priority will be applied first.-->
+							{{$ctrl.validationErrors.percentageWarning[$index].message}}
+			       			</p>
+			    			</tool-tipper>
+
 				</td>
 				<td class="md-text-field">
 

@@ -168,6 +168,36 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
 
     }
 
+    publicApi.validatePercentageWarning = function (rewards) {
+
+        var arrlength = rewards.length;
+        var prctWarnObj = {};
+        var percentageWarning = [];
+
+        for (var i = 0; i < arrlength; i++) {
+
+            if (rewards[i].value > 50 ) {
+                prctWarnObj = {
+                    isError: true,
+                    message: 'You have entered over 50% for this discount. Please confirm the amount is correct before proceeding.' 
+                };
+                percentageWarning.push(prctWarnObj);
+            }
+
+            else {
+                prctWarnObj = {
+                    isError: false,
+                    message: ''
+                };
+                percentageWarning.push(prctWarnObj);
+            }
+
+        }
+
+        return percentageWarning;
+
+    }
+
     publicApi.validatePromotion = function (promotion) {
         var validationErrors = {};
 
@@ -180,6 +210,7 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
         validationErrors.minQtyThreshold = publicApi.validateMinimumQty(promotion.reward.details);
         validationErrors.maxPercentage = publicApi.validateMaxPercentage(promotion.reward.details);
         validationErrors.priorityRange = publicApi.validatePriority(promotion.priority);
+        validationErrors.percentageWarning = publicApi.validatePercentageWarning(promotion.reward.details);
 
         return validationErrors;
     }
