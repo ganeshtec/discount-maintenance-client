@@ -51,7 +51,7 @@
 				</td>
 				<td class="md-text-field">
 						<input type="text" id="value" name="value_{{$index}}" ng-model="item.value" ng-required="$ctrl.preview" ng-blur="$ctrl.roundPercentage($index); $ctrl.validatePromotion()" allow-pattern="^[\d.]+$" ng-if="$ctrl.data.reward.type=='AMTOFF'"/>
-                        <input type="text" id="value" name="value_{{$index}}" ng-model="item.value" ng-required="$ctrl.preview" ng-blur="$ctrl.roundPercentage($index); $ctrl.validatePromotion()" allow-pattern="^[\d.]+$" ng-if="$ctrl.data.reward.type=='PERCNTOFF'"/>
+                        <input type="text" id="value" name="value_{{$index}}" class="tooltiphead" ng-model="item.value" ng-required="$ctrl.preview" ng-blur="$ctrl.roundPercentage($index); $ctrl.validatePromotion()" allow-pattern="^[\d.]+$" ng-if="$ctrl.data.reward.type=='PERCNTOFF'"/>
 							<span class='error-message' ng-show="$ctrl.promoform['value_' + $index].$invalid || $ctrl.preview">
 									<span ng-show="$ctrl.promoform['value_' + $index].$error.required" ng-if="$ctrl.data.reward.type=='AMTOFF'">Please enter a valid amount</span>
 									
@@ -63,13 +63,31 @@
 									</span>
 							</span>
 							<span class='error-message' ng-show="$ctrl.validationErrors.maxPercentage[$index].isError">{{$ctrl.validationErrors.maxPercentage[$index].message}}	</span>			
-							<!-- <span class='tooltip' ng-show="$ctrl.validationErrors.percentageWarning[$index].isError">{{$ctrl.validationErrors.percentageWarning[$index].message}}	</span> -->				
-							<tool-tipper tooltiptitle="Priority" ng-show="$ctrl.validationErrors.percentageWarning[$index].isError">
-			        		<p>
-			        		<!-- Assign a priority by entering a number between zero and one thousand. Zero is the lowest priority and one thousand is the highest priority. When multiple promotions are qualified for the same purchase condition, the one with the highest priority will be applied first.-->
-							{{$ctrl.validationErrors.percentageWarning[$index].message}}
-			       			</p>
-			    			</tool-tipper>
+							<!-- <span class='tooltip' ng-show="$ctrl.validationErrors.percentageWarning[$index].isError">{{$ctrl.validationErrors.percentageWarning[$index].message}}	</span> -->	
+
+							<tool-tipper-warning  ng-show="$ctrl.validationErrors.percentageWarning[$index].isError" show-tool-tip="true">	
+								<p>
+								{{$ctrl.validationErrors.percentageWarning[$index].message}}
+								</p>		
+							<!--<span> 
+								<span  class="tooltipbody">
+									<div class="tooltippoint">
+										&nbsp;
+									</div>
+									<div class="tooltipcontent">
+										<div class="tooltipmessage ax_default">
+											<p>
+											{{$ctrl.validationErrors.percentageWarning[$index].message}}
+											</p>
+										</div>
+										<div class="tooltipclose">
+											<i class="fa fa-close" aria-label="Close" ng-click="showToolTip=!showToolTip"></i>
+										</div>
+									</div>
+								</span>
+							</span>	-->
+			        		
+							</tool-tipper-warning>
 
 				</td>
 				<td class="md-text-field">
