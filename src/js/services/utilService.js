@@ -323,11 +323,13 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
     }
 
     publicApi.isSubmitEligibleForDisable = function (promotion) {
+        
         var leadTimePromise = leadTimeService.fetchLeadTime();
         return leadTimePromise.then(function (leadTime) {
+            var leadtimeSec= leadTime * 24 * 60 * 60 *1000;
             var today = new Date();
             var endDate = new Date(promotion.endDt);
-            if (endDate.getDate() - today.getDate() <= leadTime && promotion.status == 61 && promotion.printLabel === true) {
+            if (endDate.getTime() - today.getTime() <= leadtimeSec && promotion.status == 61 && promotion.printLabel === true) {
                 return true;
             }
             return false;

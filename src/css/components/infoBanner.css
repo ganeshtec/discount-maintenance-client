@@ -6,7 +6,7 @@
 .infobannerbody {
     width: 1200px; 
     padding-left: 90px;
-    position: relative;
+    /*position: relative;*/
 
     /* Position the tooltip */
     position: absolute;
@@ -15,29 +15,13 @@
     left: 100%;
 }
 
-.infobannerpoint {
-    float: left;
-    position: absolute;
-    left: 0;
-    top: 15px;
-    z-index: -1;
-    width: 50px;
-    display: block;
-    background-color: rgba(40, 111, 173, 1);
-    -webkit-transform: rotate(45deg);
-    -moz-transform: rotate(45deg);
-    -o-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    transform: rotate(45deg);
-}
-
 .infobannercontent {
     font-family: 'Open Sans', sans-serif;
     font-size: 12px;
     line-height: 20px;
     color: #fff;
     margin-top: -20px;
-    margin-left: -90px;
+    margin-left: 0px;
     float: left;
     position: relative; 
     background: inherit;
@@ -55,13 +39,6 @@
     display: inline-block;
 }
 
-.infobannerclose {
-    float: left;
-    background-color: rgba(40, 111, 173, 1);
-    cursor: pointer; 
-    left: 742px; 
-    top: 11px;
-}
 .infobannertitle {
     font-size: 18px;
     font-weight: bold;

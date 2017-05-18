@@ -14,13 +14,15 @@ function HeaderController(utilService) {
     ctrl.utilService = utilService;
     ctrl.isEndDtWithinLeadTime = false;
     ctrl.$onInit = function () {
-        var isEndDtWithinLeadTimePromise = ctrl.utilService.isSubmitEligibleForDisable(ctrl.data);
-        isEndDtWithinLeadTimePromise.then(function (value) {
-            ctrl.isEndDtWithinLeadTime = value;
-        })
-        var leadTimePromise = ctrl.utilService.getLeadTime();
-        leadTimePromise.then(function (leadtimeValue) {
-            ctrl.leadTime = leadtimeValue;
-        });
+        if(ctrl.data!=null){
+            var isEndDtWithinLeadTimePromise = ctrl.utilService.isSubmitEligibleForDisable(ctrl.data);
+            isEndDtWithinLeadTimePromise.then(function (value) {
+                ctrl.isEndDtWithinLeadTime = value;
+            })
+            var leadTimePromise = ctrl.utilService.getLeadTime();
+            leadTimePromise.then(function (leadtimeValue) {
+                ctrl.leadTime = leadtimeValue;
+            });
+        }
     }
 }
