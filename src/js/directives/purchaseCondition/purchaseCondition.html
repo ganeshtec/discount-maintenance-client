@@ -65,27 +65,10 @@
 							<span class='error-message' ng-show="$ctrl.validationErrors.maxPercentage[$index].isError">{{$ctrl.validationErrors.maxPercentage[$index].message}}	</span>			
 							<!-- <span class='tooltip' ng-show="$ctrl.validationErrors.percentageWarning[$index].isError">{{$ctrl.validationErrors.percentageWarning[$index].message}}	</span> -->	
 
-							<tool-tipper-warning  ng-show="$ctrl.validationErrors.percentageWarning[$index].isError" show-tool-tip="true">	
+							<tool-tipper-warning  ng-if="$ctrl.validationErrors.percentageWarning[$index].isError" show-tool-tip="true">	
 								<p>
 								{{$ctrl.validationErrors.percentageWarning[$index].message}}
 								</p>		
-							<!--<span> 
-								<span  class="tooltipbody">
-									<div class="tooltippoint">
-										&nbsp;
-									</div>
-									<div class="tooltipcontent">
-										<div class="tooltipmessage ax_default">
-											<p>
-											{{$ctrl.validationErrors.percentageWarning[$index].message}}
-											</p>
-										</div>
-										<div class="tooltipclose">
-											<i class="fa fa-close" aria-label="Close" ng-click="showToolTip=!showToolTip"></i>
-										</div>
-									</div>
-								</span>
-							</span>	-->
 			        		
 							</tool-tipper-warning>
 

@@ -112,19 +112,27 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
 
         //var today = new Date();
         var today = $filter('date')(new Date(), 'yyyy-MM-dd');
+        var todayDT = new Date(today);
+        var startDT = new Date(startDt);
+
+        // console.log("Today Date:: "+ todayDT.getTime());
+        // console.log("Start Date:: "+ startDT.getTime());
 
         var threeMonthsTime = 90 * 24 * 60 * 60 * 1000;
-        var threeMonthsWarning = {
+        // console.log("threeMonthsTime :: "+ threeMonthsTime);
+
+        var threeMonthsWarningErr = {
             isError: false,
             message: ''
         };
-
-        if (startDt - today >= threeMonthsTime) {
-            threeMonthsWarning.isError = true;
-            threeMonthsWarning.message = 'Discount start date is after 3 months. Please check!!'
+       
+        if (startDT.getTime() - todayDT.getTime() >= threeMonthsTime) {
+         //   console.log("Inside IF"); 
+            threeMonthsWarningErr.isError = true;
+            threeMonthsWarningErr.message = 'Discount start date is after 3 months. Please check!!'
         }
 
-        return threeMonthsWarning;
+        return threeMonthsWarningErr;
     }
 
     publicApi.validateMinimumQty = function (rewards) {

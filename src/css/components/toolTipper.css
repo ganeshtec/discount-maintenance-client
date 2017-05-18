@@ -1,4 +1,5 @@
 .tooltip {
+    content: "";
     position: relative;
     display: inline-block;
 }
@@ -31,6 +32,23 @@
     transform: rotate(45deg);
 }
 
+.tooltipcontent-warning {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    line-height: 22px;
+    color: #fff;
+    margin-top: -65px;
+    margin-left: 200px;
+    float: left;
+    position: relative;
+    background: inherit;
+    background-color: #FFC20E;
+    border: none;
+    text-align: left;
+    overflow: hidden;
+    width: 100%;
+}
+
 .tooltipcontent {
     font-family: 'Open Sans', sans-serif;
     font-size: 14px;
@@ -55,8 +73,11 @@
 
 .tooltipclose {
     float: left;
-    background-color: rgba(40, 111, 173, 1);
     cursor: pointer; 
     left: 742px; 
     top: 11px;
 }
+
+#pointer{
+    border:solid 10px transparent;border-right-color:#fff;position:absolute;margin:-85px 0 0 -20px;
+    }

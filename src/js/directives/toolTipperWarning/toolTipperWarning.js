@@ -1,18 +1,12 @@
-app.component('toolTipperWarning', {
-    templateUrl: 'toolTipperWarning.html',
-    bindings: {
-        showToolTip: '<'
-    },
-    transclude: true,
-    controller: ToolTipperWarningController
-});
-
-//PromoLabelsController.$inject = ['validationService'];
-
-function ToolTipperWarningController() {
-
-
-
-  
-
-}
+app.directive('toolTipperWarning', [
+    function () {
+        return {
+            restrict: 'E',
+            scope: {
+                showToolTip: '<'
+            },
+            transclude: true,
+            templateUrl: 'toolTipperWarning.html'
+        };
+    }
+]);
