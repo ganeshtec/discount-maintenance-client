@@ -108,6 +108,25 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
         return endDtLessThanStartErr;
     }
 
+    publicApi.validateThreeMonthsWarning = function (startDt) {
+
+        //var today = new Date();
+        var today = $filter('date')(new Date(), 'yyyy-MM-dd');
+
+        var threeMonthsTime = 90 * 24 * 60 * 60 * 1000;
+        var threeMonthsWarning = {
+            isError: false,
+            message: ''
+        };
+
+        if (startDt - today >= threeMonthsTime) {
+            threeMonthsWarning.isError = true;
+            threeMonthsWarning.message = 'Discount start date is after 3 months. Please check!!'
+        }
+
+        return threeMonthsWarning;
+    }
+
     publicApi.validateMinimumQty = function (rewards) {
 
         var arrlength = rewards.length;
@@ -211,6 +230,7 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
         validationErrors.maxPercentage = publicApi.validateMaxPercentage(promotion.reward.details);
         validationErrors.priorityRange = publicApi.validatePriority(promotion.priority);
         validationErrors.percentageWarning = publicApi.validatePercentageWarning(promotion.reward.details);
+        validationErrors.threeMonthsWarning = publicApi.validateThreeMonthsWarning(promotion.startDt);
 
         return validationErrors;
     }
