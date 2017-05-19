@@ -129,7 +129,7 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
         if (startDT.getTime() - todayDT.getTime() >= threeMonthsTime) {
          //   console.log("Inside IF"); 
             threeMonthsWarningErr.isError = true;
-            threeMonthsWarningErr.message = 'Discount start date is after 3 months. Please check!!'
+            threeMonthsWarningErr.message = 'This discount is starting 3 or more months later'
         }
 
         return threeMonthsWarningErr;
@@ -206,7 +206,7 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
             if (rewards[i].value > 50 ) {
                 prctWarnObj = {
                     isError: true,
-                    message: 'You have entered over 50% for this discount. Please confirm the amount is correct before proceeding.' 
+                    message: 'You have entered over 50% for this discount.' 
                 };
                 percentageWarning.push(prctWarnObj);
             }
@@ -225,6 +225,36 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
 
     }
 
+    publicApi.validateAmountWarning = function (rewards) {
+
+        var arrlength = rewards.length;
+        var amtWarnObj = {};
+        var amountWarning = [];
+
+        for (var i = 0; i < arrlength; i++) {
+            
+            if (rewards[i].maxAllowedVal > 100 ) {
+                amtWarnObj = {
+                    isError: true,
+                    message: 'You have entered over $100 for this discount.' 
+                };
+                amountWarning.push(amtWarnObj);
+            }
+
+            else {
+                amtWarnObj = {
+                    isError: false,
+                    message: ''
+                };
+                amountWarning.push(amtWarnObj);
+            }
+
+        }
+
+        return amountWarning;
+
+    }
+
     publicApi.validatePromotion = function (promotion) {
         var validationErrors = {};
 
@@ -238,6 +268,7 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
         validationErrors.maxPercentage = publicApi.validateMaxPercentage(promotion.reward.details);
         validationErrors.priorityRange = publicApi.validatePriority(promotion.priority);
         validationErrors.percentageWarning = publicApi.validatePercentageWarning(promotion.reward.details);
+        validationErrors.amountWarning = publicApi.validateAmountWarning(promotion.reward.details);
         validationErrors.threeMonthsWarning = publicApi.validateThreeMonthsWarning(promotion.startDt);
 
         return validationErrors;

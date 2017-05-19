@@ -75,12 +75,19 @@
 				</td>
 				<td class="md-text-field">
 
-						<input type="text" id="maxval" name="maxval_{{$index}}" ng-model="item.maxAllowedVal"  ng-if="$ctrl.data.reward.type=='PERCNTOFF'" allow-pattern="^[\d.]+$"  />
+						<input type="text" id="maxval" name="maxval_{{$index}}" ng-model="item.maxAllowedVal" ng-blur="$ctrl.validatePromotion()"  ng-if="$ctrl.data.reward.type=='PERCNTOFF'" allow-pattern="^[\d.]+$"  />
 							<span class='error-message' ng-show="$ctrl.promoform['maxval_' + $index].$invalid ">
 								<span ng-show="$ctrl.promoform['maxval_' + $index].$error.pattern">Please enter valid number</span>
 							</span> 
 
-
+						<tool-tipper-warning  ng-show="$ctrl.validationErrors.amountWarning[$index].isError" show-tool-tip="true">	
+								<p>
+								{{$ctrl.validationErrors.amountWarning[$index].message}}
+								</p>		
+			        		
+							</tool-tipper-warning>	
+					
+							
 				</td>
 				<td class="md-text-field"> <a ng-click="$ctrl.isDisabled || $ctrl.removePurchaseCondition(index)">Remove</a>
 				</td>
@@ -92,7 +99,7 @@
     <div class="md-text-field" ng-if="$ctrl.promotype=='MultipleItemsPercentDiscount'">
       <label for="percentoff">Percentage discount off each combination</label>
       <input type="text" ng-model="$ctrl.data.reward.details[0].value" name="percentoff" ng-required="$ctrl.preview" required allow-pattern="(\d)" />
-      <span class='error-message' ng-show="$ctrl.promoform.percentoff.$invalid ">
+      <span class='error-message' ng-show="$ctrl.promoform.percentoff.$invalid ">	
 			<span ng-show="$ctrl.promoform.percentoff.$error.required">Please enter a valid discount amount</span>
             
 	</span>
