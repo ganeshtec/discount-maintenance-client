@@ -1,5 +1,5 @@
-/* 
-	State Service 
+/*
+	State Service
 	Services that will handle setting common state of ui properties
 */
 
@@ -41,7 +41,7 @@ app.service('utilService', ['$filter', function ($filter) {
         return approve[promotion.status]
     }
     publicApi.needsValidation = function (promotion) {
-        //these promoitons need to be validated before being saved as draftand submitted 
+        //these promoitons need to be validated before being saved as draftand submitted
         var validate = {
             '61': true, // active
             '57': true, // pending
@@ -60,7 +60,7 @@ app.service('utilService', ['$filter', function ($filter) {
             promotion.meta.action = 'create';
         } else if (promotion.meta.action) {
             if (promotion.meta.action != 'create' && promotion.meta.action != 'update' && promotion.meta.action != 'update') {
-                //this bolckis to correct old data in QA , should not happen in production       
+                //this bolckis to correct old data in QA , should not happen in production
                 if (promotion.promoId) {
                     promotion.meta.action = 'update';
                 } else {
@@ -131,12 +131,12 @@ app.service('utilService', ['$filter', function ($filter) {
 
         //check to validate items and category
 
-        if (promotion.startDt) {
-            promotion.startDt = promotion.startDt.split(' ')[0] + ' 03:00:00';
-        }
-        if (promotion.endDt) {
-            promotion.endDt = promotion.endDt.split(' ')[0] + ' 02:59:59';
-        }
+        // if (promotion.startDt) {
+        //     promotion.startDt = promotion.startDt.split(' ')[0] + ' 03:00:00';
+        // }
+        // if (promotion.endDt) {
+        //     promotion.endDt = promotion.endDt.split(' ')[0] + ' 02:59:59';
+        // }
 
         publicApi.validateItemCategory(promotion);
 
@@ -320,9 +320,9 @@ app.service('utilService', ['$filter', function ($filter) {
             promotion.promoTypeCd = 10;
         }
     }
-    
+
     // publicApi.isPromotionActive = function() {
-        
+
     //     return null;
     // }
 

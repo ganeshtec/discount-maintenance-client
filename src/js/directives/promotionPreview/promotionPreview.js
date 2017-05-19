@@ -13,7 +13,7 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                 formHolder: '=',
                 viewProp: '=',
                 promoMfa: '=',
-              
+
 
             },
             link: function (scope, element) {
@@ -59,8 +59,10 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                         scope.previewData.data.promoSubTypeCd = 'ProductLevelPerItemPercentDiscount';
                     }
                     var promotion = scope.previewData.data;
+                    console.log(promotion);
                     utilService.setDefaultsForSaveAsDraft(promotion);
                     utilService.transformPromotionRequest(promotion);
+                    console.log(promotion);
                     var missing = utilService.requiredFieldsMissing(promotion);
                     var isBuyAandBHasSource = utilService.validateBuyAandB(promotion);
                     if (!scope.originalSet) {
@@ -94,6 +96,7 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                     var needsValidation = utilService.needsValidation(promotion);
                     scope.submitStatus = 'Saving as draft';
                     var save = function () {
+                        console.log(promotion);
                         var promise = promotionDataService.saveAsDraft(promotion);
                         promise.then(
                             function (data) {
@@ -118,12 +121,13 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                         )
                     }
                     if (needsValidation) {
-
+                        console.log(promotion);
                         var validatePromise = promotionDataService.validate(promotion);
                         scope.submitStatus = 'Validating promotion';
                         validatePromise.then(function () {
                             save();
                         }, function (res) {
+                            console.log(res);
                             var data = res.data;
                             if (data && data.validationErrorDetail) {
                                 var errorData = data.validationErrorDetail.promotionValidationErrors;
