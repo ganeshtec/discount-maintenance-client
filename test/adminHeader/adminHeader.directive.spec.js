@@ -29,7 +29,7 @@ describe('Unit testing adminHeader.directive.spec.js', function() {
     $httpBackend.flush();
   });
 
-  fit('Checks if content is constructed according to input data.', function() {
+  it('Checks if content is constructed according to input data.', function() {
     // Compile a piece of HTML containing the directive
     $scope.uistate="Edit";
     $scope.promotype={};
