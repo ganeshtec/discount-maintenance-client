@@ -40,7 +40,8 @@ var input = {
             'node_modules/angular-aria/angular-aria.min.js',
             'node_modules/angular-material/angular-material.min.js',
             'node_modules/angular-cookies/angular-cookies.min.js',
-            'node_modules/angular-route/angular-route.min.js'
+            'node_modules/angular-route/angular-route.min.js',
+            'node_modules/moment/moment.js'
         ],
         'fonts': [
             'node_modules/font-awesome/fonts/*'
@@ -204,7 +205,7 @@ gulp.task('buildArtifact', () =>
         .pipe(gulp.dest('public'))
 );
 
-gulp.task('srcbuild', ['lint','concat:vendor-js', 'concat:js', 'build:vendor-css', 'build:css', 'copy:index', 'copy:html', 'copy:fonts']);
+gulp.task('srcbuild', [ 'lint' ,'concat:vendor-js', 'concat:js', 'build:vendor-css', 'build:css', 'copy:index', 'copy:html', 'copy:fonts']);
 gulp.task('build-prod', gulpSequence('prebuild:clean', 'srcbuild', 'copy:prodUrls'));
 gulp.task('build-qa', gulpSequence('prebuild:clean', 'srcbuild', 'copy:qaUrls'));
 gulp.task('build-ad', gulpSequence('prebuild:clean', 'srcbuild', 'copy:adUrls'));

@@ -13,7 +13,8 @@
         "module": true,
         "inject": true,
         "require": true,
-        "__dirname": true
+        "__dirname": true,
+        "moment": true
     },
     "extends": "eslint:recommended",
     "rules": {

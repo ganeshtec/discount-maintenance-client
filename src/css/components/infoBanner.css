@@ -1,0 +1,45 @@
+.infobanner {
+    position: relative;
+    display: inline-block;
+}
+
+.infobannerbody {
+    width: 1200px; 
+    padding-left: 90px;
+    /*position: relative;*/
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: -5px;
+    left: 100%;
+}
+
+.infobannercontent {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12px;
+    line-height: 20px;
+    color: #fff;
+    margin-top: -20px;
+    margin-left: 0px;
+    float: left;
+    position: relative; 
+    background: inherit;
+    background-color: rgba(40, 111, 173, 1);
+    border: none;
+    text-align: left; 
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.infobannermessage {
+    float: left;
+    width: 90%;
+    margin: 10px;
+    display: inline-block;
+}
+
+.infobannertitle {
+    font-size: 18px;
+    font-weight: bold;
+}
