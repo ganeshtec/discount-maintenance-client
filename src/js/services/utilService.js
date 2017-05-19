@@ -326,10 +326,8 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
         
         var leadTimePromise = leadTimeService.fetchLeadTime();
         return leadTimePromise.then(function (leadTime) {
-            var leadtimeSec= leadTime * 24 * 60 * 60 *1000;
-            var today = new Date();
-            var endDate = new Date(promotion.endDt);
-            if (endDate.getTime() - today.getTime() <= leadtimeSec && promotion.status == 61 && promotion.printLabel === true) {
+            var minDt = moment(promotion.endDt).subtract(leadTime,'days');
+            if (moment().isAfter(minDt) && promotion.status == 61 && promotion.printLabel === true) {
                 return true;
             }
             return false;

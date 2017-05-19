@@ -1,8 +1,5 @@
 app.component('infoBanner', {
     templateUrl: 'infoBanner.html',
-    bindings: {
-        data: '='
-    },
     controller: InfoBannerController,
 });
 

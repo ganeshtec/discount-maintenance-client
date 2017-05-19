@@ -19,10 +19,6 @@ function HeaderController(utilService) {
             isEndDtWithinLeadTimePromise.then(function (value) {
                 ctrl.isEndDtWithinLeadTime = value;
             })
-            var leadTimePromise = ctrl.utilService.getLeadTime();
-            leadTimePromise.then(function (leadtimeValue) {
-                ctrl.leadTime = leadtimeValue;
-            });
         }
     }
 }
