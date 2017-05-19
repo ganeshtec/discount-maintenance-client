@@ -60,7 +60,7 @@ describe('utilService', function () {
 
   it('isSubmitEligibleForDisable should return false for active promotion without printlabel and endDt within lead time', function () {
     var promotion = {
-      "endDt": moment().add(1, 'days').toDate(),
+      "endDt": moment().add(1, 'days').format("YYYY-MM-DD"),
       "printLabel": false,
       "status": 61
     }
@@ -70,7 +70,7 @@ describe('utilService', function () {
 
   it('isSubmitEligibleForDisable should return false for active promotion without printlabel and endDt outside lead time', function () {
     var promotion = {
-      "endDt": moment().add(10, 'days').toDate(),
+      "endDt": moment().add(10, 'days').format("YYYY-MM-DD"),
       "printLabel": false,
       "status": 61
     }
@@ -81,7 +81,7 @@ describe('utilService', function () {
 
   it('isSubmitEligibleForDisable should return false for inactive promotion with printlabel and endDt outside lead time', function () {
     var promotion = {
-      "endDt": moment().add(10, 'days').toDate(),
+      "endDt": moment().add(10, 'days').format("YYYY-MM-DD"),
       "printLabel": true,
       "status": 20
     }
@@ -91,7 +91,7 @@ describe('utilService', function () {
 
   it('isSubmitEligibleForDisable should return true for active promotion with printlabel and endDt minus lead time is equal to today', function () {
     var promotion = {
-      "endDt": moment().add(2, 'days').toDate(),
+      "endDt": moment().add(3, 'days').format("YYYY-MM-DD"),
       "printLabel": true,
       "status": 61
     }
@@ -102,7 +102,7 @@ describe('utilService', function () {
 
   it('isSubmitEligibleForDisable should return false for active promotion with printlabel and today is one day more than end date minus lead time', function () {
     var promotion = {
-      "endDt": moment().add(3, 'days').toDate(),
+      "endDt": moment().add(4, 'days').format("YYYY-MM-DD"),
       "printLabel": true,
       "status": 61
     }
