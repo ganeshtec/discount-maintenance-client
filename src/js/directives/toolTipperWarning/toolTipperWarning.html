@@ -5,11 +5,14 @@
 
 
     <span ng-show="showToolTip" class="tooltipbody">
+			<div class="tooltippoint-warning">
+			&nbsp;
+		</div>
 		<div class="tooltipcontent-warning">
 			<div class="tooltipmessage ax_default">
 				<ng-transclude></ng-transclude>
 			</div>
-			<div class="tooltipclose">
+			<div class="tooltipclose-warning">
 				<i class="fa fa-close" aria-label="Close" ng-click="showToolTip=!showToolTip"></i>
 			</div>
 		</div>
