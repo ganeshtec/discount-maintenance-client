@@ -246,6 +246,19 @@ describe('validationService', function () {
         expect(response.message).not.toBe('');
     });
 
+    it('Returns isError as true and non empty error message when selected percentage greater than 50%', function () {
+        var rewards = [{ min: 0, value: 75, maxAllowedVal: 2 }, { min: 0, value: 25, maxAllowedVal: 0 }, { min: 0, value: 75, maxAllowedVal: 25 }]
+
+        var response = validationService.validatePercentageWarning(rewards);
+        expect(response[0].isError).toBe(true);
+        expect(response[0].message).not.toBe('');
+        expect(response[1].isError).toBe(false);
+        expect(response[1].message).toBe('');
+        expect(response[2].isError).toBe(true);
+        expect(response[2].message).not.toBe('');
+    });
+
+  
 
 
 });

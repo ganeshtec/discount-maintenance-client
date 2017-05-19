@@ -8,6 +8,7 @@
             <span ng-show="promoform.start.$error.required">Please enter a valid start date</span>      
             </span>
             <span class='error-message' ng-show="$ctrl.validationErrors.startDt.isError">{{$ctrl.validationErrors.startDt.message}}</span>
+            <span class='error-message' ng-show="$ctrl.validationErrors.threeMonthsWarning.isError">{{$ctrl.validationErrors.threeMonthsWarning.message}}</span>
 
         </div>
     </div>
