@@ -225,35 +225,6 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
 
     }
 
-    publicApi.validateAmountWarning = function (rewards) {
-
-        var arrlength = rewards.length;
-        var amtWarnObj = {};
-        var amountWarning = [];
-
-        for (var i = 0; i < arrlength; i++) {
-            
-            if (rewards[i].maxAllowedVal > 100 ) {
-                amtWarnObj = {
-                    isError: true,
-                    message: 'You have entered over $100 for this discount.' 
-                };
-                amountWarning.push(amtWarnObj);
-            }
-
-            else {
-                amtWarnObj = {
-                    isError: false,
-                    message: ''
-                };
-                amountWarning.push(amtWarnObj);
-            }
-
-        }
-
-        return amountWarning;
-
-    }
 
     publicApi.validatePromotion = function (promotion) {
         var validationErrors = {};
@@ -268,7 +239,6 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
         validationErrors.maxPercentage = publicApi.validateMaxPercentage(promotion.reward.details);
         validationErrors.priorityRange = publicApi.validatePriority(promotion.priority);
         validationErrors.percentageWarning = publicApi.validatePercentageWarning(promotion.reward.details);
-        validationErrors.amountWarning = publicApi.validateAmountWarning(promotion.reward.details);
         validationErrors.threeMonthsWarning = publicApi.validateThreeMonthsWarning(promotion.startDt);
 
         return validationErrors;
