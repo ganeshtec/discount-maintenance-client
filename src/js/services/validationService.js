@@ -108,6 +108,33 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
         return endDtLessThanStartErr;
     }
 
+    publicApi.validateThreeMonthsWarning = function (startDt) {
+
+        //var today = new Date();
+        var today = $filter('date')(new Date(), 'yyyy-MM-dd');
+        var todayDT = new Date(today);
+        var startDT = new Date(startDt);
+
+        // console.log("Today Date:: "+ todayDT.getTime());
+        // console.log("Start Date:: "+ startDT.getTime());
+
+        var threeMonthsTime = 90 * 24 * 60 * 60 * 1000;
+        // console.log("threeMonthsTime :: "+ threeMonthsTime);
+
+        var threeMonthsWarningErr = {
+            isError: false,
+            message: ''
+        };
+       
+        if (startDT.getTime() - todayDT.getTime() >= threeMonthsTime) {
+         //   console.log("Inside IF"); 
+            threeMonthsWarningErr.isError = true;
+            threeMonthsWarningErr.message = 'This discount is starting 3 or more months later'
+        }
+
+        return threeMonthsWarningErr;
+    }
+
     publicApi.validateMinimumQty = function (rewards) {
 
         var arrlength = rewards.length;
@@ -168,6 +195,37 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
 
     }
 
+    publicApi.validatePercentageWarning = function (rewards) {
+
+        var arrlength = rewards.length;
+        var prctWarnObj = {};
+        var percentageWarning = [];
+
+        for (var i = 0; i < arrlength; i++) {
+
+            if (rewards[i].value > 50 ) {
+                prctWarnObj = {
+                    isError: true,
+                    message: 'You have entered over 50% for this discount.' 
+                };
+                percentageWarning.push(prctWarnObj);
+            }
+
+            else {
+                prctWarnObj = {
+                    isError: false,
+                    message: ''
+                };
+                percentageWarning.push(prctWarnObj);
+            }
+
+        }
+
+        return percentageWarning;
+
+    }
+
+
     publicApi.validatePromotion = function (promotion) {
         var validationErrors = {};
 
@@ -180,6 +238,8 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
         validationErrors.minQtyThreshold = publicApi.validateMinimumQty(promotion.reward.details);
         validationErrors.maxPercentage = publicApi.validateMaxPercentage(promotion.reward.details);
         validationErrors.priorityRange = publicApi.validatePriority(promotion.priority);
+        validationErrors.percentageWarning = publicApi.validatePercentageWarning(promotion.reward.details);
+        validationErrors.threeMonthsWarning = publicApi.validateThreeMonthsWarning(promotion.startDt);
 
         return validationErrors;
     }

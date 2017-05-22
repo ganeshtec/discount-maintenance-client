@@ -24,10 +24,12 @@
     "angular-material": "1.0.5",
     "angular-mocks": "1.5.5",
     "angular-route": "1.5.5",
+    "angular-tooltips": "^1.1.11",
     "font-awesome": "4.6.3",
     "hapi": "13.5.0",
     "inert": "^3.2.0",
-    "karma-junit-reporter": "^1.2.0"
+    "karma-junit-reporter": "^1.2.0",
+    "moment": "^2.18.1"
   },
   "author": "Darryl Crockett",
   "license": "MIT",

@@ -12,6 +12,7 @@ module.exports = function(config) {
             'node_modules/angular-aria/angular-aria.js',
             'node_modules/angular-material/angular-material.js',
             'node_modules/angular-cookies/angular-cookies.js',
+            'node_modules/moment/moment.js',
             'src/js/app.js',
             'env_config/karma/*.js',
             'src/js/modules/**/*.js',
