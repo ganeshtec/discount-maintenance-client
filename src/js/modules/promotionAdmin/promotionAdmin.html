@@ -2,7 +2,7 @@
 	<div layout="row">
 		<div flex="100">
 			<!-- Admin Header compontent -->
-			<admin-header class="admin__header" promotype="promotionData" qa-page-type="{{UiState}}" uistate="UiState" urls="urls"></admin-header>
+			<admin-header class="admin__header"  ng-if="promotionData" data="promotionData" promotype="promotionData" qa-page-type="{{UiState}}" uistate="UiState" urls="urls"></admin-header>
 		</div>
 	</div>
 	<form class="admin__promotion__form" name="promoForm">
@@ -13,7 +13,7 @@
 			</div>
 			<div class="admin__content" flex="75">
 				<!-- Admin Promotion Form -->
-				<admin-promotion-form data="promotionData" view-prop="viewProperties" promo-mfa="promotionSubTypesForMFA" index="sectionInx" form-holder="formHolder" promo-form="promoForm" ng-if="promotionData"></admin-promotion-form>
+				<admin-promotion-form data="promotionData" view-prop="viewProperties" validation-errors="validationErrors" promo-mfa="promotionSubTypesForMFA" index="sectionInx" form-holder="formHolder" promo-form="promoForm" ng-if="promotionData"></admin-promotion-form>
 				<!-- Admin Promotion Form Controls -->
 				<admin-promotion-form-controls data="sections" index="sectionInx"></admin-promotion-form-controls>
 			</div>
@@ -27,4 +27,4 @@
 	</form>
 </div>
 
-<promotion-preview data="promotionData" ng-if="previewOverlayConfig.isOpen" promo-mfa="promotionSubTypesForMFA" form-holder="previewFormHolder" preview-overlay-config="previewOverlayConfig" preview-data="previewData" promo-form="promoForm" view-prop="viewProperties"></promotion-preview>
+<promotion-preview validation-errors="validationErrors" data="promotionData" ng-if="previewOverlayConfig.isOpen" promo-mfa="promotionSubTypesForMFA" form-holder="previewFormHolder" preview-overlay-config="previewOverlayConfig" preview-data="previewData" promo-form="promoForm" view-prop="viewProperties"></promotion-preview>

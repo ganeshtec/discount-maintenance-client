@@ -70,7 +70,6 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$co
                 displayRedemptionLimits: visibility,
                 displayRedemptionMethod: visibility,
                 displayCombinationPromo: visibility,
-                displayPriority: visibility,
                 displayOMSId: visibility,
                 displayMFGBrand: visibility,
                 displayWebHierarchy: visibility,

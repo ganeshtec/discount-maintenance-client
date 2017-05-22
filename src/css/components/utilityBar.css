@@ -29,3 +29,7 @@
 	height: 1px;
 	width:1px;
 }
+
+.labelCount {
+  float: right;
+}

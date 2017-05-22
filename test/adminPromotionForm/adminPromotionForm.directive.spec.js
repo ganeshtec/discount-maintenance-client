@@ -27,16 +27,4 @@ describe('Unit testing adminPromotionForm.directive.spec.js', function () {
                             .respond(200,response);                    
   }));
 
-  it('Check if getPromotionSubTypes method executes in promotiondataservicespec ', function() {
-    var promise = promotionDataService.getPromotionSubTypes();
-    $httpBackend.flush();
-    $scope.$digest();
-  });
-
-   it('Check if getAllSegments method executes in customerSegmentDataService ', function() {
-    var promise = customerSegmentDataService.getAllSegments();
-    $httpBackend.flush();
-    $scope.$digest();
-  });
-
 });

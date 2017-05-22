@@ -3,8 +3,9 @@
 	Services that will handle setting common state of ui properties
 */
 
-app.service('utilService', ['$filter', function ($filter) {
+app.service('utilService', ['$filter', 'leadTimeService', function ($filter, leadTimeService) {
     var publicApi = {};
+    this.leadTime;
     var rewardMethodMappoing = {
         'ProductLevelPercentDiscount': 'ALLAFFECTEDITMS',
         'CategoryLevelValueDiscount': 'ALLAFFECTEDITMS',
@@ -324,10 +325,21 @@ app.service('utilService', ['$filter', function ($filter) {
         }
     }
 
-    // publicApi.isPromotionActive = function() {
+    publicApi.isSubmitEligibleForDisable = function (promotion) {
+        
+        var leadTimePromise = leadTimeService.fetchLeadTime();
+        return leadTimePromise.then(function (leadTime) {
+            var minDt = moment(promotion.endDt).subtract(leadTime,'days');
+            if (moment().isAfter(minDt) && promotion.status == 61 && promotion.printLabel === true) {
+                return true;
+            }
+            return false;
+        });
+    }
 
-    //     return null;
-    // }
+    publicApi.getLeadTime = function () {
+        return leadTimeService.fetchLeadTime();
+    }
 
     return publicApi;
 }]);

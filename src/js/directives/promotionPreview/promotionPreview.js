@@ -1,7 +1,7 @@
 // Purpose is to popuplate the modal with a message.
 // Has control to close the modal
-app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'OverlayConfigFactory', 'DataFactory', 'utilService',
-    function (URL_CONFIG, promotionDataService, overlayConfig, DataFactory, utilService) {
+app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'OverlayConfigFactory', 'DataFactory', 'utilService', 'validationService',
+    function (URL_CONFIG, promotionDataService, overlayConfig, DataFactory, utilService, validationService) {
         return {
             restrict: 'E',
             templateUrl: 'promotionPreview.html',
@@ -13,12 +13,10 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                 formHolder: '=',
                 viewProp: '=',
                 promoMfa: '=',
-
-
+                validationErrors: '='
             },
             link: function (scope, element) {
-
-
+                scope.validationErrors = validationService.validatePromotion(scope.data);         
 
                 scope.close = function () {
                     // if a exisiting promotion is submitted then reload the page
@@ -55,9 +53,10 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                         delete scope.previewData.data.custSegment;
                         scope.previewData.data.purchaseConds.customerSegmentId = 0;
                     }
-                    if (scope.previewData.data.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountCS' || scope.previewData.data.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB') {
+                    if ( scope.previewData.data.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB') {
                         scope.previewData.data.promoSubTypeCd = 'ProductLevelPerItemPercentDiscount';
                     }
+
                     var promotion = scope.previewData.data;
                     utilService.setDefaultsForSaveAsDraft(promotion);
                     utilService.transformPromotionRequest(promotion);

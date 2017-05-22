@@ -90,7 +90,6 @@ describe('validationService', function () {
         var leadtime = 3;
         var endDt = moment().add(leadtime - 1, 'days').toDate();
 
-
         spyOn(leadTimeService, 'fetchLeadTime').and.callFake(function () {
             return {
                 then: function (callback) { return callback(3) }
@@ -212,4 +211,58 @@ describe('validationService', function () {
             expect(response[2].message).not.toBe('');
         });
     });
+
+    it('Returns isError as false and empty error message when priority is between 0 and 1000', function () {
+        var priority = 5
+
+        var response = validationService.validatePriority(priority);
+        expect(response.isError).toBe(false);
+        expect(response.message).toBe('');
+    });
+
+
+    it('Returns isError as true and non empty error message when priority is more than 1000', function () {
+        var priority = 1001
+
+        var response = validationService.validatePriority(priority);
+        expect(response.isError).toBe(true);
+        expect(response.message).not.toBe('');
+    });
+
+    it('Returns isError as true and non empty error message when priority is more than 1000', function () {
+        var priority = 2000
+
+        var response = validationService.validatePriority(priority);
+        expect(response.isError).toBe(true);
+        expect(response.message).not.toBe('');
+    });
+
+    it('Returns isError as true and non empty error message when priority is less than 0', function () {
+        var priority = -1
+
+        var response = validationService.validatePriority(priority);
+        expect(response.isError).toBe(true);
+        expect(response.message).not.toBe('');
+    });
+
+    it('Returns isError as true and non empty error message when priority is there are decimal points', function () {
+        var priority = 2.4
+
+        var response = validationService.validatePriority(priority);
+        expect(response.isError).toBe(true);
+        expect(response.message).not.toBe('');
+    });
+
+    it('Returns isError as true and non empty error message when selected percentage greater than 50%', function () {
+        var rewards = [{ min: 0, value: 75, maxAllowedVal: 2 }, { min: 0, value: 25, maxAllowedVal: 0 }, { min: 0, value: 75, maxAllowedVal: 25 }]
+
+        var response = validationService.validatePercentageWarning(rewards);
+        expect(response[0].isError).toBe(true);
+        expect(response[0].message).not.toBe('');
+        expect(response[1].isError).toBe(false);
+        expect(response[1].message).toBe('');
+        expect(response[2].isError).toBe(true);
+        expect(response[2].message).not.toBe('');
+    });
+
 });

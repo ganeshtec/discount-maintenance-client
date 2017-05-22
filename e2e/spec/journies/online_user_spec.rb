@@ -11,7 +11,8 @@ describe 'Online makes a customer segment discount that is persisted', type: :fe
 			customer_segment:  "Roofing Pantry Loaders",
 			inclusion:         "itemssku",
 			item_sku:          "100091",
-			store_location:    "123",
+			market_location:    "1",
+			priority:			"12",
 			rewards_quantity:  "100",
 			amount_off:        "99",
 			desc_long:         "long description",
@@ -48,7 +49,7 @@ def create_discount_online(promotion)
     click_on 'Search'
     click_button 'Next'
     
-    fill_in 'Search and Add Store Number', with: promotion.store_location
+    fill_in 'Search and Add Market Number', with: promotion.market_location
     click_on 'Search'
 
 	click_button 'Next'

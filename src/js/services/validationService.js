@@ -41,6 +41,21 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
         return endDateError;
     }
 
+    publicApi.validatePriority = function(priority) {
+        var priorityErrors = {
+            isError: false,
+            message: ''
+        };
+
+
+        if(priority && (priority < 0 || priority > 1000 || priority % 1 != 0)) {
+            priorityErrors.isError = true;
+            priorityErrors.message = 'Enter number between 0 and 1000';
+        }
+
+        return priorityErrors;
+    }
+
     publicApi.validateMSBEndDate = function (startDt, endDt) {
         var endDateError = {
             isError: false,
@@ -68,6 +83,27 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
         var minEndDate = moment(startDate).add(leadTime, 'days');
         return minEndDate;
     };
+
+    // REFACTOR TO USE MOMENTJS
+    publicApi.validateThreeMonthsWarning = function (startDt) {
+        var today = $filter('date')(new Date(), 'yyyy-MM-dd');
+        var todayDT = new Date(today);
+        var startDT = new Date(startDt);
+
+        var threeMonthsTime = 90 * 24 * 60 * 60 * 1000;
+
+        var threeMonthsWarningErr = {
+            isError: false,
+            message: ''
+        };
+       
+        if (startDT.getTime() - todayDT.getTime() >= threeMonthsTime) {
+            threeMonthsWarningErr.isError = true;
+            threeMonthsWarningErr.message = 'This discount is starting 3 or more months later'
+        }
+
+        return threeMonthsWarningErr;
+    }
 
     publicApi.validateMinimumQty = function (rewards) {
         var minQtyErrObj;
@@ -125,16 +161,50 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
         return maxPercentageErrors;
     }
 
+    publicApi.validatePercentageWarning = function (rewards) {
+
+        var arrlength = rewards.length;
+        var prctWarnObj = {};
+        var percentageWarning = [];
+
+        for (var i = 0; i < arrlength; i++) {
+
+            if (rewards[i].value > 50 ) {
+                prctWarnObj = {
+                    isError: true,
+                    message: 'You have entered over 50% for this discount.' 
+                };
+                percentageWarning.push(prctWarnObj);
+            }
+
+            else {
+                prctWarnObj = {
+                    isError: false,
+                    message: ''
+                };
+                percentageWarning.push(prctWarnObj);
+            }
+
+        }
+
+        return percentageWarning;
+
+    }
+
+
     publicApi.validatePromotion = function (promotion) {
         var validationErrors = {};
-        validationErrors.startDt = publicApi.validateStartDate(promotion.startDtFmt);
+        validationErrors.startDt = publicApi.validateStartDate(promotion.startDt);
         // Calls the appropriate end date validation based on whether or not the discount is MSB
         validationErrors.endDt = promotion.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB'
-            ? publicApi.validateMSBEndDate(promotion.startDtFmt, promotion.endDtFmt)
-            : publicApi.validateEndDate(promotion.startDtFmt, promotion.endDtFmt);
+            ? publicApi.validateMSBEndDate(promotion.startDt, promotion.endDt)
+            : publicApi.validateEndDate(promotion.startDt, promotion.endDt);
         validationErrors.minQtyThreshold = publicApi.validateMinimumQty(promotion.reward.details);
-        validationErrors.percentOff = publicApi.validatePercentOff(promotion.reward.details);
 
+        validationErrors.maxPercentage = publicApi.validatePercentOff(promotion.reward.details);
+        validationErrors.priorityRange = publicApi.validatePriority(promotion.priority);
+        validationErrors.percentageWarning = publicApi.validatePercentageWarning(promotion.reward.details);
+        validationErrors.threeMonthsWarning = publicApi.validateThreeMonthsWarning(promotion.startDt);
         return validationErrors;
     }
 

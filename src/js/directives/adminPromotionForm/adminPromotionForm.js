@@ -1,5 +1,5 @@
 // Purpose is to build promotion data
-app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService', 'redemptionMethodTypes', 'validationService', 'DataFactory', 'itemCategorySourceData',
+app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService', 'redemptionMethodTypes', 'validationService','DataFactory', 'itemCategorySourceData',
     function (promotionSubTypes, promotionDataService, redemptionMethodTypes, validationService, DataFactory, itemCategorySourceData) {
 
         return {
@@ -13,10 +13,11 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                 formHolder: '=',
                 display: '=',
                 viewProp: '=',
-                promoMfa: '='
+                promoMfa: '=',
+                validationErrors: '='
             },
             link: function (scope) {
-
+                    
                 function getPromoSubTypes() {
                     var getPromotionPromise;
                     if (scope.promoMfa) {
@@ -40,23 +41,20 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                     }
                 }
 
+
                 scope.formHolder.form = scope.promoForm;
                 getPromoSubTypes();
 
                 function setPromotionSubType(watch) {
-
-
                     if (scope.promotionSubTypes && scope.data && scope.data.promoSubTypeCd) {
                         $.each(scope.promotionSubTypes, function (i) {
-
-                            if (scope.promoMfa && scope.data.promoId && scope.data.promoId != 0 && !watch) {
-
-                                if (scope.data.purchaseConds.customerSegmentId && scope.data.purchaseConds.customerSegmentId != 0) {
+                            if (scope.promoMfa &&  !watch) {
+                                if (scope.data.promoType=='ORDERPROMO' && scope.data.promoSubTypeCd=='OrderLevelPercentDiscount') {
                                     scope.promoSubTypeObject = scope.promotionSubTypes[1];
-                                } else {
+                                }
+                                else {
                                     scope.promoSubTypeObject = scope.promotionSubTypes[0];
                                 }
-
                             } else {
                                 if (scope.promotionSubTypes[i].promoSubTypeCd == scope.data.promoSubTypeCd) {
                                     scope.promoSubTypeObject = scope.promotionSubTypes[i];
@@ -64,9 +62,7 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                             }
                         });
                     }
-
                 }
-
                 scope.$watch('data.promoSubTypeCd', function () {
                     setPromotionSubType(true);
                     if (scope.promoSubTypeObject && scope.promoSubTypeObject.promoSubTypeObject) {
@@ -88,6 +84,10 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                     scope.data.purchaseConds.sources.push(new itemCategorySourceData());
                 }
 
+                scope.validatePromotion = function(){
+                    scope.validationErrors = validationService.validatePromotion(scope.data);
+                };
+
 
                 scope.showMaximumDiscount = false;
 
@@ -99,6 +99,14 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                     scope.data.promoSubTypeCd = scope.promoSubTypeObject.promoSubTypeCd;
                     scope.data.promoSubTypeDesc = scope.promoSubTypeObject.promoSubTypeDesc;
                     scope.data.promoType = scope.promoSubTypeObject.promoType;
+
+                    if (scope.promoSubTypeObject.promoSubTypeCd == 'OrderLevelPercentDiscount') {
+                        
+                        scope.data.printLabel = false;
+                    }
+                    else{
+                        scope.data.printLabel = true;
+                    }
 
 
                     //AP-573-Promo validations - Buy A And B, get % off both

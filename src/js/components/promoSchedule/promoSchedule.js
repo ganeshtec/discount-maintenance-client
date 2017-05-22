@@ -8,7 +8,6 @@ app.component('promoSchedule', {
         viewProp: '=',
         formHolder: '=',
         validationErrors: '='
-
     },
     controller: PromoScheduleController
 

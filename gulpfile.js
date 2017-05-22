@@ -199,13 +199,13 @@ gulp.task('test', ['srcbuild'], function (done) {
 });
 
 gulp.task('buildArtifact', () =>
-    gulp.src('public/*')
+    gulp.src(['!./node_modules/**', 'node_modules','**' ])
         .pipe(tar('archive.tar'))
         .pipe(gzip())
         .pipe(gulp.dest('public'))
 );
 
-gulp.task('srcbuild', ['lint', 'concat:vendor-js', 'concat:js', 'build:vendor-css', 'build:css', 'copy:index', 'copy:html', 'copy:fonts']);
+gulp.task('srcbuild', [ 'lint' ,'concat:vendor-js', 'concat:js', 'build:vendor-css', 'build:css', 'copy:index', 'copy:html', 'copy:fonts']);
 gulp.task('build-prod', gulpSequence('prebuild:clean', 'srcbuild', 'copy:prodUrls'));
 gulp.task('build-qa', gulpSequence('prebuild:clean', 'srcbuild', 'copy:qaUrls'));
 gulp.task('build-ad', gulpSequence('prebuild:clean', 'srcbuild', 'copy:adUrls'));

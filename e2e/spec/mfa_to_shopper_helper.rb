@@ -62,18 +62,19 @@ def store_sign_in
 end
 
 class Promotion
-  attr_reader :name, :promotion_type, :redemption_method, :customer_segment, :inclusion, :item_sku, :store_location, :rewards_quantity, 
+  attr_reader :name, :promotion_type, :redemption_method, :customer_segment, :priority, :inclusion, :item_sku, :market_location, :rewards_quantity, 
   :amount_off, :desc_long, :desc_short, :start_date, :end_date
 
-  def initialize(name:, promotion_type:, redemption_method:, customer_segment:, inclusion:, item_sku:, store_location:, rewards_quantity:, 
+  def initialize(name:, promotion_type:, redemption_method:, customer_segment:, priority:, inclusion:, item_sku:, market_location:, rewards_quantity:, 
     amount_off:, desc_long:, desc_short:, start_date:, end_date:)
     @name = name
     @promotion_type = promotion_type
     @redemption_method = redemption_method
     @customer_segment = customer_segment
+    @priority = priority
     @inclusion = inclusion
     @item_sku = item_sku
-    @store_location = store_location
+    @market_location = market_location
     @rewards_quantity = rewards_quantity
     @amount_off = amount_off
     @desc_long = desc_long

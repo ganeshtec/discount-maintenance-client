@@ -3,7 +3,7 @@
 	"name": "Promo-Admin-UI",
 	"versionStrategy": "tracker",
     "fmsNumber": "IT-08105",
-    "cdTemplate": "CD0001003",
+    "cdTemplate": "CD0001001",
 	"language": "js"
 },
 
@@ -40,7 +40,7 @@
 
 
 "environments": {
-	"AD": {
+	"development": {
 		"cf": {
 			"apiEndpoint": "api.run-np.homedepot.com",
 			"domain": "apps-np.homedepot.com",
@@ -90,13 +90,13 @@
 
 	"production": {
 		"cf": {
-			"apiEndpoint": "api.run-np.homedepot.com",
-			"domain": "apps-np.homedepot.com",
-			"org": "ci",
-			"space": "production"
+			"apiEndpoint": "api.run-zb.homedepot.com",
+			"domain": "apps-zb.homedepot.com",
+			"org": "pricing",
+			"space": "PR"
 		},
 		"artifactCategory": "release",
-		"manualDeployLink": "https://ln0e9d.homedepot.com:9443/job/CI-HelloWorld/job/CI_Deploy/parambuild/?delay=0sec&ENVIRONMENT=production&CF_USER=&CF_PWD=",
+		"manualDeployLink": "http://ld8834.homedepot.com/teams/main/pipelines/promo-admin-pr",
 		"associatedBranchName": "master"
 	}
 }

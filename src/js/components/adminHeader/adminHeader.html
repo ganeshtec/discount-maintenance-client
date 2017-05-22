@@ -9,7 +9,10 @@
 	</h1>
 	<p>All fields are required except where indicated otherwise.</p>
 </div>
-
+<div  ng-show="$ctrl.isEndDtWithinLeadTime">
+	<info-banner>
+	</info-banner>
+</div>
 <div class="admin__header__content admin__header__content--bottom" ng-show="($ctrl.uistate == 'Compare')">
 	<h1 class="md-display-2">
 		Compare View

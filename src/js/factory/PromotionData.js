@@ -10,6 +10,8 @@ app.factory('PromotionData', [function () {
             'startDt': '',
             'endDt': '',
             'name': '',
+            'printLabel': true,
+            'labelText': '',
             'redmptnLmt': {
                 'maxUsesPerOrd': '-1',
                 'maxUsesPerCust': '-1',
