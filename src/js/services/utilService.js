@@ -128,20 +128,23 @@ app.service('utilService', ['$filter', function ($filter) {
         if (promotion.reward && promotion.reward.details) {
             publicApi.calculatePurchaseCondition(promotion);
         }
+        
+        if (promotion.startDt) {    
+            promotion.startDt = publicApi.convertDateToDateString(promotion.startDt) + ' 03:00:00';
+        }
 
-        //check to validate items and category
+        if(promotion.endDt) {
+            promotion.endDt = publicApi.convertDateToDateString(promotion.endDt) + ' 02:59:59';
 
-        // if (promotion.startDt) {
-        //     promotion.startDt = promotion.startDt.split(' ')[0] + ' 03:00:00';
-        // }
-        // if (promotion.endDt) {
-        //     promotion.endDt = promotion.endDt.split(' ')[0] + ' 02:59:59';
-        // }
+        }
 
         publicApi.validateItemCategory(promotion);
 
     }
 
+    publicApi.convertDateToDateString = function(date) {
+        return date ? moment(date).format('YYYY-MM-DD') : undefined;
+    }
 
     publicApi.validateItemCategory = function (data) {
 

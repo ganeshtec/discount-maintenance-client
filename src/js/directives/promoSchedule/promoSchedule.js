@@ -32,43 +32,20 @@ function PromoScheduleController($filter, $scope, validationService) {
     // });
 
     this.$onInit = function() {
-      console.log(this.data);
-      this.data.startDtFmt = this.convertDateStringToDate(this.data.startDt);
-      this.data.endDtFmt = this.convertDateStringToDate(this.data.endDt);
+        this.data.startDt =  this.convertDateStringToDate(this.data.startDt);
+        this.data.endDt =  this.convertDateStringToDate(this.data.endDt);
     }
 
-    this.convertDateStringToDate(dateString) {
-      return dateString ? moment(dateString).toDate() : undefined;
+    this.convertDateStringToDate = function(dateString){
+        return dateString ? moment(dateString).toDate() : undefined;
     }
 
-    this.$onChanges = function(changes) {
-      console.log(this.data);
-      console.log(changes);
-    }
-
-    this.setStartDate = function() {
-      this.data.startDt = moment(this.data.startDtFmt).format('YYYY-MM-DD') + ' 03:00:00';
-    }
-
-    this.setEndDate = function () {
-      this.data.endDt = moment(this.data.endDtFmt).format('YYYY-MM-DD') + ' 02:59:59';
+    this.convertDateToDateString = function(date) {
+        return date ? moment(date).format('YYYY-MM-DD') : undefined;
     }
 
     this.validatePromotion = function() {
-        console.log(this.data);
-        console.log(this.validationErrors);
         this.validationErrors = validationService.validatePromotion(this.data);
-        console.log(this.validationErrors);
-        if (this.validationErrors.startDt.isError === false && this.data.startDtFmt) {
-            this.setStartDate();
-        }
-        if (this.validationErrors.endDt.isError === false && this.data.endDtFmt) {
-            console.log("setting endDt...");
-            this.setEndDate();
-        }
-        console.log(this.data);
     }
-
-    //this.setDatesOnEdit();
 
 }
