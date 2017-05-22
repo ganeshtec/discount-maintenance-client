@@ -169,7 +169,7 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
 
         for (var i = 0; i < arrlength; i++) {
 
-            if (rewards[i].value > 50 ) {
+            if (rewards[i].value > 50 && rewards[i].value <= 99.9) {
                 prctWarnObj = {
                     isError: true,
                     message: 'You have entered over 50% for this discount.' 
@@ -191,6 +191,19 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
 
     }
 
+    publicApi.areErrorsPresent = function(validationErrorsObject) {
+        for (var i in validationErrorsObject) {
+            if (validationErrorsObject.hasOwnProperty(i)) {
+                // This is a patch to avoid warnings preventing submit. The warning logic should be moved, either to
+                // the appropriate component or to some sort of warning service.
+                if (i !== 'percentageWarning' && i !== 'threeMonthsWarning' && validationErrorsObject[i].isError === true) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 
     publicApi.validatePromotion = function (promotion) {
         var validationErrors = {};
@@ -201,10 +214,11 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
             : publicApi.validateEndDate(promotion.startDt, promotion.endDt);
         validationErrors.minQtyThreshold = publicApi.validateMinimumQty(promotion.reward.details);
 
-        validationErrors.maxPercentage = publicApi.validatePercentOff(promotion.reward.details);
+        validationErrors.percentOff = publicApi.validatePercentOff(promotion.reward.details);
         validationErrors.priorityRange = publicApi.validatePriority(promotion.priority);
         validationErrors.percentageWarning = publicApi.validatePercentageWarning(promotion.reward.details);
         validationErrors.threeMonthsWarning = publicApi.validateThreeMonthsWarning(promotion.startDt);
+
         return validationErrors;
     }
 

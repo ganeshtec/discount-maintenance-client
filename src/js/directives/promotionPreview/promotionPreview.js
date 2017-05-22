@@ -16,7 +16,8 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                 validationErrors: '='
             },
             link: function (scope, element) {
-                scope.validationErrors = validationService.validatePromotion(scope.data);         
+                scope.validationErrors = validationService.validatePromotion(scope.data);
+                // scope.areErrorsPresentInForm = validationService.areErrorsPresent(scope.validationErrors);
 
                 scope.close = function () {
                     // if a exisiting promotion is submitted then reload the page
@@ -53,7 +54,7 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                         delete scope.previewData.data.custSegment;
                         scope.previewData.data.purchaseConds.customerSegmentId = 0;
                     }
-                    if ( scope.previewData.data.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB') {
+                    if (scope.previewData.data.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB') {
                         scope.previewData.data.promoSubTypeCd = 'ProductLevelPerItemPercentDiscount';
                     }
 
@@ -178,6 +179,13 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
 
                     return promise;
                 }
+
+                // scope.areErrorsPresent = function () {
+                //     console.log("in areErrorsPresent");
+                //     scope.validationErrors = validationService.validatePromotion(scope.data);
+                //     scope.areErrorsPresentInForm = validationService.areErrorsPresent(scope.validationErrors);
+                // }
+
             }
         };
     }]);

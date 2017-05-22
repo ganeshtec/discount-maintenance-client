@@ -5,10 +5,11 @@ app.component('adminFooter', {
         previewOverlayConfig: '=',
         promoForm: '=',
         index: '=',
-        formHolder: '='
+        formHolder: '=',
+        validationErrors: '='
     },
     templateUrl: 'adminFooter.html',
-    controller: function FooterCtrl(PromotionData, utilService, leadTimeService, promotionDataService, modalService) {
+    controller: function FooterCtrl(PromotionData, utilService, leadTimeService, promotionDataService, modalService, validationService) {
         var tempData = $.extend(true, {}, this.data);
         var inprogress = false;
         var isEndDtWithinLeadTime = false;
@@ -70,6 +71,8 @@ app.component('adminFooter', {
         this.canApprove = function (promotion) {
             return utilService.canApprove(promotion) && !inprogress && !isEndDtWithinLeadTime;
         }
+
+      
 
     }
 });
