@@ -7,7 +7,7 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
     var publicApi = {};
 
     publicApi.validateStartDate = function (startDt, checkForUndefined) {
-        var startDateError = checkForUndefined ? {
+        var startDateError = (startDt === undefined && checkForUndefined) ? {
             isError: true,
             message: 'Start date is requred.'
         } : {
@@ -25,7 +25,7 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
     }
 
     publicApi.validateEndDate = function (startDt, endDt, checkForUndefined) {
-        var endDateError = checkForUndefined ? {
+        var endDateError = (endDt === undefined && checkForUndefined) ? {
             isError: true,
             message: 'End date is requred.'
         } : {
@@ -65,7 +65,7 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
     }
 
     publicApi.validateMSBEndDate = function (startDt, endDt, checkForUndefined ) {
-        var endDateError = checkForUndefined ? {
+        var endDateError = (endDt === undefined && checkForUndefined) ? {
             isError: true,
             message: 'End date is requred.'
         } : {
@@ -121,7 +121,7 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
         var minQtyErrors = [];
 
         for (var i = 0; i < rewards.length; i++) {
-            if (checkForUndefined === true) {
+            if (rewards[i].min === undefined && checkForUndefined === true) {
                 minQtyErrObj = {
                     isError: true,
                     message: 'is required.'
@@ -154,7 +154,7 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
         var percentOffErrors = [];
 
         for (var i = 0; i < rewards.length; i++) {
-            if (checkForUndefined === true) {
+            if (rewards[i].value === undefined && checkForUndefined === true) {
                 percentOffErrorObject = {
                     isError: true,
                     message: 'Percent off is required.'
