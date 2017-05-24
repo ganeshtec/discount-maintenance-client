@@ -12,7 +12,6 @@ app.component('adminFooter', {
 
     templateUrl:'adminFooter.html',
     controller: function FooterCtrl(PromotionData, utilService, leadTimeService, promotionDataService, modalService, validationService) {
-        console.log("***********_________ Errors in adminFooter::",this.validationErrors);
         var tempData = $.extend(true, {}, this.data);
         var inprogress = false;
         var isEndDtWithinLeadTime = false;
@@ -62,20 +61,20 @@ app.component('adminFooter', {
         }
 
         this.preview = function (data) {
-            // this.validatePromotion(data);
-            // this.checkForValidationErrors(this.validationErrors);
+            var areValidationErrorsPresent;
+            this.validatePromotion(data, function(validationErrors) {
+                areValidationErrorsPresent = validationService.areErrorsPresent(validationErrors);
+            });
 
-            // if (this.areValidationErrors === true) {
-            //     modalService.showAlert('Error', 'Please fix all validation errors');
-            //     return;
-            // }
+            if (areValidationErrorsPresent === true) {
+                modalService.showAlert('Error', 'Please fix all validation errors');
+                return;
+            }
 
             this.previewdata.data = $.extend(true, {}, data);
             this.previewOverlayConfig.open();
         }
         this.canSave = function (promotion) {
-            //$ctrl.canSave($ctrl.data)
-
             return utilService.canSaveAsDraft(promotion) && !inprogress;
         }
 
@@ -83,15 +82,11 @@ app.component('adminFooter', {
             return utilService.canApprove(promotion) && !inprogress && !isEndDtWithinLeadTime;
         }
 
-        // this.validatePromotion = function (promotion) {
-        //     this.validationErrors = validationService.validatePromotion(promotion);
-        // }
+        this.validatePromotion = function (promotion, callback) {
+            var validationErrors = validationService.validatePromotion(promotion, true);
+            callback(validationErrors);
+        }
 
-        // this.checkForValidationErrors = function (validationErrors) {
-        //     this.areValidationErrors = validationService.areErrorsPresent(validationErrors);
-        // }
-
-        
 
     }
 });

@@ -17,8 +17,6 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
             },
             link: function (scope, element) {
                 scope.validationErrors = validationService.validatePromotion(scope.data);
-                // scope.areErrorsPresentInForm = validationService.areErrorsPresent(scope.validationErrors);
-                console.log("##########________validationErrors in PromotionPreview::",scope.validationErrors);
                 scope.close = function () {
                     // if a exisiting promotion is submitted then reload the page
                     if (scope.originalPromoId && scope.savedPromoId) {
@@ -179,13 +177,6 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
 
                     return promise;
                 }
-
-                // scope.areErrorsPresent = function () {
-                //     console.log("in areErrorsPresent");
-                //     scope.validationErrors = validationService.validatePromotion(scope.data);
-                //     scope.areErrorsPresentInForm = validationService.areErrorsPresent(scope.validationErrors);
-                // }
-
             }
         };
     }]);

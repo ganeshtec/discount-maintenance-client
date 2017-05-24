@@ -40,24 +40,17 @@
 		<tr ng-repeat="item in $ctrl.data.reward.details track by $index" ng-class="{odd:($index % 2)}">
 			 <td class="md-text-field">
 						<input type="text" id="minamount" name="minamount_{{$index}}" ng-blur="$ctrl.validatePromotion()" ng-model="item.min" ng-required="$ctrl.preview" allow-pattern="(\d)" min = "1" ng-if="qualuom == 'Quantity'"/>
-                        <input type="text" id="minamount" name="minamount_{{$index}}" ng-model="item.min" ng-required="$ctrl.preview" allow-pattern="^[\d.]+$" min = "1" ng-if="qualuom == 'Amount'"/>
+                        <input type="text" id="minamount" name="minamount_{{$index}}" ng-blur="$ctrl.validatePromotion()" ng-model="item.min" ng-required="$ctrl.preview" allow-pattern="^[\d.]+$" min = "1" ng-if="qualuom == 'Amount'"/>
 						 <span class='error-message' ng-show="$ctrl.promoform['minamount_' + $index].$invalid ">
-								 <span ng-show="$ctrl.promoform['minamount_' + $index].$error.required" ng-if="qualuom == 'Amount'">Please enter a valid minimum purchase amount</span>
-								 <span ng-show="$ctrl.promoform['minamount_' + $index].$error.required" ng-if="qualuom == 'Quantity'">Please enter a valid minimum purchase quantity</span>
-                                 <span ng-show="$ctrl.promoform['minamount_' + $index].$error.pattern">Please enter  numeric characters</span>
 							</span> 
-							<span class='error-message' ng-show="$ctrl.validationErrors.minQtyThreshold[$index].isError">{{$ctrl.validationErrors.minQtyThreshold[$index].message}} </span>
+							<span class='error-message' ng-show="$ctrl.validationErrors.minimumThreshold[$index].isError && qualuom == 'Quantity'">Minimum purchase quantity {{$ctrl.validationErrors.minimumThreshold[$index].message}} </span>
+							<span class='error-message' ng-show="$ctrl.validationErrors.minimumThreshold[$index].isError && qualuom == 'Amount'">Minumum purchase amount {{$ctrl.validationErrors.minimumThreshold[$index].message}} </span>
 						
 				</td>
 				<td class="md-text-field">
 						<input type="text" id="value" name="value_{{$index}}" ng-model="item.value" ng-required="$ctrl.preview" ng-blur="$ctrl.roundPercentage($index); $ctrl.validatePromotion()" allow-pattern="^[\d.]+$" ng-if="$ctrl.data.reward.type=='AMTOFF'"/>
                         <input type="text" id="value" name="value_{{$index}}" class="tooltiphead" ng-model="item.value" ng-required="$ctrl.preview" ng-blur="$ctrl.roundPercentage($index); $ctrl.validatePromotion()" allow-pattern="^[\d.]+$" ng-if="$ctrl.data.reward.type=='PERCNTOFF'"/>
 							<span class='error-message' ng-show="$ctrl.promoform['value_' + $index].$invalid || $ctrl.preview">
-									<span ng-show="$ctrl.promoform['value_' + $index].$error.required" ng-if="$ctrl.data.reward.type=='AMTOFF'">Please enter a valid amount</span>
-									
-									<span ng-show="$ctrl.promoform['value_' + $index].$error.required" ng-if="$ctrl.data.reward.type=='PERCNTOFF'">Please enter a valid percentage</span>
-                                    <span ng-show="$ctrl.promoform['value_' + $index].$error.pattern">Please enter  valid number</span>
-									
 									<span ng-show="$ctrl.promoform['value_' + $index].$error.min">
 										Please enter a value above 0
 									</span>
