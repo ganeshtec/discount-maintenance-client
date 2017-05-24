@@ -51,15 +51,15 @@ describe('purchaseCondition', function () {
         ctrl.data.reward.details = [{min:0,value:12,maxAllowedVal:2},{min:2,value:25,maxAllowedVal:3},{min:0,value:120,maxAllowedVal:25}];
         ctrl.validatePromotion();
         
-        expect(ctrl.validationErrors.minQtyThreshold[0].isError).toBe(true);
-        expect(ctrl.validationErrors.minQtyThreshold[0].message).not.toBe('');
+        expect(ctrl.validationErrors.minimumThreshold[0].isError).toBe(true);
+        expect(ctrl.validationErrors.minimumThreshold[0].message).not.toBe('');
     });
 
     it('Returns isError as false and empty error message when selected minimum quantity threshold is other than 0', function () {
         ctrl.data.reward.details = [{min:0,value:12,maxAllowedVal:2},{min:2,value:25,maxAllowedVal:3},{min:0,value:120,maxAllowedVal:25}];
         ctrl.validatePromotion();
 
-        expect(ctrl.validationErrors.minQtyThreshold[1].isError).toBe(false);
-        expect(ctrl.validationErrors.minQtyThreshold[1].message).toBe('');
+        expect(ctrl.validationErrors.minimumThreshold[1].isError).toBe(false);
+        expect(ctrl.validationErrors.minimumThreshold[1].message).toBe('');
     });
 });

@@ -164,7 +164,7 @@ describe('validationService', function () {
     it('returns a minimum quantity error when selected minimum quantity threshold is 0.', function () {
         var rewards = [{min:0,value:12,maxAllowedVal:2},{min:2,value:25,maxAllowedVal:3},{min:0,value:120,maxAllowedVal:25}]
 
-        validationService.validateMinimumQty(rewards, function(response) {
+        validationService.validateMinimumPurchase(rewards, function(response) {
             expect(response[0].isError).toBe(true);
             expect(response[0].message).not.toBe('');
             expect(response[2].isError).toBe(true);
@@ -175,7 +175,7 @@ describe('validationService', function () {
     it('returns a false/empty minimum quantity error when selected minimum quantity threshold is greater than 0.', function () {
         var rewards = [{min:0,value:12,maxAllowedVal:2},{min:2,value:25,maxAllowedVal:3},{min:0,value:120,maxAllowedVal:25}]
 
-        validationService.validateMinimumQty(rewards, function(response) {
+        validationService.validateMinimumPurchase(rewards, function(response) {
             expect(response[1].isError).toBe(false);
             expect(response[1].message).toBe('');
         });
