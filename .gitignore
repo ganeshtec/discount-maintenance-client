@@ -3,3 +3,4 @@ public/
 .idea
 e2e/bin/
 build/
+npm-debug.log

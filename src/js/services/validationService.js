@@ -196,8 +196,17 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
             if (validationErrorsObject.hasOwnProperty(i)) {
                 // This is a patch to avoid warnings preventing submit. The warning logic should be moved, either to
                 // the appropriate component or to some sort of warning service.
-                if (i !== 'percentageWarning' && i !== 'threeMonthsWarning' && validationErrorsObject[i].isError === true) {
-                    return true;
+                if (i !== 'percentageWarning' && i !== 'threeMonthsWarning'){
+                    // Check for array, and if array, iterate through each
+                    if (Array.isArray(validationErrorsObject[i])){
+                        for (var j in validationErrorsObject[i]) {
+                            if (validationErrorsObject[i][j].isError === true) {
+                                return true;
+                            }
+                        }
+                    } else if (validationErrorsObject[i].isError === true) {
+                        return true;
+                    }
                 }
             }
         }
@@ -213,7 +222,6 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
             ? publicApi.validateMSBEndDate(promotion.startDt, promotion.endDt)
             : publicApi.validateEndDate(promotion.startDt, promotion.endDt);
         validationErrors.minQtyThreshold = publicApi.validateMinimumQty(promotion.reward.details);
-
         validationErrors.percentOff = publicApi.validatePercentOff(promotion.reward.details);
         validationErrors.priorityRange = publicApi.validatePriority(promotion.priority);
         validationErrors.percentageWarning = publicApi.validatePercentageWarning(promotion.reward.details);

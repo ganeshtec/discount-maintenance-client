@@ -14,9 +14,9 @@ app.component('promoSchedule', {
 });
 
 PromoScheduleController.$inject = ['$filter', '$scope','validationService'];
-
+ 
 function PromoScheduleController($filter, $scope, validationService) {
-
+console.log("Validation Errors in PromoSchedule::",$scope.validationErrors);
     // $scope.$watch('data', function (nv) {
     //     if (nv) {
     //         if (nv.startDt) {
@@ -45,6 +45,7 @@ function PromoScheduleController($filter, $scope, validationService) {
 
     this.validatePromotion = function() {
         this.validationErrors = validationService.validatePromotion(this.data);
+        console.log("Validation Errors in PromoSchedule in method::",this.validationErrors);
     }
 
 }

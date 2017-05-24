@@ -8,8 +8,11 @@ app.component('adminFooter', {
         formHolder: '=',
         validationErrors: '='
     },
-    templateUrl: 'adminFooter.html',
+
+
+    templateUrl:'adminFooter.html',
     controller: function FooterCtrl(PromotionData, utilService, leadTimeService, promotionDataService, modalService, validationService) {
+        console.log("***********_________ Errors in adminFooter::",this.validationErrors);
         var tempData = $.extend(true, {}, this.data);
         var inprogress = false;
         var isEndDtWithinLeadTime = false;
@@ -59,6 +62,14 @@ app.component('adminFooter', {
         }
 
         this.preview = function (data) {
+            // this.validatePromotion(data);
+            // this.checkForValidationErrors(this.validationErrors);
+
+            // if (this.areValidationErrors === true) {
+            //     modalService.showAlert('Error', 'Please fix all validation errors');
+            //     return;
+            // }
+
             this.previewdata.data = $.extend(true, {}, data);
             this.previewOverlayConfig.open();
         }
@@ -72,7 +83,15 @@ app.component('adminFooter', {
             return utilService.canApprove(promotion) && !inprogress && !isEndDtWithinLeadTime;
         }
 
-      
+        // this.validatePromotion = function (promotion) {
+        //     this.validationErrors = validationService.validatePromotion(promotion);
+        // }
+
+        // this.checkForValidationErrors = function (validationErrors) {
+        //     this.areValidationErrors = validationService.areErrorsPresent(validationErrors);
+        // }
+
+        
 
     }
 });

@@ -1,14 +1,14 @@
 <div class="admin" flex="100" id="promoTop">
 	<div layout="row">
 		<div flex="100">
-			<!-- Admin Header compontent -->
+			<!-- Admin Header component -->
 			<admin-header class="admin__header"  ng-if="promotionData" data="promotionData" promotype="promotionData" qa-page-type="{{UiState}}" uistate="UiState" urls="urls"></admin-header>
 		</div>
 	</div>
 	<form class="admin__promotion__form" name="promoForm">
 		<div layout="row" class="admin__main">
 			<div class="admin__sidepanel" flex="25">
-				<!-- Admin Subnavigation compontent -->
+				<!-- Admin Subnavigation component -->
 				<admin-subnav data="sections"></admin-subnav>
 			</div>
 			<div class="admin__content" flex="75">
@@ -20,8 +20,8 @@
 		</div>
 		<div layout="row">
 			<div flex="100">
-				<!-- Admin Footer compontent -->
-				<admin-footer validation-errors="validationErrors" ng-if="promotionData" data="promotionData" preview-overlay-config="previewOverlayConfig" previewdata="previewData" class="admin__footer" form-holder="formHolder"  promo-form="promoForm" index="sectionInx"></admin-footer>
+				<!-- Admin Footer component -->
+				<admin-footer ng-if="promotionData" data="promotionData" validation-errors="validationErrors" preview-overlay-config="previewOverlayConfig" previewdata="previewData" class="admin__footer" form-holder="formHolder"  promo-form="promoForm" index="sectionInx"></admin-footer>
 			</div>
 		</div>
 	</form>
