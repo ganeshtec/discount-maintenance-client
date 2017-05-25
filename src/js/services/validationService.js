@@ -3,7 +3,7 @@
 	Services that will handle validation of promotion attributes
 */
 
-app.service('validationService', ['$filter', 'leadTimeService', function ($filter, leadTimeService) {
+app.service('validationService', ['$filter', 'leadTimeService', 'utilService', function ($filter, leadTimeService, utilService) {
     var publicApi = {};
 
     publicApi.validateStartDate = function (startDt, checkForUndefined) {
@@ -244,7 +244,10 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
 
     publicApi.validatePromotion = function (promotion, checkForUndefined) {
         var validationErrors = {};
-        validationErrors.startDt = publicApi.validateStartDate(promotion.startDt, checkForUndefined);
+        // Will skip validation of start date if the promotion is active
+        validationErrors.startDt = !utilService.isPromotionActive(promotion)
+            ? publicApi.validateStartDate(promotion.startDt, checkForUndefined)
+            : {isError: false, message:''};
         // Calls the appropriate end date validation based on whether or not the discount is MSB
         validationErrors.endDt = promotion.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB'
             ? publicApi.validateMSBEndDate(promotion.startDt, promotion.endDt, checkForUndefined)

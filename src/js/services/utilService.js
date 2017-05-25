@@ -1,8 +1,3 @@
-/*
-	State Service
-	Services that will handle setting common state of ui properties
-*/
-
 app.service('utilService', ['$filter', 'leadTimeService', function ($filter, leadTimeService) {
     var publicApi = {};
     this.leadTime;
@@ -48,6 +43,10 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
             '57': true, // pending
         }
         return validate[promotion.status]
+    }
+    publicApi.isPromotionActive = function (promotion) {
+        // Checks if promotion has status 61: active
+        return promotion.status === 61 ? true : false;
     }
     //Massage data to match the promotion request
     publicApi.transformPromotionRequest = function (promotion) {
