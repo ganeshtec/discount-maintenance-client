@@ -1,0 +1,15 @@
+.sku-type-modal{
+    width: 300px
+}
+.close-sku-type-modal{
+	position: absolute;
+	top: 0;
+	right: 10px;	
+	font-size: 28px;
+	color: #F96302;
+	cursor: pointer;
+}
+.sku-types-button{
+    position: absolute;
+    right: 50px;
+}

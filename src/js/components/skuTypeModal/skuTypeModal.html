@@ -1,9 +1,20 @@
-<div>
-    <h2>SKU Types</h2>
-    <p>The following SKU types are included in your selection. 
-    Choose the types that you would like applied to your discount
-    </p>
-    <ul>
-        <li >N - Normal</li>
-    </ul>
+<div class="md-dialog-content sku-type-modal">
+<div class="close-sku-type-modal" ng-click="closeSkuTypeModal()">&times;</div>
+    <h3>SKU Types</h3>
+    <br/>
+    <p>The following SKU types are included in your selection. Choose the types that you would like applied to your discount</p>
+    <br/>
+
+        <div ng-repeat="skuType in $ctrl.skuTypes">
+            <div class="md-checkbox">
+            <input type="checkbox" id="skuType_{{skuType.skuTypeCode}}" name="skuType_{{skuType.skuTypeCode}}" title="{{skuType.description}}"/>
+            <label for="label"><span><span></span></span>{{skuType.skuTypeCode}} - {{skuType.description}}</label>
+            </div>
+        </div>
+    <a href="" class="md-button secondary " style="margin-top:28px" ng-click="closeSkuTypeModal()" >
+		Cancel
+	</a>
+    <a href="" class="md-button primary" style="margin-top:28px" ng-click="applySkuTypeSelection()" >
+		Apply
+	</a>
 </div>

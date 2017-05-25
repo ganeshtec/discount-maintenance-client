@@ -58,7 +58,10 @@
     <item-inclusion data="item.inclusions.partnumbers" itemtype="item.inclusions.itemtype" purchaseoption="data.purchaseConds.sources[$index].purchaseoption"
         is-disabled="isDisabled" promoform="promoform" ng-show="data.purchaseConds.sources[$index].purchaseoption == 'itemoms' || data.purchaseConds.sources[$index].purchaseoption == 'itemsku'"></item-inclusion>
     <!-- Category view Codes Component -->
-    <category-view data="item.inclusions.hierarchies" is-disabled="isDisabled" promoform="promoform" ng-show="data.purchaseConds.sources[$index].purchaseoption == 'category' && viewProp.displayWebHierarchy"></category-view>
+    <category-view data="item.inclusions.hierarchies" is-disabled="isDisabled" promoform="promoform" ng-show="data.purchaseConds.sources[$index].purchaseoption == 'category' && viewProp.displayWebHierarchy">
+    </category-view>
+    <a href="" class="md-button secondary sku-types-button" ng-click="showSkuTypeModal($event)" ng-show="data.purchaseConds.sources[$index].purchaseoption == 'category'">Select SKU Types</a>
+   
     <!-- NXK8980  MerchCategory-CodeChanges-START -->
     <merch-hierarchy-view data="item.inclusions.hierarchies" is-disabled="isDisabled" promoform="promoform" ng-show="data.purchaseConds.sources[$index].purchaseoption == 'category'">
     </merch-hierarchy-view>

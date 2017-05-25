@@ -6,7 +6,7 @@ app.service('skuTypesDataService', ['$http', '$q', 'dataService',
         publicApi.fetchSkuTypes = function (data) {
             var config = {
                     method: 'GET',
-                    url: '/skutypes',
+                    url: '/skutypes/',
                 },
                 result = $q.defer();
             if (skuTypes != undefined) {
