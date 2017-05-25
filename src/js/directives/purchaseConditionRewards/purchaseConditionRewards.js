@@ -1,6 +1,6 @@
 // Purpose is to build promotion code spec.
-app.directive('purchaseConditionRewards', ['SourceData', 'customerSegmentDataService',
-    function (SourceData, customerSegmentDataService) {
+app.directive('purchaseConditionRewards', ['SourceData', 'customerSegmentDataService', '$mdDialog',
+    function (SourceData, customerSegmentDataService,$mdDialog) {
         return {
             restrict: 'E',
             templateUrl: 'purchaseConditionRewards.html',
@@ -103,9 +103,14 @@ app.directive('purchaseConditionRewards', ['SourceData', 'customerSegmentDataSer
 
                 }
 
-
-
-
+                scope.showSkuTypeModal = function(ev) {
+                    $mdDialog.show({
+                        template: '<sku-type-modal></sku-type-modal>',
+                        parent: angular.element(document.body),
+                        targetEvent: ev,
+                        preserveScope: true       
+                    })
+                }
             }
         }
     }
