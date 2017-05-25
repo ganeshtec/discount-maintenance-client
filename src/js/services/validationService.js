@@ -95,25 +95,18 @@ app.service('validationService', ['$filter', 'leadTimeService', 'utilService', f
         return minEndDate;
     };
 
-    // REFACTOR TO USE MOMENTJS
     publicApi.validateThreeMonthsWarning = function (startDt) {
-        var today = $filter('date')(new Date(), 'yyyy-MM-dd');
-        var todayDT = new Date(today);
-        var startDT = new Date(startDt);
-
-        var threeMonthsTime = 90 * 24 * 60 * 60 * 1000;
-
-        var threeMonthsWarningErr = {
+        var threeMonthsWarning = {
             isError: false,
             message: ''
         };
-       
-        if (startDT.getTime() - todayDT.getTime() >= threeMonthsTime) {
-            threeMonthsWarningErr.isError = true;
-            threeMonthsWarningErr.message = 'This discount is starting 3 or more months later'
+
+        if(moment(startDt).isAfter(moment().add(3, 'months'))) {
+            threeMonthsWarning.isError = true;
+            threeMonthsWarning.message = 'It will be at least three months until this discount begins.'
         }
 
-        return threeMonthsWarningErr;
+        return threeMonthsWarning;
     }
 
     publicApi.validateMinimumPurchase = function (rewards, checkForUndefined) {
