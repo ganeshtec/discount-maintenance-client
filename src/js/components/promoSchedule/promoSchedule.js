@@ -13,9 +13,9 @@ app.component('promoSchedule', {
 
 });
 
-PromoScheduleController.$inject = ['$filter', '$scope','validationService'];
+PromoScheduleController.$inject = ['$filter', '$scope','validationService', 'utilService'];
  
-function PromoScheduleController($filter, $scope, validationService) {
+function PromoScheduleController($filter, $scope, validationService, utilService) {
     // $scope.$watch('data', function (nv) {
     //     if (nv) {
     //         if (nv.startDt) {
@@ -44,6 +44,10 @@ function PromoScheduleController($filter, $scope, validationService) {
 
     this.validatePromotion = function() {
         this.validationErrors = validationService.validatePromotion(this.data);
+    }
+
+    this.isPromotionActive = function(promotion){
+        return utilService.isPromotionActive(promotion);
     }
 
 }

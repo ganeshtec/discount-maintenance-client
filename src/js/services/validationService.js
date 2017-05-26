@@ -3,7 +3,7 @@
 	Services that will handle validation of promotion attributes
 */
 
-app.service('validationService', ['$filter', 'leadTimeService', function ($filter, leadTimeService) {
+app.service('validationService', ['$filter', 'leadTimeService', 'utilService', function ($filter, leadTimeService, utilService) {
     var publicApi = {};
 
     publicApi.validateStartDate = function (startDt, checkForUndefined) {
@@ -95,25 +95,18 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
         return minEndDate;
     };
 
-    // REFACTOR TO USE MOMENTJS
     publicApi.validateThreeMonthsWarning = function (startDt) {
-        var today = $filter('date')(new Date(), 'yyyy-MM-dd');
-        var todayDT = new Date(today);
-        var startDT = new Date(startDt);
-
-        var threeMonthsTime = 90 * 24 * 60 * 60 * 1000;
-
-        var threeMonthsWarningErr = {
+        var threeMonthsWarning = {
             isError: false,
             message: ''
         };
-       
-        if (startDT.getTime() - todayDT.getTime() >= threeMonthsTime) {
-            threeMonthsWarningErr.isError = true;
-            threeMonthsWarningErr.message = 'This discount is starting 3 or more months later'
+
+        if(moment(startDt).isAfter(moment().add(3, 'months'))) {
+            threeMonthsWarning.isError = true;
+            threeMonthsWarning.message = 'It will be at least three months until this discount begins.'
         }
 
-        return threeMonthsWarningErr;
+        return threeMonthsWarning;
     }
 
     publicApi.validateMinimumPurchase = function (rewards, checkForUndefined) {
@@ -244,7 +237,10 @@ app.service('validationService', ['$filter', 'leadTimeService', function ($filte
 
     publicApi.validatePromotion = function (promotion, checkForUndefined) {
         var validationErrors = {};
-        validationErrors.startDt = publicApi.validateStartDate(promotion.startDt, checkForUndefined);
+        // Will skip validation of start date if the promotion is active
+        validationErrors.startDt = !utilService.isPromotionActive(promotion)
+            ? publicApi.validateStartDate(promotion.startDt, checkForUndefined)
+            : {isError: false, message:''};
         // Calls the appropriate end date validation based on whether or not the discount is MSB
         validationErrors.endDt = promotion.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB'
             ? publicApi.validateMSBEndDate(promotion.startDt, promotion.endDt, checkForUndefined)

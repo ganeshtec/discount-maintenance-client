@@ -110,4 +110,22 @@ describe('utilService', function () {
     expect(utilService.isSubmitEligibleForDisable(promotion)).toEqual(false);
   });
 
+  it('returns true from isPromotionActive for promotions with status 61.', function() {
+    var promotion = {
+      "status": 61
+    }
+
+    expect(utilService.isPromotionActive(promotion)).toEqual(true);
+  });
+
+  it('returns false from isPromotionActive for promotions with a status other than 61', function() {
+    var promotion = {}
+
+    while(!promotion.status || promotion.status == 61) {
+      promotion.status = Math.floor(Math.random() * 100);
+    }
+
+    expect(utilService.isPromotionActive(promotion)).toEqual(false);
+  });
+
 });
