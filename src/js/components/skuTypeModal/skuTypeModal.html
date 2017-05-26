@@ -7,7 +7,7 @@
 
         <div ng-repeat="skuType in $ctrl.skuTypes">
             <div class="md-checkbox">
-            <input type="checkbox" id="skuType_{{skuType.skuTypeCode}}" name="skuType_{{skuType.skuTypeCode}}" title="{{skuType.description}}"/>
+            <input type="checkbox" id="skuType_{{skuType.skuTypeCode}}" ng-model="$ctrl.skuSelection[skuType.skuTypeCode]" name="skuType_{{skuType.skuTypeCode}}" title="{{skuType.description}}" />
             <label for="label"><span><span></span></span>{{skuType.skuTypeCode}} - {{skuType.description}}</label>
             </div>
         </div>
