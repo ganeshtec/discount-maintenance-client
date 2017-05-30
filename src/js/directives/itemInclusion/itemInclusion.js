@@ -131,11 +131,14 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory',
                     scope.itemSkuSearch = (data.inValidSkuInfo) ? [data.inValidSkuInfo.toString().replace(/,/g, ' ')] : [];
 
                     scope.inValidSkuInfo = (scope.itemSkuSearch.length > 0);
+                    
                     var invalidIds = data.inValidSkuInfo;
                     if (clicked && invalidIds && invalidIds.length > 0) {
-                        DataFactory.messageModal.message = 'Following SKU ID\'s are invalid: ' + invalidIds.toString();
-                        DataFactory.messageModal.title = 'Warning';
-                        $('#messageModal').popup();
+                        // DataFactory.messageModal.message = 'Following SKU ID\'s are invalid: ' + invalidIds.toString();
+                        // DataFactory.messageModal.title = 'Warning';
+                        // $('#messageModal').popup();
+                        scope.showInvalidError = true;
+
                     }
                 }
 
@@ -181,7 +184,6 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory',
                 }
 
                 function validateItemData(data) {
-
                     if (data.length == 0) {
                         scope.showInvalidError = true;
                         return;
@@ -194,12 +196,6 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory',
                             return;
                         }
                         if (!scope.isSkuSearch && data[i] && data[i].length != 9) {
-
-                            scope.showInvalidError = true;
-                            return;
-                        }
-                        if (scope.isSkuSearch && data[i] && (data[i].length != 6 && data[i].length != 10)) {
-
                             scope.showInvalidError = true;
                             return;
                         }
