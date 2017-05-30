@@ -9,14 +9,16 @@ app.component('promoLabels', {
     controller: PromoLabelsController
 });
 
-PromoLabelsController.$inject = ['validationService'];
+PromoLabelsController.$inject = ['validationService', 'utilService'];
 
-function PromoLabelsController(validationService) {
+function PromoLabelsController(validationService, utilService) {
 
     this.validatePromotion = function() {
         this.validationErrors = validationService.validatePromotion(this.data);
-
     }
-  
+
+    this.isPromotionActive = function(){
+        return utilService.isPromotionActive(this.data);
+    }
 
 }
