@@ -22,36 +22,44 @@ describe('validationService', function () {
     }));
 
     it('returns a startDt errors object with isError and message properties.', function () {
-        var today = moment().toDate();
+        var promotion = {
+            startDt: moment().toDate()
+        }
 
-        validationService.validateStartDate(today, function(response) {
+        validationService.validateStartDate(promotion, function(response) {
             expect(response.isError).toBeDefined();
             expect(response.message).toBeDefined();
         });
     });
 
     it('returns a start date error when selected start date is in the past.', function () {
-        var pastStartDate = moment().subtract(3, 'days').toDate();
+        var promotion = {
+            startDt: moment().subtract(3, 'days').toDate()
+        }
 
-        validationService.validateStartDate(pastStartDate, function(response) {
+        validationService.validateStartDate(promotion, function(response) {
             expect(response.isError).toBe(true);
             expect(response.message).not.toBe('');
         });
     })
 
     it('returns a false/empty start date error when selected start date is in the future.', function () {
-        var futureDate = moment().add(3, 'days').toDate();
+        var promotion = {
+            startDt: moment().add(3, 'days').toDate()
+        }
 
-        validationService.validateStartDate(futureDate, function(response) {
+        validationService.validateStartDate(promotion, function(response) {
             expect(response.isError).toBe(false);
             expect(response.message).toBe('');
         });
     })
 
     it('returns a false/empty start date error when selected start date is today.', function () {
-        var today = moment().toDate();
+        var promotion = {
+            startDt: moment().toDate()
+        }
 
-        validationService.validateStartDate(today, function(response) {
+        validationService.validateStartDate(promotion, function(response) {
             expect(response.isError).toBe(false);
             expect(response.message).toBe('');
         });
