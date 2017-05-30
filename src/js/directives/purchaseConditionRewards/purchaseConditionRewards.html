@@ -60,7 +60,13 @@
     <!-- Category view Codes Component -->
     <category-view data="item.inclusions.hierarchies" is-disabled="isDisabled" promoform="promoform" ng-show="data.purchaseConds.sources[$index].purchaseoption == 'category' && viewProp.displayWebHierarchy">
     </category-view>
-    <a href="" class="md-button secondary sku-types-button" ng-click="showSkuTypeModal($event)" ng-show="data.purchaseConds.sources[$index].purchaseoption == 'category'">Select SKU Types</a>
+    <div ng-show="data.purchaseConds.sources[$index].purchaseoption == 'category'">
+        <a class="editOption thd-orange" ng-click="showSkuTypeModal($event)" href="">
+	     Edit SKU Types
+	     </a>
+        <!--<a href="" class="md-button secondary sku-types-button" ng-click="showSkuTypeModal($event)" ng-show="data.purchaseConds.sources[$index].purchaseoption == 'category'"></a>-->
+    </div> 
+    
    
     <!-- NXK8980  MerchCategory-CodeChanges-START -->
     <merch-hierarchy-view data="item.inclusions.hierarchies" is-disabled="isDisabled" promoform="promoform" ng-show="data.purchaseConds.sources[$index].purchaseoption == 'category'">

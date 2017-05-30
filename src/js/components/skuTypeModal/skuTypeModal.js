@@ -18,16 +18,50 @@ function SkuTypeModalController(skuTypesDataService,$mdDialog,$scope) {
         })
         return result;
     }
+    ctrl.isSkuTypeExclusionsNotInitialized = function(){
+        var result = false;
+        if(ctrl.data.status == '20' && !ctrl.data.purchaseConds.sources[0].exclusions.skuTypeAttrsInitialized){
+            result=true;
+        }
+        return result;
+    }
+    ctrl.initializeSkuTypeExclusions = function(){
+        var attrs=[];
+        ctrl.skuTypes.forEach(function(skuType){
+            attrs.push(ctrl.buildSkuTypeAttr(skuType.skuTypeCode));
+        });
+        ctrl.data.purchaseConds.sources[0].exclusions.attrs=attrs;
+        ctrl.data.purchaseConds.sources[0].exclusions.skuTypeAttrsInitialized=true;
+    }
+
     ctrl.$onInit = function () {
+        if(ctrl.data.purchaseConds.sources[0].exclusions == undefined){
+            ctrl.data.purchaseConds.sources[0].exclusions={};           
+        }
+        if(ctrl.data.purchaseConds.sources[0].exclusions.attrs == undefined){
+            ctrl.data.purchaseConds.sources[0].exclusions.attrs=[];
+        }
         skuTypesDataService.fetchSkuTypes().then(function(skuTypes){
             ctrl.skuTypes=skuTypes;
-            ctrl.skuSelection={};       
+            ctrl.skuSelection={};     
+            if(ctrl.isSkuTypeExclusionsNotInitialized()){
+                ctrl.initializeSkuTypeExclusions();                
+            }
             ctrl.skuTypes.forEach(function(skuType) {
-                ctrl.skuSelection[skuType.skuTypeCode]= !ctrl.isSkuTypeExcluded(skuType.skuTypeCode);
+                    ctrl.skuSelection[skuType.skuTypeCode]=  !ctrl.isSkuTypeExcluded(skuType.skuTypeCode);
             });
-        
+            
             
         });
+    }
+    ctrl.buildSkuTypeAttr= function(skuTypeCode){
+        var attr={};
+        attr.value=skuTypeCode;
+        //attr.id='bcdfe1a4-626a-4042-9a2e-5298f9b952a8'
+        attr.id='bcdfe1a4';
+        attr.name='SKU Type';
+        attr.operator='==';   
+        return attr;    
     }
 
     
@@ -36,12 +70,7 @@ function SkuTypeModalController(skuTypesDataService,$mdDialog,$scope) {
         var attrs=[]
         ctrl.skuTypes.forEach(function(skuType){
             if(!ctrl.skuSelection[skuType.skuTypeCode]){
-                var attr={};
-                attr.value=skuType.skuTypeCode;
-                attr.id='bcdfe1a4-626a-4042-9a2e-5298f9b952a8'
-                attr.name='SKU Type';
-                attr.operator='==';
-                attrs.push(attr);
+                attrs.push(ctrl.buildSkuTypeAttr(skuType.skuTypeCode));
             }
         });
         ctrl.data.purchaseConds.sources[0].exclusions.attrs=attrs;

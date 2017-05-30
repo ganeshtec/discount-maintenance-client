@@ -50,10 +50,8 @@ app.factory('PromotionData', [function () {
                         'partnumbers': [],
                         'itemtype': 'category',
                         'hierarchies': [],
-                        'attrs': [{
-                            'name': 'SKUType',
-                            'value': 'N'
-                        }]
+                        'attrs': [],
+                        'skuTypeAttrsInitialized': false
                     },
                     'minPurchaseQty': null
                 }],
