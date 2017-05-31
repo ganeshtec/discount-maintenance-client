@@ -49,13 +49,13 @@
 				</td>
 				<td class="md-text-field">
 						<input type="text" id="value" name="value_{{$index}}" ng-model="item.value" ng-required="$ctrl.preview" ng-blur="$ctrl.roundPercentage($index); $ctrl.validatePromotion()" allow-pattern="^[\d.]+$" ng-if="$ctrl.data.reward.type=='AMTOFF'"/>
-                        <input type="text" id="value" name="value_{{$index}}" class="tooltiphead" ng-model="item.value" ng-required="$ctrl.preview" ng-blur="$ctrl.roundPercentage($index); $ctrl.validatePromotion()" allow-pattern="^[\d.]+$" ng-if="$ctrl.data.reward.type=='PERCNTOFF'"/>
+                        <input type="text" id="value" name="value_{{$index}}" ng-model="item.value" ng-required="$ctrl.preview" ng-blur="$ctrl.roundPercentage($index); $ctrl.validatePromotion()" allow-pattern="^[\d.]+$" ng-if="$ctrl.data.reward.type=='PERCNTOFF'" class="tooltiphead"/>
 							<span class='error-message' ng-show="$ctrl.promoform['value_' + $index].$invalid || $ctrl.preview">
 									<span ng-show="$ctrl.promoform['value_' + $index].$error.min">
 										Please enter a value above 0
 									</span>
 							</span>
-							<span class='error-message' ng-show="$ctrl.validationErrors.percentOff[$index].isError">{{$ctrl.validationErrors.percentOff[$index].message}}	</span>					
+							<span class='error-message' ng-show="$ctrl.validationErrors.rewards[$index].isError">{{$ctrl.validationErrors.rewards[$index].message}}	</span>					
 
 							<tool-tipper-warning  ng-show="$ctrl.validationErrors.percentageWarning[$index].isError" show-tool-tip="true">	
 								<p>
@@ -80,19 +80,15 @@
 <div ng-if="$ctrl.purchaseCondition.sources.length > 1">
     <div class="md-text-field" ng-if="$ctrl.promotype=='MultipleItemsPercentDiscount'">
       <label for="percentoff">Percentage discount off each combination</label>
-      <input type="text" ng-model="$ctrl.data.reward.details[0].value" name="percentoff" ng-required="$ctrl.preview" required allow-pattern="(\d)" />
-      <span class='error-message' ng-show="$ctrl.promoform.percentoff.$invalid ">	
-			<span ng-show="$ctrl.promoform.percentoff.$error.required">Please enter a valid discount amount</span>
-            
-	</span>
+      <input type="text" ng-model="$ctrl.data.reward.details[0].value" name="percentoff" ng-blur="$ctrl.validatePromotion()" ng-required="$ctrl.preview" required allow-pattern="(\d)" />
+		<span class='error-message' ng-show="$ctrl.validationErrors.rewards[0].isError">{{$ctrl.validationErrors.rewards[0].message}}	</span>
     </div>
 
     <div class="md-text-field" ng-if="$ctrl.promotype=='MultipleItemsValueDiscount'">
       <label for="amountoff">Amount off each combination</label>
-      <input type="text" ng-model="$ctrl.data.reward.details[0].value" name="amountoff" ng-required="$ctrl.preview" required allow-pattern="^[\d.]+$" />
+      <input type="text" ng-model="$ctrl.data.reward.details[0].value" name="amountoff" ng-blur="$ctrl.validatePromotion()" ng-required="$ctrl.preview" required allow-pattern="^[\d.]+$" />
        <span class='error-message' ng-show="$ctrl.promoform.amountoff.$invalid ">
 			<span ng-show="$ctrl.promoform.amountoff.$error.required">Please enter a valid amount</span>
-            
 	</span>
     </div>
 

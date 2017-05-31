@@ -247,12 +247,30 @@ app.service('validationService', ['$filter', 'leadTimeService', 'utilService', f
             : publicApi.validateEndDateWithoutLeadTime(promotion.startDt, promotion.endDt, checkForUndefined);
     }
 
+    publicApi.validateRewards = function(promotion, checkForUndefined) {
+        var emptyValidaton;
+        var rewardsErrors;
+
+        if (promotion.reward) {
+            if (promotion.reward.type === 'PERCNTOFF') {
+                return publicApi.validatePercentOff(promotion.reward.details, checkForUndefined);
+            } else if (promotion.reward.type === 'AMTOFF') {
+                emptyValidaton = { isError: false, message: '' };
+                rewardsErrors = [];
+                promotion.reward.details.forEach(function() {
+                    rewardsErrors.push(emptyValidaton);
+                })
+                return rewardsErrors;
+            }
+        }
+    }
+
     publicApi.validatePromotion = function (promotion, checkForUndefined) {
         var validationErrors = {};
         validationErrors.startDt = publicApi.validateStartDate(promotion, checkForUndefined);
         validationErrors.endDt = publicApi.validateDiscountEndDate(promotion, checkForUndefined);
         validationErrors.minimumThreshold = publicApi.validateMinimumPurchase(promotion.reward.details, checkForUndefined);
-        validationErrors.percentOff = publicApi.validatePercentOff(promotion.reward.details, checkForUndefined);
+        validationErrors.rewards = publicApi.validateRewards(promotion, checkForUndefined);
         validationErrors.priorityRange = publicApi.validatePriority(promotion.priority);
         validationErrors.percentageWarning = publicApi.validatePercentageWarning(promotion.reward.details);
         validationErrors.threeMonthsWarning = publicApi.validateThreeMonthsWarning(promotion.startDt);
