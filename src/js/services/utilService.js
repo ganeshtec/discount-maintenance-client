@@ -159,7 +159,9 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
         if (sources && sources.length > 0) {
             for (var i = 0; i < sources.length; i++) {
                 var purchaseOption = sources[i].purchaseoption;
-
+                if(sources[i].exclusions && sources[i].exclusions.attrs && purchaseOption != 'category'){
+                    sources[i].exclusions.attrs = []; //Setting attrs to empty if user does not select category
+                }
                 if (sources[i].inclusions && sources[i].inclusions.partnumbers && purchaseOption == 'category') {
                     sources[i].inclusions.partnumbers = []; //setting Item OMS id empty if user select category radio button
                 } else if (sources[i].inclusions && sources[i].inclusions.partnumbers && purchaseOption == 'itemoms') {

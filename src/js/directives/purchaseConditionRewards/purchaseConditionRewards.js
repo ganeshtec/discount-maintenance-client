@@ -103,10 +103,11 @@ app.directive('purchaseConditionRewards', ['SourceData', 'customerSegmentDataSer
 
                 }
                 
-                scope.showSkuTypeModal = function(ev) {
-
+                scope.showSkuTypeModal = function(ev,source,promostatus) {
+                    scope.source=source;
+                    scope.promostatus=promostatus;
                     $mdDialog.show({
-                        template: '<sku-type-modal data="data"></sku-type-modal>',
+                        template: '<sku-type-modal source="source" promo-status="promostatus"></sku-type-modal>',
                         parent: angular.element(document.body),
                         targetEvent: ev,
                         scope: scope,

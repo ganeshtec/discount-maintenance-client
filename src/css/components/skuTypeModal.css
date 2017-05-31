@@ -9,6 +9,6 @@
 	color: #F96302;
 	cursor: pointer;
 }
-.sku-types-button{
-    
+.filter_sku_types_link{
+    float: right;
 }

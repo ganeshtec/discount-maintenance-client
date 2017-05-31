@@ -1,17 +1,19 @@
 app.component('skuTypeModal', {
     bindings: {
-        data: '=',
+        source: '=',
+        promoStatus: '=',
     },
+    scope: {},
     templateUrl: 'skuTypeModal.html',
     controller: SkuTypeModalController,
 });
 
-function SkuTypeModalController(skuTypesDataService,$mdDialog,$scope) {
+function SkuTypeModalController(skuTypesDataService,$mdDialog) {
     var ctrl=this;
     ctrl.isSkuTypeExcluded =function(skuTypeCode){
         
         var result=false;
-        ctrl.data.purchaseConds.sources[0].exclusions.attrs.forEach(function(attr){          
+        ctrl.source.exclusions.attrs.forEach(function(attr){          
             if(attr.value == skuTypeCode){
                 result= true;
             }
@@ -20,7 +22,7 @@ function SkuTypeModalController(skuTypesDataService,$mdDialog,$scope) {
     }
     ctrl.isSkuTypeExclusionsNotInitialized = function(){
         var result = false;
-        if(ctrl.data.status == '20' && !ctrl.data.purchaseConds.sources[0].exclusions.skuTypeAttrsInitialized){
+        if(ctrl.promoStatus == '20' && !ctrl.source.exclusions.skuTypeAttrsInitialized){
             result=true;
         }
         return result;
@@ -30,16 +32,16 @@ function SkuTypeModalController(skuTypesDataService,$mdDialog,$scope) {
         ctrl.skuTypes.forEach(function(skuType){
             attrs.push(ctrl.buildSkuTypeAttr(skuType.skuTypeCode));
         });
-        ctrl.data.purchaseConds.sources[0].exclusions.attrs=attrs;
-        ctrl.data.purchaseConds.sources[0].exclusions.skuTypeAttrsInitialized=true;
+        ctrl.source.exclusions.attrs=attrs;
+        ctrl.source.exclusions.skuTypeAttrsInitialized=true;
     }
 
     ctrl.$onInit = function () {
-        if(ctrl.data.purchaseConds.sources[0].exclusions == undefined){
-            ctrl.data.purchaseConds.sources[0].exclusions={};           
+        if(ctrl.source.exclusions == undefined){
+            ctrl.source.exclusions={};           
         }
-        if(ctrl.data.purchaseConds.sources[0].exclusions.attrs == undefined){
-            ctrl.data.purchaseConds.sources[0].exclusions.attrs=[];
+        if(ctrl.source.exclusions.attrs == undefined){
+            ctrl.source.exclusions.attrs=[];
         }
         skuTypesDataService.fetchSkuTypes().then(function(skuTypes){
             ctrl.skuTypes=skuTypes;
@@ -48,10 +50,8 @@ function SkuTypeModalController(skuTypesDataService,$mdDialog,$scope) {
                 ctrl.initializeSkuTypeExclusions();                
             }
             ctrl.skuTypes.forEach(function(skuType) {
-                    ctrl.skuSelection[skuType.skuTypeCode]=  !ctrl.isSkuTypeExcluded(skuType.skuTypeCode);
-            });
-            
-            
+                ctrl.skuSelection[skuType.skuTypeCode]=  !ctrl.isSkuTypeExcluded(skuType.skuTypeCode);
+            });            
         });
     }
     ctrl.buildSkuTypeAttr= function(skuTypeCode){
@@ -66,18 +66,18 @@ function SkuTypeModalController(skuTypesDataService,$mdDialog,$scope) {
 
     
 
-    $scope.applySkuTypeSelection = function(){
+    ctrl.applySkuTypeSelection = function(){
         var attrs=[]
         ctrl.skuTypes.forEach(function(skuType){
             if(!ctrl.skuSelection[skuType.skuTypeCode]){
                 attrs.push(ctrl.buildSkuTypeAttr(skuType.skuTypeCode));
             }
         });
-        ctrl.data.purchaseConds.sources[0].exclusions.attrs=attrs;
+        ctrl.source.exclusions.attrs=attrs;
         $mdDialog.hide();
     }
 
-    $scope.closeSkuTypeModal = function(){
+    ctrl.closeSkuTypeModal = function(){
         $mdDialog.hide();
     }
 

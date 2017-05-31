@@ -1,6 +1,6 @@
 <div class="md-dialog-content sku-type-modal">
 <div class="close-sku-type-modal" ng-click="closeSkuTypeModal()">&times;</div>
-    <h3>SKU Types</h3>
+    <h3>Filter SKU Types</h3>
     <br/>
     <p>The following SKU types are included in your selection. Choose the types that you would like applied to your discount</p>
     <br/>
@@ -11,10 +11,10 @@
             <label for="label"><span><span></span></span>{{skuType.skuTypeCode}} - {{skuType.description}}</label>
             </div>
         </div>
-    <a href="" class="md-button secondary " style="margin-top:28px" ng-click="closeSkuTypeModal()" >
+    <a href="" class="md-button secondary " style="margin-top:28px" ng-click="$ctrl.closeSkuTypeModal()" >
 		Cancel
 	</a>
-    <a href="" class="md-button primary" style="margin-top:28px" ng-click="applySkuTypeSelection()" >
+    <a href="" class="md-button primary" style="margin-top:28px" ng-click="$ctrl.applySkuTypeSelection()" >
 		Apply
 	</a>
 </div>
