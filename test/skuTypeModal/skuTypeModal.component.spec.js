@@ -70,7 +70,10 @@ describe('skuTypeModal', function () {
         ctrl.skuSelection['S']=false;
         ctrl.applySkuTypeSelection();
         expect(ctrl.source.exclusions.attrs.length).toBe(1); 
-        expect(ctrl.source.exclusions.attrs[0].value).toEqual('S');     
+        expect(ctrl.source.exclusions.attrs[0].value).toEqual('S'); 
+        expect(ctrl.source.exclusions.attrs[0].id).toEqual('bcdfe1a4-626a-4042-9a2e-5298f9b952a8');
+         expect(ctrl.source.exclusions.attrs[0].operator).toEqual('==');  
+         expect(ctrl.source.exclusions.attrs[0].name).toEqual('SKU Type');  
     });
 
     it('Close modal should leave excluded attributes unchanged', function () {

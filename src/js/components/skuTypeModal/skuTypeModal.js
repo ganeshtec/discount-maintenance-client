@@ -57,8 +57,7 @@ function SkuTypeModalController(skuTypesDataService,$mdDialog) {
     ctrl.buildSkuTypeAttr= function(skuTypeCode){
         var attr={};
         attr.value=skuTypeCode;
-        //attr.id='bcdfe1a4-626a-4042-9a2e-5298f9b952a8'
-        attr.id='bcdfe1a4';
+        attr.id='bcdfe1a4-626a-4042-9a2e-5298f9b952a8'
         attr.name='SKU Type';
         attr.operator='==';   
         return attr;    
