@@ -32,8 +32,8 @@ function PurchaseConditionController(validationService) {
                 this.data.reward.details[i].qualUOM = qualuom;
             }
         }
+        this.data.purchaseConds.qualUOM = temp;
     }
-     
    
     function addPurchaseCondition() {
         this.data.reward.details = this.data.reward.details || [];
