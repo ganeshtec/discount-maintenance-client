@@ -1,6 +1,6 @@
 // Purpose is to build promotion data.
-app.directive('itemInclusion', ['itemsDataService', 'DataFactory',
-    function (itemsDataService, DataFactory) {
+app.directive('itemInclusion', ['itemsDataService', 'DataFactory','$mdDialog',
+    function (itemsDataService, DataFactory,$mdDialog) {
         return {
             restrict: 'E',
             templateUrl: 'itemInclusion.html',
@@ -115,6 +115,7 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory',
 
 
                 function setSkuValidData(data, clicked) {
+                    console.log("_____*****Data in setSkuValidData Function::",data);
                     existingID = '';
 
                     if (!scope.validSkuInfo.length && scope.data && !scope.itemSkuSearch) {
@@ -142,6 +143,7 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory',
                     }
                 }
 
+              
                 function getItemsByID(data, clicked) {
 
                     if (scope.isSkuSearch) {
@@ -154,7 +156,14 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory',
 
                         itemPromise.then(
                             function (data) {
+                                // Pop up call after completion of Service call for Each Sku Count
+                            
+                                console.log("____PopUp Job Completed Now Data will go down to Table")
                                 setSkuValidData(data, clicked);
+                                if(data.validSkuInfo) {
+                                            showSkuTypeModal(data);
+                                }
+                                
                             },
                             function (error) {
                                 DataFactory.messageModal.message = error;
@@ -181,6 +190,18 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory',
                             });
                     }
 
+                }
+
+            function showSkuTypeModal(data) {
+                    scope.data=data;
+                    $mdDialog.show({
+                        template: '<promo-sku-type-modal data="data"></promo-sku-type-modal>',
+                        controller: PromoSkuTypeModalController,
+                        parent: angular.element(document.body),
+                       // targetEvent: ev,
+                        scope: scope,
+                        preserveScope: true       
+                    })
                 }
 
                 function validateItemData(data) {
@@ -243,7 +264,7 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory',
                     if (emptyCheck(data)) {
                         if (scope.isSkuSearch) {
                             scope.dataEmpty = true;
-                            DataFactory.messageModal.message = 'Please enter a valid SKU Number';
+                            DataFactory.messageModal.message = 'Please enter atleast one valid SKU Number to continue';
                             DataFactory.messageModal.title = 'Warning';
                             $('#messageModal').popup();
                         } else {

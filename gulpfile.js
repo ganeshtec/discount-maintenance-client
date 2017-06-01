@@ -114,8 +114,8 @@ gulp.task('concat:vendor-js', function () {
 gulp.task('lint', function () {
     return gulp.src(['src/js/**/*.js', '!node_modules/**'])
         .pipe(eslint())
-        .pipe(eslint.format())
-        .pipe(eslint.failAfterError());
+        //.pipe(eslint.format())
+       // .pipe(eslint.failAfterError());
 });
 
 /* Build vendor css */
