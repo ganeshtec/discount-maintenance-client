@@ -116,7 +116,7 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
                         promotion.purchaseConds.isInclusionsOrExclusionsExist = true;
                         hasExc = true;
                     }
-                    if (sources[0].exclusions.hierarchies && sources[0].exclusions.attrs.length > 0) {
+                    if (sources[0].exclusions.attrs && sources[0].exclusions.attrs.length > 0) {
                         promotion.purchaseConds.isInclusionsOrExclusionsExist = true;
                         hasExc = true;
                     }
