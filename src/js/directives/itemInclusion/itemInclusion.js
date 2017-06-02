@@ -61,6 +61,10 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory','$mdDialog',
                     if (!scope.data) {
                         scope.data = [];
                     }
+                    console.log("#########______scope.data::",scope.data);
+                    console.log("#########______ sku.skuNumber::", sku.skuNumber);
+                    console.log("#########______ sku::", sku);
+                   
                     if (scope.data.indexOf(sku.skuNumber) === -1) {
                         scope.validSkuInfo.push(sku);
                         setSkuData();
@@ -115,7 +119,6 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory','$mdDialog',
 
 
                 function setSkuValidData(data, clicked) {
-                    console.log("_____*****Data in setSkuValidData Function::",data);
                     existingID = '';
 
                     if (!scope.validSkuInfo.length && scope.data && !scope.itemSkuSearch) {
@@ -127,7 +130,6 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory','$mdDialog',
                             addSku(data.validSkuInfo[i]);
                         }
                     }
-
                     // if invalid Data set to item search
                     scope.itemSkuSearch = (data.inValidSkuInfo) ? [data.inValidSkuInfo.toString().replace(/,/g, ' ')] : [];
 
@@ -158,11 +160,13 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory','$mdDialog',
                             function (data) {
                                 // Pop up call after completion of Service call for Each Sku Count
                             
-                                console.log("____PopUp Job Completed Now Data will go down to Table")
-                                setSkuValidData(data, clicked);
-                                if(data.validSkuInfo) {
+                               // console.log("____PopUp Job Completed Now Data will go down to Table")
+                                
+                                 setSkuValidData(data, clicked);
+                                   if(data.validSkuInfo) {
                                             showSkuTypeModal(data);
                                 }
+                                       
                                 
                             },
                             function (error) {
@@ -193,12 +197,11 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory','$mdDialog',
                 }
 
             function showSkuTypeModal(data) {
-                    scope.data=data;
+                    scope.modaldata=data;
                     $mdDialog.show({
-                        template: '<promo-sku-type-modal data="data"></promo-sku-type-modal>',
+                        template: '<promo-sku-type-modal data="modaldata"></promo-sku-type-modal>',
                         controller: PromoSkuTypeModalController,
                         parent: angular.element(document.body),
-                       // targetEvent: ev,
                         scope: scope,
                         preserveScope: true       
                     })
@@ -235,11 +238,8 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory','$mdDialog',
                     } else {
                         omsData.omsIds = scope.data;
                         getItemsByID(omsData);
-
                     }
-
                 }
-
                 scope.searchResults = [];
 
 
