@@ -46,8 +46,8 @@ function PromoScheduleController($filter, $scope, validationService, utilService
         this.validationErrors = validationService.validatePromotion(this.data);
     }
 
-    this.isPromotionActive = function(promotion){
-        return utilService.isPromotionActive(promotion);
+    this.isPromotionActive = function(){
+        return utilService.isPromotionActive(this.data);
     }
 
 }
