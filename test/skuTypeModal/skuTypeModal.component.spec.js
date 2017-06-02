@@ -40,7 +40,8 @@ describe('skuTypeModal', function () {
         ctrl.$onInit();
         scope.$digest();
         expect(ctrl.skuSelection['N']).toBe(false);  
-        expect(ctrl.skuSelection['S']).toBe(false);       
+        expect(ctrl.skuSelection['S']).toBe(false);   
+        expect(ctrl.selectionMade).toBe(false);    
     });
 
     it('All SKU Types are selected on editing an existing promotion without any SKU Type Exclusions', function () {
@@ -49,7 +50,8 @@ describe('skuTypeModal', function () {
         ctrl.$onInit();
         scope.$digest();
         expect(ctrl.skuSelection['N']).toBe(true);  
-        expect(ctrl.skuSelection['S']).toBe(true);       
+        expect(ctrl.skuSelection['S']).toBe(true);  
+        expect(ctrl.selectionMade).toBe(true);      
     });
 
     it('SKU Types that were previsously selected should be checked on editing', function () {
@@ -58,7 +60,8 @@ describe('skuTypeModal', function () {
         ctrl.$onInit();
         scope.$digest();
         expect(ctrl.skuSelection['N']).toBe(true);  
-        expect(ctrl.skuSelection['S']).toBe(false);       
+        expect(ctrl.skuSelection['S']).toBe(false);  
+        expect(ctrl.selectionMade).toBe(true);       
     });
 
     it('Apply should add attributes not selected to exclusions', function () {
@@ -76,6 +79,22 @@ describe('skuTypeModal', function () {
          expect(ctrl.source.exclusions.attrs[0].name).toEqual('SKU Type');  
     });
 
+    it('Apply should be disabled if no selection is made', function () {
+        ctrl.source.exclusions={ attrs: [ {id: '1234', name: 'SKU Type', value: 'N', opeartor: '=='},{id: '1234', name: 'SKU Type', value: 'S', opeartor: '=='}]};//Contains
+        ctrl.promoStatus= 70;
+        ctrl.$onInit();
+        scope.$digest();
+        expect(ctrl.selectionMade).toBe(false);
+    });
+
+    it('Apply should be enabled if any selection is made', function () {
+        ctrl.source.exclusions={ attrs: [ {id: '1234', name: 'SKU Type', value: 'N', opeartor: '=='}]};//Contains
+        ctrl.promoStatus= 70;
+        ctrl.$onInit();
+        scope.$digest();
+        expect(ctrl.selectionMade).toBe(true);
+    });
+
     it('Close modal should leave excluded attributes unchanged', function () {
         ctrl.source.exclusions={ attrs: [ {id: '1234', name: 'SKU Type', value: 'N', opeartor: '=='}]};
         ctrl.promoStatus= 70;
@@ -86,9 +105,5 @@ describe('skuTypeModal', function () {
         ctrl.closeSkuTypeModal();
         expect(ctrl.source.exclusions.attrs.length).toBe(1); 
         expect(ctrl.source.exclusions.attrs[0].value).toEqual('N');     
-    });
-
-
-
-   
+    }); 
 });
