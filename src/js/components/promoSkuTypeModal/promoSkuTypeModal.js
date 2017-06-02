@@ -12,7 +12,8 @@ function PromoSkuTypeModalController(skuTypesDataService, $mdDialog) {
         skuTypesDataService.fetchSkuTypes().then(function (skuTypes) {
             ctrl.skuTypes = skuTypes;
             var ctr = 0;
-            var skuMap = ctrl.data.skuCountList;
+            //var skuMap = ctrl.data.skuCountList;
+            var skuMap = ctrl.getSkuCount(ctrl.data);
 
             for (var i = 0, len = ctrl.skuTypes.length; i < len; i++) {
                 for (var j = 0; j < skuMap.length; j++) {
@@ -30,14 +31,17 @@ function PromoSkuTypeModalController(skuTypesDataService, $mdDialog) {
                 ctrl.skuTypes[i].skuTypeCode = skuTypes[i].skuTypeCode;
             }
 
-            var sortedArray = [];
             skuTypes.sort(function (a, b) {
                 return b.skuCount - a.skuCount;
             });
         });
     }
 
-
+    ctrl.getSkuCount = function(data){
+        console.log("Sku count: ", ctrl.data.skuCountList);
+        return ctrl.data.skuCountList;
+            
+    }
     ctrl.applySkuTypeSelection = function () {
         // var attrs=[]
         // ctrl.skuTypes.forEach(function(skuType){
