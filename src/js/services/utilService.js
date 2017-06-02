@@ -116,8 +116,14 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
                         promotion.purchaseConds.isInclusionsOrExclusionsExist = true;
                         hasExc = true;
                     }
+                    if (sources[0].exclusions.attrs && sources[0].exclusions.attrs.length > 0) {
+                        promotion.purchaseConds.isInclusionsOrExclusionsExist = true;
+                        hasExc = true;
+                    }
                     if (!hasExc) {
                         delete sources[0].exclusions;
+                    }else{
+                        delete sources[0].exclusions.skuTypeAttrsInitialized;
                     }
                 }
             }
@@ -153,7 +159,9 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
         if (sources && sources.length > 0) {
             for (var i = 0; i < sources.length; i++) {
                 var purchaseOption = sources[i].purchaseoption;
-
+                if(sources[i].exclusions && sources[i].exclusions.attrs && purchaseOption != 'category'){
+                    sources[i].exclusions.attrs = []; //Setting attrs to empty if user does not select category
+                }
                 if (sources[i].inclusions && sources[i].inclusions.partnumbers && purchaseOption == 'category') {
                     sources[i].inclusions.partnumbers = []; //setting Item OMS id empty if user select category radio button
                 } else if (sources[i].inclusions && sources[i].inclusions.partnumbers && purchaseOption == 'itemoms') {
