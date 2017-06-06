@@ -30,18 +30,40 @@ describe('promoSkuTypeModal', function () {
     }));
 
     //  fit('Test SKU Type modal component rendering', inject(function (_$compile_) {
-    //     ctrl.data={  validSkuInfo: [
+    //     //var  ctrl=this;
+    //     var  modaldata = { 
+    //         validSkuInfo: [
     //             {
-    //             }
+    //                 omsId: null,
+    //                 prodName: null,
+    //                 skuDescription: 'SMOOTH FLUSH SOLID CORE PRIMED CHROM',
+    //                 skuNumber: 1000317883,
+    //                 skuTypeCode: 'S'
+    //             },
+    //             {
+    //                 omsId: null,
+    //                 prodName: null,
+    //                 skuDescription: '16"X16" MONTAGNA BELLUNO-15.5SF CA',
+    //                 skuNumber: 100049,
+    //                 skuTypeCode: 'N'
+    //             },
     //         ],
     //         inValidSkuInfo: [{
     //         }
     //         ],
     //         skuCountList: [
     //             {
+    //                 "skuTypeCode": "S",
+    //                 "skuCount": 1
+                    
+    //             },
+    //             {
+    //                 "skuTypeCode": "N",
+    //                 "skuCount": 1
+                    
     //             }
-    //         ],};
-       
+    //         ],
+    //     };
     //     var element = _$compile_("<promo-sku-type-modal data='modaldata'></promo-sku-type-modal>")(scope);
     //     scope.$digest();
     //     expect(element.html()).toContain("Filter SKU Types");
@@ -72,32 +94,30 @@ describe('promoSkuTypeModal', function () {
             ],
             skuCountList: [
                 {
+                    "skuTypeCode": "S",
+                    "skuCount": 1
+                    
+                },
+                {
+                    "skuTypeCode": "N",
+                    "skuCount": 1
+                    
                 }
             ],
         }
         ctrl.$onInit();
         scope.$digest();
-       // expect(ctrl.skuTypes[0].skuCount).toEqual(1);  
-        expect(ctrl.deferredResult[0].skuCount).toEqual(1);  
-       
-        // expect(ctrl.skuSelection['S']).toBe(true);       
-    });
+        //console.log("_____skuTypeCountList:",ctrl.data.skuCountList);
+        //console.log("_____skuTypes:",ctrl.skuTypes);
+         expect(ctrl.skuTypes.length).toEqual(2);  
 
-   
-
-    it('Apply should add attributes not selected to exclusions', function () {
-        // ctrl.source.exclusions={ attrs: [ {id: '1234', name: 'SKU Type', value: 'N', opeartor: '=='}]};
-        // ctrl.promoStatus= 70;
-        // ctrl.$onInit();
-        // scope.$digest();
-        // ctrl.skuSelection['N']=true;
-        // ctrl.skuSelection['S']=false;
-        // ctrl.applySkuTypeSelection();
-        // expect(ctrl.source.exclusions.attrs.length).toBe(1); 
-        // expect(ctrl.source.exclusions.attrs[0].value).toEqual('S'); 
-        // expect(ctrl.source.exclusions.attrs[0].id).toEqual('bcdfe1a4-626a-4042-9a2e-5298f9b952a8');
-        //  expect(ctrl.source.exclusions.attrs[0].operator).toEqual('==');  
-        //  expect(ctrl.source.exclusions.attrs[0].name).toEqual('SKU Type');  
+         expect(ctrl.skuTypes[0].skuCount).toEqual(1);  
+         expect(ctrl.skuTypes[0].skuTypeCode).toEqual('N');  
+         expect(ctrl.skuTypes[0].description).toEqual('Normal');  
+         
+         expect(ctrl.skuTypes[1].skuCount).toEqual(1);  
+         expect(ctrl.skuTypes[1].skuTypeCode).toEqual('S');  
+         expect(ctrl.skuTypes[1].description).toEqual('Special');  
     });
 
 });
