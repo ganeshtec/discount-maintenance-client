@@ -14,7 +14,7 @@ describe('promoSkuTypeModal', function () {
         skuTypesDataService = _skuTypesDataService_;
         scope = _$rootScope_;
         ctrl = $componentController('promoSkuTypeModal', null, {
-        data: {}
+        data: { }
 
         });
 
@@ -25,52 +25,51 @@ describe('promoSkuTypeModal', function () {
                                 {"skuTypeCode": "S","description": "Special"}
                              ]);
         return deferredResult.promise;
+        
     })
 
     }));
 
-    //  fit('Test SKU Type modal component rendering', inject(function (_$compile_) {
-    //     //var  ctrl=this;
-    //     var  modaldata = { 
-    //         validSkuInfo: [
-    //             {
-    //                 omsId: null,
-    //                 prodName: null,
-    //                 skuDescription: 'SMOOTH FLUSH SOLID CORE PRIMED CHROM',
-    //                 skuNumber: 1000317883,
-    //                 skuTypeCode: 'S'
-    //             },
-    //             {
-    //                 omsId: null,
-    //                 prodName: null,
-    //                 skuDescription: '16"X16" MONTAGNA BELLUNO-15.5SF CA',
-    //                 skuNumber: 100049,
-    //                 skuTypeCode: 'N'
-    //             },
-    //         ],
-    //         inValidSkuInfo: [{
-    //         }
-    //         ],
-    //         skuCountList: [
-    //             {
-    //                 "skuTypeCode": "S",
-    //                 "skuCount": 1
+     it('Test Promo SKU Type modal component rendering', inject(function (_$compile_) {
+          scope.data = { 
+            validSkuInfo: [
+                {
+                    omsId: null,
+                    prodName: null,
+                    skuDescription: 'SMOOTH FLUSH SOLID CORE PRIMED CHROM',
+                    skuNumber: 1000317883,
+                    skuTypeCode: 'S'
+                },
+                {
+                    omsId: null,
+                    prodName: null,
+                    skuDescription: '16"X16" MONTAGNA BELLUNO-15.5SF CA',
+                    skuNumber: 100049,
+                    skuTypeCode: 'N'
+                },
+            ],
+            inValidSkuInfo: [{
+            }
+            ],
+            skuCountList: [
+                {
+                    "skuTypeCode": "S",
+                    "skuCount": 1
                     
-    //             },
-    //             {
-    //                 "skuTypeCode": "N",
-    //                 "skuCount": 1
+                },
+                {
+                    "skuTypeCode": "N",
+                    "skuCount": 1
                     
-    //             }
-    //         ],
-    //     };
-    //     var element = _$compile_("<promo-sku-type-modal data='modaldata'></promo-sku-type-modal>")(scope);
-    //     scope.$digest();
-    //     expect(element.html()).toContain("Filter SKU Types");
-    // }));
+                }
+            ],
+        };
+        var element = _$compile_("<promo-sku-type-modal data='data'></promo-sku-type-modal>")(scope);
+        scope.$digest();
+        expect(element.html()).toContain("Filter SKU Types");
+    }));
 
-
-    fit('Check SkuTypeCount is available for valid Skus Input', function () {
+    it('Check SkuTypeCount is available for valid Skus Input', function () {
       //  skuTypes
         ctrl.data = { 
             validSkuInfo: [
@@ -107,8 +106,6 @@ describe('promoSkuTypeModal', function () {
         }
         ctrl.$onInit();
         scope.$digest();
-        //console.log("_____skuTypeCountList:",ctrl.data.skuCountList);
-        //console.log("_____skuTypes:",ctrl.skuTypes);
          expect(ctrl.skuTypes.length).toEqual(2);  
 
          expect(ctrl.skuTypes[0].skuCount).toEqual(1);  

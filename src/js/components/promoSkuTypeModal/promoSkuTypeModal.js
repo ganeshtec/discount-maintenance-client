@@ -12,11 +12,7 @@ function PromoSkuTypeModalController(skuTypesDataService, $mdDialog) {
         skuTypesDataService.fetchSkuTypes().then(function (skuTypes) {
             ctrl.skuTypes = skuTypes;
             var ctr = 0;
-            //console.log("__Ctrl::",ctrl);
-            //console.log("__Ctrl.data::",ctrl.data);
-            // console.log("__Ctrl.data.skuCountList::",ctrl.data.skuCountList);
             var skuMap = ctrl.data.skuCountList;
-           // var skuMap = ctrl.getSkuCount(ctrl.data);
             for (var i = 0, len = ctrl.skuTypes.length; i < len; i++) {
                 for (var j = 0; j < skuMap.length; j++) {
                     if (skuMap[j].skuTypeCode == skuTypes[i].skuTypeCode) {
@@ -38,13 +34,7 @@ function PromoSkuTypeModalController(skuTypesDataService, $mdDialog) {
             });
         });
     }
-
-    ctrl.getSkuCount = function(data){
-        console.log("Sku count: ", ctrl.data.skuCountList);
-        return ctrl.data.skuCountList;
-            
-    }
-
+    
     ctrl.closeSkuTypeModal = function () {
         $mdDialog.hide();
     }
