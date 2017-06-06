@@ -8,6 +8,7 @@ app.service('validationService', ['$filter', 'leadTimeService', 'utilService', f
 
     publicApi.validateStartDate = function (promotion, checkForUndefined) {
         // Will skip validation of start date if the promotion is active
+
         if(utilService.isPromotionActive(promotion)) {
             return {isError: false, message:''};
         }
@@ -69,8 +70,8 @@ app.service('validationService', ['$filter', 'leadTimeService', 'utilService', f
         return priorityErrors;
     }
 
-    publicApi.validateEndDateWithLeadTime = function (startDt, endDt, checkForUndefined ) {
-        var endDateError = (endDt === undefined && checkForUndefined) ? {
+    publicApi.validateEndDateWithLeadTime = function (startDt, endDt, checkForUndefined) {
+        var endDateError = (endDt == null && checkForUndefined) ? {
             isError: true,
             message: 'End date is requred.'
         } : {
@@ -87,10 +88,13 @@ app.service('validationService', ['$filter', 'leadTimeService', 'utilService', f
                     endDateError.isError = true;
                     endDateError.message = 'Please enter a valid end date. Earliest possible MSB end date is ' + minEndDate.format('MM/DD/YYYY') + '.';
                 }
+                
             }
+            console.log("Is Error Message-In: ", endDateError);
             return endDateError;
         })
-        return endDateError;
+        console.log("Is Error Message: ", endDateError);
+       return endDateError;
     }
 
     publicApi.getMinEndDate = function (startDt,leadTime) {
@@ -206,6 +210,7 @@ app.service('validationService', ['$filter', 'leadTimeService', 'utilService', f
                     isError: false,
                     message: ''
                 };
+
                 percentageWarning.push(prctWarnObj);
             }
 
@@ -216,7 +221,10 @@ app.service('validationService', ['$filter', 'leadTimeService', 'utilService', f
     }
 
     publicApi.areErrorsPresent = function(validationErrorsObject) {
+        console.log("Errors object inside areErrorsPresent before FOR Loop", validationErrorsObject.endDt.isError);
+        console.log("Inside areErrorsPresent:: StartDate before FOR Loop ", validationErrorsObject.startDt.isError);
         for (var i in validationErrorsObject) {
+            console.log("Inside areErrorsPresent:: endDate-Before ", validationErrorsObject.endDt.isError);
             if (validationErrorsObject.hasOwnProperty(i)) {
                 // This is a patch to avoid warnings preventing submit. The warning logic should be moved, either to
                 // the appropriate component or to some sort of warning service.
@@ -242,7 +250,7 @@ app.service('validationService', ['$filter', 'leadTimeService', 'utilService', f
 
     publicApi.validateDiscountEndDate = function(promotion, checkForUndefined) {
         // Calls the appropriate end date validation based on whether or not the discount is MSB
-        return (promotion.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB' && promotion.printLabel == true)
+        return (promotion.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB' && promotion.printLabel == true || promotion.promoSubTypeCd == 'ProductLevelPerItemPercentDiscount' && promotion.printLabel == true)
             ? publicApi.validateEndDateWithLeadTime(promotion.startDt, promotion.endDt, checkForUndefined)
             : publicApi.validateEndDateWithoutLeadTime(promotion.startDt, promotion.endDt, checkForUndefined);
     }

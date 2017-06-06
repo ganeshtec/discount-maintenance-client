@@ -63,9 +63,13 @@ app.component('adminFooter', {
         this.preview = function (data) {
             var areValidationErrorsPresent;
             this.validatePromotion(data, function(validationErrors) {
+                console.log('validationErrors object sent to areErrorsPresent', validationErrors);
+               console.log('validationErrors object sent to areErrorsPresent for EndDt', validationErrors.endDt);
+               console.log('validationErrors object sent to areErrorsPresent for Message', validationErrors.endDt.message);
                 areValidationErrorsPresent = validationService.areErrorsPresent(validationErrors);
             });
 
+            console.log("areValidationErrorsPresent", areValidationErrorsPresent);
             if (areValidationErrorsPresent === true) {
                 modalService.showAlert('Error', 'Please fix all validation errors');
                 return;
@@ -84,6 +88,8 @@ app.component('adminFooter', {
 
         this.validatePromotion = function (promotion, callback) {
             var validationErrors = validationService.validatePromotion(promotion, true);
+            console.log("Validate Promotion in AdminFooter: EndDT ", validationErrors.endDt.isError);
+            console.log("Validate Promotion in AdminFooter: StartDT ", validationErrors.startDt.isError);
             callback(validationErrors);
         }
 
