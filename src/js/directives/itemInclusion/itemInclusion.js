@@ -61,10 +61,6 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory','$mdDialog',
                     if (!scope.data) {
                         scope.data = [];
                     }
-                    console.log("#########______scope.data::",scope.data);
-                    console.log("#########______ sku.skuNumber::", sku.skuNumber);
-                    console.log("#########______ sku::", sku);
-                   
                     if (scope.data.indexOf(sku.skuNumber) === -1) {
                         scope.validSkuInfo.push(sku);
                         setSkuData();
@@ -158,16 +154,10 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory','$mdDialog',
 
                         itemPromise.then(
                             function (data) {
-                                // Pop up call after completion of Service call for Each Sku Count
-                            
-                               // console.log("____PopUp Job Completed Now Data will go down to Table")
-                                
-                                 setSkuValidData(data, clicked);
-                                   if(data.validSkuInfo) {
-                                            showSkuTypeModal(data);
+                                setSkuValidData(data, clicked);
+                                if(data.validSkuInfo) {
+                                    showSkuTypeModal(data);
                                 }
-                                       
-                                
                             },
                             function (error) {
                                 DataFactory.messageModal.message = error;
@@ -196,11 +186,11 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory','$mdDialog',
 
                 }
 
-            function showSkuTypeModal(data) {
+                function showSkuTypeModal(data) {
                     scope.modaldata=data;
                     $mdDialog.show({
                         template: '<promo-sku-type-modal data="modaldata"></promo-sku-type-modal>',
-                        controller: PromoSkuTypeModalController,
+                        // controller: PromoSkuTypeModalController,
                         parent: angular.element(document.body),
                         scope: scope,
                         preserveScope: true       
