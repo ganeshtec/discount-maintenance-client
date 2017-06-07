@@ -77,6 +77,7 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$co
                 displayExclusionSubCategories: visibility,
                 displayPaymentType: visibility,
                 displayScheduleTime: visibility,
+                displayPrintLabel: visibility,
             }
         }
 
