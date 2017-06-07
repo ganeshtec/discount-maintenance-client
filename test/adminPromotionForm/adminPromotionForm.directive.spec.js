@@ -26,5 +26,4 @@ describe('Unit testing adminPromotionForm.directive.spec.js', function () {
     var getAllSegments = $httpBackend.when('GET', '/customersegment/segments')
                             .respond(200,response);                    
   }));
-
 });

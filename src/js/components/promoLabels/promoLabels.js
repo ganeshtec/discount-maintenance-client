@@ -3,17 +3,22 @@ app.component('promoLabels', {
     bindings: {
         data: '=',
         promotype: '=',
-        promoform: '='
+        promoform: '=',
+        validationErrors: '='
     },
     controller: PromoLabelsController
 });
 
-//PromoLabelsController.$inject = ['validationService'];
+PromoLabelsController.$inject = ['validationService', 'utilService'];
 
-function PromoLabelsController() {
+function PromoLabelsController(validationService, utilService) {
 
+    this.validatePromotion = function() {
+        this.validationErrors = validationService.validatePromotion(this.data);
+    }
 
-
-  
+    this.isPromotionActive = function(){
+        return utilService.isPromotionActive(this.data);
+    }
 
 }

@@ -88,6 +88,14 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                     scope.validationErrors = validationService.validatePromotion(scope.data);
                 };
 
+                scope.resetRewardsOnPromoTypeChange = function() {
+                    // This removes all but the first reward when switching to "Buy A and B" promotions
+                    if(scope.data.reward.details.length > 1
+                        && (scope.data.promoSubTypeCd == 'MultipleItemsPercentDiscount' 
+                        || scope.data.promoSubTypeCd == 'MultipleItemsValueDiscount')) { 
+                        scope.data.reward.details.splice(1, scope.data.reward.details.length-1);
+                    }
+                }
 
                 scope.showMaximumDiscount = false;
 
@@ -101,7 +109,6 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                     scope.data.promoType = scope.promoSubTypeObject.promoType;
 
                     if (scope.promoSubTypeObject.promoSubTypeCd == 'OrderLevelPercentDiscount') {
-                        
                         scope.data.printLabel = false;
                     }
                     else{

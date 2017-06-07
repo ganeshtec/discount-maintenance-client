@@ -22,36 +22,44 @@ describe('validationService', function () {
     }));
 
     it('returns a startDt errors object with isError and message properties.', function () {
-        var today = moment().toDate();
+        var promotion = {
+            startDt: moment().toDate()
+        }
 
-        validationService.validateStartDate(today, function(response) {
+        validationService.validateStartDate(promotion, function(response) {
             expect(response.isError).toBeDefined();
             expect(response.message).toBeDefined();
         });
     });
 
     it('returns a start date error when selected start date is in the past.', function () {
-        var pastStartDate = moment().subtract(3, 'days').toDate();
+        var promotion = {
+            startDt: moment().subtract(3, 'days').toDate()
+        }
 
-        validationService.validateStartDate(pastStartDate, function(response) {
+        validationService.validateStartDate(promotion, function(response) {
             expect(response.isError).toBe(true);
             expect(response.message).not.toBe('');
         });
     })
 
     it('returns a false/empty start date error when selected start date is in the future.', function () {
-        var futureDate = moment().add(3, 'days').toDate();
+        var promotion = {
+            startDt: moment().add(3, 'days').toDate()
+        }
 
-        validationService.validateStartDate(futureDate, function(response) {
+        validationService.validateStartDate(promotion, function(response) {
             expect(response.isError).toBe(false);
             expect(response.message).toBe('');
         });
     })
 
     it('returns a false/empty start date error when selected start date is today.', function () {
-        var today = moment().toDate();
+        var promotion = {
+            startDt: moment().toDate()
+        }
 
-        validationService.validateStartDate(today, function(response) {
+        validationService.validateStartDate(promotion, function(response) {
             expect(response.isError).toBe(false);
             expect(response.message).toBe('');
         });
@@ -61,7 +69,7 @@ describe('validationService', function () {
         var pastDate = moment().subtract(2, 'days').toDate();
         var startDate = undefined;
 
-        validationService.validateEndDate(startDate, pastDate, function(response) {
+        validationService.validateEndDateWithoutLeadTime(startDate, pastDate, function(response) {
             expect(response.isError).toBe(true);
             expect(response.message).not.toBe('');
         });
@@ -70,7 +78,7 @@ describe('validationService', function () {
     it('returns a false/empty end date error when selected end date is in the future.', function () {
         var futureDate = moment().add(1, 'days').toDate();
 
-        validationService.validateEndDate(undefined, futureDate, function(response) {
+        validationService.validateEndDateWithoutLeadTime(undefined, futureDate, function(response) {
             expect(response.isError).toBe(false);
             expect(response.message).toBe('');
         });
@@ -80,7 +88,7 @@ describe('validationService', function () {
     it('returns a false/empty end date error when selected end date is today.', function () {
         var today = moment().toDate();
 
-        validationService.validateEndDate(undefined, today, function(response) {
+        validationService.validateEndDateWithoutLeadTime(undefined, today, function(response) {
             expect(response.isError).toBe(false);
             expect(response.message).toBe('');
         });
@@ -96,7 +104,7 @@ describe('validationService', function () {
             }
         })
 
-        validationService.validateMSBEndDate(undefined, endDt, function(response) {
+        validationService.validateEndDateWithLeadTime(undefined, endDt, function(response) {
             expect(response.isError).toBe(true);
             expect(response.message).not.toBe('');
         });
@@ -114,7 +122,7 @@ describe('validationService', function () {
             }
         })
 
-        validationService.validateMSBEndDate(today, endDt, function(response) {
+        validationService.validateEndDateWithLeadTime(today, endDt, function(response) {
             expect(response.isError).toBe(false);
             expect(response.message).toBe('');
         });
@@ -125,7 +133,7 @@ describe('validationService', function () {
         var endDt = moment().add(5, 'days').toDate();
         var startDt= moment().add(3, 'days').toDate();
 
-        validationService.validateEndDate(startDt, endDt, function(response) {
+        validationService.validateEndDateWithoutLeadTime(startDt, endDt, function(response) {
             expect(response.isError).toBe(false);
             expect(response.message).toBe('');
         });
@@ -136,7 +144,7 @@ describe('validationService', function () {
         var endDt = moment().add(5, 'days').toDate();
         var startDt = moment().add(7, 'days').toDate();
 
-        validationService.validateEndDate(startDt, endDt, function(response) {
+        validationService.validateEndDateWithoutLeadTime(startDt, endDt, function(response) {
             expect(response.isError).toBe(true);
             expect(response.message).not.toBe('');
         });

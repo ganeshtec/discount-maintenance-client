@@ -1,14 +1,16 @@
 //Merch Hierarchy 
-app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory', 'OverlayConfigFactory',
+app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory', 'OverlayConfigFactory','$mdDialog',
 
-    function (merchHierarchyDataService, DataFactory, OverlayConfigFactory) {
+    function (merchHierarchyDataService, DataFactory, OverlayConfigFactory, $mdDialog) {
         return {
             restrict: 'E',
             templateUrl: 'merchHierarchyView.html',
             scope: {
                 data: '=',
                 promoform: '=',
-                isDisabled: '='
+                isDisabled: '=',
+                source: '=',
+                promoStatus: '=',
             },
             link: function (scope) {
                 var delimeter = '>>';
@@ -150,6 +152,7 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                                 'clasNum': tableObject.clasNum,
                                 'subClasNum': tableObject.subClasNum
                             });
+                            scope.showSkuTypeModal();
                         } else {
                             if (scope.selectedClass == null) {
                                 scope.selectedClass = {
@@ -251,6 +254,17 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                         }
                     }
                     scope.tableData.splice(index, 1);
+                }
+
+                scope.showSkuTypeModal = function(ev) {
+
+                    $mdDialog.show({
+                        template: '<sku-type-modal source="source" promo-status="promoStatus"></sku-type-modal>',
+                        parent: angular.element(document.body),
+                        targetEvent: ev,
+                        scope: scope,
+                        preserveScope: true       
+                    })
                 }
             }
         };
