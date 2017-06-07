@@ -3,13 +3,13 @@
 	Services that will handle validation of promotion attributes
 */
 
-app.service('validationService', ['$filter', 'leadTimeService', 'utilService', function ($filter, leadTimeService, utilService) {
+app.service('validationService', ['$filter', 'utilService', function ($filter, utilService) {
     var publicApi = {};
 
     var leadTime = null;
 
     //Get lead time and cache
-    var leadTimePromise = leadTimeService.fetchLeadTime();
+    var leadTimePromise = utilService.getLeadTime();
     leadTimePromise.then(function (leadtime) {
         leadTime = leadtime;
     })
