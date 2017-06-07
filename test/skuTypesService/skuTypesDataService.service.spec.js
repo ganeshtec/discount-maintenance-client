@@ -51,8 +51,5 @@ describe('skuTypesDataService', function () {
     skuTypesDataService.fetchSkuTypes();
     expect(dataService.httpRequest).toHaveBeenCalledTimes(1);
   });
-<<<<<<< HEAD
+
 });
-=======
-});
->>>>>>> master
