@@ -6,6 +6,14 @@
 app.service('validationService', ['$filter', 'leadTimeService', 'utilService', function ($filter, leadTimeService, utilService) {
     var publicApi = {};
 
+    var leadTime = null;
+
+    //Get lead time and cache
+    var leadTimePromise = leadTimeService.fetchLeadTime();
+    leadTimePromise.then(function (leadtime) {
+        leadTime = leadtime;
+    })
+
     publicApi.validateStartDate = function (promotion, checkForUndefined) {
         // Will skip validation of start date if the promotion is active
 
@@ -79,22 +87,18 @@ app.service('validationService', ['$filter', 'leadTimeService', 'utilService', f
             message: ''
         };
 
-        var leadTimePromise = leadTimeService.fetchLeadTime();
-        leadTimePromise.then(function (leadTime) {
-            var minEndDate = publicApi.getMinEndDate(startDt,leadTime);
 
-            if (endDt) {
-                if (moment(endDt).isBefore(minEndDate, 'day')) {
-                    endDateError.isError = true;
-                    endDateError.message = 'Please enter a valid end date. Earliest possible MSB end date is ' + minEndDate.format('MM/DD/YYYY') + '.';
-                }
-                
+        var minEndDate = publicApi.getMinEndDate(startDt,leadTime);
+
+        if (endDt) {
+            if (moment(endDt).isBefore(minEndDate, 'day')) {
+                endDateError.isError = true;
+                endDateError.message = 'Please enter a valid end date. Earliest possible MSB end date is ' + minEndDate.format('MM/DD/YYYY') + '.';
             }
-            console.log("Is Error Message-In: ", endDateError);
-            return endDateError;
-        })
-        console.log("Is Error Message: ", endDateError);
-       return endDateError;
+            
+        }
+
+        return endDateError;
     }
 
     publicApi.getMinEndDate = function (startDt,leadTime) {
@@ -221,10 +225,8 @@ app.service('validationService', ['$filter', 'leadTimeService', 'utilService', f
     }
 
     publicApi.areErrorsPresent = function(validationErrorsObject) {
-        console.log("Errors object inside areErrorsPresent before FOR Loop", validationErrorsObject.endDt.isError);
-        console.log("Inside areErrorsPresent:: StartDate before FOR Loop ", validationErrorsObject.startDt.isError);
+
         for (var i in validationErrorsObject) {
-            console.log("Inside areErrorsPresent:: endDate-Before ", validationErrorsObject.endDt.isError);
             if (validationErrorsObject.hasOwnProperty(i)) {
                 // This is a patch to avoid warnings preventing submit. The warning logic should be moved, either to
                 // the appropriate component or to some sort of warning service.
