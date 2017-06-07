@@ -25,7 +25,8 @@ describe('promotionAdminCtrl', function () {
                 displayOMSIdExclusion: false,
                 displayExclusionSubCategories: false,
                 displayPaymentType: false,
-                displayScheduleTime: false
+                displayScheduleTime: false,
+                displayPrintLabel: false
             }
             controller.setViewProperties(allowedPermissionIds.STORE);
             expect($scope.viewProperties).toEqual(expectedResult);
@@ -43,7 +44,8 @@ describe('promotionAdminCtrl', function () {
                 displayOMSIdExclusion: true,
                 displayExclusionSubCategories: true,
                 displayPaymentType: true,
-                displayScheduleTime: true
+                displayScheduleTime: true,
+                displayPrintLabel: true
             }
             controller.setViewProperties(allowedPermissionIds.ONLINE);
             expect($scope.viewProperties).toEqual(expectedResult);
