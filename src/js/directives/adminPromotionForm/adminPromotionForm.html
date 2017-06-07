@@ -101,7 +101,7 @@
 		</section>
 
 
-		<section class ="admin__promotion__section" ng-show="index == 6 || preview">
+		<section class ="admin__promotion__section" ng-show="viewProp.displayPrintLabel && (index == 6 || preview)">
 			<promo-labels data ="data" preview="preview" validation-errors="validationErrors" promoform="promoForm">
 			</promo-labels>
 		</section>
