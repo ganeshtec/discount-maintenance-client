@@ -258,9 +258,12 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
     }
 
     var checkEmpty = function (field) {
-        if (!field || !field.trim(0))
+        var fieldStr = field.toString();
+        if (!fieldStr || !fieldStr.trim(0)) {
             return true
-        return false;
+        } else {
+            return false;
+        }
     }
 
     publicApi.requiredFieldsMissing = function (promotion) {
