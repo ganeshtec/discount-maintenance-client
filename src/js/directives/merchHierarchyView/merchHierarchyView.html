@@ -11,7 +11,7 @@
 		 <td width="35%">
 			  <div class="md-select">
 			  
-   					<select name="promotype" style="margin-top:28px"  ng-options=" dept as dept.id+'-'+dept.name for dept in departmentDetails track by dept.id" ng-model="selectedDept" ng-change="getClassesforSelectedDepartment(selectedDept)" ng-required=" preview">
+   					<select name="selectDept" style="margin-top:28px"  ng-options=" dept as dept.id+'-'+dept.name for dept in departmentDetails track by dept.id" ng-model="selectedDept" ng-change="getClassesforSelectedDepartment(selectedDept)" ng-required=" preview">
 							<option value="">Select Department</option></select></div>
  
 		 </td>
@@ -19,13 +19,13 @@
 
 			 		<div class="md-select">	
  
-						 		<select name="promotype" style="margin-top:28px" ng-options="clas as clas.merchandiseClassNumber+'-'+clas.merchandiseClassDescription for clas in classList track by clas.merchandiseClassNumber" ng-model="selectedClass" ng-change="getSubClasses(selectedClass)" ng-required=" preview">
+						 		<select name="selectClass" style="margin-top:28px" ng-options="clas as clas.merchandiseClassNumber+'-'+clas.merchandiseClassDescription for clas in classList track by clas.merchandiseClassNumber" ng-model="selectedClass" ng-change="getSubClasses(selectedClass)" ng-required=" preview">
 					<option value="">Select class</option></select> </div>
 		 </td>
 
 		 <td width="30%">
 			 	<div class="md-select">				
-	<select name="promotype" style="margin-top:28px" ng-options="
+	<select name="selectSubClass" style="margin-top:28px" ng-options="
 subClass as subClass.merchandiseSubordinateClassNumber+'-'+subClass.merchandiseSubordinateClassDescription for subClass in  SubClassList track by subClass.merchandiseSubordinateClassNumber" ng-model="selectedSubClass" ng-change="getSelectedSubClass()" ng-required=" preview">
 					<option value="">Select subclass</option></select>	</div>
 		 </td>
@@ -60,7 +60,6 @@ subClass as subClass.merchandiseSubordinateClassNumber+'-'+subClass.merchandiseS
  		</td>
  	</tr>
  </table>
- 
  
  
  
