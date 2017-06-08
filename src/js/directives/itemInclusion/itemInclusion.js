@@ -1,6 +1,6 @@
 // Purpose is to build promotion data.
-app.directive('itemInclusion', ['itemsDataService', 'DataFactory','$mdDialog',
-    function (itemsDataService, DataFactory,$mdDialog) {
+app.directive('itemInclusion', ['itemsDataService', 'DataFactory', '$mdDialog',
+    function (itemsDataService, DataFactory, $mdDialog) {
         return {
             restrict: 'E',
             templateUrl: 'itemInclusion.html',
@@ -146,9 +146,11 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory','$mdDialog',
 
                         itemPromise.then(
                             function (data) {
+                                DataFactory.messageModal.message = undefined;
                                 setSkuValidData(data, clicked);
-                                if(data.validSkuInfo) {
-                                    showSkuTypeModal(data);
+                                if (data.validSkuInfo && clicked != undefined && !DataFactory.messageModal.message) {
+                                    showSkuTypeModal(data, clicked);
+
                                 }
                             },
                             function (error) {
@@ -179,13 +181,12 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory','$mdDialog',
                 }
 
                 function showSkuTypeModal(data) {
-                    scope.modaldata=data;
+                    scope.modaldata = data;
                     $mdDialog.show({
                         template: '<promo-sku-type-modal data="modaldata"></promo-sku-type-modal>',
-                        // controller: PromoSkuTypeModalController,
                         parent: angular.element(document.body),
                         scope: scope,
-                        preserveScope: true       
+                        preserveScope: true
                     })
                 }
 
@@ -257,18 +258,18 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory','$mdDialog',
 
                         }
                     } else
-                    if (scope.isSkuSearch) {
-                        scope.dataEmpty = false;
-                        data = data.replace(/\s\s+/g, ' ').split(/[',',' ',', ']+/);
-                        validateItemData(data);
-                        skuData.skuIds = data;
-                    } else {
-                        scope.dataEmpty = false;
-                        data = data.replace(/\s\s+/g, ' ').split(/[',',' ',', ']+/);
-                        validateItemData(data);
-                        omsData.omsIds = data;
+                        if (scope.isSkuSearch) {
+                            scope.dataEmpty = false;
+                            data = data.replace(/\s\s+/g, ' ').split(/[',',' ',', ']+/);
+                            validateItemData(data);
+                            skuData.skuIds = data;
+                        } else {
+                            scope.dataEmpty = false;
+                            data = data.replace(/\s\s+/g, ' ').split(/[',',' ',', ']+/);
+                            validateItemData(data);
+                            omsData.omsIds = data;
 
-                    }
+                        }
 
                     if (!scope.showInvalidError && !scope.dataEmpty) {
                         if (scope.isSkuSearch) {
