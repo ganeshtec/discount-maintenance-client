@@ -6,8 +6,8 @@
     background: #fff;
 }
 .skyType__table tr, .skyType__table td, .skyType__table th {
-    border-right: none !important;
-    border-left: none !important;
+    border-right: none;
+    border-left: none;
     border-spacing: 0;
     vertical-align: middle;
 }

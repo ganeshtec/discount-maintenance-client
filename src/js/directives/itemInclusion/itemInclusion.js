@@ -112,8 +112,6 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory','$mdDialog',
                         $('#messageModal').popup();
                     }
                 }
-
-
                 function setSkuValidData(data, clicked) {
                     existingID = '';
 
@@ -128,20 +126,14 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory','$mdDialog',
                     }
                     // if invalid Data set to item search
                     scope.itemSkuSearch = (data.inValidSkuInfo) ? [data.inValidSkuInfo.toString().replace(/,/g, ' ')] : [];
-
                     scope.inValidSkuInfo = (scope.itemSkuSearch.length > 0);
-                    
                     var invalidIds = data.inValidSkuInfo;
                     if (clicked && invalidIds && invalidIds.length > 0) {
-                        // DataFactory.messageModal.message = 'Following SKU ID\'s are invalid: ' + invalidIds.toString();
-                        // DataFactory.messageModal.title = 'Warning';
-                        // $('#messageModal').popup();
                         scope.showInvalidError = true;
 
                     }
                 }
 
-              
                 function getItemsByID(data, clicked) {
 
                     if (scope.isSkuSearch) {
