@@ -25,4 +25,6 @@ app.service('skuTypesDataService', ['$http', '$q', 'dataService',
         }
         return publicApi;
     }
+
 ]);
+

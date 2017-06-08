@@ -1,0 +1,24 @@
+<div class="md-dialog-content promosku-type-modal">
+    <h4>Filter SKU Types</h4>
+    <br/>
+    <p>The following SKU types are included in your Discount.</p>
+    <br/>
+    <table class="skyType__table">
+        <tr class="skyType__table__row-notopborder" ng-repeat="skuType in $ctrl.skuTypes">
+
+            <td>
+                {{skuType.skuTypeCode}} - {{skuType.description}}
+            </td>
+            <td>
+                {{skuType.skuCount}}
+            </td>
+
+            <td>
+                SKUs
+            </td>
+        </tr>
+    </table>
+    <div align="center">
+        <a href="" ng-click="$ctrl.closeSkuTypeModal()"> Close Message  </a>
+    </div>
+</div>

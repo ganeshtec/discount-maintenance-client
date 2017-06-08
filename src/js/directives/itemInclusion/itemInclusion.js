@@ -1,6 +1,6 @@
 // Purpose is to build promotion data.
-app.directive('itemInclusion', ['itemsDataService', 'DataFactory',
-    function (itemsDataService, DataFactory) {
+app.directive('itemInclusion', ['itemsDataService', 'DataFactory','$mdDialog',
+    function (itemsDataService, DataFactory,$mdDialog) {
         return {
             restrict: 'E',
             templateUrl: 'itemInclusion.html',
@@ -112,8 +112,6 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory',
                         $('#messageModal').popup();
                     }
                 }
-
-
                 function setSkuValidData(data, clicked) {
                     existingID = '';
 
@@ -126,16 +124,13 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory',
                             addSku(data.validSkuInfo[i]);
                         }
                     }
-
                     // if invalid Data set to item search
                     scope.itemSkuSearch = (data.inValidSkuInfo) ? [data.inValidSkuInfo.toString().replace(/,/g, ' ')] : [];
-
                     scope.inValidSkuInfo = (scope.itemSkuSearch.length > 0);
                     var invalidIds = data.inValidSkuInfo;
                     if (clicked && invalidIds && invalidIds.length > 0) {
-                        DataFactory.messageModal.message = 'Following SKU ID\'s are invalid: ' + invalidIds.toString();
-                        DataFactory.messageModal.title = 'Warning';
-                        $('#messageModal').popup();
+                        scope.showInvalidError = true;
+
                     }
                 }
 
@@ -152,6 +147,9 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory',
                         itemPromise.then(
                             function (data) {
                                 setSkuValidData(data, clicked);
+                                if(data.validSkuInfo) {
+                                    showSkuTypeModal(data);
+                                }
                             },
                             function (error) {
                                 DataFactory.messageModal.message = error;
@@ -180,8 +178,18 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory',
 
                 }
 
-                function validateItemData(data) {
+                function showSkuTypeModal(data) {
+                    scope.modaldata=data;
+                    $mdDialog.show({
+                        template: '<promo-sku-type-modal data="modaldata"></promo-sku-type-modal>',
+                        // controller: PromoSkuTypeModalController,
+                        parent: angular.element(document.body),
+                        scope: scope,
+                        preserveScope: true       
+                    })
+                }
 
+                function validateItemData(data) {
                     if (data.length == 0) {
                         scope.showInvalidError = true;
                         return;
@@ -194,12 +202,6 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory',
                             return;
                         }
                         if (!scope.isSkuSearch && data[i] && data[i].length != 9) {
-
-                            scope.showInvalidError = true;
-                            return;
-                        }
-                        if (scope.isSkuSearch && data[i] && (data[i].length != 6 && data[i].length != 10)) {
-
                             scope.showInvalidError = true;
                             return;
                         }
@@ -218,11 +220,8 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory',
                     } else {
                         omsData.omsIds = scope.data;
                         getItemsByID(omsData);
-
                     }
-
                 }
-
                 scope.searchResults = [];
 
 
@@ -247,7 +246,7 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory',
                     if (emptyCheck(data)) {
                         if (scope.isSkuSearch) {
                             scope.dataEmpty = true;
-                            DataFactory.messageModal.message = 'Please enter a valid SKU Number';
+                            DataFactory.messageModal.message = 'Please enter atleast one valid SKU Number to continue';
                             DataFactory.messageModal.title = 'Warning';
                             $('#messageModal').popup();
                         } else {
