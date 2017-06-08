@@ -10,8 +10,8 @@
 
 "artifact": {
 	"artifactoryDomain": "https://pcf-deploy.artifactory.homedepot.com/artifactory",
-	"artifactoryRepoKey": "libs-release-local",
-	"artifactoryRepoKeySnapshot": "libs-snapshot-local",
+	"artifactoryRepoKey": "pcf-deploy",
+	"artifactoryRepoKeySnapshot": "pcf-deploy",
 	"artifactoryGroup": "com/homedepot/pricing/promo-admin",
 	"artifactType": "tar.gz"
 },
