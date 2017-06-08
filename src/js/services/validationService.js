@@ -3,11 +3,20 @@
 	Services that will handle validation of promotion attributes
 */
 
-app.service('validationService', ['$filter', 'leadTimeService', 'utilService', function ($filter, leadTimeService, utilService) {
+app.service('validationService', ['$filter', 'utilService', function ($filter, utilService) {
     var publicApi = {};
+
+    var leadTime = null;
+
+    //Get lead time and cache
+    var leadTimePromise = utilService.getLeadTime();
+    leadTimePromise.then(function (leadtime) {
+        leadTime = leadtime;
+    })
 
     publicApi.validateStartDate = function (promotion, checkForUndefined) {
         // Will skip validation of start date if the promotion is active
+
         if(utilService.isPromotionActive(promotion)) {
             return {isError: false, message:''};
         }
@@ -69,8 +78,8 @@ app.service('validationService', ['$filter', 'leadTimeService', 'utilService', f
         return priorityErrors;
     }
 
-    publicApi.validateEndDateWithLeadTime = function (startDt, endDt, checkForUndefined ) {
-        var endDateError = (endDt === undefined && checkForUndefined) ? {
+    publicApi.validateEndDateWithLeadTime = function (startDt, endDt, checkForUndefined) {
+        var endDateError = (endDt == null && checkForUndefined) ? {
             isError: true,
             message: 'End date is requred.'
         } : {
@@ -78,18 +87,17 @@ app.service('validationService', ['$filter', 'leadTimeService', 'utilService', f
             message: ''
         };
 
-        var leadTimePromise = leadTimeService.fetchLeadTime();
-        leadTimePromise.then(function (leadTime) {
-            var minEndDate = publicApi.getMinEndDate(startDt,leadTime);
 
-            if (endDt) {
-                if (moment(endDt).isBefore(minEndDate, 'day')) {
-                    endDateError.isError = true;
-                    endDateError.message = 'Please enter a valid end date. Earliest possible MSB end date is ' + minEndDate.format('MM/DD/YYYY') + '.';
-                }
+        var minEndDate = publicApi.getMinEndDate(startDt,leadTime);
+
+        if (endDt) {
+            if (moment(endDt).isBefore(minEndDate, 'day')) {
+                endDateError.isError = true;
+                endDateError.message = 'Please enter a valid end date. Earliest possible MSB end date is ' + minEndDate.format('MM/DD/YYYY') + '.';
             }
-            return endDateError;
-        })
+            
+        }
+
         return endDateError;
     }
 
@@ -206,6 +214,7 @@ app.service('validationService', ['$filter', 'leadTimeService', 'utilService', f
                     isError: false,
                     message: ''
                 };
+
                 percentageWarning.push(prctWarnObj);
             }
 
@@ -216,6 +225,7 @@ app.service('validationService', ['$filter', 'leadTimeService', 'utilService', f
     }
 
     publicApi.areErrorsPresent = function(validationErrorsObject) {
+
         for (var i in validationErrorsObject) {
             if (validationErrorsObject.hasOwnProperty(i)) {
                 // This is a patch to avoid warnings preventing submit. The warning logic should be moved, either to
@@ -242,7 +252,7 @@ app.service('validationService', ['$filter', 'leadTimeService', 'utilService', f
 
     publicApi.validateDiscountEndDate = function(promotion, checkForUndefined) {
         // Calls the appropriate end date validation based on whether or not the discount is MSB
-        return (promotion.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB' && promotion.printLabel == true)
+        return (promotion.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB' && promotion.printLabel == true || promotion.promoSubTypeCd == 'ProductLevelPerItemPercentDiscount' && promotion.printLabel == true)
             ? publicApi.validateEndDateWithLeadTime(promotion.startDt, promotion.endDt, checkForUndefined)
             : publicApi.validateEndDateWithoutLeadTime(promotion.startDt, promotion.endDt, checkForUndefined);
     }

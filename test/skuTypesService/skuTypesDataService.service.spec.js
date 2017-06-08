@@ -29,7 +29,6 @@ describe('skuTypesDataService', function () {
     });
     $rootScope.$apply();
     expect(skuTypes).toBeDefined();
-    console.log(skuTypes[0].skuTypeCode);
     expect(skuTypes[0].skuTypeCode).toEqual('N');
     expect(skuTypes[0].description).toEqual('N - Normal');
   });
