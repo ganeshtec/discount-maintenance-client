@@ -9,7 +9,7 @@
 
 
 "artifact": {
-	"artifactoryDomain": "https://maven.artifactory.homedepot.com/artifactory",
+	"artifactoryDomain": "https://pcf-deploy.artifactory.homedepot.com/artifactory",
 	"artifactoryRepoKey": "libs-release-local",
 	"artifactoryRepoKeySnapshot": "libs-snapshot-local",
 	"artifactoryGroup": "com/homedepot/pricing/promo-admin",
