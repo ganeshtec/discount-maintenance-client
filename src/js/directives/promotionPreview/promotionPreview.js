@@ -54,6 +54,11 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                     }
                     if (scope.previewData.data.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB') {
                         scope.previewData.data.promoSubTypeCd = 'ProductLevelPerItemPercentDiscount';
+                        scope.previewData.data.reasonCd = 49;
+                    }
+
+                    if(scope.previewData.data.promoSubTypeCd == 'OrderLevelPercentDiscount') {
+                        scope.previewData.data.reasonCd = 70;
                     }
 
                     var promotion = scope.previewData.data;
