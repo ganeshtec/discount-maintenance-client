@@ -56,22 +56,20 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory', '$mdDialog',
 
                 }
 
-                function addSku(sku) {
+                // function addSku(sku) {
 
-                    if (!scope.data) {
-                        scope.data = [];
-                    }
-                    if (scope.data.indexOf(sku.skuNumber) === -1) {
-                        scope.validSkuInfo.push(sku);
-                        setSkuData();
-                    } else {
-                        existingID += sku.skuNumber + ', ';
-                        DataFactory.messageModal.message = 'Following Sku/s are already added: ' + existingID
-                        DataFactory.messageModal.title = 'Warning';
-                        $('#messageModal').popup();
-                    }
+                //     if (!scope.data) {
+                //         scope.data = [];
+                //     }
+                //     if (scope.data.indexOf(sku.skuNumber) === -1) {
+                //         scope.validSkuInfo.push(sku);
+                //         setSkuData();
+                //     } else {
+                //         existingID += sku.skuNumber + ', ';
 
-                }
+                //     }
+
+                // }
 
                 function setData() {
                     scope.itemtype = 'OMS';
@@ -82,7 +80,6 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory', '$mdDialog',
 
                 function setSkuData() {
                     scope.itemtype = 'SKU';
-
                     scope.data = scope.validSkuInfo.reduce(function (data, sku) {
                         return data.concat(sku.skuNumber);
                     }, []);
@@ -112,30 +109,35 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory', '$mdDialog',
                         $('#messageModal').popup();
                     }
                 }
-                function setSkuValidData(data, clicked) {
-                    existingID = '';
+                // function setSkuValidData(data, clicked) {
+                //     existingID = '';
 
-                    if (!scope.validSkuInfo.length && scope.data && !scope.itemSkuSearch) {
-                        $.extend(true, scope.validSkuInfo, data.validSkuInfo);
-                    }
+                //     if (!scope.validSkuInfo.length && scope.data && !scope.itemSkuSearch) {
+                //         $.extend(true, scope.validSkuInfo, data.validSkuInfo);
+                //     }
 
-                    if (data.validSkuInfo && scope.itemSkuSearch) {
-                        for (var i = 0; i < data.validSkuInfo.length; i++) {
-                            addSku(data.validSkuInfo[i]);
-                        }
-                    }
-                    // if invalid Data set to item search
-                    scope.itemSkuSearch = (data.inValidSkuInfo) ? [data.inValidSkuInfo.toString().replace(/,/g, ' ')] : [];
-                    scope.inValidSkuInfo = (scope.itemSkuSearch.length > 0);
-                    var invalidIds = data.inValidSkuInfo;
-                    if (clicked && invalidIds && invalidIds.length > 0) {
-                        scope.showInvalidError = true;
+                //     if (data.validSkuInfo && scope.itemSkuSearch) {
+                //         for (var i = 0; i < data.validSkuInfo.length; i++) {
+                //             addSku(data.validSkuInfo[i]);
+                //         }
+                //         if (existingID != '') {
+                //             DataFactory.messageModal.message = 'Following Sku/s are already added: ' + existingID
+                //             DataFactory.messageModal.title = 'Warning';
+                //             $('#messageModal').popup();
+                //         }
+                //     }
+                //     // if invalid Data set to item search
+                //     scope.itemSkuSearch = (data.inValidSkuInfo) ? [data.inValidSkuInfo.toString().replace(/,/g, ' ')] : [];
+                //     scope.inValidSkuInfo = (scope.itemSkuSearch.length > 0);
+                //     var invalidIds = data.inValidSkuInfo;
+                //     if (clicked && invalidIds && invalidIds.length > 0) {
+                //         scope.showInvalidError = true;
 
-                    }
-                }
+                //     }
+                // }
 
                 function getItemsByID(data, clicked) {
-
+                   
                     if (scope.isSkuSearch) {
 
                         var tempSkuData = {};
@@ -145,11 +147,12 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory', '$mdDialog',
                         var itemPromise = itemsDataService.getSkuIdCodes(tempSkuData);
 
                         itemPromise.then(
-                            function (data) {
+                            function (itemPromiseResult) {
                                 DataFactory.messageModal.message = undefined;
-                                setSkuValidData(data, clicked);
-                                if (data.validSkuInfo && clicked != undefined && !DataFactory.messageModal.message) {
-                                    showSkuTypeModal(data, clicked);
+                                //setSkuValidData(itemPromiseResult, clicked);
+                                
+                                if (itemPromiseResult.validSkuInfo && clicked != undefined && !DataFactory.messageModal.message) {
+                                    showSkuTypeModal(itemPromiseResult);
 
                                 }
                             },
@@ -158,9 +161,6 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory', '$mdDialog',
                                 DataFactory.messageModal.title = 'Error';
                                 $('#messageModal').popup();
                             });
-
-
-
                     } else {
 
                         var tempData = {};
@@ -180,10 +180,12 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory', '$mdDialog',
 
                 }
 
-                function showSkuTypeModal(data) {
-                    scope.modaldata = data;
+                function showSkuTypeModal(itemPromiseResult) {
+                    scope.modaldata = {};
+                    scope.modaldata.itemPromiseResult= itemPromiseResult;
+                    scope.modaldata.itemInclusionData = scope.data;
                     $mdDialog.show({
-                        template: '<promo-sku-type-modal data="modaldata"></promo-sku-type-modal>',
+                        template: '<promo-sku-type-modal data="modaldata" filtered-sku-list-callback="$ctrl.filteredSkuListCallback(filteredSkuList)"></promo-sku-type-modal>',
                         parent: angular.element(document.body),
                         scope: scope,
                         preserveScope: true
@@ -300,8 +302,6 @@ app.directive('itemInclusion', ['itemsDataService', 'DataFactory', '$mdDialog',
                     }
 
                 }
-
-
             }
         };
     }
