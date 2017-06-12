@@ -8,7 +8,7 @@
 					Search
 				</a>
 				<ul>
-					<span class='error-message' ng-show="showInvalidError">                   
+					<span class='error-message' ng-show="showInvalidError">
 				    <span>
 				   			Please enter a valid 9 digit OMS ID
 				    </span>
@@ -72,10 +72,10 @@
 				<input class="table__search" placeholder="Search and Add Item Sku Number" type="text" ng-model="itemSkuSearch" ng-keypress="($event.keyCode === 13) && search(itemSkuSearch)"
 				ng-class="{'error': inValidSkuInfo}" ng-change="clear()" allow-pattern="(\d|[a-z A-Z\(\?\-\_\.\'\,\%\$\!\@\)])" />
 				<a class="md-button secondary no-padding" href="" ng-click="search(itemSkuSearch)">
-					Search 
+					Search
 				</a>
 				<ul>
-					<span class='error-message' ng-show="showInvalidError">                   
+					<span class='error-message' ng-show="showInvalidError">
 				    <span>
 				   			Invalid Skus Entered, Please enter a valid Sku Number.
 				    </span>
@@ -104,6 +104,9 @@
 		<th>
 			Description
 		</th>
+		<th>
+      Type
+		</th>
 		<th class="r">
 			<a class="editOption thd-orange" ng-if="validSkuInfo && validSkuInfo.length >0" ng-click="removeAll()" href="">
 				Remove All
@@ -117,6 +120,9 @@
 		</td>
 		<td>
 			{{item.skuDescription}}
+		</td>
+		<td>
+      {{item.skuTypeCode}}
 		</td>
 		<td class="r">
 			<a class="editOption thd-orange" ng-click="isDisabled || removePromoCode($index)" href="">
