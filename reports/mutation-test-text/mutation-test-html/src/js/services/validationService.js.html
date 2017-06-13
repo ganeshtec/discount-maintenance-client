@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <meta charset="UTF-8"/>
+        <meta data-mutation-stats="%7B%22all%22:0,%22killed%22:0,%22survived%22:0,%22ignored%22:0,%22untested%22:0,%22success%22:0,%22successRate%22:%220.0%22,%22killedRate%22:%220.0%22,%22survivedRate%22:%220.0%22,%22ignoredRate%22:%220.0%22,%22untestedRate%22:%220.0%22%7D"/>
+        <title>validationService.js - Mutation test results</title>
+        <style type="text/css">
+    html, body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Helvetica Neue', 'Helvetica', 'Verdana', 'Arial', sans-serif;
+        font-size: 14px;
+    }
+
+    header, nav, main, footer {
+        display: block;
+        padding: 10px;
+    }
+
+    header {
+        background-color: #fff5a0;
+        border-bottom: 1px solid #ddd130;
+    }
+
+    header.survived {
+        border-bottom-color: #b46767;
+    }
+
+    header.killed {
+        border-bottom-color: #516948;
+    }
+
+    header h1 {
+        font-size: 18px;
+        font-weight: normal;
+    }
+
+    header h1 .fileName {
+        font-weight: bold;
+    }
+
+    #mutationStats {
+        margin-top: 10px;
+    }
+
+    .stat {
+        display: inline-block;
+        width: 250px;
+    }
+
+    .stat .statValue {
+        border: 1px solid black;
+        padding: 4px;
+        background-color: white;
+        font-weight: bold;
+    }
+
+    .stat .statValue small {
+        color: #666;
+        font-weight: normal;
+        font-size: 11px;
+    }
+
+    nav {
+        background-color: #ffe87c;
+        border-bottom: 1px solid #b49d5e;
+    }
+
+    nav .link {
+        color: black;
+        text-decoration: underline;
+    }
+
+    footer {
+        background-color: #ddd;
+        border-top: 1px solid #aaa;
+    }
+
+    footer p {
+        margin: 0;
+    }
+
+    .killed {
+        background-color: #b5d592;
+    }
+
+    .survived {
+        background-color: #fc8c84;
+    }
+
+    .neutral {
+        background-color: #ffe87c;
+    }
+
+    #toggleKilledMutations {
+    background-color: #eee;
+    border: 1px solid #666;
+    padding: 6px 10px;
+    border-radius: 2px;
+    cursor: pointer;
+}
+#toggleKilledMutations:hover {
+    background-color: #aaa;
+}
+#toggleKilledMutations:active {
+    background-color: #666;
+    border-color: #eee;
+}
+
+#source {
+    font-family: 'Consolas', 'Courier New', 'Lucida Sans Typewriter', monospace;
+    white-space: pre;
+}
+
+#mutations {
+    border-collapse: collapse;
+}
+
+#mutations th, #mutations td {
+    padding: 5px 15px;
+    border: 1px solid #666;
+}
+
+#mutations th {
+    background-color: #eee;
+    font-weight: normal;
+    text-align: left;
+}
+
+#popup {
+    position: fixed;
+    border: solid 1px black;
+    padding: 3px;
+    display: none;
+}
+
+#popup.show {
+    display: block;
+}
+
+code .killed, code .survived {
+    border: solid 1px white;
+}
+
+</style>
+
+        <script type="text/javascript">
+    function onLoad() {
+    each(document.getElementsByClassName('code'), function(element) {
+        element.addEventListener('mouseover', onMouseOver, false);
+        element.addEventListener('mousemove', onMouseMove, false);
+        element.addEventListener('mouseout', onMouseOut, false);
+    });
+}
+
+function each(list, fn, thisArg) {
+    Array.prototype.forEach.call(list, fn, thisArg);
+}
+
+function onMouseOver(event) {
+    var popup = document.getElementById('popup');
+    addMutations(popup, event.target);
+    setPopupPosition(popup, event);
+    popup.classList.add("show");
+}
+
+function onMouseMove(event) {
+    setPopupPosition(document.getElementById('popup'), event);
+}
+
+function onMouseOut() {
+    document.getElementById('popup').classList.remove('show');
+}
+
+function addMutations(popup, target) {
+    var mutationEl;
+
+    each(target.classList, function(_class) {
+        if (_class.indexOf('mutation_') > -1) {
+            mutationEl = document.getElementById(_class);
+            if (Array.prototype.indexOf.call(mutationEl.classList, 'killed') > -1) {
+                popup.classList.add('killed');
+                popup.classList.remove('survived');
+            } else {
+                popup.classList.add('survived');
+                popup.classList.remove('killed');
+            }
+            popup.classList.add(mutationEl.classList);
+            popup.innerHTML = mutationEl.innerHTML;
+        }
+    });
+}
+
+var showKilledMutations = true;
+function toggleKilledMutations() {
+    showKilledMutations = !showKilledMutations;
+
+    if(showKilledMutations) {
+        document.querySelector('#toggleKilledMutations').innerHTML = 'Hide killed mutations';
+        each(document.querySelectorAll('.code.killed'), function(e) {
+            e.style.backgroundColor = '';
+        });
+        each(document.querySelectorAll('#mutations .killed'), function(e) {
+            e.style.display = '';
+        });
+    } else {
+        document.querySelector('#toggleKilledMutations').innerHTML = 'Show killed mutations';
+        each(document.querySelectorAll('.code.killed'), function(e) {
+            e.style.backgroundColor = 'white';
+        });
+        each(document.querySelectorAll('#mutations .killed'), function(e) {
+            e.style.display = 'none';
+        });
+    }
+}
+
+function setPopupPosition(popup, event) {
+    var top = event.clientY,
+        left = event.clientX + 10;
+
+    popup.setAttribute('style', 'top:' + top + 'px;left:' + left + 'px;');
+}
+
+window.onload = onLoad;
+
+</script>
+    </head>
+
+    <body>
+        <header class="neutral">
+            <h1>
+                Mutation test results for
+                <span class="fileName">
+                        validationService.js
+                </span>
+            </h1>
+
+            <section id="mutationStats">
+                <div class="stat">
+                    Success rate:&nbsp;
+                    <span class="statValue">
+                        0.0%&nbsp;
+                        <small>
+                            (0 / 0)
+                        </small>
+                    </span>
+                </div>
+                <div class="stat">
+                    Survived:&nbsp;
+                    <span class="statValue">
+                        0.0%&nbsp;
+                        <small>
+                            (0 / 0)
+                        </small>
+                    </span>
+                </div>
+                <div class="stat">
+                    Ignored:&nbsp;
+                    <span class="statValue">
+                        0.0%&nbsp;
+                        <small>
+                            (0 / 0)
+                        </small>
+                    </span>
+                </div>
+                <div class="stat">
+                    Untested:&nbsp;
+                    <span class="statValue">
+                        0.0%&nbsp;
+                        <small>
+                            (0 / 0)
+                        </small>
+                    </span>
+                </div>
+            </section>
+        </header>
+
+        <nav><a class="link " href="../../../../mutation-test-html/index.html">mutation-test-html</a> >> <a class="link " href="../../../../mutation-test-html/src/index.html">src</a> >> <a class="link " href="../../../../mutation-test-html/src/js/index.html">js</a> >> <a class="link " href="../../../../mutation-test-html/src/js/services/index.html">services</a> >> validationService.js</nav>
+
+        <main>
+            
+<section>
+    <code id="source"><ol><li>/* </li><li>	Validation Service </li><li>	Services that will handle validation of promotion attributes</li><li>*/</li><li></li><li>app.service('validationService', ['$filter', 'leadTimeService', 'utilService', function ($filter, leadTimeService, utilService) {</li><li>    var publicApi = {};</li><li></li><li>    publicApi.validateStartDate = function (promotion, checkForUndefined) {</li><li>        // Will skip validation of start date if the promotion is active</li><li>        if(utilService.isPromotionActive(promotion)) {</li><li>            return {isError: false, message:''};</li><li>        }</li><li></li><li>        var startDateError = (promotion.startDt === undefined && checkForUndefined) ? {</li><li>            isError: true,</li><li>            message: 'Start date is requred.'</li><li>        } : {</li><li>            isError: false,</li><li>            message: ''</li><li>        };</li><li></li><li>        var today = moment();</li><li>        if(promotion.startDt && moment(promotion.startDt).isBefore(today, 'day')) {</li><li>            startDateError.isError = true;</li><li>            startDateError.message = 'Start date cannot be earlier than today.';</li><li>        }</li><li></li><li>        return startDateError;</li><li>    }</li><li></li><li>    publicApi.validateEndDateWithoutLeadTime = function (startDt, endDt, checkForUndefined) {</li><li>        var endDateError = (endDt === undefined && checkForUndefined) ? {</li><li>            isError: true,</li><li>            message: 'End date is requred.'</li><li>        } : {</li><li>            isError: false,</li><li>            message: ''</li><li>        };</li><li></li><li>        </li><li>        var today = moment();</li><li></li><li>        if (endDt) {</li><li>            if (moment(endDt).isBefore(startDt, 'day')){</li><li>                endDateError.isError = true;</li><li>                endDateError.message = 'End date cannot be before start date.';</li><li>            } else if (moment(endDt).isBefore(today, 'day')) {</li><li>                endDateError.isError = true;</li><li>                endDateError.message = 'End date cannot be earlier than today.';</li><li>            }</li><li>        }</li><li></li><li>        return endDateError;</li><li>    }</li><li></li><li>    publicApi.validatePriority = function(priority) {</li><li>        var priorityErrors = {</li><li>            isError: false,</li><li>            message: ''</li><li>        };</li><li></li><li></li><li>        if(priority && (priority < 0 || priority > 1000 || priority % 1 != 0)) {</li><li>            priorityErrors.isError = true;</li><li>            priorityErrors.message = 'Enter number between 0 and 1000';</li><li>        }</li><li></li><li>        return priorityErrors;</li><li>    }</li><li></li><li>    publicApi.validateEndDateWithLeadTime = function (startDt, endDt, checkForUndefined ) {</li><li>        var endDateError = (endDt === undefined && checkForUndefined) ? {</li><li>            isError: true,</li><li>            message: 'End date is requred.'</li><li>        } : {</li><li>            isError: false,</li><li>            message: ''</li><li>        };</li><li></li><li>        var leadTimePromise = leadTimeService.fetchLeadTime();</li><li>        leadTimePromise.then(function (leadTime) {</li><li>            var minEndDate = publicApi.getMinEndDate(startDt,leadTime);</li><li></li><li>            if (endDt) {</li><li>                if (moment(endDt).isBefore(minEndDate, 'day')) {</li><li>                    endDateError.isError = true;</li><li>                    endDateError.message = 'Please enter a valid end date. Earliest possible MSB end date is ' + minEndDate.format('MM/DD/YYYY') + '.';</li><li>                }</li><li>            }</li><li>            return endDateError;</li><li>        })</li><li>        return endDateError;</li><li>    }</li><li></li><li>    publicApi.getMinEndDate = function (startDt,leadTime) {</li><li>        var today = moment();</li><li>        var startDate = (startDt && today.isBefore(startDt, 'days')) ? moment(startDt) : today;</li><li>        var minEndDate = moment(startDate).add(leadTime, 'days');</li><li>        return minEndDate;</li><li>    };</li><li></li><li>    publicApi.validateThreeMonthsWarning = function (startDt) {</li><li>        var threeMonthsWarning = {</li><li>            isError: false,</li><li>            message: ''</li><li>        };</li><li></li><li>        if(moment(startDt).isAfter(moment().add(3, 'months'))) {</li><li>            threeMonthsWarning.isError = true;</li><li>            threeMonthsWarning.message = 'It will be at least three months until this discount begins.'</li><li>        }</li><li></li><li>        return threeMonthsWarning;</li><li>    }</li><li></li><li>    publicApi.validateMinimumPurchase = function (rewards, checkForUndefined) {</li><li>        var minQtyErrObj;</li><li>        var minQtyErrors = [];</li><li></li><li>        for (var i = 0; i < rewards.length; i++) {</li><li>            if (rewards[i].min === undefined && checkForUndefined === true) {</li><li>                minQtyErrObj = {</li><li>                    isError: true,</li><li>                    message: 'is required.'</li><li>                };</li><li>                minQtyErrors.push(minQtyErrObj);</li><li>            }</li><li>            // null and undefined checks are necessary here. I tried to check</li><li>            // "if (rewards[i].min)", but when the value is 0, it evaluates to falsey.</li><li>            else if (rewards[i].min != null</li><li>                && rewards[i].min != undefined</li><li>                && rewards[i].min &lt;= 0) {</li><li>                minQtyErrObj = {</li><li>                    isError: true,</li><li>                    message: 'must be greater than zero.'</li><li>                };</li><li>                minQtyErrors.push(minQtyErrObj);</li><li>            } else {</li><li>                minQtyErrObj = {</li><li>                    isError: false,</li><li>                    message: ''</li><li>                };</li><li>                minQtyErrors.push(minQtyErrObj);</li><li>            }</li><li>        }</li><li>        return minQtyErrors;</li><li>    }</li><li></li><li>    publicApi.validatePercentOff = function (rewards, checkForUndefined) {</li><li>        var percentOffErrorObject;</li><li>        var percentOffErrors = [];</li><li></li><li>        for (var i = 0; i &lt; rewards.length; i++) {</li><li>            if (rewards[i].value === undefined && checkForUndefined === true) {</li><li>                percentOffErrorObject = {</li><li>                    isError: true,</li><li>                    message: 'Percent off is required.'</li><li>                };</li><li>                percentOffErrors.push(percentOffErrorObject);</li><li>            }</li><li></li><li>            // null and undefined checks are necessary here. I tried to check</li><li>            // "if (rewards[i].value)", but when the value is 0, it evaluates to falsey.</li><li>            else if (rewards[i].value != null </li><li>                && rewards[i].value != undefined </li><li>                && (rewards[i].value > 99.9 || rewards[i].value < 0.01)) {</li><li>                </li><li>                percentOffErrorObject = {</li><li>                    isError: true,</li><li>                    message: 'Please enter a value between 0.01 and 99.9.'</li><li>                };</li><li>                percentOffErrors.push(percentOffErrorObject);</li><li>            }</li><li></li><li>            else {</li><li>                percentOffErrorObject = {</li><li>                    isError: false,</li><li>                    message: ''</li><li>                };</li><li>                percentOffErrors.push(percentOffErrorObject);</li><li>            }</li><li>        }</li><li></li><li>        return percentOffErrors;</li><li>    }</li><li></li><li>    publicApi.validatePercentageWarning = function (rewards) {</li><li></li><li>        var arrlength = rewards.length;</li><li>        var prctWarnObj = {};</li><li>        var percentageWarning = [];</li><li></li><li>        for (var i = 0; i < arrlength; i++) {</li><li></li><li>            if (rewards[i].value > 50 && rewards[i].value <= 99.9) {</li><li>                prctWarnObj = {</li><li>                    isError: true,</li><li>                    message: 'You have entered over 50% for this discount.' </li><li>                };</li><li>                percentageWarning.push(prctWarnObj);</li><li>            }</li><li></li><li>            else {</li><li>                prctWarnObj = {</li><li>                    isError: false,</li><li>                    message: ''</li><li>                };</li><li>                percentageWarning.push(prctWarnObj);</li><li>            }</li><li></li><li>        }</li><li></li><li>        return percentageWarning;</li><li></li><li>    }</li><li></li><li>    publicApi.areErrorsPresent = function(validationErrorsObject) {</li><li>        for (var i in validationErrorsObject) {</li><li>            if (validationErrorsObject.hasOwnProperty(i)) {</li><li>                // This is a patch to avoid warnings preventing submit. The warning logic should be moved, either to</li><li>                // the appropriate component or to some sort of warning service.</li><li>                if (i !== 'percentageWarning' && i !== 'threeMonthsWarning'){</li><li>                    // Check for array, and if array, iterate through each</li><li>                    if (Array.isArray(validationErrorsObject[i])){</li><li>                        for (var j in validationErrorsObject[i]) {</li><li>                            if (validationErrorsObject[i][j].isError === true) {</li><li>                                return true;</li><li>                            }</li><li>                        }</li><li>                    } else {</li><li>                        if (validationErrorsObject[i].isError === true){</li><li>                            return true;</li><li>                        }</li><li></li><li>                    }</li><li>                }</li><li>            }</li><li>        }</li><li>        return false;</li><li>    }</li><li></li><li>    publicApi.validateDiscountEndDate = function(promotion, checkForUndefined) {</li><li>        // Calls the appropriate end date validation based on whether or not the discount is MSB</li><li>        return (promotion.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB' && promotion.printLabel == true)</li><li>            ? publicApi.validateEndDateWithLeadTime(promotion.startDt, promotion.endDt, checkForUndefined)</li><li>            : publicApi.validateEndDateWithoutLeadTime(promotion.startDt, promotion.endDt, checkForUndefined);</li><li>    }</li><li></li><li>    publicApi.validatePromotion = function (promotion, checkForUndefined) {</li><li>        var validationErrors = {};</li><li>        validationErrors.startDt = publicApi.validateStartDate(promotion, checkForUndefined);</li><li>        validationErrors.endDt = publicApi.validateDiscountEndDate(promotion, checkForUndefined);</li><li>        validationErrors.minimumThreshold = publicApi.validateMinimumPurchase(promotion.reward.details, checkForUndefined);</li><li>        validationErrors.percentOff = publicApi.validatePercentOff(promotion.reward.details, checkForUndefined);</li><li>        validationErrors.priorityRange = publicApi.validatePriority(promotion.priority);</li><li>        validationErrors.percentageWarning = publicApi.validatePercentageWarning(promotion.reward.details);</li><li>        validationErrors.threeMonthsWarning = publicApi.validateThreeMonthsWarning(promotion.startDt);</li><li>        return validationErrors;</li><li>    }</li><li></li><li>    return publicApi;</li><li>}]);</li></ol></code>
+</section>
+
+<section>
+    <h2>Mutations</h2>
+        <p>
+            No mutations could be performed on this file. This may be due to one of the following reasons:
+        </p>
+        <ul>
+            <li>No unit tests exist for this file</li>
+            <li>No specs were configured for this file</li>
+            <li>Unit tests are failing already without applying any mutations</li>
+            <li>All possible mutations in this file were excluded</li>
+        </ul>
+</section>
+
+<div id="popup" aria-hidden="true"></div>
+
+        </main>
+
+        <footer>
+            <p>Report generated by <a class="brand" href="https://www.npmjs.com/package/grunt-mutation-testing">grunt-mutation-testing</a> on 6/5/2017, 4:07:58 PM.</p>
+        </footer>
+    </body>
+</html>

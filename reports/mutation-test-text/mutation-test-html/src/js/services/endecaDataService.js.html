@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <meta charset="UTF-8"/>
+        <meta data-mutation-stats="%7B%22all%22:0,%22killed%22:0,%22survived%22:0,%22ignored%22:0,%22untested%22:0,%22success%22:0,%22successRate%22:%220.0%22,%22killedRate%22:%220.0%22,%22survivedRate%22:%220.0%22,%22ignoredRate%22:%220.0%22,%22untestedRate%22:%220.0%22%7D"/>
+        <title>endecaDataService.js - Mutation test results</title>
+        <style type="text/css">
+    html, body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Helvetica Neue', 'Helvetica', 'Verdana', 'Arial', sans-serif;
+        font-size: 14px;
+    }
+
+    header, nav, main, footer {
+        display: block;
+        padding: 10px;
+    }
+
+    header {
+        background-color: #fff5a0;
+        border-bottom: 1px solid #ddd130;
+    }
+
+    header.survived {
+        border-bottom-color: #b46767;
+    }
+
+    header.killed {
+        border-bottom-color: #516948;
+    }
+
+    header h1 {
+        font-size: 18px;
+        font-weight: normal;
+    }
+
+    header h1 .fileName {
+        font-weight: bold;
+    }
+
+    #mutationStats {
+        margin-top: 10px;
+    }
+
+    .stat {
+        display: inline-block;
+        width: 250px;
+    }
+
+    .stat .statValue {
+        border: 1px solid black;
+        padding: 4px;
+        background-color: white;
+        font-weight: bold;
+    }
+
+    .stat .statValue small {
+        color: #666;
+        font-weight: normal;
+        font-size: 11px;
+    }
+
+    nav {
+        background-color: #ffe87c;
+        border-bottom: 1px solid #b49d5e;
+    }
+
+    nav .link {
+        color: black;
+        text-decoration: underline;
+    }
+
+    footer {
+        background-color: #ddd;
+        border-top: 1px solid #aaa;
+    }
+
+    footer p {
+        margin: 0;
+    }
+
+    .killed {
+        background-color: #b5d592;
+    }
+
+    .survived {
+        background-color: #fc8c84;
+    }
+
+    .neutral {
+        background-color: #ffe87c;
+    }
+
+    #toggleKilledMutations {
+    background-color: #eee;
+    border: 1px solid #666;
+    padding: 6px 10px;
+    border-radius: 2px;
+    cursor: pointer;
+}
+#toggleKilledMutations:hover {
+    background-color: #aaa;
+}
+#toggleKilledMutations:active {
+    background-color: #666;
+    border-color: #eee;
+}
+
+#source {
+    font-family: 'Consolas', 'Courier New', 'Lucida Sans Typewriter', monospace;
+    white-space: pre;
+}
+
+#mutations {
+    border-collapse: collapse;
+}
+
+#mutations th, #mutations td {
+    padding: 5px 15px;
+    border: 1px solid #666;
+}
+
+#mutations th {
+    background-color: #eee;
+    font-weight: normal;
+    text-align: left;
+}
+
+#popup {
+    position: fixed;
+    border: solid 1px black;
+    padding: 3px;
+    display: none;
+}
+
+#popup.show {
+    display: block;
+}
+
+code .killed, code .survived {
+    border: solid 1px white;
+}
+
+</style>
+
+        <script type="text/javascript">
+    function onLoad() {
+    each(document.getElementsByClassName('code'), function(element) {
+        element.addEventListener('mouseover', onMouseOver, false);
+        element.addEventListener('mousemove', onMouseMove, false);
+        element.addEventListener('mouseout', onMouseOut, false);
+    });
+}
+
+function each(list, fn, thisArg) {
+    Array.prototype.forEach.call(list, fn, thisArg);
+}
+
+function onMouseOver(event) {
+    var popup = document.getElementById('popup');
+    addMutations(popup, event.target);
+    setPopupPosition(popup, event);
+    popup.classList.add("show");
+}
+
+function onMouseMove(event) {
+    setPopupPosition(document.getElementById('popup'), event);
+}
+
+function onMouseOut() {
+    document.getElementById('popup').classList.remove('show');
+}
+
+function addMutations(popup, target) {
+    var mutationEl;
+
+    each(target.classList, function(_class) {
+        if (_class.indexOf('mutation_') > -1) {
+            mutationEl = document.getElementById(_class);
+            if (Array.prototype.indexOf.call(mutationEl.classList, 'killed') > -1) {
+                popup.classList.add('killed');
+                popup.classList.remove('survived');
+            } else {
+                popup.classList.add('survived');
+                popup.classList.remove('killed');
+            }
+            popup.classList.add(mutationEl.classList);
+            popup.innerHTML = mutationEl.innerHTML;
+        }
+    });
+}
+
+var showKilledMutations = true;
+function toggleKilledMutations() {
+    showKilledMutations = !showKilledMutations;
+
+    if(showKilledMutations) {
+        document.querySelector('#toggleKilledMutations').innerHTML = 'Hide killed mutations';
+        each(document.querySelectorAll('.code.killed'), function(e) {
+            e.style.backgroundColor = '';
+        });
+        each(document.querySelectorAll('#mutations .killed'), function(e) {
+            e.style.display = '';
+        });
+    } else {
+        document.querySelector('#toggleKilledMutations').innerHTML = 'Show killed mutations';
+        each(document.querySelectorAll('.code.killed'), function(e) {
+            e.style.backgroundColor = 'white';
+        });
+        each(document.querySelectorAll('#mutations .killed'), function(e) {
+            e.style.display = 'none';
+        });
+    }
+}
+
+function setPopupPosition(popup, event) {
+    var top = event.clientY,
+        left = event.clientX + 10;
+
+    popup.setAttribute('style', 'top:' + top + 'px;left:' + left + 'px;');
+}
+
+window.onload = onLoad;
+
+</script>
+    </head>
+
+    <body>
+        <header class="neutral">
+            <h1>
+                Mutation test results for
+                <span class="fileName">
+                        endecaDataService.js
+                </span>
+            </h1>
+
+            <section id="mutationStats">
+                <div class="stat">
+                    Success rate:&nbsp;
+                    <span class="statValue">
+                        0.0%&nbsp;
+                        <small>
+                            (0 / 0)
+                        </small>
+                    </span>
+                </div>
+                <div class="stat">
+                    Survived:&nbsp;
+                    <span class="statValue">
+                        0.0%&nbsp;
+                        <small>
+                            (0 / 0)
+                        </small>
+                    </span>
+                </div>
+                <div class="stat">
+                    Ignored:&nbsp;
+                    <span class="statValue">
+                        0.0%&nbsp;
+                        <small>
+                            (0 / 0)
+                        </small>
+                    </span>
+                </div>
+                <div class="stat">
+                    Untested:&nbsp;
+                    <span class="statValue">
+                        0.0%&nbsp;
+                        <small>
+                            (0 / 0)
+                        </small>
+                    </span>
+                </div>
+            </section>
+        </header>
+
+        <nav><a class="link " href="../../../../mutation-test-html/index.html">mutation-test-html</a> >> <a class="link " href="../../../../mutation-test-html/src/index.html">src</a> >> <a class="link " href="../../../../mutation-test-html/src/js/index.html">js</a> >> <a class="link " href="../../../../mutation-test-html/src/js/services/index.html">services</a> >> endecaDataService.js</nav>
+
+        <main>
+            
+<section>
+    <code id="source"><ol><li>/* </li><li>	Data Service </li><li>	Services that will handle endeca http request to web services</li><li>*/</li><li>app.service('endecaDataService', ['$http', '$q', 'dataService',</li><li>    function ($http, $q, dataService) {</li><li>        var publicApi = {};</li><li></li><li>        // Service to get Sales catalog</li><li>        publicApi.getSalesCatalog = function (term) {</li><li>            var config = {</li><li>                    method: 'JSONP',</li><li>                    service: 'endeca',</li><li>                    url: '?callback=JSON_CALLBACK&type=category&term=' + term</li><li>                },</li><li></li><li>                result = $q.defer();</li><li>            dataService.httpRequest(config).then(</li><li>                function (response) {</li><li></li><li>                    result.resolve(response.data);</li><li>                },</li><li>                function (error) {</li><li></li><li>                    result.reject(error);</li><li>                });</li><li></li><li>            return result.promise;</li><li>        }</li><li></li><li>        return publicApi;</li><li>    }</li><li>]);</li><li></li></ol></code>
+</section>
+
+<section>
+    <h2>Mutations</h2>
+        <p>
+            No mutations could be performed on this file. This may be due to one of the following reasons:
+        </p>
+        <ul>
+            <li>No unit tests exist for this file</li>
+            <li>No specs were configured for this file</li>
+            <li>Unit tests are failing already without applying any mutations</li>
+            <li>All possible mutations in this file were excluded</li>
+        </ul>
+</section>
+
+<div id="popup" aria-hidden="true"></div>
+
+        </main>
+
+        <footer>
+            <p>Report generated by <a class="brand" href="https://www.npmjs.com/package/grunt-mutation-testing">grunt-mutation-testing</a> on 6/5/2017, 4:07:58 PM.</p>
+        </footer>
+    </body>
+</html>

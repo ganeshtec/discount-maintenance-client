@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <meta charset="UTF-8"/>
+        <meta data-mutation-stats="%7B%22all%22:0,%22killed%22:0,%22survived%22:0,%22ignored%22:0,%22untested%22:0,%22success%22:0,%22successRate%22:%220.0%22,%22killedRate%22:%220.0%22,%22survivedRate%22:%220.0%22,%22ignoredRate%22:%220.0%22,%22untestedRate%22:%220.0%22%7D"/>
+        <title>DashboardCtrl.js - Mutation test results</title>
+        <style type="text/css">
+    html, body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Helvetica Neue', 'Helvetica', 'Verdana', 'Arial', sans-serif;
+        font-size: 14px;
+    }
+
+    header, nav, main, footer {
+        display: block;
+        padding: 10px;
+    }
+
+    header {
+        background-color: #fff5a0;
+        border-bottom: 1px solid #ddd130;
+    }
+
+    header.survived {
+        border-bottom-color: #b46767;
+    }
+
+    header.killed {
+        border-bottom-color: #516948;
+    }
+
+    header h1 {
+        font-size: 18px;
+        font-weight: normal;
+    }
+
+    header h1 .fileName {
+        font-weight: bold;
+    }
+
+    #mutationStats {
+        margin-top: 10px;
+    }
+
+    .stat {
+        display: inline-block;
+        width: 250px;
+    }
+
+    .stat .statValue {
+        border: 1px solid black;
+        padding: 4px;
+        background-color: white;
+        font-weight: bold;
+    }
+
+    .stat .statValue small {
+        color: #666;
+        font-weight: normal;
+        font-size: 11px;
+    }
+
+    nav {
+        background-color: #ffe87c;
+        border-bottom: 1px solid #b49d5e;
+    }
+
+    nav .link {
+        color: black;
+        text-decoration: underline;
+    }
+
+    footer {
+        background-color: #ddd;
+        border-top: 1px solid #aaa;
+    }
+
+    footer p {
+        margin: 0;
+    }
+
+    .killed {
+        background-color: #b5d592;
+    }
+
+    .survived {
+        background-color: #fc8c84;
+    }
+
+    .neutral {
+        background-color: #ffe87c;
+    }
+
+    #toggleKilledMutations {
+    background-color: #eee;
+    border: 1px solid #666;
+    padding: 6px 10px;
+    border-radius: 2px;
+    cursor: pointer;
+}
+#toggleKilledMutations:hover {
+    background-color: #aaa;
+}
+#toggleKilledMutations:active {
+    background-color: #666;
+    border-color: #eee;
+}
+
+#source {
+    font-family: 'Consolas', 'Courier New', 'Lucida Sans Typewriter', monospace;
+    white-space: pre;
+}
+
+#mutations {
+    border-collapse: collapse;
+}
+
+#mutations th, #mutations td {
+    padding: 5px 15px;
+    border: 1px solid #666;
+}
+
+#mutations th {
+    background-color: #eee;
+    font-weight: normal;
+    text-align: left;
+}
+
+#popup {
+    position: fixed;
+    border: solid 1px black;
+    padding: 3px;
+    display: none;
+}
+
+#popup.show {
+    display: block;
+}
+
+code .killed, code .survived {
+    border: solid 1px white;
+}
+
+</style>
+
+        <script type="text/javascript">
+    function onLoad() {
+    each(document.getElementsByClassName('code'), function(element) {
+        element.addEventListener('mouseover', onMouseOver, false);
+        element.addEventListener('mousemove', onMouseMove, false);
+        element.addEventListener('mouseout', onMouseOut, false);
+    });
+}
+
+function each(list, fn, thisArg) {
+    Array.prototype.forEach.call(list, fn, thisArg);
+}
+
+function onMouseOver(event) {
+    var popup = document.getElementById('popup');
+    addMutations(popup, event.target);
+    setPopupPosition(popup, event);
+    popup.classList.add("show");
+}
+
+function onMouseMove(event) {
+    setPopupPosition(document.getElementById('popup'), event);
+}
+
+function onMouseOut() {
+    document.getElementById('popup').classList.remove('show');
+}
+
+function addMutations(popup, target) {
+    var mutationEl;
+
+    each(target.classList, function(_class) {
+        if (_class.indexOf('mutation_') > -1) {
+            mutationEl = document.getElementById(_class);
+            if (Array.prototype.indexOf.call(mutationEl.classList, 'killed') > -1) {
+                popup.classList.add('killed');
+                popup.classList.remove('survived');
+            } else {
+                popup.classList.add('survived');
+                popup.classList.remove('killed');
+            }
+            popup.classList.add(mutationEl.classList);
+            popup.innerHTML = mutationEl.innerHTML;
+        }
+    });
+}
+
+var showKilledMutations = true;
+function toggleKilledMutations() {
+    showKilledMutations = !showKilledMutations;
+
+    if(showKilledMutations) {
+        document.querySelector('#toggleKilledMutations').innerHTML = 'Hide killed mutations';
+        each(document.querySelectorAll('.code.killed'), function(e) {
+            e.style.backgroundColor = '';
+        });
+        each(document.querySelectorAll('#mutations .killed'), function(e) {
+            e.style.display = '';
+        });
+    } else {
+        document.querySelector('#toggleKilledMutations').innerHTML = 'Show killed mutations';
+        each(document.querySelectorAll('.code.killed'), function(e) {
+            e.style.backgroundColor = 'white';
+        });
+        each(document.querySelectorAll('#mutations .killed'), function(e) {
+            e.style.display = 'none';
+        });
+    }
+}
+
+function setPopupPosition(popup, event) {
+    var top = event.clientY,
+        left = event.clientX + 10;
+
+    popup.setAttribute('style', 'top:' + top + 'px;left:' + left + 'px;');
+}
+
+window.onload = onLoad;
+
+</script>
+    </head>
+
+    <body>
+        <header class="neutral">
+            <h1>
+                Mutation test results for
+                <span class="fileName">
+                        DashboardCtrl.js
+                </span>
+            </h1>
+
+            <section id="mutationStats">
+                <div class="stat">
+                    Success rate:&nbsp;
+                    <span class="statValue">
+                        0.0%&nbsp;
+                        <small>
+                            (0 / 0)
+                        </small>
+                    </span>
+                </div>
+                <div class="stat">
+                    Survived:&nbsp;
+                    <span class="statValue">
+                        0.0%&nbsp;
+                        <small>
+                            (0 / 0)
+                        </small>
+                    </span>
+                </div>
+                <div class="stat">
+                    Ignored:&nbsp;
+                    <span class="statValue">
+                        0.0%&nbsp;
+                        <small>
+                            (0 / 0)
+                        </small>
+                    </span>
+                </div>
+                <div class="stat">
+                    Untested:&nbsp;
+                    <span class="statValue">
+                        0.0%&nbsp;
+                        <small>
+                            (0 / 0)
+                        </small>
+                    </span>
+                </div>
+            </section>
+        </header>
+
+        <nav><a class="link " href="../../../../../mutation-test-html/index.html">mutation-test-html</a> >> <a class="link " href="../../../../../mutation-test-html/src/index.html">src</a> >> <a class="link " href="../../../../../mutation-test-html/src/js/index.html">js</a> >> <a class="link " href="../../../../../mutation-test-html/src/js/modules/index.html">modules</a> >> <a class="link " href="../../../../../mutation-test-html/src/js/modules/dashboard/index.html">dashboard</a> >> DashboardCtrl.js</nav>
+
+        <main>
+            
+<section>
+    <code id="source"><ol><li>app.controller('DashboardCtrl', ['$filter', 'leadTimeService', '$scope', 'DataFactory', 'promotionDataService', '$location', '$routeParams', '$mdDialog', 'dashboardDataService', 'OverlayConfigFactory',</li><li>    function ($filter, leadTimeService, $scope, DataFactory, promotionDataService, $location, routeParams, $mdDialog, dashboardDataService, OverlayConfigFactory) {</li><li>        var DEFAULT_RECORDS_PER_PG = 10,</li><li>            LEAST_RECORDS_PER_PG = 5; //smallest value in the records per page selectbox </li><li>        $scope.selected = {};</li><li>        $scope.selectedCount = 0;</li><li>        $scope.sel = [];</li><li>        $scope.browseCatalogOverlayConfig = OverlayConfigFactory.getInstance();</li><li>        // inital value of the select all check box</li><li>        $scope.selectAll = false;</li><li>        var all = {};</li><li>        $scope.$watchCollection('selected', function () {</li><li>            $scope.computeSelectedArray();</li><li>        });</li><li>        $scope.paginationConfig = {};</li><li></li><li>        $scope.toggleAll = function () {</li><li>            if ($scope.selectAll) {</li><li>                $scope.selected = angular.extend({}, all);</li><li>            } else {</li><li>                $scope.selected = {};</li><li>            }</li><li>        }</li><li></li><li>        $scope.updatePage = function (no) {</li><li>            $location.search('page', no);</li><li>        };</li><li>        $scope.updateSize = function (size) {</li><li>            //move to page 1 when changing number of records per page</li><li>            var params = {</li><li>                'page': 1,</li><li>                'size': size</li><li>            }</li><li>            $location.search(params);</li><li>        };</li><li>        $scope.searchWithUrlParams = function () {</li><li>            var params = $location.search();</li><li>            $scope.promotionName = params.keyword || '';</li><li>            $scope.search(params.keyword || '',</li><li>                params.page || 1,</li><li>                params.size || DEFAULT_RECORDS_PER_PG,</li><li>                params.status || 'all',</li><li>                params.type || 'all',</li><li>                params.sortby || 'none',</li><li>                params.order || 'asc'</li><li>            );</li><li>        }</li><li></li><li>        $scope.computeSelectedArray = function () {</li><li>            var keys = Object.keys($scope.selected);</li><li>            $scope.sel = []</li><li>            for (var i = 0; i < keys.length; i++) {</li><li>                if ($scope.selected[keys[i]]) {</li><li>                    $scope.sel.push(keys[i]);</li><li>                } else {</li><li>                    $scope.selectAll = false;</li><li>                }</li><li>            }</li><li>            if (Object.keys($scope.selected).length != Object.keys(all).length) {</li><li>                $scope.selectAll = false;</li><li>            }</li><li>            $scope.selectedCount = $scope.sel.length;</li><li>        }</li><li>        $scope.updateKeyword = function () {</li><li>            if (!$scope.promotionName) {</li><li>                $scope.errorMessage = 'Promotion name is mandatory'</li><li>            } else {</li><li>                var current = $location.search();</li><li>                if ($scope.promotionName == current.keyword) {</li><li>                    $scope.searchWithUrlParams();</li><li>                } else {</li><li>                    $scope.errorMessage = ' ';</li><li>                    var params = {</li><li>                        'keyword': $scope.promotionName,</li><li>                        'page': 1</li><li>                    }</li><li>                    $location.search(params);</li><li>                }</li><li>            }</li><li>        }</li><li>        $scope.refresh = function () {</li><li>            var current = $location.search();</li><li>            if (current.page == 1 && current.size == DEFAULT_RECORDS_PER_PG) {</li><li>                $scope.searchWithUrlParams();</li><li>            } else {</li><li>                var params = {</li><li>                    'keyword': '',</li><li>                    'page': 1,</li><li>                    'size': DEFAULT_RECORDS_PER_PG</li><li>                }</li><li>                $location.search(params);</li><li>            }</li><li></li><li>        }</li><li>        var checkForValid = function (data) {</li><li>            var valid = data.validData;</li><li>            var invalid = data.invalidData;</li><li>            var resp = {};</li><li>            if (valid && valid.length > 0) {</li><li>                resp.valid = []</li><li>                for (var i = 0; i < valid.length; i++) {</li><li>                    resp.valid.push(valid[i].promoId);</li><li>                }</li><li>            }</li><li>            if (invalid && invalid.length > 0) {</li><li>                resp.invalid = []</li><li>                for (var j = 0; j < invalid.length; j++) {</li><li>                    var promos = {};</li><li>                    promos.id = invalid[j].invalidInput.promoId;</li><li></li><li>                    //Displaying  invalid id and not the actual message</li><li>                    resp.invalid.push(promos.id);</li><li>                }</li><li>            }</li><li>            return resp;</li><li>        }</li><li></li><li>        $scope.save = function () {</li><li></li><li>            var promotions = $scope.promotions;</li><li>            var req = [];</li><li>            var dupcheck = {};</li><li>            for (var j = 0; j < promotions.length; j++) {</li><li>                var promotionData = promotions[j];</li><li>                var promotion = promotionData.promotion;</li><li>                if ($scope.selected[promotion.promoId]) {</li><li>                    promotion.meta.action = 'update';</li><li>                    promotion.startDt = $filter('date')(promotionData.start, 'yyyy-MM-dd HH:mm:ss');</li><li>                    promotion.endDt = $filter('date')(promotionData.end, 'yyyy-MM-dd HH:mm:ss');</li><li>                    if (!dupcheck[promotion.promoId]) {</li><li>                        req.push(promotion);</li><li>                        dupcheck[promotion.promoId] = true;</li><li>                    }</li><li>                }</li><li>            }</li><li>            var promotionPromise = promotionDataService.savePromotions(req);</li><li>            $scope.loading = true;</li><li>            promotionPromise.then(</li><li>                function (data) {</li><li>                    var resp = checkForValid(data);</li><li>                    if (resp.valid && !resp.invalid) {</li><li>                        showAlert('Success', 'Saved successfully', $scope.refresh);</li><li>                    } else if (resp.invalid) {</li><li>                        showAlert('Error', 'Unable to save promotions :' + JSON.stringify(resp.invalid));</li><li>                    }</li><li>                    $scope.loading = false;</li><li>                },</li><li>                function () {</li><li>                    $scope.loading = false;</li><li>                    showAlert('Error', 'Unable to save');</li><li>                }</li><li>            );</li><li>        }</li><li>        var showAlert = function (title, content, onClose) {</li><li>            var options = $mdDialog.alert()</li><li>                .title(title)</li><li>                .textContent(content)</li><li>                .ok('Ok');</li><li>            if (onClose) {</li><li>                onClose();</li><li>            }</li><li>            $mdDialog.show(options);</li><li>        }</li><li></li><li>        var showConfirm = function (title, content) {</li><li>            var options = $mdDialog.confirm()</li><li>                .title(title)</li><li>                .textContent(content)</li><li>                .ok('Ok')</li><li>                .cancel('Cancel');</li><li>            return options;</li><li>        }</li><li></li><li>        $scope.delete = function () {</li><li></li><li></li><li>            var sel = $scope.selected;</li><li>            var promotions = $scope.promotions;</li><li>            var req = []</li><li>            for (var i = 0; i < promotions.length; i++) {</li><li>                var promotionData = promotions[i];</li><li>                var promo = promotionData.promotion;</li><li>                if (sel[promo.promoId]) {</li><li>                    req.push(promo);</li><li>                }</li><li>            }</li><li></li><li>            var options = showConfirm('Warning', 'Promotion will be deleted permanently');</li><li>            $mdDialog.show(options).then(function () {</li><li></li><li></li><li>                var promotionPromise = promotionDataService.delete(req);</li><li>                $scope.loading = true;</li><li>                promotionPromise.then(</li><li>                    function (data) {</li><li>                        var resp = checkForValid(data);</li><li>                        if (resp.valid) { /*if multiple promos are selected for delete then */</li><li>                            showAlert('Success', 'Deleted successfully :' + JSON.stringify(resp.valid), $scope.searchWithUrlParams);</li><li>                        }</li><li>                        if (resp.invalid) {</li><li>                            showAlert('Error', 'Unable to delete promotions :' + JSON.stringify(resp.invalid).replace(/[{}\\]/g, ''));</li><li>                        }</li><li>                        $scope.loading = false;</li><li>                    },</li><li>                    function () {</li><li>                        showAlert('Error', 'Unable to delete');</li><li>                        $scope.loading = false;</li><li>                    }</li><li>                )</li><li>            });</li><li>        }</li><li></li><li>        $scope.isInLeadTime = function(endDate, leadTime) {</li><li>            var today = new Date();</li><li>            var leadTimeSec = leadTime * 24 * 60 * 60 * 1000;</li><li>            if (endDate.getTime() - today.getTime() &lt;= leadTimeSec){</li><li>                return true;</li><li>            } else {</li><li>                return false;</li><li>            }</li><li>        }</li><li></li><li>        $scope.eligibleLabelForDeactivate = function(labelFlag, status, inLeadTime) {</li><li>            if (labelFlag == true && status == 61 && !inLeadTime) {</li><li>                return true;</li><li>            } else {</li><li>                return false;</li><li>            }</li><li>        }</li><li></li><li>        $scope.cannotBeDeactivated = function(labelFlag, status, inLeadTime) {</li><li>            if (labelFlag && status == 61 && inLeadTime) {</li><li>                return true;</li><li>            } else {</li><li>                return false;</li><li>            }</li><li>        }</li><li></li><li>        $scope.constructAndSavePromo = function(leadTime, promo) {</li><li>            var today = new Date();</li><li>            var newEndDate = new Date();</li><li>            newEndDate.setDate(today.getDate() + leadTime);</li><li>            promo.endDt = $filter('date')(newEndDate, 'yyyy-MM-dd HH:mm:ss');</li><li>            promotionDataService.saveAsDraft(promo);</li><li>        }</li><li></li><li>        $scope.deactivate = function () {</li><li>            var promoPromise = promotionDataService.getPromotionByID($scope.sel[0]);</li><li>            var leadTimePromise = leadTimeService.fetchLeadTime();</li><li>            var promo;</li><li>            var inLeadTime;</li><li>            var endDate;</li><li>            promoPromise.then(function (data) {</li><li>                promo = data;</li><li>                endDate = new Date(data.endDt);</li><li>                leadTimePromise.then(function (leadTime) {</li><li>                    inLeadTime = $scope.isInLeadTime(endDate, leadTime);</li><li>                    if ($scope.eligibleLabelForDeactivate(promo.printLabel, promo.status, inLeadTime)) {</li><li>                        $scope.constructAndSavePromo(leadTime, promo);</li><li>                        showAlert('Success', promo.name + ' will end on ' + promo.endDt.split(' ')[0] + ' to account for labeling lead time.');</li><li>                        return;</li><li>                    } if ($scope.cannotBeDeactivated(promo.printLabel, promo.status, inLeadTime)) {</li><li>                        showAlert('Failure', 'This discount is already scheduled to end on ' + promo.endDt.split(' ')[0] + ' and cannot be deactivated earlier due to the time to remove labels.');</li><li>                        return;</li><li>                    } else {</li><li>                        var deactivatePromise = promotionDataService.deactivate($scope.sel[0]);</li><li>                        $scope.loading = true;</li><li>                        deactivatePromise.then(function (data) {</li><li>                            var resp = checkForValid(data);</li><li>                            if (resp.valid && !resp.invalid) {</li><li>                                showAlert('Success', 'Deactivated successfully', $scope.searchWithUrlParams);</li><li>                            } else if (resp.invalid) {</li><li>                                showAlert('Error', 'Unable to deactivate promotion :' + JSON.stringify(resp.invalid));</li><li>                            }</li><li>                            $scope.loading = false;</li><li>                        }, function () {</li><li>                            $scope.loading = false;</li><li>                            $scope.searchWithUrlParams();</li><li>                        })</li><li>                    }</li><li>                })</li><li>            })</li><li>        };</li><li></li><li>        $scope.setupSortableHeader = function () {</li><li>            $scope.headers = [{</li><li>                'sortId': 'promoId',</li><li>                'text': 'Id',</li><li>                'width': '3%'</li><li>            },</li><li>            {</li><li>                'sortId': 'name',</li><li>                'text': 'Promotion Name',</li><li>                'width': '25%'</li><li>            },</li><li>            {</li><li>                'sortId': 'statusName',</li><li>                'text': 'Status',</li><li>                'width': '5%'</li><li>            },</li><li>            {</li><li>                'sortId': 'promoSubTypeDesc',</li><li>                'text': 'Promotion Type',</li><li>                'width': '8%'</li><li>            },</li><li>            {</li><li>                'sortId': 'startDate',</li><li>                'text': 'Start Date',</li><li>                'width': '5%'</li><li>            },</li><li>            {</li><li>                'sortId': 'endDate',</li><li>                'text': 'End Date',</li><li>                'width': '5%'</li><li>            },</li><li>            {</li><li>                'sortId': 'createdBy',</li><li>                'text': 'Created By',</li><li>                'width': '5%'</li><li>            },</li><li>            {</li><li>                'sortId': 'lastModifiedBy',</li><li>                'text': 'Last Modified (ID/Date)',</li><li>                'width': '12%'</li><li>            },</li><li>            {</li><li>                'sortId': 'priority',</li><li>                'text': 'Priority',</li><li>                'width': '4%'</li><li>            }</li><li>            ];</li><li>        }</li><li>        $scope.canSave = function () {</li><li>            if ($scope.selectedCount == 0) {</li><li>                return false;</li><li>            }</li><li>            var modifiedFields = $('.promotions .ng-invalid');</li><li>            var promoId = $(field).parent().parent().data('promoid');</li><li>            for (var i = 0; i &lt; modifiedFields.length; i++) {</li><li>                var field = modifiedFields[i];</li><li>                if ($scope.selected[promoId]) {</li><li>                    return false;</li><li>                }</li><li>            }</li><li>            var disabledFields = angular.element('.promotions input[disabled]');</li><li>            for (var j = 0; j &lt; disabledFields.length; j++) {</li><li>                field = disabledFields[j];</li><li>                if ($scope.selected[promoId]) {</li><li>                    return false;</li><li>                }</li><li>            }</li><li>            return true;</li><li>        }</li><li>        $scope.search = function (keyword, curPage, pageSize, status, type, sortby, order) {</li><li>            //clear all selected items when moving away from page</li><li>            $scope.selected = {};</li><li>            var promotionPromise = promotionDataService.getPromotions(keyword, curPage - 1, pageSize, status, type, sortby, order);</li><li>            //set mask to indicate progress and prevent further operations</li><li>            $scope.loading = true;</li><li>            promotionPromise.then(</li><li>                function (data) {</li><li>                    var promotions = data.results || [];</li><li>                    var wrappers = [];</li><li>                    all = {};</li><li>                    for (var i = 0; i &lt; promotions.length; i++) {</li><li>                        var wrapper = {};</li><li>                        wrapper.promotion = promotions[i];</li><li>                        wrapper.start = new Date(promotions[i].startDt.split(' ')[0].replace(/-/g, '\/'));</li><li>                        wrapper.end = new Date(promotions[i].endDt.split(' ')[0].replace(/-/g, '\/'));</li><li>                        wrapper.disabled = !$scope.isEditable(promotions[i]);</li><li>                        wrappers.push(wrapper);</li><li>                        all[promotions[i].promoId] = true;</li><li>                    }</li><li>                    $scope.promotions = wrappers;</li><li></li><li>                    $scope.paginationConfig.recordsPerPage = data.criteria.page.size + '';</li><li>                    $scope.paginationConfig.currentPage = parseInt(curPage);</li><li>                    $scope.paginationConfig.totalRecords = data.totalCount || 0;</li><li>                    $scope.paginationReq = $scope.paginationConfig.totalRecords > LEAST_RECORDS_PER_PG;</li><li>                    $scope.nodata = parseInt(data.totalCount || 0) === 0;</li><li>                    $scope.loading = false;</li><li>                    $scope.filterstatus = status;</li><li>                    $scope.filtertype = type;</li><li>                },</li><li>                function () {</li><li>                    $scope.loading = false;</li><li>                }</li><li>            );</li><li>        }</li><li>        // search based on url params</li><li>        $scope.searchWithUrlParams();</li><li>        //get all status</li><li>        var statusPromise = promotionDataService.getAllStatus();</li><li>        $scope.status = {};</li><li>        statusPromise.then(</li><li>            function (data) {</li><li>                $scope.statusList = data.promotionStatus</li><li>                var statusData = data.promotionStatus;</li><li>                for (var i = 0; i < statusData.length; i++) {</li><li>                    var status = statusData[i];</li><li>                    $scope.status[status.promoStatusCd] = status.promoStatusDesc || '';</li><li>                }</li><li>            },</li><li>            function () { }</li><li>        )</li><li></li><li></li><li></li><li>        // var promoPromise = promotionDataService.getPromotionSubTypes();</li><li>        if (DataFactory.promotionSubTypes) {</li><li>            $scope.promoSubTypes = setPromoTypes();</li><li>        } else {</li><li>            getPromoSubTypes();</li><li>        }</li><li></li><li></li><li></li><li>        function getPromoSubTypes() {</li><li>            var getPromotionPromise = promotionDataService.getPromotionSubTypes();</li><li>            getPromotionPromise.then(</li><li>                function (data) {</li><li>                    DataFactory.promotionSubTypes = data.promotionSubTypes;</li><li>                    $scope.promoList = DataFactory.promotionSubTypes;</li><li>                    $scope.promoSubTypes = setPromoTypes();</li><li>                },</li><li>                function (error) {</li><li>                    DataFactory.messageModal.message = error;</li><li>                    DataFactory.messageModal.title = 'Error';</li><li>                    $('#messageModal').popup();</li><li></li><li>                });</li><li>        }</li><li></li><li>        function setPromoTypes() {</li><li>            var promotionSubTypes = {};</li><li>            for (var i = 0; i < DataFactory.promotionSubTypes.length; i++) {</li><li>                var subType = DataFactory.promotionSubTypes[i];</li><li>                promotionSubTypes[subType.promoSubTypeCd] = subType.promoSubTypeDesc;</li><li>            }</li><li>            return promotionSubTypes;</li><li>        }</li><li>        // this gets triggered whenever the url changes ,see app.js for route configuration</li><li>        $scope.$on('$routeUpdate', function () {</li><li>            $scope.searchWithUrlParams();</li><li>        });</li><li>        $scope.edit = function (id) {</li><li>            window.location = '#/promotion-admin/' + (id || $scope.sel[0]) + '#promoTop';</li><li>        }</li><li>        $scope.duplicate = function (id) {</li><li>            window.location = '#/promotion-admin/clone/' + (id || $scope.sel[0]) + '#promoTop';</li><li>        }</li><li></li><li>        $scope.compare = function (id1, id2) {</li><li>            window.location = '#/promotion-admin/compare/' + (id1 || $scope.sel[0]) + '/' + (id2 || $scope.sel[1]);</li><li>        }</li><li>        // check is only for editing inline from dashboard, promotions that are Active/Pending can still be edited from the main page</li><li>        $scope.isEditable = function (promotion) {</li><li>            var editable = {</li><li>                '20': true,</li><li>                '72': true</li><li>            }</li><li>            return editable[promotion.status]</li><li>        }</li><li>        $scope.filter = function () {</li><li>            var params = {};</li><li>            params.type = $scope.filtertype;</li><li>            params.status = $scope.filterstatus;</li><li>            $location.search(params);</li><li>        }</li><li>        $scope.sort = function (sortId) {</li><li>            var params = $location.search();</li><li>            params.sortby = sortId;</li><li>            $scope.sortby = sortId;</li><li>            if (params.sortby == sortId) {</li><li>                params.order = (params.order == 'asc') ? 'desc' : 'asc';</li><li>            } else {</li><li>                params.order = 'asc';</li><li>            }</li><li></li><li>            $scope.order = params.order;</li><li>            $location.search(params);</li><li>        }</li><li></li><li>        $scope.selectedPromotions = [];</li><li>        $scope.setPromotionToView = function (id) {</li><li></li><li>            $scope.promotionData = dashboardDataService.getPromotionFromList($scope.promotions, id);</li><li>            $scope.$broadcast('horizontalTabClicked');</li><li></li><li>        };</li><li></li><li>        $scope.setupSortableHeader();</li><li>        //only active promotions can be deactived and cannot be deleted</li><li>        $scope.isActive = function () {</li><li>            var promotion = null;</li><li>            var promotions = $scope.promotions;</li><li>            if ($scope.sel.length == 0) {</li><li>                return false;</li><li>            }</li><li>            for (var i = 0; i < promotions.length; i++) {</li><li>                var promotionData = promotions[i];</li><li>                var promo = promotionData.promotion;</li><li>                if ($scope.sel[0] == promo.promoId) {</li><li>                    promotion = promotions[i].promotion;</li><li>                }</li><li>            }</li><li>            var active = {</li><li>                '61': true, // active</li><li>                '57': true, // pending</li><li>            }</li><li>            $scope.toDeactivate = active[promotion.status];</li><li>            return active[promotion.status];</li><li>        };</li><li>        // at least one of the selected promotion is active</li><li>        $scope.hasActive = function () {</li><li>            var promotions = $scope.promotions;</li><li>            if ($scope.sel.length == 0) {</li><li>                return false;</li><li>            }</li><li>            var active = {</li><li>                '61': true, // active</li><li>                '57': true, // pending</li><li>            }</li><li>            for (var i = 0; i < promotions.length; i++) {</li><li>                var promotionData = promotions[i];</li><li>                var promo = promotionData.promotion;</li><li>                if ($scope.selected[promo.promoId] && active[promo.status]) {</li><li>                    return true</li><li>                }</li><li>            }</li><li>            return false;</li><li>        }</li><li>    }</li><li>]);</li><li></li></ol></code>
+</section>
+
+<section>
+    <h2>Mutations</h2>
+        <p>
+            No mutations could be performed on this file. This may be due to one of the following reasons:
+        </p>
+        <ul>
+            <li>No unit tests exist for this file</li>
+            <li>No specs were configured for this file</li>
+            <li>Unit tests are failing already without applying any mutations</li>
+            <li>All possible mutations in this file were excluded</li>
+        </ul>
+</section>
+
+<div id="popup" aria-hidden="true"></div>
+
+        </main>
+
+        <footer>
+            <p>Report generated by <a class="brand" href="https://www.npmjs.com/package/grunt-mutation-testing">grunt-mutation-testing</a> on 6/5/2017, 4:07:58 PM.</p>
+        </footer>
+    </body>
+</html>

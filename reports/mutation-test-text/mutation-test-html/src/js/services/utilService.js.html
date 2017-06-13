@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <meta charset="UTF-8"/>
+        <meta data-mutation-stats="%7B%22all%22:0,%22killed%22:0,%22survived%22:0,%22ignored%22:0,%22untested%22:0,%22success%22:0,%22successRate%22:%220.0%22,%22killedRate%22:%220.0%22,%22survivedRate%22:%220.0%22,%22ignoredRate%22:%220.0%22,%22untestedRate%22:%220.0%22%7D"/>
+        <title>utilService.js - Mutation test results</title>
+        <style type="text/css">
+    html, body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Helvetica Neue', 'Helvetica', 'Verdana', 'Arial', sans-serif;
+        font-size: 14px;
+    }
+
+    header, nav, main, footer {
+        display: block;
+        padding: 10px;
+    }
+
+    header {
+        background-color: #fff5a0;
+        border-bottom: 1px solid #ddd130;
+    }
+
+    header.survived {
+        border-bottom-color: #b46767;
+    }
+
+    header.killed {
+        border-bottom-color: #516948;
+    }
+
+    header h1 {
+        font-size: 18px;
+        font-weight: normal;
+    }
+
+    header h1 .fileName {
+        font-weight: bold;
+    }
+
+    #mutationStats {
+        margin-top: 10px;
+    }
+
+    .stat {
+        display: inline-block;
+        width: 250px;
+    }
+
+    .stat .statValue {
+        border: 1px solid black;
+        padding: 4px;
+        background-color: white;
+        font-weight: bold;
+    }
+
+    .stat .statValue small {
+        color: #666;
+        font-weight: normal;
+        font-size: 11px;
+    }
+
+    nav {
+        background-color: #ffe87c;
+        border-bottom: 1px solid #b49d5e;
+    }
+
+    nav .link {
+        color: black;
+        text-decoration: underline;
+    }
+
+    footer {
+        background-color: #ddd;
+        border-top: 1px solid #aaa;
+    }
+
+    footer p {
+        margin: 0;
+    }
+
+    .killed {
+        background-color: #b5d592;
+    }
+
+    .survived {
+        background-color: #fc8c84;
+    }
+
+    .neutral {
+        background-color: #ffe87c;
+    }
+
+    #toggleKilledMutations {
+    background-color: #eee;
+    border: 1px solid #666;
+    padding: 6px 10px;
+    border-radius: 2px;
+    cursor: pointer;
+}
+#toggleKilledMutations:hover {
+    background-color: #aaa;
+}
+#toggleKilledMutations:active {
+    background-color: #666;
+    border-color: #eee;
+}
+
+#source {
+    font-family: 'Consolas', 'Courier New', 'Lucida Sans Typewriter', monospace;
+    white-space: pre;
+}
+
+#mutations {
+    border-collapse: collapse;
+}
+
+#mutations th, #mutations td {
+    padding: 5px 15px;
+    border: 1px solid #666;
+}
+
+#mutations th {
+    background-color: #eee;
+    font-weight: normal;
+    text-align: left;
+}
+
+#popup {
+    position: fixed;
+    border: solid 1px black;
+    padding: 3px;
+    display: none;
+}
+
+#popup.show {
+    display: block;
+}
+
+code .killed, code .survived {
+    border: solid 1px white;
+}
+
+</style>
+
+        <script type="text/javascript">
+    function onLoad() {
+    each(document.getElementsByClassName('code'), function(element) {
+        element.addEventListener('mouseover', onMouseOver, false);
+        element.addEventListener('mousemove', onMouseMove, false);
+        element.addEventListener('mouseout', onMouseOut, false);
+    });
+}
+
+function each(list, fn, thisArg) {
+    Array.prototype.forEach.call(list, fn, thisArg);
+}
+
+function onMouseOver(event) {
+    var popup = document.getElementById('popup');
+    addMutations(popup, event.target);
+    setPopupPosition(popup, event);
+    popup.classList.add("show");
+}
+
+function onMouseMove(event) {
+    setPopupPosition(document.getElementById('popup'), event);
+}
+
+function onMouseOut() {
+    document.getElementById('popup').classList.remove('show');
+}
+
+function addMutations(popup, target) {
+    var mutationEl;
+
+    each(target.classList, function(_class) {
+        if (_class.indexOf('mutation_') > -1) {
+            mutationEl = document.getElementById(_class);
+            if (Array.prototype.indexOf.call(mutationEl.classList, 'killed') > -1) {
+                popup.classList.add('killed');
+                popup.classList.remove('survived');
+            } else {
+                popup.classList.add('survived');
+                popup.classList.remove('killed');
+            }
+            popup.classList.add(mutationEl.classList);
+            popup.innerHTML = mutationEl.innerHTML;
+        }
+    });
+}
+
+var showKilledMutations = true;
+function toggleKilledMutations() {
+    showKilledMutations = !showKilledMutations;
+
+    if(showKilledMutations) {
+        document.querySelector('#toggleKilledMutations').innerHTML = 'Hide killed mutations';
+        each(document.querySelectorAll('.code.killed'), function(e) {
+            e.style.backgroundColor = '';
+        });
+        each(document.querySelectorAll('#mutations .killed'), function(e) {
+            e.style.display = '';
+        });
+    } else {
+        document.querySelector('#toggleKilledMutations').innerHTML = 'Show killed mutations';
+        each(document.querySelectorAll('.code.killed'), function(e) {
+            e.style.backgroundColor = 'white';
+        });
+        each(document.querySelectorAll('#mutations .killed'), function(e) {
+            e.style.display = 'none';
+        });
+    }
+}
+
+function setPopupPosition(popup, event) {
+    var top = event.clientY,
+        left = event.clientX + 10;
+
+    popup.setAttribute('style', 'top:' + top + 'px;left:' + left + 'px;');
+}
+
+window.onload = onLoad;
+
+</script>
+    </head>
+
+    <body>
+        <header class="neutral">
+            <h1>
+                Mutation test results for
+                <span class="fileName">
+                        utilService.js
+                </span>
+            </h1>
+
+            <section id="mutationStats">
+                <div class="stat">
+                    Success rate:&nbsp;
+                    <span class="statValue">
+                        0.0%&nbsp;
+                        <small>
+                            (0 / 0)
+                        </small>
+                    </span>
+                </div>
+                <div class="stat">
+                    Survived:&nbsp;
+                    <span class="statValue">
+                        0.0%&nbsp;
+                        <small>
+                            (0 / 0)
+                        </small>
+                    </span>
+                </div>
+                <div class="stat">
+                    Ignored:&nbsp;
+                    <span class="statValue">
+                        0.0%&nbsp;
+                        <small>
+                            (0 / 0)
+                        </small>
+                    </span>
+                </div>
+                <div class="stat">
+                    Untested:&nbsp;
+                    <span class="statValue">
+                        0.0%&nbsp;
+                        <small>
+                            (0 / 0)
+                        </small>
+                    </span>
+                </div>
+            </section>
+        </header>
+
+        <nav><a class="link " href="../../../../mutation-test-html/index.html">mutation-test-html</a> >> <a class="link " href="../../../../mutation-test-html/src/index.html">src</a> >> <a class="link " href="../../../../mutation-test-html/src/js/index.html">js</a> >> <a class="link " href="../../../../mutation-test-html/src/js/services/index.html">services</a> >> utilService.js</nav>
+
+        <main>
+            
+<section>
+    <code id="source"><ol><li>app.service('utilService', ['$filter', 'leadTimeService', function ($filter, leadTimeService) {</li><li>    var publicApi = {};</li><li>    this.leadTime;</li><li>    var rewardMethodMappoing = {</li><li>        'ProductLevelPercentDiscount': 'ALLAFFECTEDITMS',</li><li>        'CategoryLevelValueDiscount': 'ALLAFFECTEDITMS',</li><li>        'ProductLevelValueDiscount': 'ALLAFFECTEDITMS',</li><li>        'CategoryLevelPercentDiscount': 'ALLAFFECTEDITMS',</li><li>        'MultipleItemsPercentDiscount': 'ALLAFFECTEDITMS',</li><li>        'ProductLevelPWPPercentDiscount': 'ALLAFFECTEDITMS',</li><li>        'ProductLevelSameItemPercentDiscount': 'ALLAFFECTEDITMS',</li><li>        'ProductLevelBuyXGetYFree': 'ALLAFFECTEDITMS',</li><li>        'OrderLevelValueDiscount': 'WHOLEORDER',</li><li>        'OrderLevelPercentDiscount': 'WHOLEORDER',</li><li>        'ProductLevelPerItemValueDiscount': 'INDVDLAFFECTEDITMS',</li><li>        'ProductLevelPerItemPercentDiscount': 'INDVDLAFFECTEDITMS',</li><li>        'MultipleItemsValueDiscount': 'ALLAFFECTEDITMS'</li><li></li><li>    }</li><li></li><li>    publicApi.canSaveAsDraft = function (promotion) {</li><li>        //these promotions can be saved as draft</li><li>        var save = {</li><li>            '20': true, // draft</li><li>            '72': true, // complete with erros/warning</li><li>        }</li><li>        return save[promotion.status]</li><li>    }</li><li>    publicApi.canApprove = function (promotion) {</li><li>        //these promotions can be submitted for apporval</li><li>        var approve = {</li><li>            '20': true, // draft</li><li>            '72': true, // complete with erros/warning</li><li>            '61': true, // active</li><li>            '57': true, // pending</li><li>        }</li><li>        return approve[promotion.status]</li><li>    }</li><li>    publicApi.needsValidation = function (promotion) {</li><li>        //these promoitons need to be validated before being saved as draftand submitted</li><li>        var validate = {</li><li>            '61': true, // active</li><li>            '57': true, // pending</li><li>        }</li><li>        return validate[promotion.status]</li><li>    }</li><li>    publicApi.isPromotionActive = function (promotion) {</li><li>        // Checks if promotion has status 61: active</li><li>        return promotion.status === 61 ? true : false;</li><li>    }</li><li>    //Massage data to match the promotion request</li><li>    publicApi.transformPromotionRequest = function (promotion) {</li><li>        if (promotion.promoCdSpec) {</li><li>            if (!promotion.promoCdSpec.systemGen && !promotion.promoCdSpec.promoCodes) {</li><li>                delete promotion.promoCdSpec;</li><li>            }</li><li>        }</li><li></li><li>        if (!promotion.meta.action || promotion.meta.action == null) {</li><li>            promotion.meta.action = 'create';</li><li>        } else if (promotion.meta.action) {</li><li>            if (promotion.meta.action != 'create' && promotion.meta.action != 'update' && promotion.meta.action != 'update') {</li><li>                //this bolckis to correct old data in QA , should not happen in production</li><li>                if (promotion.promoId) {</li><li>                    promotion.meta.action = 'update';</li><li>                } else {</li><li>                    promotion.meta.action = 'create';</li><li>                }</li><li>            }</li><li>        }</li><li>        //TODO:  move this to backend this field is not showed anywhere in the UI</li><li>        if (promotion.reward) {</li><li>            promotion.reward.method = rewardMethodMappoing[promotion.promoSubTypeCd];</li><li>        }</li><li></li><li>        if (promotion.promoSubTypeCd.indexOf('Percent') != -1) {</li><li>            promotion.reward.type = 'PERCNTOFF';</li><li>        } else {</li><li>            promotion.reward.type = 'AMTOFF';</li><li>        }</li><li>        if (promotion.purchaseConds) {</li><li>            if (promotion.purchaseConds.targets && promotion.purchaseConds.targets.length === 0) {</li><li>                delete promotion.purchaseConds.targets;</li><li>            }</li><li>            if (promotion.purchaseConds.sources && promotion.purchaseConds.sources.length === 0) {</li><li>                delete promotion.purchaseConds.sources;</li><li>            }</li><li>        }</li><li>        if (promotion.purchaseConds) {</li><li>            promotion.purchaseConds.isInclusionsOrExclusionsExist = false;</li><li>            //No promotions with targets for now</li><li>            promotion.purchaseConds.isTargetExist = false;</li><li>            var sources = promotion.purchaseConds.sources;</li><li>            if (sources && sources[0]) {</li><li>                if (sources[0].inclusions) {</li><li>                    var hasInc = false;</li><li>                    if (sources[0].inclusions.partnumbers && sources[0].inclusions.partnumbers.length > 0) {</li><li>                        promotion.purchaseConds.isInclusionsOrExclusionsExist = true;</li><li>                        hasInc = true;</li><li>                    }</li><li>                    if (sources[0].inclusions.hierarchies && sources[0].inclusions.hierarchies.length > 0) {</li><li>                        promotion.purchaseConds.isInclusionsOrExclusionsExist = true;</li><li>                        hasInc = true;</li><li>                    }</li><li>                    if (!hasInc) {</li><li>                        delete sources[0].inclusions;</li><li>                    }</li><li>                }</li><li>                if (sources && sources[0].exclusions) {</li><li>                    var hasExc = false;</li><li>                    if (sources[0].exclusions.partnumbers && sources[0].exclusions.partnumbers.length > 0) {</li><li>                        promotion.purchaseConds.isInclusionsOrExclusionsExist = true;</li><li>                        hasExc = true;</li><li>                    }</li><li>                    if (sources[0].exclusions.hierarchies && sources[0].exclusions.hierarchies.length > 0) {</li><li>                        promotion.purchaseConds.isInclusionsOrExclusionsExist = true;</li><li>                        hasExc = true;</li><li>                    }</li><li>                    if (!hasExc) {</li><li>                        delete sources[0].exclusions;</li><li>                    }</li><li>                }</li><li>            }</li><li></li><li>            //No promotions with targets for now</li><li>            delete promotion.purchaseConds.targets</li><li>        }</li><li>        if (promotion.reward && promotion.reward.details) {</li><li>            publicApi.calculatePurchaseCondition(promotion);</li><li>        }</li><li>        </li><li>        if (promotion.startDt) {    </li><li>            promotion.startDt = publicApi.convertDateToDateString(promotion.startDt) + ' 03:00:00';</li><li>        }</li><li></li><li>        if(promotion.endDt) {</li><li>            promotion.endDt = publicApi.convertDateToDateString(promotion.endDt) + ' 02:59:59';</li><li></li><li>        }</li><li></li><li>        publicApi.validateItemCategory(promotion);</li><li></li><li>    }</li><li></li><li>    publicApi.convertDateToDateString = function(date) {</li><li>        return date ? moment(date).format('YYYY-MM-DD') : undefined;</li><li>    }</li><li></li><li>    publicApi.validateItemCategory = function (data) {</li><li></li><li></li><li>        var sources = data.purchaseConds.sources;</li><li>        if (sources && sources.length > 0) {</li><li>            for (var i = 0; i < sources.length; i++) {</li><li>                var purchaseOption = sources[i].purchaseoption;</li><li></li><li>                if (sources[i].inclusions && sources[i].inclusions.partnumbers && purchaseOption == 'category') {</li><li>                    sources[i].inclusions.partnumbers = []; //setting Item OMS id empty if user select category radio button</li><li>                } else if (sources[i].inclusions && sources[i].inclusions.partnumbers && purchaseOption == 'itemoms') {</li><li>                    sources[i].inclusions.hierarchies = []; //setting Item OMS id empty if user select Item OMS radio button</li><li>                }</li><li>                // delete sources[i].purchaseoption;</li><li></li><li>            }</li><li></li><li></li><li></li><li>        }</li><li></li><li></li><li>    }</li><li></li><li>    publicApi.convertStringToInteger = function (data) {</li><li></li><li>        $(data.reward.details).each(function (i) {</li><li>            data.reward.details[i].min = parseFloat(data.reward.details[i].min);</li><li></li><li>        });</li><li></li><li></li><li>    }</li><li></li><li></li><li>    // Method to deactivate all sections, expected to have property .isActive</li><li>    publicApi.calculatePurchaseCondition = function (data) {</li><li>        publicApi.convertStringToInteger(data);</li><li></li><li>        data.reward.details = $filter('orderBy')(data.reward.details, 'min');</li><li></li><li></li><li>        var minPurchaseQty = -1;</li><li>        $(data.reward.details).each(function (i) {</li><li></li><li>            var detailsObject1 = data.reward.details[i];</li><li></li><li>            minPurchaseQty = data.reward.details[0].min;</li><li></li><li>            var maxValue;</li><li>            if (data.reward.details.length == (i + 1)) {</li><li>                maxValue = -1;</li><li></li><li>            } else {</li><li></li><li>                var detailsObject2 = data.reward.details[i + 1];</li><li>                var nextValue = detailsObject2.min;</li><li>                maxValue = nextValue - 1;</li><li>                if (data.purchaseConds.qualUOM == 'Amount') {</li><li></li><li>                    maxValue = Math.round((nextValue - 0.01) * 100) / 100;</li><li></li><li>                }</li><li></li><li>            }</li><li></li><li></li><li>            detailsObject1.max = maxValue;</li><li>            detailsObject1.seq = i + 1;</li><li>            detailsObject1.qualUOM = data.purchaseConds.qualUOM;</li><li></li><li>        });</li><li></li><li></li><li></li><li>        if (data.purchaseConds && data.purchaseConds.sources) {</li><li>            $(data.purchaseConds.sources).each(function (i, source) {</li><li>                if (data.purchaseConds.qualUOM == 'Quantity') {</li><li>                    delete source.minTotalPrice;</li><li>                    source.minPurchaseQty = minPurchaseQty;</li><li>                } else {</li><li>                    delete source.minPurchaseQty;</li><li>                    source.minTotalPrice = minPurchaseQty;</li><li>                }</li><li>            })</li><li>        }</li><li></li><li></li><li>        if (data.promoSubTypeCd === 'MultipleItemsValueDiscount' || data.promoSubTypeCd === 'MultipleItemsPercentDiscount') {</li><li>            if (data.purchaseConds.sources && data.purchaseConds.sources.length > 0) {</li><li></li><li>                if (data.purchaseConds.sources[0].minPurchaseQty && data.purchaseConds.sources[1].minPurchaseQty) {</li><li>                    data.reward.details[0].min = data.purchaseConds.sources[0].minPurchaseQty + data.purchaseConds.sources[1].minPurchaseQty;</li><li>                    data.reward.details[0].max = -1;</li><li>                }</li><li>            }</li><li></li><li>        }</li><li></li><li></li><li>        return data;</li><li>    }</li><li></li><li>    var checkEmpty = function (field) {</li><li>        if (!field || !field.trim(0))</li><li>            return true</li><li>        return false;</li><li>    }</li><li></li><li>    publicApi.requiredFieldsMissing = function (promotion) {</li><li>        return checkEmpty(promotion.name) || checkEmpty(promotion.startDt) || checkEmpty(promotion.endDt) || checkEmpty(promotion.promoSubTypeCd) || promotion.purchaseConds.locations.length == 0;</li><li>    }</li><li>    publicApi.invalidSysGenCode = function (promotion) {</li><li>        if (promotion && promotion.promoCdSpec && promotion.promoCdSpec.systemGen) {</li><li>            var syscode = promotion.promoCdSpec.systemGen;</li><li>            var len = promotion.promoCdSpec.cdLength || '0';</li><li>            var cdPrefix = syscode.cdPrefix || '';</li><li>            var cdSuffix = syscode.cdSuffix || '';</li><li>            var total = parseInt(len) + cdPrefix.length + cdSuffix.length;</li><li>            if (total < 9) {</li><li>                return true;</li><li>            }</li><li>        }</li><li>        return false;</li><li>    }</li><li></li><li>    publicApi.validateBuyAandB = function (promotion) {</li><li></li><li>        if (promotion.promoSubTypeCd != 'MultipleItemsValueDiscount' && promotion.promoSubTypeCd != 'MultipleItemsPercentDiscount') {</li><li>            return null;</li><li>        }</li><li></li><li>        var iserror = false;</li><li>        for (var i = 0; i < promotion.purchaseConds.sources.length; i++) {</li><li></li><li></li><li>            if (promotion.purchaseConds.sources[i].inclusions && promotion.purchaseConds.sources[i].inclusions.partnumbers && promotion.purchaseConds.sources[i].inclusions.partnumbers.length === 0 && promotion.purchaseConds.sources[i].inclusions.hierarchies && promotion.purchaseConds.sources[i].inclusions.hierarchies.length === 0) {</li><li></li><li>                if (promotion.purchaseConds.sources[i].exclusions && promotion.purchaseConds.sources[i].exclusions.partnumbers && promotion.purchaseConds.sources[i].exclusions.partnumbers.length === 0 && promotion.purchaseConds.sources[i].exclusions.hierarchies && promotion.purchaseConds.sources[i].exclusions.hierarchies.length === 0) {</li><li>                    iserror = true;</li><li>                }</li><li>            }</li><li>        }</li><li></li><li>        if (iserror) {</li><li>            return 'ERROR: Item A and Item B is mandatory ,Please add atleast 1 item or 1 category that qualifies for promotion.';</li><li>        } else {</li><li>            return null;</li><li>        }</li><li></li><li></li><li>    }</li><li></li><li>    publicApi.setDefaultsForSaveAsDraft = function (promotion) {</li><li>        if (promotion.promoCdRqrd == null) {</li><li>            promotion.promoCdRqrd = true;</li><li>        }</li><li>        if (promotion.isSitewideDeal == null) {</li><li>            promotion.isSitewideDeal = true;</li><li>        }</li><li>        if (promotion.exclsve == null) {</li><li>            promotion.exclsve = 0;</li><li>        }</li><li>        if (promotion.expireDtExtDays == null) {</li><li>            promotion.expireDtExtDays = 0;</li><li>        }</li><li>        //  set status as draft expect when status is pending or active</li><li>        if (!publicApi.needsValidation(promotion)) {</li><li>            promotion.status = 20;</li><li>        }</li><li>        if (promotion.promoSubTypeCd == null) {</li><li>            promotion.promoSubTypeCd = 20;</li><li>        }</li><li>        if (promotion.promoTypeCd == null) {</li><li>            promotion.promoTypeCd = 10;</li><li>        }</li><li>    }</li><li></li><li>    publicApi.isSubmitEligibleForDisable = function (promotion) {</li><li>        </li><li>        var leadTimePromise = leadTimeService.fetchLeadTime();</li><li>        return leadTimePromise.then(function (leadTime) {</li><li>            var minDt = moment(promotion.endDt).subtract(leadTime,'days');</li><li>            if (moment().isAfter(minDt) && promotion.status == 61 && promotion.printLabel === true) {</li><li>                return true;</li><li>            }</li><li>            return false;</li><li>        });</li><li>    }</li><li></li><li>    publicApi.getLeadTime = function () {</li><li>        return leadTimeService.fetchLeadTime();</li><li>    }</li><li></li><li>    return publicApi;</li><li>}]);</li><li></li></ol></code>
+</section>
+
+<section>
+    <h2>Mutations</h2>
+        <p>
+            No mutations could be performed on this file. This may be due to one of the following reasons:
+        </p>
+        <ul>
+            <li>No unit tests exist for this file</li>
+            <li>No specs were configured for this file</li>
+            <li>Unit tests are failing already without applying any mutations</li>
+            <li>All possible mutations in this file were excluded</li>
+        </ul>
+</section>
+
+<div id="popup" aria-hidden="true"></div>
+
+        </main>
+
+        <footer>
+            <p>Report generated by <a class="brand" href="https://www.npmjs.com/package/grunt-mutation-testing">grunt-mutation-testing</a> on 6/5/2017, 4:07:58 PM.</p>
+        </footer>
+    </body>
+</html>
