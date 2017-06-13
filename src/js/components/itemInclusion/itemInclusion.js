@@ -112,7 +112,7 @@ function ItemInclusionsController(itemsDataService, DataFactory, $mdDialog,$scop
         }
 
         // if invalid Data set to item search
-        ctrl.itemSearch = (data.inValidOmsInfo) ? [data.inValidOmsInfo.toString().replace(/,/g, ' ')] : [];
+        ctrl.itemSearch = (data.inValidOmsInfo) ? data.inValidOmsInfo.toString().replace(/,/g, ' ') : '';
         ctrl.inValidOmsInfo = (ctrl.itemSearch.length > 0);
         var invalidIds = data.inValidOmsInfo;
         if (clicked && invalidIds && invalidIds.length > 0) {
@@ -138,7 +138,7 @@ function ItemInclusionsController(itemsDataService, DataFactory, $mdDialog,$scop
             }
         }
         // if invalid Data set to item search
-        ctrl.itemSkuSearch = (data.inValidSkuInfo) ? [data.inValidSkuInfo.toString().replace(/,/g, ' ')] : [];
+        ctrl.itemSkuSearch = (data.inValidSkuInfo) ? data.inValidSkuInfo.toString().replace(/,/g, ' ') : '';
         ctrl.inValidSkuInfo = (ctrl.itemSkuSearch.length > 0);
         var invalidIds = data.inValidSkuInfo;
         if (clicked && invalidIds && invalidIds.length > 0) {
