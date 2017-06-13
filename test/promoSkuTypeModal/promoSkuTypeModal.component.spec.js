@@ -32,8 +32,7 @@ describe('promoSkuTypeModal', function () {
     }));
 
     it('Test Promo SKU Type modal component rendering', inject(function (_$compile_) {
-        scope.data = {
-            itemPromiseResult: {
+        scope.skuIdValidationResponse = {
                 validSkuInfo: [
                     {
                         omsId: null,
@@ -64,8 +63,7 @@ describe('promoSkuTypeModal', function () {
                         "skuCount": 1
 
                     }
-                ],
-            }
+                ]
         };
         var element = _$compile_("<promo-sku-type-modal data='data'></promo-sku-type-modal>")(scope);
         scope.$digest();
@@ -74,8 +72,7 @@ describe('promoSkuTypeModal', function () {
 
     it('Check SkuTypeCount is available for valid Skus Input', function () {
         //  skuTypes
-        ctrl.data = {
-            itemPromiseResult: {
+        ctrl.skuIdValidationResponse = {
                 validSkuInfo: [
                     {
                         omsId: null,
@@ -106,8 +103,7 @@ describe('promoSkuTypeModal', function () {
                         "skuCount": 1
 
                     }
-                ],
-            }
+                ]
         }
         ctrl.$onInit();
         scope.$digest();
