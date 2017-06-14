@@ -84,7 +84,7 @@ describe('Unit testing itemInclusion.component.spec.js', function() {
 
   });
 
-    fit('Checks if item-inclusion component is rendering item oms ids', function() {
+  it('Checks if item-inclusion component is rendering item oms ids', function() {
     var itemData = ['1000317883','100049'];
     spyOn(itemsDataService, 'getOmsIDs').and.returnValue(itemData);
     spyOn(itemsDataService, 'getOmsIdCodes').and.callFake(function () {
