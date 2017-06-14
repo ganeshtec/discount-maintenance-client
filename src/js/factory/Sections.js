@@ -4,7 +4,7 @@ app.factory('SECTIONS', ['ALLOWED_PERMISSION_IDS', function(ALLOWED_PERMISSION_I
         var allowedPermissionIDs=ALLOWED_PERMISSION_IDS();
         if (userType == allowedPermissionIDs.STORE) {
             return [
-                {name:'Promotion Properties',isActive:true,shouldDisplay:true, link: 'promotion-properties', icon: 'fa-gear' },
+                {name:'Discount Properties',isActive:true,shouldDisplay:true, link: 'promotion-properties', icon: 'fa-gear' },
                 {name:'Purchase Conditions',isActive:false,shouldDisplay:true, link: 'promotion-condition-rewards', icon: 'fa-money'},
                 {name:'Location',isActive:false,shouldDisplay:true, link: 'promotion-location', icon: 'fa-globe'},
                 {name:'Rewards',isActive:false,shouldDisplay:true, link: 'promotion-rewards', icon: 'fa-gift'},
@@ -15,7 +15,7 @@ app.factory('SECTIONS', ['ALLOWED_PERMISSION_IDS', function(ALLOWED_PERMISSION_I
             ];
         } else if (userType == allowedPermissionIDs.ONLINE) {
             return [
-                {name:'Promotion Properties',isActive:true,shouldDisplay:true, link: 'promotion-properties', icon: 'fa-gear' },
+                {name:'Discount Properties',isActive:true,shouldDisplay:true, link: 'promotion-properties', icon: 'fa-gear' },
                 {name:'Purchase Conditions',isActive:false,shouldDisplay:true, link: 'promotion-condition-rewards', icon: 'fa-money'},
                 {name:'Location',isActive:false,shouldDisplay:true, link: 'promotion-location', icon: 'fa-globe'},
                 {name:'Rewards',isActive:false,shouldDisplay:true, link: 'promotion-rewards', icon: 'fa-gift'},
@@ -26,7 +26,7 @@ app.factory('SECTIONS', ['ALLOWED_PERMISSION_IDS', function(ALLOWED_PERMISSION_I
             ];
         } else {
             return [
-                {name:'Promotion Properties',isActive:true,shouldDisplay:true, link: 'promotion-properties', icon: 'fa-gear' },
+                {name:'Discount Properties',isActive:true,shouldDisplay:true, link: 'promotion-properties', icon: 'fa-gear' },
                 {name:'Purchase Conditions',isActive:false,shouldDisplay:true, link: 'promotion-condition-rewards', icon: 'fa-money'},
                 {name:'Location',isActive:false,shouldDisplay:true, link: 'promotion-location', icon: 'fa-globe'},
                 {name:'Rewards',isActive:false,shouldDisplay:true, link: 'promotion-rewards', icon: 'fa-gift'},

@@ -24,7 +24,7 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                     }
                     //if it was a new promotion  move to edit mode
                     if (scope.savedPromoId && !scope.originalPromoId) {
-                        window.location = '#/promotion-admin/' + scope.savedPromoId;
+                        window.location = '#/discount-admin/' + scope.savedPromoId;
 
                     }
                     scope.previewOverlayConfig.close();
@@ -151,7 +151,7 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                             function () {
                                 scope.submitStatus = '';
                                 scope.previewOverlayConfig.close();
-                                window.location = '#/promotion-dashboard';
+                                window.location = '#/discount-dashboard';
                             },
                             function (res) {
                                 scope.submitStatus = '';

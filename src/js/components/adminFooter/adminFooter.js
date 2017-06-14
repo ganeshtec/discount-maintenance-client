@@ -50,12 +50,12 @@ app.component('adminFooter', {
                 function (data) {
                     inprogress = false;
                     if (data.data.promoId) {
-                        modalService.savedAlert('Success', 'Promotion saved-' + data.data.promoId);
+                        modalService.savedAlert('Success', 'Discount saved-' + data.data.promoId);
                     }
                 },
                 function () {
                     inprogress = false;
-                    modalService.showAlert('Error', 'Unable to save promotion');
+                    modalService.showAlert('Error', 'Unable to save discount');
                 }
             )
         }
