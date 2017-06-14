@@ -42,8 +42,7 @@ function PromoSkuTypeModalController(skuTypesDataService, $mdDialog) {
         }
         ctrl.skuIdValidationResponse.validSkuInfo=filteredList;
         $mdDialog.hide();
-        ctrl.filteredSkuListCallback({ filteredResult: ctrl.skuIdValidationResponse});
-             
+        ctrl.filteredSkuListCallback({ filteredResult: ctrl.skuIdValidationResponse});            
     }
 
 }
