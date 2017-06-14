@@ -1,4 +1,4 @@
-describe("ItemInclusionComponent", function() {
+fdescribe("ItemInclusionComponent", function() {
   var $componentController, ctrl;
 
   beforeEach(module("app"));
@@ -16,7 +16,7 @@ describe("ItemInclusionComponent", function() {
     it("Should reformat sku list to a list of numbers", function() {
       var dirtySkus = "123456 222555";
       var sanitizedSkus = ctrl.sanitizeSkus(dirtySkus);
-      expect(sanitizeSkus.length).toEqual(2);
+      expect(sanitizedSkus.length).toEqual(2);
     });
 
     it("Should remove duplicate skus from pasted sku list", function() {
