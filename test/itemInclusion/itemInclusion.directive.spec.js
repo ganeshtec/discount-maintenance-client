@@ -1,4 +1,4 @@
-xdescribe('Unit testing itemInclusion.directive.spec.js', function() {
+describe('Unit testing itemInclusion.directive.spec.js', function() {
   var $compile,
       $rootScope,
       $scope,

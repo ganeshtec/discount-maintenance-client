@@ -1,4 +1,4 @@
-fdescribe("ItemInclusionComponent", function() {
+describe("ItemSearchComponent", function() {
   var $componentController, ctrl;
 
   beforeEach(module("app"));
@@ -10,7 +10,7 @@ fdescribe("ItemInclusionComponent", function() {
     beforeEach(inject(function(_$componentController_) {
       $componentController = _$componentController_;
       var bindings = {};
-      ctrl = $componentController('itemInclusion', null, bindings);
+      ctrl = $componentController('itemSearch', null, bindings);
     }));
 
     it("Should reformat sku list to a list of numbers", function() {
@@ -19,8 +19,12 @@ fdescribe("ItemInclusionComponent", function() {
       expect(sanitizedSkus.length).toEqual(2);
     });
 
-    it("Should remove duplicate skus from pasted sku list", function() {
-
+    it("Should remove duplicate skus from array of skus", function() {
+      var duplicateSkuArray = ["123456", "222555", "123456"];
+      var uniqueSkuArray = ctrl.removeDuplicateSkus(duplicateSkuArray);
+      expect(uniqueSkuArray.length).toEqual(2);
+      expect(uniqueSkuArray).toContain("123456");
+      expect(uniqueSkuArray).toContain("222555");
     });
 
     it("Should display error if pasted sku list contains letters", function() {
@@ -50,6 +54,10 @@ fdescribe("ItemInclusionComponent", function() {
 
   describe('Oms Ids', function() {
     it('Should reformat oms id list to a list of numbers', function() {
+
+    });
+
+    it("Should remove duplicate oms ids from array of oms ids", function() {
 
     });
 
