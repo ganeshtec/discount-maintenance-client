@@ -293,18 +293,36 @@ describe('Unit testing itemInclusion.component.spec.js', function () {
         expect(ctrl.validOmsInfo.length).toEqual(2);
     });
 
-    xit('setItemData should show warning if items entered were already added', function () {
-        ctrl = $componentController('itemInclusion', null, {
-            data: [999999999],
-            validOmsInfo: {
-                    omsId: 999999999,
-                    prodName: 'SMOOTH FLUSH SOLID CORE PRIMED CHROM',
-                    skuNumber: 1000317883,
-                    skuTypeCode: 'S'
+    it('setItemData should show a warning message if any of the items are already present', function () {
+        spyOn(itemsDataService, 'getOmsIDs').and.returnValue(itemData);
+        spyOn(itemsDataService, 'getOmsIdCodes').and.callFake(function () {
+            deferredResult = $q.defer();
+            deferredResult.resolve({
+                validOmsInfo: [
+                    {
+                        omsId: 999999999,
+                        prodName: 'SMOOTH FLUSH SOLID CORE PRIMED CHROM',
+                        skuNumber: 1000317883,
+                        skuTypeCode: 'S'
+                    },
+                    {
+                        omsId: 888888888,
+                        prodName: '16"X16" MONTAGNA BELLUNO-15.5SF CA',
+                        skuNumber: 100049,
+                        skuTypeCode: 'N'
+                    },
+                ],
+                inValidOmsInfo: [{
                 }
+                ]
+            });
+            return deferredResult.promise;
+        });
+        ctrl = $componentController('itemInclusion', null, {
+            data: [999999999,888888888]
         });
         ctrl.$onInit();
-
+        $rootScope.$digest();
         var itemData = {
             validOmsInfo: [
                 {
@@ -319,6 +337,12 @@ describe('Unit testing itemInclusion.component.spec.js', function () {
                     skuNumber: 100049,
                     skuTypeCode: 'N'
                 },
+                {
+                    omsId: 77777777,
+                    prodName: 'TEst1',
+                    skuNumber: 100047,
+                    skuTypeCode: 'N'
+                },
             ],
             inValidOmsInfo: [
                 {
@@ -326,11 +350,14 @@ describe('Unit testing itemInclusion.component.spec.js', function () {
                 }
             ]
         };
-        ctrl.itemSearch = "999999999 , 888888888";
+        spyOn(ctrl, 'showMessageModal');
         ctrl.setItemData(itemData, true);
-        //Validate call to popup modal
-        expect(ctrl.data.length).toEqual(2);
-        expect(ctrl.validOmsInfo.length).toEqual(2);
+        expect(ctrl.showMessageModal).toHaveBeenCalledTimes(1);
+        expect(ctrl.data.length).toEqual(3);
+        expect(ctrl.data[0]).toEqual(999999999)
+        expect(ctrl.data[1]).toEqual(888888888)
+        expect(ctrl.data[2]).toEqual(77777777)
+        expect(ctrl.validOmsInfo.length).toEqual(3);
     });
 
 

@@ -92,7 +92,7 @@ function ItemInclusionsController(itemsDataService, DataFactory, $mdDialog, $sco
         }, []);
     }
 
-    this.setItemData = function (data, clicked) {
+    this.setItemData = function (data) {
         this.existingID = '';
         if (!ctrl.validOmsInfo.length && ctrl.data && !ctrl.itemSearch) {
             $.extend(true, ctrl.validOmsInfo, data.validOmsInfo);
@@ -102,11 +102,15 @@ function ItemInclusionsController(itemsDataService, DataFactory, $mdDialog, $sco
                 ctrl.addItem(data.validOmsInfo[i]);
             }
             if (this.existingID != '') {
-                DataFactory.messageModal.message = 'Following item/s are already added: ' + this.existingID
-                DataFactory.messageModal.title = 'Warning';
-                $('#messageModal').popup();
+                ctrl.showMessageModal('Warning','Following item/s are already added: ' + this.existingID);
             }
         }
+    }
+
+    this.showMessageModal =function (title, message){
+        DataFactory.messageModal.title=title;
+        DataFactory.messageModal.message =message;
+        $('#messageModal').popup();
     }
 
     this.handleInvalidItems = function(data,clicked) {
@@ -115,9 +119,7 @@ function ItemInclusionsController(itemsDataService, DataFactory, $mdDialog, $sco
         ctrl.inValidOmsInfo = (ctrl.itemSearch.length > 0);
         var invalidIds = data.inValidOmsInfo;
         if (clicked && invalidIds && invalidIds.length > 0) {
-            DataFactory.messageModal.message = 'Following Items/OMS ID\'s are invalid: ' + invalidIds.toString();
-            DataFactory.messageModal.title = 'Warning';
-            $('#messageModal').popup();
+            ctrl.showMessageModal('Warning','Following Items/OMS ID\'s are invalid: ' + invalidIds.toString());
         }
     }
 
@@ -132,9 +134,7 @@ function ItemInclusionsController(itemsDataService, DataFactory, $mdDialog, $sco
                 ctrl.addSku(data.validSkuInfo[i]);
             }
             if (this.existingID != '') {
-                DataFactory.messageModal.message = 'Following Sku/s are already added: ' + this.existingID
-                DataFactory.messageModal.title = 'Warning';
-                $('#messageModal').popup();
+                ctrl.showMessageModal('Warning','Following Sku/s are already added: ' + this.existingID);
             }
         }
         // if invalid Data set to item search
@@ -167,9 +167,7 @@ function ItemInclusionsController(itemsDataService, DataFactory, $mdDialog, $sco
                     }
                 },
                 function (error) {
-                    DataFactory.messageModal.message = error;
-                    DataFactory.messageModal.title = 'Error';
-                    $('#messageModal').popup();
+                    ctrl.showMessageModal('Error',error);
                 });
         } else {
 
@@ -179,13 +177,11 @@ function ItemInclusionsController(itemsDataService, DataFactory, $mdDialog, $sco
 
             itemPromise.then(
                 function (data) {
-                    ctrl.setItemData(data, clicked);
+                    ctrl.setItemData(data);
                     ctrl.handleInvalidItems(data,clicked);
                 },
                 function (error) {
-                    DataFactory.messageModal.message = error;
-                    DataFactory.messageModal.title = 'Error';
-                    $('#messageModal').popup();
+                    ctrl.showMessageModal('Error',error);
                 });
         }
 
