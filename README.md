@@ -38,8 +38,8 @@ npm run e2e // run on separate console
 npm run mutation-test
 //muation coverage report is generated @reports/mutation/html/index.html
 
-#Concourse
-[Concourse Repo](https://github.homedepot.com/snowshoe-ci/concourse)
+# Concourse
+[Concourse Repo](https://github.homedepot.com/snowshoe-ci/concourse)  
 [Concourse](http://ld5743.homedepot.com/)
 
 Builds are triggered through the promo folder in github/concourse
