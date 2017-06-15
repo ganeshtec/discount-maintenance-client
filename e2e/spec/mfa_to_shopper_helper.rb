@@ -13,8 +13,8 @@ Capybara.configure do |config|
   config.javascript_driver = :selenium
 end
 
-Capybara.default_wait_time = 12
-
+#Capybara.default_wait_time = 12
+Capybara.default_max_wait_time = 20
 Capybara.register_driver :selenium do |app|
     Capybara::Selenium::Driver.new(app, :browser => :chrome)
 end
@@ -41,6 +41,8 @@ def tomorrow
   future_date(1)
 end
 
+
+
 def online_sign_in
   visit "#{PROMO_UI_HOST}"
   if page.has_content? 'Please provide a valid user name and password.'
@@ -63,10 +65,10 @@ end
 
 class Promotion
   attr_reader :name, :promotion_type, :redemption_method, :customer_segment, :priority, :inclusion, :item_sku, :market_location, :rewards_quantity, 
-  :amount_off, :desc_long, :desc_short, :start_date, :end_date
+  :percent_off, :desc_long, :desc_short, :start_date, :end_date
 
   def initialize(name:, promotion_type:, redemption_method:, customer_segment:, priority:, inclusion:, item_sku:, market_location:, rewards_quantity:, 
-    amount_off:, desc_long:, desc_short:, start_date:, end_date:)
+    percent_off:, desc_long:, desc_short:, start_date:, end_date:)
     @name = name
     @promotion_type = promotion_type
     @redemption_method = redemption_method
@@ -76,7 +78,7 @@ class Promotion
     @item_sku = item_sku
     @market_location = market_location
     @rewards_quantity = rewards_quantity
-    @amount_off = amount_off
+    @percent_off = percent_off
     @desc_long = desc_long
     @desc_short = desc_short
     @start_date = start_date
