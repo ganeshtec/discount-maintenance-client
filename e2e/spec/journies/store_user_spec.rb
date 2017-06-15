@@ -11,10 +11,10 @@ describe 'MFA makes a customer segment discount that is persisted', type: :featu
 			customer_segment:  "Roofing Pantry Loaders",
 			inclusion:         "itemssku",
 			priority:		   "10",
-			item_sku:          "100091",
+			item_sku:          "100091, 100049, 100090",
 			market_location:    "1",
 			rewards_quantity:  "100",
-			amount_off:        "99",
+			percent_off:        "9",
 			desc_long:         "long description",
 			desc_short:        "short description",
 			start_date:        today.strftime("%m/%d/%Y"),
@@ -63,6 +63,7 @@ def create_cust_segment_discount_store(promotion)
     fill_in 'Search and Add Item Sku Number', with: promotion.item_sku
     puts "PROMOTION inclusion Item Sku After Search"
     click_on 'Search'
+	click_on 'Apply'
     click_button 'Next'
  
     fill_in 'Search and Add Market Number', with: promotion.market_location
@@ -71,7 +72,7 @@ def create_cust_segment_discount_store(promotion)
 	click_button 'Next'
 
     fill_in 'minamount', with: promotion.rewards_quantity
-    fill_in 'value', with: promotion.amount_off
+    fill_in 'value', with: promotion.percent_off
 	click_button 'Next'
 
 	fill_in 'start', with: promotion.start_date 
@@ -115,7 +116,7 @@ def edit_cust_segment_discount_store()
     click_button 'Next'
 
     fill_in 'minamount', with: promotion.rewards_quantity
-    fill_in 'value', with: promotion.amount_off
+    fill_in 'value', with: promotion.percent_off
 	
 	puts "Rewards page"
     click_button 'Next'
@@ -163,13 +164,13 @@ def edit_MSB_discount_store()
     click_button 'Next'
 
     fill_in 'minamount', with: promotion.rewards_quantity
-    fill_in 'value', with: promotion.amount_off
+    fill_in 'value', with: promotion.percent_off
 	
 	puts "Rewards page"
     click_button 'Next'
 
-	fill_in 'start', with: promotion.start_date 
-    fill_in 'end', with: promotion.end_date 
+	# fill_in 'start', with: promotion.start_date 
+    fill_in 'end', with: future_date(5).strftime("%m/%d/%Y") 
 	sleep(3)
 	click_on 'Preview & Submit'
 	sleep(3)
