@@ -13,8 +13,9 @@ module.exports = function (config) {
       { pattern: 'node_modules/angular-cookies/angular-cookies.js', mutated: false, included: true },
       { pattern: 'node_modules/angular-mocks/angular-mocks.js', mutated: false, included: true },
       { pattern: 'node_modules/moment/moment.js', mutated: false, included: true },
+      { pattern: 'src/js/**/*.js', mutated: true, included: true },
+       '!src/js/common/usabilla.js' ,
       { pattern: 'env_config/karma/*.js', mutated: false, included: true },
-      { pattern: 'src/**/*.js', mutated: true, included: true },
       'test/**/*.js',
       // '!src/fileToIgnore.js' // You can exclude files if you want
     ],

@@ -44,7 +44,6 @@
     "grunt-contrib-watch": "^1.0.0",
     "grunt-http-server": "^1.16.0",
     "grunt-karma": "^2.0.0",
-    "grunt-mutation-testing": "^1.4.2",
     "grunt-shell": "^1.3.0",
     "grunt-stryker": "^0.5.4",
     "gulp": "3.9.1",
