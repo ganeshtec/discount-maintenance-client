@@ -5,3 +5,4 @@ e2e/bin/
 build/
 npm-debug.log
 .DS_Store
+reports
