@@ -5,6 +5,7 @@ describe('Unit testing itemInclusion.component.spec.js', function () {
         $scope,
         element,
         itemsDataService,
+        skuTypesDataService,
         $q;
 
     // Load the myApp module, which contains the directive
@@ -12,15 +13,20 @@ describe('Unit testing itemInclusion.component.spec.js', function () {
 
     // Store references to $rootScope and $compile
     // so they are available to all tests in this describe block
-    beforeEach(inject(function (_$compile_, _$componentController_, _$rootScope_, _itemsDataService_, _$q_) {
+    beforeEach(inject(function (_$compile_, _$componentController_, _$rootScope_, _itemsDataService_, _$q_,_skuTypesDataService_) {
         // The injector unwraps the underscores (_) from around the parameter names when matching
         $compile = _$compile_;
         $q = _$q_;
         $componentController = _$componentController_;
+        skuTypesDataService=_skuTypesDataService_;
         $rootScope = _$rootScope_;
         // $scope = $rootScope.$new();
         itemsDataService = _itemsDataService_;
-
+        spyOn(skuTypesDataService,'fetchSkuTypes').and.callFake(function () {
+            deferredResult =$q.defer();
+            deferredResult.resolve([{"skuTypeCode": "N","description": "Normal"},{"skuTypeCode": "S","description": "Special"}]);
+            return deferredResult.promise;
+        });
         ctrl = $componentController('itemInclusion', null, {
             data: {}
 
@@ -76,7 +82,8 @@ describe('Unit testing itemInclusion.component.spec.js', function () {
         $rootScope.itemtype = 'SKU';
         var element = $compile("<item-inclusion data='itemData' itemtype='itemtype'></item-inclusion>")($rootScope);
         $rootScope.$digest();
-        expect(element.html()).toContain("Sku");
+        expect(element.html()).toContain("SKU");
+        expect(element.html()).toContain("SKU Type");
         expect(element.html()).toContain("Description");
         expect(element.html()).toContain("SMOOTH FLUSH SOLID CORE PRIMED CHROM");
         expect(element.html()).toContain('16"X16" MONTAGNA BELLUNO-15.5SF CA');
@@ -166,6 +173,16 @@ describe('Unit testing itemInclusion.component.spec.js', function () {
         expect(ctrl.validSkuInfo.length).toEqual(1);
         expect(ctrl.existingID).toEqual("100091, ");
     });
+
+    it("Verify skuTypeDescriptionLookup table is properly initalized", function(){
+        ctrl = $componentController('itemInclusion', null, {
+            data: []
+        });
+        ctrl.$onInit();
+        $rootScope.$digest();
+        expect(ctrl.skuTypeDescriptionLookup['N']).toEqual('Normal');
+        expect(ctrl.skuTypeDescriptionLookup['S']).toEqual('Special');
+    })
 
     it('Verify addItem adds item to validOmsInfo', function () {
         ctrl = $componentController('itemInclusion', null, {

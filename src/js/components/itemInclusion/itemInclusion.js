@@ -11,17 +11,17 @@ app.component('itemInclusion', {
         itemtype: '=',
         promoform: '=',
         isDisabled: '=',
-        viewProp: '='
+        viewProp: '=',
     },
     controller: ItemInclusionsController
 });
-ItemInclusionsController.$inject = ['itemsDataService', 'DataFactory', '$mdDialog', '$scope'];
-function ItemInclusionsController(itemsDataService, DataFactory, $mdDialog, $scope) {
+ItemInclusionsController.$inject = ['itemsDataService', 'DataFactory', '$mdDialog', '$scope','skuTypesDataService'];
+function ItemInclusionsController(itemsDataService, DataFactory, $mdDialog, $scope,skuTypesDataService) {
     var ctrl = this;
     var omsData = {};
     var skuData = {};
     this.existingID = '';
-
+    this.skuTypeDescriptionLookup = {};
     ctrl.$onInit = function () {
         ctrl.searchResults = [];
         ctrl.isSkuSearch = false;
@@ -43,6 +43,13 @@ function ItemInclusionsController(itemsDataService, DataFactory, $mdDialog, $sco
             }
         }
         ctrl.searchResults = [];
+        skuTypesDataService.fetchSkuTypes().then(
+            function(skuTypes){
+                for(var i=0;i<skuTypes.length;i++){
+                    ctrl.skuTypeDescriptionLookup[skuTypes[i].skuTypeCode]=skuTypes[i].description;
+                }
+            }
+        );
     }
     ctrl.$onChanges = function (changes) {
         if (changes.purchaseoption.currentValue === 'itemsku') {

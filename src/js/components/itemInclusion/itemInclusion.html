@@ -87,7 +87,10 @@
 	<tr class="category__table__row-notopborder">
 
 		<th>
-			Sku
+			SKU
+		</th>
+		<th>
+			SKU Type
 		</th>
 		<th>
 			Description
@@ -99,16 +102,18 @@
 		</th>
 	</tr>
 	<tr ng-repeat="item in $ctrl.validSkuInfo track by $index" ng-class="{odd:($index % 2)}">
-
 		<td>
 			{{item.skuNumber}}
+		</td>
+		<td>
+			{{item.skuTypeCode}} - {{$ctrl.skuTypeDescriptionLookup[item.skuTypeCode]}}
 		</td>
 		<td>
 			{{item.skuDescription}}
 		</td>
 		<td class="r">
 			<a class="editOption thd-orange" ng-click="$ctrl.isDisabled || $ctrl.removePromoCode($index)" href="">
-				Remove
+				<i class="fa fa-fw" aria-hidden="true" title="Remove"></i>
 			</a>
 		</td>
 	</tr>
