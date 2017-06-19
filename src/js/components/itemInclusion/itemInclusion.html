@@ -118,3 +118,7 @@
 		</td>
 	</tr>
 </table>
+<div id="itemCountDiv">
+	<span ng-show="$ctrl.validOmsInfo.length > 0 && !$ctrl.isSkuSearch" id="itemCount">{{$ctrl.validOmsInfo.length}} Item(s)</span>
+	<span ng-show="$ctrl.validSkuInfo.length > 0 && $ctrl.isSkuSearch" id="skuCount">{{$ctrl.validSkuInfo.length}} SKU(s)</span>	
+</div>
