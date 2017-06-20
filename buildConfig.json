@@ -1,6 +1,6 @@
 {
 "projectInfo": {
-	"name": "Promo-Admin-UI",
+	"name": "Disc-Main-Ext-Client",
 	"versionStrategy": "tracker",
     "fmsNumber": "IT-08105",
     "cdTemplate": "CD0001001",
@@ -18,7 +18,8 @@
 
 
 "fortify":{
-	"foldersToScan": "src",
+	"foldersToScan": "flow",
+	"project-name" : "Pricing_Discount_Maintenance_Extended_UI",
 	"emailList": "e9w3d9v7m8a6f1r3@thdengops.slack.com"
 },
 
