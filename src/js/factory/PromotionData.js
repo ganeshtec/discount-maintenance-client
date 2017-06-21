@@ -21,7 +21,6 @@ app.factory('PromotionData', [function () {
                 'action': 'create',
                 'schemaVer': '1.0'
             },
-            'reasonCd': 49,
             'exclsve': 0,
             'isSitewideDeal': false,
             'promoCdRqrd': false,
@@ -60,6 +59,7 @@ app.factory('PromotionData', [function () {
             'reward': {
                 'type': '',
                 'method': '',
+                'reasonCode': 49,
                 'details': [{
                     'qualUOM': 'Quantity',
                     'min': null,

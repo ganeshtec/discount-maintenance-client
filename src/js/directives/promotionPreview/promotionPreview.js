@@ -57,11 +57,11 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                     }
 
                     if (scope.previewData.data.promoSubTypeCd == 'ProductLevelPerItemPercentDiscount') {
-                        scope.previewData.data.reasonCd = 49;
+                        scope.previewData.data.reward.reasonCode = 49;
                     }
 
                     if(scope.previewData.data.promoSubTypeCd == 'OrderLevelPercentDiscount') {
-                        scope.previewData.data.reasonCd = 70;
+                        scope.previewData.data.reward.reasonCode = 70;
                     }
 
                     var promotion = scope.previewData.data;
