@@ -2,7 +2,7 @@
 	<div layout="row" class="padding-bottom-20">
 		<div flex="100">
 			<h1 class="pull-left md-display-2 admin__header__title">
-				Promotion List
+				Discount List
 			</h1>
 				<!-- 
 
@@ -12,7 +12,7 @@
 						 <a href="#" class="md-button"  ng-href="#/promotion-mfa"><i class="fa fa-plus"></i> Create New Promotion</a> 		 
 
 				-->
-			 <a href="#" class="md-button"  ng-href="#/promotion-admin"><i class="fa fa-plus"></i> Create New Promotion</a> 
+			 <a href="#" class="md-button"  ng-href="#/discount-admin"><i class="fa fa-plus"></i> Create New Discount</a> 
 		</div>
 	</div>
 	<div layout="row">
@@ -23,7 +23,7 @@
 					<div id="searchFilterContainer" flex="100">
 	 					<div class="md-toolbar-search">
 	 		 				<div id="searchFilterSearchBox">
-	 		 					<input id="searchFilterSearchBoxInput" class="table__search" placeholder="Search promotion name or keyword" type="text" ng-model="promotionName" ng-keypress="($event.keyCode === 13) && updateKeyword()" allow-pattern="(\d|[a-z A-Z\_])" />
+	 		 					<input id="searchFilterSearchBoxInput" class="table__search" placeholder="Search Discount name or keyword" type="text" ng-model="promotionName" ng-keypress="($event.keyCode === 13) && updateKeyword()" allow-pattern="(\d|[a-z A-Z\_])" />
 	 		 				</div>
 	 						<div id="searchFilterSearchButton">
 	 							<a class="md-button secondary" href="" ng-click="updateKeyword()">Search</a>
@@ -48,7 +48,7 @@
 
 									<div class="md-select md-select-space">
 										<label for="filterstatus">
-											Promotion Status
+											Discount Status
 										</label>
 										<select name="filterstatus" ng-model="filterstatus">
 											<option value="all" aria-label="Show All">Select All</option>
@@ -60,7 +60,7 @@
 
 									<div class="md-select md-select-space">
 										<label for="filtertype">
-											Promotion Type
+											Discount Type
 										</label>
 										<select name="filtertype" ng-model="filtertype">
 											<option value="all" aria-label="Show All">Select All</option>
@@ -142,7 +142,7 @@
 								</tr>	
 							</table>
 							<div ng-if="nodata" class=" nopromotion">
-								No promotion found
+								No Discount found
 							</div>
 						</form>
 					</div>
@@ -163,7 +163,7 @@
 				<a class="md-button secondary pull-right" ng-click="promotionData = ''">Cancel</a>
 			</div>
 			<div class="admin__header__content admin__header__content--bottom">
-				<h1 class="md-display-2">Edit Promotion 
+				<h1 class="md-display-2">Edit Discount 
 					<span class="" ng-show="promotionData.promotype.name"> : {{promotionData.promotype.name}}</span>
 					<br>
 					<span class="" ng-show="promotionData.promotype.promoSubTypeDesc"> Type: {{promotionData.promotype.promoSubTypeDesc}}</span>

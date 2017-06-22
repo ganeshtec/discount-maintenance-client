@@ -5,12 +5,15 @@
     <br/>
     <table class="skyType__table">
         <tr class="skyType__table__row-notopborder" ng-repeat="skuType in $ctrl.skuTypes">
-
             <td>
-                {{skuType.skuTypeCode}} - {{skuType.description}}
+                <div class="md-checkbox">
+                    <input type="checkbox" id="skuType_{{skuType.skuTypeCode}}" name="skuType_{{skuType.skuTypeCode}}" ng-model="$ctrl.skuSelectionMap[skuType.skuTypeCode].selected"
+                        name="skuType_{{skuType.skuTypeCode}}" title="{{skuType.description}}" />
+                    <label for="skuType_{{skuType.skuTypeCode}}"><span></span>{{skuType.skuTypeCode}} - {{skuType.description}}</label>
+                </div>
             </td>
             <td>
-                {{skuType.skuCount}}
+                {{$ctrl.skuSelectionMap[skuType.skuTypeCode].count}}
             </td>
 
             <td>
@@ -18,7 +21,19 @@
             </td>
         </tr>
     </table>
-    <div align="center">
+
+    <!--<div align="center">
         <a href="" ng-click="$ctrl.closeSkuTypeModal()"> Close Message  </a>
     </div>
+-->
+
+    <a href="" class="md-button secondary " style="margin-top:28px" ng-click="$ctrl.closeSkuTypeModal()">
+		Cancel
+	</a>
+    <a href="" class="md-button primary" style="margin-top:28px" ng-click="$ctrl.filterSkuTypesUnchecked()">
+		Apply
+	</a>
+
+
+
 </div>

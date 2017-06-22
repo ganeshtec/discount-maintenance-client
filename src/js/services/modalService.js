@@ -4,7 +4,7 @@ app.service('modalService', ['$mdDialog', function ($mdDialog) {
     publicApi.savedAlert = function (title, message) {
         var options = {};
         options.onRemoving = function () {
-            window.location = '#/promotion-dashboard';
+            window.location = '#/discount-dashboard';
         }
         $mdDialog.show($mdDialog.alert(options)
             .title(title)

@@ -63,7 +63,7 @@ app.controller('DashboardCtrl', ['$filter', 'leadTimeService', '$scope', 'DataFa
         }
         $scope.updateKeyword = function () {
             if (!$scope.promotionName) {
-                $scope.errorMessage = 'Promotion name is mandatory'
+                $scope.errorMessage = 'Discount name is mandatory'
             } else {
                 var current = $location.search();
                 if ($scope.promotionName == current.keyword) {
@@ -141,7 +141,7 @@ app.controller('DashboardCtrl', ['$filter', 'leadTimeService', '$scope', 'DataFa
                     if (resp.valid && !resp.invalid) {
                         showAlert('Success', 'Saved successfully', $scope.refresh);
                     } else if (resp.invalid) {
-                        showAlert('Error', 'Unable to save promotions :' + JSON.stringify(resp.invalid));
+                        showAlert('Error', 'Unable to save discounts :' + JSON.stringify(resp.invalid));
                     }
                     $scope.loading = false;
                 },
@@ -185,7 +185,7 @@ app.controller('DashboardCtrl', ['$filter', 'leadTimeService', '$scope', 'DataFa
                 }
             }
 
-            var options = showConfirm('Warning', 'Promotion will be deleted permanently');
+            var options = showConfirm('Warning', 'Discount will be deleted permanently');
             $mdDialog.show(options).then(function () {
 
 
@@ -198,7 +198,7 @@ app.controller('DashboardCtrl', ['$filter', 'leadTimeService', '$scope', 'DataFa
                             showAlert('Success', 'Deleted successfully :' + JSON.stringify(resp.valid), $scope.searchWithUrlParams);
                         }
                         if (resp.invalid) {
-                            showAlert('Error', 'Unable to delete promotions :' + JSON.stringify(resp.invalid).replace(/[{}\\]/g, ''));
+                            showAlert('Error', 'Unable to delete discounts :' + JSON.stringify(resp.invalid).replace(/[{}\\]/g, ''));
                         }
                         $scope.loading = false;
                     },
@@ -270,7 +270,7 @@ app.controller('DashboardCtrl', ['$filter', 'leadTimeService', '$scope', 'DataFa
                             if (resp.valid && !resp.invalid) {
                                 showAlert('Success', 'Deactivated successfully', $scope.searchWithUrlParams);
                             } else if (resp.invalid) {
-                                showAlert('Error', 'Unable to deactivate promotion :' + JSON.stringify(resp.invalid));
+                                showAlert('Error', 'Unable to deactivate discount :' + JSON.stringify(resp.invalid));
                             }
                             $scope.loading = false;
                         }, function () {
@@ -290,7 +290,7 @@ app.controller('DashboardCtrl', ['$filter', 'leadTimeService', '$scope', 'DataFa
             },
             {
                 'sortId': 'name',
-                'text': 'Promotion Name',
+                'text': 'Discount Name',
                 'width': '25%'
             },
             {
@@ -300,7 +300,7 @@ app.controller('DashboardCtrl', ['$filter', 'leadTimeService', '$scope', 'DataFa
             },
             {
                 'sortId': 'promoSubTypeDesc',
-                'text': 'Promotion Type',
+                'text': 'Discount Type',
                 'width': '8%'
             },
             {
@@ -444,14 +444,14 @@ app.controller('DashboardCtrl', ['$filter', 'leadTimeService', '$scope', 'DataFa
             $scope.searchWithUrlParams();
         });
         $scope.edit = function (id) {
-            window.location = '#/promotion-admin/' + (id || $scope.sel[0]) + '#promoTop';
+            window.location = '#/discount-admin/' + (id || $scope.sel[0]) + '#promoTop';
         }
         $scope.duplicate = function (id) {
-            window.location = '#/promotion-admin/clone/' + (id || $scope.sel[0]) + '#promoTop';
+            window.location = '#/discount-admin/clone/' + (id || $scope.sel[0]) + '#promoTop';
         }
 
         $scope.compare = function (id1, id2) {
-            window.location = '#/promotion-admin/compare/' + (id1 || $scope.sel[0]) + '/' + (id2 || $scope.sel[1]);
+            window.location = '#/discount-admin/compare/' + (id1 || $scope.sel[0]) + '/' + (id2 || $scope.sel[1]);
         }
         // check is only for editing inline from dashboard, promotions that are Active/Pending can still be edited from the main page
         $scope.isEditable = function (promotion) {

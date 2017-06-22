@@ -3,30 +3,30 @@
 		<section class="admin__promotion__section" ng-show="index == 0 || preview">
 			<div class="md-text-field">
 				<label for="name">
-					Promotion Name {{isDisabled}} {{userType}}
+					Discount Name {{isDisabled}} {{userType}}
 				</label>
-				<input type="text" id="name" name="name" ng-model="data.name" title="Promotion Name" placeholder="Enter 254 characters or fewer" ng-maxlength="254" ng-required="preview" allow-pattern="(\d|[a-z A-Z\_])" />
+				<input type="text" id="name" name="name" ng-model="data.name" title="Discount Name" placeholder="Enter 254 characters or fewer" ng-maxlength="254" ng-required="preview" allow-pattern="(\d|[a-z A-Z\_])" />
 				<span class='error-message' ng-show="promoForm.name.$invalid">
 					<span ng-show="promoForm.name.$error.required">
 						Please enter a valid promotion name
 					</span>
 					<span ng-show="promoForm.name.$error.maxlength">
-						Please enter a valid promotion name less than or equal to 254 characters
+						Please enter a valid discount name less than or equal to 254 characters
 					</span>
 				</span>
 			</div>
 			<div class="md-select md-select-space">
 				<label for="promotype">
-					Promotion Type
+					Discount Type
 				</label>
 				<select name="promotype" ng-options="promotype as promotype.promoSubTypeDesc for promotype in promotionSubTypes" ng-model="promoSubTypeObject" ng-change="getSelectedSubTypes(); resetRewardsOnPromoTypeChange(); validatePromotion()" ng-required=" preview">
 					<option value="">
-						-- Select a promotion type --
+						-- Select a discount type --
 					</option>
 				</select>
 				<span class='error-message' ng-show=" promoForm.promotype.$invalid">
 					<span ng-show="promoForm.promotype.$error.required">
-						Please select a valid promotion type
+						Please select a valid discount type
 					</span>
 				</span>
 			</div>
@@ -44,7 +44,7 @@
 			<promotion-code-specification ng-if="data.promoCdRqrd" test ="{{data.couponId}}" couponId="data.couponId" preview="preview" data="data.promoCdSpec" require="data.promoCdRqrd" promoform='promoForm'></promotion-code-specification>
 			<div class="md-text-field" ng-show="viewProp.displayCombinationPromo">
 				<label for="promocombo">
-					Combination with other promotions
+					Combination with other discounts
 				</label>
 				<input type="text" name="promocombo" ng-model="data.promocombo" title="Promotion Combinations" placeholder="Combine with other promotions" disabled />
 			</div>
@@ -56,7 +56,7 @@
 				</label>
 			    <tool-tipper tooltiptitle="Priority">
 			        <p>
-			        	Assign a priority by entering a number between zero and one thousand. Zero is the lowest priority and one thousand is the highest priority. When multiple promotions are qualified for the same purchase condition, the one with the highest priority will be applied first.
+			        	Assign a priority by entering a number between zero and one thousand. Zero is the lowest priority and one thousand is the highest priority. When multiple discounts are qualified for the same purchase condition, the one with the highest priority will be applied first.
 			        </p>
 			    </tool-tipper>
 				<input type="number" name="priority" ng-model="data.priority" title="Priority" placeholder="Enter number between 0 and 1000" ng-required="preview" 

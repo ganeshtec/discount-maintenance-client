@@ -36,7 +36,7 @@ describe('Unit testing adminHeader.directive.spec.js', function () {
     var element = $compile("<admin-header></admin-header>")($scope);
     $scope.$digest();
     // Check that the compiled element contains the templated content
-    expect(element.html()).toContain("Back to Promotions List");
+    expect(element.html()).toContain("Back to Discounts List");
 
   });
 
@@ -52,7 +52,7 @@ describe('Unit testing adminHeader.directive.spec.js', function () {
     var element = $compile("<admin-header uistate='uistate' promotype='promotype'></admin-header>")($scope);
     $rootScope.$digest();
     // Check that the compiled element contains the templated content
-    expect(element.html()).toContain("Edit Promotion");
+    expect(element.html()).toContain("Edit Discount");
     expect(element.html()).toContain("Promo type");
 
   });

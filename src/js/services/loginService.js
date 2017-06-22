@@ -96,7 +96,7 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
 
             function redirectPage() {
                 status = '';
-                $location.path('promotion-dashboard');
+                $location.path('discount-dashboard');
             }
 
         }
@@ -146,7 +146,7 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
                     } else {
                         status = 'success';
                         if (sourcepage === 'login') {
-                            $location.path('promotion-dashboard');
+                            $location.path('discount-dashboard');
                         }
 
                     }
@@ -206,7 +206,7 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
                         $cookies.put('userPermissions', JSON.stringify(userPermissions));
                         status = 'success';
                         if (sourcepage === 'login') {
-                            $location.path('promotion-dashboard');
+                            $location.path('discount-dashboard');
                         }
 
                     }
