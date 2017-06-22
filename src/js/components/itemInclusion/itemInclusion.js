@@ -12,6 +12,7 @@ app.component('itemInclusion', {
         promoform: '=',
         isDisabled: '=',
         viewProp: '=',
+        showSkuTypeFilter: '='
     },
     controller: ItemInclusionsController
 });
@@ -24,7 +25,7 @@ function ItemInclusionsController(itemsDataService, DataFactory, $mdDialog, $sco
     this.skuTypeDescriptionLookup = {};
     ctrl.$onInit = function () {
         ctrl.searchResults = [];
-        ctrl.isSkuSearch = false;
+        ctrl.initializeSkuSearch(ctrl.purchaseoption);
         ctrl.validOmsInfo = [];
         ctrl.validSkuInfo = [];
         ctrl.inValidOmsInfo = false;
@@ -52,11 +53,10 @@ function ItemInclusionsController(itemsDataService, DataFactory, $mdDialog, $sco
         );
     }
     ctrl.$onChanges = function (changes) {
-        if (changes.purchaseoption.currentValue === 'itemsku') {
-            ctrl.isSkuSearch = true;
-        } else {
-            ctrl.isSkuSearch = false;
-        }
+        ctrl.initializeSkuSearch(changes.purchaseoption.currentValue);
+    }
+    ctrl.initializeSkuSearch = function (purchaseoption){
+        ctrl.isSkuSearch=purchaseoption ==='itemsku';
     }
     this.addItem = function (item) {
         if (!ctrl.data) {
@@ -167,7 +167,7 @@ function ItemInclusionsController(itemsDataService, DataFactory, $mdDialog, $sco
             skuIdValidationPromise.then(
                 function (skuIdValidationResponse) {
                     DataFactory.messageModal.message = undefined;
-                    if (skuIdValidationResponse.validSkuInfo && clicked != undefined && !DataFactory.messageModal.message) {
+                    if (ctrl.showSkuTypeFilter && skuIdValidationResponse.validSkuInfo && clicked != undefined && !DataFactory.messageModal.message) {
                         ctrl.showSkuTypeModal(skuIdValidationResponse);
                     } else {
                         ctrl.setSkuValidData(skuIdValidationResponse, clicked);

@@ -377,47 +377,38 @@ describe('Unit testing itemInclusion.component.spec.js', function () {
         expect(ctrl.validOmsInfo.length).toEqual(3);
     });
 
+    it('verify that isSkuSearch is initalized to true if the purchaseoption passed is itemsku',function(){
+        ctrl = $componentController('itemInclusion', null, {
+            data: [],
+            purchaseoption: 'itemsku'
+        });
+        ctrl.$onInit();
+        expect(ctrl.isSkuSearch).toBe(true);
+    });
 
+    it('verify that isSkuSearch is initalized to false if the purchaseoption passed is itemoms',function(){
+        ctrl = $componentController('itemInclusion', null, {
+            data: [],
+            purchaseoption: 'itemoms'
+        });
+        ctrl.$onInit();
+        expect(ctrl.isSkuSearch).toBe(false);
+    });
 
-
-    // // test conditions for item skus
-
-    // // test condition validate the place holder for item sku search.
-
-    //   it('Checks if sku item placeholder works', function() {
-
-
-    //     // Contain a piece of HTML containing the Directive  
-    //     var element = $compile("<item-inclusion></item-inclusion>")($rootScope);
-    //     $rootScope.$digest();
-
-
-    //     expect(element.html()).toContain("Search and Add Item Sku Number");
-
-    //   });
-
-
-    // // test conditions for item skus search functionality is defined
-
-    //   it('Checks if sku item search functionality defined', function() {
-
-    //       var validSkuInfo = [];
-
-    //     // Contain a piece of HTML containing the Directive  
-    //         var element = $compile("<item-inclusion data='validSkuInfo'> </item-inclusion>")($rootScope);
-    //         $rootScope.$digest();
-    //         this.$isolateScope = element.isolateScope();
-    //         spyOn(this.$isolateScope, "search").and.callThrough();
-
-    //         this.$isolateScope.search('1234567');
-
-    //         //expect(this.$isolateScope.search).toBeDefined();
-    //         expect(this.$isolateScope.search).toHaveBeenCalled();
-
-    //         expect(this.$isolateScope.isSkuSearch).not.toBe(undefined);
-
-    //   });
-
+    it('verify that isSkuSearch is changes to true if the purchaseoption itemsku is selected', function(){
+        ctrl = $componentController('itemInclusion', null, {
+            data: [],
+            purchaseoption: 'itemoms'
+        });
+        ctrl.$onInit();
+        expect(ctrl.isSkuSearch).toBe(false);
+        var changes={};
+        changes.purchaseoption={};
+        changes.purchaseoption.previousValue="itemoms";
+        changes.purchaseoption.currentValue="itemsku";
+        ctrl.$onChanges(changes);
+        expect(ctrl.isSkuSearch).toBe(true);
+    });
 
 
 });
