@@ -64,7 +64,7 @@
     <!-- Item view Codes Component -->
     <!--<item-inclusion data="item.inclusions.partnumbers" is-disabled="isDisabled" promoform="promoform" ng-show="data.purchaseConds.sources[$index].purchaseoption == 'itemoms'"></item-inclusion>-->
     <item-inclusion data="item.inclusions.partnumbers" itemtype="item.inclusions.itemtype" purchaseoption="item.purchaseoption"
-        is-disabled="isDisabled" promoform="promoform" ng-show="item.purchaseoption == 'itemoms' || item.purchaseoption == 'itemsku'"></item-inclusion>
+        is-disabled="isDisabled" promoform="promoform" ng-show="item.purchaseoption == 'itemoms' || item.purchaseoption == 'itemsku'" show-sku-type-filter="true"></item-inclusion>
     <!-- Category view Codes Component -->
     <category-view data="item.inclusions.hierarchies" is-disabled="isDisabled" promoform="promoform" ng-show="item.purchaseoption == 'category' && viewProp.displayWebHierarchy">
     </category-view>
