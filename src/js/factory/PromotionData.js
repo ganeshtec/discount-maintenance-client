@@ -59,6 +59,7 @@ app.factory('PromotionData', [function () {
             'reward': {
                 'type': '',
                 'method': '',
+                'reasonCode': 49,
                 'details': [{
                     'qualUOM': 'Quantity',
                     'min': null,
