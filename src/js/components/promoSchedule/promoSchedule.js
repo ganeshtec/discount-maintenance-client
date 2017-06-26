@@ -16,19 +16,6 @@ app.component('promoSchedule', {
 PromoScheduleController.$inject = ['$filter', '$scope','validationService', 'utilService'];
  
 function PromoScheduleController($filter, $scope, validationService, utilService) {
-    // $scope.$watch('data', function (nv) {
-    //     if (nv) {
-    //         if (nv.startDt) {
-    //             $scope.startDt = new Date(nv.startDt.split(' ')[0].replace(/-/g, '\/'));
-    //         }
-    //         if (nv.endDt) {
-    //             $scope.endDt = new Date(nv.endDt.split(' ')[0].replace(/-/g, '\/'));
-    //         }
-    //         $scope.starttime = '3:00 AM';
-    //         $scope.endtime = '2:59 AM';
-    //     }
-    // });
-
     this.$onInit = function() {
         this.data.startDt =  this.convertDateStringToDate(this.data.startDt);
         this.data.endDt =  this.convertDateStringToDate(this.data.endDt);
@@ -49,5 +36,8 @@ function PromoScheduleController($filter, $scope, validationService, utilService
     this.isPromotionActive = function(){
         return utilService.isPromotionActive(this.data);
     }
-
+        
+    this.setEndDateMin = function () {
+        this.data.minEndDt = moment(this.data.startDt).format('YYYY-MM-DD');
+    }
 }
