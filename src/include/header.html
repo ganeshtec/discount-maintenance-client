@@ -8,7 +8,10 @@
         </a>
     </div>    
     <div class="md-toolbar-actions"> 
-        <span>Currently logged in as: {{userRoles}}</span>     
+        <span>Currently logged in as: </span>
+        <select name="userRole" ng-model="userRoleSelected">
+            <option ng-repeat="user in userPermissions" value="{{user.id}}">{{user.shortDesc}}</option>
+        </select>    
         <a class="profile" href="" title="{{username}}"></a>
         <a class="logout" href="#/login"   ng-click='logout()' title="Logout"></a>
     </div>

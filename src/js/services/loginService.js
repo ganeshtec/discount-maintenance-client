@@ -1,5 +1,5 @@
-app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout', 'DataFactory', 'URL_CONFIG',
-    function ($http, $q, $cookies, $location, $timeout, DataFactory, URL_CONFIG) {
+app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout', 'DataFactory', 'URL_CONFIG','$rootScope',
+    function ($http, $q, $cookies, $location, $timeout, DataFactory, URL_CONFIG, $rootScope) {
         var publicApi = {};
         var status = null;
         var urls = new URL_CONFIG();
@@ -74,8 +74,8 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
                             'domain': '.homedepot.com'
                         });
                         status = '';
-                        redirectPage();
-                        publicApi.authorizeUser(username, 'login');
+                       //  redirectPage();
+                       publicApi.authorizeUser(username, 'login');
                     }
 
                 }
@@ -112,11 +112,6 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
             $cookies.remove('userPermissions', {
                 'domain': '.homedepot.com'
             });
-            $cookies.remove('userRoles', {
-                'domain': '.homedepot.com'
-            });
-
-            sessionStorage.removeItem('userRoles');
 
             publicApi.setErrorStatus('');
 
@@ -224,26 +219,36 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
                         redirectPage();
 
                     } else {
-                        userPermissions = data;
+
+                        //description = "SKU: Discount Engine-Online DCM"
+                        //id = "229"
+                        //description ="SKU: Discount Engine-Store MFA"
+                        //id ="228"
+                        var userPermValue =   [{ id:"228", description:"SKU: Discount Engine-Store MFA"} ,{id:"229", description:"SKU: Discount Engine-Online DCM"}];
+                    
+                        userPermissions = userPermValue; //data;
+
+                        console.log(userPermissions);
+
+                        for(i = 0; i < userPermissions.length; i++){
+                            var userPerm = userPermissions[i].description;
+                            var n = userPerm.indexOf('-');
+                            userPermissions[i].shortDesc = userPerm.substring(n+1);
+
+                            if(userPermissions[i].id === data[0].id) {
+                                userPermissions[i].selected = true;
+                            }
+                        }
+                        
                         console.log(userPermissions);
                         $cookies.put('userPermissions', JSON.stringify(userPermissions));
-                        
-                        var userPerm = userPermissions[0].description;
-                        var n = userPerm.indexOf('-');
-                        var userRole = userPerm.substring(n+1);
-
-                        $cookies.put('userRoles', userRole);
-                        sessionStorage.setItem('userRoles',userRole);
-                        
+                                                
                         status = 'success';
                         if (sourcepage === 'login') {
                             $location.path('discount-dashboard');
                         }
-
-                        //$scope.$broadcast('userLogin');
-
                     }
-
+                    $rootScope.$broadcast('user-login');
                 }
             }
 

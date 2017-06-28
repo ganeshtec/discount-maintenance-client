@@ -1,5 +1,5 @@
-app.controller('loginCtrl', ['$scope', '$routeParams', '$location','$cookies', 'loginService',
-    function($scope, $routeParams, $location, $cookies,loginService) {
+app.controller('loginCtrl', ['$scope', '$rootScope', '$routeParams', '$location','$cookies', 'loginService',
+    function($scope, $rootScope, $routeParams, $location, $cookies,loginService) {
         
 
         $scope.showError = loginService.getErrorStatus() || null;
@@ -8,6 +8,13 @@ app.controller('loginCtrl', ['$scope', '$routeParams', '$location','$cookies', '
             $cookies.remove('userPermissions',{'domain': '.homedepot.com'});
             loginService.authenticate($scope.name, $scope.password).then(function(data) {
                 $scope.showError = data;
+                
+                // if(!data){
+                //     loginService.authorizeUser($scope.name, 'login').then(function(data) {
+                //         $rootScope.$broadcast('user-login');
+                //     });
+                // }
+                
             });
 
         }

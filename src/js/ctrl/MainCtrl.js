@@ -3,7 +3,7 @@ app.controller('MainCtrl', ['$scope', '$location', '$cookies', 'DataFactory', 'S
     function ($scope, $location, $cookies, DataFactory, SECTIONS, promotionDataService, loginService, OverlayConfigFactory) {
         $scope.messageModal = DataFactory.messageModal;
         $scope.username = '';
-        $scope.userRoles = '';
+        $scope.userPermissions = '';
         $scope.previewData = {
             data: {}
         };
@@ -11,15 +11,24 @@ app.controller('MainCtrl', ['$scope', '$location', '$cookies', 'DataFactory', 'S
         $scope.previewFormHolder = {};
         $scope.previewOverlayConfig = OverlayConfigFactory.getInstance();
         $scope.previewOverlayConfig.mask(true);
-        if ($cookies.get('userName') != null && $cookies.get('userName') != '') {
-            $scope.username = $cookies.get('userName');
-        }
-        
-        // if ($cookies.get('userRoles') != null && $cookies.get('userRoles') != '') {
-        //     $scope.userRoles = $cookies.get('userRoles');
-        // }
 
-        $scope.userRoles = sessionStorage.getItem('userRoles');
+        $scope.setLoginInfo = function() {
+            
+            if ($cookies.get('userName') != null && $cookies.get('userName') != '') {
+                $scope.username = $cookies.get('userName');
+            }
+            
+            if ($cookies.get('userPermissions') != null) {
+             $scope.userPermissions = JSON.parse($cookies.get('userPermissions'));
+           // $scope.userType = userPermissions[0]['id'];
+            }
+        }
+
+        $scope.$on('user-login', function(event, args) {
+            $scope.setLoginInfo();
+        });
+
+        $scope.setLoginInfo();
 
         $scope.sections = new SECTIONS();
         $scope.section = promotionDataService.getSection($scope.sections);
@@ -38,6 +47,7 @@ app.controller('MainCtrl', ['$scope', '$location', '$cookies', 'DataFactory', 'S
             loginService.setErrorStatus('invalidsession');
             $location.path('login');
         }
+                
         $scope.logout = function () {
             
         /*
@@ -54,18 +64,12 @@ app.controller('MainCtrl', ['$scope', '$location', '$cookies', 'DataFactory', 'S
                 'domain': '.homedepot.com'
             });
             
-            // $cookies.remove('userRoles', {
-            //     'domain': '.homedepot.com'
-            // });
-
-            sessionStorage.removeItem('userRoles');
-            
             loginService.setErrorStatus('');
 
             //$scope.$broadcast('userLogout');
         */
             $scope.username = '';
-            $scope.userRoles = '';
+            $scope.userPermissions = '';
             loginService.clearLoginData();
 
         }
