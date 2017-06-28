@@ -9,7 +9,6 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
             return status;
         }
 
-
         publicApi.setErrorStatus = function (errstatus) {
             status = errstatus;
         }
@@ -51,6 +50,7 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
                     var username = data.userName;
                     var resstatus = data.status;
                     if (THDSSO == null || THDSSO == 'null' || resstatus == 'INVALID_CREDENTIALS' || resstatus == 'PASSWORD_EXPIRED') {
+                    /*    
                         $cookies.remove('THDSSO', {
                             'domain': '.homedepot.com'
                         });
@@ -60,9 +60,9 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
                         $cookies.remove('userPermissions', {
                             'domain': '.homedepot.com'
                         });
-
+                    */
+                        publicApi.clearLoginData();
                         status = 'invaliduser';
-
                         $location.path('login');
 
                     } else {
@@ -100,6 +100,29 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
             }
 
         }
+
+        publicApi.clearLoginData = function () {
+
+            $cookies.remove('THDSSO', {
+                'domain': '.homedepot.com'
+            });
+            $cookies.remove('userName', {
+                'domain': '.homedepot.com'
+            });
+            $cookies.remove('userPermissions', {
+                'domain': '.homedepot.com'
+            });
+            $cookies.remove('userRoles', {
+                'domain': '.homedepot.com'
+            });
+
+            sessionStorage.removeItem('userRoles');
+
+            publicApi.setErrorStatus('');
+
+            //$location.path('login');
+        }
+
 
         // Method to deactivate all sections, expected to have property .isActive
         publicApi.sessionValidate = function (ssoCookie, sourcepage) {
@@ -194,8 +217,7 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
                     redirectPage();
 
                 } else {
-
-
+                    
                     var data = response.data;
                     if (data.length === 0) {
                         status = 'unauthorized';
@@ -203,11 +225,22 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
 
                     } else {
                         userPermissions = data;
+                        console.log(userPermissions);
                         $cookies.put('userPermissions', JSON.stringify(userPermissions));
+                        
+                        var userPerm = userPermissions[0].description;
+                        var n = userPerm.indexOf('-');
+                        var userRole = userPerm.substring(n+1);
+
+                        $cookies.put('userRoles', userRole);
+                        sessionStorage.setItem('userRoles',userRole);
+                        
                         status = 'success';
                         if (sourcepage === 'login') {
                             $location.path('discount-dashboard');
                         }
+
+                        //$scope.$broadcast('userLogin');
 
                     }
 
