@@ -5,12 +5,12 @@
 			<div class="md-text-field" ng-init="data.locations='markets'">
 			<label for="location">Location Types</label>
 				<div class="md-radio">
-					<input type="radio" id="markets" name="locations1" ng-model="data.locations" title="markets" value="markets"/>
+					<input type="radio" id="markets" name="locations1" ng-model="data.locations" title="markets" value="markets" ng-change="removeAll();clearInput();"/>
 					<label for="markets"><span><span></span></span>Markets</label>
 				</div>
 
 				<div class="md-radio">
-					<input type="radio" id="stores" name="locations2" ng-model="data.locations" title="stores" value="stores" />
+					<input type="radio" id="stores" name="locations2" ng-model="data.locations" title="stores" value="stores" ng-change="removeAll(); clearInput();"/>
 					<label for="stores"><span><span></span></span>Stores</label>
 				</div>
 			</div> 
@@ -71,8 +71,9 @@
 			</div>
 		</td>
 	</tr>
-	<tr class="category__table__row-notopborder" ng-if="data.locations=='stores'">
 
+	<tr class="category__table__row-notopborder" ng-if="data.locations=='stores'">
+		{{data.locations}}
 		<th>
 			Store Number
 		</th>
@@ -100,7 +101,7 @@
 		    {{item.marketNumber}}
 		</td>
 		<td class="r">
-			<a class="editOption thd-orange" ng-click="isDisabled || removeStore($index)" href="">
+			<a class="editOption thd-orange" ng-click="isDisabled || removeItem($index)" href="">
 				Remove
 			</a>
 		</td>
@@ -108,34 +109,34 @@
 	<tr class="category__table__row-notopborder" ng-if="data.locations=='markets'">
 
 		<th>
-			Store Number
-		</th>
-		<th>
-			Store Name
-		</th>
-		<th>
 			Market Number
 		</th>
+		<th>
+			MarketName
+		</th>
+		<th>
+			BYO Number
+		</th>
 		<th class="r">
-			<a class="editOption thd-orange" ng-if="validStoreInfo && validStoreInfo.length >0" ng-click="removeAll()" href="">
+			<a class="editOption thd-orange" ng-if="validMarketInfo && validMarketInfo.length >0" ng-click="removeAll()" href="">
 				Remove All
 			</a>
 		</th>
 	</tr>
-	<tr ng-repeat="item in validStoreInfo track by $index" ng-class="{odd:($index % 2)}" ng-if="data.locations=='markets'">
+	<tr ng-repeat="market in validMarketInfo track by $index" ng-class="{odd:($index % 2)}" ng-if="data.locations=='markets'">
 
 		<td>
-			{{item.storeNumber}}
+			{{market.marketNumber}}
 		</td>
 		<td>
-			{{item.storeName}}
+			{{market.marketName}}
 		</td>
 		<td>
-		    {{item.marketNumber}}
+		    <!--{{item.marketNumber}}-->
 		</td>
 
 		<td class="r">
-			<a class="editOption thd-orange" ng-click="isDisabled || removeStore($index)" href="">
+			<a class="editOption thd-orange" ng-click="isDisabled || removeItem($index)" href="">
 				Remove
 			</a>
 		</td>

@@ -12,6 +12,8 @@ app.service('locationDataService', ['$http', '$q', 'dataService',
                 result = $q.defer();
             dataService.httpRequest(config).then(
                 function (response) {
+                     //console.log("---Response :",response);
+                     //console.log("---Response.data :",response.data);
                     result.resolve(response.data);
                     
                 },
