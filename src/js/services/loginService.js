@@ -220,30 +220,22 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
 
                     } else {
 
-                        //description = "SKU: Discount Engine-Online DCM"
-                        //id = "229"
-                        //description ="SKU: Discount Engine-Store MFA"
-                        //id ="228"
                         var userPermValue =   [{ id:"228", description:"SKU: Discount Engine-Store MFA"} ,{id:"229", description:"SKU: Discount Engine-Online DCM"}];
                     
                         userPermissions = userPermValue; //data;
-
-                        console.log(userPermissions);
+                        var defaultUserPerm = data[0].id;
 
                         for(i = 0; i < userPermissions.length; i++){
                             var userPerm = userPermissions[i].description;
                             var n = userPerm.indexOf('-');
-                            userPermissions[i].shortDesc = userPerm.substring(n+1);
-
-                            if(userPermissions[i].id === data[0].id) {
-                                userPermissions[i].selected = true;
-                            }
+                            userPermissions[i].shortDesc = userPerm.substring(n+1);                            
                         }
                         
-                        console.log(userPermissions);
                         $cookies.put('userPermissions', JSON.stringify(userPermissions));
+                        $cookies.put('currentUserRole', defaultUserPerm);
                                                 
                         status = 'success';
+
                         if (sourcepage === 'login') {
                             $location.path('discount-dashboard');
                         }

@@ -1,6 +1,6 @@
 // Main Controller for root scope
-app.controller('MainCtrl', ['$scope', '$location', '$cookies', 'DataFactory', 'SECTIONS', 'promotionDataService', 'loginService', 'OverlayConfigFactory',
-    function ($scope, $location, $cookies, DataFactory, SECTIONS, promotionDataService, loginService, OverlayConfigFactory) {
+app.controller('MainCtrl', ['$scope', '$location', '$cookies', 'DataFactory', 'SECTIONS', 'promotionDataService', 'loginService', 'OverlayConfigFactory','$rootScope','$route',
+    function ($scope, $location, $cookies, DataFactory, SECTIONS, promotionDataService, loginService, OverlayConfigFactory,$rootScope,$route) {
         $scope.messageModal = DataFactory.messageModal;
         $scope.username = '';
         $scope.userPermissions = '';
@@ -11,6 +11,9 @@ app.controller('MainCtrl', ['$scope', '$location', '$cookies', 'DataFactory', 'S
         $scope.previewFormHolder = {};
         $scope.previewOverlayConfig = OverlayConfigFactory.getInstance();
         $scope.previewOverlayConfig.mask(true);
+        $scope.userRoleSelected = {
+            id: null,
+        }
 
         $scope.setLoginInfo = function() {
             
@@ -20,7 +23,10 @@ app.controller('MainCtrl', ['$scope', '$location', '$cookies', 'DataFactory', 'S
             
             if ($cookies.get('userPermissions') != null) {
              $scope.userPermissions = JSON.parse($cookies.get('userPermissions'));
-           // $scope.userType = userPermissions[0]['id'];
+            }
+
+            if ($cookies.get('currentUserRole') != null) {
+                $scope.userRoleSelected.id = $cookies.get('currentUserRole');
             }
         }
 
@@ -29,6 +35,20 @@ app.controller('MainCtrl', ['$scope', '$location', '$cookies', 'DataFactory', 'S
         });
 
         $scope.setLoginInfo();
+
+        $scope.getUserPerm = function(){
+            var userValue = $scope.userRoleSelected.id;
+            console.log("User:: ", userValue);
+            $cookies.put('currentUserRole', userValue);
+
+            var currentUrl = $location.absUrl();
+            var n = currentUrl.indexOf("/discount-dashboard");
+
+            //Switch to the dashboard if not already there
+            if(n < 0) {
+                $location.path('/discount-dashboard');
+            }
+        }
 
         $scope.sections = new SECTIONS();
         $scope.section = promotionDataService.getSection($scope.sections);
@@ -49,25 +69,11 @@ app.controller('MainCtrl', ['$scope', '$location', '$cookies', 'DataFactory', 'S
         }
                 
         $scope.logout = function () {
-            
-        /*
-            $cookies.remove('THDSSO', {
-                'domain': '.homedepot.com'
-            });
-            $cookies.remove('userName', {
-                'domain': '.homedepot.com'
-            });
-            $cookies.remove('userPermissions', {
-                'domain': '.homedepot.com'
-            });
+
             $cookies.put('logout', 'true', {
                 'domain': '.homedepot.com'
             });
             
-            loginService.setErrorStatus('');
-
-            //$scope.$broadcast('userLogout');
-        */
             $scope.username = '';
             $scope.userPermissions = '';
             loginService.clearLoginData();
