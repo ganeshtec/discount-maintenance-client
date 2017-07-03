@@ -25,6 +25,7 @@ app.service('locationDataService', ['$http', '$q', 'dataService',
         }
 
         publicApi.getStoreIds = function (data) {
+           // console.log("*_*)*_*_*_*_(_*_*_*______data.length::",data);
             var storeIDs = [];
             for (var i = 0; i < data.length; i++) {
                 storeIDs.push(parseInt(data[i]));

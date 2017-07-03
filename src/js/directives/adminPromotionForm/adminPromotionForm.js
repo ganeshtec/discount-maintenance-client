@@ -17,7 +17,14 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                 validationErrors: '='
             },
             link: function (scope) {
-                    
+             //console.log("--------scope.data in AdminPromoForm:----",scope.data.purchaseConds);
+                if(scope.data.purchaseConds.locations.flag=='storeFlag') {
+                    scope.data.purchaseConds.locations.locations='stores'
+                }
+             
+                else{
+                    scope.data.purchaseConds.locations.locations='markets'
+                }
                 function getPromoSubTypes() {
                     var getPromotionPromise;
                     if (scope.promoMfa) {
@@ -100,6 +107,8 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                 scope.showMaximumDiscount = false;
 
                 scope.getSelectedSubTypes = function () {
+
+                    
 
                     if (scope.promoSubTypeObject.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB') {
                         scope.data.purchaseConds.customerSegmentId = 0;

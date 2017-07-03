@@ -21,6 +21,7 @@ app.directive(
                 },
                 link: function (scope) {
                     var storeData = {};
+                    var marketData = {};
                     var existingID = '';
                     var existingMarketNumber = '';
                     scope.searchResults = [];
@@ -30,16 +31,23 @@ app.directive(
                     scope.showInvalidError = false;
                     scope.addStoretest = scope.addStore;
 
-
+                   
                     scope.search = function (data, location) {
-
                         if (scope.checkForEmptyValues(data, location)) {
-
                             data = scope.formatToCommaSeparatedList(data);
-
                             if (scope.isLocationDataValid(data)) {
-                                storeData.locationNumbers = data;
-                                getStoresByID(storeData, location, true);
+                             // console.log("scope.data.locations::",scope.data.locations); 
+                            //console.log("location Value in Search Function ::",location);   
+                                if(scope.data.locations=='stores') {
+                                //console.log("&&&--WS call happen for Stores::");
+                                    storeData.locationNumbers = data;
+                                    getStoresByID(storeData, location, true);
+                                }else {
+                                // console.log("&&&--WS call happen for MARKETs::");
+                                    marketData.locationNumbers = data;
+                                    getStoresByID(marketData, location, true);
+                                }
+                                
                             }
                         }
 
@@ -101,21 +109,36 @@ app.directive(
 
                     /* Data Service Call for Store & Market Search  */
                     function getStoresByID(data, location, clicked) {
+                        //console.log("location Value bfore at method getStoresByID ::",location);
+                        //console.log("calling getStoresByID function Evaluation::",data);
                         var tempData = {};
                         var locationPromise = {};
-
+                       // var locNumbers ;
+                        // if(data.locationNumbers) {
+                        //     locNumbers=data.locationNumbers;
+                        // }
+                        // else{
+                        //     locNumbers = data.locations;
+                        // }
+                           
                         tempData.locationNumbers = locationDataService
                             .getStoreIds(data.locationNumbers)
+                            //.getStoreIds(locNumbers)
+                            
 
                         locationPromise = locationDataService
                             .getStoreIdCodes(tempData, location);
                         locationPromise
                             .then(
                             function (data) {
+                               //  console.log("location Value bfore If ::",location);
                                 if (location == 'markets') {
+                                  //  console.log("CALL HAPPEND FOR MARKETS---PROMISE::",location);
+                                  //console.log("location Value::",location);
                                     scope.setMarketData(data, clicked);
                                 }
                                 else {
+                                  //   console.log("CALL HAPPEND FOR STORES---PROMISE::",location);
                                     scope.setStoreData(data,
                                         clicked);
                                 }
@@ -129,6 +152,7 @@ app.directive(
                     }
 
                     scope.setMarketData = function (data, clicked) {
+                        //console.log("~~~~~~~--setMarketData Function called::",data);
                         existingMarketNumber = '';
                         var invalidMarketNumbers;
 
@@ -147,6 +171,7 @@ app.directive(
                     }
 
                     scope.setStoreData = function (data, clicked) {
+                     //   console.log("$$$$$$$--setStoreDate Function called::",data);
                         existingID = '';
                         var invalidIds;
 
@@ -244,7 +269,7 @@ app.directive(
 
                     }
                     function setMarketData() {
-
+                        //console.log("scope.data.locations in setMarketData means Market::",scope.data.locations);   
                         var tempMarket = scope.data.locations;
                         scope.data = scope.validMarketInfo.reduce(function (data, market) {
                             return data.concat(market.marketNumber);
@@ -252,25 +277,33 @@ app.directive(
                         scope.data.locations = tempMarket;
                     }
                     function setData() {
-
+                         //console.log("scope.data.locations in setdata means Store::",scope.data.locations);   
                         var templocation = scope.data.locations;
                         scope.data = scope.validStoreInfo.reduce(function (data, item) {
                             return data.concat(item.storeNumber);
                         }, []);
 
                         scope.data.locations = templocation;
+                        scope.data.flag = 'storeFlag';
 
                     }
 
-                    // This gets invoked for editing location data for existing promotion
+                   //This gets invoked for editing location data for existing promotion
                     if (scope.data && scope.data.length) {
-
-                        storeData.locationNumbers = scope.data;
                         var clicked = true;
-                        getStoresByID(storeData, 'stores', clicked)
+                        if (scope.data.locations == 'stores') 
+                            {
+                                //console.log("Edit Promotion stores::",scope.data);
+                            storeData.locationNumbers = scope.data;
+                            getStoresByID(storeData, 'stores', clicked)
+                        }
+                        else{
+                               // console.log("Edit Promotion Markets::",scope.data);
+                            marketData.locationNumbers = scope.data;
+                                  // here we need to start work on Monday
+                            getStoresByID(marketData, 'markets', clicked)
+                        }
                     }
-
-
 
                     //Removing a individual store
                     scope.removeItem = function (index) {
@@ -299,6 +332,8 @@ app.directive(
 
                     scope.clearInput = function () {
                         scope.locationSearch = null; 
+                        //scope.data.purchaseConds.locations = scope.data.locations;
+                       // console.log("Radio button selected::",scope.data.locations);
                     }
 
                 }
