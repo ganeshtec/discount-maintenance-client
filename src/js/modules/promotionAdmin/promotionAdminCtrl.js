@@ -18,18 +18,10 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$co
             $scope.username = $cookies.get('userName');
         }
 
-        // if ($cookies.get('userPermissions') != null) {
-        //     var userPermissions = JSON.parse($cookies.get('userPermissions'));
-        //     $scope.userType = userPermissions[0]['id'];
-        //     console.log("User Perm after Login: ", $scope.userType);
-        // }
-        
         if ($cookies.get('currentUserRole') != null) {
             var currentUserRole = $cookies.get('currentUserRole');
             $scope.userType = currentUserRole;
         }
-
-     
 
         // Method to get promotion by id - Test Should return promotion record
         function getPromotionByID(id) {

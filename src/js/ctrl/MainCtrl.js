@@ -1,6 +1,6 @@
 // Main Controller for root scope
-app.controller('MainCtrl', ['$scope', '$location', '$cookies', 'DataFactory', 'SECTIONS', 'promotionDataService', 'loginService', 'OverlayConfigFactory','$rootScope','$route',
-    function ($scope, $location, $cookies, DataFactory, SECTIONS, promotionDataService, loginService, OverlayConfigFactory,$rootScope,$route) {
+app.controller('MainCtrl', ['$scope', '$location', '$cookies', 'DataFactory', 'SECTIONS', 'promotionDataService', 'loginService', 'OverlayConfigFactory',
+    function ($scope, $location, $cookies, DataFactory, SECTIONS, promotionDataService, loginService, OverlayConfigFactory) {
         $scope.messageModal = DataFactory.messageModal;
         $scope.username = '';
         $scope.userPermissions = '';
@@ -22,7 +22,7 @@ app.controller('MainCtrl', ['$scope', '$location', '$cookies', 'DataFactory', 'S
             }
             
             if ($cookies.get('userPermissions') != null) {
-             $scope.userPermissions = JSON.parse($cookies.get('userPermissions'));
+                $scope.userPermissions = JSON.parse($cookies.get('userPermissions'));
             }
 
             if ($cookies.get('currentUserRole') != null) {
@@ -30,7 +30,7 @@ app.controller('MainCtrl', ['$scope', '$location', '$cookies', 'DataFactory', 'S
             }
         }
 
-        $scope.$on('user-login', function(event, args) {
+        $scope.$on('user-login', function(/*event, args*/) {
             $scope.setLoginInfo();
         });
 
@@ -38,11 +38,12 @@ app.controller('MainCtrl', ['$scope', '$location', '$cookies', 'DataFactory', 'S
 
         $scope.getUserPerm = function(){
             var userValue = $scope.userRoleSelected.id;
-            console.log("User:: ", userValue);
-            $cookies.put('currentUserRole', userValue);
+            $cookies.put('currentUserRole', userValue, {
+                'domain': '.homedepot.com'
+            });
 
             var currentUrl = $location.absUrl();
-            var n = currentUrl.indexOf("/discount-dashboard");
+            var n = currentUrl.indexOf('/discount-dashboard');
 
             //Switch to the dashboard if not already there
             if(n < 0) {
@@ -76,7 +77,9 @@ app.controller('MainCtrl', ['$scope', '$location', '$cookies', 'DataFactory', 'S
             
             $scope.username = '';
             $scope.userPermissions = '';
+            $scope.userRoleSelected.id = null;
             loginService.clearLoginData();
+            loginService.setErrorStatus('');
 
         }
     }
