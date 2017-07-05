@@ -21,8 +21,8 @@ app.directive('categoryView', ['categoryDataService', 'DataFactory', 'OverlayCon
 
                 scope.addItem = function (item) {
                     var data = {};
-                    data.name = item.name;
-                    data.id = item.source;
+                    data.name = item.displayName;
+                    data.id = item.sourceId;
                     data.catalog = 'Web';
 
                     var index = -1;
@@ -69,24 +69,18 @@ app.directive('categoryView', ['categoryDataService', 'DataFactory', 'OverlayCon
                 }
 
                 scope.search = function (data) {
-                    var getCategoriesPromise = categoryDataService.getCategoriesSearch(data);
-                    scope.categoryDataLoading = true;
-
+                    var getCategoriesPromise = categoryDataService.getCategories(data);
                     getCategoriesPromise.then(
                         function (data) {
+                            scope.searchResults = data.docs;
 
-                            scope.categoryDataLoading = false;
-
-                            scope.searchResults = data.data;
-
-                            if (data.data.length == 0) {
+                            if (data.docs == null) {
                                 DataFactory.messageModal.message = 'Category not found';
                                 DataFactory.messageModal.title = 'Warning';
                                 $('#messageModal').popup();
                             }
                         },
                         function (error) {
-                            scope.categoryDataLoading = false;
                             DataFactory.messageModal.message = error;
                             DataFactory.messageModal.title = 'Error';
                             $('#messageModal').popup();
