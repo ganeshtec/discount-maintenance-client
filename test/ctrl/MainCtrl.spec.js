@@ -30,6 +30,7 @@ describe('MainCtrl', function () {
            $scope.setLoginInfo();
            expect($scope.username).toBe(username);
            //expect($scope.userPermissions).toBe(userPermValue);
+           expect($scope.userPermissions).not.toBeNull();
            expect($scope.userRoleSelected.id).toBe(currentUserRole);
            
            $scope.logout();

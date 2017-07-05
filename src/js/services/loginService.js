@@ -196,16 +196,30 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
 
                     } else {
 
-                        var userPermValue =   [{id:'228', description:'SKU: Discount Engine-Store MFA'} ,{id:'229', description:'SKU: Discount Engine-Online DCM'}];
-                    
-                        userPermissions = userPermValue; //data;
-                        var defaultUserPerm = data[0].id;
+                        //var userPermValue =   [{id:'228', description:'SKU: Discount Engine-Store MFA'} ,{id:'229', description:'SKU: Discount Engine-Online DCM'}];
+                        //userPermissions = userPermValue; // (for testing)
 
+                        userPermissions = data;  
+                        
+                        //Set default user permission based on the first shortDesc alphabeticly 
+                        var defaultUserPerm = userPermissions[0].id;
+
+                        var defaultPerm = -1;
+
+                        //Set shortDesc and defulat user permission
                         for(var i = 0; i < userPermissions.length; i++){
                             var userPerm = userPermissions[i].description;
                             var n = userPerm.indexOf('-');
-                            userPermissions[i].shortDesc = userPerm.substring(n+1);                            
+                            userPermissions[i].shortDesc = userPerm.substring(n+1);    
+
+                            if(defaultPerm < 0) {
+                                defaultPerm = i;
+                            }else if (userPermissions[i].shortDesc < userPermissions[defaultPerm].shortDesc){
+                                defaultPerm = i;
+                            }                      
                         }
+
+                        defaultUserPerm = userPermissions[defaultPerm].id;
                         
                         $cookies.put('userPermissions', JSON.stringify(userPermissions), {
                             'domain': '.homedepot.com'
