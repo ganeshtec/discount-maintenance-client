@@ -81,6 +81,9 @@
     background-color: rgba(0, 0, 0, 0.5);
     text-decoration: none;
   }
+  .md-toolbar-actions .user {
+    color:#EEEEEE;
+  }
   .md-toolbar-actions a.search:before {
     font-family:"FontAwesome";
     content: "\f002";

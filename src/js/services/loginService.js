@@ -1,5 +1,5 @@
-app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout', 'DataFactory', 'URL_CONFIG',
-    function ($http, $q, $cookies, $location, $timeout, DataFactory, URL_CONFIG) {
+app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout', 'DataFactory', 'URL_CONFIG','$rootScope',
+    function ($http, $q, $cookies, $location, $timeout, DataFactory, URL_CONFIG, $rootScope) {
         var publicApi = {};
         var status = null;
         var urls = new URL_CONFIG();
@@ -8,7 +8,6 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
         publicApi.getErrorStatus = function () {
             return status;
         }
-
 
         publicApi.setErrorStatus = function (errstatus) {
             status = errstatus;
@@ -33,16 +32,8 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
 
             function httpSuccess(response, status) {
                 if (response.data == null || response.data == undefined || response.data == '') {
-                    $cookies.remove('THDSSO', {
-                        'domain': '.homedepot.com'
-                    });
-                    $cookies.remove('userName', {
-                        'domain': '.homedepot.com'
-                    });
-                    $cookies.remove('userPermissions', {
-                        'domain': '.homedepot.com'
-                    });
-
+                    
+                    publicApi.clearLoginData();
                     status = 'invaliduser';
 
                 } else {
@@ -51,18 +42,9 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
                     var username = data.userName;
                     var resstatus = data.status;
                     if (THDSSO == null || THDSSO == 'null' || resstatus == 'INVALID_CREDENTIALS' || resstatus == 'PASSWORD_EXPIRED') {
-                        $cookies.remove('THDSSO', {
-                            'domain': '.homedepot.com'
-                        });
-                        $cookies.remove('userName', {
-                            'domain': '.homedepot.com'
-                        });
-                        $cookies.remove('userPermissions', {
-                            'domain': '.homedepot.com'
-                        });
 
+                        publicApi.clearLoginData();
                         status = 'invaliduser';
-
                         $location.path('login');
 
                     } else {
@@ -70,11 +52,13 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
                         $cookies.put('THDSSO', THDSSO, {
                             'domain': '.homedepot.com'
                         });
+
                         $cookies.put('userName', username, {
                             'domain': '.homedepot.com'
                         });
+
                         status = '';
-                        redirectPage();
+                       //  redirectPage();
                         publicApi.authorizeUser(username, 'login');
                     }
 
@@ -94,12 +78,30 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
                 return status;
             }
 
-            function redirectPage() {
+            /*function redirectPage() {
                 status = '';
                 $location.path('discount-dashboard');
-            }
+            }*/
 
         }
+
+        publicApi.clearLoginData = function () {
+
+            $cookies.remove('THDSSO', {
+                'domain': '.homedepot.com'
+            });
+            $cookies.remove('userName', {
+                'domain': '.homedepot.com'
+            });
+            $cookies.remove('userPermissions', {
+                'domain': '.homedepot.com'
+            });
+            $cookies.remove('currentUserRole', {
+                'domain': '.homedepot.com'
+            });
+ 
+        }
+
 
         // Method to deactivate all sections, expected to have property .isActive
         publicApi.sessionValidate = function (ssoCookie, sourcepage) {
@@ -125,16 +127,8 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
             function httpSuccess(response) {
 
                 if (response.data == null || response.data == undefined || response.data == '') {
-                    $cookies.remove('THDSSO', {
-                        'domain': '.homedepot.com'
-                    });
-                    $cookies.remove('userName', {
-                        'domain': '.homedepot.com'
-                    });
-                    $cookies.remove('userPermissions', {
-                        'domain': '.homedepot.com'
-                    });
 
+                    publicApi.clearLoginData();
                     status = 'invaliduser';
                     $location.path('login');
 
@@ -194,23 +188,54 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
                     redirectPage();
 
                 } else {
-
-
+                    
                     var data = response.data;
                     if (data.length === 0) {
                         status = 'unauthorized';
                         redirectPage();
 
                     } else {
-                        userPermissions = data;
-                        $cookies.put('userPermissions', JSON.stringify(userPermissions));
+
+                        //var userPermValue =   [{id:'228', description:'SKU: Discount Engine-Store MFA'} ,{id:'229', description:'SKU: Discount Engine-Online DCM'}];
+                        //userPermissions = userPermValue; // (for testing)
+
+                        userPermissions = data;  
+                        
+                        //Set default user permission based on the first shortDesc alphabeticly 
+                        var defaultUserPerm = userPermissions[0].id;
+
+                        var defaultPerm = -1;
+
+                        //Set shortDesc and defulat user permission
+                        for(var i = 0; i < userPermissions.length; i++){
+                            var userPerm = userPermissions[i].description;
+                            var n = userPerm.indexOf('-');
+                            userPermissions[i].shortDesc = userPerm.substring(n+1);    
+
+                            if(defaultPerm < 0) {
+                                defaultPerm = i;
+                            }else if (userPermissions[i].shortDesc < userPermissions[defaultPerm].shortDesc){
+                                defaultPerm = i;
+                            }                      
+                        }
+
+                        defaultUserPerm = userPermissions[defaultPerm].id;
+                        
+                        $cookies.put('userPermissions', JSON.stringify(userPermissions), {
+                            'domain': '.homedepot.com'
+                        });
+                        
+                        $cookies.put('currentUserRole', defaultUserPerm, {
+                            'domain': '.homedepot.com'
+                        });
+
                         status = 'success';
+
                         if (sourcepage === 'login') {
                             $location.path('discount-dashboard');
                         }
-
                     }
-
+                    $rootScope.$broadcast('user-login');
                 }
             }
 
@@ -228,16 +253,8 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
             }
 
             function redirectPage() {
+                publicApi.clearLoginData();
                 status = 'unauthorized';
-                $cookies.remove('THDSSO', {
-                    'domain': '.homedepot.com'
-                });
-                $cookies.remove('userName', {
-                    'domain': '.homedepot.com'
-                });
-                $cookies.remove('userPermissions', {
-                    'domain': '.homedepot.com'
-                });
                 $location.path('login');
             }
         }
