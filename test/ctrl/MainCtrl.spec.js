@@ -22,7 +22,7 @@ describe('MainCtrl', function () {
         $cookies.put('currentUserRole', currentUserRole);
     }));
 
-    fdescribe('UserLogin',
+    describe('UserLogin',
      
      function() {
         it('test logout function clears the username and userpermmision', function() {
