@@ -1,47 +1,12 @@
-// fdescribe('Replace Special characterr directive', function () {
-//   'use strict';
-//   var scope,
-//       element,
-//       testValue,
-//       compile,
-//       ngModelCtrl;
-
-//   beforeEach(function () {
-//     module('app');
-
-//     compile = function () {
-//       inject([
-//         '$compile',
-//         '$rootScope',
-//         function ($compile, $rootScope) {
-//           scope = $rootScope.$new();
-//           scope.testValue = testValue;
-//           element = angular.element('<input ng-model="testValue" replace-special-characters></input>');
-//           $compile(element)(scope);
-//           ngModelCtrl = element.controller('ngModel');
-//           scope.$digest();
-//         }
-//       ]);
-//     };
-//   });
-// //   describe('initialization', function () {
-// //     beforeEach(function () {
-
-// //     });
-//     it('Opening and closing quote characters should be replaced with regular quotes', function () {
-//        testValue = '<save 10% with promocode “Lithonia2017”? until 6/30>';
-//       compile();
-//       ngModelCtrl.$setViewValue(testValue);
-//       scope.$digest();
-//       expect(scope.testValue).toEqual('save 10% with promocode "Lithonia2017"? until 6/30');
-//     });
-// //   });
-// });
-
 describe('Replace Special character directive', function() {
   var $scope,
       element,
       ngModelCtrl;
+   var triggerKeyDown = function(element, keyCode) {
+    var e = $.Event('keypress');
+    e.which = keyCode;
+    element.trigger(e);
+  };
   // Load the myApp module, which contains the directive
   beforeEach(module('app'));
 
@@ -69,9 +34,18 @@ describe('Replace Special character directive', function() {
   it('Should remove invalid characters', function() {
     ngModelCtrl.$setViewValue("save 10% with promocode <Lithonia2017>? until 6/30");
     expect($scope.testValue).toEqual('save 10% with promocode Lithonia2017? until 6/30');
+    //expect(element.html()).toContain('save 10% with promocode Lithonia2017? until 6/30');
   });
   it('Empty input should not fail', function() {
     ngModelCtrl.$setViewValue("");
     expect($scope.testValue).toEqual('');
   });
+  it('Invlid characters should be prevented from being keyed in',function(){
+    triggerKeyDown(element,91)//simulate entering open square bracket key
+    expect($scope.isLastKeyValid).toEqual(false);
+  })
+  it('Should be able to key-in allowed characters',function(){
+    triggerKeyDown(element,65);//simulate entering character 'a'
+    expect($scope.isLastKeyValid).toEqual(true);
+  })
 });
