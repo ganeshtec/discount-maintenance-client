@@ -18,13 +18,13 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
             },
             link: function (scope) {
              //console.log("--------scope.data in AdminPromoForm:----",scope.data.purchaseConds);
-                if(scope.data.purchaseConds.locations.flag=='storeFlag') {
-                    scope.data.purchaseConds.locations.locations='stores'
-                }
+                // if(scope.data.purchaseConds.locations.flag=='storeFlag') {
+                //     scope.data.purchaseConds.locations.locations='stores'
+                // }
              
-                else{
-                    scope.data.purchaseConds.locations.locations='markets'
-                }
+                // else{
+                //     scope.data.purchaseConds.locations.locations='markets'
+                // }
                 function getPromoSubTypes() {
                     var getPromotionPromise;
                     if (scope.promoMfa) {

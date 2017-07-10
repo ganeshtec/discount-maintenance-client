@@ -38,6 +38,7 @@ app.factory('PromotionData', [function () {
                 'channels': [87],
                 'qualUOM': 'Quantity',
                 'locations': [],
+                'markets': [],
                 'isTargetExist': false,
                 'sources': [{
                     'inclusions': {
