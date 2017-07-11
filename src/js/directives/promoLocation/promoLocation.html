@@ -12,9 +12,8 @@
 				</div>
 			</div> 
 			<!-- Markets code END -->
-			
-<!-- <table class="table category__table" ng-hide="locationType == 'markets' "> -->
 
+<!-- <table class="table category__table" ng-hide="locationType == 'markets' "> -->
 <table class="table category__table">
 
 	<tr class="category__table__row-nobottomborder">
@@ -48,25 +47,11 @@
 				    </span>
 					</span>
 				</ul>
-			<!--	<ul class="table__search__results">
-					<li ng-repeat="item in searchResults | filter: itemSearch">
-						<a href="" ng-click="addStore(item)" class="table__search__results__item">
-							{{item.omsId}} | {{item.prodName}}
-						</a>
-					</li>
-					<li>
-						<a ng-show="searchResults.length" href="" ng-click="searchResults = []" class="table__search__results__item">
-							Close
-						</a>
-					</li>
-				</ul>
-				-->
 			</div>
 		</td>
 	</tr>
 
 	<tr class="category__table__row-notopborder" ng-if="locationType=='stores'">
-		{{locationType}}
 		<th>
 			Store Number
 		</th>
@@ -108,7 +93,7 @@
 			MarketName
 		</th>
 		<th>
-			BYO Number
+			
 		</th>
 		<th class="r">
 			<a class="editOption thd-orange" ng-if="validMarketInfo && validMarketInfo.length >0" ng-click="removeAll()" href="">
