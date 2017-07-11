@@ -24,6 +24,7 @@ module.exports = function(config) {
             'src/js/components/**/*.js',
             'src/js/directives/**/*.html',
             'src/js/directives/**/*.js',
+            'src/js/ctrl/*.js',
             'node_modules/angular-mocks/angular-mocks.js',
             'test/**/*.js'
         ],

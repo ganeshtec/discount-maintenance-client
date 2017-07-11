@@ -1,11 +1,11 @@
-app.controller('loginCtrl', ['$scope', '$routeParams', '$location','$cookies', 'loginService',
-    function($scope, $routeParams, $location, $cookies,loginService) {
+app.controller('loginCtrl', ['$scope', '$rootScope', '$routeParams', '$location','$cookies', 'loginService',
+    function($scope, $rootScope, $routeParams, $location, $cookies,loginService) {
         
 
         $scope.showError = loginService.getErrorStatus() || null;
         $scope.submit = function() {
             $cookies.remove('logout', { 'domain': '.homedepot.com' });
-            $cookies.remove('userPermissions',{'domain': '.homedepot.com'});
+            loginService.clearLoginData();
             loginService.authenticate($scope.name, $scope.password).then(function(data) {
                 $scope.showError = data;
             });

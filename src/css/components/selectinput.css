@@ -53,3 +53,10 @@
   color:#999999;
   cursor: not-allowed;
 }
+
+.md-select-alt select{
+  line-height: 30px;
+}
+.md-select-alt:after {
+  top: 5px;
+}

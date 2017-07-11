@@ -7,7 +7,13 @@
         <span><h1>Discount Engine</h1></span>
         </a>
     </div>    
-    <div class="md-toolbar-actions">      
+    <div class="md-toolbar-actions"> 
+        <span class="user" ng-show="userRoleSelected.id"> Currently logged in as: </span>
+        <div class="md-select md-select-alt" ng-show="userRoleSelected.id">
+        <select name="userRole" style="width:155px"ng-model="userRoleSelected.id" ng-change="getUserPerm()">
+            <option ng-repeat="user in userPermissions" value="{{user.id}}">{{user.shortDesc}}</option>
+        </select>  
+        </div>  
         <a class="profile" href="" title="{{username}}"></a>
         <a class="logout" href="#/login"   ng-click='logout()' title="Logout"></a>
     </div>

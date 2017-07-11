@@ -12,14 +12,14 @@
  			<div class="md-toolbar-search l">
 				<label for="MerchHierarchy"><h3>Web Hierarchy</h3></label>
  				<input class="table__search" placeholder="Search and Add Category" type="text" ng-model="itemSearch" ng-keypress="($event.keyCode === 13) && (!itemSearch || isDisabled || search(itemSearch))" allow-pattern="(\d|[a-z A-Z\(\?\-\_\.\'\,\%\$\!\@\&\)])" />
-				<!--<a class="md-button secondary no-padding" href="" ng-click="!itemSearch || isDisabled || search(itemSearch)">-->
-					<a class="md-button secondary no-padding" href="" ng-click="showSkuTypeCountModal($event)">
+				<a class="md-button secondary no-padding" href="" ng-click="!itemSearch || isDisabled || search(itemSearch)">
+					<!--<a class="md-button secondary no-padding" href="" ng-click="showSkuTypeCountModal($event)">-->
 					Search
 				</a>
  				<ul class="table__search__results">
 					<li ng-repeat="item in searchResults | filter:itemSearch">
-						<a href="" ng-click="addItem(item.details)" class="table__search__results__item">
-							{{item.details.name}} | {{item.details.source}}
+						<a href="" ng-click="addItem(item)" class="table__search__results__item">
+							{{item.displayName}} | {{item.sourceId}}
 						</a>
 					</li>
 					<li>
