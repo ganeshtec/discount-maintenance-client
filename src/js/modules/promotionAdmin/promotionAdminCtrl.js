@@ -29,7 +29,7 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$co
             var getPromotionPromise = promotionDataService.getPromotionByID(id);
             getPromotionPromise.then(
                 function (data) {
-                    var promoData = new PromotionData();
+                    var promoData = new PromotionData($scope.userType);
                     $scope.promotionData = angular.extend(promoData, data);
                     if ($scope.clonemode) {
                         $scope.promotionData.origRequestId = data.promoId;
@@ -49,35 +49,49 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$co
         }
 
         function setPromoData() {
-            $scope.promotionData = new PromotionData();
-            $scope.promotionData.meta.created = $scope.username;
-            $scope.promotionData.meta.lastUpdatedBy = $scope.username;
+            var promotionData = new PromotionData($scope.userType);
+            promotionData.meta.created = $scope.username;
+            promotionData.meta.lastUpdatedBy = $scope.username;
+            $scope.promotionData=promotionData;
         }
 
         $this.setViewProperties = function(userType) {
             if (userType == allowedPermissionIDs.STORE) {
-                $scope.viewProperties = getViewProperties(false);
-                $scope.promotionSubTypesForMFA = true;
-            } else if (userType == allowedPermissionIDs.ONLINE) {
-                $scope.promotionSubTypesForMFA = false;
-                $scope.viewProperties = getViewProperties(true);
-            }
-        }
-
-        function getViewProperties(visibility) {
-            return {
-                displayPromoDescription: visibility,
-                displayRedemptionLimits: visibility,
-                displayRedemptionMethod: visibility,
-                displayCombinationPromo: visibility,
-                displayOMSId: visibility,
-                displayMFGBrand: visibility,
-                displayWebHierarchy: visibility,
-                displayOMSIdExclusion: visibility,
-                displayExclusionSubCategories: visibility,
-                displayPaymentType: visibility,
-                displayScheduleTime: visibility,
-                displayPrintLabel: visibility,
+                $scope.viewProperties = {
+                    displayPromoDescription: false,
+                    displayRedemptionLimits: false,
+                    displayRedemptionMethod: false,
+                    displayCombinationPromo: false,
+                    displayOMSId: false,
+                    displayMFGBrand: false,
+                    displayWebHierarchy: false,
+                    displayOMSIdExclusion: false,
+                    displayExclusionSubCategories: false,
+                    displayPaymentType: false,
+                    displayScheduleTime: false,
+                    displayPrintLabel: false,
+                    displayLocations: true,
+                    promotionSubTypesForMFA: true
+                }
+                //$scope.promotionSubTypesForMFA = true;
+            } else if (userType == allowedPermissionIDs.ONLINE) {                
+                $scope.viewProperties = {
+                    displayPromoDescription: true,
+                    displayRedemptionLimits: true,
+                    displayRedemptionMethod: true,
+                    displayCombinationPromo: true,
+                    displayOMSId: true,
+                    displayMFGBrand: true,
+                    displayWebHierarchy: true,
+                    displayOMSIdExclusion: true,
+                    displayExclusionSubCategories: true,
+                    displayPaymentType: true,
+                    displayScheduleTime: true,
+                    displayPrintLabel: false,
+                    displayLocations: false,
+                    promotionSubTypesForMFA: false
+                }
+                //$scope.promotionSubTypesForMFA = false;
             }
         }
 

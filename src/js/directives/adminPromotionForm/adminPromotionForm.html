@@ -83,7 +83,7 @@
 			<purchase-condition-rewards preview="preview" data="data" view-prop="viewProp" promoform="promoForm" is-disabled="isDisabled">
 			</purchase-condition-rewards>
 		</section>
-		<section class="admin__promotion__section" ng-show="index == 2 || preview">
+		<section class="admin__promotion__section" ng-show="viewProp.displayLocations && (index == 2 || preview)">
 				<promo-location data="data.purchaseConds.locations" preview="preview" promoform="promoForm">
 				</promo-location>
 		</section>
