@@ -44,10 +44,12 @@ app.controller('MainCtrl', ['$scope', '$location', '$cookies', 'DataFactory', 'S
 
             var currentUrl = $location.absUrl();
             var n = currentUrl.indexOf('/discount-dashboard');
-
             //Switch to the dashboard if not already there
             if(n < 0) {
                 $location.path('/discount-dashboard');
+            }
+            else if(n > 0){
+                $location.path('/discount-dashboard/#');
             }
         }
 

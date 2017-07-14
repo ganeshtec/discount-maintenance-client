@@ -1,10 +1,15 @@
-app.controller('DashboardCtrl', ['$filter', 'leadTimeService', '$scope', 'DataFactory', 'promotionDataService', '$location', '$routeParams', '$mdDialog', 'dashboardDataService', 'OverlayConfigFactory',
-    function ($filter, leadTimeService, $scope, DataFactory, promotionDataService, $location, routeParams, $mdDialog, dashboardDataService, OverlayConfigFactory) {
+app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$scope', 'DataFactory', 'promotionDataService', '$location', '$routeParams', '$mdDialog', 'dashboardDataService', 'OverlayConfigFactory',
+    function ($cookies, $filter, leadTimeService, $scope, DataFactory, promotionDataService, $location, routeParams, $mdDialog, dashboardDataService, OverlayConfigFactory) {
         var DEFAULT_RECORDS_PER_PG = 10,
             LEAST_RECORDS_PER_PG = 5; //smallest value in the records per page selectbox 
         $scope.selected = {};
         $scope.selectedCount = 0;
         $scope.sel = [];
+        $scope.userRoleSelected = {
+            id: null,
+        }
+        $scope.channelId = [];
+
         $scope.browseCatalogOverlayConfig = OverlayConfigFactory.getInstance();
         // inital value of the select all check box
         $scope.selectAll = false;
@@ -33,10 +38,27 @@ app.controller('DashboardCtrl', ['$filter', 'leadTimeService', '$scope', 'DataFa
             }
             $location.search(params);
         };
+
+        if ($cookies.get('currentUserRole') != null) {
+            $scope.userRoleSelected.id = $cookies.get('currentUserRole');
+            if ($scope.userRoleSelected.id == 229) {
+                $scope.channelId = 87;
+            }
+            else if ($scope.userRoleSelected.id == 228) {
+                $scope.channelId = 57;
+            }
+
+        }
+
         $scope.searchWithUrlParams = function () {
+
+            var channelList = [];
+            channelList.push($scope.channelId);
             var params = $location.search();
             $scope.promotionName = params.keyword || '';
-            $scope.search(params.keyword || '',
+            params.channels = channelList;
+            $scope.search(params.channels,
+                params.keyword || '',
                 params.page || 1,
                 params.size || DEFAULT_RECORDS_PER_PG,
                 params.status || 'all',
@@ -210,17 +232,17 @@ app.controller('DashboardCtrl', ['$filter', 'leadTimeService', '$scope', 'DataFa
             });
         }
 
-        $scope.isInLeadTime = function(endDate, leadTime) {
+        $scope.isInLeadTime = function (endDate, leadTime) {
             var today = new Date();
             var leadTimeSec = leadTime * 24 * 60 * 60 * 1000;
-            if (endDate.getTime() - today.getTime() <= leadTimeSec){
+            if (endDate.getTime() - today.getTime() <= leadTimeSec) {
                 return true;
             } else {
                 return false;
             }
         }
 
-        $scope.eligibleLabelForDeactivate = function(labelFlag, status, inLeadTime) {
+        $scope.eligibleLabelForDeactivate = function (labelFlag, status, inLeadTime) {
             if (labelFlag == true && status == 61 && !inLeadTime) {
                 return true;
             } else {
@@ -228,7 +250,7 @@ app.controller('DashboardCtrl', ['$filter', 'leadTimeService', '$scope', 'DataFa
             }
         }
 
-        $scope.cannotBeDeactivated = function(labelFlag, status, inLeadTime) {
+        $scope.cannotBeDeactivated = function (labelFlag, status, inLeadTime) {
             if (labelFlag && status == 61 && inLeadTime) {
                 return true;
             } else {
@@ -236,7 +258,7 @@ app.controller('DashboardCtrl', ['$filter', 'leadTimeService', '$scope', 'DataFa
             }
         }
 
-        $scope.constructAndSavePromo = function(leadTime, promo) {
+        $scope.constructAndSavePromo = function (leadTime, promo) {
             var today = new Date();
             var newEndDate = new Date();
             newEndDate.setDate(today.getDate() + leadTime);
@@ -351,10 +373,13 @@ app.controller('DashboardCtrl', ['$filter', 'leadTimeService', '$scope', 'DataFa
             }
             return true;
         }
-        $scope.search = function (keyword, curPage, pageSize, status, type, sortby, order) {
+
+
+
+        $scope.search = function (channels, keyword, curPage, pageSize, status, type, sortby, order) {
             //clear all selected items when moving away from page
             $scope.selected = {};
-            var promotionPromise = promotionDataService.getPromotions(keyword, curPage - 1, pageSize, status, type, sortby, order);
+            var promotionPromise = promotionDataService.getPromotions(channels, keyword, curPage - 1, pageSize, status, type, sortby, order);
             //set mask to indicate progress and prevent further operations
             $scope.loading = true;
             promotionPromise.then(
