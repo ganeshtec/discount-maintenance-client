@@ -135,9 +135,10 @@ app.service('promotionDataService', ['$http', '$q', 'dataService', 'DataFactory'
             return result.promise;
         }
 
-        publicApi.getPromotions = function (promoname, page, size, status, promoTypeCd, sortby, order) {
+        publicApi.getPromotions = function (channels, promoname, page, size, status, promoTypeCd, sortby, order) {
             var query = {};
             query.criteria = {};
+            query.criteria.channels = channels;
             query.criteria.term = promoname;
             query.criteria.page = {};
             query.criteria.page.page = page || 0;
