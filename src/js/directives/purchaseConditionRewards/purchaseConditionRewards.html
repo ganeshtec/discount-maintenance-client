@@ -39,25 +39,25 @@
             </a>
         </div> 
         <label ng-show="data.purchaseConds.sources.length > 1">Definition for "{{alphabet[$index]}}" *</label>
-        <div class="" ng-show="viewProp.displayOMSId">
-            <input type="radio" id="itemsoms_{{$index}}" name="purchaseoption1" ng-model="data.purchaseConds.sources[$index].purchaseoption"
+        <div class="md-radio" ng-show="viewProp.displayOMSId">
+            <input type="radio" id="itemsoms_{{$index}}" name="purchaseoption_{{$index}}" ng-model="data.purchaseConds.sources[$index].purchaseoption"
                 title="Items/OMS ID's" value="itemoms" />
-            <label for="itemsoms"><span><span></span></span>Items/OMS ID's</label>
+            <label for="itemsoms_{{$index}}"><span><span></span></span>Items/OMS ID's</label>
         </div>
-        <div class="">
-            <input type="radio" id="itemssku_{{$index}}" name="purchaseoption2" ng-model="data.purchaseConds.sources[$index].purchaseoption"
+        <div class="md-radio">
+            <input type="radio" id="itemssku_{{$index}}" name="purchaseoption_{{$index}}" ng-model="data.purchaseConds.sources[$index].purchaseoption"
                 title="Items/SKU" value="itemsku" />
-            <label for="itemssku"><span><span></span></span>Items/SKU</label>
+            <label for="itemssku_{{$index}}"><span><span></span></span>Items/SKU</label>
         </div>
-        <div class="">
-            <input type="radio" id="category_{{$index}}" name="purchaseoption3" ng-model="data.purchaseConds.sources[$index].purchaseoption"
+        <div class="md-radio">
+            <input type="radio" id="category_{{$index}}" name="purchaseoption_{{$index}}" ng-model="data.purchaseConds.sources[$index].purchaseoption"
                 title="Category" value="category" />
-            <label for="category"><span><span></span></span>Category </label>
+            <label for="category_{{$index}}"><span><span></span></span>Category </label>
         </div>
-        <div class="" ng-show="viewProp.displayMFGBrand">
-            <input type="radio" id="brand_{{$index}}" name="purchaseoption4" ng-model="data.purchaseConds.sources[$index].purchaseoption"
+        <div class="md-radio" ng-show="viewProp.displayMFGBrand">
+            <input type="radio" id="brand_{{$index}}" name="purchaseoption_{{$index}}" ng-model="data.purchaseConds.sources[$index].purchaseoption"
                 title="MFG Brand" value="Brand" ng-disabled="true" />
-            <label for="brand"><span><span></span></span>MFG Brand</label>
+            <label for="brand_{{$index}}"><span><span></span></span>MFG Brand</label>
         </div>
 
     </div>
