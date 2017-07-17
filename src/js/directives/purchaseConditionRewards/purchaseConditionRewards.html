@@ -44,7 +44,8 @@
                 title="Items/OMS ID's" value="itemoms" />
             <label for="itemsoms_{{$index}}"><span><span></span></span>Items/OMS ID's</label>
         </div>
-        <div class="md-radio">
+        <div class="md-radio" ng-show="viewProp.displayItemsSku">
+            <!--<div class="md-radio">-->
             <input type="radio" id="itemssku_{{$index}}" name="purchaseoption_{{$index}}" ng-model="data.purchaseConds.sources[$index].purchaseoption"
                 title="Items/SKU" value="itemsku" />
             <label for="itemssku_{{$index}}"><span><span></span></span>Items/SKU</label>
@@ -54,11 +55,7 @@
                 title="Category" value="category" />
             <label for="category_{{$index}}"><span><span></span></span>Category </label>
         </div>
-        <div class="md-radio" ng-show="viewProp.displayMFGBrand">
-            <input type="radio" id="brand_{{$index}}" name="purchaseoption_{{$index}}" ng-model="data.purchaseConds.sources[$index].purchaseoption"
-                title="MFG Brand" value="Brand" ng-disabled="true" />
-            <label for="brand_{{$index}}"><span><span></span></span>MFG Brand</label>
-        </div>
+
 
     </div>
     <!-- Item view Codes Component -->
@@ -72,7 +69,7 @@
     
    
     <!-- NXK8980  MerchCategory-CodeChanges-START -->
-    <merch-hierarchy-view data="item.inclusions.hierarchies" source="item" is-disabled="isDisabled" promoform="promoform" promo-status="data.status" ng-show="item.purchaseoption == 'category'">
+    <merch-hierarchy-view data="item.inclusions.hierarchies"  source="item" is-disabled="isDisabled" promoform="promoform" view-prop="viewProp" promo-status="data.status" ng-show="item.purchaseoption == 'category' && viewProp.displayItemsSku">
     </merch-hierarchy-view>
     <!-- NXK8980  MerchCategory-CodeChanges-END -->
     <category-exclusion data="item.exclusions" itemtype="item.exclusions.itemtype" is-disabled="isDisabled" promoform="promoform"

@@ -25,7 +25,7 @@
 						title="Items/OMS ID's" value="itemoms"  ng-change="setExcludeItemType()"/>
 					<label for="itemsoms"><span><span></span></span>Items/OMS ID's</label>
 				</div>
-				<div class="md-radio">
+				<div class="md-radio" ng-show="viewProp.displayItemsSku">
 					<input type="radio" id="itemssku_exclude" name="sku_excludeoption" ng-model="itemexclude"
 						title="Items/SKU" value="itemsku" ng-change="setExcludeItemType()"/>
 					<label for="itemssku"><span><span></span></span>Items/SKU</label>
