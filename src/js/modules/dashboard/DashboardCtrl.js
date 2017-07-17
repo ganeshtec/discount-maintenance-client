@@ -42,16 +42,15 @@ app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$sco
         if ($cookies.get('currentUserRole') != null) {
             $scope.userRoleSelected.id = $cookies.get('currentUserRole');
             if ($scope.userRoleSelected.id == 229) {
-                $scope.channelId = 87;
+                $scope.channelId = 57;
             }
             else if ($scope.userRoleSelected.id == 228) {
-                $scope.channelId = 57;
+                $scope.channelId = 87;
             }
 
         }
 
         $scope.searchWithUrlParams = function () {
-
             var channelList = [];
             channelList.push($scope.channelId);
             var params = $location.search();
