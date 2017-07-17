@@ -41,14 +41,7 @@ app.controller('MainCtrl', ['$scope', '$location', '$cookies', 'DataFactory', 'S
             $cookies.put('currentUserRole', userValue, {
                 'domain': '.homedepot.com'
             });
-
-            var currentUrl = $location.absUrl();
-            var n = currentUrl.indexOf('/discount-dashboard');
-
-            //Switch to the dashboard if not already there
-            if(n < 0) {
-                $location.path('/discount-dashboard');
-            }
+            $location.path('/discount-dashboard/#');
         }
 
         $scope.sections = new SECTIONS();
