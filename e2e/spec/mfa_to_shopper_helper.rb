@@ -27,6 +27,7 @@ Capybara::Webkit.configure(&:allow_unknown_urls)
 
 PROMO_UI_HOST = ENV['PROMO_UI_HOST'] || 'http://localhost.homedepot.com:8002'.freeze
 PROMO_CREATION = ENV['PROMO_CREATION'] || 'http://localhost.homedepot.com:8002/#/promotion-admin'.freeze
+DISC_MAINT_API = ENV['DISC_MAINT_API'] || 'http://localhost.homedepot.com:8090/v1'.freeze
 
 def future_date(days_ahead)
   todays_date = Date.today
@@ -62,6 +63,31 @@ def store_sign_in
     click_on 'Sign In'
   end
 end
+
+#Continue to work on wednesday
+def validate_values_in_database(promotion_id,promotion)
+
+ http_response = HTTParty.get("#{DISC_MAINT_API}" + "/cartPromotions/" + promotion_id)
+  expect(http_response.code).to be(200)
+
+  response = JSON.parse(http_response.body)
+
+  # expected_start_date = Date.strptime(promotion.start_date, "%m/%d/%Y").strftime("%Y-%m-%d")
+  # expected_end_date = Date.strptime(promotion.end_date, "%m/%d/%Y").strftime("%Y-%m-%d")
+  # expected_sku_list = promotion.item_sku.split(",").reverse.join(",")
+  # #expected_store_list = promotion.store_location.split(",").reverse.join(",")
+  # expect(discount[0]["promoId"].to_s).to eq(promotion_id)
+  # expect(discount[0]["startDate"]).to eq(expected_start_date)
+  # expect(discount[0]["endDate"]).to eq(expected_end_date)
+  # expect(discount[0]["threshold"]).to eq(promotion.quantity.to_i)
+  # expect(discount[0]["skuList"]).to eq(expected_sku_list)
+  # expect(discount[0]["amount"]).to eq(promotion.percent_off.to_i)
+  # #expect(discount[0]["storeList"]).to eq(expected_store_list)
+  puts "MSB Promotion exists in the discount admin API and its promotion ID is: " + response
+
+
+end
+
 
 class Promotion
   attr_reader :name, :promotion_type, :redemption_method, :customer_segment, :priority, :inclusion, :item_sku, :market_location, :rewards_quantity, 

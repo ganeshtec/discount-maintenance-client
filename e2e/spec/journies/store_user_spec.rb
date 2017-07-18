@@ -23,26 +23,27 @@ describe 'MFA makes a customer segment discount that is persisted', type: :featu
 	end
 
     it 'provides the MFA-created customer segment discount to the Promotion_Maintenance_UI for STOREUSER' do
-		create_cust_segment_discount_store(promotion)
+		promotion_id = create_cust_segment_discount_store(promotion)
+		validate_values_in_database(promotion_id,promotion)
 	end
 
-	it 'edits the MFA-created customer segment discount to the Promotion_Maintenance_UI for STOREUSER' do
-		edit_cust_segment_discount_store()
-	end	
+	# it 'edits the MFA-created customer segment discount to the Promotion_Maintenance_UI for STOREUSER' do
+	# 	edit_cust_segment_discount_store()
+	# end	
 
-	it 'edits the MFA-created multi-sku bulk discount to the Promotion_Maintenance_UI for STOREUSER' do
-		edit_MSB_discount_store()
-	end
+	# it 'edits the MFA-created multi-sku bulk discount to the Promotion_Maintenance_UI for STOREUSER' do
+	# 	edit_MSB_discount_store()
+	# end
 end
 
 def create_cust_segment_discount_store(promotion)
 	puts "Starting test for discount - STORE USER"
 	store_sign_in
-	expect(page).to have_css('.md-button', text: 'CREATE NEW PROMOTION')
+	expect(page).to have_css('.md-button', text: 'CREATE NEW DISCOUNT')
 	puts "SIGN IN COMPLETED WITHOUT ERROR"
     
-    click_on 'Create New Promotion'
-	puts "Create New Promotion SUCCESS" 
+    click_on 'Create New Discount'
+	puts "Create New Discount SUCCESS" 
 	
 	fill_in 'name', with: promotion.name
 	sleep(5)
@@ -52,7 +53,7 @@ def create_cust_segment_discount_store(promotion)
 
     click_button 'Next'
 
-    select('Small Roofers', :from => 'segment')
+    select('bbb', :from => 'segment')
     puts "PROMOTION Customer Segment ADDED SUCCESSFULLY"
 
     puts "expect statement SUCCESSFULLY"
@@ -86,6 +87,8 @@ def create_cust_segment_discount_store(promotion)
 	page.has_content?(promotion.name)
 	puts promotion.name + " Submit process ends for Store User"
 	sleep(12)
+	promotion_id = first('td.dashboard-promo-id').text
+	return promotion_id
 end
 
 def edit_cust_segment_discount_store()
@@ -181,3 +184,4 @@ def edit_MSB_discount_store()
 	puts edited_promo_name + " Submit process ends for Store User"	
 	sleep(12)
 end
+
