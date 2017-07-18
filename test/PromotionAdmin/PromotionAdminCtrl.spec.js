@@ -25,7 +25,7 @@ describe('promotionAdminCtrl', function () {
                 displayOMSIdExclusion: false,
                 displayExclusionSubCategories: false,
                 displayPaymentType: false,
-                displayScheduleTime: false,
+                displayScheduleTime: true,
                 displayLocations: true,
                 displayPrintLabel: false,
                 promotionSubTypesForMFA: true
