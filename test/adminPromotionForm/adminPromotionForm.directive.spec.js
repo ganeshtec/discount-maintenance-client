@@ -20,10 +20,46 @@ describe('Unit testing adminPromotionForm.directive.spec.js', function () {
     customerSegmentDataService = _customerSegmentDataService_;
     $httpBackend = _$httpBackend_;
     var response = {};
+    $scope.promoMfa=true;
+    $scope.data={
+      reward:{
+        details:[]
+      }
+    }
+    $scope.formHolder={}
+    var leadTime = $httpBackend.when('GET', '/labels/leadTime')
+                            .respond(200,3); 
+    var customerSegments = $httpBackend.when('GET', '/customersegment/segments')
+                            .respond(200,[]);    
+    var element = $compile("<admin-promotion-form data='data' promo-mfa='promoMfa' form-holder='formHolder'></admin-promotion-form>")($scope);
+    $rootScope.$digest();
+    this.$isolateScope = element.isolateScope();   
 
-    var getPromotionSubTypes = $httpBackend.when('GET', '/promotionTypes/promotionSubTypes/adminUI.json')
-                            .respond(200,response);
-    var getAllSegments = $httpBackend.when('GET', '/customersegment/segments')
-                            .respond(200,response);                    
   }));
+  it('updatePrintLabelFlag should set printLabel to false if promoMfa is true and promoSubTypeCd is OrderLevelPercentDiscount',function(){ 
+      this.$isolateScope.promoSubTypeObject ={promoSubTypeCd:'OrderLevelPercentDiscount'}
+      this.$isolateScope.promoMfa=true;
+      this.$isolateScope.data.printLabel=true; 
+      this.$isolateScope.updatePrintLabelFlag();
+      expect(this.$isolateScope.data.printLabel).toBe(false);
+  });
+
+  it('updatePrintLabelFlag should set printLabel to true if promoMfa is true and promoSubTypeCd is not OrderLevelPercentDiscount',function(){ 
+      this.$isolateScope.promoMfa=true;
+      this.$isolateScope.data.printLabel=false; 
+      this.$isolateScope.promoSubTypeObject ={promoSubTypeCd:'ProductLevelPerItemPercentDiscountMSB'}
+      this.$isolateScope.updatePrintLabelFlag();
+      expect(this.$isolateScope.data.printLabel).toBe(true);
+  });
+  it('updatePrintLabelFlag should not change printLabel flag if promoMfa is false',function(){ 
+      this.$isolateScope.data.promoSubTypeCd='Any';
+      this.$isolateScope.promoMfa=false;
+      this.$isolateScope.data.printLabel=false;
+      this.$isolateScope.updatePrintLabelFlag();
+      expect(this.$isolateScope.data.printLabel).toBe(false);
+      this.$isolateScope.data.printLabel=true;
+      this.$isolateScope.updatePrintLabelFlag();
+      expect(this.$isolateScope.data.printLabel).toBe(true);
+  });
+
 });
