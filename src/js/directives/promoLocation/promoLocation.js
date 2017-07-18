@@ -32,17 +32,18 @@ app.directive(
                     scope.inValidStoreInfo = false;
                     scope.showInvalidError = false;
                     scope.addStoretest = scope.addStore;
+
                     scope.search = function (data) {
                         if (scope.checkForEmptyValues(data, scope.locationType)) {
                             data = scope.formatToCommaSeparatedList(data);
                             if (scope.isLocationDataValid(data)) {
                                 if (scope.locationType == 'stores') {
                                     storeData.locationNumbers = data;
-                                    getStoresByID(storeData, true);
+                                    scope.getStoresByID(storeData, true);
 
                                 } else {
                                     marketData.locationNumbers = data;
-                                    getMarketsByID(marketData, true);
+                                    scope.getMarketsByID(marketData, true);
                                 }
 
                             }
@@ -111,7 +112,7 @@ app.directive(
                     };
 
                     /* Data Service Call for Market  Search  */
-                    function getMarketsByID(data, clicked) {
+                    scope.getMarketsByID = function (data, clicked) {
                         var marketValidationResponsePromise = locationDataService
                             .validateMarketIds(data);
                         marketValidationResponsePromise
@@ -124,7 +125,7 @@ app.directive(
                     }
 
                     /* Data Service Call for Store  Search  */
-                    function getStoresByID(data, clicked) {
+                    scope.getStoresByID = function (data, clicked) {
                         var locationPromise = locationDataService
                             .getStoreIdCodes(data);
                         locationPromise
@@ -264,17 +265,18 @@ app.directive(
                     }
 
                     //This gets invoked for editing location data for existing promotion
+
                     var clicked = true;
                     if (scope.locations && scope.locations.length > 0) {
                         scope.locationType = 'stores';
                         storeData.locationNumbers = scope.locations;
-                        getStoresByID(storeData, clicked)
+                        scope.getStoresByID(storeData, clicked)
                     }
                     else {
                         scope.locationType = 'markets';
                         if (scope.markets && scope.markets.length > 0) {
                             marketData.locationNumbers = scope.markets;
-                            getMarketsByID(marketData, clicked)
+                            scope.getMarketsByID(marketData, clicked)
                         }
                     }
 
@@ -320,6 +322,7 @@ app.directive(
 
                     scope.clearInput = function () {
                         scope.locationSearch = null;
+                        scope.showInvalidError = false;
                     }
 
                 }

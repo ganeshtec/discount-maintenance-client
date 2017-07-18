@@ -3,17 +3,17 @@ app.service('locationDataService', ['$http', '$q', 'dataService',
         var publicApi = {};
 
         publicApi.getStoreIdCodes = function (data) {
-            
+
             var config = {
                     method: 'POST',
                     url: '/location/store/validate.json',
-                    data: {locationNumbers: publicApi.getStoreIds(data.locationNumbers)}
+                    data: { locationNumbers: publicApi.parseIds(data.locationNumbers) }
                 },
                 result = $q.defer();
             dataService.httpRequest(config).then(
                 function (response) {
                     result.resolve(response.data);
-                    
+
                 },
                 function (error) {
                     result.reject(error);
@@ -23,17 +23,17 @@ app.service('locationDataService', ['$http', '$q', 'dataService',
         }
 
         publicApi.validateMarketIds = function (data) {
-  
+
             var config = {
                     method: 'POST',
                     url: '/location/market/validate.json',
-                    data: data
+                    data: { locationNumbers: publicApi.parseIds(data.locationNumbers) }
                 },
                 result = $q.defer();
             dataService.httpRequest(config).then(
                 function (response) {
                     result.resolve(response.data);
-                    
+
                 },
                 function (error) {
                     result.reject(error);
@@ -42,12 +42,12 @@ app.service('locationDataService', ['$http', '$q', 'dataService',
             return result.promise;
         }
 
-        publicApi.getStoreIds = function (data) {
-            var storeIDs = [];
+        publicApi.parseIds = function (data) {
+            var locationIDs = [];
             for (var i = 0; i < data.length; i++) {
-                storeIDs.push(parseInt(data[i]));
+                locationIDs.push(parseInt(data[i]));
             }
-            return storeIDs;
+            return locationIDs;
         }
         return publicApi;
     }

@@ -29,7 +29,7 @@
 					Search
 				</a>
 				<ul>
-					<span class='error-message' ng-show="showInvalidError" ng-show="locationType=='stores'">
+					<span class='error-message' ng-show="showInvalidError" ng-if="locationType=='stores'">
 				    <span>
 				   			Please enter a valid Store Number
 				    </span>
@@ -41,7 +41,7 @@
 					Search
 				</a>
 				<ul>
-					<span class='error-message' ng-show="showInvalidError" ng-show="locationType=='markets'">
+					<span class='error-message' ng-show="showInvalidError" ng-if="locationType=='markets'">
 				    <span>
 				   			Please enter a valid Market Number
 				    </span>
