@@ -16,6 +16,9 @@ app.component('promoSchedule', {
 PromoScheduleController.$inject = ['$filter', '$scope','validationService', 'utilService'];
  
 function PromoScheduleController($filter, $scope, validationService, utilService) {
+    this.startTime='3:00 AM';//For display only. see utilService.js for actual time
+    this.endTime='2:59 AM';
+
     this.$onInit = function() {
         this.data.startDt =  this.convertDateStringToDate(this.data.startDt);
         this.data.endDt =  this.convertDateStringToDate(this.data.endDt);
