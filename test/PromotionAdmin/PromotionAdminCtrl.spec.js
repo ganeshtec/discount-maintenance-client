@@ -12,7 +12,7 @@ describe('promotionAdminCtrl', function () {
         controller = $controller('promotionAdminCtrl', { $scope: $scope});
     }));
 
-    describe('Test view properties', function() {
+    fdescribe('Test view properties', function() {
         it('Sets appropriate view properties for MFA/Store users', function() {
             var expectedResult = {
                 displayPromoDescription: false,
@@ -28,9 +28,10 @@ describe('promotionAdminCtrl', function () {
                 displayScheduleTime: true,
                 displayLocations: true,
                 displayPrintLabel: false,
-                promotionSubTypesForMFA: true,
                 displayItemsSku:true,
-                displayMerchHiearchy: true
+                displayMerchHiearchy: true,
+                displayCustomerSegment: true,
+                promotionSubTypesForMFA: true
             }
             controller.setViewProperties(allowedPermissionIds.STORE);
             expect($scope.viewProperties).toEqual(expectedResult);
@@ -51,9 +52,10 @@ describe('promotionAdminCtrl', function () {
                 displayScheduleTime: true,
                 displayLocations: false,
                 displayPrintLabel: false,
-                promotionSubTypesForMFA: false,
                 displayItemsSku:false,
-                displayMerchHiearchy: false
+                displayMerchHiearchy: false,
+                displayCustomerSegment: false,
+                promotionSubTypesForMFA: false
             }
             controller.setViewProperties(allowedPermissionIds.ONLINE);
             expect($scope.viewProperties).toEqual(expectedResult);
