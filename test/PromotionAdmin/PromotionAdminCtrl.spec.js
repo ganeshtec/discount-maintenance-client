@@ -28,6 +28,8 @@ describe('promotionAdminCtrl', function () {
                 displayScheduleTime: true,
                 displayLocations: true,
                 displayPrintLabel: false,
+                displayItemsSku:true,
+                displayMerchHiearchy: true,
                 displayCustomerSegment: true,
                 promotionSubTypesForMFA: true
             }
@@ -50,6 +52,8 @@ describe('promotionAdminCtrl', function () {
                 displayScheduleTime: true,
                 displayLocations: false,
                 displayPrintLabel: false,
+                displayItemsSku:false,
+                displayMerchHiearchy: false,
                 displayCustomerSegment: false,
                 promotionSubTypesForMFA: false
             }

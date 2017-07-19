@@ -122,7 +122,7 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
                     }
                     if (!hasExc) {
                         delete sources[0].exclusions;
-                    }else{
+                    } else {
                         delete sources[0].exclusions.skuTypeAttrsInitialized;
                     }
                 }
@@ -134,12 +134,12 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
         if (promotion.reward && promotion.reward.details) {
             publicApi.calculatePurchaseCondition(promotion);
         }
-        
-        if (promotion.startDt) {    
+
+        if (promotion.startDt) {
             promotion.startDt = publicApi.convertDateToDateString(promotion.startDt) + ' 03:00:00';
         }
 
-        if(promotion.endDt) {
+        if (promotion.endDt) {
             promotion.endDt = publicApi.convertDateToDateString(promotion.endDt) + ' 02:59:59';
 
         }
@@ -148,7 +148,7 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
 
     }
 
-    publicApi.convertDateToDateString = function(date) {
+    publicApi.convertDateToDateString = function (date) {
         return date ? moment(date).format('YYYY-MM-DD') : undefined;
     }
 
@@ -159,7 +159,7 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
         if (sources && sources.length > 0) {
             for (var i = 0; i < sources.length; i++) {
                 var purchaseOption = sources[i].purchaseoption;
-                if(sources[i].exclusions && sources[i].exclusions.attrs && purchaseOption != 'category'){
+                if (sources[i].exclusions && sources[i].exclusions.attrs && purchaseOption != 'category') {
                     sources[i].exclusions.attrs = []; //Setting attrs to empty if user does not select category
                 }
                 if (sources[i].inclusions && sources[i].inclusions.partnumbers && purchaseOption == 'category') {
@@ -233,7 +233,9 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
             $(data.purchaseConds.sources).each(function (i, source) {
                 if (data.purchaseConds.qualUOM == 'Quantity') {
                     delete source.minTotalPrice;
-                    source.minPurchaseQty = minPurchaseQty;
+                    if (source.minPurchaseQty == null) {
+                        source.minPurchaseQty = minPurchaseQty;
+                    }
                 } else {
                     delete source.minPurchaseQty;
                     source.minTotalPrice = minPurchaseQty;
@@ -336,10 +338,10 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
     }
 
     publicApi.isSubmitEligibleForDisable = function (promotion) {
-        
+
         var leadTimePromise = leadTimeService.fetchLeadTime();
         return leadTimePromise.then(function (leadTime) {
-            var minDt = moment(promotion.endDt).subtract(leadTime,'days');
+            var minDt = moment(promotion.endDt).subtract(leadTime, 'days');
             if (moment().isAfter(minDt) && promotion.status == 61 && promotion.printLabel === true) {
                 return true;
             }

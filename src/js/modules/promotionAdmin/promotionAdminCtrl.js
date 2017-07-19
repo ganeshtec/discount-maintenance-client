@@ -71,6 +71,8 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$co
                     displayScheduleTime: true,
                     displayPrintLabel: false,
                     displayLocations: true,
+                    displayItemsSku:true,
+                    displayMerchHiearchy: true,
                     displayCustomerSegment: true,
                     promotionSubTypesForMFA: true
                 }
@@ -90,6 +92,8 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$co
                     displayScheduleTime: true,
                     displayPrintLabel: false,
                     displayLocations: false,
+                    displayItemsSku: false,
+                    displayMerchHiearchy: false,
                     displayCustomerSegment: false,
                     promotionSubTypesForMFA: false
                 }
