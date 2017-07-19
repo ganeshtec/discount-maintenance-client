@@ -71,6 +71,7 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$co
                     displayScheduleTime: true,
                     displayPrintLabel: false,
                     displayLocations: true,
+                    displayCustomerSegment: true,
                     promotionSubTypesForMFA: true
                 }
                 //$scope.promotionSubTypesForMFA = true;
@@ -89,6 +90,7 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$co
                     displayScheduleTime: true,
                     displayPrintLabel: false,
                     displayLocations: false,
+                    displayCustomerSegment: false,
                     promotionSubTypesForMFA: false
                 }
                 //$scope.promotionSubTypesForMFA = false;

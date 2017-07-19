@@ -1,5 +1,5 @@
 
-<div class="md-select md-select-space" ng-if="data.promoSubTypeCd=='OrderLevelPercentDiscount' || data.purchaseConds.customerSegmentId!=0 && data.promoSubTypeCd=='OrderLevelPercentDiscount'">
+<div class="md-select md-select-space" ng-show="viewProp.displayCustomerSegment" ng-if="data.promoSubTypeCd=='OrderLevelPercentDiscount' || data.purchaseConds.customerSegmentId!=0 && data.promoSubTypeCd=='OrderLevelPercentDiscount'">
     <label for="promocustomersegment"><h3>Customer Segment</h3></label>
 
 
