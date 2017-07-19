@@ -28,7 +28,9 @@ describe('promotionAdminCtrl', function () {
                 displayScheduleTime: true,
                 displayLocations: true,
                 displayPrintLabel: false,
-                promotionSubTypesForMFA: true
+                promotionSubTypesForMFA: true,
+                displayItemsSku:true,
+                displayMerchHiearchy: true
             }
             controller.setViewProperties(allowedPermissionIds.STORE);
             expect($scope.viewProperties).toEqual(expectedResult);
@@ -49,7 +51,9 @@ describe('promotionAdminCtrl', function () {
                 displayScheduleTime: true,
                 displayLocations: false,
                 displayPrintLabel: false,
-                promotionSubTypesForMFA: false
+                promotionSubTypesForMFA: false,
+                displayItemsSku:false,
+                displayMerchHiearchy: false
             }
             controller.setViewProperties(allowedPermissionIds.ONLINE);
             expect($scope.viewProperties).toEqual(expectedResult);

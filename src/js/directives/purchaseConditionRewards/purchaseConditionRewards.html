@@ -39,12 +39,12 @@
             </a>
         </div> 
         <label ng-show="data.purchaseConds.sources.length > 1">Definition for "{{alphabet[$index]}}" *</label>
-        <div class="md-radio" ng-show="viewProp.displayOMSId">
+        <div class="md-radio" id="itemsoms_div_{{$index}}" ng-show="viewProp.displayOMSId">
             <input type="radio" id="itemsoms_{{$index}}" name="purchaseoption_{{$index}}" ng-model="data.purchaseConds.sources[$index].purchaseoption"
                 title="Items/OMS ID's" value="itemoms" />
             <label for="itemsoms_{{$index}}"><span><span></span></span>Items/OMS ID's</label>
         </div>
-        <div class="md-radio" ng-show="viewProp.displayItemsSku">
+        <div class="md-radio" id="itemssku_div_{{$index}}" ng-show="viewProp.displayItemsSku">
             <!--<div class="md-radio">-->
             <input type="radio" id="itemssku_{{$index}}" name="purchaseoption_{{$index}}" ng-model="data.purchaseConds.sources[$index].purchaseoption"
                 title="Items/SKU" value="itemsku" />
