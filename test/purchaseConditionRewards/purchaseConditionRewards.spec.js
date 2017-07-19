@@ -35,6 +35,18 @@ describe('Unit testing purchaseConditionRewards directive', function () {
             expect(element.find("div[id='itemsoms_div_0']").attr('aria-hidden')).toBe('true');
             expect(element.find("div[id='itemssku_div_0']").attr('aria-hidden')).toBe('false');
         });
+
+        it("Show/Hide Filter SKUTypes based on viewProperty displayFilterSkuTypes value", function(){
+            $scope.viewProp = { displayFilterSkuTypes: false}
+            $scope.data={purchaseConds: {sources: [{purchaseoption: 'category'}]}};
+            $scope.promoform = {};
+            $scope.preview = false;
+            $scope.isDisabled = false;
+            var element = $compile("<purchase-condition-rewards data='data' promoform='promoform' preview='preview' view-prop='viewProp'></purchase-condition-rewards>")($scope);
+            $scope.$digest();   
+            expect(element.find("div[class*='filter_sku_types_link']").attr('aria-hidden')).toBe('true');               
+        })
     });
+
 
 });
