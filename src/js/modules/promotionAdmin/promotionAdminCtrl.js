@@ -74,7 +74,8 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$co
                     displayItemsSku:true,
                     displayMerchHiearchy: true,
                     displayCustomerSegment: true,
-                    promotionSubTypesForMFA: true
+                    promotionSubTypesForMFA: true,
+                    displayFilterSkuTypes: true
                 }
                 //$scope.promotionSubTypesForMFA = true;
             } else if (userType == allowedPermissionIDs.ONLINE) {                
@@ -95,7 +96,8 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$co
                     displayItemsSku: false,
                     displayMerchHiearchy: false,
                     displayCustomerSegment: false,
-                    promotionSubTypesForMFA: false
+                    promotionSubTypesForMFA: false,
+                    displayFilterSkuTypes: false
                 }
                 //$scope.promotionSubTypesForMFA = false;
             }
