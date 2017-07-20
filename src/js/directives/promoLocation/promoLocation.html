@@ -17,6 +17,9 @@
 
 
 
+			<!-- Markets code END -->
+
+
 <!-- <table class="table category__table" ng-hide="data.locations == 'markets' "> -->
 
 <table class="table category__table">
@@ -26,13 +29,11 @@
 
 			
 			<div class="md-toolbar-search l">
-
-				<label for="StoreLocation" ng-if="locationType=='stores'" ><h3>Store Location</h3></label>
-				<label for="MarketLocation" ng-if="locationType=='markets'"><h3>Market Location</h3></label>
-				<input class="table__search" ng-show="locationType=='stores'" ng-keypress="($event.keyCode === 13) && search(locationSearch)" placeholder="Search and Add Store Number" type="text" ng-model="locationSearch" ng-class="{'error': inValidStoreInfo}"
+				<label for="StoreLocation" ng-if="data.locations=='stores'" ><h3>Store Location</h3></label>
+				<label for="MarketLocation" ng-if="data.locations=='markets'"><h3>Market Location</h3></label>
+				<input class="table__search" ng-show="data.locations=='stores'" ng-keypress="($event.keyCode === 13) && search(locationSearch,data.locations)" placeholder="Search and Add Store Number" type="text" ng-model="locationSearch" ng-class="{'error': inValidStoreInfo}"
 					ng-change="clear()" allow-pattern="[\d\s\(\,\)]" />
-				<a class="md-button secondary no-padding" href="" ng-show="locationType=='stores'" ng-click="search(locationSearch)">
-
+				<a class="md-button secondary no-padding" href="" ng-show="data.locations=='stores'" ng-click="search(locationSearch,data.locations)">
 					Search
 				</a>
 				<ul>
@@ -42,11 +43,9 @@
 				    </span>
 					</span>
 				</ul>
-
-				<input class="table__search" ng-show="locationType=='markets'" ng-keypress="($event.keyCode === 13) && search(locationSearch)" placeholder="Search and Add Market Number" type="text" ng-model="locationSearch" ng-class="{'error': inValidMarketInfo}"
+				<input class="table__search" ng-show="data.locations=='markets'" ng-keypress="($event.keyCode === 13) && search(locationSearch,data.locations)" placeholder="Search and Add Market Number" type="text" ng-model="locationSearch" ng-class="{'error': inValidMarketInfo}"
 					ng-change="clear()" allow-pattern="[\d\s\(\,\)]" />
-				<a class="md-button secondary no-padding" ng-show="locationType=='markets'" href="" ng-click="search(locationSearch)">
-
+				<a class="md-button secondary no-padding" ng-show="data.locations=='markets'" href="" ng-click="search(locationSearch,data.locations)">
 					Search
 				</a>
 				<ul>
@@ -56,6 +55,19 @@
 				    </span>
 					</span>
 				</ul>
+			<!--	<ul class="table__search__results">
+					<li ng-repeat="item in searchResults | filter: itemSearch">
+						<a href="" ng-click="addStore(item)" class="table__search__results__item">
+							{{item.omsId}} | {{item.prodName}}
+						</a>
+					</li>
+					<li>
+						<a ng-show="searchResults.length" href="" ng-click="searchResults = []" class="table__search__results__item">
+							Close
+						</a>
+					</li>
+				</ul>
+				-->
 			</div>
 		</td>
 	</tr>
