@@ -2,18 +2,18 @@ app.service('locationDataService', ['$http', '$q', 'dataService',
     function ($http, $q, dataService) {
         var publicApi = {};
 
-        publicApi.getStoreIdCodes = function (data) {
-
+        publicApi.getStoreIdCodes = function (data, location) {
+  
             var config = {
                     method: 'POST',
-                    url: '/location/store/validate.json',
-                    data: { locationNumbers: publicApi.parseIds(data.locationNumbers) }
+                    url: location=='stores'? '/location/store/validate.json':'/location/market/validate.json',
+                    data: data
                 },
                 result = $q.defer();
             dataService.httpRequest(config).then(
                 function (response) {
                     result.resolve(response.data);
-
+                    
                 },
                 function (error) {
                     result.reject(error);
@@ -22,33 +22,16 @@ app.service('locationDataService', ['$http', '$q', 'dataService',
             return result.promise;
         }
 
-        publicApi.validateMarketIds = function (data) {
-
-            var config = {
-                    method: 'POST',
-                    url: '/location/market/validate.json',
-                    data: { locationNumbers: publicApi.parseIds(data.locationNumbers) }
-                },
-                result = $q.defer();
-            dataService.httpRequest(config).then(
-                function (response) {
-                    result.resolve(response.data);
-
-                },
-                function (error) {
-                    result.reject(error);
-                }
-            );
-            return result.promise;
-        }
-
-        publicApi.parseIds = function (data) {
-            var locationIDs = [];
+        publicApi.getStoreIds = function (data) {
+            var storeIDs = [];
             for (var i = 0; i < data.length; i++) {
-                locationIDs.push(parseInt(data[i]));
+                storeIDs.push(parseInt(data[i]));
             }
-            return locationIDs;
+            return storeIDs;
         }
+
+
+
         return publicApi;
     }
 ]);
