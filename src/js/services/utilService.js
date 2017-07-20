@@ -233,7 +233,9 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
             $(data.purchaseConds.sources).each(function (i, source) {
                 if (data.purchaseConds.qualUOM == 'Quantity') {
                     delete source.minTotalPrice;
-                    source.minPurchaseQty = minPurchaseQty;
+                    if (source.minPurchaseQty == null) {
+                        source.minPurchaseQty = minPurchaseQty;
+                    }
                 } else {
                     delete source.minPurchaseQty;
                     source.minTotalPrice = minPurchaseQty;
