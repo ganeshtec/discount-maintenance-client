@@ -1,6 +1,7 @@
 // Mock data for item level percent off promotion
-app.factory('PromotionData', [function () {
-    var _construct = function PromotionData() {
+app.factory('PromotionData', ['ALLOWED_PERMISSION_IDS',function (ALLOWED_PERMISSION_IDS) {
+    var _construct = function PromotionData(userType) {
+        var allowedPermissionIDs=ALLOWED_PERMISSION_IDS();
         var data = {
             'promoId': 0,
             'status': 20, // 20 draft
@@ -73,7 +74,13 @@ app.factory('PromotionData', [function () {
             'couponId': null,
 
         };
+        if (userType == allowedPermissionIDs.ONLINE) {
+            data.printLabel = false;
+            data.purchaseConds.locations = [8119];
+            data.purchaseConds.channels = [57];
+        }
         return data;
     };
+
     return _construct;
 }]);
