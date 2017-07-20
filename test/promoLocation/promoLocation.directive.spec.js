@@ -21,11 +21,17 @@ describe('Unit testing promoLocation.directive.spec.js', function () {
     this.$isolateScope = element.isolateScope();
   }));
 
-  
+  //Verify error is thrown when item already exists
   //Verify item is added to item table if data service response is valid
   //Verify if negative number is added to Store list error is thrown
+  //Verify that when stores are added with spaces or comas or semicolons the list is recognised
+  //Verify that when invalid Market number is added that error is thrown
+  //Verify that when markets are added with spaces or commas or semicolons the list is recognised
+  //Verify thet when Markets with alpha numeric data is entered an error is thrown
   //Verify that when Market and Store service does not return correct status code, application does not crash
   //Verify that when store service returns 3 stores, they are passed on to the html
+
+
   //Verify functionality of markets -> store list translation service
 
 
@@ -33,6 +39,7 @@ describe('Unit testing promoLocation.directive.spec.js', function () {
   it("Test for formatToCommaSeparatedList method for space seperated input", function () {
     expect(this.$isolateScope.formatToCommaSeparatedList("1 4 5")).toEqual(['1', '4', '5']);
   });
+
 
   it("Test for formatToCommaSeparatedList method for comma seperated input", function () {
 
@@ -57,19 +64,46 @@ describe('Unit testing promoLocation.directive.spec.js', function () {
 
   });
 
-  // These tests are failing, created a bug#
-  // it("Checks isLocationDataValid method functionality returns false for alphanumeric values", function () {
+  it("Checks isLocationDataValid method functionality returns false for alphanumeric values", function () {
     
-  //   expect(this.$isolateScope.isLocationDataValid(['1', '4a', '5'])).toEqual(false);
+    expect(this.$isolateScope.isLocationDataValid(['1a', '4', '5'])).toEqual(false);
+    //expect(this.$isolateScope.isLocationDataValid(['1','-4','5'])).toEqual(false);
+
+  });
+
+  it("Checks isLocationDataValid method functionality returns false for empty array ", function () {
+    
+    expect(this.$isolateScope.isLocationDataValid([])).toEqual(false);
+
+
+  });
+
+  // it("Checks for checkForInvalidLocations method returns the valid results ", function () {
+
+  //   invalidData={"inValidMarketInfo":[121]};
+    
+  //   expect(this.$isolateScope.checkForInvalidLocations(invalidData)).toEqual(121);
+
 
   // });
 
-  // it("Checks isLocationDataValid method functionality returns false for negative values", function () {
+  
+  // fit("Checks for printErrorMessageForInvalidLocations method returns the valid results ", function () {
+
+  //   this.$isolateScope.data={"inValidStoreInfo":[121]};
+
+  //   invalidData    = this.$isolateScope.data;
+
+  //   //spyOn('$messageModal','popup').andReturn(false);
+  //   spyOn(this.$isolateScope, "printErrorMessageForInvalidLocations").and.callThrough();
+
+  //   this.$isolateScope.printErrorMessageForInvalidLocations('1',invalidData,true);
+
     
-  //   expect(this.$isolateScope.isLocationDataValid(['1','-4'])).toEqual(false);
+  //   expect(messageModal.popup).toHaveBeenCalled();
+
 
   // });
-
 
   it("Checks for checkForInvalidLocations method returns the valid results ", function () {
 
@@ -111,35 +145,6 @@ describe('Unit testing promoLocation.directive.spec.js', function () {
     expect(this.$isolateScope.checkForInvalidLocations(storeData)).toEqual([]);
 
     expect(this.$isolateScope.setStoreData).toHaveBeenCalled();
-
-  });
-
-
-  it('Checks for search Method to invoke getStoresById when stores are entered as input', function () {
-    this.$isolateScope.data = '121';
-    this.$isolateScope.locationType = 'stores'
-    spyOn(this.$isolateScope, "getStoresByID");
-    this.$isolateScope.search(this.$isolateScope.data);
-    expect(this.$isolateScope.getStoresByID).toHaveBeenCalled();
-
-  });
-
-  it('Checks for search Method to invoke getMarketsByID when stores are entered as input', function () {
-    this.$isolateScope.data = '121 123a';
-    this.$isolateScope.locationType = 'markets'
-    spyOn(this.$isolateScope, "getMarketsByID");
-    this.$isolateScope.search(this.$isolateScope.data);
-    expect(this.$isolateScope.getMarketsByID).toHaveBeenCalledWith({ locationNumbers: [ '121', '123a' ] },true);
-
-  });
-
-  it('Checks for search Method to invoke getMarketsByID when stores are entered as input', function () {
-    this.$isolateScope.data = '';
-    this.$isolateScope.locationType = 'markets'
-    spyOn(this.$isolateScope, "getMarketsByID");
-    spyOn(this.$isolateScope,"checkForEmptyValues").and.returnValue(false);
-    this.$isolateScope.search(this.$isolateScope.data);
-    expect(this.$isolateScope.getMarketsByID.calls.count()).toEqual(0);
 
   });
 

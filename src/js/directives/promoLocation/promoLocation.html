@@ -1,19 +1,27 @@
 <!-- Markets code START -->
-			<div class="md-text-field">
+
+			
+
+			<div class="md-text-field" ng-init="data.locations='markets'">
 			<label for="location">Location Types</label>
 				<div class="md-radio">
-					<input type="radio" id="markets" name="locations1" ng-model="locationType" title="markets" value="markets" ng-change="removeAll();clearInput();"/>
+					<input type="radio" id="markets" name="locations1" ng-model="data.locations" title="markets" value="markets"/>
 					<label for="markets"><span><span></span></span>Markets</label>
 				</div>
 
 				<div class="md-radio">
-					<input type="radio" id="stores" name="locations2" ng-model="locationType" title="stores" value="stores" ng-change="removeAll(); clearInput();"/>
+					<input type="radio" id="stores" name="locations2" ng-model="data.locations" title="stores" value="stores" />
 					<label for="stores"><span><span></span></span>Stores</label>
 				</div>
 			</div> 
+
+
+
 			<!-- Markets code END -->
 
-<!-- <table class="table category__table" ng-hide="locationType == 'markets' "> -->
+
+<!-- <table class="table category__table" ng-hide="data.locations == 'markets' "> -->
+
 <table class="table category__table">
 
 	<tr class="category__table__row-nobottomborder">
@@ -21,41 +29,50 @@
 
 			
 			<div class="md-toolbar-search l">
-
-				<label for="StoreLocation" ng-if="locationType=='stores'" ><h3>Store Location</h3></label>
-				<label for="MarketLocation" ng-if="locationType=='markets'"><h3>Market Location</h3></label>
-				<input class="table__search" ng-show="locationType=='stores'" ng-keypress="($event.keyCode === 13) && search(locationSearch)" placeholder="Search and Add Store Number" type="text" ng-model="locationSearch" ng-class="{'error': inValidStoreInfo}"
+				<label for="StoreLocation" ng-if="data.locations=='stores'" ><h3>Store Location</h3></label>
+				<label for="MarketLocation" ng-if="data.locations=='markets'"><h3>Market Location</h3></label>
+				<input class="table__search" ng-show="data.locations=='stores'" ng-keypress="($event.keyCode === 13) && search(locationSearch,data.locations)" placeholder="Search and Add Store Number" type="text" ng-model="locationSearch" ng-class="{'error': inValidStoreInfo}"
 					ng-change="clear()" allow-pattern="[\d\s\(\,\)]" />
-				<a class="md-button secondary no-padding" href="" ng-show="locationType=='stores'" ng-click="search(locationSearch)">
-
+				<a class="md-button secondary no-padding" href="" ng-show="data.locations=='stores'" ng-click="search(locationSearch,data.locations)">
 					Search
 				</a>
 				<ul>
-					<span class='error-message' ng-show="showInvalidError" ng-if="locationType=='stores'">
+					<span class='error-message' ng-show="showInvalidError" ng-show="data.locations=='stores'">
 				    <span>
 				   			Please enter a valid Store Number
 				    </span>
 					</span>
 				</ul>
-
-				<input class="table__search" ng-show="locationType=='markets'" ng-keypress="($event.keyCode === 13) && search(locationSearch)" placeholder="Search and Add Market Number" type="text" ng-model="locationSearch" ng-class="{'error': inValidMarketInfo}"
+				<input class="table__search" ng-show="data.locations=='markets'" ng-keypress="($event.keyCode === 13) && search(locationSearch,data.locations)" placeholder="Search and Add Market Number" type="text" ng-model="locationSearch" ng-class="{'error': inValidMarketInfo}"
 					ng-change="clear()" allow-pattern="[\d\s\(\,\)]" />
-				<a class="md-button secondary no-padding" ng-show="locationType=='markets'" href="" ng-click="search(locationSearch)">
-
+				<a class="md-button secondary no-padding" ng-show="data.locations=='markets'" href="" ng-click="search(locationSearch,data.locations)">
 					Search
 				</a>
 				<ul>
-					<span class='error-message' ng-show="showInvalidError" ng-if="locationType=='markets'">
+					<span class='error-message' ng-show="showInvalidError" ng-show="data.locations=='markets'">
 				    <span>
 				   			Please enter a valid Market Number
 				    </span>
 					</span>
 				</ul>
+			<!--	<ul class="table__search__results">
+					<li ng-repeat="item in searchResults | filter: itemSearch">
+						<a href="" ng-click="addStore(item)" class="table__search__results__item">
+							{{item.omsId}} | {{item.prodName}}
+						</a>
+					</li>
+					<li>
+						<a ng-show="searchResults.length" href="" ng-click="searchResults = []" class="table__search__results__item">
+							Close
+						</a>
+					</li>
+				</ul>
+				-->
 			</div>
 		</td>
 	</tr>
+	<tr class="category__table__row-notopborder" ng-if="data.locations=='stores'">
 
-	<tr class="category__table__row-notopborder" ng-if="locationType=='stores'">
 		<th>
 			Store Number
 		</th>
@@ -71,7 +88,7 @@
 			</a>
 		</th>
 	</tr>
-	<tr ng-repeat="item in validStoreInfo track by $index" ng-class="{odd:($index % 2)}" ng-if="locationType=='stores'">
+	<tr ng-repeat="item in validStoreInfo track by $index" ng-class="{odd:($index % 2)}" ng-if="data.locations=='stores'">
 
 		<td>
 			{{item.storeNumber}}
@@ -83,42 +100,42 @@
 		    {{item.marketNumber}}
 		</td>
 		<td class="r">
-			<a class="editOption thd-orange" ng-click="isDisabled || removeItem($index)" href="">
+			<a class="editOption thd-orange" ng-click="isDisabled || removeStore($index)" href="">
 				Remove
 			</a>
 		</td>
 	</tr>
-	<tr class="category__table__row-notopborder" ng-if="locationType=='markets'">
+	<tr class="category__table__row-notopborder" ng-if="data.locations=='markets'">
 
+		<th>
+			Store Number
+		</th>
+		<th>
+			Store Name
+		</th>
 		<th>
 			Market Number
 		</th>
-		<th>
-			MarketName
-		</th>
-		<th>
-			
-		</th>
 		<th class="r">
-			<a class="editOption thd-orange" ng-if="validMarketInfo && validMarketInfo.length >0" ng-click="removeAll()" href="">
+			<a class="editOption thd-orange" ng-if="validStoreInfo && validStoreInfo.length >0" ng-click="removeAll()" href="">
 				Remove All
 			</a>
 		</th>
 	</tr>
-	<tr ng-repeat="market in validMarketInfo track by $index" ng-class="{odd:($index % 2)}" ng-if="locationType=='markets'">
+	<tr ng-repeat="item in validStoreInfo track by $index" ng-class="{odd:($index % 2)}" ng-if="data.locations=='markets'">
 
 		<td>
-			{{market.marketNumber}}
+			{{item.storeNumber}}
 		</td>
 		<td>
-			{{market.marketName}}
+			{{item.storeName}}
 		</td>
 		<td>
-		    <!--{{item.marketNumber}}-->
+		    {{item.marketNumber}}
 		</td>
 
 		<td class="r">
-			<a class="editOption thd-orange" ng-click="isDisabled || removeItem($index)" href="">
+			<a class="editOption thd-orange" ng-click="isDisabled || removeStore($index)" href="">
 				Remove
 			</a>
 		</td>
