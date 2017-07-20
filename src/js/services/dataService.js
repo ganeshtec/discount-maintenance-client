@@ -27,7 +27,8 @@ app.service('dataService', ['$http', '$q', 'URL_CONFIG', function ($http, $q, UR
                 if (response.data) {
                     deferred.resolve(response);
                 } else {
-                    deferred.reject('Error Fetching Data');
+
+                    deferred.reject('Error Fetching Data'+serviceUrl+config.url);
                 }
             },
             function (error) {
