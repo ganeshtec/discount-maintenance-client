@@ -62,4 +62,22 @@ describe('Unit testing adminPromotionForm.directive.spec.js', function () {
       expect(this.$isolateScope.data.printLabel).toBe(true);
   });
 
+  it('updatePrintLabelFlag should set printLabel to true if promoMfa is true and promoSubTypeCd is ProductLevelPerItemPercentDiscountMSB',function(){ 
+      this.$isolateScope.promoSubTypeObject ={promoSubTypeCd:'ProductLevelPerItemPercentDiscountMSB'}
+      this.$isolateScope.promoMfa=true;
+      this.$isolateScope.data.printLabel=true; 
+      this.$isolateScope.updatePrintLabelFlag();
+      expect(this.$isolateScope.data.printLabel).toBe(true);
+  });
+
+  it('updatePrintLabelFlag should set printLabel to true and labelText editable if promoMfa is true and promoSubTypeCd is ProductLevelPerItemPercentDiscountMSB',function(){ 
+      this.$isolateScope.promoSubTypeObject ={promoSubTypeCd:'ProductLevelPerItemPercentDiscountMSB'}
+      this.$isolateScope.promoMfa=true;
+      this.$isolateScope.data.printLabel=true;
+      this.$isolateScope.data.labelText = 'SampleText'; 
+      this.$isolateScope.updatePrintLabelFlag();
+      expect(this.$isolateScope.data.printLabel).toBe(true);
+      expect(this.$isolateScope.data.labelText).toEqual('SampleText');
+  });
+
 });
