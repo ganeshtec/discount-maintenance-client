@@ -12,7 +12,7 @@ describe('promotionAdminCtrl', function () {
         controller = $controller('promotionAdminCtrl', { $scope: $scope});
     }));
 
-    fdescribe('Test view properties', function() {
+    describe('Test view properties', function() {
         it('Sets appropriate view properties for MFA/Store users', function() {
             var expectedResult = {
                 displayPromoDescription: false,
