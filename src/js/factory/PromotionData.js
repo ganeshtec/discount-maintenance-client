@@ -39,6 +39,7 @@ app.factory('PromotionData', ['ALLOWED_PERMISSION_IDS',function (ALLOWED_PERMISS
                 'channels': [87],
                 'qualUOM': 'Quantity',
                 'locations': [],
+                'markets': [],
                 'isTargetExist': false,
                 'sources': [{
                     'inclusions': {
