@@ -27,9 +27,6 @@ Capybara::Webkit.configure(&:allow_unknown_urls)
 
 PROMO_UI_HOST = ENV['PROMO_UI_HOST'] || 'http://localhost.homedepot.com:8002'.freeze
 PROMO_CREATION = ENV['PROMO_CREATION'] || 'http://localhost.homedepot.com:8002/#/promotion-admin'.freeze
-DISC_MAINT_API = ENV['DISC_MAINT_API'] || 'http://localhost.homedepot.com:8090/v1'.freeze
-#DISC_MAINT_API = ENV['DISC_MAINT_API'] || 'https://promotionsws-ext-qa.apps-np.homedepot.com/v1'.freeze
-
 
 def future_date(days_ahead)
   todays_date = Date.today
@@ -66,35 +63,11 @@ def store_sign_in
   end
 end
 
-def validate_values_in_database(promotion_id,promotion)
-  puts "promotion_id::" + promotion_id
-  puts "promotion json ::" + "#{DISC_MAINT_API}" + "/cartPromotions/" + promotion_id
-  http_response = HTTParty.get("#{DISC_MAINT_API}" + "/cartPromotions/" + promotion_id)
-  expect(http_response.code).to be(200)
-  puts "Service Call Completed to DISC_MAIN_API"
-  response = JSON.parse(http_response.body)
-  expected_start_date = Date.strptime(promotion.start_date, "%m/%d/%Y").strftime("%Y-%m-%d 03:00:00")
-  expected_end_date = Date.strptime(promotion.end_date, "%m/%d/%Y").strftime("%Y-%m-%d 02:59:59")
-  expected_sku_list = promotion.item_sku.split(",") .map(&:to_i) 
-  #expected_store_list = promotion.store_location.split(",") 
-  expected_market_list = promotion.market_location.split(",").map(&:to_i)
-  expect(response["startDt"]).to eq(expected_start_date)
-  expect(response["endDt"]).to eq(expected_end_date)
-  #expect(response["purchaseConds"]["locations"]).to match_array(expected_store_list)
-  expect(response["purchaseConds"]["markets"]).to match_array(expected_market_list)
-  expect(response["purchaseConds"]["sources"][0]["inclusions"]["partnumbers"]).to match_array(expected_sku_list)
-  expect(response["promoId"].to_s).to eq(promotion_id)
-  expect(response["reward"]["details"][0]["min"]).to eq(promotion.rewards_quantity.to_i)
-  expect(response["reward"]["details"][0]["value"].to_f).to eq(promotion.percent_off.to_f)
-  puts "MSB Discount exists in the discount admin API and its promotion ID is: " + promotion_id
-end
-
-
 class Promotion
-  attr_reader :name, :promotion_type, :redemption_method, :customer_segment, :priority, :inclusion, :item_sku, :market_location, :store_location, :rewards_quantity, 
+  attr_reader :name, :promotion_type, :redemption_method, :customer_segment, :priority, :inclusion, :item_sku, :market_location, :rewards_quantity, 
   :percent_off, :desc_long, :desc_short, :start_date, :end_date
 
-  def initialize(name:, promotion_type:, redemption_method:, customer_segment:, priority:, inclusion:, item_sku:, market_location:, store_location:, rewards_quantity:, 
+  def initialize(name:, promotion_type:, redemption_method:, customer_segment:, priority:, inclusion:, item_sku:, market_location:, rewards_quantity:, 
     percent_off:, desc_long:, desc_short:, start_date:, end_date:)
     @name = name
     @promotion_type = promotion_type
@@ -104,7 +77,6 @@ class Promotion
     @inclusion = inclusion
     @item_sku = item_sku
     @market_location = market_location
-    @store_location = store_location
     @rewards_quantity = rewards_quantity
     @percent_off = percent_off
     @desc_long = desc_long
