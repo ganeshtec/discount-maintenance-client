@@ -1,5 +1,5 @@
 
-<div class="md-select md-select-space" ng-if="data.promoSubTypeCd=='OrderLevelPercentDiscount' || data.purchaseConds.customerSegmentId!=0 && data.promoSubTypeCd=='OrderLevelPercentDiscount'">
+<div class="md-select md-select-space" ng-show="viewProp.displayCustomerSegment" ng-if="data.promoSubTypeCd=='OrderLevelPercentDiscount' || data.purchaseConds.customerSegmentId!=0 && data.promoSubTypeCd=='OrderLevelPercentDiscount'">
     <label for="promocustomersegment"><h3>Customer Segment</h3></label>
 
 
@@ -32,19 +32,20 @@
 
     <div class="md-text-field">
         <h3>Inclusion</h3>
-        <div ng-show="item.purchaseoption == 'category'" class="filter_sku_types_link">
+        <div ng-show="item.purchaseoption == 'category' && viewProp.displayFilterSkuTypes" class="filter_sku_types_link">
             <a class="editOption thd-orange" ng-click="showSkuTypeModal($event,item,data.status)" href="">
             <i class="fa fa-filter thd-orange" aria-hidden="true"></i>
             Filter SKU Types
             </a>
         </div> 
         <label ng-show="data.purchaseConds.sources.length > 1">Definition for "{{alphabet[$index]}}" *</label>
-        <div class="md-radio" ng-show="viewProp.displayOMSId">
+        <div class="md-radio" id="itemsoms_div_{{$index}}" ng-show="viewProp.displayOMSId">
             <input type="radio" id="itemsoms_{{$index}}" name="purchaseoption_{{$index}}" ng-model="data.purchaseConds.sources[$index].purchaseoption"
                 title="Items/OMS ID's" value="itemoms" />
             <label for="itemsoms_{{$index}}"><span><span></span></span>Items/OMS ID's</label>
         </div>
-        <div class="md-radio">
+        <div class="md-radio" id="itemssku_div_{{$index}}" ng-show="viewProp.displayItemsSku">
+            <!--<div class="md-radio">-->
             <input type="radio" id="itemssku_{{$index}}" name="purchaseoption_{{$index}}" ng-model="data.purchaseConds.sources[$index].purchaseoption"
                 title="Items/SKU" value="itemsku" />
             <label for="itemssku_{{$index}}"><span><span></span></span>Items/SKU</label>
@@ -54,11 +55,7 @@
                 title="Category" value="category" />
             <label for="category_{{$index}}"><span><span></span></span>Category </label>
         </div>
-        <div class="md-radio" ng-show="viewProp.displayMFGBrand">
-            <input type="radio" id="brand_{{$index}}" name="purchaseoption_{{$index}}" ng-model="data.purchaseConds.sources[$index].purchaseoption"
-                title="MFG Brand" value="Brand" ng-disabled="true" />
-            <label for="brand_{{$index}}"><span><span></span></span>MFG Brand</label>
-        </div>
+
 
     </div>
     <!-- Item view Codes Component -->
@@ -72,7 +69,7 @@
     
    
     <!-- NXK8980  MerchCategory-CodeChanges-START -->
-    <merch-hierarchy-view data="item.inclusions.hierarchies" source="item" is-disabled="isDisabled" promoform="promoform" promo-status="data.status" ng-show="item.purchaseoption == 'category'">
+    <merch-hierarchy-view data="item.inclusions.hierarchies"  source="item" is-disabled="isDisabled" promoform="promoform" view-prop="viewProp" promo-status="data.status" ng-show="item.purchaseoption == 'category' && viewProp.displayItemsSku">
     </merch-hierarchy-view>
     <!-- NXK8980  MerchCategory-CodeChanges-END -->
     <category-exclusion data="item.exclusions" itemtype="item.exclusions.itemtype" is-disabled="isDisabled" promoform="promoform"

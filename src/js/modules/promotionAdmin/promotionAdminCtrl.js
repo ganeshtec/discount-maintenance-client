@@ -68,10 +68,14 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$co
                     displayOMSIdExclusion: false,
                     displayExclusionSubCategories: false,
                     displayPaymentType: false,
-                    displayScheduleTime: false,
-                    displayPrintLabel: false,
+                    displayScheduleTime: true,
+                    displayPrintLabel: true,
                     displayLocations: true,
-                    promotionSubTypesForMFA: true
+                    displayItemsSku:true,
+                    displayMerchHiearchy: true,
+                    displayCustomerSegment: true,
+                    promotionSubTypesForMFA: true,
+                    displayFilterSkuTypes: true
                 }
                 //$scope.promotionSubTypesForMFA = true;
             } else if (userType == allowedPermissionIDs.ONLINE) {                
@@ -89,7 +93,11 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$co
                     displayScheduleTime: true,
                     displayPrintLabel: false,
                     displayLocations: false,
-                    promotionSubTypesForMFA: false
+                    displayItemsSku: false,
+                    displayMerchHiearchy: false,
+                    displayCustomerSegment: false,
+                    promotionSubTypesForMFA: false,
+                    displayFilterSkuTypes: false
                 }
                 //$scope.promotionSubTypesForMFA = false;
             }

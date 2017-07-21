@@ -2,6 +2,7 @@ describe('Promo schedule', function() {
 
   var $componentController,
       $filter;
+  var ctrl;
 
   // Load the myApp module, which contains the directive
   beforeEach(module('app'));
@@ -20,5 +21,9 @@ describe('Promo schedule', function() {
     });
 
   }));
+  it('Test start and end time',function(){
+      expect(ctrl.startTime).toBe('3:00 AM');
+      expect(ctrl.endTime).toBe('2:59 AM')
+  });
 
 });
