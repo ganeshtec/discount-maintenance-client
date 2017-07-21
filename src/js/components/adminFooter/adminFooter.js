@@ -70,7 +70,6 @@ app.component('adminFooter', {
                 modalService.showAlert('Error', 'Please fix all validation errors');
                 return;
             }
-
             this.previewdata.data = $.extend(true, {}, data);
             this.previewOverlayConfig.open();
         }

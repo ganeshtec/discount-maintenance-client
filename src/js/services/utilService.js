@@ -269,7 +269,8 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
     }
 
     publicApi.requiredFieldsMissing = function (promotion) {
-        return checkEmpty(promotion.name) || checkEmpty(promotion.startDt) || checkEmpty(promotion.endDt) || checkEmpty(promotion.promoSubTypeCd) || promotion.purchaseConds.locations.length == 0;
+        return checkEmpty(promotion.name) || checkEmpty(promotion.startDt) || checkEmpty(promotion.endDt)|| checkEmpty(promotion.promoSubTypeCd) 
+            || (promotion.purchaseConds.locations.length == 0 && promotion.purchaseConds.markets.length == 0);
     }
     publicApi.invalidSysGenCode = function (promotion) {
         if (promotion && promotion.promoCdSpec && promotion.promoCdSpec.systemGen) {
