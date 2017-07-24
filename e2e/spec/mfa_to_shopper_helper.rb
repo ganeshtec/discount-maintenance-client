@@ -10,13 +10,36 @@ require 'pry'
 
 Capybara.configure do |config|
   config.run_server = false
-  config.javascript_driver = :selenium
 end
 
-#Capybara.default_wait_time = 12
-Capybara.default_max_wait_time = 20
-Capybara.register_driver :selenium do |app|
-    Capybara::Selenium::Driver.new(app, :browser => :chrome)
+# For CI. Headless browser
+browser = ENV['BROWSER']
+
+# For dev
+if (browser == "headless")
+
+  # Capybara.register_driver :chrome do |app|
+  #   Capybara::Selenium::Driver.new(app, browser: :chrome)
+  # end
+
+  Capybara.register_driver :headless_chrome do |app|
+    capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
+      "chromeOptions" => {
+      'args' => ['headless', 'disable-gpu']
+      }
+    )
+
+    Capybara::Selenium::Driver.new app,
+      browser: :chrome,
+      desired_capabilities: capabilities
+  end
+
+  Capybara.javascript_driver = :headless_chrome
+
+else
+    Capybara.register_driver :selenium do |app|
+      Capybara::Selenium::Driver.new(app, :browser => :chrome)
+    end
 end
 
 Capybara.save_path = "/tmp/screenshots"
