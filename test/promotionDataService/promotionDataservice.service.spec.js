@@ -59,8 +59,9 @@ describe('Unit test for promotionDataService', function() {
       var promoTypeCd= 'all';
       var sortby = 'none';
       var order = 'asc';
-      $httpBackend.expectPOST('/search',{"criteria":{"channels":[87],"term":"","page":{"page":1,"size":10}}}).respond(200,searchResponse);    
-      var promise = promotionDataService.getPromotions(channels, promoname, page, pageSize, status, promoTypeCd, sortby, order);
+      var searchType ='discountName';
+      $httpBackend.expectPOST('/search',{"criteria":{"channels":[87],"term":"","searchType":"discountName","page":{"page":1,"size":10}}}).respond(200,searchResponse);    
+      var promise = promotionDataService.getPromotions(channels, promoname, page, pageSize, status, promoTypeCd, sortby, order,searchType);
       promise.then(function(data){
         expect(data.totalCount).toBe(0);
       })
