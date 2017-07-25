@@ -2,6 +2,13 @@
      margin: auto;
      width: 100%;
  }
+ #searchTypeContainer{
+     top: -20px;
+     float: left;
+     margin: auto;
+     width: 250px;
+     padding-bottom:20px;
+ }
  #searchFilterSearchBox { 
      float: left;
      padding-bottom: 20px;

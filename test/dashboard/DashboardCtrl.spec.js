@@ -59,6 +59,7 @@ describe('DashboardCtrl', function () {
             deferredResult.resolve(
                 {criteria: {
         		    channels: [57],
+                    searchType: 'discountName',
         		    term: "",
         		    promoSubTypeCd: null,
         		    status: null,
@@ -82,7 +83,7 @@ describe('DashboardCtrl', function () {
             //$scope.search([57], '', 1, 10, 'all', 'all', 'none', 'asc');
             expect(promotionDataService.getPromotions.calls.count()).toEqual(1);
             console.log(promotionDataService.getPromotions.calls.first().args);
-            expect(promotionDataService.getPromotions.calls.first().args).toEqual([[57],'',0,10,'all','all','none','asc']);
+            expect(promotionDataService.getPromotions.calls.first().args).toEqual([[57],'',0,10,'all','all','none','asc','discountName']);
             
         });
 

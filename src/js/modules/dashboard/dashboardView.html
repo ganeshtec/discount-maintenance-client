@@ -4,7 +4,7 @@
 			<h1 class="pull-left md-display-2 admin__header__title">
 				Discount List
 			</h1>
-				<!-- 
+			<!-- 
 
 					if MFA
 						 <a href="#" class="md-button"  ng-href="#/promotion-digital"><i class="fa fa-plus"></i> Create New Promotion</a> 
@@ -12,29 +12,36 @@
 						 <a href="#" class="md-button"  ng-href="#/promotion-mfa"><i class="fa fa-plus"></i> Create New Promotion</a> 		 
 
 				-->
-			 <a href="#" class="md-button"  ng-href="#/discount-admin"><i class="fa fa-plus"></i> Create New Discount</a> 
+			<a href="#" class="md-button" ng-href="#/discount-admin"><i class="fa fa-plus"></i> Create New Discount</a>
 		</div>
 	</div>
 	<div layout="row">
-		<div  class="admin__main">
+		<div class="admin__main">
 			<div class="admin__content">
 				<!-- Search Filter - Start -->
 				<div layout="row">
+					<div id="searchTypeContainer" class="md-select">
+						<label for="searchType">Search Type</label>
+						<select id="searchType" name="searchType" ng-model="searchType" title="Select Search Type" ng-change="searchTypeChanged()">
+								<option value="discountName">Name</option>
+								<option value="discountId">ID #</option>
+						</select>
+					</div>
 					<div id="searchFilterContainer" flex="100">
-	 					<div class="md-toolbar-search">
-	 		 				<div id="searchFilterSearchBox">
-	 		 					<input id="searchFilterSearchBoxInput" class="table__search" placeholder="Search Discount name or keyword" type="text" ng-model="promotionName" ng-keypress="($event.keyCode === 13) && updateKeyword()" allow-pattern="(\d|[a-z A-Z\_])" />
-	 		 				</div>
-	 						<div id="searchFilterSearchButton">
-	 							<a class="md-button secondary" href="" ng-click="updateKeyword()">Search</a>
-	 						</div>
+						<div class="md-toolbar-search">
+							<div id="searchFilterSearchBox">
+								<input id="searchFilterSearchBoxInput" class="table__search" placeholder="Search Discount name or keyword" type="text" ng-model="searchTerm"
+									ng-keypress="($event.keyCode === 13) && updateKeyword()" replace-special-characters />
+							</div>
+							<div id="searchFilterSearchButton">
+								<a class="md-button secondary" href="" ng-click="updateKeyword()">Search</a>
+							</div>
 
-	 						<div id="searchFilterFilterButton">
-	 							<a class="md-button util__btn" href="" ng-click="showFilter=true">
-	 								<i class="fa fa-filter"></i> 
-	 								Filter
-	 							</a>
-	 
+							<div id="searchFilterFilterButton">
+								<a class="md-button util__btn" href="" ng-click="showFilter=true">
+									<i class="fa fa-filter"></i> Filter
+								</a>
+
 								<div id="searchFilter" ng-show="showFilter">
 									<div id="searchFilterHeader">
 										<div id="searchFilterHeaderTitle">
@@ -78,9 +85,9 @@
 
 							</div>
 						</div>
-					</div>  					
+					</div>
 				</div>
-				<div  class="error">{{errorMessage}}&nbsp;</div>
+				<div class="error">{{errorMessage}}&nbsp;</div>
 				<!-- Search Filter - End -->
 
 
@@ -88,25 +95,25 @@
 					<div flex="40">
 						<!--Button/Link Small Group -->
 						<div class="md-button-group sm">
-				      <a class="md-button util__btn no-margin" href="" ng-click="selectedCount == 1 && edit()" ng-disabled="selectedCount != 1"><i class="fa fa-pencil"></i> Edit</a>
-				      <a class="md-button util__btn"  ng-click="selectedCount == 1 && duplicate()" ng-disabled="selectedCount != 1"><i class="fa fa-clone"></i> Duplicate</a>
-				      <a class="md-button util__btn" ng-click="isActive() && selectedCount ==1 && deactivate()" ng-disabled="!isActive() || selectedCount!= 1" ><i class="fa fa-remove" ></i> Deactivate</a>
-				      <a class="md-button util__btn" ng-disabled="hasActive() ||selectedCount == 0" ng-click="selectedCount != 0 && !hasActive() && delete()"><i class="fa fa-trash"></i> Delete</a>
+							<a class="md-button util__btn no-margin" href="" ng-click="selectedCount == 1 && edit()" ng-disabled="selectedCount != 1"><i class="fa fa-pencil"></i> Edit</a>
+							<a class="md-button util__btn" ng-click="selectedCount == 1 && duplicate()" ng-disabled="selectedCount != 1"><i class="fa fa-clone"></i> Duplicate</a>
+							<a class="md-button util__btn" ng-click="isActive() && selectedCount ==1 && deactivate()" ng-disabled="!isActive() || selectedCount!= 1"><i class="fa fa-remove"></i> Deactivate</a>
+							<a class="md-button util__btn" ng-disabled="hasActive() ||selectedCount == 0" ng-click="selectedCount != 0 && !hasActive() && delete()"><i class="fa fa-trash"></i> Delete</a>
 						</div>
 					</div>
 					<div flex="30">
 						<!--Button/Link Small Group -->
 						<div class="md-button-group sm">
-				      <a class="md-button util__btn" ng-click="selectedCount == 2 && compare()" ng-disabled="selectedCount != 2"><i class="fa fa-pencil"></i> Compare</a>
-				      <a class="md-button util__btn" ng-disabled="true"><i class="fa fa-columns"></i> Vertical View</a>
-				      <a class="md-button util__btn" ng-disabled="selectedCount != 1" ng-click="selectedCount == 1 && setPromotionToView(sel)"><i class="fa fa-columns"></i> Horizontal View</a>
+							<a class="md-button util__btn" ng-click="selectedCount == 2 && compare()" ng-disabled="selectedCount != 2"><i class="fa fa-pencil"></i> Compare</a>
+							<a class="md-button util__btn" ng-disabled="true"><i class="fa fa-columns"></i> Vertical View</a>
+							<a class="md-button util__btn" ng-disabled="selectedCount != 1" ng-click="selectedCount == 1 && setPromotionToView(sel)"><i class="fa fa-columns"></i> Horizontal View</a>
 						</div>
 					</div>
 					<div flex="20">
 						<!--Button/Link Small Group -->
 						<div class="md-button-group sm">
-				      <a class="md-button util__btn" ng-click="canSave() && save()" ng-disabled="!canSave()"><i class="fa fa-pencil"></i> Save</a>
-				      <a class="md-button util__btn" ng-click="refresh()"><i class="fa fa-refresh"></i> Refresh</a>
+							<a class="md-button util__btn" ng-click="canSave() && save()" ng-disabled="!canSave()"><i class="fa fa-pencil"></i> Save</a>
+							<a class="md-button util__btn" ng-click="refresh()"><i class="fa fa-refresh"></i> Refresh</a>
 						</div>
 					</div>
 					<div flex="10">
@@ -119,27 +126,34 @@
 						<form name="promogrid" novalidate>
 							<table class="table c promotions">
 								<tr>
-									<th width="3%" class="padding-left-20"><md-checkbox ng-true-value="true"  aria-label="Select All Promotions" ng-change="toggleAll()" ng-false-value="false" ng-model="selectAll"></md-checkbox>
-									</th>  
-									<th width="{{header.width}}" ng-class="{'sortorder':(sortby== header.sortId),'reverse':(order=='desc')}" ng-repeat="header in headers" ng-click="sort(header.sortId)" >{{header.text}}</th>
-								</tr> 
-								<tr ng-repeat="wrapper in promotions " ng-class="{'disabledpromo':wrapper.disabled, 'odd':($index % 2)}" data-promoid ="{{wrapper.promotion.promoId}}">
+									<th width="3%" class="padding-left-20">
+										<md-checkbox ng-true-value="true" aria-label="Select All Promotions" ng-change="toggleAll()" ng-false-value="false"
+											ng-model="selectAll"></md-checkbox>
+									</th>
+									<th width="{{header.width}}" ng-class="{'sortorder':(sortby== header.sortId),'reverse':(order=='desc')}" ng-repeat="header in headers"
+										ng-click="sort(header.sortId)">{{header.text}}</th>
+								</tr>
+								<tr ng-repeat="wrapper in promotions " ng-class="{'disabledpromo':wrapper.disabled, 'odd':($index % 2)}" data-promoid="{{wrapper.promotion.promoId}}">
 									<td class="padding-left-20">
-										<md-checkbox aria-label="Select {{wrapper.promotion.name}} Promotion" ng-true-value="true" ng-false-value="false"  ng-model="selected[wrapper.promotion.promoId]" /></md-checkbox>
+										<md-checkbox aria-label="Select {{wrapper.promotion.name}} Promotion" ng-true-value="true" ng-false-value="false" ng-model="selected[wrapper.promotion.promoId]"
+										/></md-checkbox>
 									</td>
 									<td class='dashboard-promo-id'>{{wrapper.promotion.promoId}}</td>
 									<td>
-					  					<input type="text" ng-disabled="wrapper.disabled"  class="promotionName" required ng-model="wrapper.promotion.name" required allow-pattern="(\d|[a-z A-Z\(\?\-\_\.\'\,\%\$\!\@\)])" />
-					  				</td>
+										<input type="text" ng-disabled="wrapper.disabled" class="promotionName" required ng-model="wrapper.promotion.name" required
+											allow-pattern="(\d|[a-z A-Z\(\?\-\_\.\'\,\%\$\!\@\)])" />
+									</td>
 									<td width="8%" class='dashboard-promo-status'>{{status[wrapper.promotion.status]}}</td>
 									<td class="l" width="15%">{{promoSubTypes[wrapper.promotion.promoSubTypeCd]}}</td>
-									<td><input  ng-disabled="wrapper.disabled"  type="date" required class="promotionDate" ng-model="wrapper.start" required /></td>
-									<td><input ng-disabled="wrapper.disabled"  type="date" required ng-min="wrapper.start" class="promotionDate" ng-model="wrapper.end" required /></td>
+									<td><input ng-disabled="wrapper.disabled" type="date" required class="promotionDate" ng-model="wrapper.start" required
+										/></td>
+									<td><input ng-disabled="wrapper.disabled" type="date" required ng-min="wrapper.start" class="promotionDate" ng-model="wrapper.end"
+											required /></td>
 									<td>{{wrapper.promotion.meta.createdBy|uppercase}}</td>
 									<td class="l">{{wrapper.promotion.meta.lastUpdatedBy|uppercase}}&nbsp;{{wrapper.promotion.meta.lastUpdated}}</td>
 									<td>{{wrapper.promotion.priority}}</td>
 
-								</tr>	
+								</tr>
 							</table>
 							<div ng-if="nodata" class=" nopromotion">
 								No Discount found
@@ -147,8 +161,8 @@
 						</form>
 					</div>
 				</div>
-				<pagination ng-if="paginationReq"  onpagechange="updatePage" onsizechange="updateSize" config="paginationConfig"></pagination>
-				<div class="mask" ng-show="loading"></div>	 
+				<pagination ng-if="paginationReq" onpagechange="updatePage" onsizechange="updateSize" config="paginationConfig"></pagination>
+				<div class="mask" ng-show="loading"></div>
 			</div>
 		</div>
 	</div>
@@ -163,7 +177,7 @@
 				<a class="md-button secondary pull-right" ng-click="promotionData = ''">Cancel</a>
 			</div>
 			<div class="admin__header__content admin__header__content--bottom">
-				<h1 class="md-display-2">Edit Discount 
+				<h1 class="md-display-2">Edit Discount
 					<span class="" ng-show="promotionData.promotype.name"> : {{promotionData.promotype.name}}</span>
 					<br>
 					<span class="" ng-show="promotionData.promotype.promoSubTypeDesc"> Type: {{promotionData.promotype.promoSubTypeDesc}}</span>
@@ -188,10 +202,12 @@
 		<div layout="row">
 			<div flex="100">
 				<!-- Admin Footer compontent -->
-				<admin-footer ng-if="promotionData" data="promotionData" preview-overlay-config="previewOverlayConfig" previewdata="previewData" class="admin__footer" form-holder="formHolder" promo-form="promoForm" index="sectionInx"></admin-footer>
+				<admin-footer ng-if="promotionData" data="promotionData" preview-overlay-config="previewOverlayConfig" previewdata="previewData"
+					class="admin__footer" form-holder="formHolder" promo-form="promoForm" index="sectionInx"></admin-footer>
 			</div>
 		</div>
 	</form>
 </div>
 
-<promotion-preview data="promotionData" ng-if="previewOverlayConfig.isOpen" form-holder="previewFormHolder" preview-overlay-config="previewOverlayConfig" preview-data="previewData" promo-form="promoForm"></promotion-preview>
+<promotion-preview data="promotionData" ng-if="previewOverlayConfig.isOpen" form-holder="previewFormHolder" preview-overlay-config="previewOverlayConfig"
+	preview-data="previewData" promo-form="promoForm"></promotion-preview>
