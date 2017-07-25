@@ -7,12 +7,14 @@ describe('DashboardCtrl', function () {
     var promotionDataService;
     var $q;
     var $cookies;
+    var $location;
 
-    beforeEach(inject(function ($injector, _$rootScope_, _$controller_, _promotionDataService_,_$q_,_$cookies_) {
+    beforeEach(inject(function ($injector, _$rootScope_, _$controller_, _promotionDataService_,_$q_,_$cookies_,_$location_) {
         $scope = _$rootScope_.$new();
         $controller = _$controller_;
         promotionDataService = _promotionDataService_;
         $q=_$q_;
+        $location=_$location_;
         $cookies=_$cookies_;
         $cookies.put('currentUserRole',229);
         controller = $controller('DashboardCtrl', { $scope: $scope });
@@ -53,8 +55,8 @@ describe('DashboardCtrl', function () {
             expect($scope.channelId).toEqual(87); 
         });
     });
-    describe('DiscountsSearchBasedOnChannels', function () {
-        it('Dashboard search method called with channels', function () {
+    describe('Discount Search', function () {
+        it('Dashboard search method called with channels and searchType', function () {
             var deferredResult = $q.defer();
             deferredResult.resolve(
                 {criteria: {
@@ -82,13 +84,29 @@ describe('DashboardCtrl', function () {
             $scope.searchWithUrlParams();
             //$scope.search([57], '', 1, 10, 'all', 'all', 'none', 'asc');
             expect(promotionDataService.getPromotions.calls.count()).toEqual(1);
-            console.log(promotionDataService.getPromotions.calls.first().args);
-            expect(promotionDataService.getPromotions.calls.first().args).toEqual([[57],'',0,10,'all','all','none','asc','discountName']);
-            
+            expect(promotionDataService.getPromotions.calls.first().args).toEqual([[57],'',0,10,'all','all','none','asc','discountName']);           
         });
 
+        it('When user does not enter a keyword search should return all records matching other criteria', function () {
+            spyOn($location, "search").and.returnValue({keyword:'hello',searchType: 'discountName',page:1,size:10});
+            $scope.searchTerm='';
+            $scope.updateKeyword();
+            expect($location.search.calls.count()).toEqual(2);
+            expect($location.search.calls.first().args.length).toEqual(0);
+            expect($location.search.calls.mostRecent().args[0].keyword).toEqual('');          
+        });
+        it('When search type changes keyword field should be reset and page should be refreshed', function () {
+            spyOn($location, "search").and.returnValue({keyword:'hello',searchType: 'discountName',page:1,size:10});
+            $scope.searchTerm='hello';
+            $scope.searchTypeChanged();
+            expect($scope.searchTerm).toEqual('');
+            expect($location.search.calls.count()).toEqual(2);
+            expect($location.search.calls.first().args.length).toEqual(0);
+            expect($location.search.calls.mostRecent().args[0].keyword).toEqual('');          
+        });
 
     });
+
 
 
 });
