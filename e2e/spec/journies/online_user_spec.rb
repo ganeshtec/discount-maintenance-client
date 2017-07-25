@@ -22,7 +22,7 @@ describe 'Online makes a customer segment discount that is persisted', type: :fe
 			)
 	end
 
-    it 'provides the Online user-created discount to the Promotion_Maintenance_UI for ONLINEUSER' do
+    it 'provides the Online user-created discount to the Promotion_Maintenance_UI for ONLINEUSER' do	
 		create_discount_online(promotion)
 	end	
     it 'edits the Online user-created discount to the Promotion_Maintenance_UI for ONLINEUSER' do

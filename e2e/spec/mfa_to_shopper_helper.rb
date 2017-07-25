@@ -48,10 +48,12 @@ Capybara::Screenshot.prune_strategy = :keep_last_run
 
 Capybara::Webkit.configure(&:allow_unknown_urls)
 
+Capybara.default_max_wait_time = 20
+
 PROMO_UI_HOST = ENV['PROMO_UI_HOST'] || 'http://localhost.homedepot.com:8002'.freeze
 PROMO_CREATION = ENV['PROMO_CREATION'] || 'http://localhost.homedepot.com:8002/#/promotion-admin'.freeze
-DISC_MAINT_API = ENV['DISC_MAINT_API'] || 'http://localhost.homedepot.com:8090/v1'.freeze
-#DISC_MAINT_API = ENV['DISC_MAINT_API'] || 'https://promotionsws-ext-qa.apps-np.homedepot.com/v1'.freeze
+#DISC_MAINT_API = ENV['DISC_MAINT_API'] || 'http://localhost.homedepot.com:8090/v1'.freeze
+DISC_MAINT_API = ENV['DISC_MAINT_API'] || 'https://promotionsws-ext-qa.apps-np.homedepot.com/v1'.freeze
 
 
 def future_date(days_ahead)
