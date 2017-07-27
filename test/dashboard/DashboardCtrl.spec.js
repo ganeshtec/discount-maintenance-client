@@ -28,7 +28,6 @@ describe('DashboardCtrl', function () {
             futureDate.setDate(futureDate.getDate() + 10);
 
             expect($scope.isInLeadTime(futureDate, 5)).toEqual(false);
-
         });
 
         it('Determines if lead time must be accounted for in this promo', function () {
@@ -44,17 +43,18 @@ describe('DashboardCtrl', function () {
         });
     });
 
-
     describe('Verify channel initialization based on user roles', function(){
         it('DCM user should only see promotions created with channel 57', function(){
             expect($scope.channelId).toEqual(57);          
         });
+
         it('MFA user should only see promotions created with channel 87', function(){
             $cookies.put('currentUserRole',228);
             $controller('DashboardCtrl', { $scope: $scope });
             expect($scope.channelId).toEqual(87); 
         });
     });
+
     describe('Discount Search', function () {
         it('Dashboard search method called with channels and searchType', function () {
             var deferredResult = $q.defer();
@@ -82,9 +82,25 @@ describe('DashboardCtrl', function () {
             );
             spyOn(promotionDataService, "getPromotions").and.returnValue(deferredResult.promise);
             $scope.searchWithUrlParams();
-            //$scope.search([57], '', 1, 10, 'all', 'all', 'none', 'asc');
             expect(promotionDataService.getPromotions.calls.count()).toEqual(1);
             expect(promotionDataService.getPromotions.calls.first().args).toEqual([[57],'',0,10,'all','all','none','asc','discountName']);           
+        });
+
+        it("Should pass the SKU number into the URL as a query parameter when the user searches by SKU", function(){
+            var expectedResults = {
+                channels: [87],
+                keyword: "100090",
+                searchType: "sku",
+                page: 1,
+                type: "all",
+                status: "all"
+            };
+            $scope.searchTerm = "100090";
+            $scope.searchType = "sku";
+            $scope.updateKeyword();
+            var actualResults = $location.search();
+            expect(actualResults.keyword).toEqual(expectedResults.keyword);            
+            expect(actualResults.searchType).toEqual(expectedResults.searchType);
         });
 
         it('When user does not enter a keyword search should return all records matching other criteria', function () {
@@ -95,6 +111,7 @@ describe('DashboardCtrl', function () {
             expect($location.search.calls.first().args.length).toEqual(0);
             expect($location.search.calls.mostRecent().args[0].keyword).toEqual('');          
         });
+
         it('When search type changes keyword field should be reset and page should be refreshed', function () {
             spyOn($location, "search").and.returnValue({keyword:'hello',searchType: 'discountName',page:1,size:10});
             $scope.searchTerm='hello';
@@ -104,9 +121,5 @@ describe('DashboardCtrl', function () {
             expect($location.search.calls.first().args.length).toEqual(0);
             expect($location.search.calls.mostRecent().args[0].keyword).toEqual('');          
         });
-
     });
-
-
-
 });
