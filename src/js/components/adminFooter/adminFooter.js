@@ -86,6 +86,10 @@ app.component('adminFooter', {
             callback(validationErrors);
         }
 
+        this.isPromotionActive = function(){
+            return utilService.isPromotionActive(this.data);
+        }
+
 
     }
 });

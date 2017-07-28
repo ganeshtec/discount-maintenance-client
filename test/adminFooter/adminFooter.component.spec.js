@@ -91,4 +91,58 @@ describe('Unit testing adminFooter.directive.spec.js', function () {
     expect(ctrl.canApprove({})).toEqual(false);
   })
 
+  it('Checks if can approve returns true if promotion status is not active', function () {
+      spyOn(utilService, 'canApprove').and.callFake(function () {
+        return {
+          then: function (callback) { return callback(true) }
+        }
+      })
+
+    spyOn(utilService, 'isSubmitEligibleForDisable').and.callFake(function () {
+        return {
+          then: function (callback) { return callback(false) }
+        }
+      })
+
+      spyOn(utilService, 'isPromotionActive').and.callFake(function () {
+        return {
+          then: function (callback) { return callback(false) }
+        }
+      }) 
+
+    ctrl = $componentController('adminFooter',null, {
+         data: {} 
+         
+         });
+    $scope.$digest();
+    expect(ctrl.canApprove({})).toEqual(true);
+  })
+
+   it('Checks if can approve returns false if promotion status is active', function () {
+      spyOn(utilService, 'canApprove').and.callFake(function () {
+        return {
+          then: function (callback) { return callback(false) }
+        }
+      })
+
+    spyOn(utilService, 'isSubmitEligibleForDisable').and.callFake(function () {
+        return {
+          then: function (callback) { return callback(true) }
+        }
+      })
+
+      spyOn(utilService, 'isPromotionActive').and.callFake(function () {
+        return {
+          then: function (callback) { return callback(true) }
+        }
+      }) 
+
+    ctrl = $componentController('adminFooter',null, {
+         data: {} 
+         
+         });
+    $scope.$digest();
+    expect(ctrl.canApprove({})).toEqual(false);
+  })
+
 });
