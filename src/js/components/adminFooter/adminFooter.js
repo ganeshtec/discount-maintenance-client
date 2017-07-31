@@ -10,7 +10,7 @@ app.component('adminFooter', {
     },
 
 
-    templateUrl:'adminFooter.html',
+    templateUrl: 'adminFooter.html',
     controller: function FooterCtrl(PromotionData, utilService, leadTimeService, promotionDataService, modalService, validationService) {
         var tempData = $.extend(true, {}, this.data);
         var inprogress = false;
@@ -62,7 +62,7 @@ app.component('adminFooter', {
 
         this.preview = function (data) {
             var areValidationErrorsPresent;
-            this.validatePromotion(data, function(validationErrors) {
+            this.validatePromotion(data, function (validationErrors) {
                 areValidationErrorsPresent = validationService.areErrorsPresent(validationErrors);
             });
 
@@ -81,13 +81,21 @@ app.component('adminFooter', {
             return utilService.canApprove(promotion) && !inprogress && !isEndDtWithinLeadTime;
         }
 
+        this.isPreviewSubmitClickDisabled = function (promotion) {
+            return utilService.isPreviewSubmitClickDisabled(promotion);
+        }
+
         this.validatePromotion = function (promotion, callback) {
             var validationErrors = validationService.validatePromotion(promotion, true);
             callback(validationErrors);
         }
 
-        this.isPromotionActive = function(){
-            return utilService.isPromotionActive(this.data);
+        this.disableClick = function (promotion) {
+            var isClickable = utilService.canApprove(promotion) && !utilService.isPreviewSubmitClickDisabled(promotion);
+            if (isClickable) {
+                this.preview(this.data)
+            }
+            return isClickable;
         }
 
 

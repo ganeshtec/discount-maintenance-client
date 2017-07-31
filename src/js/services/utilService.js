@@ -269,7 +269,7 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
     }
 
     publicApi.requiredFieldsMissing = function (promotion) {
-        return checkEmpty(promotion.name) || checkEmpty(promotion.startDt) || checkEmpty(promotion.endDt)|| checkEmpty(promotion.promoSubTypeCd) 
+        return checkEmpty(promotion.name) || checkEmpty(promotion.startDt) || checkEmpty(promotion.endDt) || checkEmpty(promotion.promoSubTypeCd)
             || (promotion.purchaseConds.locations.length == 0 && promotion.purchaseConds.markets.length == 0);
     }
     publicApi.invalidSysGenCode = function (promotion) {
@@ -348,6 +348,18 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
             }
             return false;
         });
+    }
+
+    publicApi.isPreviewSubmitClickDisabled = function (promotion) {
+
+        //  var leadTimePromise = leadTimeService.fetchLeadTime();
+        // return leadTimePromise.then(function (leadTime) {
+        //      var minDt = moment(promotion.endDt).subtract(leadTime, 'days');
+        if (promotion.status == 61 && promotion.printLabel === true) {
+            return true;
+        }
+        return false;
+
     }
 
     publicApi.getLeadTime = function () {
