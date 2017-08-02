@@ -268,6 +268,40 @@ app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$sco
             }
         }
 
+        $scope.activeWithNoLabelDiscount = function (labelFlag, status) {
+
+            if (labelFlag == false && status == 61) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+
+        $scope.updatePromoEndDateTomorrow = function (promo) {
+            var today = new Date();
+            var newDate = today.setDate(today.getDate() + 1);
+            promo.endDt = $filter('date')(newDate, 'yyyy-MM-dd HH:mm:ss')
+            promo.status = 64;
+            promotionDataService.saveAsDraft(promo);
+        }
+
+        $scope.isPromoStatusPending = function (status) {
+            if (status == 57) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+
+
+        $scope.updateEndDateForPendingDiscount = function (promo) {
+            promo.endDt = promo.startDt;
+            promo.status = 64;
+            promotionDataService.saveAsDraft(promo);
+        }
+
         $scope.constructAndSavePromo = function (leadTime, promo) {
             var today = new Date();
             var newEndDate = new Date();
@@ -289,30 +323,50 @@ app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$sco
                     inLeadTime = $scope.isInLeadTime(endDate, leadTime);
                     if ($scope.eligibleLabelForDeactivate(promo.printLabel, promo.status, inLeadTime)) {
                         $scope.constructAndSavePromo(leadTime, promo);
-                        showAlert('Success', promo.name + ' will end on ' + promo.endDt.split(' ')[0] + ' to account for labeling lead time.');
+
                         return;
                     } if ($scope.cannotBeDeactivated(promo.printLabel, promo.status, inLeadTime)) {
                         showAlert('Failure', 'This discount is already scheduled to end on ' + promo.endDt.split(' ')[0] + ' and cannot be deactivated earlier due to the time to remove labels.');
                         return;
                     } else {
-                        var deactivatePromise = promotionDataService.deactivate($scope.sel[0]);
-                        $scope.loading = true;
-                        deactivatePromise.then(function (data) {
-                            var resp = checkForValid(data);
-                            if (resp.valid && !resp.invalid) {
-                                showAlert('Success', 'Deactivated successfully', $scope.searchWithUrlParams);
-                            } else if (resp.invalid) {
-                                showAlert('Error', 'Unable to deactivate discount :' + JSON.stringify(resp.invalid));
-                            }
-                            $scope.loading = false;
-                        }, function () {
-                            $scope.loading = false;
-                            $scope.searchWithUrlParams();
-                        })
+                        if ($scope.activeWithNoLabelDiscount(promo.printLabel, promo.status)) {
+                            $scope.updatePromoEndDateTomorrow(promo);
+                            $scope.deactivatePromotions();
+                        }
+                        else if ($scope.isPromoStatusPending(promo.status)) {
+                            $scope.updateEndDateForPendingDiscount(promo);
+                            $scope.deactivatePromotions();
+                        }
+                        else {
+                            $scope.deactivatePromotions();
+                        }
+
+
+
                     }
                 })
             })
         };
+
+
+        $scope.deactivatePromotions = function () {
+            var deactivatePromise = promotionDataService.deactivate($scope.sel[0]);
+            $scope.loading = true;
+            deactivatePromise.then(function (data) {
+                var resp = checkForValid(data);
+                if (resp.valid && !resp.invalid) {
+                    showAlert('Success', 'Deactivated successfully', $scope.searchWithUrlParams);
+                } else if (resp.invalid) {
+                    showAlert('Error', 'Unable to deactivate discount :' + JSON.stringify(resp.invalid));
+                }
+                $scope.loading = false;
+            }, function () {
+                $scope.loading = false;
+                $scope.searchWithUrlParams();
+            })
+
+
+        }
 
         $scope.setupSortableHeader = function () {
             $scope.headers = [{

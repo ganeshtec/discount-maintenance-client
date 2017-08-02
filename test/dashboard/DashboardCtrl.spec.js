@@ -42,6 +42,22 @@ describe('DashboardCtrl', function () {
             expect($scope.cannotBeDeactivated(true, 61, false)).toEqual(false);
             expect($scope.cannotBeDeactivated(true, 52, true)).toEqual(false);
         });
+
+        it('Determines an active discount without a label changes status to inactive', function () {
+
+            expect($scope.activeWithNoLabelDiscount(false,61)).toEqual(true);
+            expect($scope.activeWithNoLabelDiscount(true,61)).toEqual(false);
+            expect($scope.activeWithNoLabelDiscount(true,10)).toEqual(false);
+         }
+         );
+
+         it('Determines an pending discount will change the status to inactive', function () {
+
+            expect($scope.isPromoStatusPending(57)).toEqual(true);
+            expect($scope.isPromoStatusPending(10)).toEqual(false);
+         }
+         );
+
     });
 
 
