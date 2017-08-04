@@ -260,8 +260,7 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
     }
 
     var checkEmpty = function (field) {
-        var fieldStr = field.toString();
-        if (!fieldStr || !fieldStr.trim(0)) {
+        if (!field || field.toString().trim().length==0) {
             return true
         } else {
             return false;

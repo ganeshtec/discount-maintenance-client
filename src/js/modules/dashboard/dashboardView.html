@@ -25,6 +25,7 @@
 						<select id="searchType" name="searchType" ng-model="searchType" title="Select Search Type" ng-change="searchTypeChanged()">
 								<option value="discountName">Name</option>
 								<option value="discountId">ID #</option>
+								<option ng-show="channelId == 57" value="omsId">OMS ID #</option>
 						</select>
 					</div>
 					<div id="searchFilterContainer" flex="100">
