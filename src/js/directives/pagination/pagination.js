@@ -80,7 +80,7 @@ app.directive('pagination', ['$anchorScroll', function ($anchorScroll) {
             }
 
             scope.repaint();
-            scope.$watch('config.currentPage + config.recordsPerPage', function () {
+            scope.$watch('config.currentPage + config.recordsPerPage + config.totalRecords', function () {
                 scope.repaint();
             });
             scope.changeSize = function () {
