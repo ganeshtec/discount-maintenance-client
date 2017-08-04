@@ -323,7 +323,7 @@ app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$sco
                     inLeadTime = $scope.isInLeadTime(endDate, leadTime);
                     if ($scope.eligibleLabelForDeactivate(promo.printLabel, promo.status, inLeadTime)) {
                         $scope.constructAndSavePromo(leadTime, promo);
-
+                        showAlert('Success', promo.name + ' will end on ' + promo.endDt.split(' ')[0] + ' to account for labeling lead time.');
                         return;
                     } if ($scope.cannotBeDeactivated(promo.printLabel, promo.status, inLeadTime)) {
                         showAlert('Failure', 'This discount is already scheduled to end on ' + promo.endDt.split(' ')[0] + ' and cannot be deactivated earlier due to the time to remove labels.');
@@ -340,9 +340,6 @@ app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$sco
                         else {
                             $scope.deactivatePromotions();
                         }
-
-
-
                     }
                 })
             })
