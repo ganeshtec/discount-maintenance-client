@@ -69,7 +69,7 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$co
                     displayExclusionSubCategories: false,
                     displayPaymentType: false,
                     displayScheduleTime: true,
-                    displayPrintLabel: true,
+                    displayPrintLabel: false,
                     displayLocations: true,
                     displayItemsSku:true,
                     displayMerchHiearchy: true,

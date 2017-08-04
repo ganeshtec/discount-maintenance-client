@@ -24,8 +24,9 @@
 						<label for="searchType">Search Type</label>
 						<select id="searchType" name="searchType" ng-model="searchType" title="Select Search Type" ng-change="searchTypeChanged()">
 								<option value="discountName">Name</option>
-								<option value="skuNumber">SKU/Item#</option>
 								<option value="discountId">ID #</option>
+								<option ng-show="channelId == 87" value="skuNumber">SKU/Item#</option>
+								<option ng-show="channelId == 57" value="omsId">OMS ID #</option>
 						</select>
 					</div>
 					<div id="searchFilterContainer" flex="100">
@@ -107,7 +108,8 @@
 						<div class="md-button-group sm">
 							<a class="md-button util__btn" ng-click="selectedCount == 2 && compare()" ng-disabled="selectedCount != 2"><i class="fa fa-pencil"></i> Compare</a>
 							<a class="md-button util__btn" ng-disabled="true"><i class="fa fa-columns"></i> Vertical View</a>
-							<a class="md-button util__btn" ng-disabled="selectedCount != 1" ng-click="selectedCount == 1 && setPromotionToView(sel)"><i class="fa fa-columns"></i> Horizontal View</a>
+							<!-- <a class="md-button util__btn" ng-disabled="selectedCount != 1" ng-click="selectedCount == 1 && setPromotionToView(sel)"><i class="fa fa-columns"></i> Horizontal View</a>-->
+							<a class="md-button util__btn" ng-disabled="true"<i class="fa fa-columns"></i> Horizontal View</a>
 						</div>
 					</div>
 					<div flex="20">
