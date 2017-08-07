@@ -27,6 +27,14 @@ app.component('adminFooter', {
         }
         this.saveDraft = function (data) {
             tempData = $.extend(true, {}, data);
+
+            if (tempData.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB') {
+                tempData.promoSubTypeCd = 'ProductLevelPerItemPercentDiscount';
+            }
+
+            utilService.setDefaultsForSaveAsDraft(tempData);
+            utilService.transformPromotionRequest(tempData);
+
             var missing = utilService.requiredFieldsMissing(data);
             if (missing) {
                 modalService.showAlert('Error', 'Valid Name,Type,Start Date,End Date are required');
@@ -42,8 +50,6 @@ app.component('adminFooter', {
                 modalService.showAlert('Error', 'Please fix all validation errors');
                 return;
             }
-            utilService.setDefaultsForSaveAsDraft(tempData);
-            utilService.transformPromotionRequest(tempData);
             inprogress = true;
             var promise = promotionDataService.saveAsDraft(tempData);
             promise.then(
