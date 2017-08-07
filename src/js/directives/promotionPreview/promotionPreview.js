@@ -67,13 +67,14 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                     var promotion = scope.previewData.data;
                     utilService.setDefaultsForSaveAsDraft(promotion);
                     utilService.transformPromotionRequest(promotion);
+                    var missingLocation = utilService.requiredLocationsOrMarkets(promotion);
                     var missing = utilService.requiredFieldsMissing(promotion);
                     var isBuyAandBHasSource = utilService.validateBuyAandB(promotion);
                     if (!scope.originalSet) {
                         scope.originalPromoId = promotion.promoId;
                         scope.originalSet = true;
                     }
-                    if (missing) {
+                    if (missing || missingLocation) {
                         setError('ERROR: Please fill out all required fields.');
                         clickableSaveBtn(event);
                         return;

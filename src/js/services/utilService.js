@@ -258,7 +258,6 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
 
         return data;
     }
-
     var checkEmpty = function (field) {
         if (!field || field.toString().trim().length==0) {
             return true
@@ -266,11 +265,18 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
             return false;
         }
     }
+ 
+    publicApi.requiredLocationsOrMarkets = function (promotion) {
+        return (promotion.purchaseConds.locations.length == 0 && promotion.purchaseConds.markets.length == 0);
+    }
 
     publicApi.requiredFieldsMissing = function (promotion) {
-        return checkEmpty(promotion.name) || checkEmpty(promotion.startDt) || checkEmpty(promotion.endDt) || checkEmpty(promotion.promoSubTypeCd)
-            || (promotion.purchaseConds.locations.length == 0 && promotion.purchaseConds.markets.length == 0);
+        if(checkEmpty(promotion.name) || checkEmpty(promotion.startDt) || checkEmpty(promotion.endDt) || checkEmpty(promotion.promoSubTypeCd)){
+            return true;
+        }
+        return false;
     }
+
     publicApi.invalidSysGenCode = function (promotion) {
         if (promotion && promotion.promoCdSpec && promotion.promoCdSpec.systemGen) {
             var syscode = promotion.promoCdSpec.systemGen;
