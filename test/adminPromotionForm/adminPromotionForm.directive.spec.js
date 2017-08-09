@@ -62,4 +62,19 @@ describe('Unit testing adminPromotionForm.directive.spec.js', function () {
       expect(this.$isolateScope.data.printLabel).toBe(true);
   });
 
+  it('resetRewardsOnPromoTypeChange should clear MaxAllowedVal if the reward type is AMTOFF',function(){
+    this.$isolateScope.data.reward.type='AMTOFF';
+    this.$isolateScope.data.reward.details=[{maxAllowedVal: 1000}];
+    this.$isolateScope.resetRewardsOnPromoTypeChange();
+    expect(this.$isolateScope.data.reward.details[0].maxAllowedVal).toBe(undefined);
+
+  });
+
+  it('resetRewardsOnPromoTypeChange should preserve MaxAllowedVal if the reward type is PERCNTOFF',function(){
+    this.$isolateScope.data.reward.type='PERCNTOFF';
+    this.$isolateScope.data.reward.details=[{maxAllowedVal: 1000}];
+    this.$isolateScope.resetRewardsOnPromoTypeChange();
+    expect(this.$isolateScope.data.reward.details[0].maxAllowedVal).toEqual(1000);
+  });
+
 });

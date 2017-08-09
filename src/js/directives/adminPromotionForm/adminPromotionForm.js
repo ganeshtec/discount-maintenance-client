@@ -95,6 +95,9 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                         || scope.data.promoSubTypeCd == 'MultipleItemsValueDiscount')) { 
                         scope.data.reward.details.splice(1, scope.data.reward.details.length-1);
                     }
+                    if(scope.data.reward.type === 'AMTOFF') {                        
+                        scope.data.reward.details[0].maxAllowedVal=undefined;
+                    }
                 }
 
                 scope.showMaximumDiscount = false;
