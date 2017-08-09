@@ -91,4 +91,62 @@ describe('Unit testing adminFooter.directive.spec.js', function () {
     expect(ctrl.canApprove({})).toEqual(false);
   })
 
+  it('Checks if can disableClick returns false if promotion status is active and printLabel is On', function () {
+      spyOn(utilService, 'canApprove').and.callFake(function () {
+        return {
+          then: function (callback) { return callback(true) }
+        }
+      })
+
+    spyOn(utilService, 'isPreviewSubmitClickDisabled').and.callFake(function () {
+        return {
+          then: function (callback) { return callback(true) }
+        }
+      })
+
+    
+      spyOn(utilService, 'isSubmitEligibleForDisable').and.callFake(function () {
+        return {
+          then: function (callback) { return callback(true) }
+        }
+      })
+
+    ctrl = $componentController('adminFooter',null, {
+         data: {} 
+         
+         });
+    $scope.$digest();
+    expect(ctrl.disableClick(ctrl.data)).toEqual(false);
+  })
+
+
+
+   it('Checks if can disableClick returns true if promotion status is active and printLabel is Off', function () {
+      spyOn(utilService, 'canApprove').and.callFake(function () {
+        return {
+          then: function (callback) { return callback(true) }
+        }
+      })
+
+   
+      spyOn(utilService, 'isPreviewSubmitClickDisabled').and.callFake(function () {
+        return {
+          then: function (callback) { return callback(true) }
+        }
+      })
+
+       spyOn(utilService, 'isSubmitEligibleForDisable').and.callFake(function () {
+        return {
+          then: function (callback) { return callback(true) }
+        }
+      })
+
+    ctrl = $componentController('adminFooter',null, {
+         data: {} 
+         
+         });
+    $scope.$digest();
+    expect(ctrl.disableClick()).toEqual(false);
+  })
+
 });

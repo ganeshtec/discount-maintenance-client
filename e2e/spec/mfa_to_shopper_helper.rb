@@ -10,13 +10,36 @@ require 'pry'
 
 Capybara.configure do |config|
   config.run_server = false
-  config.javascript_driver = :selenium
 end
 
-#Capybara.default_wait_time = 12
-Capybara.default_max_wait_time = 20
-Capybara.register_driver :selenium do |app|
-    Capybara::Selenium::Driver.new(app, :browser => :chrome)
+# For CI. Headless browser
+browser = ENV['BROWSER']
+
+# For dev
+if (browser == "headless")
+
+  # Capybara.register_driver :chrome do |app|
+  #   Capybara::Selenium::Driver.new(app, browser: :chrome)
+  # end
+
+  Capybara.register_driver :headless_chrome do |app|
+    capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
+      "chromeOptions" => {
+      'args' => ['headless', 'disable-gpu']
+      }
+    )
+
+    Capybara::Selenium::Driver.new app,
+      browser: :chrome,
+      desired_capabilities: capabilities
+  end
+
+  Capybara.javascript_driver = :headless_chrome
+
+else
+    Capybara.register_driver :selenium do |app|
+      Capybara::Selenium::Driver.new(app, :browser => :chrome)
+    end
 end
 
 Capybara.save_path = "/tmp/screenshots"
@@ -25,10 +48,12 @@ Capybara::Screenshot.prune_strategy = :keep_last_run
 
 Capybara::Webkit.configure(&:allow_unknown_urls)
 
+Capybara.default_max_wait_time = 20
+
 PROMO_UI_HOST = ENV['PROMO_UI_HOST'] || 'http://localhost.homedepot.com:8002'.freeze
 PROMO_CREATION = ENV['PROMO_CREATION'] || 'http://localhost.homedepot.com:8002/#/promotion-admin'.freeze
-DISC_MAINT_API = ENV['DISC_MAINT_API'] || 'http://localhost.homedepot.com:8090/v1'.freeze
-#DISC_MAINT_API = ENV['DISC_MAINT_API'] || 'https://promotionsws-ext-qa.apps-np.homedepot.com/v1'.freeze
+#DISC_MAINT_API = ENV['DISC_MAINT_API'] || 'http://localhost.homedepot.com:8090/v1'.freeze
+DISC_MAINT_API = ENV['DISC_MAINT_API'] || 'https://promotionsws-ext-qa.apps-np.homedepot.com/v1'.freeze
 
 
 def future_date(days_ahead)

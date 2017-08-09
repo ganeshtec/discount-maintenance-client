@@ -27,7 +27,7 @@ describe('promotionAdminCtrl', function () {
                 displayPaymentType: false,
                 displayScheduleTime: true,
                 displayLocations: true,
-                displayPrintLabel: true,
+                displayPrintLabel: false,
                 displayItemsSku:true,
                 displayMerchHiearchy: true,
                 displayCustomerSegment: true,

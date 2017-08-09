@@ -19,7 +19,7 @@ describe 'MFA makes a customer segment discount that is persisted', type: :featu
 			percent_off:        "9",
 			desc_long:         "long description",
 			desc_short:        "short description",
-			start_date:        today.strftime("%m/%d/%Y"),
+			start_date:        tomorrow.strftime("%m/%d/%Y"),
 			end_date:          future_date(7).strftime("%m/%d/%Y")
 			)
 	end
@@ -42,6 +42,7 @@ end
 def create_MSB_discount_store(promotion) 
 		puts "Creating MSB  discount for - STORE USER"
 		store_sign_in
+		sleep(10)
 		expect(page).to have_css('.md-button', text: 'CREATE NEW DISCOUNT')
 		puts "SIGN IN COMPLETED WITHOUT ERROR"
 		click_on 'Create New Discount'
@@ -116,6 +117,7 @@ def create_MSB_discount_market(promotion)
 		
 		fill_in 'minamount', with: promotion.rewards_quantity
 		fill_in 'value', with: promotion.percent_off
+		click_button 'Next'
 		click_button 'Next'
 		fill_in 'start', with: promotion.start_date 
 		fill_in 'end', with: promotion.end_date 
