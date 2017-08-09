@@ -22,6 +22,10 @@ function PromoScheduleController($filter, $scope, validationService, utilService
     this.$onInit = function() {
         this.data.startDt =  this.convertDateStringToDate(this.data.startDt);
         this.data.endDt =  this.convertDateStringToDate(this.data.endDt);
+
+        this.data.endDt =  this.convertDateStringToDate(moment(this.data.endDt).format('YYYY-MM-DD'));
+        this.setEndDateMin();
+
     }
 
     this.convertDateStringToDate = function(dateString){
