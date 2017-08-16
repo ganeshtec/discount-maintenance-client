@@ -233,7 +233,7 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
             $(data.purchaseConds.sources).each(function (i, source) {
                 if (data.purchaseConds.qualUOM == 'Quantity') {
                     delete source.minTotalPrice;
-                    if (source.minPurchaseQty == null) {
+                    if (data.promoSubTypeCd != 'MultipleItemsPercentDiscount' && data.promoSubTypeCd != 'MultipleItemsValueDiscount') {
                         source.minPurchaseQty = minPurchaseQty;
                     }
                 } else {
