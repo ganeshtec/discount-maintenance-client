@@ -3,7 +3,7 @@
 	Services that will handle data http request
 */
 
-app.service('dataService', ['$http', '$q', 'URL_CONFIG', function ($http, $q, URL_CONFIG) {
+app.service('dataService', ['$http', '$q', '$cookies', 'URL_CONFIG', function ($http, $q, $cookies, URL_CONFIG) {
     var publicApi = {};
     var urls = new URL_CONFIG();
     publicApi.httpRequest = function (config) {
@@ -19,7 +19,9 @@ app.service('dataService', ['$http', '$q', 'URL_CONFIG', function ($http, $q, UR
             withCredentials: true,
             headers: config.headers || {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'X-THDSSO' : $cookies.get('THDSSO')
+                
             }
 
         }).then(
