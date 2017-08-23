@@ -123,7 +123,7 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
                     if (!hasExc) {
                         delete sources[0].exclusions;
                     } else {
-                        delete sources[0].exclusions.skuTypeAttrsInitialized;
+                        delete sources[0].exclusions.initializeSkuTypeExclusions;
                     }
                 }
             }

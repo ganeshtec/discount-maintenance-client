@@ -53,7 +53,7 @@ app.factory('PromotionData', ['ALLOWED_PERMISSION_IDS',function (ALLOWED_PERMISS
                         'itemtype': 'category',
                         'hierarchies': [],
                         'attrs': [],
-                        'skuTypeAttrsInitialized': false
+                        'initializeSkuTypeExclusions': true
                     },
                     'minPurchaseQty': null
                 }],
