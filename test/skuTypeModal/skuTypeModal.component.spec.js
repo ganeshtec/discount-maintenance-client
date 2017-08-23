@@ -27,7 +27,7 @@ describe('skuTypeModal', function () {
 
     it('Test SKU Type modal component rendering', inject(function (_$compile_) {
         scope.source={};
-        var element = _$compile_("<sku-type-modal source='source' promo-status='20'></sku-type-modal>")(scope);
+        var element = _$compile_("<sku-type-modal source='source'></sku-type-modal>")(scope);
         scope.$digest();
         // Check that the compiled element contains the templated content
         expect(element.html()).toContain("Filter SKU Types");
@@ -35,7 +35,7 @@ describe('skuTypeModal', function () {
     }));
     
     it('Validate no SKU Types are selected on creating a new promotion', function () {
-        ctrl.source.exclusions={skuTypeAttrsInitialized: false};
+        ctrl.source.exclusions={initializeSkuTypeExclusions: true};
         ctrl.promoStatus= 20;
         ctrl.$onInit();
         scope.$digest();
