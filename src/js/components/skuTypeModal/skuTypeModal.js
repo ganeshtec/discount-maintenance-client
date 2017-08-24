@@ -1,7 +1,6 @@
 app.component('skuTypeModal', {
     bindings: {
-        source: '=',
-        promoStatus: '=',
+        source: '='
     },
     scope: {},
     templateUrl: 'skuTypeModal.html',
@@ -20,22 +19,16 @@ function SkuTypeModalController(skuTypesDataService, $mdDialog) {
         }
         return result;
     }
-    ctrl.isSkuTypeExclusionsNotInitialized = function () {
-        var result = false;
-        if (ctrl.promoStatus == '20' && !ctrl.source.exclusions.skuTypeAttrsInitialized) {
-            result = true;
-        }
-        return result;
-    }
     ctrl.initializeSkuTypeExclusions = function () {
-        var attrs = [];
-        for(var index in ctrl.skuTypes){
-            attrs.push(ctrl.buildSkuTypeAttr(ctrl.skuTypes[index].skuTypeCode));
+        if(ctrl.source.exclusions.initializeSkuTypeExclusions){
+            var attrs = [];
+            for(var index in ctrl.skuTypes){
+                attrs.push(ctrl.buildSkuTypeAttr(ctrl.skuTypes[index].skuTypeCode));
+            }
+            ctrl.source.exclusions.attrs = attrs;
+            ctrl.source.exclusions.initializeSkuTypeExclusions = false;
         }
-        ctrl.source.exclusions.attrs = attrs;
-        ctrl.source.exclusions.skuTypeAttrsInitialized = true;
     }
-
     ctrl.$onInit = function () {
         if (ctrl.source.exclusions == undefined) {
             ctrl.source.exclusions = {};
@@ -46,9 +39,7 @@ function SkuTypeModalController(skuTypesDataService, $mdDialog) {
         ctrl.skuSelection = {};
         skuTypesDataService.fetchSkuTypes().then(function (skuTypes) {
             ctrl.skuTypes = skuTypes;
-            if (ctrl.isSkuTypeExclusionsNotInitialized()) {
-                ctrl.initializeSkuTypeExclusions();
-            }
+            ctrl.initializeSkuTypeExclusions();
             for(var index in ctrl.skuTypes){
                 var skuType=ctrl.skuTypes[index];
                 ctrl.skuSelection[skuType.skuTypeCode] = !ctrl.isSkuTypeExcluded(skuType.skuTypeCode);

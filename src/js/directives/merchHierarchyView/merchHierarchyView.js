@@ -267,7 +267,7 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                 };
                 scope.showSkuTypeModal = function(ev) {
                     $mdDialog.show({
-                        template: '<sku-type-modal source="source" promo-status="promoStatus"></sku-type-modal>',
+                        template: '<sku-type-modal source="source"></sku-type-modal>',
                         parent: angular.element(document.body),
                         targetEvent: ev,
                         scope: scope,
