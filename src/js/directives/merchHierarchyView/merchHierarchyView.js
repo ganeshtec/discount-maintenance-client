@@ -1,7 +1,7 @@
 //Merch Hierarchy 
-app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory', 'OverlayConfigFactory','$mdDialog',
+app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory', 'OverlayConfigFactory','$mdDialog','validationService','$rootScope',
 
-    function (merchHierarchyDataService, DataFactory, OverlayConfigFactory, $mdDialog) {
+    function (merchHierarchyDataService, DataFactory, OverlayConfigFactory, $mdDialog, validationService, $rootScope) {
         return {
             restrict: 'E',
             templateUrl: 'merchHierarchyView.html',
@@ -10,7 +10,8 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                 promoform: '=',
                 isDisabled: '=',
                 source: '=',
-                promoStatus: '=',
+                promoStatus: '='
+               
             },
             link: function (scope) {
                 var delimeter = '>>';
@@ -256,15 +257,24 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                     scope.tableData.splice(index, 1);
                 }
 
-                scope.showSkuTypeModal = function(ev) {
+                $rootScope.$on('refreshSkuTypeValidations', function () {
+                    scope.validatePromotion();
+                });
 
+                scope.validatePromotion = function(){
+                    scope.validationErrors = {};
+                    scope.validationErrors.skuTypeFilter = validationService.validateSkyTypeFilter(scope.source);
+                };
+                scope.showSkuTypeModal = function(ev) {
                     $mdDialog.show({
                         template: '<sku-type-modal source="source" promo-status="promoStatus"></sku-type-modal>',
                         parent: angular.element(document.body),
                         targetEvent: ev,
                         scope: scope,
                         preserveScope: true       
-                    })
+                    }).finally(function() {
+                        scope.validatePromotion();
+                    });
                 }
             }
         };

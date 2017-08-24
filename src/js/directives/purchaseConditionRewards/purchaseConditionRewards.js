@@ -1,6 +1,6 @@
 // Purpose is to build promotion code spec.
-app.directive('purchaseConditionRewards', ['SourceData', 'customerSegmentDataService', '$mdDialog',
-    function (SourceData, customerSegmentDataService,$mdDialog) {
+app.directive('purchaseConditionRewards', ['SourceData', 'customerSegmentDataService', '$mdDialog','$rootScope',
+    function (SourceData, customerSegmentDataService,$mdDialog,$rootScope) {
         return {
             restrict: 'E',
             templateUrl: 'purchaseConditionRewards.html',
@@ -112,7 +112,9 @@ app.directive('purchaseConditionRewards', ['SourceData', 'customerSegmentDataSer
                         targetEvent: ev,
                         scope: scope,
                         preserveScope: true       
-                    })
+                    }).finally(function() {
+                        $rootScope.$broadcast('refreshSkuTypeValidations');
+                    });
                 }
             }
         }

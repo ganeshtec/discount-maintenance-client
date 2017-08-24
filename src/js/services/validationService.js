@@ -275,6 +275,34 @@ app.service('validationService', ['$filter', 'utilService', function ($filter, u
         }
     }
 
+    publicApi.validateSkyTypeFilter = function(source, checkForUndefined) {
+        //If all sku types are excluded return a validation error
+        var skuTypeError = {
+            isError: false,
+            message: ''
+        };
+
+        if(checkForUndefined === true && (source === undefined ||
+            source.exclusions === undefined || source.exclusions.attrs === undefined)){
+            skuTypeError = {        
+                isError: true,
+                message: 'At least 1 Sku type must be selected.'
+            };
+        } else if (source != undefined && source.exclusions != undefined &&
+            source.exclusions.attrs != undefined){
+            if((source.exclusions.skuTypeAttrsInitialized == false ) ||
+                (source.exclusions.attrs.length === 9)) {
+                skuTypeError = {        
+                    isError: true,
+                    message: 'At least 1 Sku type must be selected.'
+                };
+            } 
+        }
+        
+        return skuTypeError;
+
+    }
+
     publicApi.validatePromotion = function (promotion, checkForUndefined) {
         var validationErrors = {};
         validationErrors.startDt = publicApi.validateStartDate(promotion, checkForUndefined);
@@ -284,6 +312,7 @@ app.service('validationService', ['$filter', 'utilService', function ($filter, u
         validationErrors.priorityRange = publicApi.validatePriority(promotion.priority);
         validationErrors.percentageWarning = publicApi.validatePercentageWarning(promotion.reward.details);
         validationErrors.threeMonthsWarning = publicApi.validateThreeMonthsWarning(promotion.startDt);
+        validationErrors.skuTypeFilter = publicApi.validateSkyTypeFilter(promotion.purchaseConds.sources[0], checkForUndefined);
         return validationErrors;
     }
 
