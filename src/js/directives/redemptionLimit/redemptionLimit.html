@@ -12,11 +12,11 @@
         </p>
     </tool-tipper>
     <div class="md-radio">
-        <input type="radio" id="promomax_unlimit" name="promomax" ng-model="promomax" value="promounlimt" ng-change="promocheck(value)"/>
+        <input type="radio" id="promomax_unlimit" name="promomax" ng-model="promomax" value="promounlimt" ng-change="promocheck(value)" ng-disabled="preview"/>
         <label for="promomax_unlimit"><span><span></span></span>Unlimited</label>
     </div>
     <div class="md-radio">
-        <input type="radio" id="promomaxset" name="promomax" ng-model="promomax" value="promoset" ng-change="promocheck(value)"/>
+        <input type="radio" id="promomaxset" name="promomax" ng-model="promomax" value="promoset" ng-change="promocheck(value)"ng-disabled="preview"/>
         <label for="promomaxset"><span><span></span></span>Set maximum redemption</label>
     </div>
 </div>
@@ -40,11 +40,11 @@
         </p>
     </tool-tipper>
     <div class="md-radio">
-        <input type="radio" id="ordermax_unlimit" name="ordermax" ng-model="ordermax" value="orderunlimt"  ng-change="orderCheck(value)"/>
+        <input type="radio" id="ordermax_unlimit" name="ordermax" ng-model="ordermax" value="orderunlimt"  ng-change="orderCheck(value)" ng-disabled="preview"/>
         <label for="ordermax_unlimit"><span><span></span></span>Unlimited</label>
     </div>
     <div class="md-radio">
-        <input type="radio" id="ordermaxredem" name="ordermax" ng-model="ordermax" value="setorder"  ng-change="orderCheck(value)"/>
+        <input type="radio" id="ordermaxredem" name="ordermax" ng-model="ordermax" value="setorder"  ng-change="orderCheck(value)" ng-disabled="preview"/>
         <label for="ordermaxset"><span><span></span></span>Set maximum redemption</label>
     </div>
 </div>
@@ -68,11 +68,11 @@
         </p>
     </tool-tipper>
     <div class="md-radio">
-        <input type="radio" id="custmax_unlimit" name="custmax" ng-model="custmax" value="custunlimt"  ng-change="custCheck(value)"/>
+        <input type="radio" id="custmax_unlimit" name="custmax" ng-model="custmax" value="custunlimt"  ng-change="custCheck(value)" ng-disabled="preview"/>
         <label for="custmax_unlimit"><span><span></span></span>Unlimited</label>
     </div>
     <div class="md-radio">
-        <input type="radio" id="custmaxredem" name="custmax" ng-model="custmax" value="setcust"  ng-change="custCheck(value)"/>
+        <input type="radio" id="custmaxredem" name="custmax" ng-model="custmax" value="setcust"  ng-change="custCheck(value)" ng-disabled="preview"/>
         <label for="custmaxset"><span><span></span></span>Set maximum redemption</label>
     </div>
 </div>

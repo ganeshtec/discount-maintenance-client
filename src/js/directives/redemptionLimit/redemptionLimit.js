@@ -7,6 +7,7 @@ app.directive('redemptionLimit', [
             scope: {
                 data: '=',
                 promoform: '=',
+                preview: '='
 
 
             },

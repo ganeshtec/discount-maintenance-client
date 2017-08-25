@@ -10,8 +10,8 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                 promoform: '=',
                 isDisabled: '=',
                 source: '=',
-                promoStatus: '='
-               
+                promoStatus: '=',
+                preview: '='
             },
             link: function (scope) {
                 var delimeter = '>>';

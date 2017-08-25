@@ -64,7 +64,9 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                         scope.previewData.data.reward.reasonCode = 70;
                     }
 
-                    var promotion = scope.previewData.data;
+                    var promotion = $.extend(true, {}, scope.previewData.data);
+                    //var promotion = scope.previewData.data;
+
                     utilService.setDefaultsForSaveAsDraft(promotion);
                     utilService.transformPromotionRequest(promotion);
                     var missingLocation = utilService.requiredLocationsOrMarkets(promotion);
@@ -148,7 +150,10 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                 }
 
 
-                scope.submit = function (promotion) {
+                scope.submit = function (promotionData) {
+
+                    var promotion = $.extend(true, {}, promotionData);
+
                     if (promotion.status == 20 && promotion.promoSubTypeCd == 20 &&
                         promotion.promoTypeCd == 10) {
                         promotion.errorMessage = 'ERROR: Unable to Submit Promotion with Draft Default Values';
