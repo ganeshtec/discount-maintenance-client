@@ -8,6 +8,9 @@
  <table class="table category__table">
  	<tr class="category__table__row-nobottomborder">
 		 <label for="MerchHierarchy"><h3>Merch Hierarchy</h3></label> 
+
+		<span class='error-message' ng-show="validationErrors.skuTypeFilter.isError">{{validationErrors.skuTypeFilter.message}}</span>
+
 		 <td width="35%">
 			  <div class="md-select">
 			  
