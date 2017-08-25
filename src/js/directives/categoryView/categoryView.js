@@ -7,7 +7,8 @@ app.directive('categoryView', ['categoryDataService', 'DataFactory', 'OverlayCon
             scope: {
                 data: '=',
                 promoform: '=',
-                isDisabled: '='
+                isDisabled: '=',
+                preview: '='
 
             },
             link: function (scope) {

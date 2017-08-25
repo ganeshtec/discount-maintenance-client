@@ -6,12 +6,12 @@
  </div>
  
  <table class="table category__table">
- 	<tr class="category__table__row-nobottomborder">
+ 	<tr class="category__table__row-nobottomborder" ng-hide="preview">
 		 <label for="MerchHierarchy"><h3>Merch Hierarchy</h3></label> 
 		 <td width="35%">
 			  <div class="md-select">
 			  
-   					<select name="selectDept" style="margin-top:28px"  ng-options=" dept as dept.id+'-'+dept.name for dept in departmentDetails track by dept.id" ng-model="selectedDept" ng-change="getClassesforSelectedDepartment(selectedDept)" ng-required=" preview">
+   					<select name="selectDept" style="margin-top:28px"  ng-options=" dept as dept.id+'-'+dept.name for dept in departmentDetails track by dept.id" ng-model="selectedDept" ng-change="getClassesforSelectedDepartment(selectedDept)">
 							<option value="">Select Department</option></select></div>
  
 		 </td>
@@ -19,14 +19,14 @@
 
 			 		<div class="md-select">	
  
-						 		<select name="selectClass" style="margin-top:28px" ng-options="clas as clas.merchandiseClassNumber+'-'+clas.merchandiseClassDescription for clas in classList track by clas.merchandiseClassNumber" ng-model="selectedClass" ng-change="getSubClasses(selectedClass)" ng-required=" preview">
+						 		<select name="selectClass" style="margin-top:28px" ng-options="clas as clas.merchandiseClassNumber+'-'+clas.merchandiseClassDescription for clas in classList track by clas.merchandiseClassNumber" ng-model="selectedClass" ng-change="getSubClasses(selectedClass)">
 					<option value="">Select class</option></select> </div>
 		 </td>
 
 		 <td width="30%">
 			 	<div class="md-select">				
 	<select name="selectSubClass" style="margin-top:28px" ng-options="
-subClass as subClass.merchandiseSubordinateClassNumber+'-'+subClass.merchandiseSubordinateClassDescription for subClass in  SubClassList track by subClass.merchandiseSubordinateClassNumber" ng-model="selectedSubClass" ng-change="getSelectedSubClass()" ng-required=" preview">
+subClass as subClass.merchandiseSubordinateClassNumber+'-'+subClass.merchandiseSubordinateClassDescription for subClass in  SubClassList track by subClass.merchandiseSubordinateClassNumber" ng-model="selectedSubClass" ng-change="getSelectedSubClass()">
 					<option value="">Select subclass</option></select>	</div>
 		 </td>
 		 <td>
@@ -53,8 +53,8 @@ subClass as subClass.merchandiseSubordinateClassNumber+'-'+subClass.merchandiseS
 	 <td>{{hierarchy.deptNum}}-{{hierarchy.dept}}</td>
 	      <td>{{hierarchy.clasNum}}-{{hierarchy.clas}}</td>
 	      <td>{{hierarchy.subClasNum}}-{{hierarchy.subClass}}</td>
- 		<td class="r">
-		 <a class="editOption thd-orange" ng-click="isDisabled || deleteRow($index)" href="">
+ 		<td class="r" ng-hide="preview">
+		 <a class="editOption thd-orange" ng-click="isDisabled || deleteRow($index)" href="" >
 	     Delete
 	     </a>
  		</td>

@@ -5,7 +5,8 @@ app.directive('promoDescription', [
             restrict: 'E',
             templateUrl: 'promoDescription.html',
             scope: {
-                data: '='
+                data: '=',
+                preview: '='
 
             }
         };

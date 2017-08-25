@@ -11,6 +11,7 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                 isDisabled: '=',
                 source: '=',
                 promoStatus: '=',
+                preview: '='
             },
             link: function (scope) {
                 var delimeter = '>>';

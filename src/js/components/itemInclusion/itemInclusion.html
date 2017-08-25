@@ -1,9 +1,9 @@
 <table class="table category__table" ng-show="!$ctrl.isSkuSearch">
-	<tr class="category__table__row-nobottomborder">
+	<tr class="category__table__row-nobottomborder" ng-hide="$ctrl.preview">
 		<td colspan="4">
 			<div class="md-toolbar-search l">
 				<input class="table__search" placeholder="Search and Add Item OMS ID" type="text" ng-model="$ctrl.itemSearch" ng-keypress="($event.keyCode === 13) && $ctrl.search($ctrl.itemSearch)"
-				ng-class="{'error': inValidOmsInfo}" ng-change="$ctrl.clear()" allow-pattern="[\d\s\,]" />
+				ng-class="{'error': inValidOmsInfo}" ng-change="$ctrl.clear()" allow-pattern="[\d\s\,]" ng-disabled="$ctrl.preview"/>
 				<a class="md-button secondary no-padding" href="" ng-click="$ctrl.search($ctrl.itemSearch)">
 					Search
 				</a>
@@ -40,7 +40,7 @@
 			Description
 		</th>
 		<th class="r">
-			<a class="editOption thd-orange" ng-if="$ctrl.validOmsInfo && $ctrl.validOmsInfo.length >0" ng-click="$ctrl.removeAll()" href="">
+			<a class="editOption thd-orange" ng-if="$ctrl.validOmsInfo && $ctrl.validOmsInfo.length >0" ng-click="$ctrl.removeAll()" href="" ng-hide="$ctrl.preview">
 				Remove All
 			</a>
 		</th>
@@ -55,7 +55,7 @@
 		<td>
 			{{item.prodName}}
 		</td>
-		<td class="r">
+		<td class="r" ng-hide="$ctrl.preview">
 			<a class="editOption thd-orange" ng-click="$ctrl.isDisabled || $ctrl.removePromoCode($index)" href="">
 				Remove
 			</a>
@@ -66,7 +66,7 @@
 
 
 <table class="table category__table" ng-show="$ctrl.isSkuSearch">
-	<tr class="category__table__row-nobottomborder">
+	<tr class="category__table__row-nobottomborder" ng-hide="$ctrl.preview">
 		<td colspan="4">
 			<div class="md-toolbar-search l">
 				<input class="table__search" placeholder="Search and Add Item Sku Number" type="text" ng-model="$ctrl.itemSkuSearch" ng-keypress="($event.keyCode === 13) && $ctrl.search($ctrl.itemSkuSearch)"
@@ -96,7 +96,7 @@
 			Description
 		</th>
 		<th class="r">
-			<a class="editOption thd-orange" ng-if="$ctrl.validSkuInfo && $ctrl.validSkuInfo.length >0" ng-click="$ctrl.removeAll()" href="">
+			<a class="editOption thd-orange" ng-if="$ctrl.validSkuInfo && $ctrl.validSkuInfo.length >0" ng-click="$ctrl.removeAll()" href="" ng-hide="$ctrl.preview">
 				Remove All
 			</a>
 		</th>
@@ -111,8 +111,8 @@
 		<td>
 			{{item.skuDescription}}
 		</td>
-		<td class="r">
-			<a class="editOption thd-orange" ng-click="$ctrl.isDisabled || $ctrl.removePromoCode($index)" href="">
+		<td class="r" ng-hide="$ctrl.preview">
+			<a class="editOption thd-orange" ng-click="$ctrl.isDisabled || $ctrl.removePromoCode($index)" href="" >
 				<i class="fa fa-fw" aria-hidden="true" title="Remove"></i>
 			</a>
 		</td>

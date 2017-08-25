@@ -6,19 +6,19 @@
 
 	<label for="priority">Minimum purchase type</label>
 	<div class="md-radio">
-		<input type="radio" id="quantity" name="minpurchase" ng-model="qualuom" title="Quantity Purchase" value="Quantity" ng-change="$ctrl.setQualUOM(qualuom)"/>
+		<input type="radio" id="quantity" name="minpurchase" ng-model="qualuom" title="Quantity Purchase" value="Quantity" ng-change="$ctrl.setQualUOM(qualuom)" ng-disabled="$ctrl.preview"/>
 		<label for="quantity"><span><span></span></span>Quantity purchase</label>
 	</div>
 		
 	<div class="md-radio">
-		<input type="radio" id="amount" name="minpurchase" ng-model="qualuom" title="Amount Spent" value="Amount" ng-change="$ctrl.setQualUOM(qualuom)"/>
+		<input type="radio" id="amount" name="minpurchase" ng-model="qualuom" title="Amount Spent" value="Amount" ng-change="$ctrl.setQualUOM(qualuom)" ng-disabled="$ctrl.preview"/>
 		<label for="amount"><span><span></span></span>Amount spent</label>
 	</div>
 </div>
 
 
 <table class="table category__table">
-		<tr class="category__table__row-nobottomborder">
+		<tr class="category__table__row-nobottomborder" ng-hide="$ctrl.preview">
 				<td colspan="3">
 						<a href="" class="purchaseCondition__btn md-button" ng-click="$ctrl.addPurchaseCondition()">Add New Condition</a>
 				</td>
@@ -39,8 +39,8 @@
 
 		<tr ng-repeat="item in $ctrl.data.reward.details track by $index" ng-class="{odd:($index % 2)}">
 			 <td class="md-text-field">
-						<input type="text" id="minamount" name="minamount_{{$index}}" ng-blur="$ctrl.validatePromotion()" ng-model="item.min" ng-required="$ctrl.preview" allow-pattern="(\d)" min = "1" ng-if="qualuom == 'Quantity'"/>
-                        <input type="text" id="minamount" name="minamount_{{$index}}" ng-blur="$ctrl.validatePromotion()" ng-model="item.min" ng-required="$ctrl.preview" allow-pattern="^[\d.]+$" min = "1" ng-if="qualuom == 'Amount'"/>
+						<input type="text" id="minamount" name="minamount_{{$index}}" ng-blur="$ctrl.validatePromotion()" ng-model="item.min" ng-required="$ctrl.preview" allow-pattern="(\d)" min = "1" ng-if="qualuom == 'Quantity'" ng-disabled="$ctrl.preview"/>
+                        <input type="text" id="minamount" name="minamount_{{$index}}" ng-blur="$ctrl.validatePromotion()" ng-model="item.min" ng-required="$ctrl.preview" allow-pattern="^[\d.]+$" min = "1" ng-if="qualuom == 'Amount'" ng-disabled="$ctrl.preview"/>
 						 <span class='error-message' ng-show="$ctrl.promoform['minamount_' + $index].$invalid ">
 							</span> 
 							<span class='error-message' ng-show="$ctrl.validationErrors.minimumThreshold[$index].isError && qualuom == 'Quantity'">Minimum purchase quantity {{$ctrl.validationErrors.minimumThreshold[$index].message}} </span>
@@ -48,8 +48,8 @@
 						
 				</td>
 				<td class="md-text-field">
-						<input type="text" id="value" name="value_{{$index}}" ng-model="item.value" ng-required="$ctrl.preview" ng-blur="$ctrl.roundPercentage($index); $ctrl.validatePromotion()" allow-pattern="^[\d.]+$" ng-if="$ctrl.data.reward.type=='AMTOFF'"/>
-                        <input type="text" id="value" name="value_{{$index}}" ng-model="item.value" ng-required="$ctrl.preview" ng-blur="$ctrl.roundPercentage($index); $ctrl.validatePromotion()" allow-pattern="^[\d.]+$" ng-if="$ctrl.data.reward.type=='PERCNTOFF'" class="tooltiphead"/>
+						<input type="text" id="value" name="value_{{$index}}" ng-model="item.value" ng-required="$ctrl.preview" ng-blur="$ctrl.roundPercentage($index); $ctrl.validatePromotion()" allow-pattern="^[\d.]+$" ng-if="$ctrl.data.reward.type=='AMTOFF'" ng-disabled="$ctrl.preview"/>
+                        <input type="text" id="value" name="value_{{$index}}" ng-model="item.value" ng-required="$ctrl.preview" ng-blur="$ctrl.roundPercentage($index); $ctrl.validatePromotion()" allow-pattern="^[\d.]+$" ng-if="$ctrl.data.reward.type=='PERCNTOFF'" class="tooltiphead" ng-disabled="$ctrl.preview"/>
 							<span class='error-message' ng-show="$ctrl.promoform['value_' + $index].$invalid || $ctrl.preview">
 									<span ng-show="$ctrl.promoform['value_' + $index].$error.min">
 										Please enter a value above 0
@@ -65,13 +65,13 @@
 				</td>
 				<td class="md-text-field">
 
-						<input type="text" id="maxval" name="maxval_{{$index}}" ng-model="item.maxAllowedVal" ng-blur="$ctrl.validatePromotion()"  ng-if="$ctrl.data.reward.type=='PERCNTOFF'" allow-pattern="^[\d.]+$"  />
+						<input type="text" id="maxval" name="maxval_{{$index}}" ng-model="item.maxAllowedVal" ng-blur="$ctrl.validatePromotion()"  ng-if="$ctrl.data.reward.type=='PERCNTOFF'" allow-pattern="^[\d.]+$" ng-disabled="$ctrl.preview"  />
 							<span class='error-message' ng-show="$ctrl.promoform['maxval_' + $index].$invalid ">
 								<span ng-show="$ctrl.promoform['maxval_' + $index].$error.pattern">Please enter valid number</span>
 							</span> 
 							
 				</td>
-				<td class="md-text-field"> <a ng-click="$ctrl.isDisabled || $ctrl.removePurchaseCondition(index)">Remove</a>
+				<td class="md-text-field" ng-hide="$ctrl.preview"> <a ng-click="$ctrl.isDisabled || $ctrl.removePurchaseCondition(index)">Remove</a>
 				</td>
 		</tr>
 </table>
@@ -80,13 +80,13 @@
 <div ng-if="$ctrl.purchaseCondition.sources.length > 1">
     <div class="md-text-field" ng-if="$ctrl.promotype=='MultipleItemsPercentDiscount'">
       <label for="percentoff">Percentage discount off each combination</label>
-      <input type="text" ng-model="$ctrl.data.reward.details[0].value" name="percentoff" ng-blur="$ctrl.validatePromotion()" ng-required="$ctrl.preview" required allow-pattern="(\d)" />
+      <input type="text" ng-model="$ctrl.data.reward.details[0].value" name="percentoff" ng-blur="$ctrl.validatePromotion()" ng-required="$ctrl.preview" required allow-pattern="(\d)" ng-disabled="$ctrl.preview"/>
 		<span class='error-message' ng-show="$ctrl.validationErrors.rewards[0].isError">{{$ctrl.validationErrors.rewards[0].message}}	</span>
     </div>
 
     <div class="md-text-field" ng-if="$ctrl.promotype=='MultipleItemsValueDiscount'">
       <label for="amountoff">Amount off each combination</label>
-      <input type="text" ng-model="$ctrl.data.reward.details[0].value" name="amountoff" ng-blur="$ctrl.validatePromotion()" ng-required="$ctrl.preview" required allow-pattern="^[\d.]+$" />
+      <input type="text" ng-model="$ctrl.data.reward.details[0].value" name="amountoff" ng-blur="$ctrl.validatePromotion()" ng-required="$ctrl.preview" required allow-pattern="^[\d.]+$" ng-disabled="$ctrl.preview" />
        <span class='error-message' ng-show="$ctrl.promoform.amountoff.$invalid ">
 			<span ng-show="$ctrl.promoform.amountoff.$error.required">Please enter a valid amount</span>
 	</span>
@@ -94,7 +94,7 @@
 
     <div class="md-text-field">
       <label for="maxdiscount">Maximum discount amount</label>
-      <input type="text" ng-model="$ctrl.data.reward.details[0].maxAllowedVal"   name="maxdiscount" allow-pattern="^[\d.]+$" />
+      <input type="text" ng-model="$ctrl.data.reward.details[0].maxAllowedVal"   name="maxdiscount" allow-pattern="^[\d.]+$" ng-disabled="$ctrl.preview" />
     </div>
 	
 </div>

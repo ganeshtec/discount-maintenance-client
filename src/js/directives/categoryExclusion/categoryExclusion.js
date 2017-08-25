@@ -8,7 +8,8 @@ app.directive('categoryExclusion', [
                 data: '=',
                 promoform: '=',
                 itemtype: '=',
-                viewProp: '='
+                viewProp: '=',
+                preview: '='
             },
             link: function (scope) {
                 scope.search = function () {

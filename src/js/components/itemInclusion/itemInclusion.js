@@ -12,7 +12,8 @@ app.component('itemInclusion', {
         promoform: '=',
         isDisabled: '=',
         viewProp: '=',
-        showSkuTypeFilter: '='
+        showSkuTypeFilter: '=',
+        preview: '='
     },
     controller: ItemInclusionsController
 });

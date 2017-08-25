@@ -1,11 +1,12 @@
 <form class="admin__promotion__form" name="promoForm" ng-cloak>
 	<fieldset ng-disabled="isDisabled">
 		<section class="admin__promotion__section" ng-show="index == 0 || preview">
+		
 			<div class="md-text-field">
 				<label for="name">
 					Discount Name {{isDisabled}} {{userType}}
 				</label>
-				<input type="text" id="name" name="name" ng-model="data.name" title="Discount Name" placeholder="Enter 254 characters or fewer" ng-maxlength="254" ng-required="preview" replace-special-characters />
+				<input type="text" id="name" name="name" ng-model="data.name" title="Discount Name" placeholder="Enter 254 characters or fewer" ng-maxlength="254" ng-required="preview" ng-disabled="preview" replace-special-characters />
 				<span class='error-message' ng-show="promoForm.name.$invalid">
 					<span ng-show="promoForm.name.$error.required">
 						Please enter a valid promotion name
@@ -15,11 +16,12 @@
 					</span>
 				</span>
 			</div>
+				
 			<div class="md-select md-select-space">
 				<label for="promotype">
 					Discount Type
 				</label>
-				<select name="promotype" ng-options="promotype as promotype.promoSubTypeDesc for promotype in promotionSubTypes" ng-model="promoSubTypeObject" ng-change="getSelectedSubTypes(); resetRewardsOnPromoTypeChange(); validatePromotion()" ng-required=" preview">
+				<select name="promotype" ng-options="promotype as promotype.promoSubTypeDesc for promotype in promotionSubTypes" ng-model="promoSubTypeObject" ng-change="getSelectedSubTypes(); resetRewardsOnPromoTypeChange(); validatePromotion()" ng-required=" preview" ng-disabled="preview">
 					<option value="">
 						-- Select a discount type --
 					</option>
@@ -35,13 +37,13 @@
 				<label for="method">
 					Redemption Method
 				</label>
-				<select ng-options="method.value as method.label for method in redemptionMethodTypes" ng-model="data.promoCdRqrd">
+				<select ng-options="method.value as method.label for method in redemptionMethodTypes" ng-model="data.promoCdRqrd" ng-disabled="preview">
 					<option value="">
 						-- Select a redemption method --
 					</option>
 				</select>
 			</div> 
-			<promotion-code-specification ng-if="data.promoCdRqrd" test ="{{data.couponId}}" couponId="data.couponId" preview="preview" data="data.promoCdSpec" require="data.promoCdRqrd" promoform='promoForm'></promotion-code-specification>
+			<promotion-code-specification ng-if="data.promoCdRqrd" test ="{{data.couponId}}" couponId="data.couponId" preview="preview" ng-disabled="preview" data="data.promoCdSpec" require="data.promoCdRqrd" promoform='promoForm'></promotion-code-specification>
 			<div class="md-text-field" ng-show="viewProp.displayCombinationPromo">
 				<label for="promocombo">
 					Combination with other discounts
@@ -59,7 +61,7 @@
 			        	Assign a priority by entering a number between zero and one thousand. Zero is the lowest priority and one thousand is the highest priority. When multiple discounts are qualified for the same purchase condition, the one with the highest priority will be applied first.
 			        </p>
 			    </tool-tipper>
-				<input type="number" name="priority" ng-model="data.priority" title="Priority" placeholder="Enter number between 0 and 1000" ng-required="preview" 
+				<input type="number" name="priority" ng-model="data.priority" title="Priority" placeholder="Enter number between 0 and 1000" ng-required="preview" ng-disabled="preview" 
 				allow-pattern="(\d)" ng-blur = "validatePromotion()">
 				<!--<input type="number" name="priority" ng-model="data.priority" min="0" max="1000" title="Priority" placeholder="Enter number between 0 and 1000" ng-required="preview" allow-pattern="(\d)" />-->
 				<span class='error-message' ng-show="promoForm.priority.$invalid">
@@ -92,11 +94,11 @@
 				</purchase-condition>
 		</section>
 		<section class="admin__promotion__section" ng-show="viewProp.displayPromoDescription && (index == 4 || preview)">
-				<promo-description data="data">
+				<promo-description data="data" preview="preview">
 				</promo-description>
 		</section>
 		<section class="admin__promotion__section" ng-show="viewProp.displayRedemptionLimits && (index == 5 || preview)">
-				<redemption-limit data="data.redmptnLmt" promoform="promoForm">
+				<redemption-limit data="data.redmptnLmt" promoform="promoForm" preview="preview">
 				</redemption-limit>
 		</section>
 
