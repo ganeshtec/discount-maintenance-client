@@ -18,7 +18,9 @@ describe('Unit testing purchaseConditionRewards directive', function () {
         _$httpBackend_.when('GET', '/skutypes/')
                 .respond(200,[]);
         _$httpBackend_.when('GET', '/merchHierarchy/departments')
-                .respond(200,[]);  
+                .respond(200,[]); 
+        _$httpBackend_.when('GET', '/labels/leadTime')
+                .respond(200,3);  
     }));
 
     describe("Show/Hide options based on flags", function () {

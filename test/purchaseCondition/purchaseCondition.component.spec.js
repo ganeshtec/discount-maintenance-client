@@ -11,6 +11,9 @@ describe('purchaseCondition', function () {
         data: {
             reward: {
                 details: []
+            },
+            purchaseConds: {
+                sources: []
             }
         },
         validationErrors : {
