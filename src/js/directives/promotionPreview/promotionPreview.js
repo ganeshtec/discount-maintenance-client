@@ -90,7 +90,7 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                     var invalidSysCode = utilService.invalidSysGenCode(promotion);
                     if (invalidSysCode) {
                         setError('System generated code should have a minimum of 9 characters');
-                       // unclickableSaveBtn(event);
+                        unclickableSaveBtn(event);
                         return;
                     }
 
