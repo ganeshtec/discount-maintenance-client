@@ -78,11 +78,11 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                     }
                     if (missing || missingLocation) {
                         setError('ERROR: Please fill out all required fields.');
-                        unclickableSaveBtn(event);
+                        clickableSaveBtn(event);
                         return;
                     } else if (isBuyAandBHasSource != null) {
                         setError(isBuyAandBHasSource);
-                        unclickableSaveBtn(event);
+                        clickableSaveBtn(event);
                         return;
                     } else {
                         scope.requiredFieldsMissing = false;
@@ -90,14 +90,14 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                     var invalidSysCode = utilService.invalidSysGenCode(promotion);
                     if (invalidSysCode) {
                         setError('System generated code should have a minimum of 9 characters');
-                        unclickableSaveBtn(event);
+                        clickableSaveBtn(event);
                         return;
                     }
 
 
                     if (!scope.formHolder.form.$valid) {
                         setError('ERROR: Please fix all validation errors.');
-                        unclickableSaveBtn(event);
+                        clickableSaveBtn(event);
                         return;
                     }
                     var needsValidation = utilService.needsValidation(promotion);
@@ -115,14 +115,14 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                                             clickableSaveBtn(event);
                                         },
                                         function () {
-                                            unclickableSaveBtn(event);
+                                            clickableSaveBtn(event);
                                         });
                                 }
                             },
                             function () {
                                 scope.submitStatus = '';
                                 setError('ERROR: Unable to submit promotion.');
-                                unclickableSaveBtn(event);
+                                clickableSaveBtn(event);
                             }
                         )
                     }
@@ -141,7 +141,7 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                             }
                             scope.submitStatus = '';
                             setError('ERROR: Unable to submit promotion.');
-                            unclickableSaveBtn(event);
+                            clickableSaveBtn(event);
                         });
                     } else {
                         save();
