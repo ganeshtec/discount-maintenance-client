@@ -20,7 +20,7 @@
 		<footer>
 			<div class="clearfix">
 				<a class="md-button  secondary align-right pull-left" ng-click="close()">Cancel</a>
-				<a class="md-button primary pull-right" ng-disabled="submitStatus" href="" ng-click="saveAndSubmit($event)"> Submit</a>
+				<a class="md-button primary pull-right" ng-disabled="submitStatus||headerErrorMsg" href="" ng-click="saveAndSubmit($event)"> Submit</a>
 			</div>	
 		</footer>
 </overlay>
