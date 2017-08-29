@@ -267,7 +267,8 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
     }
  
     publicApi.requiredLocationsOrMarkets = function (promotion) {
-        return (promotion.purchaseConds.locations.length == 0 && promotion.purchaseConds.markets.length == 0);
+        return (promotion.purchaseConds.locations === null || promotion.purchaseConds.locations.length == 0) &&
+         (promotion.purchaseConds.markets === null || promotion.purchaseConds.markets.length == 0);
     }
 
     publicApi.requiredFieldsMissing = function (promotion) {
