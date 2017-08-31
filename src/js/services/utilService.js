@@ -319,6 +319,53 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
 
     }
 
+    publicApi.validateBuyAandBOverlap = function (promotion) {
+        
+        function intersect(a, b) {
+            var t;
+            if (b.length > a.length) t = b, b = a, a = t; // indexOf to loop over shorter
+            return a.filter(function (e) {
+                return b.indexOf(e) > -1;
+            });
+        }
+
+        if (promotion.promoSubTypeCd != 'MultipleItemsValueDiscount' && promotion.promoSubTypeCd != 'MultipleItemsPercentDiscount') {
+            return null;
+        }
+
+        if(promotion.purchaseConds.sources.length > 1){
+            if(promotion.purchaseConds.sources[0].inclusions && promotion.purchaseConds.sources[1].inclusions){
+
+                //Check products for overlap
+                if(promotion.purchaseConds.sources[0].inclusions.partnumbers && promotion.purchaseConds.sources[0].inclusions.partnumbers.length > 0){
+                    if(promotion.purchaseConds.sources[1].inclusions.partnumbers && promotion.purchaseConds.sources[1].inclusions.partnumbers.length > 0){
+                        var itemsOverlap = intersect(promotion.purchaseConds.sources[0].inclusions.partnumbers, promotion.purchaseConds.sources[1].inclusions.partnumbers);
+                        if(itemsOverlap.length > 0){
+                            return 'ERROR: A and B groups cannot contain the same products';
+                        }
+                    }
+                }
+
+                //Check categories for overlap
+                if(promotion.purchaseConds.sources[0].inclusions.hierarchies && promotion.purchaseConds.sources[0].inclusions.hierarchies.length > 0){
+                    if(promotion.purchaseConds.sources[1].inclusions.hierarchies && promotion.purchaseConds.sources[1].inclusions.hierarchies.length > 0){
+                        
+                        var h1 = promotion.purchaseConds.sources[0].inclusions.hierarchies.map(function(a) {return a.id;});
+                        var h2 = promotion.purchaseConds.sources[1].inclusions.hierarchies.map(function(a) {return a.id;});
+                        
+                        var overlap = intersect(h1, h2);
+                        if(overlap.length > 0){
+                            return 'ERROR: A and B groups cannot contain the same product categories';
+                        }
+                    }
+                }
+            }
+        }
+
+        return null;
+    }
+    
+
     publicApi.setDefaultsForSaveAsDraft = function (promotion) {
         if (promotion.promoCdRqrd == null) {
             promotion.promoCdRqrd = true;
