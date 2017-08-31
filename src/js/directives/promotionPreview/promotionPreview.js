@@ -72,6 +72,7 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                     var missingLocation = utilService.requiredLocationsOrMarkets(promotion);
                     var missing = utilService.requiredFieldsMissing(promotion);
                     var isBuyAandBHasSource = utilService.validateBuyAandB(promotion);
+                    var isBuyAandBHasOverlap = utilService.validateBuyAandBOverlap(promotion);
                     if (!scope.originalSet) {
                         scope.originalPromoId = promotion.promoId;
                         scope.originalSet = true;
@@ -81,6 +82,9 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                         return;
                     } else if (isBuyAandBHasSource != null) {
                         setError(isBuyAandBHasSource);
+                        return;
+                    } else if (isBuyAandBHasOverlap != null) {
+                        setError(isBuyAandBHasOverlap);
                         return;
                     } else {
                         scope.requiredFieldsMissing = false;

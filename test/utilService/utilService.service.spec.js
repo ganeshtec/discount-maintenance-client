@@ -128,4 +128,66 @@ describe('utilService', function () {
     expect(utilService.isPromotionActive(promotion)).toEqual(false);
   });
 
+  // Below Test Scenarios to cover multiItem Dollar Value Promotions
+  it('returns error message from validateBuyAandBOverlap (value) for multi item promotions with overlapping categories (hierarchies).', function() {
+    var promotion = {"promoId":18116,"promoSubTypeCd":"MultipleItemsValueDiscount","status":61,"purchaseConds":{"sources":[{"inclusions":{"partnumbers":null,"itemtype":null,"hierarchies":[{"id":"da80fc04-3857-427c-ada9-8b868b6bb45c","name":"Pipes & Fittings","catalog":"Web"}]}},{"inclusions":{"partnumbers":null,"itemtype":null,"hierarchies":[{"id":"da80fc04-3857-427c-ada9-8b868b6bb45c","name":"Pipes & Fittings","catalog":"Web"}]}}]}};
+
+    expect(utilService.validateBuyAandBOverlap(promotion)).toEqual("ERROR: A and B groups cannot contain the same product categories");
+  });
+
+  it('returns null from validateBuyAandBOverlap (value) for multi item promotions with non overlapping categories (hierarchies).', function() {
+    var promotion = {"promoId":18116,"promoSubTypeCd":"MultipleItemsValueDiscount","status":61,"purchaseConds":{"sources":[{"inclusions":{"partnumbers":null,"itemtype":null,"hierarchies":[{"id":"da80fc04-3857-427c-ada9-ffffffffffff","name":"Pipes & Fittings","catalog":"Web"}]}},{"inclusions":{"partnumbers":null,"itemtype":null,"hierarchies":[{"id":"da80fc04-3857-427c-ada9-8b868b6bb45c","name":"Pipes & Fittings","catalog":"Web"}]}}]}};
+
+    expect(utilService.validateBuyAandBOverlap(promotion)).toEqual(null);
+  });
+
+  it('returns error message from validateBuyAandBOverlap (value) for multi item promotions with overlapping products (part numbers).', function() {
+    var promotion = {"promoId":18116,"promoSubTypeCd":"MultipleItemsValueDiscount","status":61,"purchaseConds":{"sources":[{"inclusions":{"partnumbers":[100169919],"itemtype":null,"hierarchies":[]}},{"inclusions":{"partnumbers":[100169919],"itemtype":null,"hierarchies":[]}}]}};
+
+    expect(utilService.validateBuyAandBOverlap(promotion)).toEqual("ERROR: A and B groups cannot contain the same products");
+  });
+
+  it('returns null from validateBuyAandBOverlap (value) for multi item promotions with non overlapping products (part numbers).', function() {
+    var promotion = {"promoId":18116,"promoSubTypeCd":"MultipleItemsValueDiscount","status":61,"purchaseConds":{"sources":[{"inclusions":{"partnumbers":[100169919],"itemtype":null,"hierarchies":[]}},{"inclusions":{"partnumbers":[100351464],"itemtype":null,"hierarchies":[]}}]}};
+
+    expect(utilService.validateBuyAandBOverlap(promotion)).toEqual(null);
+  });
+
+  it('returns null from validateBuyAandBOverlap (value) for multi item promotions where one is using products (part numbers) and the other is using categories (hierarchies).', function() {
+    var promotion = {"promoId":18116,"promoSubTypeCd":"MultipleItemsValueDiscount","status":61,"purchaseConds":{"sources":[{"inclusions":{"partnumbers":[100169919],"itemtype":null,"hierarchies":[]}},{"inclusions":{"partnumbers":null,"itemtype":null,"hierarchies":[{"id":"da80fc04-3857-427c-ada9-ffffffffffff","name":"Pipes & Fittings","catalog":"Web"}]}}]}};
+
+    expect(utilService.validateBuyAandBOverlap(promotion)).toEqual(null);
+  });
+  
+  // Below Test Scenarios to cover multiItem Percentage Promotions
+  it('returns error message from validateBuyAandBOverlap (percent) for multi item promotions with overlapping categories (hierarchies).', function() {
+    var promotion = {"promoId":18116,"promoSubTypeCd":"MultipleItemsPercentDiscount","status":61,"purchaseConds":{"sources":[{"inclusions":{"partnumbers":null,"itemtype":null,"hierarchies":[{"id":"da80fc04-3857-427c-ada9-8b868b6bb45c","name":"Pipes & Fittings","catalog":"Web"}]}},{"inclusions":{"partnumbers":null,"itemtype":null,"hierarchies":[{"id":"da80fc04-3857-427c-ada9-8b868b6bb45c","name":"Pipes & Fittings","catalog":"Web"}]}}]}};
+
+    expect(utilService.validateBuyAandBOverlap(promotion)).toEqual("ERROR: A and B groups cannot contain the same product categories");
+  });
+
+  it('returns null from validateBuyAandBOverlap (percent) for multi item promotions with non overlapping categories (hierarchies).', function() {
+    var promotion = {"promoId":18116,"promoSubTypeCd":"MultipleItemsPercentDiscount","status":61,"purchaseConds":{"sources":[{"inclusions":{"partnumbers":null,"itemtype":null,"hierarchies":[{"id":"da80fc04-3857-427c-ada9-ffffffffffff","name":"Pipes & Fittings","catalog":"Web"}]}},{"inclusions":{"partnumbers":null,"itemtype":null,"hierarchies":[{"id":"da80fc04-3857-427c-ada9-8b868b6bb45c","name":"Pipes & Fittings","catalog":"Web"}]}}]}};
+
+    expect(utilService.validateBuyAandBOverlap(promotion)).toEqual(null);
+  });
+
+  it('returns error message from validateBuyAandBOverlap (percent) for multi item promotions with overlapping products (part numbers).', function() {
+    var promotion = {"promoId":18116,"promoSubTypeCd":"MultipleItemsPercentDiscount","status":61,"purchaseConds":{"sources":[{"inclusions":{"partnumbers":[100169919],"itemtype":null,"hierarchies":[]}},{"inclusions":{"partnumbers":[100169919],"itemtype":null,"hierarchies":[]}}]}};
+
+    expect(utilService.validateBuyAandBOverlap(promotion)).toEqual("ERROR: A and B groups cannot contain the same products");
+  });
+
+  it('returns null from validateBuyAandBOverlap (percent) for multi item promotions with non overlapping products (part numbers).', function() {
+    var promotion = {"promoId":18116,"promoSubTypeCd":"MultipleItemsPercentDiscount","status":61,"purchaseConds":{"sources":[{"inclusions":{"partnumbers":[100169919],"itemtype":null,"hierarchies":[]}},{"inclusions":{"partnumbers":[100351464],"itemtype":null,"hierarchies":[]}}]}};
+
+    expect(utilService.validateBuyAandBOverlap(promotion)).toEqual(null);
+  });
+
+  it('returns null from validateBuyAandBOverlap (percent) for multi item promotions where one is using products (part numbers) and the other is using categories (hierarchies).', function() {
+    var promotion = {"promoId":18116,"promoSubTypeCd":"MultipleItemsPercentDiscount","status":61,"purchaseConds":{"sources":[{"inclusions":{"partnumbers":[100169919],"itemtype":null,"hierarchies":[]}},{"inclusions":{"partnumbers":null,"itemtype":null,"hierarchies":[{"id":"da80fc04-3857-427c-ada9-ffffffffffff","name":"Pipes & Fittings","catalog":"Web"}]}}]}};
+
+    expect(utilService.validateBuyAandBOverlap(promotion)).toEqual(null);
+  });
+
 });
