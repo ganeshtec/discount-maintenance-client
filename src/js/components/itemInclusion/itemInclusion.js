@@ -101,18 +101,35 @@ function ItemInclusionsController(itemsDataService, DataFactory, $mdDialog, $sco
     }
 
     this.setItemData = function (data) {
-        this.existingID = '';
+        this.existingID = '';  
+        var condensedList = this.condenseMultipleSkus(data.validOmsInfo);
         if (!ctrl.validOmsInfo.length && ctrl.data && !ctrl.itemSearch) {
-            $.extend(true, ctrl.validOmsInfo, data.validOmsInfo);
+            $.extend(true, ctrl.validOmsInfo, condensedList);
         }
         if (data.validOmsInfo && ctrl.itemSearch) {
-            for (var i = 0; i < data.validOmsInfo.length; i++) {
-                ctrl.addItem(data.validOmsInfo[i]);
+            for (var i = 0; i < condensedList.length; i++) {
+                ctrl.addItem(condensedList[i]);
             }
             if (this.existingID != '') {
                 ctrl.showMessageModal('Warning','Following item/s are already added: ' + this.existingID);
             }
+        }    
+    }
+
+    this.condenseMultipleSkus= function(data){
+        var map={};
+        if(data!=undefined){
+            for (var i = 0; i < data.length; i++) {
+                if(map[data[i].omsId]==undefined){
+                    map[data[i].omsId]=data[i];
+                }else{
+                    map[data[i].omsId].skuNumber+=' '+data[i].skuNumber;
+                }
+            }
         }
+        var keys = Object.keys(map); 
+        var values = keys.map(function(v) { return map[v]; });
+        return values;
     }
 
     this.showMessageModal =function (title, message){
