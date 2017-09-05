@@ -371,8 +371,8 @@ describe('Unit testing itemInclusion.component.spec.js', function () {
         ctrl.setItemData(itemData, true);
         expect(ctrl.showMessageModal).toHaveBeenCalledTimes(1);
         expect(ctrl.data.length).toEqual(3);
-        expect(ctrl.data[0]).toEqual(999999999)
-        expect(ctrl.data[1]).toEqual(888888888)
+        expect(ctrl.data[0]).toEqual(888888888)
+        expect(ctrl.data[1]).toEqual(999999999)
         expect(ctrl.data[2]).toEqual(77777777)
         expect(ctrl.validOmsInfo.length).toEqual(3);
     });
@@ -409,6 +409,47 @@ describe('Unit testing itemInclusion.component.spec.js', function () {
         ctrl.$onChanges(changes);
         expect(ctrl.isSkuSearch).toBe(true);
     });
+    
+    it('setItemData should condense multiple omsIds with multiple skus into one', function () {
+        ctrl = $componentController('itemInclusion', null, {
+            data: []
+        });
+        ctrl.$onInit();
+
+        var itemData = {
+            validOmsInfo: [
+                {
+                    omsId: 999999999,
+                    prodName: 'SMOOTH FLUSH SOLID CORE PRIMED CHROM',
+                    skuNumber: 1000317883,
+                    skuTypeCode: 'S'
+                },
+                {
+                    omsId: 999999999,
+                    prodName: 'SMOOTH FLUSH SOLID CORE PRIMED CHROM',
+                    skuNumber: 1000317884,
+                    skuTypeCode: 'S'
+                },
+                {
+                    omsId: 888888888,
+                    prodName: '16"X16" MONTAGNA BELLUNO-15.5SF CA',
+                    skuNumber: 100049,
+                    skuTypeCode: 'N'
+                },
+            ],
+            inValidOmsInfo: [
+                {
+
+                }
+            ]
+        };
+        ctrl.itemSearch = "999999999 , 888888888"
+        ctrl.setItemData(itemData, true)
+        expect(ctrl.data.length).toEqual(2);
+        expect(ctrl.validOmsInfo.length).toEqual(2);
+        expect(ctrl.validOmsInfo[1].skuNumber).toEqual("1000317883 1000317884")
+    });
+
 
 
 });
