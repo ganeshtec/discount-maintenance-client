@@ -258,6 +258,12 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
                 $location.path('login');
             }
         }
+
+        $rootScope.$on('unauth-error',function() {
+            publicApi.clearLoginData();
+            publicApi.setErrorStatus('unauthorized');
+            $location.path('login');
+        });
         return publicApi;
     }
 ]);

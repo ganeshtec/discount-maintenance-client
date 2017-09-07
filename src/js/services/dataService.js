@@ -3,7 +3,7 @@
 	Services that will handle data http request
 */
 
-app.service('dataService', ['$http', '$q', '$cookies', 'URL_CONFIG', function ($http, $q, $cookies, URL_CONFIG) {
+app.service('dataService', ['$http', '$rootScope', '$q', '$cookies', 'URL_CONFIG', function ($http, $rootScope, $q, $cookies, URL_CONFIG) {
     var publicApi = {};
     var urls = new URL_CONFIG();
     publicApi.httpRequest = function (config) {
@@ -33,7 +33,11 @@ app.service('dataService', ['$http', '$q', '$cookies', 'URL_CONFIG', function ($
                 }
             },
             function (error) {
-                deferred.reject(error);
+                if(error!=null && error.status == 403){
+                    $rootScope.$broadcast('unauth-error');
+                }else{
+                    deferred.reject(error);
+                }
             });
 
         return deferred.promise;
