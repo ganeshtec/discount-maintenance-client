@@ -11,10 +11,11 @@ app.component('adminFooter', {
 
 
     templateUrl: 'adminFooter.html',
-    controller: function FooterCtrl(PromotionData, utilService, leadTimeService, promotionDataService, modalService, validationService) {
+    controller: function FooterCtrl(PromotionData, utilService, leadTimeService, promotionDataService, modalService, validationService, $scope) {
         var tempData = $.extend(true, {}, this.data);
         var inprogress = false;
         var isEndDtWithinLeadTime = false;
+        var ctrl=this;
         if (tempData) {
             var isEndDtWithinLeadTimePromise = utilService.isSubmitEligibleForDisable(tempData);
             isEndDtWithinLeadTimePromise.then(function (value) {
@@ -65,6 +66,10 @@ app.component('adminFooter', {
                 }
             )
         }
+
+        $scope.$on('unauth-error',function() {
+            ctrl.previewOverlayConfig.close();
+        });
 
         this.preview = function (data) {
             var areValidationErrorsPresent;
