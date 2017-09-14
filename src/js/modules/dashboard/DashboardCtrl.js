@@ -307,7 +307,12 @@ app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$sco
             var newEndDate = new Date();
             newEndDate.setDate(today.getDate() + leadTime);
             promo.endDt = $filter('date')(newEndDate, 'yyyy-MM-dd HH:mm:ss');
-            promotionDataService.saveAsDraft(promo);
+            var promise = promotionDataService.saveAsDraft(promo);
+            promise.then(
+                function(data) {
+                    promotionDataService.submit(data.data);
+                }
+            )
         }
 
         $scope.deactivate = function () {
@@ -323,6 +328,9 @@ app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$sco
                     inLeadTime = $scope.isInLeadTime(endDate, leadTime);
                     if ($scope.eligibleLabelForDeactivate(promo.printLabel, promo.status, inLeadTime)) {
                         $scope.constructAndSavePromo(leadTime, promo);
+                        // call another one for transmit
+                        // as part of savePromo in WS do Transmit call
+
                         showAlert('Success', promo.name + ' will end on ' + promo.endDt.split(' ')[0] + ' to account for labeling lead time.');
                         return;
                     } if ($scope.cannotBeDeactivated(promo.printLabel, promo.status, inLeadTime)) {
