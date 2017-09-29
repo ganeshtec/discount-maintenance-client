@@ -114,9 +114,17 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$co
             
             $this.setViewProperties($scope.userType);
 
-            $scope.sections = new SECTIONS($scope.userType);
+            $scope.sections = new SECTIONS(false, $scope.userType);
             $scope.section = promotionDataService.getSection($scope.sections);
             $scope.sectionInx = $scope.sections.indexOf($scope.section);
+
+            var labelToggle = leadTimeService.fetchLabelToggle();
+            labelToggle.then(function(toggle) {
+                console.log("Scope sections - ", $scope.sections)
+                console.log("toggle labels flag - ", toggle)
+                $scope.sections[6].shouldDisplay = toggle;
+            })
+    
 
 
             //get new data

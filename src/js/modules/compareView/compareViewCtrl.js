@@ -44,9 +44,9 @@ app.controller('compareViewCtrl', ['$scope', '$routeParams', '$timeout', '$cooki
             $scope.UiState = 'Compare';
             $scope.editMode = true;
 
-            $scope.sections = new SECTIONS();
-            $scope.section = promotionDataService.getSection($scope.sections);
-            $scope.sectionInx = $scope.sections.indexOf($scope.section);
+            // $scope.sections = new SECTIONS(true, null);
+            // $scope.section = promotionDataService.getSection($scope.sections);
+            // $scope.sectionInx = $scope.sections.indexOf($scope.section);
 
             getPromotionByID(promotionID1);
             getPromotionByID(promotionID2);
