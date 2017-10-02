@@ -1,5 +1,5 @@
-app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$cookies', '$location', 'loginService', 'promotionDataService', 'PromotionData', 'SECTIONS', 'DataFactory', 'createTestRecord', 'URL_CONFIG', 'ALLOWED_PERMISSION_IDS',
-    function ($scope, $routeParams, $timeout, $cookies, $location, loginService, promotionDataService, PromotionData, SECTIONS, DataFactory, createTestRecord, URL_CONFIG, ALLOWED_PERMISSION_IDS) {
+app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$cookies', '$location', 'loginService', 'promotionDataService', 'PromotionData', 'SECTIONS', 'DataFactory', 'createTestRecord', 'URL_CONFIG', 'ALLOWED_PERMISSION_IDS', 'leadTimeService',
+    function ($scope, $routeParams, $timeout, $cookies, $location, loginService, promotionDataService, PromotionData, SECTIONS, DataFactory, createTestRecord, URL_CONFIG, ALLOWED_PERMISSION_IDS, leadTimeService) {
 
         var $this = this;
 
@@ -52,10 +52,10 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$co
             var promotionData = new PromotionData($scope.userType);
             promotionData.meta.created = $scope.username;
             promotionData.meta.lastUpdatedBy = $scope.username;
-            $scope.promotionData=promotionData;
+            $scope.promotionData = promotionData;
         }
 
-        $this.setViewProperties = function(userType) {
+        $this.setViewProperties = function (userType) {
             if (userType == allowedPermissionIDs.STORE) {
                 $scope.viewProperties = {
                     displayPromoDescription: false,
@@ -71,14 +71,14 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$co
                     displayScheduleTime: true,
                     displayPrintLabel: false,
                     displayLocations: true,
-                    displayItemsSku:true,
+                    displayItemsSku: true,
                     displayMerchHiearchy: true,
                     displayCustomerSegment: true,
                     promotionSubTypesForMFA: true,
                     displayFilterSkuTypes: true
                 }
                 //$scope.promotionSubTypesForMFA = true;
-            } else if (userType == allowedPermissionIDs.ONLINE) {                
+            } else if (userType == allowedPermissionIDs.ONLINE) {
                 $scope.viewProperties = {
                     displayPromoDescription: true,
                     displayRedemptionLimits: true,
@@ -111,20 +111,18 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$co
 
             $scope.UiState = ($scope.comparemode) ? 'Compare' : ((data.promoId) ? 'Edit' : 'Create New');
             $scope.editMode = ($scope.UiState === 'Edit');
-            
+
             $this.setViewProperties($scope.userType);
 
-            $scope.sections = new SECTIONS(false, $scope.userType);
+            $scope.sections = new SECTIONS($scope.userType);
             $scope.section = promotionDataService.getSection($scope.sections);
             $scope.sectionInx = $scope.sections.indexOf($scope.section);
 
             var labelToggle = leadTimeService.fetchLabelToggle();
-            labelToggle.then(function(toggle) {
-                console.log("Scope sections - ", $scope.sections)
-                console.log("toggle labels flag - ", toggle)
-                $scope.sections[6].shouldDisplay = toggle;
+            labelToggle.then(function (toggle) {
+                $this.updateSections(toggle);
             })
-    
+
 
 
             //get new data
@@ -146,6 +144,17 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$co
                 getPromotionByID(data.promoId);
 
                 // End Testing Create
+            }
+        }
+
+        $this.updateSections = function (labelToggle) {
+            if ($scope.userType == allowedPermissionIDs.STORE) {
+                $scope.sections.forEach(function (section) {
+                    if (section.name === 'Labels') {
+                        section.shouldDisplay = labelToggle;
+                        $scope.viewProperties.displayPrintLabel = labelToggle;
+                    }
+                })
             }
         }
 
