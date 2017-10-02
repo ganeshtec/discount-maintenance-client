@@ -1,12 +1,20 @@
 describe('purchaseCondition', function () {
 
     var $componentController;
+    var $compile;
+    var $rootScope;
+    var $scope;
 
     // Load the myApp module, which contains the directive
     beforeEach(module('app'));
 
-    beforeEach(inject(function(_$componentController_) {
+    beforeEach(inject(function(_$componentController_,_$compile_,_$rootScope_, _$httpBackend_) {
     $componentController = _$componentController_;
+    $compile = _$compile_;
+    $rootScope = _$rootScope_;
+    $scope = $rootScope.$new();
+    _$httpBackend_.when('GET', '/labels/leadTime')
+                .respond(200,3);  
     ctrl = $componentController('purchaseCondition',null, {
         data: {
             reward: {
@@ -24,6 +32,18 @@ describe('purchaseCondition', function () {
         },
     });
   }));
+
+    it('verify Rewards radio button should be invisible for MFA User ', function () {
+            $scope.purchanseCondition = {};
+            $scope.qualuom = {};
+            $scope.promoform = {};
+            $scope.preview = false;
+            $scope.isDisabled = false;
+            var element = $compile("<purchase-condition data='data' promoform='promoform' preview='preview' purchase-condition='data.purchaseConds' is-disabled='isDisabled' qualuom = 'data.purchaseConds.qualUOM' ></purchase-condition>")($scope);
+            $scope.$digest();
+            expect(element.find('.md-text-field').is(':visible')).toBe(false);
+           
+        });
 
 
     it('adding object in purchaseCondition array', function () {

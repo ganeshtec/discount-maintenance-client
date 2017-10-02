@@ -1,9 +1,10 @@
 
 <div ng-if="$ctrl.purchaseCondition.sources.length == 1">
 
+<label for="priority" ng-show="$ctrl.data.purchaseConds.channels == 87">Discount</label>
+<div id="rewardsId" class="md-text-field" ng-show="$ctrl.data.purchaseConds.channels == 57" ng-init="qualuom = $ctrl.data.reward.details[0].qualUOM || 'Quantity'">
 
-<div class="md-text-field" ng-init="qualuom = $ctrl.data.reward.details[0].qualUOM || 'Quantity'">
-
+	<!--<label for="priority" ng-show="$ctrl.data.purchaseConds.channels == 87">Discount</label>-->
 	<label for="priority">Minimum purchase type</label>
 	<div class="md-radio">
 		<input type="radio" id="quantity" name="minpurchase" ng-model="qualuom" title="Quantity Purchase" value="Quantity" ng-change="$ctrl.setQualUOM(qualuom)" ng-disabled="$ctrl.preview"/>
