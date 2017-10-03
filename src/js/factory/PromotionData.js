@@ -11,7 +11,7 @@ app.factory('PromotionData', ['ALLOWED_PERMISSION_IDS',function (ALLOWED_PERMISS
             'startDt': '',
             'endDt': '',
             'name': '',
-            'printLabel': true,
+            'printLabel': false,
             'labelText': '',
             'redmptnLmt': {
                 'maxUsesPerOrd': '-1',
