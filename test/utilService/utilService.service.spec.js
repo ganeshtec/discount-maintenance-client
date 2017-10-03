@@ -190,4 +190,20 @@ describe('utilService', function () {
     expect(utilService.validateBuyAandBOverlap(promotion)).toEqual(null);
   });
 
+  it('verify validateItemCategory clears inclusions.hierarchies when purchaseoption not equal to category.', function() {
+    var promotion = {"promoId":18116,"promoSubTypeCd":"MultipleItemsPercentDiscount","status":61,"purchaseConds":{"sources":[{"purchaseoption":"itemsku","inclusions":{"partnumbers":[100169919],"itemtype":null,"hierarchies":[{"id":"2>>2","name":"SPC TESTS>>SPC CLASS","catalog":"Merch"}]}}]}};
+
+    utilService.validateItemCategory(promotion);
+    expect(promotion.purchaseConds.sources[0].inclusions.hierarchies.length).toEqual(0);
+    expect(promotion.purchaseConds.sources[0].inclusions.partnumbers.length).toEqual(1);
+  });
+
+  it('verify validateItemCategory clears inclusions.hierarchies when purchaseoption not equal to category.', function() {
+    var promotion = {"promoId":18116,"promoSubTypeCd":"MultipleItemsPercentDiscount","status":61,"purchaseConds":{"sources":[{"purchaseoption":"category","inclusions":{"partnumbers":[100169919],"itemtype":null,"hierarchies":[{"id":"2>>2","name":"SPC TESTS>>SPC CLASS","catalog":"Merch"}]}}]}};
+
+    utilService.validateItemCategory(promotion);
+    expect(promotion.purchaseConds.sources[0].inclusions.hierarchies.length).toEqual(1);
+    expect(promotion.purchaseConds.sources[0].inclusions.partnumbers.length).toEqual(0);
+  });
+
 });
