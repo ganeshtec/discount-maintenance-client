@@ -119,10 +119,10 @@ app.directive('purchaseConditionRewards', ['SourceData', 'customerSegmentDataSer
 
                 scope.removeAll = function () {
                     for(var i = 0; i < scope.data.purchaseConds.sources.length; i++){
-                        //scope.data.purchaseConds.sources[i].inclusions.hierarchies = [];
-                        $rootScope.$broadcast('clearCategories');
                         scope.data.purchaseConds.sources[i].inclusions.partnumbers = [];
                     }
+
+                    $rootScope.$broadcast('clearCategories');
 
                 }
             }
