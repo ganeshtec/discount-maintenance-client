@@ -16,39 +16,75 @@ describe('Unit testing purchaseConditionRewards directive', function () {
         _$httpBackend_.when('GET', '/customersegment/segments')
             .respond(200, { segments: [] });
         _$httpBackend_.when('GET', '/skutypes/')
-                .respond(200,[]);
+            .respond(200, []);
         _$httpBackend_.when('GET', '/merchHierarchy/departments')
-                .respond(200,[]); 
+            .respond(200, []);
         _$httpBackend_.when('GET', '/labels/leadTime')
-                .respond(200,3);  
+            .respond(200, 3);
     }));
 
     describe("Show/Hide options based on flags", function () {
         beforeEach(function () {
-            $scope.data={purchaseConds: {sources: [{purchaseoption: 'category'}]}};
+            $scope.data = { purchaseConds: { sources: [{ purchaseoption: 'category' }] } };
             $scope.promoform = {};
             $scope.preview = false;
             $scope.isDisabled = false;
         });
         it('verify Items/SKU radio button displays only if displayItemsSku view property is set to true', function () {
-            $scope.viewProp = { displayOMSIdExclusion:false, displayItemsSku: true }
+            $scope.viewProp = { displayOMSIdExclusion: false, displayItemsSku: true }
             var element = $compile("<purchase-condition-rewards data='data' promoform='promoform' preview='preview' view-prop='viewProp'></purchase-condition-rewards>")($scope);
             $scope.$digest();
             expect(element.find("div[id='itemsoms_div_0']").attr('aria-hidden')).toBe('true');
             expect(element.find("div[id='itemssku_div_0']").attr('aria-hidden')).toBe('false');
         });
 
-        it("Show/Hide Filter SKUTypes based on viewProperty displayFilterSkuTypes value", function(){
-            $scope.viewProp = { displayFilterSkuTypes: false}
-            $scope.data={purchaseConds: {sources: [{purchaseoption: 'category'}]}};
+        it("Show/Hide Filter SKUTypes based on viewProperty displayFilterSkuTypes value", function () {
+            $scope.viewProp = { displayFilterSkuTypes: false }
+            $scope.data = { purchaseConds: { sources: [{ purchaseoption: 'category' }] } };
             $scope.promoform = {};
             $scope.preview = false;
             $scope.isDisabled = false;
             var element = $compile("<purchase-condition-rewards data='data' promoform='promoform' preview='preview' view-prop='viewProp'></purchase-condition-rewards>")($scope);
-            $scope.$digest();   
-            expect(element.find("div[class*='filter_sku_types_link']").attr('aria-hidden')).toBe('true');               
+            $scope.$digest();
+            expect(element.find("div[class*='filter_sku_types_link']").attr('aria-hidden')).toBe('true');
         })
+
+         
     });
+
+        fit('updatePrintLabel should set printLabel to false if item/sku selected', function () {
+
+            $scope.viewProp = { displayFilterSkuTypes: true }
+            $scope.data = { purchaseConds: { sources: [{ purchaseoption: 'category' }] } };
+            $scope.promoform = {};
+            $scope.preview = false;
+            $scope.isDisabled = false;
+            var element = $compile("<purchase-condition-rewards data='data' promoform='promoform' preview='preview' view-prop='viewProp'></purchase-condition-rewards>")($scope);
+            $scope.$digest();
+            this.$isolateScope = element.isolateScope();   
+
+            this.$isolateScope.updatePrintLabel();
+            expect(this.$isolateScope.data.printLabel).toBe(false);
+         });
+
+          fit('updatePrintLabel should set printLabel to false if category selected', function () {
+
+            $scope.viewProp = { displayFilterSkuTypes: true }
+            $scope.data = { purchaseConds: { sources: [{ purchaseoption: 'category' }] } };
+        
+            $scope.promoform = {};
+            $scope.preview = false;
+            $scope.isDisabled = false;
+            var element = $compile("<purchase-condition-rewards data='data' promoform='promoform' preview='preview' view-prop='viewProp'></purchase-condition-rewards>")($scope);
+            $scope.$digest();
+            this.$isolateScope = element.isolateScope();   
+
+            this.$isolateScope.updatePrintLabel();
+            expect(this.$isolateScope.data.printLabel).toBe(false);
+            expect(this.$isolateScope.data.labelText).toBe('');
+         });
+
+
 
 
 });

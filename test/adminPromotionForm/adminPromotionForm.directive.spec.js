@@ -36,31 +36,6 @@ describe('Unit testing adminPromotionForm.directive.spec.js', function () {
     this.$isolateScope = element.isolateScope();   
 
   }));
-  it('updatePrintLabelFlag should set printLabel to false if promoMfa is true and promoSubTypeCd is OrderLevelPercentDiscount',function(){ 
-      this.$isolateScope.promoSubTypeObject ={promoSubTypeCd:'OrderLevelPercentDiscount'}
-      this.$isolateScope.promoMfa=true;
-      this.$isolateScope.data.printLabel=true; 
-      this.$isolateScope.updatePrintLabelFlag();
-      expect(this.$isolateScope.data.printLabel).toBe(false);
-  });
-
-  it('updatePrintLabelFlag should set printLabel to true if promoMfa is true and promoSubTypeCd is not OrderLevelPercentDiscount',function(){ 
-      this.$isolateScope.promoMfa=true;
-      this.$isolateScope.data.printLabel=false; 
-      this.$isolateScope.promoSubTypeObject ={promoSubTypeCd:'ProductLevelPerItemPercentDiscountMSB'}
-      this.$isolateScope.updatePrintLabelFlag();
-      expect(this.$isolateScope.data.printLabel).toBe(true);
-  });
-  it('updatePrintLabelFlag should not change printLabel flag if promoMfa is false',function(){ 
-      this.$isolateScope.data.promoSubTypeCd='Any';
-      this.$isolateScope.promoMfa=false;
-      this.$isolateScope.data.printLabel=false;
-      this.$isolateScope.updatePrintLabelFlag();
-      expect(this.$isolateScope.data.printLabel).toBe(false);
-      this.$isolateScope.data.printLabel=true;
-      this.$isolateScope.updatePrintLabelFlag();
-      expect(this.$isolateScope.data.printLabel).toBe(true);
-  });
 
   it('resetRewardsOnPromoTypeChange should clear MaxAllowedVal if the reward type is AMTOFF',function(){
     this.$isolateScope.data.reward.type='AMTOFF';
