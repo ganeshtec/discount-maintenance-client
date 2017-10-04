@@ -47,12 +47,12 @@
         <div class="md-radio" id="itemssku_div_{{$index}}" ng-show="viewProp.displayItemsSku">
             <!--<div class="md-radio">-->
             <input type="radio" id="itemssku_{{$index}}" name="purchaseoption_{{$index}}" ng-model="data.purchaseConds.sources[$index].purchaseoption"
-                title="Items/SKU" value="itemsku" ng-disabled="preview" />
+                title="Items/SKU" ng-change="removeAll()" value="itemsku" ng-disabled="preview" />
             <label for="itemssku_{{$index}}"><span><span></span></span>Items/SKU</label>
         </div>
         <div class="md-radio">
             <input type="radio" id="category_{{$index}}" name="purchaseoption_{{$index}}" ng-model="data.purchaseConds.sources[$index].purchaseoption"
-                title="Category" value="category" ng-disabled="preview"/>
+                title="Category" ng-change="removeAll()" value="category" ng-disabled="preview"/>
             <label for="category_{{$index}}"><span><span></span></span>Category </label>
         </div>
 
