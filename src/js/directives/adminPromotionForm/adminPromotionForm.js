@@ -101,16 +101,7 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                 }
 
                 scope.showMaximumDiscount = false;
-                scope.updatePrintLabelFlag = function(){
-                    if(scope.promoMfa){
-                        if (scope.promoSubTypeObject.promoSubTypeCd == 'OrderLevelPercentDiscount') {
-                            scope.data.printLabel = false;
-                        }
-                        else{
-                            scope.data.printLabel = true;
-                        }
-                    }
-                }
+              
                 scope.getSelectedSubTypes = function () {
 
                     if (scope.promoSubTypeObject.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB') {
@@ -119,7 +110,6 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                     scope.data.promoSubTypeCd = scope.promoSubTypeObject.promoSubTypeCd;
                     scope.data.promoSubTypeDesc = scope.promoSubTypeObject.promoSubTypeDesc;
                     scope.data.promoType = scope.promoSubTypeObject.promoType;
-                    scope.updatePrintLabelFlag();
                     //AP-573-Promo validations - Buy A And B, get % off both
                     if (scope.data.promoSubTypeCd.indexOf('MultipleItemsPercentDiscount') != -1 || scope.data.promoSubTypeCd.indexOf('MultipleItemsValueDiscount') != -1) {
                         scope.data.isSitewideDeal = false;
