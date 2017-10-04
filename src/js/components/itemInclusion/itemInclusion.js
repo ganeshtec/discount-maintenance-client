@@ -55,6 +55,14 @@ function ItemInclusionsController(itemsDataService, DataFactory, $mdDialog, $sco
     }
     ctrl.$onChanges = function (changes) {
         ctrl.initializeSkuSearch(changes.purchaseoption.currentValue);
+        
+        if(changes.purchaseoption.currentValue!='itemoms' && changes.purchaseoption.previousValue=='itemoms'){
+            ctrl.validOmsInfo = [];
+        }
+        if(changes.purchaseoption.currentValue!='itemsku' && changes.purchaseoption.previousValue=='itemsku'){
+            ctrl.validSkuInfo = [];
+        }
+
     }
     ctrl.initializeSkuSearch = function (purchaseoption){
         ctrl.isSkuSearch=purchaseoption ==='itemsku';

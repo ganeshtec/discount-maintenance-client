@@ -4,7 +4,8 @@ app.component('promoLabels', {
         data: '=',
         promotype: '=',
         promoform: '=',
-        validationErrors: '='
+        validationErrors: '=',
+        preview: '='
     },
     controller: PromoLabelsController
 });
