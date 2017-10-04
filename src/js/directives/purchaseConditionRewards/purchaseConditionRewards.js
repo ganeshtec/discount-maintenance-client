@@ -72,11 +72,18 @@ app.directive('purchaseConditionRewards', ['SourceData', 'customerSegmentDataSer
 
                     }
                 }
+                scope.updatePrintLabel = function(){
+                    if(scope.data.purchaseConds.sources[0].purchaseoption == 'itemsku' ){
+                        scope.data.printLabel = false; 
+                    }
+                    else {
+                        scope.data.printLabel = false; 
+                        scope.data.labelText=''; 
+                    }
+                }
 
                 scope.initializePurchaseOption = function (index, item, data) {
-
                     if (data.purchaseConds.sources[index].purchaseoption == 'category') {
-
                         data.purchaseConds.sources[index].purchaseoption = 'category'
                     } else if (data.purchaseConds.sources[index].purchaseoption == 'itemoms') {
 
@@ -97,7 +104,7 @@ app.directive('purchaseConditionRewards', ['SourceData', 'customerSegmentDataSer
 
                         data.purchaseConds.sources[index].purchaseoption = 'category'
                     } else {
-
+                        data.printLabel = false;
                         data.purchaseConds.sources[index].purchaseoption = 'category'
                     }
 
