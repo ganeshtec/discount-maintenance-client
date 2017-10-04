@@ -257,6 +257,23 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                     scope.tableData.splice(index, 1);
                 }
 
+                scope.deleteAllRows = function () {
+                    scope.data.splice(0, scope.data.length);
+                    scope.tableData.splice(0,scope.tableData.length);
+                }
+
+                $rootScope.$on('clearCategories', function () {
+                    scope.deleteAllRows();
+                    
+                    scope.selectedDept = null;
+                    scope.selectedClass = null;
+                    scope.selectedSubClass = null;
+                    
+                    scope.classList = [];
+                    scope.SubClassList = [];
+                });
+
+
                 $rootScope.$on('refreshSkuTypeValidations', function () {
                     scope.validatePromotion();
                 });
