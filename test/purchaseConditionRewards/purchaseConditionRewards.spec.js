@@ -52,7 +52,7 @@ describe('Unit testing purchaseConditionRewards directive', function () {
          
     });
 
-        fit('updatePrintLabel should set printLabel to false if item/sku selected', function () {
+        it('updatePrintLabel should set printLabel to false if item/sku selected', function () {
 
             $scope.viewProp = { displayFilterSkuTypes: true }
             $scope.data = { purchaseConds: { sources: [{ purchaseoption: 'category' }] } };
@@ -67,7 +67,7 @@ describe('Unit testing purchaseConditionRewards directive', function () {
             expect(this.$isolateScope.data.printLabel).toBe(false);
          });
 
-          fit('updatePrintLabel should set printLabel to false if category selected', function () {
+          it('updatePrintLabel should set printLabel to false if category selected', function () {
 
             $scope.viewProp = { displayFilterSkuTypes: true }
             $scope.data = { purchaseConds: { sources: [{ purchaseoption: 'category' }] } };
