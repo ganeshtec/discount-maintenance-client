@@ -260,6 +260,7 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                 scope.deleteAllRows = function () {
                     scope.data.splice(0, scope.data.length);
                     scope.tableData.splice(0,scope.tableData.length);
+                    scope.validationErrors = {};
                 }
 
                 $rootScope.$on('clearCategories', function () {
