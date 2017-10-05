@@ -120,10 +120,12 @@ app.directive('purchaseConditionRewards', ['SourceData', 'customerSegmentDataSer
                 scope.removeAll = function () {
                     for(var i = 0; i < scope.data.purchaseConds.sources.length; i++){
                         scope.data.purchaseConds.sources[i].inclusions.partnumbers = [];
+                        scope.data.purchaseConds.sources[i].exclusions = {};
+                        scope.data.purchaseConds.sources[i].exclusions.attrs = {};
+                        scope.data.purchaseConds.sources[i].exclusions.initializeSkuTypeExclusions = true;
                     }
 
                     $rootScope.$broadcast('clearCategories');
-
                 }
             }
         }
