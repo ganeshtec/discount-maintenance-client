@@ -1,6 +1,6 @@
 
-<div class="md-select md-select-space" ng-show="viewProp.displayCustomerSegment" ng-if="data.promoSubTypeCd=='OrderLevelPercentDiscount' || data.purchaseConds.customerSegmentId!=0 && data.promoSubTypeCd=='OrderLevelPercentDiscount'">
-    <label for="promocustomersegment"><h3>Customer Segment</h3></label>
+<div class="md-select md-select-space" ng-show="viewProp.displayCustomerSegment">
+    <label for="promocustomersegment"><h3>Customer Segment (optional)</h3></label>
 
 
 
@@ -41,18 +41,18 @@
         <label ng-show="data.purchaseConds.sources.length > 1">Definition for "{{alphabet[$index]}}" *</label>
         <div class="md-radio" id="itemsoms_div_{{$index}}" ng-show="viewProp.displayOMSId">
             <input type="radio" id="itemsoms_{{$index}}" name="purchaseoption_{{$index}}" ng-model="data.purchaseConds.sources[$index].purchaseoption"
-                title="Items/OMS ID's" value="itemoms" ng-disabled="preview" />
+                title="Items/OMS ID's" value="itemoms" ng-change="updatePrintLabel()" ng-disabled="preview" />
             <label for="itemsoms_{{$index}}"><span><span></span></span>Items/OMS ID's</label>
         </div>
         <div class="md-radio" id="itemssku_div_{{$index}}" ng-show="viewProp.displayItemsSku">
             <!--<div class="md-radio">-->
             <input type="radio" id="itemssku_{{$index}}" name="purchaseoption_{{$index}}" ng-model="data.purchaseConds.sources[$index].purchaseoption"
-                title="Items/SKU" ng-change="removeAll()" value="itemsku" ng-disabled="preview" />
+                title="Items/SKU" value="itemsku" ng-change="updatePrintLabel();removeAll()" ng-disabled="preview" />
             <label for="itemssku_{{$index}}"><span><span></span></span>Items/SKU</label>
         </div>
         <div class="md-radio">
             <input type="radio" id="category_{{$index}}" name="purchaseoption_{{$index}}" ng-model="data.purchaseConds.sources[$index].purchaseoption"
-                title="Category" ng-change="removeAll()" value="category" ng-disabled="preview"/>
+                title="Category" value="category" ng-change="updatePrintLabel();removeAll()" ng-disabled="preview"/>
             <label for="category_{{$index}}"><span><span></span></span>Category </label>
         </div>
 
