@@ -6,9 +6,7 @@
     <div class="md-checkbox">
 
         <input type="checkbox" id="labelId" 
-        ng-disabled="$ctrl.data.promoSubTypeCd=='OrderLevelPercentDiscount' || 
-        $ctrl.isPromotionActive() && $ctrl.data.printLabel == true ||
-        $ctrl.data.purchaseConds.sources[0].purchaseoption!='itemsku' || $ctrl.preview"
+        ng-disabled="$ctrl.isPrintLabelDisabled() || $ctrl.preview"
          name="labelCheckbox" ng-model="$ctrl.data.printLabel" title="label" ng-click="$ctrl.data.labelText = null; $ctrl.validatePromotion()" 
          />
 
@@ -16,7 +14,7 @@
     </div>
     <div class="md-textarea">		
         <label for="labelText">Label Text (optional)</label>		
-        <input type="text" id="labelText" name="labelText" title="labelText" ng-model="$ctrl.data.labelText" ng-disabled="$ctrl.data.promoSubTypeCd=='OrderLevelPercentDiscount' || !$ctrl.data.printLabel || $ctrl.preview" rows="1" allow-pattern="(\d|[a-z A-Z\(\?\-\_\.\'\,\%\$\!\@\)])" maxlength="11" placeholder="Please enter 11 characters or fewer"></input>		
+        <input type="text" id="labelText" name="labelText" title="labelText" ng-model="$ctrl.data.labelText" ng-disabled="$ctrl.isPrintLabelDisabled() || !$ctrl.data.printLabel || $ctrl.preview" rows="1" allow-pattern="(\d|[a-z A-Z\(\?\-\_\.\'\,\%\$\!\@\)])" maxlength="11" placeholder="Please enter 11 characters or fewer"></input>		
         <span class="labelCount">{{$ctrl.data.labelText.length || 0}}/11</span>
     </div>
 </div>

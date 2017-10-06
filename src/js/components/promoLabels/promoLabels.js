@@ -22,4 +22,9 @@ function PromoLabelsController(validationService, utilService) {
         return utilService.isPromotionActive(this.data);
     }
 
+    this.isPrintLabelDisabled = function(){
+        return utilService.isPrintLabelDisabled(this.data);
+    }
+
 }
+

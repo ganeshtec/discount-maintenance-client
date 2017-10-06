@@ -38,6 +38,8 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$co
                         delete $scope.promotionData.couponId;
                         //change the status to draft
                         $scope.promotionData.status = 20;
+                    }else {
+                        $scope.promotionData.originalPrintLabel = data.printLabel;
                     }
                     $scope.promotionData.meta.lastUpdatedBy = $scope.username;
                 },
