@@ -44,6 +44,7 @@ function PurchaseConditionController(validationService,utilService) {
         this.data.reward.details = this.data.reward.details || [];
         var condition = new PurchaseConditionController();
         this.data.reward.details.push(condition);
+        this.updatePrintLabel();
     }
 
     function validatePromotion() {

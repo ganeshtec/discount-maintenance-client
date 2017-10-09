@@ -435,7 +435,8 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
             disabled = true;
         }
 
-        if (promotion.purchaseConds && promotion.purchaseConds.sources && promotion.purchaseConds.sources[0].purchaseoption != 'itemsku') {
+        if (promotion.purchaseConds && promotion.purchaseConds.sources && promotion.purchaseConds.sources[0]
+            && promotion.purchaseConds.sources[0].purchaseoption != 'itemsku') {
             disabled = true;
 
         }
@@ -448,7 +449,9 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
             disabled = true;
         }
 
-
+        if(promotion.reward && promotion.reward.details.length > 1) {
+            disabled = true;
+        }
         return disabled;
     }
 
