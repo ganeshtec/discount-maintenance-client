@@ -259,20 +259,20 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
         return data;
     }
     var checkEmpty = function (field) {
-        if (!field || field.toString().trim().length==0) {
+        if (!field || field.toString().trim().length == 0) {
             return true
         } else {
             return false;
         }
     }
- 
+
     publicApi.requiredLocationsOrMarkets = function (promotion) {
-        return ((promotion.purchaseConds.locations === null || promotion.purchaseConds.locations.length == 0) 
+        return ((promotion.purchaseConds.locations === null || promotion.purchaseConds.locations.length == 0)
             && (promotion.purchaseConds.markets === null || promotion.purchaseConds.markets.length == 0));
     }
 
     publicApi.requiredFieldsMissing = function (promotion) {
-        if(checkEmpty(promotion.name) || checkEmpty(promotion.startDt) || checkEmpty(promotion.endDt) || checkEmpty(promotion.promoSubTypeCd)){
+        if (checkEmpty(promotion.name) || checkEmpty(promotion.startDt) || checkEmpty(promotion.endDt) || checkEmpty(promotion.promoSubTypeCd)) {
             return true;
         }
         return false;
@@ -320,7 +320,7 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
     }
 
     publicApi.validateBuyAandBOverlap = function (promotion) {
-        
+
         function intersect(a, b) {
             var t;
             if (b.length > a.length) t = b, b = a, a = t; // indexOf to loop over shorter
@@ -333,28 +333,28 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
             return null;
         }
 
-        if(promotion.purchaseConds.sources.length > 1){
-            if(promotion.purchaseConds.sources[0].inclusions && promotion.purchaseConds.sources[1].inclusions){
+        if (promotion.purchaseConds.sources.length > 1) {
+            if (promotion.purchaseConds.sources[0].inclusions && promotion.purchaseConds.sources[1].inclusions) {
 
                 //Check products for overlap
-                if(promotion.purchaseConds.sources[0].inclusions.partnumbers && promotion.purchaseConds.sources[0].inclusions.partnumbers.length > 0){
-                    if(promotion.purchaseConds.sources[1].inclusions.partnumbers && promotion.purchaseConds.sources[1].inclusions.partnumbers.length > 0){
+                if (promotion.purchaseConds.sources[0].inclusions.partnumbers && promotion.purchaseConds.sources[0].inclusions.partnumbers.length > 0) {
+                    if (promotion.purchaseConds.sources[1].inclusions.partnumbers && promotion.purchaseConds.sources[1].inclusions.partnumbers.length > 0) {
                         var itemsOverlap = intersect(promotion.purchaseConds.sources[0].inclusions.partnumbers, promotion.purchaseConds.sources[1].inclusions.partnumbers);
-                        if(itemsOverlap.length > 0){
+                        if (itemsOverlap.length > 0) {
                             return 'ERROR: A and B groups cannot contain the same products';
                         }
                     }
                 }
 
                 //Check categories for overlap
-                if(promotion.purchaseConds.sources[0].inclusions.hierarchies && promotion.purchaseConds.sources[0].inclusions.hierarchies.length > 0){
-                    if(promotion.purchaseConds.sources[1].inclusions.hierarchies && promotion.purchaseConds.sources[1].inclusions.hierarchies.length > 0){
-                        
-                        var h1 = promotion.purchaseConds.sources[0].inclusions.hierarchies.map(function(a) {return a.id;});
-                        var h2 = promotion.purchaseConds.sources[1].inclusions.hierarchies.map(function(a) {return a.id;});
-                        
+                if (promotion.purchaseConds.sources[0].inclusions.hierarchies && promotion.purchaseConds.sources[0].inclusions.hierarchies.length > 0) {
+                    if (promotion.purchaseConds.sources[1].inclusions.hierarchies && promotion.purchaseConds.sources[1].inclusions.hierarchies.length > 0) {
+
+                        var h1 = promotion.purchaseConds.sources[0].inclusions.hierarchies.map(function (a) { return a.id; });
+                        var h2 = promotion.purchaseConds.sources[1].inclusions.hierarchies.map(function (a) { return a.id; });
+
                         var overlap = intersect(h1, h2);
-                        if(overlap.length > 0){
+                        if (overlap.length > 0) {
                             return 'ERROR: A and B groups cannot contain the same product categories';
                         }
                     }
@@ -364,7 +364,7 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
 
         return null;
     }
-    
+
 
     publicApi.setDefaultsForSaveAsDraft = function (promotion) {
         if (promotion.promoCdRqrd == null) {
@@ -420,10 +420,10 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
     }
 
     publicApi.updatePrintLabel = function (promotion) {
-     
-        if(publicApi.isPrintLabelDisabled(promotion)) {
-            promotion.printLabel = false; 
-            promotion.labelText=''; 
+
+        if (publicApi.isPrintLabelDisabled(promotion)) {
+            promotion.printLabel = false;
+            promotion.labelText = '';
         }
     }
 
@@ -431,17 +431,23 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
 
         var disabled = false;
 
-        if(publicApi.isPromotionActive(promotion) && promotion.originalPrintLabel == true){
+        if (publicApi.isPromotionActive(promotion) && promotion.originalPrintLabel == true) {
             disabled = true;
         }
 
-        if(promotion.purchaseConds && promotion.purchaseConds.sources && promotion.purchaseConds.sources[0].purchaseoption != 'itemsku'){
+        if (promotion.purchaseConds && promotion.purchaseConds.sources && promotion.purchaseConds.sources[0].purchaseoption != 'itemsku') {
             disabled = true;
-        } 
 
-        if(promotion.custSegment && promotion.custSegment.id != 0) {
+        }
+
+        if (promotion.custSegment && promotion.custSegment.id != 0) {
             disabled = true;
         }
+
+        if (promotion.reward && promotion.reward.details[0] && promotion.reward.details[0].qualUOM != 'Quantity') {
+            disabled = true;
+        }
+
 
         return disabled;
     }

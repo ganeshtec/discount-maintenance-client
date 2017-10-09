@@ -14,15 +14,16 @@ app.component('purchaseCondition', {
     controller: PurchaseConditionController
 });
 
-PurchaseConditionController.$inject = ['validationService'];
+PurchaseConditionController.$inject = ['validationService','utilService'];
 
-function PurchaseConditionController(validationService) {
+function PurchaseConditionController(validationService,utilService) {
 
     this.setQualUOM = setQualUOM;
     this.addPurchaseCondition = addPurchaseCondition;
     this.removePurchaseCondition = removePurchaseCondition;
     this.validatePromotion = validatePromotion;
     this.roundPercentage = roundPercentage;
+    this.updatePrintLabel = updatePrintLabel;
 
     function setQualUOM(qualuom) {
         var temp = qualuom;
@@ -34,15 +35,19 @@ function PurchaseConditionController(validationService) {
         }
         this.data.purchaseConds.qualUOM = temp;
     }
-   
+
+    function updatePrintLabel () {
+        utilService.updatePrintLabel(this.data);
+    }
+
     function addPurchaseCondition() {
         this.data.reward.details = this.data.reward.details || [];
         var condition = new PurchaseConditionController();
         this.data.reward.details.push(condition);
     }
 
-    function validatePromotion() {     
-        this.validationErrors = validationService.validatePromotion(this.data);    
+    function validatePromotion() {
+        this.validationErrors = validationService.validatePromotion(this.data);
     }
 
     function removePurchaseCondition(index) {
