@@ -7,12 +7,12 @@
 	<!--<label for="priority" ng-show="$ctrl.data.purchaseConds.channels == 87">Discount</label>-->
 	<label for="priority">Minimum purchase type</label>
 	<div class="md-radio">
-		<input type="radio" id="quantity" name="minpurchase" ng-model="qualuom" title="Quantity Purchase" value="Quantity" ng-change="$ctrl.setQualUOM(qualuom)" ng-disabled="$ctrl.preview"/>
+		<input type="radio" id="quantity" name="minpurchase" ng-model="qualuom" title="Quantity Purchase" value="Quantity" ng-change="$ctrl.setQualUOM(qualuom);$ctrl.updatePrintLabel()" ng-disabled="$ctrl.preview"/>
 		<label for="quantity"><span><span></span></span>Quantity purchase</label>
 	</div>
 		
 	<div class="md-radio">
-		<input type="radio" id="amount" name="minpurchase" ng-model="qualuom" title="Amount Spent" value="Amount" ng-change="$ctrl.setQualUOM(qualuom)" ng-disabled="$ctrl.preview"/>
+		<input type="radio" id="amount" name="minpurchase" ng-model="qualuom" title="Amount Spent" value="Amount" ng-change="$ctrl.setQualUOM(qualuom);$ctrl.updatePrintLabel()" ng-disabled="$ctrl.preview"/>
 		<label for="amount"><span><span></span></span>Amount spent</label>
 	</div>
 </div>

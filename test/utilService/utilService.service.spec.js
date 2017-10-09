@@ -246,4 +246,18 @@ it('return true if item/sku is selected', function() {
     expect(utilService.isPrintLabelDisabled(promotion)).toEqual(false);
   });
 
+  it('return true if quantity threshold is not selected', function() {
+   var promotion = {"promoId":18116,"reward":{"details":[{"qualUOM":"Amount","value":"10.00","seq":1,"max":-1.0,"min":100.0,"maxAllowedVal":10.0}]}};
+    utilService.updatePrintLabel(promotion);
+   //utilService.isPromotionActive(promotion);
+    expect(utilService.isPrintLabelDisabled(promotion)).toEqual(true);
+  });
+
+  it('return false if quantity threshold is selected', function() {
+   var promotion = {"promoId":18116,"reward":{"details":[{"qualUOM":"Quantity","value":"10.00","seq":1,"max":-1.0,"min":100.0,"maxAllowedVal":10.0}]}};
+    utilService.updatePrintLabel(promotion);
+   //utilService.isPromotionActive(promotion);
+    expect(utilService.isPrintLabelDisabled(promotion)).toEqual(false);
+  });
+
 });
