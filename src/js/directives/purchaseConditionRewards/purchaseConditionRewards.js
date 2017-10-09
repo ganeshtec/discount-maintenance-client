@@ -1,6 +1,6 @@
 // Purpose is to build promotion code spec.
-app.directive('purchaseConditionRewards', ['SourceData', 'customerSegmentDataService', '$mdDialog','$rootScope',
-    function (SourceData, customerSegmentDataService,$mdDialog,$rootScope) {
+app.directive('purchaseConditionRewards', ['SourceData', 'customerSegmentDataService', '$mdDialog','$rootScope','utilService',
+    function (SourceData, customerSegmentDataService,$mdDialog,$rootScope, utilService) {
         return {
             restrict: 'E',
             templateUrl: 'purchaseConditionRewards.html',
@@ -48,7 +48,6 @@ app.directive('purchaseConditionRewards', ['SourceData', 'customerSegmentDataSer
                         scope.data.purchaseConds.customerSegmentId = scope.data.custSegment.id;
                     } else {
                         scope.data.purchaseConds.customerSegmentId = 0;
-
                     }
                 };
                 // End of Customer Segment
@@ -73,13 +72,7 @@ app.directive('purchaseConditionRewards', ['SourceData', 'customerSegmentDataSer
                     }
                 }
                 scope.updatePrintLabel = function(){
-                    if(scope.data.purchaseConds.sources[0].purchaseoption == 'itemsku' ){
-                        scope.data.printLabel = false; 
-                    }
-                    else {
-                        scope.data.printLabel = false; 
-                        scope.data.labelText=''; 
-                    }
+                    utilService.updatePrintLabel(scope.data);
                 }
 
                 scope.initializePurchaseOption = function (index, item, data) {

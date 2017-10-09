@@ -206,4 +206,121 @@ describe('utilService', function () {
     expect(promotion.purchaseConds.sources[0].inclusions.partnumbers.length).toEqual(0);
   });
 
+  it('return true if promotion is Active and print label is true', function() {
+    var promotion = {
+      "status": 61,
+      "originalPrintLabel": true
+    }
+    utilService.updatePrintLabel(promotion);
+    utilService.isPromotionActive(promotion);
+    expect(utilService.isPrintLabelDisabled(promotion)).toEqual(true);
+  });
+
+  it('return false if promotion is not Active and print label is true', function() {
+    var promotion = {
+      "status": 57,
+      "origiPrintLabel": true
+    }
+    utilService.updatePrintLabel(promotion);
+    utilService.isPromotionActive(promotion);
+    expect(utilService.isPrintLabelDisabled(promotion)).toEqual(false);
+  });
+it('return true if item/sku is selected', function() {
+   var promotion = {"promoId":18116,"promoSubTypeCd":"MultipleItemsPercentDiscount","status":61,"purchaseConds":{"sources":[{"inclusions":{"partnumbers":[100169919],"itemtype":null,"hierarchies":[]}},{"inclusions":{"partnumbers":[100169919],"itemtype":null,"hierarchies":[]}}]}};
+    utilService.updatePrintLabel(promotion);
+    utilService.isPromotionActive(promotion);
+    expect(utilService.isPrintLabelDisabled(promotion)).toEqual(true);
+  });
+
+  it('return true if customer segment is selected', function() {
+   var promotion = {"custSegment":{id:11136},"promoId":18116,"promoSubTypeCd":"MultipleItemsPercentDiscount","status":61,"purchaseConds":{"sources":[{"purchaseoption":"itemsku","inclusions":{"partnumbers":[100169919],"itemtype":null,"hierarchies":[]}},{"inclusions":{"partnumbers":[100169919],"itemtype":null,"hierarchies":[]}}]}};
+    utilService.updatePrintLabel(promotion);
+    utilService.isPromotionActive(promotion);
+    expect(utilService.isPrintLabelDisabled(promotion)).toEqual(true);
+  });
+
+  it('return false if customer segment is not selected', function() {
+   var promotion = {"custSegment":{id:0},"promoId":18116,"promoSubTypeCd":"MultipleItemsPercentDiscount","status":61,"purchaseConds":{"sources":[{"purchaseoption":"itemsku","inclusions":{"partnumbers":[100169919],"itemtype":null,"hierarchies":[]}},{"inclusions":{"partnumbers":[100169919],"itemtype":null,"hierarchies":[]}}]}};
+    utilService.updatePrintLabel(promotion);
+    utilService.isPromotionActive(promotion);
+    expect(utilService.isPrintLabelDisabled(promotion)).toEqual(false);
+  });
+
+  it('return true if quantity threshold is not selected', function() {
+   var promotion = {"promoId":18116,"reward":{"details":[{"qualUOM":"Amount","value":"10.00","seq":1,"max":-1.0,"min":100.0,"maxAllowedVal":10.0}]}};
+    utilService.updatePrintLabel(promotion);
+   //utilService.isPromotionActive(promotion);
+    expect(utilService.isPrintLabelDisabled(promotion)).toEqual(true);
+  });
+
+  it('return false if quantity threshold is selected', function() {
+   var promotion = {"promoId":18116,"reward":{"details":[{"qualUOM":"Quantity","value":"10.00","seq":1,"max":-1.0,"min":100.0,"maxAllowedVal":10.0}]}};
+    utilService.updatePrintLabel(promotion);
+   //utilService.isPromotionActive(promotion);
+    expect(utilService.isPrintLabelDisabled(promotion)).toEqual(false);
+  });
+
+  it('returns true if discount reward is multi tier', function() {
+    var promotion = {
+     "reward": {
+       "type": "PERCNTOFF",
+       "method": "INDVDLAFFECTEDITMS",
+       "reasonCode": 49,
+       "details": [
+         {
+           "qualUOM": "Quantity",
+           "min": 10,
+           "max": 14,
+           "maxAllowedVal": "",
+           "seq": 1,
+           "value": 10
+         },
+         {
+           "min": 15,
+           "value": 15,
+           "max": 19,
+           "seq": 2,
+           "qualUOM": "Quantity"
+         },
+         {
+           "min": 20,
+           "value": 20,
+           "max": -1,
+           "seq": 3,
+           "qualUOM": "Quantity"
+         }
+       ]
+     }
+    }
+ 
+    utilService.updatePrintLabel(promotion);
+    utilService.isPromotionActive(promotion);
+    expect(utilService.isPrintLabelDisabled(promotion)).toEqual(true);
+   });
+ 
+   it('returns false if discount reward is single tier', function() {
+     var promotion = {
+      "reward": {
+        "type": "PERCNTOFF",
+        "method": "INDVDLAFFECTEDITMS",
+        "reasonCode": 49,
+        "details": [
+          {
+            "qualUOM": "Quantity",
+            "min": 10,
+            "max": 14,
+            "maxAllowedVal": "",
+            "seq": 1,
+            "value": 10
+          }
+        ]
+      }
+     }
+  
+     utilService.updatePrintLabel(promotion);
+     utilService.isPromotionActive(promotion);
+     expect(utilService.isPrintLabelDisabled(promotion)).toEqual(false);
+    });
+ 
+
 });
