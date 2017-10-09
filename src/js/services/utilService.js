@@ -408,7 +408,7 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
         //  var leadTimePromise = leadTimeService.fetchLeadTime();
         // return leadTimePromise.then(function (leadTime) {
         //      var minDt = moment(promotion.endDt).subtract(leadTime, 'days');
-        if (promotion.status == 61 && promotion.printLabel === true) {
+        if (promotion.status == 61 && promotion.originalPrintLabel === true) {
             return true;
         }
         return false;
@@ -417,6 +417,33 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
 
     publicApi.getLeadTime = function () {
         return leadTimeService.fetchLeadTime();
+    }
+
+    publicApi.updatePrintLabel = function (promotion) {
+     
+        if(publicApi.isPrintLabelDisabled(promotion)) {
+            promotion.printLabel = false; 
+            promotion.labelText=''; 
+        }
+    }
+
+    publicApi.isPrintLabelDisabled = function (promotion) {
+
+        var disabled = false;
+
+        if(publicApi.isPromotionActive(promotion) && promotion.originalPrintLabel == true){
+            disabled = true;
+        }
+
+        if(promotion.purchaseConds && promotion.purchaseConds.sources && promotion.purchaseConds.sources[0].purchaseoption != 'itemsku'){
+            disabled = true;
+        } 
+
+        if(promotion.custSegment && promotion.custSegment.id != 0) {
+            disabled = true;
+        }
+
+        return disabled;
     }
 
     return publicApi;

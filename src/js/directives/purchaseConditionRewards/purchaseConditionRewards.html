@@ -5,7 +5,7 @@
 
 
     <select name="segment" ng-options="segment as segment.name for segment in segmentDetails track by segment.name" ng-model="data.custSegment"
-        ng-change="onSegmentSelection()" ng-disabled="preview">
+        ng-change="onSegmentSelection();updatePrintLabel()" ng-disabled="preview">
 					<option value="">
 						-- Select a Customer Segment --
 					</option>
