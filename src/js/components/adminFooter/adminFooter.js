@@ -29,9 +29,9 @@ app.component('adminFooter', {
         this.saveDraft = function (data) {
             tempData = $.extend(true, {}, data);
 
-            if (tempData.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB') {
-                tempData.promoSubTypeCd = 'ProductLevelPerItemPercentDiscount';
-            }
+            // if (tempData.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB') {
+            //     tempData.promoSubTypeCd = 'ProductLevelPerItemPercentDiscount';
+            // }
 
             utilService.setDefaultsForSaveAsDraft(tempData);
             utilService.transformPromotionRequest(tempData);

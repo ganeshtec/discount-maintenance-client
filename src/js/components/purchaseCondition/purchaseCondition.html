@@ -30,10 +30,10 @@
 				</td>
 				<td class="md-text-field">
 						<label for="name" ng-if="$ctrl.data.reward.type=='AMTOFF'">Amount Off</label>
-						<label for="name" ng-if="$ctrl.data.reward.type=='PERCNTOFF'">Percentage Off</label>
+						<label for="name" ng-if="$ctrl.data.reward.type=='PERCNTOFF' || $ctrl.data.purchaseConds.channels == 87">Percentage Off</label>
 				</td>
 				<td class="md-text-field">
-						<label for="name" ng-show="$ctrl.data.reward.type=='PERCNTOFF'">Maximum Discount Amount</label>
+						<label for="name" ng-show="$ctrl.data.reward.type=='PERCNTOFF' || $ctrl.data.purchaseConds.channels == 87">Maximum Discount Amount</label>
 				</td>
 				<td class="md-text-field"></td>
 		</tr>
@@ -50,7 +50,7 @@
 				</td>
 				<td class="md-text-field">
 						<input type="text" id="value" name="value_{{$index}}" ng-model="item.value" ng-required="$ctrl.preview" ng-blur="$ctrl.roundPercentage($index); $ctrl.validatePromotion()" allow-pattern="^[\d.]+$" ng-if="$ctrl.data.reward.type=='AMTOFF'" ng-disabled="$ctrl.preview"/>
-                        <input type="text" id="value" name="value_{{$index}}" ng-model="item.value" ng-required="$ctrl.preview" ng-blur="$ctrl.roundPercentage($index); $ctrl.validatePromotion()" allow-pattern="^[\d.]+$" ng-if="$ctrl.data.reward.type=='PERCNTOFF'" class="tooltiphead" ng-disabled="$ctrl.preview"/>
+                        <input type="text" id="value" name="value_{{$index}}" ng-model="item.value" ng-required="$ctrl.preview" ng-blur="$ctrl.roundPercentage($index); $ctrl.validatePromotion()" allow-pattern="^[\d.]+$" ng-if="$ctrl.data.reward.type=='PERCNTOFF' || $ctrl.data.purchaseConds.channels == 87" class="tooltiphead" ng-disabled="$ctrl.preview"/>
 							<span class='error-message' ng-show="$ctrl.promoform['value_' + $index].$invalid || $ctrl.preview">
 									<span ng-show="$ctrl.promoform['value_' + $index].$error.min">
 										Please enter a value above 0
@@ -66,7 +66,7 @@
 				</td>
 				<td class="md-text-field">
 
-						<input type="text" id="maxval" name="maxval_{{$index}}" ng-model="item.maxAllowedVal" ng-blur="$ctrl.validatePromotion()"  ng-if="$ctrl.data.reward.type=='PERCNTOFF'" allow-pattern="^[\d.]+$" ng-disabled="$ctrl.preview"  />
+						<input type="text" id="maxval" name="maxval_{{$index}}" ng-model="item.maxAllowedVal" ng-blur="$ctrl.validatePromotion()"  ng-if="$ctrl.data.reward.type=='PERCNTOFF' || $ctrl.data.purchaseConds.channels == 87" allow-pattern="^[\d.]+$" ng-disabled="$ctrl.preview"  />
 							<span class='error-message' ng-show="$ctrl.promoform['maxval_' + $index].$invalid ">
 								<span ng-show="$ctrl.promoform['maxval_' + $index].$error.pattern">Please enter valid number</span>
 							</span> 

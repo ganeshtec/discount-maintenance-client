@@ -60,6 +60,7 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$co
         $this.setViewProperties = function (userType) {
             if (userType == allowedPermissionIDs.STORE) {
                 $scope.viewProperties = {
+                    displayDiscountType: false,
                     displayPromoDescription: false,
                     displayRedemptionLimits: false,
                     displayRedemptionMethod: false,
@@ -82,6 +83,7 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$co
                 //$scope.promotionSubTypesForMFA = true;
             } else if (userType == allowedPermissionIDs.ONLINE) {
                 $scope.viewProperties = {
+                    displayDiscountType: true,
                     displayPromoDescription: true,
                     displayRedemptionLimits: true,
                     displayRedemptionMethod: true,

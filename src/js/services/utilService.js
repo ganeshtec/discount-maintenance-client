@@ -271,11 +271,20 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
             && (promotion.purchaseConds.markets === null || promotion.purchaseConds.markets.length == 0));
     }
 
+
     publicApi.requiredFieldsMissing = function (promotion) {
-        if (checkEmpty(promotion.name) || checkEmpty(promotion.startDt) || checkEmpty(promotion.endDt) || checkEmpty(promotion.promoSubTypeCd)) {
-            return true;
+        if (promotion.purchaseConds.channels === 57) {
+            if (checkEmpty(promotion.name) || checkEmpty(promotion.startDt) || checkEmpty(promotion.endDt) || checkEmpty(promotion.promoSubTypeCd)) {
+                return true;
+            }
+        }
+        else {
+            if (checkEmpty(promotion.name) || checkEmpty(promotion.startDt) || checkEmpty(promotion.endDt)) {
+                return true;
+            }
         }
         return false;
+
     }
 
     publicApi.invalidSysGenCode = function (promotion) {
@@ -449,7 +458,7 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
             disabled = true;
         }
 
-        if(promotion.reward && promotion.reward.details.length > 1) {
+        if (promotion.reward && promotion.reward.details.length > 1) {
             disabled = true;
         }
         return disabled;

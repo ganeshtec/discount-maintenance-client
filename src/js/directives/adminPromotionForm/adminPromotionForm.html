@@ -17,11 +17,11 @@
 				</span>
 			</div>
 				
-			<div class="md-select md-select-space">
+			<div class="md-select md-select-space" ng-show="viewProp.displayDiscountType">
 				<label for="promotype">
 					Discount Type
 				</label>
-				<select name="promotype" ng-options="promotype as promotype.promoSubTypeDesc for promotype in promotionSubTypes" ng-model="promoSubTypeObject" ng-change="getSelectedSubTypes(); resetRewardsOnPromoTypeChange(); validatePromotion()" ng-required=" preview" ng-disabled="preview">
+				<select name="promotype" ng-options="promotype as promotype.promoSubTypeDesc for promotype in promotionSubTypes" ng-model="promoSubTypeObject" ng-change="getSelectedSubTypes(); resetRewardsOnPromoTypeChange(); validatePromotion()" ng-required="viewProp.displayDiscountType && preview" ng-disabled="preview">
 					<option value="">
 						-- Select a discount type --
 					</option>
