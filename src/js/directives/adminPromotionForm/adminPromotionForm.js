@@ -20,11 +20,7 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                     
                 function getPromoSubTypes() {
                     var getPromotionPromise;
-                    // if (scope.promoMfa) {
-                    //     DataFactory.promotionSubTypes = promotionDataService.getPromotionSubTypesForMFA();
-                    //     scope.promotionSubTypes = DataFactory.promotionSubTypes;
-                    // }
-                    // else {
+               
                     getPromotionPromise = promotionDataService.getPromotionSubTypes();
 
                     getPromotionPromise.then(
@@ -38,7 +34,6 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                                 $('#messageModal').popup();
 
                             });
-                  //  }
                 }
 
 
@@ -104,9 +99,6 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
               
                 scope.getSelectedSubTypes = function () {
 
-                    // if (scope.promoSubTypeObject.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB') {
-                    //     scope.data.purchaseConds.customerSegmentId = 0;
-                    // }
                     scope.data.promoSubTypeCd = scope.promoSubTypeObject.promoSubTypeCd;
                     scope.data.promoSubTypeDesc = scope.promoSubTypeObject.promoSubTypeDesc;
                     scope.data.promoType = scope.promoSubTypeObject.promoType;
@@ -138,10 +130,12 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                         scope.data.reward.method = 'WHOLEORDER';
                     }
                 }
-
-                if(scope.promoMfa){
+           
+                if(scope.data.purchaseConds.channels[0]===87){
                     scope.data.reward.type = 'PERCNTOFF';
+                    scope.data.reward.method = 'INDVDLAFFECTEDITMS';
                 }
+          
 
                 scope.validatePromotion = function() {
                     scope.validationErrors = validationService.validatePromotion(scope.data);

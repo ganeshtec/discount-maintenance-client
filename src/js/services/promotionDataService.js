@@ -13,23 +13,6 @@ app.service('promotionDataService', ['$http', '$q', 'dataService', 'DataFactory'
             return result;
         }
 
-        publicApi.getPromotionSubTypesForMFA = function() {
-            return [{
-                'promoSubTypeCd': 'ProductLevelPerItemPercentDiscountMSB',
-                'promoSubTypeDesc': 'Multi-SKU Bulk',
-                'promoType': 'ITEMPROMO',
-                'promoTypeCode': 10,
-                'promoSubTypeId': 25
-            } ,
-            {
-                'promoSubTypeCd': 'OrderLevelPercentDiscount',
-                'promoSubTypeDesc': 'Customer Segmentation',
-                'promoType': 'ORDERPROMO',
-                'promoTypeCode': 20,
-                'promoSubTypeId': 30
-            }];
-        }
-
         publicApi.getRedemptionMethodTypes = function () {
             return new redemptionMethodTypes();
         }

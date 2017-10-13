@@ -78,6 +78,12 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
         } else {
             promotion.reward.type = 'AMTOFF';
         }
+
+        if (promotion.purchaseConds.channels[0] === 87) {
+            promotion.reward.type = 'PERCNTOFF';
+            promotion.reward.method = 'INDVDLAFFECTEDITMS';
+        }
+
         if (promotion.purchaseConds) {
             if (promotion.purchaseConds.targets && promotion.purchaseConds.targets.length === 0) {
                 delete promotion.purchaseConds.targets;

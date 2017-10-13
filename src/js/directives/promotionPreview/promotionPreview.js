@@ -48,21 +48,18 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
 
                     scope.headerErrorMsg = '';
                     delete scope.errorMessages;
-
-                    // if (scope.previewData.data.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB' && scope.previewData.data.custSegment) {
-                    //     delete scope.previewData.data.custSegment;
-                    //     scope.previewData.data.purchaseConds.customerSegmentId = 0;
-                    // }
-                    // if (scope.previewData.data.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB') {
-                    //     scope.previewData.data.promoSubTypeCd = 'ProductLevelPerItemPercentDiscount';
-                    // }
-
-                    if (scope.previewData.data.promoSubTypeCd == 'ProductLevelPerItemPercentDiscount') {
+                  
+                    if (scope.previewData.data.purchaseConds.channels[0] === 57 && scope.previewData.data.promoSubTypeCd == 'ProductLevelPerItemPercentDiscount') {
                         scope.previewData.data.reward.reasonCode = 49;
                     }
-
-                    if(scope.previewData.data.promoSubTypeCd == 'OrderLevelPercentDiscount') {
+                    else if (scope.previewData.data.purchaseConds.channels[0] === 57 && scope.previewData.data.promoSubTypeCd == 'OrderLevelPercentDiscount') {
                         scope.previewData.data.reward.reasonCode = 70;
+                    }
+                    else if (scope.previewData.data.purchaseConds.channels[0] === 87) {
+                        scope.previewData.data.reward.reasonCode = 49;
+                        scope.previewData.data.promoSubTypeCd = 'TypeLessDiscount';
+                        scope.previewData.data.promoSubTypeDesc = 'TypeLess-Discounts';
+                        scope.previewData.data.promoType = 'ITEMPROMO';
                     }
 
                     var promotion = $.extend(true, {}, scope.previewData.data);
@@ -71,9 +68,7 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                     utilService.setDefaultsForSaveAsDraft(promotion);
                     utilService.transformPromotionRequest(promotion);
                     var missingLocation = utilService.requiredLocationsOrMarkets(promotion);
-                    console.log("Is MissingLocation: "+ missingLocation);
                     var missing = utilService.requiredFieldsMissing(promotion);
-                    console.log("Is RequiredFieldsMissing: "+ missing);
                     var isBuyAandBHasSource = utilService.validateBuyAandB(promotion);
                     var isBuyAandBHasOverlap = utilService.validateBuyAandBOverlap(promotion);
                     if (!scope.originalSet) {
