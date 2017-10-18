@@ -1,19 +1,18 @@
 
 <div ng-if="$ctrl.purchaseCondition.sources.length == 1">
 
-<label for="priority" ng-show="$ctrl.data.purchaseConds.channels == 87">Discount</label>
-<div id="rewardsId" class="md-text-field" ng-show="$ctrl.data.purchaseConds.channels == 57" ng-init="qualuom = $ctrl.data.reward.details[0].qualUOM || 'Quantity'">
+<div id="rewardsId" class="md-text-field">
+	<div>
+		<label for="priority">{{$ctrl.rewardHeaderLabel}}</label>
+		<div class="md-radio">
+			<input type="radio" id="quantity" name="minpurchase" ng-model="$ctrl.qualuom" title="Quantity Purchase" value="Quantity" ng-change="$ctrl.setQualUOM($ctrl.qualuom);$ctrl.updatePrintLabel()" ng-disabled="$ctrl.preview"/>
+			<label for="quantity"><span><span></span></span>{{$ctrl.rewardQuantityLabel}}</label>
+		</div>
 
-	<!--<label for="priority" ng-show="$ctrl.data.purchaseConds.channels == 87">Discount</label>-->
-	<label for="priority">Minimum purchase type</label>
-	<div class="md-radio">
-		<input type="radio" id="quantity" name="minpurchase" ng-model="qualuom" title="Quantity Purchase" value="Quantity" ng-change="$ctrl.setQualUOM(qualuom);$ctrl.updatePrintLabel()" ng-disabled="$ctrl.preview"/>
-		<label for="quantity"><span><span></span></span>Quantity purchase</label>
-	</div>
-		
-	<div class="md-radio">
-		<input type="radio" id="amount" name="minpurchase" ng-model="qualuom" title="Amount Spent" value="Amount" ng-change="$ctrl.setQualUOM(qualuom);$ctrl.updatePrintLabel()" ng-disabled="$ctrl.preview"/>
-		<label for="amount"><span><span></span></span>Amount spent</label>
+		<div class="md-radio">
+			<input type="radio" id="amount" name="minpurchase" ng-model="$ctrl.qualuom" title="Amount Spent" value="Amount" ng-change="$ctrl.setQualUOM($ctrl.qualuom);$ctrl.updatePrintLabel()" ng-disabled="$ctrl.preview"/>
+			<label for="amount"><span><span></span></span>{{$ctrl.rewardAmountLabel}}</label>
+		</div>
 	</div>
 </div>
 
@@ -26,13 +25,13 @@
 		</tr>
 		<tr class="odd">
 				<td class="md-text-field">
-						<label for="name">Minimum Purchase ({{qualuom}})</label>
+						<label for="name">Minimum Purchase (Quantity)</label>
 				</td>
 				<td class="md-text-field">
 						<label for="name" ng-if="$ctrl.data.reward.type=='AMTOFF'">Amount Off</label>
-						<label for="name" ng-if="$ctrl.data.reward.type=='PERCNTOFF' || $ctrl.data.purchaseConds.channels == 87">Percentage Off</label>
+						<label for="name" ng-if="$ctrl.data.reward.type=='PERCNTOFF' || $ctrl.data.purchaseConds.channels == 87">{{$ctrl.rewardTypeLabel}} Off</label>
 				</td>
-				<td class="md-text-field">
+				<td class="md-text-field" ng-if="$ctrl.qualuom!=='Amount'">
 						<label for="name" ng-show="$ctrl.data.reward.type=='PERCNTOFF' || $ctrl.data.purchaseConds.channels == 87">Maximum Discount Amount</label>
 				</td>
 				<td class="md-text-field"></td>
@@ -40,12 +39,11 @@
 
 		<tr ng-repeat="item in $ctrl.data.reward.details track by $index" ng-class="{odd:($index % 2)}">
 			 <td class="md-text-field">
-						<input type="text" id="minamount" name="minamount_{{$index}}" ng-blur="$ctrl.validatePromotion()" ng-model="item.min" ng-required="$ctrl.preview" allow-pattern="(\d)" min = "1" ng-if="qualuom == 'Quantity'" ng-disabled="$ctrl.preview"/>
-                        <input type="text" id="minamount" name="minamount_{{$index}}" ng-blur="$ctrl.validatePromotion()" ng-model="item.min" ng-required="$ctrl.preview" allow-pattern="^[\d.]+$" min = "1" ng-if="qualuom == 'Amount'" ng-disabled="$ctrl.preview"/>
-						 <span class='error-message' ng-show="$ctrl.promoform['minamount_' + $index].$invalid ">
-							</span> 
-							<span class='error-message' ng-show="$ctrl.validationErrors.minimumThreshold[$index].isError && qualuom == 'Quantity'">Minimum purchase quantity {{$ctrl.validationErrors.minimumThreshold[$index].message}} </span>
-							<span class='error-message' ng-show="$ctrl.validationErrors.minimumThreshold[$index].isError && qualuom == 'Amount'">Minumum purchase amount {{$ctrl.validationErrors.minimumThreshold[$index].message}} </span>
+						<input type="text" id="minamount" name="minamount_{{$index}}" ng-blur="$ctrl.validatePromotion()" ng-model="item.min" ng-required="$ctrl.preview" allow-pattern="(\d)" min = "1" ng-if="$ctrl.qualuom == 'Quantity'" ng-disabled="$ctrl.preview"/>
+                        <input type="text" id="minamount" name="minamount_{{$index}}" ng-blur="$ctrl.validatePromotion()" ng-model="item.min" ng-required="$ctrl.preview" allow-pattern="^[\d.]+$" min = "1" ng-if="$ctrl.qualuom == 'Amount'" ng-disabled="$ctrl.preview"/>
+						<span class='error-message' ng-show="$ctrl.promoform['minamount_' + $index].$invalid "></span> 
+						<span class='error-message' ng-show="$ctrl.validationErrors.minimumThreshold[$index].isError && $ctrl.qualuom == 'Quantity'">Minimum purchase quantity {{$ctrl.validationErrors.minimumThreshold[$index].message}} </span>
+						<span class='error-message' ng-show="$ctrl.validationErrors.minimumThreshold[$index].isError && $ctrl.qualuom == 'Amount'">Minumum purchase amount {{$ctrl.validationErrors.minimumThreshold[$index].message}} </span>
 						
 				</td>
 				<td class="md-text-field">
@@ -64,7 +62,7 @@
 								</p>		
 							</tool-tipper-warning>
 				</td>
-				<td class="md-text-field">
+				<td class="md-text-field" ng-if="$ctrl.qualuom!=='Amount'">
 
 						<input type="text" id="maxval" name="maxval_{{$index}}" ng-model="item.maxAllowedVal" ng-blur="$ctrl.validatePromotion()"  ng-if="$ctrl.data.reward.type=='PERCNTOFF' || $ctrl.data.purchaseConds.channels == 87" allow-pattern="^[\d.]+$" ng-disabled="$ctrl.preview"  />
 							<span class='error-message' ng-show="$ctrl.promoform['maxval_' + $index].$invalid ">
