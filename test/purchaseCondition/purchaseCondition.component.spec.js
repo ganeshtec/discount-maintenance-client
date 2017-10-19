@@ -18,7 +18,8 @@ describe('purchaseCondition', function () {
         ctrl = $componentController('purchaseCondition', null, {
             data: {
                 reward: {
-                    details: [{}]
+                    details: [{}],
+                    type: 'PERCNTOFF'
                 },
                 purchaseConds: {
                     channels: [57],
@@ -48,15 +49,11 @@ describe('purchaseCondition', function () {
         var element = $compile("<purchase-condition data='data' promoform='promoform' preview='preview' purchase-condition='data.purchaseConds' is-disabled='isDisabled' ></purchase-condition>")($scope);
         expect(ctrl.isDCMUser).toBeTruthy();
         expect(ctrl.qualuom).toEqual('Quantity');
-        expect(ctrl.rewardTypeLabel).toEqual('Percentage');
-        expect(ctrl.rewardHeaderLabel).toEqual('Minimum purchase type');
-        expect(ctrl.rewardQuantityLabel).toEqual('Quantity purchase');
-        expect(ctrl.rewardAmountLabel).toEqual('Amount spent');
     });
 
     it('#setRewardLabel function', function () {
-        ctrl.setRewardLabel('Amount');
-        expect(ctrl.rewardTypeLabel).toEqual('Amount');
+        ctrl.setRewardLabel();
+        expect(ctrl.rewardTypeLabel).toEqual('Percentage');
     });
 
     it('adding object in purchaseCondition array', function () {
