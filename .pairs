@@ -3,12 +3,9 @@ Example:
 # place in project or home directory
 pairs:
         em: Evan Miller; emiller
-        rs: Roman Sanchez; rsanchez
         sl: Spencer Lewis; slewis
-        wt: William Tabor; wtabor
         cs: Coredelle Smith; csmith
         jd: Justin Doak; jdoak
-        ig: Immanuel Gooding; igooding
         nk: Nageswararao Kanchepu; nkanchepu
         gt: Ganesan Thangapandian; gthangapandian
         cb: Clifford Burchfield; cburchfield
@@ -16,6 +13,7 @@ pairs:
         jt: John Tippabattuni; jtippabattuni
         db: Donald Bailey; dbailey
         nn: Nikko Neequaye; Nikko
+        ak: Ariram Krishnamoorthy; ariram_krishnamoorthy
 email:
         prefix: pair
         domain: pivotallabs.com
