@@ -132,7 +132,6 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                 }
            
                 if(scope.data.purchaseConds.channels[0]===87){
-                    scope.data.reward.type = 'PERCNTOFF';
                     scope.data.reward.method = 'INDVDLAFFECTEDITMS';
                 }
           

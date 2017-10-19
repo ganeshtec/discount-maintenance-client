@@ -73,15 +73,14 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
             promotion.reward.method = rewardMethodMappoing[promotion.promoSubTypeCd];
         }
 
-        if (promotion.promoSubTypeCd.indexOf('Percent') != -1) {
-            promotion.reward.type = 'PERCNTOFF';
-        } else {
-            promotion.reward.type = 'AMTOFF';
-        }
-
-        if (promotion.purchaseConds.channels[0] === 87) {
-            promotion.reward.type = 'PERCNTOFF';
+        if(promotion.purchaseConds.channels[0] === 87){
             promotion.reward.method = 'INDVDLAFFECTEDITMS';
+        } else {    
+            if (promotion.promoSubTypeCd.indexOf('Percent') != -1) {
+                promotion.reward.type = 'PERCNTOFF';
+            } else {
+                promotion.reward.type = 'AMTOFF';
+            }
         }
 
         if (promotion.purchaseConds) {
@@ -237,7 +236,7 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
 
         if (data.purchaseConds && data.purchaseConds.sources) {
             $(data.purchaseConds.sources).each(function (i, source) {
-                if (data.purchaseConds.qualUOM == 'Quantity') {
+                if (data.purchaseConds.qualUOM == 'Quantity' || data.purchaseConds.channels[0] === 87) {
                     delete source.minTotalPrice;
                     if (data.promoSubTypeCd != 'MultipleItemsPercentDiscount' && data.promoSubTypeCd != 'MultipleItemsValueDiscount') {
                         source.minPurchaseQty = minPurchaseQty;

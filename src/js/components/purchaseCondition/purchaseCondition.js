@@ -35,25 +35,20 @@ function PurchaseConditionController(validationService, utilService) {
     this.$OnInit();
 
     function $OnInit() {
-        this.qualuom = (this.data.reward && this.data.reward.details[0].qualUOM) || 'Quantity';
-        if(this.data.reward && this.data.reward.type=='PERCNTOFF') {
-            this.rewardTypeLabel='Percentage';
-        }
         switch (this.data.purchaseConds.channels[0]) {
         case 57:
             this.isDCMUser = true;
-            this.rewardHeaderLabel='Minimum purchase type';
-            this.rewardQuantityLabel='Quantity purchase';
-            this.rewardAmountLabel='Amount spent';
+            this.qualuom = (this.data.reward && this.data.reward.details[0].qualUOM) || 'Quantity';
             break
         case 87:
             this.isMFAUser = true;
-            this.rewardHeaderLabel='Discount';
-            this.rewardQuantityLabel='Percent Off';
-            this.rewardAmountLabel='Amount Off';
-            this.setRewardLabel(this.qualuom);
+            this.qualuom =  'Quantity';
+            if(this.data.reward && !this.data.reward.type) {
+                this.data.reward.type = 'PERCNTOFF';
+            }
             break
         }
+        this.setQualUOM(this.qualuom);        
     }
 
     function setQualUOM(qualuom) {
@@ -68,12 +63,12 @@ function PurchaseConditionController(validationService, utilService) {
         this.data.purchaseConds.qualUOM = temp;
     }
 
-    function setRewardLabel(qualuom) {
-        switch(qualuom){
-        case 'Amount':
+    function setRewardLabel() {
+        switch(this.data.reward.type){
+        case 'AMTOFF':
             this.rewardTypeLabel='Amount';
             break;    
-        case 'Quantity':
+        case 'PERCNTOFF':
             this.rewardTypeLabel='Percentage';
             break;    
         }
