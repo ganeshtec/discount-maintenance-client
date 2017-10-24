@@ -3,7 +3,7 @@
 
 <div id="rewardsId" class="md-text-field">
 	<div ng-if="$ctrl.isDCMUser">
-		<label for="priority">Minimum purchase type</label>
+		<label>Minimum purchase type</label>
 		<div class="md-radio">
 			<input type="radio" id="quantity" name="minpurchase" ng-model="$ctrl.qualuom" title="Quantity Purchase" value="Quantity" ng-change="$ctrl.setQualUOM($ctrl.qualuom);$ctrl.updatePrintLabel()" ng-disabled="$ctrl.preview"/>
 			<label for="quantity"><span><span></span></span>Quantity purchase</label>
@@ -15,7 +15,7 @@
 		</div>
 	</div>
 	<div ng-if="$ctrl.isMFAUser">
-		<label for="priority">Discount</label>
+		<label>Discount</label>
 		<div class="md-radio">
 			<input type="radio" id="quantity" name="minpurchase" ng-model="$ctrl.data.reward.type" title="Quantity Purchase" value="PERCNTOFF" ng-change="$ctrl.setRewardLabel();$ctrl.updatePrintLabel()" ng-disabled="$ctrl.preview"/>
 			<label for="quantity"><span><span></span></span>Percent Off</label>
@@ -28,10 +28,9 @@
 	</div>
 </div>
 
-
 <table class="table category__table">
 		<tr class="category__table__row-nobottomborder" ng-hide="$ctrl.preview">
-				<td colspan="3">
+				<td colspan="4">
 						<a href="" class="purchaseCondition__btn md-button" ng-click="$ctrl.addPurchaseCondition()">Add New Condition</a>
 				</td>
 		</tr>
@@ -106,6 +105,47 @@
     <div class="md-text-field">
       <label for="maxdiscount">Maximum discount amount</label>
       <input type="text" ng-model="$ctrl.data.reward.details[0].maxAllowedVal"   name="maxdiscount" allow-pattern="^[\d.]+$" ng-disabled="$ctrl.preview" />
-    </div>
-	
+    </div>	
 </div>
+
+<div class="md-text-field">
+	<div ng-if="$ctrl.isMFAUser">
+		<label for="discountLevel">Discount Application</label>
+		<tool-tipper tooltiptitle="Priority">
+			 <table class="discountLevelToolTip">
+				<tr>
+					<td>Item A</td>
+					<td class="highlight" >$10.00</td>
+					<td>–––– Item Level</td>
+				</tr>
+				<tr>
+					<td>Item B</td>
+					<td>$15.00</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan="3">––––––––––––––––––––––––––</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td class="highlight" >$25.00</td>
+					<td>–––– Order Level</td>
+				</tr>
+			</table> 
+
+		</tool-tipper>
+		<div class="md-radio">
+			<input type="radio" id="itemLevel" name="discountLevel" ng-model="$ctrl.data.promoType" title="Item Level" value="ITEMPROMO" ng-disabled="$ctrl.preview"/>
+			<label for="itemLevel"><span><span></span></span>Item Level</label>
+		</div>
+
+		<div class="md-radio">
+			<input type="radio" id="orderLevel" name="discountLevel" ng-model="$ctrl.data.promoType" title="Order Level" value="ORDERPROMO" ng-disabled="$ctrl.preview"/>
+			<label for="orderLevel"><span><span></span></span>Order Level</label>
+		</div>
+	</div>
+</div>
+
+<div>
+</div>
+

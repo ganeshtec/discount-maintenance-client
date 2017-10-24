@@ -30,11 +30,9 @@ function PurchaseConditionController(validationService, utilService) {
     this.isDCMUser;
     this.rewardTypeLabel='Percentage';
 
-    this.$OnInit = $OnInit;
+    this.$onInit = $onInit;
 
-    this.$OnInit();
-
-    function $OnInit() {
+    function $onInit() {
         switch (this.data.purchaseConds.channels[0]) {
         case 57:
             this.isDCMUser = true;
@@ -45,6 +43,9 @@ function PurchaseConditionController(validationService, utilService) {
             this.qualuom =  'Quantity';
             if(this.data.reward && !this.data.reward.type) {
                 this.data.reward.type = 'PERCNTOFF';
+            }
+            if(!this.data.promoType) {
+                this.data.promoType = 'ITEMPROMO';
             }
             break
         }

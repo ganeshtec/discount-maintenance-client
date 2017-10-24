@@ -30,3 +30,24 @@
     top: 353px;
     left: 829px;
     }
+.discountLevelToolTip {
+    min-width:330px;
+}
+
+.discountLevelToolTip tr td:nth-child(1) {
+    padding: 3px 20px;
+}
+.discountLevelToolTip tr td:nth-child(2) {
+    padding: 3px 20px 0px;
+}
+.discountLevelToolTip tr td:nth-child(3) {
+    padding: -1px 0px 20px;
+}
+.discountLevelToolTip td.highlight {
+    border: 1px #FFF solid;
+}
+.discountLevelToolTip td.separator {
+    border-bottom: 1px #FFF solid;
+}
+
+
