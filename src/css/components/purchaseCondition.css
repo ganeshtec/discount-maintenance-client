@@ -30,23 +30,23 @@
     top: 353px;
     left: 829px;
     }
-#discountApplicationTblId {
+.discountLevelToolTip {
     min-width:330px;
 }
 
-#discountApplicationTblId tr td:nth-child(1) {
+.discountLevelToolTip tr td:nth-child(1) {
     padding: 3px 20px;
 }
-#discountApplicationTblId tr td:nth-child(2) {
+.discountLevelToolTip tr td:nth-child(2) {
     padding: 3px 20px 0px;
 }
-#discountApplicationTblId tr td:nth-child(3) {
+.discountLevelToolTip tr td:nth-child(3) {
     padding: -1px 0px 20px;
 }
-#discountApplicationTblId td.highlight {
+.discountLevelToolTip td.highlight {
     border: 1px #FFF solid;
 }
-#discountApplicationTblId td.separator {
+.discountLevelToolTip td.separator {
     border-bottom: 1px #FFF solid;
 }
 
