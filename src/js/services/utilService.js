@@ -466,6 +466,10 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
         if (promotion.reward && promotion.reward.details.length > 1) {
             disabled = true;
         }
+
+        if(promotion.reward && promotion.reward.type != 'PERCNTOFF'){
+            disabled = true;
+        }
         return disabled;
     }
 
