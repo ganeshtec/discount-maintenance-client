@@ -25,6 +25,7 @@ function PurchaseConditionController(validationService, utilService) {
     this.roundPercentage = roundPercentage;
     this.updatePrintLabel = updatePrintLabel;
     this.setRewardLabel = setRewardLabel;
+    this.setRewardMethod = setRewardMethod;
 
     this.isMFAUser;
     this.isDCMUser;
@@ -47,6 +48,7 @@ function PurchaseConditionController(validationService, utilService) {
             if(!this.data.promoType) {
                 this.data.promoType = 'ITEMPROMO';
             }
+            this.setRewardMethod();
             break
         }
         this.setQualUOM(this.qualuom);        
@@ -71,6 +73,17 @@ function PurchaseConditionController(validationService, utilService) {
             break;    
         case 'PERCNTOFF':
             this.rewardTypeLabel='Percentage';
+            break;    
+        }
+    }
+
+    function setRewardMethod() {
+        switch(this.data.promoType){
+        case 'ITEMPROMO':
+            this.data.reward.method = 'INDVDLAFFECTEDITMS';
+            break;    
+        case 'ORDERPROMO':
+            this.data.reward.method = 'WHOLEORDER';
             break;    
         }
     }

@@ -69,13 +69,11 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
             }
         }
         //TODO:  move this to backend this field is not showed anywhere in the UI
-        if (promotion.reward) {
+        if (promotion.reward && !promotion.reward.method) {
             promotion.reward.method = rewardMethodMappoing[promotion.promoSubTypeCd];
         }
 
-        if(promotion.purchaseConds.channels[0] === 87){
-            promotion.reward.method = 'INDVDLAFFECTEDITMS';
-        } else {    
+        if(promotion.purchaseConds.channels[0] !== 87){
             if (promotion.promoSubTypeCd.indexOf('Percent') != -1) {
                 promotion.reward.type = 'PERCNTOFF';
             } else {
