@@ -129,6 +129,17 @@ describe('purchaseCondition', function () {
             expect(ctrl.isMFAUser).toBeTruthy();
             expect(ctrl.qualuom).toEqual('Quantity');
             expect(ctrl.data.promoType).toEqual('ITEMPROMO');
+            expect(ctrl.data.reward.method).toEqual('INDVDLAFFECTEDITMS');
         });       
+        it('#setRewardMethod function item level', function () {
+            ctrl.data.promoType = 'ITEMPROMO';
+            ctrl.setRewardMethod();
+            expect(ctrl.data.reward.method).toEqual('INDVDLAFFECTEDITMS');
+        });
+        it('#setRewardMethod function order level', function () {
+            ctrl.data.promoType = 'ORDERPROMO';
+            ctrl.setRewardMethod();
+            expect(ctrl.data.reward.method).toEqual('WHOLEORDER');
+        });
     });
 });

@@ -135,12 +135,12 @@
 
 		</tool-tipper>
 		<div class="md-radio">
-			<input type="radio" id="itemLevel" name="discountLevel" ng-model="$ctrl.data.promoType" title="Item Level" value="ITEMPROMO" ng-disabled="$ctrl.preview"/>
+			<input type="radio" id="itemLevel" name="discountLevel" ng-model="$ctrl.data.promoType" title="Item Level" value="ITEMPROMO" ng-change="$ctrl.setRewardMethod()" ng-disabled="$ctrl.preview"/>
 			<label for="itemLevel"><span><span></span></span>Item Level</label>
 		</div>
 
 		<div class="md-radio">
-			<input type="radio" id="orderLevel" name="discountLevel" ng-model="$ctrl.data.promoType" title="Order Level" value="ORDERPROMO" ng-disabled="$ctrl.preview"/>
+			<input type="radio" id="orderLevel" name="discountLevel" ng-model="$ctrl.data.promoType" title="Order Level" value="ORDERPROMO" ng-change="$ctrl.setRewardMethod()" ng-disabled="$ctrl.preview"/>
 			<label for="orderLevel"><span><span></span></span>Order Level</label>
 		</div>
 	</div>
