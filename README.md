@@ -1,49 +1,34 @@
 # Promotion_Maintenance_Extended_UI
-This repo contains the code for the modified Aurora Promotions UI to serve Store Promotions
+This service is part of the Discount Engine experience. This repo is a forked and extended version of the Promotion_Maintenance_UI. This repository was adapted to accomodate discount maintenance for both DCM users (online promotions) and MFA users (discounts delivered to customers in store transactions).
 
-##Configuring Environments
+## Configuring Environments
 The urls.js files within env_config folder can be edited to swap out WS environments the UI is using (local, AD, QA, etc)
 
-## Capybara Feature Tests
-All new features added to this repo must be covered by both unit tests (following TDD) and also feature tests. These feature tests are located in the capybaraTests folder of this repo.
-##### Running Feature Tests
-  ```
-  cd e2e
-  bundle install
-  ./bin/run_test.sh
-  
-  *** tests must be run from within e2e folder ***
-  *** Promo UI and WS must both be running               ***
-  ```
-
-# Clone master branch 
-git clone git@github.homedepot.com:Pricing/Promotion_Maintenance_Extended_UI.git
-
-# Go into directory
-cd Promotion_Maintenance_Extended_UI
-
 # Install dependencies using npm
+```
 npm install (may require sudo npm install)
+```
 
 # Build and run locally
+```
 npm run dev
+```
 
 # Run unit tests
+```
 npm run test
-
-# Run e2e tests
-npm run e2e // run on separate console
+```
 
 # Run mutation tests
+```
 npm run mutation-test
+```
+
 //muation coverage report is generated @reports/mutation/html/index.html
 
 # Concourse
 [Concourse Repo](https://github.homedepot.com/snowshoe-ci/concourse)  
-[Concourse](http://ld5743.homedepot.com/)
+[Concourse](http://ld02201.homedepot.com/)
 
 Builds are triggered through the promo folder in github/concourse
 AD triggers automatically, whereas QA and PR need to be triggered manually to build
-
-## Further help
-Ask Roman
