@@ -6,8 +6,9 @@ The urls.js files within env_config folder can be edited to swap out WS environm
 
 # Install dependencies using npm
 ```
-npm install (may require sudo npm install)
+npm install
 ```
+(may require sudo npm install)
 
 # Build and run locally
 ```
