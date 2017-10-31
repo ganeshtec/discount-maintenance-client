@@ -1,5 +1,5 @@
-app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$scope', 'DataFactory', 'promotionDataService', '$location', '$routeParams', '$mdDialog', 'dashboardDataService', 'OverlayConfigFactory',
-    function ($cookies, $filter, leadTimeService, $scope, DataFactory, promotionDataService, $location, routeParams, $mdDialog, dashboardDataService, OverlayConfigFactory) {
+app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$scope', 'DataFactory', 'promotionDataService', '$location', '$routeParams', '$mdDialog', 'dashboardDataService', 'OverlayConfigFactory', '$rootScope',
+    function ($cookies, $filter, leadTimeService, $scope, DataFactory, promotionDataService, $location, routeParams, $mdDialog, dashboardDataService, OverlayConfigFactory, $rootScope) {
         var DEFAULT_RECORDS_PER_PG = 10,
             LEAST_RECORDS_PER_PG = 5; //smallest value in the records per page selectbox 
         $scope.selected = {};
@@ -8,6 +8,11 @@ app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$sco
         $scope.userRoleSelected = {
             id: null,
         }
+        
+        if ($rootScope.searchParams) {
+            $location.search($rootScope.searchParams);
+        }
+
         $scope.channelId = [];
         $scope.searchType = $location.search().searchType || 'discountName';
 
@@ -31,12 +36,30 @@ app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$sco
         $scope.updatePage = function (no) {
             $location.search('page', no);
         };
+        // $scope.updateSize = function (size) {
+        //     //move to page 1 when changing number of records per page
+        //     var params = {
+        //         'page': 1,
+        //         'size': size
+        //     }
+        //     $location.search(params);
+        // };
+
         $scope.updateSize = function (size) {
             //move to page 1 when changing number of records per page
-            var params = {
-                'page': 1,
-                'size': size
-            }
+
+            var currentpage = $location.search().page;
+            var currentsize = $location.search().size; 
+
+            console.log("currentsize:" , currentsize);
+
+            var newPage = Math.floor((((currentpage - 1) * currentsize)/size) + 1);
+
+            console.log("NewPage:" , newPage);
+
+            var params =  $location.search();
+            params.page = newPage;
+            params.size = size;
             $location.search(params);
         };
 
@@ -57,6 +80,9 @@ app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$sco
             var params = $location.search();
             $scope.searchTerm = params.keyword || '';
             params.channels = channelList;
+
+            $rootScope.searchParams = params;    
+
             $scope.search(params.channels,
                 params.keyword || '',
                 params.page || 1,
@@ -107,7 +133,6 @@ app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$sco
         }
         $scope.searchTypeChanged = function () {
             $scope.searchTerm = '';
-            $scope.updateKeyword();
         }
         $scope.refresh = function () {
             var current = $location.search();
