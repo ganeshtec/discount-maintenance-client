@@ -26,6 +26,8 @@ function PurchaseConditionController(validationService, utilService) {
     this.updatePrintLabel = updatePrintLabel;
     this.setRewardLabel = setRewardLabel;
     this.setRewardMethod = setRewardMethod;
+    this.isSingleSourcePurchaseCondition = isSingleSourcePurchaseCondition;
+    this.isMultiSourcePurchaseCondition = isMultiSourcePurchaseCondition;
 
     this.isMFAUser;
     this.isDCMUser;
@@ -37,11 +39,15 @@ function PurchaseConditionController(validationService, utilService) {
         switch (this.data.purchaseConds.channels[0]) {
         case 57:
             this.isDCMUser = true;
-            this.qualuom = (this.data.reward && this.data.reward.details[0].qualUOM) || 'Quantity';
+            this.thresholdHeaderLabel = 'Minimum purchase type';
+            this.thresholdQuantityLabel = 'Quantity purchase';
+            this.thresholdAmountLabel = 'Amount spent';
             break
         case 87:
             this.isMFAUser = true;
-            this.qualuom =  'Quantity';
+            this.thresholdHeaderLabel = 'Threshold';
+            this.thresholdQuantityLabel = 'Quantity';
+            this.thresholdAmountLabel = 'Dollar';
             if(this.data.reward && !this.data.reward.type) {
                 this.data.reward.type = 'PERCNTOFF';
             }
@@ -51,6 +57,7 @@ function PurchaseConditionController(validationService, utilService) {
             this.setRewardMethod();
             break
         }
+        this.qualuom = (this.data.reward && this.data.reward.details[0].qualUOM) || 'Quantity';
         this.setQualUOM(this.qualuom);        
     }
 
@@ -88,13 +95,20 @@ function PurchaseConditionController(validationService, utilService) {
         }
     }
 
+    function isSingleSourcePurchaseCondition() {
+        return this.purchaseCondition && this.purchaseCondition.sources && this.purchaseCondition.sources.length == 1;
+    }
+
+    function isMultiSourcePurchaseCondition() {
+        return this.purchaseCondition && this.purchaseCondition.sources && this.purchaseCondition.sources.length > 1;
+    }
+
     function updatePrintLabel() {
         utilService.updatePrintLabel(this.data);
     }
 
     function addPurchaseCondition() {
         this.data.reward.details = this.data.reward.details || [];
-        // var condition = new PurchaseConditionController();
         this.data.reward.details.push({});
         this.updatePrintLabel();
     }
