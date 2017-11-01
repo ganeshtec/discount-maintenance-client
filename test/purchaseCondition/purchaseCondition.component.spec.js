@@ -57,9 +57,8 @@ describe('purchaseCondition', function () {
             expect(ctrl.thresholdAmountLabel).toEqual('Amount spent');
         });
 
-        it('#setRewardLabel function', function () {
-            ctrl.setRewardLabel();
-            expect(ctrl.rewardTypeLabel).toEqual('Percentage');
+        it('#getRewardLabel function', function () {
+            expect(ctrl.getRewardLabel()).toEqual('Percentage');
         });
 
         it('adding object in purchaseCondition array', function () {

@@ -22,12 +22,12 @@
 				<div ng-if="$ctrl.isMFAUser">
 					<label>Discount Type</label>
 					<div class="md-radio">
-						<input type="radio" id="quantity" name="discountType" ng-model="$ctrl.data.reward.type" title="Quantity Purchase" value="PERCNTOFF" ng-change="$ctrl.setRewardLabel();$ctrl.updatePrintLabel()" ng-disabled="$ctrl.preview"/>
+						<input type="radio" id="quantity" name="discountType" ng-model="$ctrl.data.reward.type" title="Quantity Purchase" value="PERCNTOFF" ng-change="$ctrl.updatePrintLabel()" ng-disabled="$ctrl.preview"/>
 						<label for="quantity"><span><span></span></span>Percent Off</label>
 					</div>
 
 					<div class="md-radio">
-						<input type="radio" id="amount" name="discountType" ng-model="$ctrl.data.reward.type" title="Amount Spent" value="AMTOFF" ng-change="$ctrl.setRewardLabel();$ctrl.updatePrintLabel()" ng-disabled="$ctrl.preview"/>
+						<input type="radio" id="amount" name="discountType" ng-model="$ctrl.data.reward.type" title="Amount Spent" value="AMTOFF" ng-change="$ctrl.updatePrintLabel()" ng-disabled="$ctrl.preview"/>
 						<label for="amount"><span><span></span></span>Dollar Off</label>
 					</div>
 				</div>
@@ -46,8 +46,7 @@
 							<label for="name">Minimum Purchase ({{$ctrl.qualuom}})</label>
 					</td>
 					<td class="md-text-field">
-							<label for="name" ng-if="$ctrl.data.reward.type=='AMTOFF'">Amount Off</label>
-							<label for="name" ng-if="$ctrl.data.reward.type=='PERCNTOFF'">Percentage Off</label>
+							<label for="name" ng-if="$ctrl.data.reward.type">{{$ctrl.getRewardLabel()}} Off</label>
 					</td>
 					<td class="md-text-field" ng-if="$ctrl.data.reward.type=='PERCNTOFF'">
 							<label for="name">Maximum Discount Amount</label>

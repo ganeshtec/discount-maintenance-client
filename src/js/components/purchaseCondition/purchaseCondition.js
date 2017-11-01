@@ -24,7 +24,7 @@ function PurchaseConditionController(validationService, utilService) {
     this.validatePromotion = validatePromotion;
     this.roundPercentage = roundPercentage;
     this.updatePrintLabel = updatePrintLabel;
-    this.setRewardLabel = setRewardLabel;
+    this.getRewardLabel = getRewardLabel;
     this.setRewardMethod = setRewardMethod;
     this.isSingleSourcePurchaseCondition = isSingleSourcePurchaseCondition;
     this.isMultiSourcePurchaseCondition = isMultiSourcePurchaseCondition;
@@ -62,26 +62,25 @@ function PurchaseConditionController(validationService, utilService) {
     }
 
     function setQualUOM(qualuom) {
-        var temp = qualuom;
-        this.setRewardLabel(qualuom);
-        this.data.reward.details[0].qualUOM = temp;
         if (this.data.reward.details) {
             for (var i = 0; i < this.data.reward.details.length; i++) {
                 this.data.reward.details[i].qualUOM = qualuom;
             }
         }
-        this.data.purchaseConds.qualUOM = temp;
+        this.data.purchaseConds.qualUOM = qualuom;
     }
 
-    function setRewardLabel() {
+    function getRewardLabel() {
+        var rewardTypeLabel = 'Percentage';
         switch(this.data.reward.type){
         case 'AMTOFF':
-            this.rewardTypeLabel='Amount';
+            rewardTypeLabel='Amount';
             break;    
         case 'PERCNTOFF':
-            this.rewardTypeLabel='Percentage';
+            rewardTypeLabel='Percentage';
             break;    
         }
+        return rewardTypeLabel;
     }
 
     function setRewardMethod() {
