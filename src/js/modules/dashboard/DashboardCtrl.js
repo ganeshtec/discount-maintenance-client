@@ -1,28 +1,13 @@
-app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$scope', 'DataFactory', 'promotionDataService', '$location', '$routeParams', '$mdDialog', 'dashboardDataService', 'OverlayConfigFactory',
-    function ($cookies, $filter, leadTimeService, $scope, DataFactory, promotionDataService, $location, routeParams, $mdDialog, dashboardDataService, OverlayConfigFactory) {
-        var DEFAULT_RECORDS_PER_PG = 10,
-            LEAST_RECORDS_PER_PG = 5; //smallest value in the records per page selectbox 
-        $scope.selected = {};
-        $scope.selectedCount = 0;
-        $scope.sel = [];
-        $scope.userRoleSelected = {
-            id: null,
-        }
-        $scope.channelId = [];
-        $scope.searchType = $location.search().searchType || 'discountName';
+app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$scope', 'DataFactory', 'promotionDataService', '$location', '$routeParams', '$mdDialog', 'dashboardDataService', 'OverlayConfigFactory', '$rootScope',
+    function ($cookies, $filter, leadTimeService, $scope, DataFactory, promotionDataService, $location, routeParams, $mdDialog, dashboardDataService, OverlayConfigFactory, $rootScope) {
 
-        $scope.browseCatalogOverlayConfig = OverlayConfigFactory.getInstance();
-        // inital value of the select all check box
-        $scope.selectAll = false;
-        var all = {};
         $scope.$watchCollection('selected', function () {
             $scope.computeSelectedArray();
         });
-        $scope.paginationConfig = {};
 
         $scope.toggleAll = function () {
             if ($scope.selectAll) {
-                $scope.selected = angular.extend({}, all);
+                $scope.selected = angular.extend({}, $scope.all);
             } else {
                 $scope.selected = {};
             }
@@ -31,25 +16,20 @@ app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$sco
         $scope.updatePage = function (no) {
             $location.search('page', no);
         };
+
         $scope.updateSize = function (size) {
             //move to page 1 when changing number of records per page
-            var params = {
-                'page': 1,
-                'size': size
-            }
+
+            var currentpage = $location.search().page || 1;
+            var currentsize = $location.search().size || $scope.DEFAULT_RECORDS_PER_PG;
+
+            var newPage = Math.floor((((currentpage - 1) * currentsize) / size) + 1);
+
+            var params = $location.search();
+            params.page = newPage;
+            params.size = size;
             $location.search(params);
         };
-
-        if ($cookies.get('currentUserRole') != null) {
-            $scope.userRoleSelected.id = $cookies.get('currentUserRole');
-            if ($scope.userRoleSelected.id == 229) {
-                $scope.channelId = 57;
-            }
-            else if ($scope.userRoleSelected.id == 228) {
-                $scope.channelId = 87;
-            }
-
-        }
 
         $scope.searchWithUrlParams = function () {
             var channelList = [];
@@ -57,10 +37,13 @@ app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$sco
             var params = $location.search();
             $scope.searchTerm = params.keyword || '';
             params.channels = channelList;
+
+            $rootScope.searchParams = params;
+
             $scope.search(params.channels,
                 params.keyword || '',
                 params.page || 1,
-                params.size || DEFAULT_RECORDS_PER_PG,
+                params.size || $scope.DEFAULT_RECORDS_PER_PG,
                 params.status || 'all',
                 params.type || 'all',
                 params.sortby || 'none',
@@ -79,15 +62,13 @@ app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$sco
                     $scope.selectAll = false;
                 }
             }
-            if (Object.keys($scope.selected).length != Object.keys(all).length) {
+            if (Object.keys($scope.selected).length != Object.keys($scope.all).length) {
                 $scope.selectAll = false;
             }
             $scope.selectedCount = $scope.sel.length;
         }
+
         $scope.updateKeyword = function () {
-            // if (!$scope.searchTerm) {
-            //     $scope.errorMessage = 'Search term is mandatory'
-            // } else {
             var current = $location.search();
             if ($scope.searchTerm == current.keyword && $scope.searchType == current.searchType) {
                 $scope.searchWithUrlParams();
@@ -103,27 +84,26 @@ app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$sco
                 }
                 $location.search(params);
             }
-            // }
         }
+
         $scope.searchTypeChanged = function () {
             $scope.searchTerm = '';
-            $scope.updateKeyword();
         }
-        $scope.refresh = function () {
-            var current = $location.search();
-            if (current.page == 1 && current.size == DEFAULT_RECORDS_PER_PG) {
-                $scope.searchWithUrlParams();
-            } else {
-                var params = {
-                    'keyword': '',
-                    'searchType': $scope.searchType,
-                    'page': 1,
-                    'size': DEFAULT_RECORDS_PER_PG
-                }
-                $location.search(params);
-            }
 
+        $scope.refresh = function () {
+            $scope.searchWithUrlParams();
         }
+
+        $scope.clearSearch = function () {
+            var params = {
+                'keyword': '',
+                'searchType': $scope.searchType,
+                'page': 1,
+                'size': $scope.DEFAULT_RECORDS_PER_PG
+            }
+            $location.search(params);
+        }
+
         var checkForValid = function (data) {
             var valid = data.validData;
             var invalid = data.invalidData;
@@ -183,6 +163,7 @@ app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$sco
                 }
             );
         }
+
         var showAlert = function (title, content, onClose) {
             var options = $mdDialog.alert()
                 .title(title)
@@ -204,8 +185,6 @@ app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$sco
         }
 
         $scope.delete = function () {
-
-
             var sel = $scope.selected;
             var promotions = $scope.promotions;
             var req = []
@@ -216,11 +195,8 @@ app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$sco
                     req.push(promo);
                 }
             }
-
             var options = showConfirm('Warning', 'Discount will be deleted permanently');
             $mdDialog.show(options).then(function () {
-
-
                 var promotionPromise = promotionDataService.delete(req);
                 $scope.loading = true;
                 promotionPromise.then(
@@ -269,7 +245,6 @@ app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$sco
         }
 
         $scope.activeWithNoLabelDiscount = function (labelFlag, status) {
-
             if (labelFlag == false && status == 61) {
                 return true;
             }
@@ -309,7 +284,7 @@ app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$sco
             promo.endDt = $filter('date')(newEndDate, 'yyyy-MM-dd HH:mm:ss');
             var promise = promotionDataService.saveAsDraft(promo);
             promise.then(
-                function(data) {
+                function (data) {
                     promotionDataService.submit(data.data);
                 }
             )
@@ -369,8 +344,6 @@ app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$sco
                 $scope.loading = false;
                 $scope.searchWithUrlParams();
             })
-
-
         }
 
         $scope.setupSortableHeader = function () {
@@ -421,6 +394,7 @@ app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$sco
             }
             ];
         }
+
         $scope.canSave = function () {
             if ($scope.selectedCount == 0) {
                 return false;
@@ -455,7 +429,7 @@ app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$sco
                 function (data) {
                     var promotions = data.results || [];
                     var wrappers = [];
-                    all = {};
+                    var all = {};
                     for (var i = 0; i < promotions.length; i++) {
                         var wrapper = {};
                         wrapper.promotion = promotions[i];
@@ -470,7 +444,7 @@ app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$sco
                     $scope.paginationConfig.recordsPerPage = data.criteria.page.size + '';
                     $scope.paginationConfig.currentPage = parseInt(curPage);
                     $scope.paginationConfig.totalRecords = data.totalCount || 0;
-                    $scope.paginationReq = $scope.paginationConfig.totalRecords > LEAST_RECORDS_PER_PG;
+                    $scope.paginationReq = $scope.paginationConfig.totalRecords > $scope.LEAST_RECORDS_PER_PG;
                     $scope.nodata = parseInt(data.totalCount || 0) === 0;
                     $scope.loading = false;
                     $scope.filterstatus = status;
@@ -481,33 +455,6 @@ app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$sco
                 }
             );
         }
-        // search based on url params
-        $scope.searchWithUrlParams();
-        //get all status
-        var statusPromise = promotionDataService.getAllStatus();
-        $scope.status = {};
-        statusPromise.then(
-            function (data) {
-                $scope.statusList = data.promotionStatus
-                var statusData = data.promotionStatus;
-                for (var i = 0; i < statusData.length; i++) {
-                    var status = statusData[i];
-                    $scope.status[status.promoStatusCd] = status.promoStatusDesc || '';
-                }
-            },
-            function () { }
-        )
-
-
-
-        // var promoPromise = promotionDataService.getPromotionSubTypes();
-        if (DataFactory.promotionSubTypes) {
-            $scope.promoSubTypes = setPromoTypes();
-        } else {
-            getPromoSubTypes();
-        }
-
-
 
         function getPromoSubTypes() {
             var getPromotionPromise = promotionDataService.getPromotionSubTypes();
@@ -533,6 +480,7 @@ app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$sco
             }
             return promotionSubTypes;
         }
+
         // this gets triggered whenever the url changes ,see app.js for route configuration
         $scope.$on('$routeUpdate', function () {
             $scope.searchWithUrlParams();
@@ -585,7 +533,6 @@ app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$sco
 
         };
 
-        $scope.setupSortableHeader();
         //only active promotions can be deactived and cannot be deleted
         $scope.isActive = function () {
             var promotion = null;
@@ -626,5 +573,61 @@ app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$sco
             }
             return false;
         }
+
+        // Initialize dashboard with default values, call default search
+        $scope.initializeDashboard = function () {
+            $scope.selected = {};
+            $scope.selectedCount = 0;
+            $scope.sel = [];
+            $scope.userRoleSelected = {
+                id: null,
+            }
+            if ($rootScope.searchParams) {
+                $location.search($rootScope.searchParams);
+            }
+            $scope.channelId = [];
+            $scope.searchType = $location.search().searchType || 'discountName';
+            $scope.browseCatalogOverlayConfig = OverlayConfigFactory.getInstance();
+            $scope.setupSortableHeader();
+            // inital value of the select all check box
+            $scope.selectAll = false;
+            $scope.paginationConfig = {};
+            // Set Channel ID based on logged in user role
+            if ($cookies.get('currentUserRole') != null) {
+                $scope.userRoleSelected.id = $cookies.get('currentUserRole');
+                if ($scope.userRoleSelected.id == 229) {
+                    $scope.channelId = 57;
+                }
+                else if ($scope.userRoleSelected.id == 228) {
+                    $scope.channelId = 87;
+                }
+            }
+            // Default Search on Load - all status
+            $scope.searchWithUrlParams();
+            var statusPromise = promotionDataService.getAllStatus();
+            $scope.status = {};
+            statusPromise.then(
+                function (data) {
+                    $scope.statusList = data.promotionStatus
+                    var statusData = data.promotionStatus;
+                    for (var i = 0; i < statusData.length; i++) {
+                        var status = statusData[i];
+                        $scope.status[status.promoStatusCd] = status.promoStatusDesc || '';
+                    }
+                },
+                function () { }
+            )
+            if (DataFactory.promotionSubTypes) {
+                $scope.promoSubTypes = setPromoTypes();
+            } else {
+                getPromoSubTypes();
+            }
+            $scope.DEFAULT_RECORDS_PER_PG = 10;
+            $scope.LEAST_RECORDS_PER_PG = 5; //smallest value in the records per page selectbox 
+            $scope.all = {};
+        }
+
+        // Instantiate with defaults
+        $scope.initializeDashboard();
     }
 ]);

@@ -129,14 +129,11 @@ describe('DashboardCtrl', function () {
             expect($location.search.calls.mostRecent().args[0].keyword).toEqual('');
         });
 
-        it('When search type changes keyword field should be reset and page should be refreshed', function () {
+        it('When search type changes keyword field should be reset', function () {
             spyOn($location, "search").and.returnValue({ keyword: 'hello', searchType: 'discountName', page: 1, size: 10 });
             $scope.searchTerm = 'hello';
             $scope.searchTypeChanged();
             expect($scope.searchTerm).toEqual('');
-            expect($location.search.calls.count()).toEqual(2);
-            expect($location.search.calls.first().args.length).toEqual(0);
-            expect($location.search.calls.mostRecent().args[0].keyword).toEqual('');
         });
 
         it("Should pass the OMS number into the URL as a query parameter when the user searches by OMS Id", function () {
@@ -156,5 +153,26 @@ describe('DashboardCtrl', function () {
             expect(actualResults.keyword).toEqual(expectedResults.keyword);
             expect(actualResults.searchType).toEqual(expectedResults.searchType);
         });
+
+        it("clearSearch should set appropriate default location search parameters", function () {
+            var expectedResults = {
+                channels: [57],
+                keyword: "100634576",
+                searchType: "omsId",
+                page: 1,
+                type: "all",
+                status: "all"
+            };
+            
+            $location.search(expectedResults)
+
+            $scope.clearSearch();
+
+            expect($location.search().keyword).toEqual('');
+            expect($location.search().searchType).toEqual('discountName');
+            expect($location.search().page).toEqual(1);
+            expect($location.search().size).toEqual(10);
+        });
+        
     });
 });
