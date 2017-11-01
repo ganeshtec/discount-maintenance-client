@@ -49,7 +49,8 @@
     word-wrap:break-word; }
 
 .promotionName{
-  width: 150px; }
+  width: 95%; 
+}
 
 .promotions th,.promotions td{
     padding: 5px !important; } 
@@ -71,4 +72,11 @@
   text-align: center;
   padding: 20px;
   height: 200px;
-} 
+}
+
+.clearSearch {
+  margin-top: 20px;
+  min-width: 105px;
+  color: #F96302;
+  cursor: pointer;
+}

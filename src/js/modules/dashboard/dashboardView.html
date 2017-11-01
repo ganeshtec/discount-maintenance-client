@@ -29,7 +29,7 @@
 								<option ng-show="channelId == 57" value="omsId">OMS ID #</option>
 						</select>
 					</div>
-					<div id="searchFilterContainer" flex="100">
+					<div id="searchFilterContainer" flex="80">
 						<div class="md-toolbar-search">
 							<div id="searchFilterSearchBox">
 								<input id="searchFilterSearchBoxInput" class="table__search" placeholder="Search Discount name or keyword" type="text" ng-model="searchTerm"
@@ -87,6 +87,9 @@
 
 							</div>
 						</div>
+					</div>
+					<div>
+						<p class="clearSearch" ng-click="clearSearch()">Clear Search</p>
 					</div>
 				</div>
 				<div class="error">{{errorMessage}}&nbsp;</div>
