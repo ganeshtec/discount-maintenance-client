@@ -49,34 +49,5 @@
 .discountLevelToolTip td.separator {
     border-bottom: 1px #FFF solid;
 }
-.prs {
-    padding-right: 3px;
-}
-.prm {
-    padding-right: 5px;
-}
-.prl {
-    padding-right: 10px;
-}
-.prxl {
-    padding-right: 15px;
-}
-.prxxl {
-    padding-right: 30px;
-}
-.pbs {
-    padding-bottom: 3px;
-}
-.pbm {
-    padding-bottom: 5px;
-}
-.pbl {
-    padding-bottom: 10px;
-}
-.pbxl {
-    padding-bottom: 15px;
-}
-.pbxxl {
-    padding-bottom: 30px;
-}
+
 
