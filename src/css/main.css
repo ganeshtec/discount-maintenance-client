@@ -297,3 +297,79 @@ md-dialog.md-default-theme.md-transition-in {
   margin-top: -82px !important;
   margin-left: -184px !important;  
 }
+
+.ptn {
+    padding-top: 0px;
+}
+.pts {
+    padding-top: 3px;
+}
+.ptm {
+    padding-top: 5px;
+}
+.ptl {
+    padding-top: 10px;
+}
+.ptxl {
+    padding-top: 15px;
+}
+.ptxxl {
+    padding-top: 30px;
+}
+
+.prn {
+    padding-right: 0px;
+}
+.prs {
+    padding-right: 3px;
+}
+.prm {
+    padding-right: 5px;
+}
+.prl {
+    padding-right: 10px;
+}
+.prxl {
+    padding-right: 15px;
+}
+.prxxl {
+    padding-right: 30px;
+}
+
+.pbn {
+    padding-bottom: 0px;
+}
+.pbs {
+    padding-bottom: 3px;
+}
+.pbm {
+    padding-bottom: 5px;
+}
+.pbl {
+    padding-bottom: 10px;
+}
+.pbxl {
+    padding-bottom: 15px;
+}
+.pbxxl {
+    padding-bottom: 30px;
+}
+
+.pln {
+    padding-left: 0px;
+}
+.pls {
+    padding-left: 3px;
+}
+.plm {
+    padding-left: 5px;
+}
+.pll {
+    padding-left: 10px;
+}
+.plxl {
+    padding-left: 15px;
+}
+.plxxl {
+    padding-left: 30px;
+}

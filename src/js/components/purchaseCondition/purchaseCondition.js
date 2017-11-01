@@ -24,8 +24,10 @@ function PurchaseConditionController(validationService, utilService) {
     this.validatePromotion = validatePromotion;
     this.roundPercentage = roundPercentage;
     this.updatePrintLabel = updatePrintLabel;
-    this.setRewardLabel = setRewardLabel;
+    this.getRewardLabel = getRewardLabel;
     this.setRewardMethod = setRewardMethod;
+    this.isSingleSourcePurchaseCondition = isSingleSourcePurchaseCondition;
+    this.isMultiSourcePurchaseCondition = isMultiSourcePurchaseCondition;
 
     this.isMFAUser;
     this.isDCMUser;
@@ -37,11 +39,15 @@ function PurchaseConditionController(validationService, utilService) {
         switch (this.data.purchaseConds.channels[0]) {
         case 57:
             this.isDCMUser = true;
-            this.qualuom = (this.data.reward && this.data.reward.details[0].qualUOM) || 'Quantity';
+            this.thresholdHeaderLabel = 'Minimum purchase type';
+            this.thresholdQuantityLabel = 'Quantity purchase';
+            this.thresholdAmountLabel = 'Amount spent';
             break
         case 87:
             this.isMFAUser = true;
-            this.qualuom =  'Quantity';
+            this.thresholdHeaderLabel = 'Threshold';
+            this.thresholdQuantityLabel = 'Quantity';
+            this.thresholdAmountLabel = 'Dollar';
             if(this.data.reward && !this.data.reward.type) {
                 this.data.reward.type = 'PERCNTOFF';
             }
@@ -51,30 +57,30 @@ function PurchaseConditionController(validationService, utilService) {
             this.setRewardMethod();
             break
         }
+        this.qualuom = (this.data.reward && this.data.reward.details[0].qualUOM) || 'Quantity';
         this.setQualUOM(this.qualuom);        
     }
 
     function setQualUOM(qualuom) {
-        var temp = qualuom;
-        this.setRewardLabel(qualuom);
-        this.data.reward.details[0].qualUOM = temp;
         if (this.data.reward.details) {
             for (var i = 0; i < this.data.reward.details.length; i++) {
                 this.data.reward.details[i].qualUOM = qualuom;
             }
         }
-        this.data.purchaseConds.qualUOM = temp;
+        this.data.purchaseConds.qualUOM = qualuom;
     }
 
-    function setRewardLabel() {
+    function getRewardLabel() {
+        var rewardTypeLabel = 'Percentage';
         switch(this.data.reward.type){
         case 'AMTOFF':
-            this.rewardTypeLabel='Amount';
+            rewardTypeLabel='Amount';
             break;    
         case 'PERCNTOFF':
-            this.rewardTypeLabel='Percentage';
+            rewardTypeLabel='Percentage';
             break;    
         }
+        return rewardTypeLabel;
     }
 
     function setRewardMethod() {
@@ -88,13 +94,20 @@ function PurchaseConditionController(validationService, utilService) {
         }
     }
 
+    function isSingleSourcePurchaseCondition() {
+        return this.purchaseCondition && this.purchaseCondition.sources && this.purchaseCondition.sources.length == 1;
+    }
+
+    function isMultiSourcePurchaseCondition() {
+        return this.purchaseCondition && this.purchaseCondition.sources && this.purchaseCondition.sources.length > 1;
+    }
+
     function updatePrintLabel() {
         utilService.updatePrintLabel(this.data);
     }
 
     function addPurchaseCondition() {
         this.data.reward.details = this.data.reward.details || [];
-        // var condition = new PurchaseConditionController();
         this.data.reward.details.push({});
         this.updatePrintLabel();
     }
