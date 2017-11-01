@@ -23,11 +23,7 @@ app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$sco
             var currentpage = $location.search().page || 1;
             var currentsize = $location.search().size || $scope.DEFAULT_RECORDS_PER_PG;
 
-            console.log("currentsize:", currentsize);
-
             var newPage = Math.floor((((currentpage - 1) * currentsize) / size) + 1);
-
-            console.log("NewPage:", newPage);
 
             var params = $location.search();
             params.page = newPage;
@@ -433,7 +429,7 @@ app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$sco
                 function (data) {
                     var promotions = data.results || [];
                     var wrappers = [];
-                    all = {};
+                    var all = {};
                     for (var i = 0; i < promotions.length; i++) {
                         var wrapper = {};
                         wrapper.promotion = promotions[i];
