@@ -14,7 +14,6 @@ app.component('promoSchedule', {
 });
 
 PromoScheduleController.$inject = ['$filter', '$scope','validationService', 'utilService'];
-   // var isNoEndDate = true;
 function PromoScheduleController($filter, $scope, validationService, utilService) {
     this.startTime='3:00 AM';//For display only. see utilService.js for actual time
     this.endTime='2:59 AM';
@@ -26,9 +25,7 @@ function PromoScheduleController($filter, $scope, validationService, utilService
     }
 
     this.updateNoEndDate = function() {
-   
-    this.data.endDt = this.convertDateStringToDate("mm/dd/yyyy");
-     //this.data.endDt = this.convertDateStringToDate("12/31/9999");
+        this.data.endDt = this.convertDateStringToDate('mm/dd/yyyy');
     }
 
     this.convertDateStringToDate = function(dateString){

@@ -16,6 +16,12 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                 validationErrors: '='
             },
             link: function (scope, element) {
+                scope.convertDateStringToDate = function(dateString){
+                    return dateString ? moment(dateString).startOf('date').toDate() : undefined;
+                }
+                if(scope.previewData.data.endDateSelection==true) {
+                    scope.previewData.data.endDt=scope.convertDateStringToDate('12/31/9999');
+                }   
                 scope.validationErrors = validationService.validatePromotion(scope.data);
                 scope.close = function () {
                     // if a exisiting promotion is submitted then reload the page
@@ -33,22 +39,8 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                     scope.headerErrorMsg = msg;
                 }
 
-                scope.convertDateStringToDate = function(dateString){
-                    return dateString ? moment(dateString).startOf('date').toDate() : undefined;
-                }
                 scope.saveAndSubmit = function (event) {
-                    //console.dir("____value of end Date going to Webservice call::"+scope.previewData.data);
-                    //console.dir("____value of end Date going to Webservice call::"+scope.previewData.data);
-                    //console.dir(""+this.data)
-                        if(scope.previewData.data.endDateSelection==true) {
-                            console.dir(" End Date selected TRUE so set End Date 12/31/9999::");
-                            console.log("Before conversion end date " + scope.previewData.data.endDt);
-                            scope.previewData.data.endDt=this.convertDateStringToDate("12/31/9999");
-                            console.log("After conversion end date "+ scope.previewData.data.endDt);
-                      
-                        }
-
-                   var unclickableSaveBtn = function (event) {
+                    var unclickableSaveBtn = function (event) {
                         event.handleObj.handler = function () { };
                     }
 
@@ -78,7 +70,6 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
 
                     var promotion = $.extend(true, {}, scope.previewData.data);
                     //var promotion = scope.previewData.data;
-
                     utilService.setDefaultsForSaveAsDraft(promotion);
                     utilService.transformPromotionRequest(promotion);
                     var missingLocation = utilService.requiredLocationsOrMarkets(promotion);
@@ -109,8 +100,6 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
 
 
                     if (!scope.formHolder.form.$valid) {
-
-                        console.log(scope.previewData);
                         setError('ERROR: Please fix all validation errors.');
                         return;
                     }
@@ -164,7 +153,6 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
 
                 scope.submit = function (promotionData) {
                     var promotion = $.extend(true, {}, promotionData);
-
                     if (promotion.status == 20 && promotion.promoSubTypeCd == 20 &&
                         promotion.promoTypeCd == 10) {
                         promotion.errorMessage = 'ERROR: Unable to Submit Promotion with Draft Default Values';
