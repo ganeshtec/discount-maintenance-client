@@ -103,3 +103,35 @@
     color: #999999;
     cursor: not-allowed;
 }
+
+.md-text-prefixed input[type=text],
+.md-text-prefixed input[type=password],
+.md-text-prefixed input[type=tel],
+.md-text-prefixed input[type=number],
+.md-text-prefixed input[type=date] {
+    padding: 10px 10px 10px 20px;
+}
+
+.md-text-suffixed input[type=text],
+.md-text-suffixed input[type=password],
+.md-text-suffixed input[type=tel],
+.md-text-suffixed input[type=number],
+.md-text-suffixed input[type=date] {
+    padding: 10px 24px 10px 10px;
+}
+
+.md-text-prefix {
+    display:inline-block;
+    position:absolute;
+    top: 28px;
+    left:25px;
+    z-index:1;
+}
+
+.md-text-suffix {
+    display:inline-block;
+    position: absolute;
+    top: 28px;
+    right:25px;
+    z-index:1;
+}
