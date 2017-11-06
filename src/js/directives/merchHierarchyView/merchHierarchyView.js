@@ -65,6 +65,7 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                     if (scope.selectedClass == null) {
                         scope.SubClassList = [];
                     }
+                    scope.selectedSubClass = null;
                     if (scope.selectedClass && scope.selectedClass != null) {
                         scope.merchDataLoading = true;
                         var getSubClassesPromise = merchHierarchyDataService.getSubClasses(scope.selectedDept.id, scope.selectedClass.merchandiseClassNumber);
@@ -72,7 +73,7 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                             function (subClassdata) {
                                 scope.SubClassListfromWS = subClassdata.merchSubClasses;
                                 var classArraySize = scope.SubClassListfromWS.length;
-
+                                
                                 for (var j = 0; j < classArraySize; j++) {
                                     var SubClassObject = {};
                                     SubClassObject.merchandiseSubordinateClassNumber = scope.SubClassListfromWS[j].merchandiseSubordinateClassNumber;
@@ -85,9 +86,9 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                             function () {
                                 scope.merchDataLoading = false;
                             });
-                    }
+                    }                    
                 }
-                // getSubClassess Method - START
+                // getSubClassess Method - END
                 scope.deps = [];
                 scope.data = $.extend(true, [], scope.data);
                 scope.tableData = $.extend(true, [], scope.tableData);
