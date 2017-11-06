@@ -122,16 +122,16 @@
 
 .md-text-prefix {
     display:inline-block;
-    position:absolute;
-    top: 28px;
-    left:25px;
+    position:fixed;
+    margin-top:11px;
+    margin-left:9px;
     z-index:1;
 }
 
 .md-text-suffix {
     display:inline-block;
-    position: absolute;
-    top: 28px;
-    right:25px;
+    position:fixed;
+    margin-top:11px;
+    margin-left:230px;
     z-index:1;
 }
