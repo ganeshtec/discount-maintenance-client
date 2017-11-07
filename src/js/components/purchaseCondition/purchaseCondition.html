@@ -1,6 +1,17 @@
 
 <div ng-if="$ctrl.isSingleSourcePurchaseCondition()">
-
+	
+	<div id="basketThresholdDiv" class="md-text-field">
+		<span> Basket Threshold (optional) </span>	
+		<br>
+			<span> Enter the dollar amount a customer's order must reach to be assessed for this discount</span>
+			<span class="md-text-field">
+			<input type="text" id="basketThreshold" name="basketThreshold" ng-model="$ctrl.data.basketThreshold" ng-blur="$ctrl.validatePromotion()" ng-required="$ctrl.preview" allow-pattern="^[\d.]+$" min = "1" ng-disabled="$ctrl.preview" placeholder="$0.00"/>
+			<span class='error-message' ng-show="$ctrl.validationErrors.basketThreshold.isError">{{$ctrl.validationErrors.message}} </span>
+			</span>
+	</div>
+	
+	
 	<div id="rewardsId" class="md-text-field">
 		<table>
 			<tr ng-if="$ctrl.isMFAUser"><td class="prxxl" colspan="2"><h3 class="pbl">Discount</h3></td></tr>

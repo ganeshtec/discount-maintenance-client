@@ -155,6 +155,41 @@ app.service('validationService', ['$filter', 'utilService', function ($filter, u
         return minQtyErrors;
     }
 
+    publicApi.validateBasketThreshold = function (promotion, checkForUndefined) {
+        var minQtyErrObj;
+        var minQtyErrors = [];
+
+            if (promotion.basketThreshold === undefined && checkForUndefined === true) {
+                // minQtyErrObj = {
+                //     isError: true,
+                //     message: 'Basket Threshold is required.'
+                // };
+                // minQtyErrors.push(minQtyErrObj);
+                console.log('Basket Threshold is required.');
+            }
+            else if (promotion.basketThreshold != null
+                && promotion.basketThreshold != undefined
+                && promotion.basketThreshold <= 0
+                || promotion.basketThreshold > 100) {
+                // minQtyErrObj = {
+                //     isError: true,
+                //     message: 'Basket Threshold must be greater than zero and less than 100.'
+                // };
+                // minQtyErrors.push(minQtyErrObj);
+                console.log('Basket Threshold is bad.');
+            } else {
+                // minQtyErrObj = {
+                //     isError: false,
+                //     message: ''
+                    
+                // };
+                // minQtyErrors.push(minQtyErrObj);
+                console.log('Basket Threshold set.');
+            }
+        
+        return minQtyErrors;
+    }
+
     publicApi.validatePercentOff = function (rewards, checkForUndefined) {
         var percentOffErrorObject;
         var percentOffErrors = [];
@@ -311,6 +346,7 @@ app.service('validationService', ['$filter', 'utilService', function ($filter, u
         validationErrors.startDt = publicApi.validateStartDate(promotion, checkForUndefined);
         validationErrors.endDt = publicApi.validateDiscountEndDate(promotion, checkForUndefined);
         validationErrors.minimumThreshold = publicApi.validateMinimumPurchase(promotion.reward.details, checkForUndefined);
+        validationErrors.basketThreshold = publicApi.validateBasketThreshold(promotion, checkForUndefined);
         validationErrors.rewards = publicApi.validateRewards(promotion, checkForUndefined);
         validationErrors.priorityRange = publicApi.validatePriority(promotion.priority);
         validationErrors.percentageWarning = publicApi.validatePercentageWarning(promotion.reward.details);
