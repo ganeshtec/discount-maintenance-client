@@ -129,9 +129,9 @@
 }
 
 .md-text-suffix {
-    display:inline-block;
-    position:fixed;
-    margin-top:11px;
-    margin-left:230px;
+    position:relative;
+    float: right;
+    margin-top:-35px;
+    margin-right:9px;
     z-index:1;
 }
