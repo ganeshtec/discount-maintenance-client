@@ -19,21 +19,27 @@ function PromoScheduleController($filter, $scope, validationService, utilService
     this.endTime='2:59 AM';
 
     this.$onInit = function() {
-        this.data.startDt =  this.convertDateStringToDate(this.data.startDt);
-        this.data.endDt =  this.convertDateStringToDate(this.data.endDt);      
+        this.data.startDt =  utilService.convertDateStringToDate(this.data.startDt);
+        this.data.endDt =  utilService.convertDateStringToDate(this.data.endDt);      
+        if(utilService.convertDateToDateString(this.data.endDt) === '9999-12-31') {
+            this.data.endDateSelection = true;
+        } else {
+            this.data.endDtFormatted =  utilService.convertDateStringToDate(this.data.endDt);         
+        }        
         this.setEndDateMin();
     }
 
+    this.setEndDtFromUI = function() {
+        this.data.endDt = this.data.endDtFormatted;
+    }
+
     this.updateNoEndDate = function() {
-        this.data.endDt = this.convertDateStringToDate('mm/dd/yyyy');
-    }
-
-    this.convertDateStringToDate = function(dateString){
-        return dateString ? moment(dateString).startOf('date').toDate() : undefined;
-    }
-
-    this.convertDateToDateString = function(date) {
-        return date ? moment(date).format('YYYY-MM-DD') : undefined;
+        if(this.data.endDateSelection) {
+            this.data.endDt = utilService.convertDateStringToDate('12/31/9999');
+        } else {
+            this.data.endDt = null;
+        }
+        this.data.endDtFormatted = null;
     }
 
     this.validatePromotion = function() {

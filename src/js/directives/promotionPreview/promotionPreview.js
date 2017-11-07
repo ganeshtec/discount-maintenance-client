@@ -19,9 +19,6 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                 scope.convertDateStringToDate = function(dateString){
                     return dateString ? moment(dateString).startOf('date').toDate() : undefined;
                 }
-                if(scope.previewData.data.endDateSelection==true) {
-                    scope.previewData.data.endDt=scope.convertDateStringToDate('12/31/9999');
-                }   
                 scope.validationErrors = validationService.validatePromotion(scope.data);
                 scope.close = function () {
                     // if a exisiting promotion is submitted then reload the page
