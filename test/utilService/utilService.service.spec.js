@@ -36,6 +36,12 @@ describe('utilService', function () {
     expect(leadTime).toBe(3);
   });
 
+  it('Test convertDateStringToDate',function(){      
+    expect(utilService.convertDateStringToDate('12/10/2017 02:59:00')).toEqual(moment("12/10/2017").toDate());
+    expect(utilService.convertDateStringToDate('12/10/2017')).toEqual(moment("12/10/2017").toDate());
+    expect(utilService.convertDateStringToDate(undefined)).toBe(undefined);
+  });
+  
   it('isSubmitEligibleForDisable should return true for active promotion with printlabel and endDt within lead time', function () {
 
     var promotion = {

@@ -36,6 +36,14 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
         }
         return approve[promotion.status]
     }
+    publicApi.convertDateStringToDate = function(dateString){
+        return dateString ? moment(dateString).startOf('date').toDate() : undefined;
+    }
+
+    publicApi.convertDateToDateString = function(date) {
+        return date ? moment(date).format('YYYY-MM-DD') : undefined;
+    }
+
     publicApi.needsValidation = function (promotion) {
         //these promoitons need to be validated before being saved as draftand submitted
         var validate = {
