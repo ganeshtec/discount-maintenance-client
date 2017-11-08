@@ -18,3 +18,18 @@
         <span class="labelCount">{{$ctrl.data.labelText.length || 0}}/11</span>
     </div>
 </div>
+<div class="md-text-field" >
+    <label for="receiptHeader">Receipt Text (Optional)</label>
+    <div></div>
+    <div class="md-textarea">
+        <label for="receiptHeader">Receipt Header</label>		
+        <input type="text" id="receiptHeaderId" name="receiptHeader" title="receiptHeader" ng-model="$ctrl.data.receiptHeader" ng-disabled="$ctrl.preview" rows="1" allow-pattern="(\d|[a-z A-Z\(\?\-\_\.\'\,\%\$\!\@\)])" maxlength="30" placeholder="Please enter 30 characters or fewer"></input>		
+        <span class="headerCount">{{$ctrl.data.receiptHeader.length || 0}}/30</span>
+     
+    </div>
+    <div class="md-textarea">		
+        <label for="receiptDesc">Receipt Description</label>		
+        <input type="text" id="receiptDescId" name="receiptDesc" title="receiptDesc" ng-model="$ctrl.data.receiptDesc" ng-disabled="$ctrl.preview" rows="1" allow-pattern="(\d|[a-z A-Z\(\?\-\_\.\'\,\%\$\!\@\)])" maxlength="30" placeholder="Please enter 30 characters or fewer"></input>		
+        <span class="descCount">{{$ctrl.data.receiptDesc.length || 0}}/30</span>
+    </div>
+</div>
