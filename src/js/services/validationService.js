@@ -25,9 +25,9 @@ app.service('validationService', ['$filter', 'utilService', function ($filter, u
             isError: true,
             message: 'Start date is requred.'
         } : {
-            isError: false,
-            message: ''
-        };
+                isError: false,
+                message: ''
+            };
 
         var today = moment();
         if (promotion.startDt && moment(promotion.startDt).isBefore(today, 'day')) {
@@ -43,9 +43,9 @@ app.service('validationService', ['$filter', 'utilService', function ($filter, u
             isError: true,
             message: 'End date is requred.'
         } : {
-            isError: false,
-            message: ''
-        };
+                isError: false,
+                message: ''
+            };
 
 
         var today = moment();
@@ -83,9 +83,9 @@ app.service('validationService', ['$filter', 'utilService', function ($filter, u
             isError: true,
             message: 'End date is requred.'
         } : {
-            isError: false,
-            message: ''
-        };
+                isError: false,
+                message: ''
+            };
 
 
         var minEndDate = publicApi.getMinEndDate(startDt, leadTime);
@@ -155,39 +155,11 @@ app.service('validationService', ['$filter', 'utilService', function ($filter, u
         return minQtyErrors;
     }
 
-    publicApi.validateBasketThreshold = function (promotion, checkForUndefined) {
-        var minQtyErrObj;
-        var minQtyErrors = [];
-
-            if (promotion.basketThreshold === undefined && checkForUndefined === true) {
-                // minQtyErrObj = {
-                //     isError: true,
-                //     message: 'Basket Threshold is required.'
-                // };
-                // minQtyErrors.push(minQtyErrObj);
-                console.log('Basket Threshold is required.');
-            }
-            else if (promotion.basketThreshold != null
-                && promotion.basketThreshold != undefined
-                && promotion.basketThreshold <= 0
-                || promotion.basketThreshold > 100) {
-                // minQtyErrObj = {
-                //     isError: true,
-                //     message: 'Basket Threshold must be greater than zero and less than 100.'
-                // };
-                // minQtyErrors.push(minQtyErrObj);
-                console.log('Basket Threshold is bad.');
-            } else {
-                // minQtyErrObj = {
-                //     isError: false,
-                //     message: ''
-                    
-                // };
-                // minQtyErrors.push(minQtyErrObj);
-                console.log('Basket Threshold set.');
-            }
-        
-        return minQtyErrors;
+    publicApi.validateBasketThreshold = function (promotion) {
+        var number = new Number(promotion.reward.basketThreshold);
+        var rounded = number.toFixed(2);
+        floatRounded = parseFloat(rounded);
+        promotion.reward.basketThreshold = floatRounded;
     }
 
     publicApi.validatePercentOff = function (rewards, checkForUndefined) {
@@ -306,9 +278,11 @@ app.service('validationService', ['$filter', 'utilService', function ($filter, u
                     rewardsErrors.push(emptyValidaton);
                 })
                 return rewardsErrors;
-            } else{
-                return { isError: true,
-                    message: 'No reward type selected by default'};
+            } else {
+                return {
+                    isError: true,
+                    message: 'No reward type selected by default'
+                };
             }
         }
     }
@@ -346,12 +320,12 @@ app.service('validationService', ['$filter', 'utilService', function ($filter, u
         validationErrors.startDt = publicApi.validateStartDate(promotion, checkForUndefined);
         validationErrors.endDt = publicApi.validateDiscountEndDate(promotion, checkForUndefined);
         validationErrors.minimumThreshold = publicApi.validateMinimumPurchase(promotion.reward.details, checkForUndefined);
-        validationErrors.basketThreshold = publicApi.validateBasketThreshold(promotion, checkForUndefined);
         validationErrors.rewards = publicApi.validateRewards(promotion, checkForUndefined);
         validationErrors.priorityRange = publicApi.validatePriority(promotion.priority);
         validationErrors.percentageWarning = publicApi.validatePercentageWarning(promotion.reward.details);
         validationErrors.threeMonthsWarning = publicApi.validateThreeMonthsWarning(promotion.startDt);
         validationErrors.skuTypeFilter = publicApi.validateSkyTypeFilter(promotion.purchaseConds.sources[0], checkForUndefined);
+        publicApi.validateBasketThreshold(promotion);
         return validationErrors;
     }
 

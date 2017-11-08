@@ -5,7 +5,38 @@
 	 max-height: 255px;
     overflow-y: auto;
 }
+.basketThresholdDiv {
+    margin: 0;
+}
+.md-text-field.basket input[type=text] {
+    min-width: 0;
+}
 
+.basketThresholdTextBox{
+    width: 32%;
+    min-width: 0;
+}
+
+.basketThresholdText{
+    color: rgb(153, 153, 153);
+  }
+input::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color: rgb(153, 153, 153);
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color: rgb(153, 153, 153);
+   opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color: rgb(153, 153, 153);
+   opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color: rgb(153, 153, 153);
+}
+::-ms-input-placeholder { /* Microsoft Edge */
+   color: rgb(153, 153, 153);
+}
 .md-space-extra {
   margin:2px 0;
   padding: 95px 1px 1px;
