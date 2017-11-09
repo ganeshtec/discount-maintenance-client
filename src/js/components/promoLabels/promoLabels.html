@@ -1,7 +1,7 @@
 
 
 <div class="md-text-field" >
-    <label for="label">Label Printing & Text</label>
+    <h3 class="pbl">Label Printing & Text</h3>
     <div></div>
     <div class="md-checkbox">
 
@@ -18,10 +18,10 @@
         <span class="labelCount">{{$ctrl.data.labelText.length || 0}}/11</span>
     </div>
 </div>
+<div></div>
 <div class="md-text-field" >
-    <label for="receiptHeader">Receipt Text (Optional)</label>
-    <div></div>
     <div class="md-textarea">
+        <h3 class="pbl">Receipt Text (Optional)</h3>
         <label for="receiptHeader">Receipt Header</label>		
         <input type="text" id="receiptHeaderId" name="receiptHeader" title="receiptHeader" ng-model="$ctrl.data.receiptHeader" ng-disabled="$ctrl.preview" rows="1" allow-pattern="(\d|[a-z A-Z\(\?\-\_\.\'\,\%\$\!\@\)])" maxlength="30" placeholder="Please enter 30 characters or fewer"></input>		
         <span class="headerCount">{{$ctrl.data.receiptHeader.length || 0}}/30</span>
