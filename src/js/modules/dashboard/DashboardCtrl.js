@@ -431,6 +431,13 @@ app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$sco
                         wrapper.promotion = promotions[i];
                         wrapper.start = new Date(promotions[i].startDt.split(' ')[0].replace(/-/g, '\/'));
                         wrapper.end = new Date(promotions[i].endDt.split(' ')[0].replace(/-/g, '\/'));
+                        if (wrapper.end.getFullYear() == 9999 
+                        && wrapper.end.getDate() == 31 
+                        // Get month starts at 0 index for January, 11 is December
+                        && wrapper.end.getMonth() == 11) {
+                            wrapper.noEndDate = true;
+                            wrapper.end = 'No end date';
+                        }
                         wrapper.disabled = !$scope.isEditable(promotions[i]);
                         wrappers.push(wrapper);
                         all[promotions[i].promoId] = true;
