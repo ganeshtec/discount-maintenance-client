@@ -30,7 +30,7 @@ function PurchaseConditionController(validationService, utilService) {
     this.isMFAUser;
     this.isDCMUser;
     this.rewardTypeLabel='Percentage';
-    this.basketThreshold = setBasketThreshold;
+    this.setBasketThreshold = setBasketThreshold;
     
 
     this.$onInit = $onInit;
@@ -63,9 +63,8 @@ function PurchaseConditionController(validationService, utilService) {
     }
     
     function setBasketThreshold(basketThreshold){
-        this.data.basketThreshold = basketThreshold;
+        this.data.reward.basketThreshold = basketThreshold;
     }
-    // this.setBasketThreshold(this.basketThreshold);
 
     function setQualUOM(qualuom) {
         if (this.data.reward.details) {
