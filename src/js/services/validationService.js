@@ -25,9 +25,9 @@ app.service('validationService', ['$filter', 'utilService', function ($filter, u
             isError: true,
             message: 'Start date is requred.'
         } : {
-                isError: false,
-                message: ''
-            };
+            isError: false,
+            message: ''
+        };
 
         var today = moment();
         if (promotion.startDt && moment(promotion.startDt).isBefore(today, 'day')) {
@@ -43,9 +43,9 @@ app.service('validationService', ['$filter', 'utilService', function ($filter, u
             isError: true,
             message: 'End date is requred.'
         } : {
-                isError: false,
-                message: ''
-            };
+            isError: false,
+            message: ''
+        };
 
 
         var today = moment();
@@ -83,9 +83,9 @@ app.service('validationService', ['$filter', 'utilService', function ($filter, u
             isError: true,
             message: 'End date is requred.'
         } : {
-                isError: false,
-                message: ''
-            };
+            isError: false,
+            message: ''
+        };
 
 
         var minEndDate = publicApi.getMinEndDate(startDt, leadTime);
@@ -158,8 +158,9 @@ app.service('validationService', ['$filter', 'utilService', function ($filter, u
     publicApi.validateBasketThreshold = function (promotion) {
         var number = new Number(promotion.reward.basketThreshold);
         var rounded = number.toFixed(2);
-        floatRounded = parseFloat(rounded);
+        var floatRounded = parseFloat(rounded);
         promotion.reward.basketThreshold = floatRounded;
+        return promotion;
     }
 
     publicApi.validatePercentOff = function (rewards, checkForUndefined) {

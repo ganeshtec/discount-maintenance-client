@@ -26,7 +26,7 @@ describe('validationService', function () {
             startDt: moment().toDate()
         }
 
-        validationService.validateStartDate(promotion, function(response) {
+        validationService.validateStartDate(promotion, function (response) {
             expect(response.isError).toBeDefined();
             expect(response.message).toBeDefined();
         });
@@ -37,7 +37,7 @@ describe('validationService', function () {
             startDt: moment().subtract(3, 'days').toDate()
         }
 
-        validationService.validateStartDate(promotion, function(response) {
+        validationService.validateStartDate(promotion, function (response) {
             expect(response.isError).toBe(true);
             expect(response.message).not.toBe('');
         });
@@ -48,7 +48,7 @@ describe('validationService', function () {
             startDt: moment().add(3, 'days').toDate()
         }
 
-        validationService.validateStartDate(promotion, function(response) {
+        validationService.validateStartDate(promotion, function (response) {
             expect(response.isError).toBe(false);
             expect(response.message).toBe('');
         });
@@ -59,7 +59,7 @@ describe('validationService', function () {
             startDt: moment().toDate()
         }
 
-        validationService.validateStartDate(promotion, function(response) {
+        validationService.validateStartDate(promotion, function (response) {
             expect(response.isError).toBe(false);
             expect(response.message).toBe('');
         });
@@ -69,7 +69,7 @@ describe('validationService', function () {
         var pastDate = moment().subtract(2, 'days').toDate();
         var startDate = undefined;
 
-        validationService.validateEndDateWithoutLeadTime(startDate, pastDate, function(response) {
+        validationService.validateEndDateWithoutLeadTime(startDate, pastDate, function (response) {
             expect(response.isError).toBe(true);
             expect(response.message).not.toBe('');
         });
@@ -78,7 +78,7 @@ describe('validationService', function () {
     it('returns a false/empty end date error when selected end date is in the future.', function () {
         var futureDate = moment().add(1, 'days').toDate();
 
-        validationService.validateEndDateWithoutLeadTime(undefined, futureDate, function(response) {
+        validationService.validateEndDateWithoutLeadTime(undefined, futureDate, function (response) {
             expect(response.isError).toBe(false);
             expect(response.message).toBe('');
         });
@@ -88,7 +88,7 @@ describe('validationService', function () {
     it('returns a false/empty end date error when selected end date is today.', function () {
         var today = moment().toDate();
 
-        validationService.validateEndDateWithoutLeadTime(undefined, today, function(response) {
+        validationService.validateEndDateWithoutLeadTime(undefined, today, function (response) {
             expect(response.isError).toBe(false);
             expect(response.message).toBe('');
         });
@@ -104,7 +104,7 @@ describe('validationService', function () {
             }
         })
 
-        validationService.validateEndDateWithLeadTime(undefined, endDt, function(response) {
+        validationService.validateEndDateWithLeadTime(undefined, endDt, function (response) {
             expect(response.isError).toBe(true);
             expect(response.message).not.toBe('');
         });
@@ -122,7 +122,7 @@ describe('validationService', function () {
             }
         })
 
-        validationService.validateEndDateWithLeadTime(today, endDt, function(response) {
+        validationService.validateEndDateWithLeadTime(today, endDt, function (response) {
             expect(response.isError).toBe(false);
             expect(response.message).toBe('');
         });
@@ -131,48 +131,48 @@ describe('validationService', function () {
 
     it('returns a false/empty end date error message when selected end date is after start date.', function () {
         var endDt = moment().add(5, 'days').toDate();
-        var startDt= moment().add(3, 'days').toDate();
+        var startDt = moment().add(3, 'days').toDate();
 
-        validationService.validateEndDateWithoutLeadTime(startDt, endDt, function(response) {
+        validationService.validateEndDateWithoutLeadTime(startDt, endDt, function (response) {
             expect(response.isError).toBe(false);
             expect(response.message).toBe('');
         });
-        
+
     });
 
     it('returns an end date error when selected end date is earlier than start date.', function () {
         var endDt = moment().add(5, 'days').toDate();
         var startDt = moment().add(7, 'days').toDate();
 
-        validationService.validateEndDateWithoutLeadTime(startDt, endDt, function(response) {
+        validationService.validateEndDateWithoutLeadTime(startDt, endDt, function (response) {
             expect(response.isError).toBe(true);
             expect(response.message).not.toBe('');
         });
     });
 
-    it('sets minimum end date to today plus lead time when no start date is selected.', function() {
+    it('sets minimum end date to today plus lead time when no start date is selected.', function () {
         var leadTime = 3;
         var expectedMinEndDate = moment().add(leadTime, 'days').toDate();
 
-        validationService.getMinEndDate(undefined, leadTime, function(response) {
+        validationService.getMinEndDate(undefined, leadTime, function (response) {
             expect(response).toEqual(expectedMinEndDate);
         });
     })
 
-    it('sets minimum end date to today plus lead time when a start date is selected.', function() {
+    it('sets minimum end date to today plus lead time when a start date is selected.', function () {
         var leadTime = 3;
         var startDate = moment().add(5, 'days').toDate();
         var expectedMinEndDate = moment(startDate).add(leadTime, 'days').toDate();
 
-        validationService.getMinEndDate(startDate, leadTime, function(response) {
+        validationService.getMinEndDate(startDate, leadTime, function (response) {
             expect(response).toEqual(expectedMinEndDate);
         });
     })
 
     it('returns a minimum quantity error when selected minimum quantity threshold is 0.', function () {
-        var rewards = [{min:0,value:12,maxAllowedVal:2},{min:2,value:25,maxAllowedVal:3},{min:0,value:120,maxAllowedVal:25}]
+        var rewards = [{ min: 0, value: 12, maxAllowedVal: 2 }, { min: 2, value: 25, maxAllowedVal: 3 }, { min: 0, value: 120, maxAllowedVal: 25 }]
 
-        validationService.validateMinimumPurchase(rewards, function(response) {
+        validationService.validateMinimumPurchase(rewards, function (response) {
             expect(response[0].isError).toBe(true);
             expect(response[0].message).not.toBe('');
             expect(response[2].isError).toBe(true);
@@ -181,27 +181,27 @@ describe('validationService', function () {
     });
 
     it('returns a false/empty minimum quantity error when selected minimum quantity threshold is greater than 0.', function () {
-        var rewards = [{min:0,value:12,maxAllowedVal:2},{min:2,value:25,maxAllowedVal:3},{min:0,value:120,maxAllowedVal:25}]
+        var rewards = [{ min: 0, value: 12, maxAllowedVal: 2 }, { min: 2, value: 25, maxAllowedVal: 3 }, { min: 0, value: 120, maxAllowedVal: 25 }]
 
-        validationService.validateMinimumPurchase(rewards, function(response) {
+        validationService.validateMinimumPurchase(rewards, function (response) {
             expect(response[1].isError).toBe(false);
             expect(response[1].message).toBe('');
         });
     });
 
     it('returns percent off error messages when percent off selections are greater than 100.', function () {
-        var rewards = [{min:0,value:12,maxAllowedVal:2},{min:2,value:25,maxAllowedVal:3},{min:0,value:120,maxAllowedVal:25}]
+        var rewards = [{ min: 0, value: 12, maxAllowedVal: 2 }, { min: 2, value: 25, maxAllowedVal: 3 }, { min: 0, value: 120, maxAllowedVal: 25 }]
 
-        validationService.validatePercentOff(rewards, function(response) {
+        validationService.validatePercentOff(rewards, function (response) {
             expect(response[2].isError).toBe(true);
             expect(response[2].message).not.toBe('');
         });
     });
 
     it('returns false/empty percent off error messages when percent off selections are less than 100.', function () {
-        var rewards = [{min:0,value:12,maxAllowedVal:2},{min:2,value:25,maxAllowedVal:3},{min:0,value:120,maxAllowedVal:25}]
+        var rewards = [{ min: 0, value: 12, maxAllowedVal: 2 }, { min: 2, value: 25, maxAllowedVal: 3 }, { min: 0, value: 120, maxAllowedVal: 25 }]
 
-        validationService.validatePercentOff(rewards, function(response) {
+        validationService.validatePercentOff(rewards, function (response) {
             expect(response[0].isError).toBe(false);
             expect(response[0].message).toBe('');
             expect(response[1].isError).toBe(false);
@@ -210,9 +210,9 @@ describe('validationService', function () {
     });
 
     it('returns percent off error messages when percent off selections are less than 0.01.', function () {
-        var rewards = [{min:0,value:-1,maxAllowedVal:2},{min:2,value:25,maxAllowedVal:3},{min:0,value:-150,maxAllowedVal:25}]
+        var rewards = [{ min: 0, value: -1, maxAllowedVal: 2 }, { min: 2, value: 25, maxAllowedVal: 3 }, { min: 0, value: -150, maxAllowedVal: 25 }]
 
-        validationService.validatePercentOff(rewards, function(response) {
+        validationService.validatePercentOff(rewards, function (response) {
             expect(response[0].isError).toBe(true);
             expect(response[0].message).not.toBe('');
             expect(response[2].isError).toBe(true);
@@ -272,5 +272,15 @@ describe('validationService', function () {
         expect(response[2].isError).toBe(true);
         expect(response[2].message).not.toBe('');
     });
+
+    it('Rounds basketThreshold to 2 decimal places', function () {
+        var promotion = {
+            reward:
+            {
+                basketThreshold: 5.6788
+            }
+        }
+        expect(validationService.validateBasketThreshold(promotion).reward.basketThreshold).toBe(5.68)
+    })
 
 });
