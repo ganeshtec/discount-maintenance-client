@@ -27,10 +27,19 @@
 		 </td>
 
 		 <td width="30%">
-			 	<div class="md-select">				
-	<select name="selectSubClass" style="margin-top:28px" ng-options="
-subClass as subClass.merchandiseSubordinateClassNumber+'-'+subClass.merchandiseSubordinateClassDescription for subClass in  SubClassList track by subClass.merchandiseSubordinateClassNumber" ng-model="selectedSubClass" ng-change="getSelectedSubClass()">
-					<option value="">Select subclass</option></select>	</div>
+					<div class="ms-dropdown" style="margin-top:28px">
+						<input placeholder="Select subclass" type="text" ng-model="subClassesSelectedText" ng-click="showDropDown=!showDropDown" readonly="readonly" ng-disabled="$ctrl.preview"/>
+						<i class="fa fa-caret-down" ng-click="showDropDown=!showDropDown" role="button" tabindex="0"></i>				
+						
+						<ul ng-if="showDropDown">
+							<li ng-repeat="item in SubClassList">
+								<a href="">
+									<md-checkbox ng-true-value="true" ng-false-value="false" ng-model="item.checked"
+									ng-change="itemSelected()">{{item.merchandiseSubordinateClassNumber}}-{{item.merchandiseSubordinateClassDescription}}</md-checkbox>     
+								</a>
+							</li>
+						</ul>
+					</div>
 		 </td>
 		 <td>
 			 	<a href="" class="md-button secondary " style="margin-top:28px" ng-click="showData()" >

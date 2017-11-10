@@ -34,6 +34,25 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                     function () {}
                 );
                 // Classes code STARTs
+                scope.subClassesSelectedText = 'Select subclasses';
+                scope.itemSelected = function() {
+                    var selectedCount = 0;
+                    var selectedSubClass;
+                    angular.forEach(scope.SubClassList, function(subClass){
+                        if(subClass.checked) {
+                            selectedCount++;
+                            selectedSubClass = subClass;
+                        }
+                    });
+                    if(selectedCount === 0 ) {
+                        scope.subClassesSelectedText = 'Select subclasses';
+                    } else if(selectedCount === 1 ) {
+                        scope.subClassesSelectedText = selectedSubClass.merchandiseSubordinateClassNumber + '-' + selectedSubClass.merchandiseSubordinateClassDescription;
+                    } else {
+                        scope.subClassesSelectedText = 'Selected ' + selectedCount + ' of ' + scope.SubClassList.length + ' subclasses';
+                    }
+                }
+
                 scope.getClassesforSelectedDepartment = function () {
                     scope.classList = [];
                     scope.SubClassList = [];
@@ -122,6 +141,7 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                     return dcsId;
                 }
                 scope.selectedOption = [];
+                scope.tableData = [];
                 scope.browseCatalogOverlayConfig = OverlayConfigFactory.getInstance();
                 scope.browseCatalogOverlayConfig.mask(true);
                 scope.showData = function () {
@@ -136,7 +156,47 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                         DataFactory.messageModal.title = 'Warning';
                         $('#messageModal').popup();
                     } else {
-                        if (scope.tableData.length === 0) {
+                        angular.forEach(scope.SubClassList, function(subClass){
+                            if(subClass.checked) {
+                                var duplicatecheck = checkForDuplicateEntry(subClass);
+                                if (duplicatecheck == true) {
+                                    DataFactory.messageModal.message = 'Duplicate Entry Please Select Another Combination:';
+                                    DataFactory.messageModal.title = 'Warning';
+                                    $('#messageModal').popup();
+                                } else {
+                                    className = scope.selectedClass == null ? '' : scope.selectedClass.merchandiseClassDescription;
+                                    className = className ? className : '';
+
+                                    subClassName = subClass == null ? '' : subClass.merchandiseSubordinateClassDescription;
+                                    subClassName = subClassName ? subClassName : '';
+                                    
+                                    classNumber = scope.selectedClass == null ? '' : scope.selectedClass.merchandiseClassNumber;
+                                    classNumber = classNumber ? classNumber : '';
+                                    
+                                    subClassNumber = subClass == null ? '' : subClass.merchandiseSubordinateClassNumber;
+                                    subClassNumber = subClassNumber ? subClassNumber : '';
+
+                                    jsondata.name = scope.selectedDept.name + delimeter + className + delimeter + subClassName;
+                                    jsondata.id = scope.selectedDept.id + delimeter + classNumber + delimeter + subClassNumber;
+                                    jsondata.catalog = 'Merch';
+
+                                    tableObject = prepareTableData(jsondata);
+
+                                    scope.data.push(jsondata);
+
+                                    scope.tableData.push({
+                                        'dept': tableObject.dept,
+                                        'clas': tableObject.clas,
+                                        'subClass': tableObject.subClass,
+                                        'deptNum': tableObject.deptNum,
+                                        'clasNum': tableObject.clasNum,
+                                        'subClasNum': tableObject.subClasNum
+                                    });
+                                }
+                            }
+                        });                    
+
+                        /*if (scope.tableData.length === 0) {
                             className = scope.selectedClass ? scope.selectedClass.merchandiseClassDescription : '';
                             subClassName = scope.selectedSubClass ? scope.selectedSubClass.merchandiseSubordinateClassDescription : ''; 
                             classNumber = scope.selectedClass ? scope.selectedClass.merchandiseClassNumber : '';
@@ -203,7 +263,7 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                                     'subClasNum': tableObject.subClasNum
                                 });
                             }
-                        }
+                        }*/
                     }
                     scope.dept = '';
                     scope.deptNum = '';
@@ -230,7 +290,7 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                     }
                     return tempdata;
                 }
-                function checkForDuplicateEntry() {
+                function checkForDuplicateEntry(subClass) {
                     for (i = 0; i < scope.tableData.length; i++) {
                         if (scope.selectedDept.name == scope.tableData[i].dept) {
                             if (scope.tableData[i].clas == '') {
@@ -240,7 +300,7 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                                 if (scope.tableData[i].subClass === '') {
                                     return true;
                                 }
-                                if (scope.selectedSubClass.merchandiseSubordinateClassDescription == scope.tableData[i].subClass) {
+                                if (subClass.merchandiseSubordinateClassDescription == scope.tableData[i].subClass && subClass.merchandiseSubordinateClassNumber == scope.tableData[i].subClasNum) {
                                     return true;
                                 }
                             }
