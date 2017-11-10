@@ -10,7 +10,7 @@
     <div class="md-toolbar-actions"> 
         <span class="user" ng-show="userRoleSelected.id"> Currently logged in as: </span>
         <div class="md-select md-select-alt" ng-show="userRoleSelected.id">
-        <select name="userRole" style="width:155px"ng-model="userRoleSelected.id" ng-change="getUserPerm()">
+        <select name="userRole" style="width:157px"ng-model="userRoleSelected.id" ng-change="getUserPerm()">
             <option ng-repeat="user in userPermissions" value="{{user.id}}">{{user.shortDesc}}</option>
         </select>  
         </div>  

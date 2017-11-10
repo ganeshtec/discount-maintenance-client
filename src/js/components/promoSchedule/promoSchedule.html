@@ -37,6 +37,6 @@
     </div>
 </div>
 <div>
-    <input type="checkbox" id="noEndDate" name="noEndDate" ng-model="$ctrl.data.endDateSelection" ng-change="$ctrl.updateNoEndDate()" ng-disabled="$ctrl.preview" />
-    No end date {{$ctrl.endDateSelection}}
+    <md-checkbox aria-label="No end date" ng-change="$ctrl.updateNoEndDate()" ng-true-value="true" ng-false-value="false" 
+    ng-disabled="$ctrl.preview" ng-model="$ctrl.data.endDateSelection">No end date</md-checkbox>     
 </div>
