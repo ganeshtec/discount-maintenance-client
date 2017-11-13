@@ -34,25 +34,6 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                     function () {}
                 );
                 // Classes code STARTs
-                scope.subClassesSelectedText = 'Select subclasses';
-                scope.itemSelected = function() {
-                    var selectedCount = 0;
-                    var selectedSubClass;
-                    angular.forEach(scope.SubClassList, function(subClass){
-                        if(subClass.checked) {
-                            selectedCount++;
-                            selectedSubClass = subClass;
-                        }
-                    });
-                    if(selectedCount === 0 ) {
-                        scope.subClassesSelectedText = 'Select subclasses';
-                    } else if(selectedCount === 1 ) {
-                        scope.subClassesSelectedText = selectedSubClass.merchandiseSubordinateClassNumber + '-' + selectedSubClass.merchandiseSubordinateClassDescription;
-                    } else {
-                        scope.subClassesSelectedText = 'Selected ' + selectedCount + ' of ' + scope.SubClassList.length + ' subclasses';
-                    }
-                }
-
                 scope.getClassesforSelectedDepartment = function () {
                     scope.classList = [];
                     scope.SubClassList = [];
@@ -81,10 +62,8 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                 // getSubClassess Method - START
                 scope.getSubClasses = function () {
 
-                    if (scope.selectedClass == null) {
-                        scope.SubClassList = [];
-                    }
-                    scope.selectedSubClass = null;
+                    scope.SubClassList = [];
+                    scope.selectedSubClasses = [];                    
                     if (scope.selectedClass && scope.selectedClass != null) {
                         scope.merchDataLoading = true;
                         var getSubClassesPromise = merchHierarchyDataService.getSubClasses(scope.selectedDept.id, scope.selectedClass.merchandiseClassNumber);
@@ -140,7 +119,7 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                     dcsId = dptNum + delimeter + clsNum + delimeter + subclsNum;
                     return dcsId;
                 }
-                scope.selectedOption = [];
+                scope.selectedSubClasses = [];
                 scope.tableData = [];
                 scope.browseCatalogOverlayConfig = OverlayConfigFactory.getInstance();
                 scope.browseCatalogOverlayConfig.mask(true);
@@ -151,85 +130,15 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                     var subClassNumber;
                     var tableObject;
                     var jsondata = {};
+                    var isTableDataEmpty = scope.tableData.length === 0;
                     if (scope.selectedDept == null) {
-                        DataFactory.messageModal.message = 'No Department Selected  , Please select  Department';
+                        DataFactory.messageModal.message = 'No Department Selected, Please select  Department';
                         DataFactory.messageModal.title = 'Warning';
                         $('#messageModal').popup();
                     } else {
-                        angular.forEach(scope.SubClassList, function(subClass){
-                            if(subClass.checked) {
-                                var duplicatecheck = checkForDuplicateEntry(subClass);
-                                if (duplicatecheck == true) {
-                                    DataFactory.messageModal.message = 'Duplicate Entry Please Select Another Combination:';
-                                    DataFactory.messageModal.title = 'Warning';
-                                    $('#messageModal').popup();
-                                } else {
-                                    className = scope.selectedClass == null ? '' : scope.selectedClass.merchandiseClassDescription;
-                                    className = className ? className : '';
-
-                                    subClassName = subClass == null ? '' : subClass.merchandiseSubordinateClassDescription;
-                                    subClassName = subClassName ? subClassName : '';
-                                    
-                                    classNumber = scope.selectedClass == null ? '' : scope.selectedClass.merchandiseClassNumber;
-                                    classNumber = classNumber ? classNumber : '';
-                                    
-                                    subClassNumber = subClass == null ? '' : subClass.merchandiseSubordinateClassNumber;
-                                    subClassNumber = subClassNumber ? subClassNumber : '';
-
-                                    jsondata.name = scope.selectedDept.name + delimeter + className + delimeter + subClassName;
-                                    jsondata.id = scope.selectedDept.id + delimeter + classNumber + delimeter + subClassNumber;
-                                    jsondata.catalog = 'Merch';
-
-                                    tableObject = prepareTableData(jsondata);
-
-                                    scope.data.push(jsondata);
-
-                                    scope.tableData.push({
-                                        'dept': tableObject.dept,
-                                        'clas': tableObject.clas,
-                                        'subClass': tableObject.subClass,
-                                        'deptNum': tableObject.deptNum,
-                                        'clasNum': tableObject.clasNum,
-                                        'subClasNum': tableObject.subClasNum
-                                    });
-                                }
-                            }
-                        });                    
-
-                        /*if (scope.tableData.length === 0) {
-                            className = scope.selectedClass ? scope.selectedClass.merchandiseClassDescription : '';
-                            subClassName = scope.selectedSubClass ? scope.selectedSubClass.merchandiseSubordinateClassDescription : ''; 
-                            classNumber = scope.selectedClass ? scope.selectedClass.merchandiseClassNumber : '';
-                            subClassNumber = scope.selectedSubClass ? scope.selectedSubClass.merchandiseSubordinateClassNumber : '';
-                            jsondata.name = scope.selectedDept.name + delimeter + className + delimeter + subClassName;
-                            jsondata.id = scope.selectedDept.id + delimeter + classNumber + delimeter + subClassNumber;
-                            jsondata.catalog = 'Merch';
-                            tableObject = prepareTableData(jsondata);
-                            scope.data.push(jsondata);
-                            scope.tableData.push({
-                                'dept': tableObject.dept,
-                                'clas': tableObject.clas,
-                                'subClass': tableObject.subClass,
-                                'deptNum': tableObject.deptNum,
-                                'clasNum': tableObject.clasNum,
-                                'subClasNum': tableObject.subClasNum
-                            });
-                            scope.showSkuTypeModal();
-                        } else {
-                            if (scope.selectedClass == null) {
-                                scope.selectedClass = {
-                                    merchandiseClassDescription: '',
-                                    merchandiseClassNumber: ''
-                                }
-                            }
-                            if (scope.selectedSubClass == null) {
-                                scope.selectedSubClass = {
-                                    merchandiseSubordinateClassDescription: '',
-                                    merchandiseSubordinateClassNumber: ''
-                                }
-                            }
-                            var duplicatecheck = checkForDuplicateEntry();
-                            if (duplicatecheck == true) {
+                        angular.forEach(scope.selectedSubClasses, function(subClass){
+                            var duplicatecheck = checkForDuplicateEntry(subClass);
+                            if (duplicatecheck) {
                                 DataFactory.messageModal.message = 'Duplicate Entry Please Select Another Combination:';
                                 DataFactory.messageModal.title = 'Warning';
                                 $('#messageModal').popup();
@@ -237,13 +146,13 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                                 className = scope.selectedClass == null ? '' : scope.selectedClass.merchandiseClassDescription;
                                 className = className ? className : '';
 
-                                subClassName = scope.selectedSubClass == null ? '' : scope.selectedSubClass.merchandiseSubordinateClassDescription;
+                                subClassName = subClass == null ? '' : subClass.merchandiseSubordinateClassDescription;
                                 subClassName = subClassName ? subClassName : '';
                                 
                                 classNumber = scope.selectedClass == null ? '' : scope.selectedClass.merchandiseClassNumber;
                                 classNumber = classNumber ? classNumber : '';
                                 
-                                subClassNumber = scope.selectedSubClass == null ? '' : scope.selectedSubClass.merchandiseSubordinateClassNumber;
+                                subClassNumber = subClass == null ? '' : subClass.merchandiseSubordinateClassNumber;
                                 subClassNumber = subClassNumber ? subClassNumber : '';
 
                                 jsondata.name = scope.selectedDept.name + delimeter + className + delimeter + subClassName;
@@ -253,7 +162,6 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                                 tableObject = prepareTableData(jsondata);
 
                                 scope.data.push(jsondata);
-
                                 scope.tableData.push({
                                     'dept': tableObject.dept,
                                     'clas': tableObject.clas,
@@ -262,8 +170,13 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                                     'clasNum': tableObject.clasNum,
                                     'subClasNum': tableObject.subClasNum
                                 });
+                                subClass.hide = true;
+                                subClass.checked = false;
                             }
-                        }*/
+                        });                    
+                        if(isTableDataEmpty) {
+                            scope.showSkuTypeModal();
+                        }
                     }
                     scope.dept = '';
                     scope.deptNum = '';
@@ -329,7 +242,7 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                     
                     scope.selectedDept = null;
                     scope.selectedClass = null;
-                    scope.selectedSubClass = null;
+                    scope.selectedSubClasses = [];
                     
                     scope.classList = [];
                     scope.SubClassList = [];
