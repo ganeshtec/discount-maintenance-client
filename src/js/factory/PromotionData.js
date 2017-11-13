@@ -13,6 +13,8 @@ app.factory('PromotionData', ['ALLOWED_PERMISSION_IDS',function (ALLOWED_PERMISS
             'name': '',
             'printLabel': false,
             'labelText': '',
+            'receiptHeader': '',
+            'receiptDesc': '',
             'redmptnLmt': {
                 'maxUsesPerOrd': '-1',
                 'maxUsesPerCust': '-1',
