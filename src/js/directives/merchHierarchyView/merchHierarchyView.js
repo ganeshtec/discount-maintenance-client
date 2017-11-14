@@ -177,12 +177,6 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                             scope.showSkuTypeModal();
                         }
                     }
-                    scope.dept = '';
-                    scope.deptNum = '';
-                    scope.clas = '';
-                    scope.clasNum = '';
-                    scope.subClass = '';
-                    scope.subClasNum = '';
                 }
                 function prepareTableData(dataObject) {
                     var tempdata = {};
