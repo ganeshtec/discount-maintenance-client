@@ -15,8 +15,8 @@ describe('purchaseCondition', function () {
         $scope = $rootScope.$new();
         _$httpBackend_.when('GET', '/labels/leadTime')
             .respond(200, 3);
-    }));   
-    describe('dcm user',function(){
+    }));
+    describe('dcm user', function () {
         beforeEach(inject(function () {
             ctrl = $componentController('purchaseCondition', null, {
                 data: {
@@ -35,7 +35,7 @@ describe('purchaseCondition', function () {
                         message: ''
                     }
                 },
-                purchaseCondition:{sources:[1]}
+                purchaseCondition: { sources: [1] }
             });
         }));
 
@@ -108,13 +108,13 @@ describe('purchaseCondition', function () {
         });
     });
 
-    describe('mfa user',function(){
+    describe('mfa user', function () {
         beforeEach(inject(function () {
             ctrl = $componentController('purchaseCondition', null, {
                 data: {
                     reward: {
-                        details: [{qualUOM:'Quantity'}],
-                        type: 'PERCNTOFF'
+                        details: [{ qualUOM: 'Quantity' }],
+                        type: 'PERCNTOFF',
                     },
                     purchaseConds: {
                         channels: [87],
@@ -144,16 +144,25 @@ describe('purchaseCondition', function () {
             ctrl.data.reward.details[0].qualUOM = 'Amount';
             ctrl.$onInit();
             expect(ctrl.qualuom).toEqual('Amount');
-        });       
+        });
         it('#setRewardMethod function item level', function () {
             ctrl.data.promoType = 'ITEMPROMO';
             ctrl.setRewardMethod();
             expect(ctrl.data.reward.method).toEqual('INDVDLAFFECTEDITMS');
         });
+
+        it('#setBasketThreshold function', function () {
+            ctrl.data.reward.basketThreshold = 50;
+            ctrl.setBasketThreshold(20);
+            expect(ctrl.data.reward.basketThreshold).toEqual(20);
+        });
+
         it('#setRewardMethod function order level', function () {
             ctrl.data.promoType = 'ORDERPROMO';
             ctrl.setRewardMethod();
             expect(ctrl.data.reward.method).toEqual('WHOLEORDER');
         });
+
     });
+    
 });

@@ -155,6 +155,14 @@ app.service('validationService', ['$filter', 'utilService', function ($filter, u
         return minQtyErrors;
     }
 
+    publicApi.validateBasketThreshold = function (promotion) {
+        var number = new Number(promotion.reward.basketThreshold);
+        var rounded = number.toFixed(2);
+        var floatRounded = parseFloat(rounded);
+        promotion.reward.basketThreshold = floatRounded;
+        return promotion;
+    }
+
     publicApi.validatePercentOff = function (rewards, checkForUndefined) {
         var percentOffErrorObject;
         var percentOffErrors = [];
@@ -271,9 +279,11 @@ app.service('validationService', ['$filter', 'utilService', function ($filter, u
                     rewardsErrors.push(emptyValidaton);
                 })
                 return rewardsErrors;
-            } else{
-                return { isError: true,
-                    message: 'No reward type selected by default'};
+            } else {
+                return {
+                    isError: true,
+                    message: 'No reward type selected by default'
+                };
             }
         }
     }
@@ -316,6 +326,7 @@ app.service('validationService', ['$filter', 'utilService', function ($filter, u
         validationErrors.percentageWarning = publicApi.validatePercentageWarning(promotion.reward.details);
         validationErrors.threeMonthsWarning = publicApi.validateThreeMonthsWarning(promotion.startDt);
         validationErrors.skuTypeFilter = publicApi.validateSkyTypeFilter(promotion.purchaseConds.sources[0], checkForUndefined);
+        publicApi.validateBasketThreshold(promotion);
         return validationErrors;
     }
 

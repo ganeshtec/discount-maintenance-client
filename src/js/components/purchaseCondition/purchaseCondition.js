@@ -9,7 +9,6 @@ app.component('purchaseCondition', {
         purchaseCondition: '=',
         promotype: '=',
         validationErrors: '='
-
     },
     controller: PurchaseConditionController
 });
@@ -28,10 +27,11 @@ function PurchaseConditionController(validationService, utilService) {
     this.setRewardMethod = setRewardMethod;
     this.isSingleSourcePurchaseCondition = isSingleSourcePurchaseCondition;
     this.isMultiSourcePurchaseCondition = isMultiSourcePurchaseCondition;
-
     this.isMFAUser;
     this.isDCMUser;
     this.rewardTypeLabel='Percentage';
+    this.setBasketThreshold = setBasketThreshold;
+    
 
     this.$onInit = $onInit;
 
@@ -58,7 +58,12 @@ function PurchaseConditionController(validationService, utilService) {
             break
         }
         this.qualuom = (this.data.reward && this.data.reward.details[0].qualUOM) || 'Quantity';
-        this.setQualUOM(this.qualuom);        
+        this.setQualUOM(this.qualuom);  
+              
+    }
+    
+    function setBasketThreshold(basketThreshold){
+        this.data.reward.basketThreshold = basketThreshold;
     }
 
     function setQualUOM(qualuom) {
