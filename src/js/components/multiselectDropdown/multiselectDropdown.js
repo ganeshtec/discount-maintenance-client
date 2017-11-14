@@ -8,6 +8,7 @@ app.component('multiselectDropdown', {
         label:'@',
         labelDelimiter: '@',
         selectedOptions: '=',
+        notifyCompletion: '<',
         preview: '='
     },
     controller: multiselectDropdownController
@@ -16,16 +17,22 @@ app.component('multiselectDropdown', {
 
 multiselectDropdownController.$inject = ['$filter', '$scope'];
 function multiselectDropdownController($filter, $scope) {
-    this.setup = function() {
-        this.labelDelimiter = this.labelDelimiter ? this.labelDelimiter : '-';
-        this.suffix = this.suffix ? this.suffix : 'options';
-        this.prefix = this.prefix ? this.prefix : 'Selected';
-        this.label = angular.isArray(this.label) ? this.label : this.label.split(',');
-        this.optionText = 'Select ' + this.suffix;
-    }
-
     this.$onChanges = function(e) {
-        this.setup();
+        if(e['label']) {
+            this.label = angular.isArray(this.label) ? this.label : this.label.split(',');
+        }
+        if(e['labelDelimiter']) {
+            this.labelDelimiter = this.labelDelimiter ? this.labelDelimiter : '-';
+        }
+        if(e['suffix']) {
+            this.suffix = this.suffix ? this.suffix : 'options';
+        }
+        if(e['prefix']) {
+            this.prefix = this.prefix ? this.prefix : 'Selected';
+        }
+        if(e['notifyCompletion']) {
+            this.optionText = 'Select ' + this.suffix;
+        }
     }
 
     this.selectionChanged = function() {
