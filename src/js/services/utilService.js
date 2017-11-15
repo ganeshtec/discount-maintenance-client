@@ -409,6 +409,11 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
         if (promotion.promoTypeCd == null) {
             promotion.promoTypeCd = 10;
         }
+        if (promotion.purchaseConds.channels[0] === 87) {
+            promotion.reward.reasonCode = 49;
+            promotion.promoSubTypeCd = 'TypeLessDiscount';
+            promotion.promoSubTypeDesc = 'TypeLess-Discounts';
+        }
     }
 
     publicApi.isSubmitEligibleForDisable = function (promotion) {

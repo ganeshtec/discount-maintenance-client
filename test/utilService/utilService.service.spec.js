@@ -335,5 +335,27 @@ it('return true if item/sku is selected', function() {
      expect(utilService.isPrintLabelDisabled(promotion)).toEqual(false);
     });
  
+    it('populates subtype code with typeless information for store channel (MFA) promotions when setting defaults for save as draft', function() {
+      var promotion = {
+        "reward": {},
+        "purchaseConds": {
+          "channels": [87]
+        }
+      };
+       utilService.setDefaultsForSaveAsDraft(promotion);
+       expect(promotion.promoSubTypeCd).toEqual('TypeLessDiscount');
+       expect(promotion.promoSubTypeDesc).toEqual('TypeLess-Discounts');
+    })
+
+    it('does not populate subtype code with typeless information for online channel (DCM) promotions when setting defaults for save as draft', function() {
+      var promotion = {
+        "reward": {},
+        "purchaseConds": {
+          "channels": [123]
+        }
+      };
+       utilService.setDefaultsForSaveAsDraft(promotion);
+       expect(promotion.promoSubTypeCd).toEqual(20);
+    })
 
 });
