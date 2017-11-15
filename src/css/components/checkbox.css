@@ -87,4 +87,6 @@
   }
   md-checkbox .md-label {
     margin-left: 10px;
+    color: #000000;
+    font-weight: 400;
   }

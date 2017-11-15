@@ -12,35 +12,31 @@
 		<span class='error-message' ng-show="validationErrors.skuTypeFilter.isError">{{validationErrors.skuTypeFilter.message}}</span>
 
 		 <td width="35%">
-			  <div class="md-select">
-			  
-   					<select name="selectDept" style="margin-top:28px"  ng-options=" dept as dept.id+'-'+dept.name for dept in departmentDetails track by dept.id" ng-model="selectedDept" ng-change="getClassesforSelectedDepartment(selectedDept)">
-							<option value="">Select Department</option></select></div>
+			<div class="md-select">			  
+				<select name="selectDept" style="margin-top:28px"  ng-options=" dept as dept.id+'-'+dept.name for dept in departmentDetails track by dept.id" ng-model="selectedDept" ng-change="getClassesforSelectedDepartment(selectedDept)">
+					<option value="">Select Department</option>
+				</select>
+			</div>
  
 		 </td>
 		 <td width="30%"> 
-
-			 		<div class="md-select">	
- 
-						 		<select name="selectClass" style="margin-top:28px" ng-options="clas as clas.merchandiseClassNumber+'-'+clas.merchandiseClassDescription for clas in classList track by clas.merchandiseClassNumber" ng-model="selectedClass" ng-change="getSubClasses(selectedClass)">
-					<option value="">Select class</option></select> </div>
+			<div class="md-select"> 
+				<select name="selectClass" style="margin-top:28px" ng-options="clas as clas.merchandiseClassNumber+'-'+clas.merchandiseClassDescription for clas in classList track by clas.merchandiseClassNumber" ng-model="selectedClass" ng-change="getSubClasses(selectedClass)">
+					<option value="">Select class</option>
+				</select>
+			</div>
 		 </td>
 
 		 <td width="30%">
-			 	<div class="md-select">				
-	<select name="selectSubClass" style="margin-top:28px" ng-options="
-subClass as subClass.merchandiseSubordinateClassNumber+'-'+subClass.merchandiseSubordinateClassDescription for subClass in  SubClassList track by subClass.merchandiseSubordinateClassNumber" ng-model="selectedSubClass" ng-change="getSelectedSubClass()">
-					<option value="">Select subclass</option></select>	</div>
+			<multiselect-dropdown options="SubClassList" suffix="subclasses" notify-completion="notifyCompletion" selected-options="selectedSubClasses" preview="$ctrl.preview" label="merchandiseSubordinateClassNumber,merchandiseSubordinateClassDescription"></multiselect-dropdown>
 		 </td>
 		 <td>
-			 	<a href="" class="md-button secondary " style="margin-top:28px" ng-click="showData()" >
-		Add
-	</a>
+			<a href="" class="md-button secondary " style="margin-top:28px" ng-click="showData()" >Add</a>
 		 </td>
  	</tr>
- <tr class="category__table__row-notopborder">
+ 	<tr class="category__table__row-notopborder">
 		<th>
-		Department
+			Department
 		</th>
 		<th>
 			Class 
@@ -54,13 +50,11 @@ subClass as subClass.merchandiseSubordinateClassNumber+'-'+subClass.merchandiseS
  	</tr>
  	<tr ng-repeat="hierarchy in tableData" ng-class="{odd:($index % 2)}" >
 	 <td>{{hierarchy.deptNum}}-{{hierarchy.dept}}</td>
-	      <td>{{hierarchy.clasNum}}-{{hierarchy.clas}}</td>
-	      <td>{{hierarchy.subClasNum}}-{{hierarchy.subClass}}</td>
- 		<td class="r" ng-hide="preview">
-		 <a class="editOption thd-orange" ng-click="isDisabled || deleteRow($index)" href="" >
-	     Delete
-	     </a>
- 		</td>
+		<td>{{hierarchy.clasNum}}-{{hierarchy.clas}}</td>
+		<td>{{hierarchy.subClasNum}}-{{hierarchy.subClass}}</td>
+		<td class="r" ng-hide="preview">
+			<a class="editOption thd-orange" ng-click="isDisabled || deleteRow($index)" href="" >Delete</a>
+		</td>
  	</tr>
  </table>
  
