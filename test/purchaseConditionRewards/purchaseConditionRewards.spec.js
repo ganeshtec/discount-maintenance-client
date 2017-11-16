@@ -49,42 +49,54 @@ describe('Unit testing purchaseConditionRewards directive', function () {
             expect(element.find("div[class*='filter_sku_types_link']").attr('aria-hidden')).toBe('true');
         })
 
-         
+
     });
 
-        it('updatePrintLabel should set printLabel to false if item/sku selected', function () {
+    it('updatePrintLabel should set printLabel to false if item/sku selected', function () {
 
-            $scope.viewProp = { displayFilterSkuTypes: true }
-            $scope.data = { purchaseConds: { sources: [{ purchaseoption: 'category' }] } };
-            $scope.promoform = {};
-            $scope.preview = false;
-            $scope.isDisabled = false;
-            var element = $compile("<purchase-condition-rewards data='data' promoform='promoform' preview='preview' view-prop='viewProp'></purchase-condition-rewards>")($scope);
-            $scope.$digest();
-            this.$isolateScope = element.isolateScope();   
+        $scope.viewProp = { displayFilterSkuTypes: true }
+        $scope.data = { purchaseConds: { sources: [{ purchaseoption: 'category' }] } };
+        $scope.promoform = {};
+        $scope.preview = false;
+        $scope.isDisabled = false;
+        var element = $compile("<purchase-condition-rewards data='data' promoform='promoform' preview='preview' view-prop='viewProp'></purchase-condition-rewards>")($scope);
+        $scope.$digest();
+        this.$isolateScope = element.isolateScope();
 
-            this.$isolateScope.updatePrintLabel();
-            expect(this.$isolateScope.data.printLabel).toBe(false);
-         });
+        this.$isolateScope.updatePrintLabel();
+        expect(this.$isolateScope.data.printLabel).toBe(false);
+    });
 
-          it('updatePrintLabel should set printLabel to false if category selected', function () {
+    it('updatePrintLabel should set printLabel to false if category selected', function () {
 
-            $scope.viewProp = { displayFilterSkuTypes: true }
-            $scope.data = { purchaseConds: { sources: [{ purchaseoption: 'category' }] } };
-        
-            $scope.promoform = {};
-            $scope.preview = false;
-            $scope.isDisabled = false;
-            var element = $compile("<purchase-condition-rewards data='data' promoform='promoform' preview='preview' view-prop='viewProp'></purchase-condition-rewards>")($scope);
-            $scope.$digest();
-            this.$isolateScope = element.isolateScope();   
+        $scope.viewProp = { displayFilterSkuTypes: true }
+        $scope.data = { purchaseConds: { sources: [{ purchaseoption: 'category' }] } };
 
-            this.$isolateScope.updatePrintLabel();
-            expect(this.$isolateScope.data.printLabel).toBe(false);
-            expect(this.$isolateScope.data.labelText).toBe('');
-         });
+        $scope.promoform = {};
+        $scope.preview = false;
+        $scope.isDisabled = false;
+        var element = $compile("<purchase-condition-rewards data='data' promoform='promoform' preview='preview' view-prop='viewProp'></purchase-condition-rewards>")($scope);
+        $scope.$digest();
+        this.$isolateScope = element.isolateScope();
 
+        this.$isolateScope.updatePrintLabel();
+        expect(this.$isolateScope.data.printLabel).toBe(false);
+        expect(this.$isolateScope.data.labelText).toBe('');
+    });
 
+    // fit('#setBasketThreshold function', function () {
+    //     $scope.data = {
+    //         'purchaseConds':{
+    //             'basketThreshold': 50
+    //         }
+    //     }
+    //     var element = $compile("<purchase-condition-rewards data='data' promoform='promoform' preview='preview' view-prop='viewProp'></purchase-condition-rewards>")($scope);
+    //     $scope.$digest();
+    //     this.$isolateScope = element.isolateScope();
+    //     expect( this.$isolateScope.data.purchaseConds.basketThreshold).toEqual(50);
+    //     this.$isolateScope.setBasketThreshold(20);
+    //     expect( this.$isolateScope.data.purchaseConds.basketThreshold).toEqual(20);
+    // });
 
 
 });

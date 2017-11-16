@@ -35,6 +35,7 @@ app.factory('PromotionData', ['ALLOWED_PERMISSION_IDS',function (ALLOWED_PERMISS
             'promoType': 0,
             'purchaseConds': {
                 'customerSegmentId': 0,
+                'basketThreshold': null,
                 'isInclusionsOrExclusionsExist': false, // if has inclusion or exclusion set true
                 'channels': [87],
                 'qualUOM': 'Quantity',

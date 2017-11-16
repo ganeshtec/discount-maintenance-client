@@ -33,7 +33,8 @@ describe('promotionAdminCtrl', function () {
                 displayMerchHiearchy: true,
                 displayCustomerSegment: true,
                 promotionSubTypesForMFA: true,
-                displayFilterSkuTypes: true
+                displayFilterSkuTypes: true,
+                displayBasketThreshold: true
             }
             controller.setViewProperties(allowedPermissionIds.STORE);
             expect($scope.viewProperties).toEqual(expectedResult);
@@ -59,7 +60,8 @@ describe('promotionAdminCtrl', function () {
                 displayMerchHiearchy: false,
                 displayCustomerSegment: false,
                 promotionSubTypesForMFA: false,
-                displayFilterSkuTypes: false
+                displayFilterSkuTypes: false,
+                displayBasketThreshold: false
             }
             controller.setViewProperties(allowedPermissionIds.ONLINE);
             expect($scope.viewProperties).toEqual(expectedResult);

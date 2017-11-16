@@ -275,12 +275,12 @@ describe('validationService', function () {
 
     it('Rounds basketThreshold to 2 decimal places', function () {
         var promotion = {
-            reward:
+            purchaseConds:
             {
                 basketThreshold: 5.6788
             }
         }
-        expect(validationService.validateBasketThreshold(promotion).reward.basketThreshold).toBe(5.68)
+        expect(validationService.validateBasketThreshold(promotion).purchaseConds.basketThreshold).toBe(5.68)
     })
 
 });

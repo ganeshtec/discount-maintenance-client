@@ -156,10 +156,10 @@ app.service('validationService', ['$filter', 'utilService', function ($filter, u
     }
 
     publicApi.validateBasketThreshold = function (promotion) {
-        var number = new Number(promotion.reward.basketThreshold);
+        var number = new Number(promotion.purchaseConds.basketThreshold);
         var rounded = number.toFixed(2);
         var floatRounded = parseFloat(rounded);
-        promotion.reward.basketThreshold = floatRounded;
+        promotion.purchaseConds.basketThreshold = floatRounded;
         return promotion;
     }
 
