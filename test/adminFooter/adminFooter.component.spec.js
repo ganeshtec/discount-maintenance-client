@@ -162,7 +162,11 @@ describe('Unit testing adminFooter.directive.spec.js', function () {
 
     spyOn(utilService, "requiredFieldsMissing").and.returnValue(true);
     spyOn(utilService, "invalidSysGenCode").and.returnValue(false);
-
+    spyOn(utilService, "setDefaultsForSaveAsDraft").and.callFake(function () {
+      return {
+        then: function (callback) { return callback(true) }
+      }
+    })
     spyOn(utilService, 'isSubmitEligibleForDisable').and.callFake(function () {
       return {
         then: function (callback) { return callback(true) }
