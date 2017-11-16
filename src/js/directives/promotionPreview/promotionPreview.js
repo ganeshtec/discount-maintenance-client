@@ -16,6 +16,9 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                 validationErrors: '='
             },
             link: function (scope, element) {
+                scope.convertDateStringToDate = function(dateString){
+                    return dateString ? moment(dateString).startOf('date').toDate() : undefined;
+                }
                 scope.validationErrors = validationService.validatePromotion(scope.data);
                 scope.close = function () {
                     // if a exisiting promotion is submitted then reload the page
@@ -64,7 +67,6 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
 
                     var promotion = $.extend(true, {}, scope.previewData.data);
                     //var promotion = scope.previewData.data;
-
                     utilService.setDefaultsForSaveAsDraft(promotion);
                     utilService.transformPromotionRequest(promotion);
                     var missingLocation = utilService.requiredLocationsOrMarkets(promotion);
@@ -147,9 +149,7 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
 
 
                 scope.submit = function (promotionData) {
-
                     var promotion = $.extend(true, {}, promotionData);
-
                     if (promotion.status == 20 && promotion.promoSubTypeCd == 20 &&
                         promotion.promoTypeCd == 10) {
                         promotion.errorMessage = 'ERROR: Unable to Submit Promotion with Draft Default Values';

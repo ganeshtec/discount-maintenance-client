@@ -32,12 +32,7 @@ app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$sco
         };
 
         $scope.searchWithUrlParams = function () {
-            var channelList = [];
-            channelList.push($scope.channelId);
             var params = $location.search();
-            $scope.searchTerm = params.keyword || '';
-            params.channels = channelList;
-
             $rootScope.searchParams = params;
 
             $scope.search(params.channels,
@@ -69,19 +64,15 @@ app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$sco
         }
 
         $scope.updateKeyword = function () {
-            var current = $location.search();
-            if ($scope.searchTerm == current.keyword && $scope.searchType == current.searchType) {
+            var params = $location.search();
+            if ($scope.searchTerm == params.keyword && $scope.searchType == params.searchType) {
                 $scope.searchWithUrlParams();
             } else {
                 $scope.errorMessage = ' ';
-                var params = {
-                    'channels': [$scope.channelId],
-                    'keyword': $scope.searchTerm,
-                    'searchType': $scope.searchType,
-                    'page': 1,
-                    'type': $scope.filtertype,
-                    'status': $scope.filterstatus
-                }
+                params.keyword = $scope.searchTerm;
+                params.searchType = $scope.searchType;
+                params.page = 1;
+
                 $location.search(params);
             }
         }
@@ -95,11 +86,18 @@ app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$sco
         }
 
         $scope.clearSearch = function () {
+            
+            $scope.searchTerm = '';
+            $scope.searchType = 'discountName'
+            
+            var channelList = [];
+            channelList.push($scope.channelId);
             var params = {
-                'keyword': '',
+                'keyword': $scope.searchTerm,
                 'searchType': $scope.searchType,
                 'page': 1,
-                'size': $scope.DEFAULT_RECORDS_PER_PG
+                'size': $scope.DEFAULT_RECORDS_PER_PG,
+                'channels': channelList
             }
             $location.search(params);
         }
@@ -417,8 +415,6 @@ app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$sco
             return true;
         }
 
-
-
         $scope.search = function (channels, keyword, curPage, pageSize, status, type, sortby, order, searchType) {
             //clear all selected items when moving away from page
             $scope.selected = {};
@@ -435,6 +431,13 @@ app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$sco
                         wrapper.promotion = promotions[i];
                         wrapper.start = new Date(promotions[i].startDt.split(' ')[0].replace(/-/g, '\/'));
                         wrapper.end = new Date(promotions[i].endDt.split(' ')[0].replace(/-/g, '\/'));
+                        if (wrapper.end.getFullYear() == 9999 
+                        && wrapper.end.getDate() == 31 
+                        // Get month starts at 0 index for January, 11 is December
+                        && wrapper.end.getMonth() == 11) {
+                            wrapper.noEndDate = true;
+                            wrapper.end = 'No end date';
+                        }
                         wrapper.disabled = !$scope.isEditable(promotions[i]);
                         wrappers.push(wrapper);
                         all[promotions[i].promoId] = true;
@@ -449,6 +452,9 @@ app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$sco
                     $scope.loading = false;
                     $scope.filterstatus = status;
                     $scope.filtertype = type;
+
+                    $scope.dataLoaded = true;
+
                 },
                 function () {
                     $scope.loading = false;
@@ -576,22 +582,21 @@ app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$sco
 
         // Initialize dashboard with default values, call default search
         $scope.initializeDashboard = function () {
+
+            $scope.dataLoaded = false;
+
+            $scope.DEFAULT_RECORDS_PER_PG = 10;
+            $scope.LEAST_RECORDS_PER_PG = 5; //smallest value in the records per page selectbox 
+            $scope.all = {};
             $scope.selected = {};
             $scope.selectedCount = 0;
             $scope.sel = [];
             $scope.userRoleSelected = {
                 id: null,
             }
-            if ($rootScope.searchParams) {
-                $location.search($rootScope.searchParams);
-            }
+            
             $scope.channelId = [];
-            $scope.searchType = $location.search().searchType || 'discountName';
-            $scope.browseCatalogOverlayConfig = OverlayConfigFactory.getInstance();
-            $scope.setupSortableHeader();
-            // inital value of the select all check box
-            $scope.selectAll = false;
-            $scope.paginationConfig = {};
+
             // Set Channel ID based on logged in user role
             if ($cookies.get('currentUserRole') != null) {
                 $scope.userRoleSelected.id = $cookies.get('currentUserRole');
@@ -602,8 +607,29 @@ app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$sco
                     $scope.channelId = 87;
                 }
             }
+            
+            if ($rootScope.searchParams) {
+                var params = $rootScope.searchParams;
+
+                $scope.searchTerm = params.keyword;
+                $scope.searchType = params.searchType;
+
+                $location.search(params);
+            }else{
+                $scope.clearSearch();
+            }
+ 
+            $scope.browseCatalogOverlayConfig = OverlayConfigFactory.getInstance();
+            $scope.setupSortableHeader();
+            // inital value of the select all check box
+            $scope.selectAll = false;
+            $scope.paginationConfig = {};
+            
             // Default Search on Load - all status
-            $scope.searchWithUrlParams();
+            if($scope.dataLoaded == false) {
+                $scope.searchWithUrlParams();
+            }
+
             var statusPromise = promotionDataService.getAllStatus();
             $scope.status = {};
             statusPromise.then(
@@ -622,9 +648,6 @@ app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$sco
             } else {
                 getPromoSubTypes();
             }
-            $scope.DEFAULT_RECORDS_PER_PG = 10;
-            $scope.LEAST_RECORDS_PER_PG = 5; //smallest value in the records per page selectbox 
-            $scope.all = {};
         }
 
         // Instantiate with defaults

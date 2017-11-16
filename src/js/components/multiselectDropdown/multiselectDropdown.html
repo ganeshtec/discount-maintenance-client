@@ -1,0 +1,12 @@
+<div class="ms-dropdown" style="margin-top:28px" click-anywhere-but-here="$ctrl.showDropDown = false">
+    <input placeholder="Select subclass" master type="text" ng-model="$ctrl.optionText" ng-click="$ctrl.showDropDown=!$ctrl.showDropDown" readonly="readonly" ng-disabled="$ctrl.preview"/>
+    <i class="fa fa-caret-down" ng-click="$ctrl.showDropDown = !$ctrl.showDropDown" role="button" tabindex="0"></i>						
+    <ul ng-if="$ctrl.showDropDown" ng-style="style">
+        <li ng-repeat="option in $ctrl.options" ng-if="!option.hide">
+            <a href="">
+                <md-checkbox ng-true-value="true" ng-false-value="false" ng-model="option.checked"
+                ng-change="$ctrl.selectionChanged()">{{$ctrl.getOptionLabel(option)}}</md-checkbox>     
+            </a>
+        </li>
+    </ul>
+</div>

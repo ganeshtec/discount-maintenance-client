@@ -55,12 +55,6 @@
 .promotions th,.promotions td{
     padding: 5px !important; } 
 
-.promotions md-checkbox.md-checked .md-icon {
-  background-color: green;
-} 
-.promotions md-checkbox .md-container {
-  top:90%;
-}   
 .error {
   font-size: 15px;
   margin-top: -15px;

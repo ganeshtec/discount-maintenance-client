@@ -1,4 +1,4 @@
-.md-checkbox {
+/* .md-checkbox {
     margin:5px 0px;
   }
   .md-checkbox:first-of-type {
@@ -74,4 +74,19 @@
     font-size:14px;
     line-height:15px;
     text-align:center;
+  } */
+  md-checkbox.md-checked .md-icon {
+    background-color: green;
+  } 
+  md-checkbox .md-container {
+    top:48%;
+    left:-3px;
+  }   
+  md-checkbox[role=checkbox][aria-checked=true]::after{
+    opacity: 0;
+  }
+  md-checkbox .md-label {
+    margin-left: 10px;
+    color: #000000;
+    font-weight: 400;
   }

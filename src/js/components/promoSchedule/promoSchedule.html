@@ -23,15 +23,20 @@
     <div flex="50">
         <div class="md-text-field" flex="80">
             <label for="promoname">End Date</label>
-            <input class="" type="date" ng-model="$ctrl.data.endDt" placeholder="yyyy-MM-dd" name="end" min="{{$ctrl.data.minEndDt}}" max="9999-12-31" ng-required="$ctrl.preview"
-            ng-blur="$ctrl.validatePromotion()" ng-disabled="$ctrl.preview"/>
-            <span class='error-message' ng-show="$ctrl.validationErrors.endDt.isError">{{$ctrl.validationErrors.endDt.message}} </span>
+            <input class="endDateBox" type="date" ng-model="$ctrl.data.endDtFormatted" placeholder="yyyy-MM-dd" name="end" min="{{$ctrl.data.minEndDt}}" max="9999-12-31"
+            ng-blur="$ctrl.validatePromotion()" ng-change="$ctrl.setEndDtFromUI()" ng-disabled="$ctrl.preview || $ctrl.data.endDateSelection"/>
+            <span class='error-message' ng-show="$ctrl.validationErrors.endDtFormatted.isError">{{$ctrl.validationErrors.endDt.message}} </span>
         </div>
-    </div>
+    </div>  
+    
     <div flex="50" ng-show="$ctrl.viewProp.displayScheduleTime">
         <div class="md-text-field md-text-field-border" flex="80">
             <label for="promomaxredem">End Time (EST)</label>
             <input type="text" id="endtime" name="endtime" ng-model="$ctrl.endTime" disabled/>
         </div>
     </div>
+</div>
+<div>
+    <md-checkbox aria-label="No end date" ng-change="$ctrl.updateNoEndDate()" ng-true-value="true" ng-false-value="false" 
+    ng-disabled="$ctrl.preview" ng-model="$ctrl.data.endDateSelection">No end date</md-checkbox>     
 </div>

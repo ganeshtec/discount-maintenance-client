@@ -153,8 +153,10 @@
 									<td class="l" width="15%">{{promoSubTypes[wrapper.promotion.promoSubTypeCd]}}</td>
 									<td><input ng-disabled="wrapper.disabled" type="date" required class="promotionDate" ng-model="wrapper.start" required
 										/></td>
-									<td><input ng-disabled="wrapper.disabled" type="date" required ng-min="wrapper.start" class="promotionDate" ng-model="wrapper.end"
+									<td ng-if="!wrapper.noEndDate"><input ng-disabled="wrapper.disabled" type="date" class="promotionDate" ng-model="wrapper.end"
 											required /></td>
+									<td ng-if="wrapper.noEndDate"><input ng-disabled="wrapper.disabled" class="promotionDate" ng-model="wrapper.end"
+										required /></td>
 									<td>{{wrapper.promotion.meta.createdBy|uppercase}}</td>
 									<td class="l">{{wrapper.promotion.meta.lastUpdatedBy|uppercase}}&nbsp;{{wrapper.promotion.meta.lastUpdated}}</td>
 									<td>{{wrapper.promotion.priority}}</td>
