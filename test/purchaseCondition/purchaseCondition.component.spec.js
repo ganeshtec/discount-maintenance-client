@@ -151,12 +151,6 @@ describe('purchaseCondition', function () {
             expect(ctrl.data.reward.method).toEqual('INDVDLAFFECTEDITMS');
         });
 
-        it('#setBasketThreshold function', function () {
-            ctrl.data.reward.basketThreshold = 50;
-            ctrl.setBasketThreshold(20);
-            expect(ctrl.data.reward.basketThreshold).toEqual(20);
-        });
-
         it('#setRewardMethod function order level', function () {
             ctrl.data.promoType = 'ORDERPROMO';
             ctrl.setRewardMethod();

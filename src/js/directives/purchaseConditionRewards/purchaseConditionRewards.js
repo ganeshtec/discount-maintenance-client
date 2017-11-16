@@ -1,6 +1,6 @@
 // Purpose is to build promotion code spec.
-app.directive('purchaseConditionRewards', ['SourceData', 'customerSegmentDataService', '$mdDialog','$rootScope','utilService',
-    function (SourceData, customerSegmentDataService,$mdDialog,$rootScope, utilService) {
+app.directive('purchaseConditionRewards', ['SourceData', 'customerSegmentDataService', '$mdDialog', '$rootScope', 'utilService','validationService',
+    function (SourceData, customerSegmentDataService, $mdDialog, $rootScope, utilService, validationService) {
         return {
             restrict: 'E',
             templateUrl: 'purchaseConditionRewards.html',
@@ -9,7 +9,8 @@ app.directive('purchaseConditionRewards', ['SourceData', 'customerSegmentDataSer
                 promoform: '=',
                 preview: '=',
                 isDisabled: '=',
-                viewProp: '='
+                viewProp: '=',
+                validationErrors: '='
             },
 
             link: function (scope) {
@@ -71,7 +72,7 @@ app.directive('purchaseConditionRewards', ['SourceData', 'customerSegmentDataSer
 
                     }
                 }
-                scope.updatePrintLabel = function(){
+                scope.updatePrintLabel = function () {
                     utilService.updatePrintLabel(scope.data);
                 }
 
@@ -102,23 +103,23 @@ app.directive('purchaseConditionRewards', ['SourceData', 'customerSegmentDataSer
                     }
 
                 }
-                
-                scope.showSkuTypeModal = function(ev,source,promostatus) {
-                    scope.source=source;
-                    scope.promostatus=promostatus;
+
+                scope.showSkuTypeModal = function (ev, source, promostatus) {
+                    scope.source = source;
+                    scope.promostatus = promostatus;
                     $mdDialog.show({
                         template: '<sku-type-modal source="source" promo-status="promostatus"></sku-type-modal>',
                         parent: angular.element(document.body),
                         targetEvent: ev,
                         scope: scope,
-                        preserveScope: true       
-                    }).finally(function() {
+                        preserveScope: true
+                    }).finally(function () {
                         $rootScope.$broadcast('refreshSkuTypeValidations');
                     });
                 }
 
                 scope.removeAll = function () {
-                    for(var i = 0; i < scope.data.purchaseConds.sources.length; i++){
+                    for (var i = 0; i < scope.data.purchaseConds.sources.length; i++) {
                         scope.data.purchaseConds.sources[i].inclusions.partnumbers = [];
                         scope.data.purchaseConds.sources[i].exclusions = {};
                         scope.data.purchaseConds.sources[i].exclusions.attrs = {};
@@ -126,6 +127,12 @@ app.directive('purchaseConditionRewards', ['SourceData', 'customerSegmentDataSer
                     }
 
                     $rootScope.$broadcast('clearCategories');
+                }
+                // scope.setBasketThreshold = function(basketThreshold) {
+                //     scope.data.purchaseConds.basketThreshold = basketThreshold;
+                // }
+                scope.validatePromotion = function () {
+                    scope.validationErrors = validationService.validatePromotion(scope.data);
                 }
             }
         }
