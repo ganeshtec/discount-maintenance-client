@@ -108,7 +108,7 @@ multiselect .dropdown-menu > li > a {
   width: 100%;
 }
 .ms-dropdown input {
-  width: 95%;
+  width: 100%;
   vertical-align:text-top;
   border:solid 1px #DDDDDD;
   background-color:#EEEEEE;
@@ -161,4 +161,16 @@ multiselect .dropdown-menu > li > a {
 }
 .ms-dropdown ul li:hover{
   background-color: #eee;
+}
+
+.ms-dropdown span {
+  position: relative;
+}
+
+.ms-dropdown span i.fa-caret-down {
+  color: #666;
+  top: 15px;
+  right: 15px;
+  position: absolute;
+  z-index: 1;
 }
