@@ -174,3 +174,7 @@ multiselect .dropdown-menu > li > a {
   position: absolute;
   z-index: 1;
 }
+/*
+[role=checkbox][aria-checked=false]::after {
+  color: #000000;
+}*/

@@ -4,6 +4,12 @@
         <input placeholder="Select subclass" id="email" master type="text" ng-model="$ctrl.optionText" ng-click="$ctrl.showDropDown=!$ctrl.showDropDown" readonly="readonly" ng-disabled="$ctrl.preview"/>
     </span>
     <ul ng-if="$ctrl.showDropDown" ng-style="style">
+        <li>
+            <a href="">
+                <md-checkbox ng-model="$ctrl.checkAll"
+                ng-change="$ctrl.selectAll()" role="checkbox" aria-checked="{{$ctrl.checkAll}}">All</md-checkbox>     
+            </a>
+        </li>
         <li ng-repeat="option in $ctrl.options" ng-if="!option.hide">
             <a href="">
                 <md-checkbox ng-true-value="true" ng-false-value="false" ng-model="option.checked"
