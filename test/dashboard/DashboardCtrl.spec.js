@@ -149,7 +149,7 @@ describe('DashboardCtrl', function () {
             $scope.searchType = "omsId";
             $scope.updateKeyword();
             var actualResults = $location.search();
-            console.log("Actual Results:: "+ actualResults.keyword);
+            // console.log("Actual Results:: "+ actualResults.keyword);
             expect(actualResults.keyword).toEqual(expectedResults.keyword);
             expect(actualResults.searchType).toEqual(expectedResults.searchType);
         });
