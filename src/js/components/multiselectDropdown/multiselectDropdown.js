@@ -38,6 +38,7 @@ function multiselectDropdownController($filter, $scope) {
         }
         if(e['notifyCompletion'] || e['options']) {
             this.optionText = 'Select ' + this.suffix;
+            this.checkAll = false;
         }
     }
 
@@ -53,6 +54,8 @@ function multiselectDropdownController($filter, $scope) {
             this.optionText = 'Select ' + this.suffix;
         } else if(this.selectedOptions.length === 1 ) {
             this.optionText = this.getOptionLabel(this.selectedOptions[0]);
+        } else if(this.selectedOptions.length == this.options.length) {
+            this.optionText = 'Selected All ' + this.suffix;
         } else {
             this.optionText = this.prefix + ' ' + this.selectedOptions.length + ' of ' + this.options.length + ' ' + this.suffix;
         }
@@ -60,7 +63,7 @@ function multiselectDropdownController($filter, $scope) {
     }
 
     function setCheckAll() {
-        if(this.selectedOptions.length == 0) {
+        if(this.selectedOptions.length === 0) {
             this.checkAll = false;
         } else if(this.selectedOptions.length == this.options.length) {
             this.checkAll = true;
@@ -88,6 +91,7 @@ function multiselectDropdownController($filter, $scope) {
         if(!this.checkAll) {
             this.selectedOptions.splice(0, this.selectedOptions.length);
         }
+        this.selectionChanged();
     }
 }
 

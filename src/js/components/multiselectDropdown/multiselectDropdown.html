@@ -5,16 +5,12 @@
     </span>
     <ul ng-if="$ctrl.showDropDown" ng-style="style">
         <li>
-            <a href="">
-                <md-checkbox ng-model="$ctrl.checkAll"
-                ng-change="$ctrl.selectAll()" role="checkbox" aria-checked="{{$ctrl.checkAll}}">All</md-checkbox>     
-            </a>
+            <md-checkbox role="checkbox" ng-model="$ctrl.checkAll"
+            ng-change="$ctrl.selectAll()" aria-checked="{{$ctrl.checkAll}}">All</md-checkbox>     
         </li>
         <li ng-repeat="option in $ctrl.options" ng-if="!option.hide">
-            <a href="">
-                <md-checkbox ng-true-value="true" ng-false-value="false" ng-model="option.checked"
-                ng-change="$ctrl.selectionChanged()">{{$ctrl.getOptionLabel(option)}}</md-checkbox>     
-            </a>
+            <md-checkbox ng-true-value="true" ng-false-value="false" ng-model="option.checked"
+            ng-change="$ctrl.selectionChanged()">{{$ctrl.getOptionLabel(option)}}</md-checkbox>     
         </li>
     </ul>
 </div>
