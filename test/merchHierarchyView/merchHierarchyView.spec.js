@@ -25,13 +25,13 @@ describe('Unit testing merchHierarchyView directive', function () {
         spyOn(merchHierarchyDataService, 'getAllClasses').and.callFake(function (arguments) {
             var deferredResultClasses = $q.defer();
             deferredResultClasses.resolve({"merchClasses":[{"merchandiseClassNumber":1,"merchandiseClassDescription":"FLEX TO HTML"}]});
-            console.log('getAllClasses arguments 1', arguments, deferredResultClasses.promise)
+            //console.log('getAllClasses arguments 1', arguments, deferredResultClasses.promise)
             return deferredResultClasses.promise;
         });
         spyOn(merchHierarchyDataService, 'getSubClasses').and.callFake(function (arguments) {
             var deferredResultSubClasses = $q.defer();
             deferredResultSubClasses.resolve({"merchSubClasses":[{"merchandiseSubordinateClassNumber":1,"merchandiseSubordinateClassDescription":"FLEX TEST"}]});
-            console.log('getSubClasses arguments 1', arguments, deferredResultSubClasses.promise)
+            //console.log('getSubClasses arguments 1', arguments, deferredResultSubClasses.promise)
             return deferredResultSubClasses.promise;
         });
         _$httpBackend_.when('GET', '/labels/leadTime')
@@ -46,7 +46,7 @@ describe('Unit testing merchHierarchyView directive', function () {
             $scope.isDisabled = false;
             $scope.item = { "purchaseoption": "category"};
         });
-        fit('verify department', function () {
+        it('verify department', function () {
             $scope.viewProp = { displayOMSIdExclusion: false, displayItemsSku: true }
             var element = $compile('<merch-hierarchy-view data="data"  preview="preview" source="item" is-disabled="isDisabled" promoform="promoform" view-prop="viewProp" promo-status="data.status" ng-show="item.purchaseoption == \'category\' && viewProp.displayItemsSku"></merch-hierarchy-view>')($scope);
             $scope.$digest();

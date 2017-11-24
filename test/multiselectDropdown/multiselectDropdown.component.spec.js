@@ -35,6 +35,35 @@ describe('multiselect dropdown', function () {
         ctrl.options[0].checked = true;
         ctrl.selectionChanged();
         expect(ctrl.selectedOptions.length).toEqual(1);
+        expect(ctrl.checkAll).toEqual('mixed');
+    });
+
+    it('Test #setCheckAll', function () {
+        ctrl.selectedOptions = [ctrl.options[0]];
+        ctrl.setCheckAll();
+        expect(ctrl.checkAll).toEqual('mixed');
+
+        ctrl.selectedOptions = [];
+        ctrl.setCheckAll();
+        expect(ctrl.checkAll).toEqual(false);
+
+        ctrl.selectedOptions = [ctrl.options[0],ctrl.options[0]];
+        ctrl.setCheckAll();
+        expect(ctrl.checkAll).toEqual(true);
+    });
+
+    it('Test #selectAll', function () {
+        //select all options
+        ctrl.checkAll = true;
+        ctrl.selectAll();
+        expect(ctrl.selectedOptions.length).toEqual(2);
+        expect(ctrl.checkAll).toEqual(true);
+
+        //unselect all options
+        ctrl.checkAll = false;
+        ctrl.selectAll();
+        expect(ctrl.selectedOptions.length).toEqual(0);
+        expect(ctrl.checkAll).toEqual(false);
     });
 
     it('Test #getOptionLabel', function () {

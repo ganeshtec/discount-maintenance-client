@@ -36,7 +36,7 @@ describe('promoLabels', function () {
         $scope.preview = false;
         var element = $compile("<promo-labels data ='data' preview='preview' promoform='promoForm' ></promo-labels>")($scope);
 
-        console.log('Receipt Length: '+ ctrl.data.receiptHeader);
+        // console.log('Receipt Length: '+ ctrl.data.receiptHeader);
         expect(ctrl.data.receiptHeader.length).toBeLessThan(30);
         expect(ctrl.data.receiptDesc.length).toBeLessThan(30);
     });

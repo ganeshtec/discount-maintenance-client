@@ -17,6 +17,12 @@ app.component('multiselectDropdown', {
 
 multiselectDropdownController.$inject = ['$filter', '$scope'];
 function multiselectDropdownController($filter, $scope) {
+    this.selectionChanged = selectionChanged;
+    this.getOptionLabel = getOptionLabel;
+    this.selectAll = selectAll;
+    this.setCheckAll = setCheckAll;
+    this.checkAll = false;
+
     this.$onChanges = function(e) {
         if(e['label']) {
             this.label = angular.isArray(this.label) ? this.label : this.label.split(',');
@@ -30,12 +36,13 @@ function multiselectDropdownController($filter, $scope) {
         if(e['prefix']) {
             this.prefix = this.prefix ? this.prefix : 'Selected';
         }
-        if(e['notifyCompletion']) {
+        if(e['notifyCompletion'] || e['options']) {
             this.optionText = 'Select ' + this.suffix;
+            this.checkAll = false;
         }
     }
 
-    this.selectionChanged = function() {
+    function selectionChanged() {
         this.selectedOptions = [];
         for(var i=0; i < this.options.length; i++){
             if(this.options[i].checked) {
@@ -47,18 +54,44 @@ function multiselectDropdownController($filter, $scope) {
             this.optionText = 'Select ' + this.suffix;
         } else if(this.selectedOptions.length === 1 ) {
             this.optionText = this.getOptionLabel(this.selectedOptions[0]);
+        } else if(this.selectedOptions.length == this.options.length) {
+            this.optionText = 'Selected All ' + this.suffix;
         } else {
             this.optionText = this.prefix + ' ' + this.selectedOptions.length + ' of ' + this.options.length + ' ' + this.suffix;
         }
+        this.setCheckAll();
     }
 
-    this.getOptionLabel = function(option) {
+    function setCheckAll() {
+        if(this.selectedOptions.length === 0) {
+            this.checkAll = false;
+        } else if(this.selectedOptions.length == this.options.length) {
+            this.checkAll = true;
+        } else {
+            this.checkAll = 'mixed';
+        }
+    }
+
+    function getOptionLabel(option) {
         var optionLabel = '';
         for(var i=0; i < this.label.length; i++){
             optionLabel += option[this.label[i]] + '-';
         }
         optionLabel = optionLabel.substring(0,optionLabel.length-1);
         return optionLabel;
+    }
+
+    function selectAll(){
+        for(var i=0; i < this.options.length; i++){
+            this.options[i].checked = this.checkAll;
+            if(this.checkAll) {
+                this.selectedOptions.push(this.options[i]);
+            }
+        }
+        if(!this.checkAll) {
+            this.selectedOptions.splice(0, this.selectedOptions.length);
+        }
+        this.selectionChanged();
     }
 }
 
