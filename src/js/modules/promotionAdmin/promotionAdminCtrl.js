@@ -72,7 +72,7 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$co
                     displayExclusionSubCategories: false,
                     displayPaymentType: false,
                     displayScheduleTime: true,
-                    displayPrintLabel: false,
+                    displayPrintLabel: true,
                     displayLocations: true,
                     displayItemsSku: true,
                     displayMerchHiearchy: true,
@@ -124,13 +124,6 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$co
             $scope.section = promotionDataService.getSection($scope.sections);
             $scope.sectionInx = $scope.sections.indexOf($scope.section);
 
-            var labelToggle = leadTimeService.fetchLabelToggle();
-            labelToggle.then(function (toggle) {
-                $this.updateSections(toggle);
-            })
-
-
-
             //get new data
             if (!$scope.editMode) {
 
@@ -153,13 +146,9 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$co
             }
         }
 
-        $this.updateSections = function (labelToggle) {
+        $this.updateSections = function () {
             if ($scope.userType == allowedPermissionIDs.STORE) {
                 $scope.sections.forEach(function (section) {
-                    if (section.name === 'Labels') {
-                        section.shouldDisplay = labelToggle;
-                        $scope.viewProperties.displayPrintLabel = labelToggle;
-                    }
                 })
             }
         }
