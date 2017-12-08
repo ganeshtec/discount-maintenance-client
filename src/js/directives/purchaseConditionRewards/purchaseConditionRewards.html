@@ -12,7 +12,7 @@
 </select>
 
 </div>
-<div class="basketThresholdDiv" ng-show="viewProp.displayBasketThreshold" ng-if="showBasketThreshold">
+<div class="basketThresholdDiv" ng-show="viewProp.displayBasketThreshold">
 		<h3 class = "basketThresholdHeader"> Basket Threshold (Optional) </h3>	
 			<span class="basketThresholdText"> Enter the dollar amount a customer's order must reach to be assessed for this discount</span>
 			<br>
@@ -23,7 +23,7 @@
 	
 
 
-<div ng-if="data.promoCdRqrd != false && data.promoSubTypeCd != 'MultipleItemsPercentDiscount' && data.promoSubTypeCd != 'MultipleItemsValueDiscount'">
+<div ng-if="data.promoCdRqrd != false  && data.promoSubTypeCd != 'MultipleItemsPercentDiscount' && data.promoSubTypeCd != 'MultipleItemsValueDiscount'">
     <div class="md-text-field">
         <label for="name">Site wide promotion </label>
         <div class="md-radio">

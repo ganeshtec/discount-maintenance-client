@@ -10,12 +10,9 @@ app.component('promoLabels', {
     controller: PromoLabelsController
 });
 
-PromoLabelsController.$inject = ['validationService', 'utilService', 'featureFlagService'];
+PromoLabelsController.$inject = ['validationService', 'utilService'];
 
-function PromoLabelsController(validationService, utilService, featureFlagService) {
-
-    var ctrl = this;
-    ctrl.showReceiptText = false;
+function PromoLabelsController(validationService, utilService) {
 
     this.validatePromotion = function() {
         this.validationErrors = validationService.validatePromotion(this.data);
@@ -28,15 +25,6 @@ function PromoLabelsController(validationService, utilService, featureFlagServic
     this.isPrintLabelDisabled = function(){
         return utilService.isPrintLabelDisabled(this.data);
     }
-
-    this.isReceiptTextActive = function() {
-        var promise = featureFlagService.getFeatureFlags();
-        promise.then(function(res) {
-            ctrl.showReceiptText = res.receiptText;
-        })
-    }
-
-    this.isReceiptTextActive();
 
 }
 
