@@ -6,7 +6,7 @@
 				<label for="name">
 					Discount Name {{isDisabled}} {{userType}}
 				</label>
-				<input type="text" id="name" name="name" ng-model="data.name" title="Discount Name" placeholder="Enter 254 characters or fewer" ng-maxlength="254" ng-required="preview" ng-disabled="preview" replace-special-characters />
+				<input type="text" id="name" name="name" ng-model="data.name" title="Discount Name" placeholder="Enter 254 characters or fewer" ng-maxlength="254" ng-trim="false" ng-required="preview" ng-disabled="preview" replace-special-characters />
 				<span class='error-message' ng-show="promoForm.name.$invalid">
 					<span ng-show="promoForm.name.$error.required">
 						Please enter a valid promotion name
@@ -68,13 +68,6 @@
 					<span ng-show="promoForm.priority.$error.required">
 						Please enter a valid promotion priority (should be numeric)
 					</span>
-					
-				<!--<span ng-show="promoForm.priority.$error.max">
-					Please enter value below 1000
-				</span>
-				<span ng-show="promoForm.priority.$error.min">
-					Please enter value between 0 and 1000
-				</span>-->
 				</span>
 				
 				<span class='error-message' ng-show="validationErrors.priorityRange.isError">{{validationErrors.priorityRange.message}}</span>
