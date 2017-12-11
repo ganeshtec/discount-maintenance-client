@@ -1,6 +1,6 @@
 // Purpose is to build promotion code spec.
-app.directive('purchaseConditionRewards', ['SourceData', 'customerSegmentDataService', '$mdDialog', '$rootScope', 'utilService','validationService',
-    function (SourceData, customerSegmentDataService, $mdDialog, $rootScope, utilService, validationService) {
+app.directive('purchaseConditionRewards', ['SourceData', 'customerSegmentDataService', '$mdDialog', '$rootScope', 'utilService','validationService', 'featureFlagService',
+    function (SourceData, customerSegmentDataService, $mdDialog, $rootScope, utilService, validationService, featureFlagService) {
         return {
             restrict: 'E',
             templateUrl: 'purchaseConditionRewards.html',
@@ -134,6 +134,13 @@ app.directive('purchaseConditionRewards', ['SourceData', 'customerSegmentDataSer
                 scope.validatePromotion = function () {
                     scope.validationErrors = validationService.validatePromotion(scope.data);
                 }
+
+                scope.showBasketThreshold = false;
+
+                var featureTogglePromise = featureFlagService.getFeatureFlags();
+                featureTogglePromise.then(function(data) {
+                    scope.showBasketThreshold = data.basketThreshold;
+                })  
             }
         }
     }

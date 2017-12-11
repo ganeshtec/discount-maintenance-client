@@ -21,6 +21,8 @@ describe('Unit testing purchaseConditionRewards directive', function () {
             .respond(200, []);
         _$httpBackend_.when('GET', '/labels/leadTime')
             .respond(200, 3);
+        _$httpBackend_.when('GET', '/featureFlags')
+        .respond(200, {});
     }));
 
     describe("Show/Hide options based on flags", function () {

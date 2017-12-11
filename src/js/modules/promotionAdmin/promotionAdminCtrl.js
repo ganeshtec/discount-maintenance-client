@@ -1,5 +1,5 @@
-app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$cookies', '$location', 'loginService', 'promotionDataService', 'PromotionData', 'SECTIONS', 'DataFactory', 'createTestRecord', 'URL_CONFIG', 'ALLOWED_PERMISSION_IDS', 'leadTimeService',
-    function ($scope, $routeParams, $timeout, $cookies, $location, loginService, promotionDataService, PromotionData, SECTIONS, DataFactory, createTestRecord, URL_CONFIG, ALLOWED_PERMISSION_IDS, leadTimeService) {
+app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$cookies', '$location', 'loginService', 'promotionDataService', 'PromotionData', 'SECTIONS', 'DataFactory', 'createTestRecord', 'URL_CONFIG', 'ALLOWED_PERMISSION_IDS',
+    function ($scope, $routeParams, $timeout, $cookies, $location, loginService, promotionDataService, PromotionData, SECTIONS, DataFactory, createTestRecord, URL_CONFIG, ALLOWED_PERMISSION_IDS) {
 
         var $this = this;
 
@@ -72,7 +72,7 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$co
                     displayExclusionSubCategories: false,
                     displayPaymentType: false,
                     displayScheduleTime: true,
-                    displayPrintLabel: false,
+                    displayPrintLabel: true,
                     displayLocations: true,
                     displayItemsSku: true,
                     displayMerchHiearchy: true,
@@ -124,13 +124,6 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$co
             $scope.section = promotionDataService.getSection($scope.sections);
             $scope.sectionInx = $scope.sections.indexOf($scope.section);
 
-            var labelToggle = leadTimeService.fetchLabelToggle();
-            labelToggle.then(function (toggle) {
-                $this.updateSections(toggle);
-            })
-
-
-
             //get new data
             if (!$scope.editMode) {
 
@@ -150,17 +143,6 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$co
                 getPromotionByID(data.promoId);
 
                 // End Testing Create
-            }
-        }
-
-        $this.updateSections = function (labelToggle) {
-            if ($scope.userType == allowedPermissionIDs.STORE) {
-                $scope.sections.forEach(function (section) {
-                    if (section.name === 'Labels') {
-                        section.shouldDisplay = labelToggle;
-                        $scope.viewProperties.displayPrintLabel = labelToggle;
-                    }
-                })
             }
         }
 

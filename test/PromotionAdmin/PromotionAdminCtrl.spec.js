@@ -28,7 +28,7 @@ describe('promotionAdminCtrl', function () {
                 displayPaymentType: false,
                 displayScheduleTime: true,
                 displayLocations: true,
-                displayPrintLabel: false,
+                displayPrintLabel: true,
                 displayItemsSku:true,
                 displayMerchHiearchy: true,
                 displayCustomerSegment: true,
@@ -68,22 +68,4 @@ describe('promotionAdminCtrl', function () {
         });
     });
 
-
-    describe('updateSections', function() {
-        it('Display label section with toggle true and current user MFA', function() {
-            $scope.userType = 228;
-            controller.setViewProperties(228);
-            controller.updateSections(true);
-            expect($scope.sections[6].shouldDisplay).toEqual(true);
-            expect($scope.viewProperties.displayPrintLabel).toEqual(true);
-        });
-
-        it('Should not display label section with toggle true and current user DCM', function() {
-            $scope.userType = 229;
-            controller.setViewProperties(229);
-            controller.updateSections(true);
-            expect($scope.sections[6].shouldDisplay).toEqual(false);
-        });
-    });
-    
 });
