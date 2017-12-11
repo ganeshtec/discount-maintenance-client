@@ -1,5 +1,5 @@
-app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$cookies', '$location', 'loginService', 'promotionDataService', 'PromotionData', 'SECTIONS', 'DataFactory', 'createTestRecord', 'URL_CONFIG', 'ALLOWED_PERMISSION_IDS', 'leadTimeService',
-    function ($scope, $routeParams, $timeout, $cookies, $location, loginService, promotionDataService, PromotionData, SECTIONS, DataFactory, createTestRecord, URL_CONFIG, ALLOWED_PERMISSION_IDS, leadTimeService) {
+app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$cookies', '$location', 'loginService', 'promotionDataService', 'PromotionData', 'SECTIONS', 'DataFactory', 'createTestRecord', 'URL_CONFIG', 'ALLOWED_PERMISSION_IDS',
+    function ($scope, $routeParams, $timeout, $cookies, $location, loginService, promotionDataService, PromotionData, SECTIONS, DataFactory, createTestRecord, URL_CONFIG, ALLOWED_PERMISSION_IDS) {
 
         var $this = this;
 
@@ -143,13 +143,6 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$co
                 getPromotionByID(data.promoId);
 
                 // End Testing Create
-            }
-        }
-
-        $this.updateSections = function () {
-            if ($scope.userType == allowedPermissionIDs.STORE) {
-                $scope.sections.forEach(function (section) {
-                })
             }
         }
 

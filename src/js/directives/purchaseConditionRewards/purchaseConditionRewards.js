@@ -135,7 +135,7 @@ app.directive('purchaseConditionRewards', ['SourceData', 'customerSegmentDataSer
 
                 scope.showBasketThreshold = false;
 
-                featureTogglePromise = featureFlagService.getFeatureFlags();
+                var featureTogglePromise = featureFlagService.getFeatureFlags();
                 featureTogglePromise.then(function(data) {
                     scope.showBasketThreshold = data.basketThreshold;
                 })  
