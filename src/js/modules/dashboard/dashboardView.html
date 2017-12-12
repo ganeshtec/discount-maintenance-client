@@ -4,15 +4,9 @@
 			<h1 class="pull-left md-display-2 admin__header__title">
 				Discount List
 			</h1>
-			<!-- 
-
-					if MFA
-						 <a href="#" class="md-button"  ng-href="#/promotion-digital"><i class="fa fa-plus"></i> Create New Promotion</a> 
-					else
-						 <a href="#" class="md-button"  ng-href="#/promotion-mfa"><i class="fa fa-plus"></i> Create New Promotion</a> 		 
-
-				-->
-			<a class="md-button" ng-href="#/discount-admin"><i class="fa fa-plus"></i> Create New Discount</a>
+			<div class="discountButton" >
+			<a class="button primary" ng-href="#/discount-admin"> Create New Discount</a>
+			</div>
 		</div>
 	</div>
 	<div layout="row">
@@ -33,7 +27,7 @@
 						<div class="md-toolbar-search">
 							<div id="searchFilterSearchBox">
 								<input id="searchFilterSearchBoxInput" class="table__search" placeholder="Search Discount name or keyword" type="text" ng-model="searchTerm"
-									ng-keypress="($event.keyCode === 13) && updateKeyword()" replace-special-characters />
+								 ng-trim="false" ng-keypress="($event.keyCode === 13) && updateKeyword()" replace-special-characters />
 							</div>
 							<div id="searchFilterSearchButton">
 								<a class="md-button secondary" href="" ng-click="updateKeyword()">Search</a>
@@ -112,7 +106,7 @@
 							<a class="md-button util__btn" ng-click="selectedCount == 2 && compare()" ng-disabled="selectedCount != 2"><i class="fa fa-pencil"></i> Compare</a>
 							<a class="md-button util__btn" ng-disabled="true"><i class="fa fa-columns"></i> Vertical View</a>
 							<!-- <a class="md-button util__btn" ng-disabled="selectedCount != 1" ng-click="selectedCount == 1 && setPromotionToView(sel)"><i class="fa fa-columns"></i> Horizontal View</a>-->
-							<a class="md-button util__btn" ng-disabled="true"<i class="fa fa-columns"></i> Horizontal View</a>
+							<a class="md-button util__btn" ng-disabled="true" <i class="fa fa-columns"></i> Horizontal View</a>
 						</div>
 					</div>
 					<div flex="20">
@@ -133,11 +127,10 @@
 							<table class="table c promotions">
 								<tr>
 									<th width="3%" class="padding-left-20">
-										<md-checkbox ng-true-value="true" aria-label="Select All Promotions" ng-change="toggleAll()" ng-false-value="false"
-											ng-model="selectAll"></md-checkbox>
+										<md-checkbox ng-true-value="true" aria-label="Select All Promotions" ng-change="toggleAll()" ng-false-value="false" ng-model="selectAll"></md-checkbox>
 									</th>
 									<th width="{{header.width}}" ng-class="{'sortorder':(sortby== header.sortId),'reverse':(order=='desc')}" ng-repeat="header in headers"
-										ng-click="sort(header.sortId)">{{header.text}}</th>
+									 ng-click="sort(header.sortId)">{{header.text}}</th>
 								</tr>
 								<tr ng-repeat="wrapper in promotions " ng-class="{'disabledpromo':wrapper.disabled, 'odd':($index % 2)}" data-promoid="{{wrapper.promotion.promoId}}">
 									<td class="padding-left-20">
@@ -146,17 +139,19 @@
 									</td>
 									<td class='dashboard-promo-id'>{{wrapper.promotion.promoId}}</td>
 									<td>
-										<input type="text" ng-disabled="wrapper.disabled" class="promotionName" required ng-model="wrapper.promotion.name" required
-											allow-pattern="(\d|[a-z A-Z\(\?\-\_\.\'\,\%\$\!\@\)])" />
+										  {{wrapper.promotion.name}}
 									</td>
 									<td width="8%" class='dashboard-promo-status'>{{status[wrapper.promotion.status]}}</td>
 									<td class="l" width="15%">{{promoSubTypes[wrapper.promotion.promoSubTypeCd]}}</td>
-									<td><input ng-disabled="wrapper.disabled" type="date" required class="promotionDate" ng-model="wrapper.start" required
-										/></td>
-									<td ng-if="!wrapper.noEndDate"><input ng-disabled="wrapper.disabled" type="date" class="promotionDate" ng-model="wrapper.end"
-											required /></td>
-									<td ng-if="wrapper.noEndDate"><input ng-disabled="wrapper.disabled" class="promotionDate" ng-model="wrapper.end"
-										required /></td>
+									<td>
+										{{wrapper.start | date:"MM/dd/yyyy"}}
+									</td>
+									<td ng-if="!wrapper.noEndDate">
+										{{wrapper.end | date:"MM/dd/yyyy"}}
+									</td>
+									<td ng-if="wrapper.noEndDate">
+										{{wrapper.end}}
+									</td>
 									<td>{{wrapper.promotion.meta.createdBy|uppercase}}</td>
 									<td class="l">{{wrapper.promotion.meta.lastUpdatedBy|uppercase}}&nbsp;{{wrapper.promotion.meta.lastUpdated}}</td>
 									<td>{{wrapper.promotion.priority}}</td>
@@ -211,11 +206,11 @@
 			<div flex="100">
 				<!-- Admin Footer compontent -->
 				<admin-footer ng-if="promotionData" data="promotionData" preview-overlay-config="previewOverlayConfig" previewdata="previewData"
-					class="admin__footer" form-holder="formHolder" promo-form="promoForm" index="sectionInx"></admin-footer>
+				 class="admin__footer" form-holder="formHolder" promo-form="promoForm" index="sectionInx"></admin-footer>
 			</div>
 		</div>
 	</form>
 </div>
 
 <promotion-preview data="promotionData" ng-if="previewOverlayConfig.isOpen" form-holder="previewFormHolder" preview-overlay-config="previewOverlayConfig"
-	preview-data="previewData" promo-form="promoForm"></promotion-preview>
+ preview-data="previewData" promo-form="promoForm"></promotion-preview>
