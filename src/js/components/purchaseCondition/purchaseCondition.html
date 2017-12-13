@@ -37,11 +37,12 @@
 
 	<table class="table category__table">
 			<tr class="category__table__row-nobottomborder" ng-hide="$ctrl.preview">
-					<td colspan="4">
-							<a href="" class="purchaseCondition__btn md-button" ng-click="$ctrl.addPurchaseCondition()">Add New Condition</a>
+					<td colspan="5">
+							<a href="" class="purchaseCondition__btn md-button" ng-click="$ctrl.addPurchaseCondition()">Add New Tier</a>
 					</td>
 			</tr>
 			<tr class="odd">
+					<td class="md-text-field"></td>
 					<td class="md-text-field">
 							<label for="name">Minimum Purchase ({{$ctrl.qualuom}})</label>
 					</td>
@@ -55,6 +56,7 @@
 			</tr>
 
 			<tr ng-repeat="item in $ctrl.data.reward.details track by $index" ng-class="{odd:($index % 2)}">
+					<td class="md-text-field">Tier {{$index+1}}</td>
 					<td ng-class="$ctrl.qualuom == 'Amount' ? 'md-text-field md-text-prefixed' : 'md-text-field'">
 							<input type="text" id="minamount" name="minamount_{{$index}}" ng-blur="$ctrl.validatePromotion()" ng-model="item.min" ng-required="$ctrl.preview" allow-pattern="(\d)" min = "1" ng-if="$ctrl.qualuom == 'Quantity'" ng-disabled="$ctrl.preview"/>
 							<input type="text" id="minamount" name="minamount_{{$index}}" ng-blur="$ctrl.validatePromotion()" ng-model="item.min" ng-required="$ctrl.preview" allow-pattern="^[\d.]+$" min = "1" ng-if="$ctrl.qualuom == 'Amount'" ng-disabled="$ctrl.preview"/>
@@ -89,7 +91,7 @@
 								<span ng-show="$ctrl.promoform['maxval_' + $index].$error.pattern">Please enter valid number</span>
 							</span> 
 					</td>
-					<td class="md-text-field" ng-hide="$ctrl.preview"> <a ng-click="$ctrl.isDisabled || $ctrl.removePurchaseCondition($index)">Remove</a>
+					<td class="md-text-field" ng-hide="$ctrl.preview"> <a ng-click="$ctrl.isDisabled || $ctrl.removePurchaseCondition($index)"><label>Remove</label></a>
 					</td>
 			</tr>
 	</table>
