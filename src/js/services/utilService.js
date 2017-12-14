@@ -410,7 +410,9 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
             promotion.promoTypeCd = 10;
         }
         if (promotion.purchaseConds.channels[0] === 87) {
+            if(promotion.reward.reasonCode!=70){
             promotion.reward.reasonCode = 49;
+            }
             promotion.promoSubTypeCd = 'TypeLessDiscount';
             promotion.promoSubTypeDesc = 'TypeLess-Discounts';
         }

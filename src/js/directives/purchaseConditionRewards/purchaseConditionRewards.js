@@ -47,8 +47,10 @@ app.directive('purchaseConditionRewards', ['SourceData', 'customerSegmentDataSer
                 scope.onSegmentSelection = function () {
                     if (scope.data.custSegment) {
                         scope.data.purchaseConds.customerSegmentId = scope.data.custSegment.id;
+                        scope.data.reward.reasonCode = 70;
                     } else {
                         scope.data.purchaseConds.customerSegmentId = 0;
+                        scope.data.reward.reasonCode = 49;
                     }
                 };
                 // End of Customer Segment

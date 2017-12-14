@@ -59,7 +59,9 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                         scope.previewData.data.reward.reasonCode = 70;
                     }
                     else if (scope.previewData.data.purchaseConds.channels[0] === 87) {
+                        if(scope.previewData.data.reward.reasonCode!=70){
                         scope.previewData.data.reward.reasonCode = 49;
+                        }
                         scope.previewData.data.promoSubTypeCd = 'TypeLessDiscount';
                         scope.previewData.data.promoSubTypeDesc = 'TypeLess-Discounts';
                         // scope.previewData.data.promoType = 'ITEMPROMO';
