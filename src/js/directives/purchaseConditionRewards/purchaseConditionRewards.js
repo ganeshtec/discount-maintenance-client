@@ -1,5 +1,5 @@
 // Purpose is to build promotion code spec.
-app.directive('purchaseConditionRewards', ['SourceData', 'customerSegmentDataService', '$mdDialog', '$rootScope', 'utilService','validationService', 'featureFlagService',
+app.directive('purchaseConditionRewards', ['SourceData', 'customerSegmentDataService', '$mdDialog', '$rootScope', 'utilService', 'validationService', 'featureFlagService',
     function (SourceData, customerSegmentDataService, $mdDialog, $rootScope, utilService, validationService, featureFlagService) {
         return {
             restrict: 'E',
@@ -47,10 +47,13 @@ app.directive('purchaseConditionRewards', ['SourceData', 'customerSegmentDataSer
                 scope.onSegmentSelection = function () {
                     if (scope.data.custSegment) {
                         scope.data.purchaseConds.customerSegmentId = scope.data.custSegment.id;
-                        scope.data.reward.reasonCode = 70;
+                        if (scope.useCustSegReasonCode && scope.data.custSegment.id != 0) {
+                            scope.data.reward.reasonCode = 70;
+                        }
+
                     } else {
-                        scope.data.purchaseConds.customerSegmentId = 0;
                         scope.data.reward.reasonCode = 49;
+                        scope.data.purchaseConds.customerSegmentId = 0;
                     }
                 };
                 // End of Customer Segment
@@ -130,9 +133,7 @@ app.directive('purchaseConditionRewards', ['SourceData', 'customerSegmentDataSer
 
                     $rootScope.$broadcast('clearCategories');
                 }
-                // scope.setBasketThreshold = function(basketThreshold) {
-                //     scope.data.purchaseConds.basketThreshold = basketThreshold;
-                // }
+              
                 scope.validatePromotion = function () {
                     scope.validationErrors = validationService.validatePromotion(scope.data);
                 }
@@ -140,9 +141,10 @@ app.directive('purchaseConditionRewards', ['SourceData', 'customerSegmentDataSer
                 scope.showBasketThreshold = false;
 
                 var featureTogglePromise = featureFlagService.getFeatureFlags();
-                featureTogglePromise.then(function(data) {
+                featureTogglePromise.then(function (data) {
                     scope.showBasketThreshold = data.basketThreshold;
-                })  
+                    scope.useCustSegReasonCode = data.useCustSegReasonCode;
+                })
             }
         }
     }

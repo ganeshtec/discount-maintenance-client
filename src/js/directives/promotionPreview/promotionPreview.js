@@ -16,7 +16,7 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                 validationErrors: '='
             },
             link: function (scope, element) {
-                scope.convertDateStringToDate = function(dateString){
+                scope.convertDateStringToDate = function (dateString) {
                     return dateString ? moment(dateString).startOf('date').toDate() : undefined;
                 }
                 scope.validationErrors = validationService.validatePromotion(scope.data);
@@ -51,7 +51,7 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
 
                     scope.headerErrorMsg = '';
                     delete scope.errorMessages;
-                  
+
                     if (scope.previewData.data.purchaseConds.channels[0] === 57 && scope.previewData.data.promoSubTypeCd == 'ProductLevelPerItemPercentDiscount') {
                         scope.previewData.data.reward.reasonCode = 49;
                     }
@@ -59,8 +59,8 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                         scope.previewData.data.reward.reasonCode = 70;
                     }
                     else if (scope.previewData.data.purchaseConds.channels[0] === 87) {
-                        if(scope.previewData.data.reward.reasonCode!=70){
-                        scope.previewData.data.reward.reasonCode = 49;
+                        if (scope.previewData.data.reward.reasonCode != 70) {
+                            scope.previewData.data.reward.reasonCode = 49;
                         }
                         scope.previewData.data.promoSubTypeCd = 'TypeLessDiscount';
                         scope.previewData.data.promoSubTypeDesc = 'TypeLess-Discounts';
