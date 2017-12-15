@@ -36,11 +36,11 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
         }
         return approve[promotion.status]
     }
-    publicApi.convertDateStringToDate = function(dateString){
+    publicApi.convertDateStringToDate = function (dateString) {
         return dateString ? moment(dateString).startOf('date').toDate() : undefined;
     }
 
-    publicApi.convertDateToDateString = function(date) {
+    publicApi.convertDateToDateString = function (date) {
         return date ? moment(date).format('YYYY-MM-DD') : undefined;
     }
 
@@ -81,7 +81,7 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
             promotion.reward.method = rewardMethodMappoing[promotion.promoSubTypeCd];
         }
 
-        if(promotion.purchaseConds.channels[0] !== 87){
+        if (promotion.purchaseConds.channels[0] !== 87) {
             if (promotion.promoSubTypeCd.indexOf('Percent') != -1) {
                 promotion.reward.type = 'PERCNTOFF';
             } else {
@@ -410,7 +410,9 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
             promotion.promoTypeCd = 10;
         }
         if (promotion.purchaseConds.channels[0] === 87) {
-            promotion.reward.reasonCode = 49;
+            if (promotion.reward.reasonCode != 70) {
+                promotion.reward.reasonCode = 49;
+            }
             promotion.promoSubTypeCd = 'TypeLessDiscount';
             promotion.promoSubTypeDesc = 'TypeLess-Discounts';
         }
@@ -478,7 +480,7 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
             disabled = true;
         }
 
-        if(promotion.reward && promotion.reward.type != 'PERCNTOFF'){
+        if (promotion.reward && promotion.reward.type != 'PERCNTOFF') {
             disabled = true;
         }
         return disabled;
