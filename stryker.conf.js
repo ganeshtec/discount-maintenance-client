@@ -23,6 +23,7 @@ module.exports = function (config) {
     testFramework: 'jasmine',
     coverageAnalysis: 'all',
     reporter: ['html', 'progress'],
-    karmaConfigFile: 'karma.conf.js'
+    karmaConfigFile: 'karma.conf.js',
+    thresholds: {high: 80, low: 20, break:20}
   });
 }
