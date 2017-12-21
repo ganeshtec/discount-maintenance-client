@@ -1,7 +1,7 @@
 // Purpose is to build promotion data
 app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService', 'redemptionMethodTypes', 'validationService','DataFactory', 'itemCategorySourceData',
     function (promotionSubTypes, promotionDataService, redemptionMethodTypes, validationService, DataFactory, itemCategorySourceData) {
-
+        
         return {
             restrict: 'E',
             templateUrl: 'adminPromotionForm.html',
@@ -34,8 +34,7 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                                 $('#messageModal').popup();
 
                             });
-                }
-
+                }     
 
                 scope.formHolder.form = scope.promoForm;
                 getPromoSubTypes();

@@ -1,0 +1,11 @@
+<div id="cbg1" class="checkbox-group" >
+	<h4>Channels</h4>
+	<div role="checkbox" class="select-all" aria-checked="false" tabindex="0" id="cond0">
+		<label>All</label>
+	</div>
+	<div ng-repeat="channel in $ctrl.channels">
+		<div role="checkbox" aria-checked="false" tabindex="-1" id="cond{{$index + 1}}" >
+			<label>{{channel.name}}</label>
+		</div>
+	</div>
+</div>
