@@ -33,11 +33,34 @@ function ChannelSelectController($scope) {
         }
     ];
 
-
+    ctrl.channelsWithCheckedFields = ctrl.channels.map(channel => {
+        var newChannel = channel;
+        newChannel.checked = false;
+        return newChannel;
+    })
 
     $scope.$$postDigest(function () {
-        console.log('Initializing');
         new CheckboxGroup('cbg1').init();
     });
+    
+    ctrl.updateSingleChannelCheckBoxValue = function(channel){
+        channel.checked ? channel.checked = false : channel.checked = true;   
+    }
+    
+    ctrl.updateAllChannelCheckBoxValues = function(){
+
+        var findAFalseChannel = ctrl.channelsWithCheckedFields.findIndex(channel => channel.checked === false)
+
+        if(findAFalseChannel === -1){
+            ctrl.channelsWithCheckedFields.forEach(channel => {
+                channel.checked = false;
+            });
+        } else {
+            ctrl.channelsWithCheckedFields.forEach(channel => {
+                channel.checked = true;
+            });
+        }
+    }
+    
     
 }
