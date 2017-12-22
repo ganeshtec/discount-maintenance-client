@@ -1,15 +1,14 @@
 app.component('channelSelect', {
     bindings: {
         data: '=',
-        promotype: '<',
-        uistate: '<',
-        urls: '<',
+        uistate: '<'
     },
     templateUrl: 'channelSelect.html',
     controller: ChannelSelectController
+
 });
 
-function ChannelSelectController() {
+function ChannelSelectController($scope) {
     var ctrl = this;
     ctrl.channels = [
         {
@@ -33,7 +32,12 @@ function ChannelSelectController() {
             "id": 87
         }
     ];
-    ctrl.$onInit = function () {
+
+
+
+    $scope.$$postDigest(function () {
+        console.log('Initializing');
         new CheckboxGroup('cbg1').init();
-    }
+    });
+    
 }
