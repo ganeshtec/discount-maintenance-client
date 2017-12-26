@@ -49,18 +49,12 @@ function ChannelSelectController($scope) {
     
     ctrl.updateAllChannelCheckBoxValues = function(){
 
-        var findAFalseChannel = ctrl.channelsWithCheckedFields.findIndex(channel => channel.checked === false)
-
-        if(findAFalseChannel === -1){
-            ctrl.channelsWithCheckedFields.forEach(channel => {
-                channel.checked = false;
-            });
-        } else {
-            ctrl.channelsWithCheckedFields.forEach(channel => {
-                channel.checked = true;
-            });
-        }
-    }
+        var indexOfFalse = ctrl.channelsWithCheckedFields.findIndex(channel => {
+            return channel.checked === false;
+        })
     
-    
-}
+        ctrl.channelsWithCheckedFields.forEach(channel => {
+            channel.checked = indexOfFalse !== -1;
+        });
+    };
+};
