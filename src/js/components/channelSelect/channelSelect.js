@@ -44,7 +44,9 @@ function ChannelSelectController($scope) {
     });
     
     ctrl.updateSingleChannelCheckBoxValue = function(channel){
-        channel.checked ? channel.checked = false : channel.checked = true;   
+        channel.checked = !channel.checked
+        console.log($scope)
+        console.log("New Status: " + channel.name +  " " + channel.checked)
     }
     
     ctrl.updateAllChannelCheckBoxValues = function(){
@@ -54,7 +56,7 @@ function ChannelSelectController($scope) {
         })
     
         ctrl.channelsWithCheckedFields.forEach(channel => {
-            channel.checked = indexOfFalse !== -1;
+            channel.checked = (indexOfFalse !== -1);
         });
     };
 };
