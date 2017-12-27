@@ -1,3 +1,6 @@
-.channel__select__channels{
-    padding-left: 50px;
+.channelSelectChannels{
+    margin-left: 22px;
+}
+.checkbox-group{
+    padding-top: 20px;
 }

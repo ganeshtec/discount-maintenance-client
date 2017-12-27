@@ -8,44 +8,24 @@ app.component('channelSelect', {
     controller: ChannelSelectController
 });
 
-function ChannelSelectController($scope) {
+function ChannelSelectController($scope, promotionDataService) {
     var ctrl = this;
-    ctrl.channels = [
-        {
-            "name": "eSVS",
-            "id": 789
-        },
-        {
-            "name": "Order Up",
-            "id": 456
-        },
-        {
-            "name": "Quote Center",
-            "id": 1011
-        },      
-        {
-            "name": "Online",
-            "id": 57
-        },        
-        {
-            "name": "POS",
-            "id": 87
-        },
-        {
-            "name": "www.HomeDepot.com",
-            "id": 999
+    var promise = promotionDataService.getSelectionChannels()
+
+    promise.then(
+        function(channels) {
+            ctrl.data.channelsWithCheckedFields = channels.map(function(channel) {
+                var newChannel = channel;
+                newChannel.checked = false;
+                return newChannel;
+            })
+            $scope.$$postDigest(function () {
+                new CheckboxGroup('cbg1').init();
+             });
         }
-    ];
+    )
 
-    ctrl.data.channelsWithCheckedFields = ctrl.channels.map(channel => {
-        var newChannel = channel;
-        newChannel.checked = false;
-        return newChannel;
-    })
-
-    $scope.$$postDigest(function () {
-        new CheckboxGroup('cbg1').init();
-    });
+ 
     
     ctrl.updateSingleChannelCheckBoxValue = function(channel){
         channel.checked = !channel.checked
@@ -53,14 +33,14 @@ function ChannelSelectController($scope) {
     
     ctrl.updateAllChannelCheckBoxValues = function(){
 
-        var indexOfFalse = ctrl.data.channelsWithCheckedFields.findIndex(channel => {
+        var indexOfFalse = ctrl.data.channelsWithCheckedFields.findIndex(function(channel) {
             return channel.checked === false;
         })
     
-        ctrl.data.channelsWithCheckedFields.forEach(channel => {
+        ctrl.data.channelsWithCheckedFields.forEach(function(channel){
             channel.checked = (indexOfFalse !== -1);
         });
     };
 
-    console.log("Preview? - ", ctrl.preview);
-};
+    
+}

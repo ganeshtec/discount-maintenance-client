@@ -36,6 +36,9 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                     scope.headerErrorMsg = msg;
                 }
 
+                var selectedSellingChannels = scope.previewData.data.channelsWithCheckedFields.filter(function(channel) {return channel.checked})
+                scope.selectedChannels = selectedSellingChannels.map(function(channel){ return channel.name}).join(', ')
+
                 scope.saveAndSubmit = function (event) {
                     var unclickableSaveBtn = function (event) {
                         event.handleObj.handler = function () { };
@@ -67,10 +70,24 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                         // scope.previewData.data.promoType = 'ITEMPROMO';
                     }
 
+                    var selectedSellingChannels = scope.previewData.data.channelsWithCheckedFields
+                    .filter(function(channel) {
+                        return channel.checked
+                    }).map(function(channel){
+                        return channel.id
+                    })
+
+                    delete scope.previewData.data.channelsWithCheckedFields;
+
                     var promotion = $.extend(true, {}, scope.previewData.data);
-                    //var promotion = scope.previewData.data;
+
                     utilService.setDefaultsForSaveAsDraft(promotion);
                     utilService.transformPromotionRequest(promotion);
+
+
+                    promotion.purchaseConds.channels = selectedSellingChannels;
+
+
                     var missingLocation = utilService.requiredLocationsOrMarkets(promotion);
                     var missing = utilService.requiredFieldsMissing(promotion);
                     var isBuyAandBHasSource = utilService.validateBuyAandB(promotion);

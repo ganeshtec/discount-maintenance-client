@@ -4,7 +4,7 @@
 	<div ng-click="$ctrl.updateAllChannelCheckBoxValues()" role="checkbox" class="select-all" aria-checked="false" tabindex="0" id="cond0">
 		<label>All</label>
 	</div>
-	<div ng-repeat="channel in $ctrl.data.channelsWithCheckedFields" ng-click="$ctrl.updateSingleChannelCheckBoxValue(channel)" role="checkbox" aria-checked="false" tabindex="-1" id="cond{{$index + 1}}" class="channel__select__channels">
+	<div ng-repeat="channel in $ctrl.data.channelsWithCheckedFields" ng-click="$ctrl.updateSingleChannelCheckBoxValue(channel)" role="checkbox" aria-checked="false" tabindex="-1" id="cond{{$index + 1}}" class="channelSelectChannels">
 		<label>{{channel.name}}</label>
 	</div>
 	<div>Select the Selling System Channel(s) where this discount will be made available</div>

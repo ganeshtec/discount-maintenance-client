@@ -5,8 +5,9 @@ app.controller('MainCtrl', ['$scope', '$location', '$cookies', 'DataFactory', 'S
         $scope.username = '';
         $scope.userPermissions = '';
         $scope.previewData = {
-            data: {}
+            data: {},
         };
+        $scope.channelState = {};
         $scope.formHolder = {};
         $scope.previewFormHolder = {};
         $scope.previewOverlayConfig = OverlayConfigFactory.getInstance();

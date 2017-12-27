@@ -9,9 +9,13 @@
 			<div ng-if="errorMessages" class="preivewError">
 				<div ng-repeat="error in errorMessages">{{error.message}}</div>	
 			</div>
+			<div class="previewChannelSelection">
+				<div>Selected Channels: </div><span>{{selectedChannels}}</span>
+			</div>
 			<div class="previewFormData"> 
 			 	<admin-promotion-form  form-holder="formHolder" validation-errors="validationErrors" promo-mfa="promoMfa" data="previewData.data" preview="{{true}}" index="sectionInx" view-prop="viewProp"></admin-promotion-form>
-			 </div>	
+			 </div>
+
 			 <div class="previewStatus" ng-show="submitStatus">
 			 	<md-progress-circular md-mode="indeterminate" /><span>{{submitStatus}}<span>
 			 </div>	
