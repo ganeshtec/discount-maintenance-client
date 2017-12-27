@@ -20,16 +20,20 @@ function ChannelSelectController($scope) {
             "id": 456
         },
         {
-            "name": "Online",
-            "id": 57
-        },
-        {
             "name": "Quote Center",
             "id": 1011
-        },                    
+        },      
+        {
+            "name": "Online",
+            "id": 57
+        },        
         {
             "name": "POS",
             "id": 87
+        },
+        {
+            "name": "www.HomeDepot.com",
+            "id": 999
         }
     ];
 
@@ -45,8 +49,6 @@ function ChannelSelectController($scope) {
     
     ctrl.updateSingleChannelCheckBoxValue = function(channel){
         channel.checked = !channel.checked
-        console.log($scope)
-        console.log("New Status: " + channel.name +  " " + channel.checked)
     }
     
     ctrl.updateAllChannelCheckBoxValues = function(){
