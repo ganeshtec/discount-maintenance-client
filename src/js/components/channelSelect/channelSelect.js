@@ -1,11 +1,11 @@
 app.component('channelSelect', {
     bindings: {
         data: '=',
-        uistate: '<'
+        uistate: '<',
+        preview: '='
     },
     templateUrl: 'channelSelect.html',
     controller: ChannelSelectController
-
 });
 
 function ChannelSelectController($scope) {
@@ -37,7 +37,7 @@ function ChannelSelectController($scope) {
         }
     ];
 
-    ctrl.channelsWithCheckedFields = ctrl.channels.map(channel => {
+    ctrl.data.channelsWithCheckedFields = ctrl.channels.map(channel => {
         var newChannel = channel;
         newChannel.checked = false;
         return newChannel;
@@ -53,12 +53,14 @@ function ChannelSelectController($scope) {
     
     ctrl.updateAllChannelCheckBoxValues = function(){
 
-        var indexOfFalse = ctrl.channelsWithCheckedFields.findIndex(channel => {
+        var indexOfFalse = ctrl.data.channelsWithCheckedFields.findIndex(channel => {
             return channel.checked === false;
         })
     
-        ctrl.channelsWithCheckedFields.forEach(channel => {
+        ctrl.data.channelsWithCheckedFields.forEach(channel => {
             channel.checked = (indexOfFalse !== -1);
         });
     };
+
+    console.log("Preview? - ", ctrl.preview);
 };
