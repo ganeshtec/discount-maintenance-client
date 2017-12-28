@@ -13,10 +13,9 @@ app.component('purchaseCondition', {
     controller: PurchaseConditionController
 });
 
-PurchaseConditionController.$inject = ['validationService', 'utilService'];
+PurchaseConditionController.$inject = ['validationService', 'utilService', '$cookies'];
 
-function PurchaseConditionController(validationService, utilService) {
-
+function PurchaseConditionController(validationService, utilService, $cookies) {
     this.setQualUOM = setQualUOM;
     this.addPurchaseCondition = addPurchaseCondition;
     this.removePurchaseCondition = removePurchaseCondition;
@@ -34,15 +33,20 @@ function PurchaseConditionController(validationService, utilService) {
 
     this.$onInit = $onInit;
 
+    if ($cookies.get('currentUserRole') != null) {
+        var currentUserRole = $cookies.get('currentUserRole');
+        this.userType = currentUserRole;
+    }
+
     function $onInit() {
-        switch (this.data.purchaseConds.channels[0]) {
-        case 57:
+        switch (this.userType) {
+        case 229:
             this.isDCMUser = true;
             this.thresholdHeaderLabel = 'Minimum purchase type';
             this.thresholdQuantityLabel = 'Quantity purchase';
             this.thresholdAmountLabel = 'Amount spent';
             break
-        case 87:
+        case 228:
             this.isMFAUser = true;
             this.thresholdHeaderLabel = 'Threshold';
             this.thresholdQuantityLabel = 'Quantity';

@@ -15,8 +15,8 @@ describe('Unit test for PromotionsData factory', function() {
   it('Verify PromotionsData for Store user', function() {
     var promo=PromotionData(allowedPermissionIds.STORE);
     expect(promo.purchaseConds.channels[0]).toBe(87);
-     expect(promo.purchaseConds.locations.length).toBe(0);
-     expect(promo.printLabel).toBe(false); 
+    expect(promo.purchaseConds.locations.length).toBe(0);
+    expect(promo.printLabel).toBe(false); 
   });
   it('Verify PromotionsData for Online user', function() {
     var promo=PromotionData(allowedPermissionIds.ONLINE);
