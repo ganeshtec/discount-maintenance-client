@@ -3,7 +3,7 @@
 	Services that will handle validation of promotion attributes
 */
 
-app.service('validationService', ['$filter', 'utilService', function ($filter, utilService) {
+app.service('validationService', ['$filter', 'utilService', '$cookies', function ($filter, utilService, $cookies) {
     var publicApi = {};
 
     var leadTime = null;
@@ -13,6 +13,11 @@ app.service('validationService', ['$filter', 'utilService', function ($filter, u
     leadTimePromise.then(function (leadtime) {
         leadTime = leadtime;
     })
+
+    if ($cookies.get('currentUserRole') != null) {
+        var currentUserRole = $cookies.get('currentUserRole');
+        this.userType = currentUserRole;
+    }
 
     publicApi.validateStartDate = function (promotion, checkForUndefined) {
         // Will skip validation of start date if the promotion is active
@@ -270,7 +275,7 @@ app.service('validationService', ['$filter', 'utilService', function ($filter, u
         var rewardsErrors;
 
         if (promotion.reward) {
-            if (promotion.reward.type === 'PERCNTOFF' || promotion.purchaseConds.channels === 87) {
+            if (promotion.reward.type === 'PERCNTOFF' || this.userType === 228) {
                 return publicApi.validatePercentOff(promotion.reward.details, checkForUndefined);
             } else if (promotion.reward.type === 'AMTOFF') {
                 emptyValidaton = { isError: false, message: '' };

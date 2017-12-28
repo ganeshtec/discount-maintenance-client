@@ -1,4 +1,4 @@
-app.service('utilService', ['$filter', 'leadTimeService', function ($filter, leadTimeService) {
+app.service('utilService', ['$filter', 'leadTimeService','$cookies', function ($filter, leadTimeService, $cookies) {
     var publicApi = {};
     this.leadTime;
     var rewardMethodMappoing = {
@@ -16,6 +16,10 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
         'ProductLevelPerItemPercentDiscount': 'INDVDLAFFECTEDITMS',
         'MultipleItemsValueDiscount': 'ALLAFFECTEDITMS'
 
+    }
+    if ($cookies.get('currentUserRole') != null) {
+        var currentUserRole = $cookies.get('currentUserRole');
+        this.userType = currentUserRole;
     }
 
     publicApi.canSaveAsDraft = function (promotion) {
@@ -81,7 +85,7 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
             promotion.reward.method = rewardMethodMappoing[promotion.promoSubTypeCd];
         }
 
-        if (promotion.purchaseConds.channels[0] !== 87) {
+        if (this.userType === 229) {
             if (promotion.promoSubTypeCd.indexOf('Percent') != -1) {
                 promotion.reward.type = 'PERCNTOFF';
             } else {
@@ -242,7 +246,7 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
 
         if (data.purchaseConds && data.purchaseConds.sources) {
             $(data.purchaseConds.sources).each(function (i, source) {
-                if (data.purchaseConds.qualUOM == 'Quantity' || data.purchaseConds.channels[0] === 87) {
+                if (data.purchaseConds.qualUOM == 'Quantity' || this.userType === 228) {
                     delete source.minTotalPrice;
                     if (data.promoSubTypeCd != 'MultipleItemsPercentDiscount' && data.promoSubTypeCd != 'MultipleItemsValueDiscount') {
                         source.minPurchaseQty = minPurchaseQty;
@@ -284,7 +288,7 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
 
 
     publicApi.requiredFieldsMissing = function (promotion) {
-        if (promotion.purchaseConds.channels === 57) {
+        if (this.userType === 229) {
             if (checkEmpty(promotion.name) || checkEmpty(promotion.startDt) || checkEmpty(promotion.endDt) || checkEmpty(promotion.promoSubTypeCd)) {
                 return true;
             }
@@ -409,7 +413,7 @@ app.service('utilService', ['$filter', 'leadTimeService', function ($filter, lea
         if (promotion.promoTypeCd == null) {
             promotion.promoTypeCd = 10;
         }
-        if (promotion.purchaseConds.channels[0] === 87) {
+        if (this.userType === 228) {
             if (promotion.reward.reasonCode != 70) {
                 promotion.reward.reasonCode = 49;
             }

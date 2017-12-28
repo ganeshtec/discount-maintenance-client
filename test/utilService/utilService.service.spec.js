@@ -342,6 +342,7 @@ it('return true if item/sku is selected', function() {
           "channels": [87]
         }
       };
+       utilService.userType = 228;
        utilService.setDefaultsForSaveAsDraft(promotion);
        expect(promotion.promoSubTypeCd).toEqual('TypeLessDiscount');
        expect(promotion.promoSubTypeDesc).toEqual('TypeLess-Discounts');

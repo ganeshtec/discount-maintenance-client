@@ -85,7 +85,7 @@
 								</tool-tipper-warning>
 					</td>
 					<td class="md-text-field md-text-prefixed" ng-if="$ctrl.data.reward.type=='PERCNTOFF'">
-							<input type="text" id="maxval" name="maxval_{{$index}}" ng-model="item.maxAllowedVal" ng-blur="$ctrl.validatePromotion()"  ng-if="$ctrl.data.reward.type=='PERCNTOFF' || $ctrl.data.purchaseConds.channels == 87" allow-pattern="^[\d.]+$" ng-disabled="$ctrl.preview"  />
+							<input type="text" id="maxval" name="maxval_{{$index}}" ng-model="item.maxAllowedVal" ng-blur="$ctrl.validatePromotion()"  ng-if="$ctrl.data.reward.type=='PERCNTOFF' || $ctrl.userType == 228" allow-pattern="^[\d.]+$" ng-disabled="$ctrl.preview"  />
 							<div class="md-text-prefix">$</div>
 							<span class='error-message' ng-show="$ctrl.promoform['maxval_' + $index].$invalid ">
 								<span ng-show="$ctrl.promoform['maxval_' + $index].$error.pattern">Please enter valid number</span>

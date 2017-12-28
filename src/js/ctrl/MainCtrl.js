@@ -1,6 +1,6 @@
 // Main Controller for root scope
-app.controller('MainCtrl', ['$scope', '$location', '$cookies', 'DataFactory', 'SECTIONS', 'promotionDataService', 'loginService', 'OverlayConfigFactory',
-    function ($scope, $location, $cookies, DataFactory, SECTIONS, promotionDataService, loginService, OverlayConfigFactory) {
+app.controller('MainCtrl', ['$rootScope', '$scope', '$location', '$cookies', 'DataFactory', 'SECTIONS', 'promotionDataService', 'loginService', 'OverlayConfigFactory',
+    function ($rootScope, $scope, $location, $cookies, DataFactory, SECTIONS, promotionDataService, loginService, OverlayConfigFactory) {
         $scope.messageModal = DataFactory.messageModal;
         $scope.username = '';
         $scope.userPermissions = '';
@@ -41,6 +41,9 @@ app.controller('MainCtrl', ['$scope', '$location', '$cookies', 'DataFactory', 'S
             $cookies.put('currentUserRole', userValue, {
                 'domain': '.homedepot.com'
             });
+            $rootScope.searchParams = null;
+            $scope.searchTerm = null;
+            $scope.searchType = null;
             $location.path('/discount-dashboard/#');
         }
 
@@ -67,7 +70,7 @@ app.controller('MainCtrl', ['$scope', '$location', '$cookies', 'DataFactory', 'S
             $cookies.put('logout', 'true', {
                 'domain': '.homedepot.com'
             });
-            
+            $rootScope.searchParams = null;
             $scope.username = '';
             $scope.userPermissions = '';
             $scope.userRoleSelected.id = null;
