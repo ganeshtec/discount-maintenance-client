@@ -49,6 +49,7 @@ describe('purchaseCondition', function () {
 
         it('verify $onInit function', function () {
             var element = $compile("<purchase-condition data='data' promoform='promoform' preview='preview' purchase-condition='data.purchaseConds' is-disabled='isDisabled' ></purchase-condition>")($scope);
+            ctrl.userType = 229;
             ctrl.$onInit();
             expect(ctrl.isDCMUser).toBe(true);
             expect(ctrl.qualuom).toEqual('Quantity');
@@ -132,6 +133,7 @@ describe('purchaseCondition', function () {
 
         it('verify $onInit function', function () {
             var element = $compile("<purchase-condition data='data' promoform='promoform' preview='preview' purchase-condition='data.purchaseConds' is-disabled='isDisabled' ></purchase-condition>")($scope);
+            ctrl.userType = 228;
             ctrl.$onInit();
             expect(ctrl.isMFAUser).toBe(true);
             expect(ctrl.qualuom).toEqual('Quantity');

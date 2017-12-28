@@ -1,7 +1,7 @@
 // Purpose is to build promotion data
-app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService', 'redemptionMethodTypes', 'validationService','DataFactory', 'itemCategorySourceData',
-    function (promotionSubTypes, promotionDataService, redemptionMethodTypes, validationService, DataFactory, itemCategorySourceData) {
-        
+app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService', 'redemptionMethodTypes', 'validationService','DataFactory', 'itemCategorySourceData', '$cookies',
+    function (promotionSubTypes, promotionDataService, redemptionMethodTypes, validationService, DataFactory, itemCategorySourceData, $cookies) {
+
         return {
             restrict: 'E',
             templateUrl: 'adminPromotionForm.html',
@@ -34,7 +34,11 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                                 $('#messageModal').popup();
 
                             });
-                }     
+                }
+                if ($cookies.get('currentUserRole') != null) {
+                    var currentUserRole = $cookies.get('currentUserRole');
+                    scope.userType = currentUserRole;
+                }
 
                 scope.formHolder.form = scope.promoForm;
                 getPromoSubTypes();
@@ -130,7 +134,7 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                     }
                 }
            
-                if(scope.data.purchaseConds.channels[0]===87){
+                if(scope.userType === 228){
                     scope.data.reward.method = 'INDVDLAFFECTEDITMS';
                 }
           

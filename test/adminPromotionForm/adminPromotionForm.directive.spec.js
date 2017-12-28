@@ -21,7 +21,6 @@ describe('Unit testing adminPromotionForm.directive.spec.js', function () {
     $httpBackend = _$httpBackend_;
     var response = {};
     $scope.promoMfa=true;
-   // $scope.data.purchaseConds.channels[0]=87;
     $scope.data={
       reward:{
         details:[]

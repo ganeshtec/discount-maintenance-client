@@ -1,7 +1,7 @@
 // Purpose is to popuplate the modal with a message.
 // Has control to close the modal
-app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'OverlayConfigFactory', 'DataFactory', 'utilService', 'validationService',
-    function (URL_CONFIG, promotionDataService, overlayConfig, DataFactory, utilService, validationService) {
+app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'OverlayConfigFactory', 'DataFactory', 'utilService', 'validationService', '$cookies',
+    function (URL_CONFIG, promotionDataService, overlayConfig, DataFactory, utilService, validationService, $cookies) {
         return {
             restrict: 'E',
             templateUrl: 'promotionPreview.html',
@@ -38,6 +38,10 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
 
                 var selectedSellingChannels = scope.previewData.data.channelsWithCheckedFields.filter(function(channel) {return channel.checked})
                 scope.selectedChannels = selectedSellingChannels.map(function(channel){ return channel.name}).join(', ')
+                if ($cookies.get('currentUserRole') != null) {
+                    var currentUserRole = $cookies.get('currentUserRole');
+                    scope.userType = currentUserRole;
+                }
 
                 scope.saveAndSubmit = function (event) {
                     var unclickableSaveBtn = function (event) {
@@ -55,13 +59,13 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                     scope.headerErrorMsg = '';
                     delete scope.errorMessages;
 
-                    if (scope.previewData.data.purchaseConds.channels[0] === 57 && scope.previewData.data.promoSubTypeCd == 'ProductLevelPerItemPercentDiscount') {
+                    if (scope.userType === 229 && scope.previewData.data.promoSubTypeCd == 'ProductLevelPerItemPercentDiscount') {
                         scope.previewData.data.reward.reasonCode = 49;
                     }
-                    else if (scope.previewData.data.purchaseConds.channels[0] === 57 && scope.previewData.data.promoSubTypeCd == 'OrderLevelPercentDiscount') {
+                    else if (scope.userType === 229 && scope.previewData.data.promoSubTypeCd == 'OrderLevelPercentDiscount') {
                         scope.previewData.data.reward.reasonCode = 70;
                     }
-                    else if (scope.previewData.data.purchaseConds.channels[0] === 87) {
+                    else if (scope.userType === 228) {
                         if (scope.previewData.data.reward.reasonCode != 70) {
                             scope.previewData.data.reward.reasonCode = 49;
                         }
