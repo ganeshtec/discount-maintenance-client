@@ -16,7 +16,7 @@ app.service('validationService', ['$filter', 'utilService', '$cookies', function
 
     if ($cookies.get('currentUserRole') != null) {
         var currentUserRole = $cookies.get('currentUserRole');
-        this.userType = currentUserRole;
+        this.userType = parseInt(currentUserRole);
     }
 
     publicApi.validateStartDate = function (promotion, checkForUndefined) {
