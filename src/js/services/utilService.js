@@ -19,7 +19,7 @@ app.service('utilService', ['$filter', 'leadTimeService','$cookies', function ($
     }
     if ($cookies.get('currentUserRole') != null) {
         var currentUserRole = $cookies.get('currentUserRole');
-        this.userType = currentUserRole;
+        this.userType = parseInt(currentUserRole);
     }
 
     publicApi.canSaveAsDraft = function (promotion) {

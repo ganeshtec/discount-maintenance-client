@@ -599,7 +599,7 @@ app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$sco
 
             // Set Channel ID based on logged in user role
             if ($cookies.get('currentUserRole') != null) {
-                $scope.userRoleSelected.id = $cookies.get('currentUserRole');
+                $scope.userRoleSelected.id = parseInt($cookies.get('currentUserRole'));
                 if ($scope.userRoleSelected.id == 229) {
                     $scope.channelId = 57;
                 }

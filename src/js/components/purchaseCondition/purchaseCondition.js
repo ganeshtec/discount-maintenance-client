@@ -35,7 +35,7 @@ function PurchaseConditionController(validationService, utilService, $cookies) {
 
     if ($cookies.get('currentUserRole') != null) {
         var currentUserRole = $cookies.get('currentUserRole');
-        this.userType = currentUserRole;
+        this.userType = parseInt(currentUserRole);
     }
 
     function $onInit() {

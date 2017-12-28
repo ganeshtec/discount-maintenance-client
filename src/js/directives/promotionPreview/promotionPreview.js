@@ -38,7 +38,7 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
 
                 if ($cookies.get('currentUserRole') != null) {
                     var currentUserRole = $cookies.get('currentUserRole');
-                    scope.userType = currentUserRole;
+                    scope.userType = parseInt(currentUserRole);
                 }
 
                 scope.saveAndSubmit = function (event) {

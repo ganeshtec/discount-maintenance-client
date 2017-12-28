@@ -37,7 +37,7 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                 }
                 if ($cookies.get('currentUserRole') != null) {
                     var currentUserRole = $cookies.get('currentUserRole');
-                    scope.userType = currentUserRole;
+                    scope.userType = parseInt(currentUserRole);
                 }
 
                 scope.formHolder.form = scope.promoForm;
