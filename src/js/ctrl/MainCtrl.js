@@ -41,6 +41,9 @@ app.controller('MainCtrl', ['$rootScope', '$scope', '$location', '$cookies', 'Da
             $cookies.put('currentUserRole', userValue, {
                 'domain': '.homedepot.com'
             });
+            $rootScope.searchParams = null;
+            $scope.searchTerm = null;
+            $scope.searchType = null;
             $location.path('/discount-dashboard/#');
         }
 
