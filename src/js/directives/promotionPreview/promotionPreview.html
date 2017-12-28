@@ -9,7 +9,7 @@
 			<div ng-if="errorMessages" class="preivewError">
 				<div ng-repeat="error in errorMessages">{{error.message}}</div>	
 			</div>
-			<div class="previewChannelSelection">
+			<div ng-show="viewProp.displayChannelSelect"class="previewChannelSelection">
 				<div>Selected Channels: </div><span>{{selectedChannels}}</span>
 			</div>
 			<div class="previewFormData"> 

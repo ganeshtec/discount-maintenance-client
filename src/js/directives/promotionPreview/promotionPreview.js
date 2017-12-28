@@ -78,15 +78,16 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                     })
 
                     delete scope.previewData.data.channelsWithCheckedFields;
+                    
 
                     var promotion = $.extend(true, {}, scope.previewData.data);
 
                     utilService.setDefaultsForSaveAsDraft(promotion);
                     utilService.transformPromotionRequest(promotion);
 
-
-                    promotion.purchaseConds.channels = selectedSellingChannels;
-
+                    if (scope.previewData.data.purchaseConds.channels[0] !== 57) {
+                        promotion.purchaseConds.channels = selectedSellingChannels;
+                    }   
 
                     var missingLocation = utilService.requiredLocationsOrMarkets(promotion);
                     var missing = utilService.requiredFieldsMissing(promotion);

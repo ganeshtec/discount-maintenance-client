@@ -2,7 +2,8 @@ app.component('channelSelect', {
     bindings: {
         data: '=',
         uistate: '<',
-        preview: '='
+        preview: '=',
+        viewProp: '='
     },
     templateUrl: 'channelSelect.html',
     controller: ChannelSelectController
@@ -16,11 +17,12 @@ function ChannelSelectController($scope, promotionDataService) {
         function(channels) {
             ctrl.data.channelsWithCheckedFields = channels.map(function(channel) {
                 var newChannel = channel;
-                newChannel.checked = false;
+                newChannel.checked = channel.id === 87 ? true : false;
                 return newChannel;
             })
             $scope.$$postDigest(function () {
                 new CheckboxGroup('cbg1').init();
+                console.log("VIEW PROP - ", ctrl.viewProp);
              });
         }
     )
@@ -29,6 +31,7 @@ function ChannelSelectController($scope, promotionDataService) {
     
     ctrl.updateSingleChannelCheckBoxValue = function(channel){
         channel.checked = !channel.checked
+        console.log(channel.name + channel.checked)
     }
     
     ctrl.updateAllChannelCheckBoxValues = function(){
