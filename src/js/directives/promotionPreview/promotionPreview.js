@@ -40,7 +40,7 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                 scope.selectedChannels = selectedSellingChannels.map(function(channel){ return channel.name}).join(', ')
                 if ($cookies.get('currentUserRole') != null) {
                     var currentUserRole = $cookies.get('currentUserRole');
-                    scope.userType = currentUserRole;
+                    scope.userType = parseInt(currentUserRole);
                 }
 
                 scope.saveAndSubmit = function (event) {

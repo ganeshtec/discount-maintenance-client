@@ -20,7 +20,7 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$co
 
         if ($cookies.get('currentUserRole') != null) {
             var currentUserRole = $cookies.get('currentUserRole');
-            $scope.userType = currentUserRole;
+            $scope.userType = parseInt(currentUserRole);
         }
 
         // Method to get promotion by id - Test Should return promotion record

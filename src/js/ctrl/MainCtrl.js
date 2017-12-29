@@ -27,7 +27,7 @@ app.controller('MainCtrl', ['$rootScope', '$scope', '$location', '$cookies', 'Da
             }
 
             if ($cookies.get('currentUserRole') != null) {
-                $scope.userRoleSelected.id = $cookies.get('currentUserRole');
+                $scope.userRoleSelected.id = parseInt($cookies.get('currentUserRole'));
             }
         }
 
