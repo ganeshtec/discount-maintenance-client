@@ -19,8 +19,8 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
             link: function (scope) {
 
                 var featureFlagPromise = featureFlagService.getFeatureFlags();
-                featureFlagPromise.then(function (res){
-                    scope.channelToggle = res.channelSelect;
+                featureFlagPromise.then(function(res) {
+                    scope.data.channelToggle = res.channelSelect;
                 })
                     
                 function getPromoSubTypes() {

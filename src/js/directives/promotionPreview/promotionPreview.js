@@ -89,9 +89,9 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                     utilService.setDefaultsForSaveAsDraft(promotion);
                     utilService.transformPromotionRequest(promotion);
 
-                    if (scope.previewData.data.purchaseConds.channels[0] !== 57) {
+                    if (scope.previewData.data.purchaseConds.channels[0] !== 57 && scope.data.channelToggle == true) {
                         promotion.purchaseConds.channels = selectedSellingChannels;
-                    }   
+                    }  
 
                     var missingLocation = utilService.requiredLocationsOrMarkets(promotion);
                     var missing = utilService.requiredFieldsMissing(promotion);

@@ -22,7 +22,6 @@ function ChannelSelectController($scope, promotionDataService) {
             })
             $scope.$$postDigest(function () {
                 new CheckboxGroup('cbg1').init();
-                console.log("VIEW PROP - ", ctrl.viewProp);
              });
         }
     )
@@ -30,20 +29,33 @@ function ChannelSelectController($scope, promotionDataService) {
  
     
     ctrl.updateSingleChannelCheckBoxValue = function(channel){
-        channel.checked = !channel.checked
-        console.log(channel.name + channel.checked)
+        channel.checked = !channel.checked;
     }
     
     ctrl.updateAllChannelCheckBoxValues = function(){
 
-        var indexOfFalse = ctrl.data.channelsWithCheckedFields.findIndex(function(channel) {
-            return channel.checked === false;
-        })
-    
+        // var indexOfFalse = ctrl.data.channelsWithCheckedFields.findIndex(function(channel) {
+        //     return channel.checked === false;
+        // })
+
+        var indexOfFalse = [];
+        for (i=0; i<ctrl.data.channelsWithCheckedFields.length; i++) {
+            if (ctrl.data.channelsWithCheckedFields[i].checked !== true) {
+                indexOfFalse += i;
+            }
+        }
+        console.log("INDEX OF FALSE - ", indexOfFalse);
+        // ctrl.data.channelsWithCheckedFields.forEach(function(channel){
+        //     channel.checked = (indexOfFalse !== -1);
+        // });
+
         ctrl.data.channelsWithCheckedFields.forEach(function(channel){
-            channel.checked = (indexOfFalse !== -1);
+            if (indexOfFalse.length === 0) {
+                channel.checked = false;
+            } else {
+                channel.checked = true;
+            }
         });
     };
 
-    
 }
