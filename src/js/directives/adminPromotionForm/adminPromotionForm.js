@@ -1,6 +1,6 @@
 // Purpose is to build promotion data
-app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService', 'redemptionMethodTypes', 'validationService','DataFactory', 'itemCategorySourceData', '$cookies',
-    function (promotionSubTypes, promotionDataService, redemptionMethodTypes, validationService, DataFactory, itemCategorySourceData, $cookies) {
+app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService', 'redemptionMethodTypes', 'validationService','DataFactory', 'itemCategorySourceData', '$cookies', 'featureFlagService',
+    function (promotionSubTypes, promotionDataService, redemptionMethodTypes, validationService, DataFactory, itemCategorySourceData, $cookies, featureFlagService) {
 
         return {
             restrict: 'E',
@@ -17,6 +17,11 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                 validationErrors: '='
             },
             link: function (scope) {
+
+                var featureFlagPromise = featureFlagService.getFeatureFlags();
+                featureFlagPromise.then(function (res){
+                    scope.channelToggle = res.channelSelect;
+                })
                     
                 function getPromoSubTypes() {
                     var getPromotionPromise;
