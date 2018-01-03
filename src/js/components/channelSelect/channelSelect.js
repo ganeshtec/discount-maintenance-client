@@ -17,11 +17,23 @@ function ChannelSelectController($scope, promotionDataService) {
         function(channels) {
             ctrl.data.channelsWithCheckedFields = channels.map(function(channel) {
                 var newChannel = channel;
-                newChannel.checked = channel.id === 87 ? true : false;
+                
+                if(ctrl.data.purchaseConds.channels.includes(channel.id)){
+                    newChannel.checked = true
+                } else {
+                    newChannel.checked = false
+                }
                 return newChannel;
             })
+
             $scope.$$postDigest(function () {
                 new CheckboxGroup('cbg1').init();
+                ctrl.data.channelsWithCheckedFields.forEach(function(channel, index){
+                    if(channel.checked === true){
+                        var elementOfTrueChannel = angular.element( document.querySelector( '#cond' + (index + 1) ) );
+                        elementOfTrueChannel.attr('aria-checked',"true");
+                    }  
+                })
              });
         }
     )
@@ -30,6 +42,10 @@ function ChannelSelectController($scope, promotionDataService) {
     
     ctrl.updateSingleChannelCheckBoxValue = function(channel){
         channel.checked = !channel.checked;
+        console.log(channel.name + channel.checked)
+
+        // UPDATE CHANNEL OBJECT ON SCOPE WITH NEW INPUT **ONLY IF MFA IS LOGGED IN && FF IS TRUE**
+        ctrl.updateScopeWithNewChannels()
     }
     
     ctrl.updateAllChannelCheckBoxValues = function(){
@@ -41,7 +57,7 @@ function ChannelSelectController($scope, promotionDataService) {
         var indexOfFalse = [];
         for (i=0; i<ctrl.data.channelsWithCheckedFields.length; i++) {
             if (ctrl.data.channelsWithCheckedFields[i].checked !== true) {
-                indexOfFalse += i;
+                indexOfFalse.push(i);
             }
         }
         console.log("INDEX OF FALSE - ", indexOfFalse);
@@ -56,6 +72,25 @@ function ChannelSelectController($scope, promotionDataService) {
                 channel.checked = true;
             }
         });
+         // UPDATE CHANNEL OBJECT ON SCOPE WITH NEW INPUT **ONLY IF MFA IS LOGGED IN && FF IS TRUE**
+         ctrl.updateScopeWithNewChannels()
     };
+
+    ctrl.updateScopeWithNewChannels = function(){
+        var selectedChannels = ctrl.data.channelsWithCheckedFields.filter(function(channel){
+            return channel.checked
+        }).map(function(channel){
+            return channel.id
+        })
+
+        console.log(selectedChannels)
+
+        //set scope to be selected channels
+
+        // $scope.$ctrl.data.purchaseConds.channels = selectedChannels
+        // $scope.previewData.purchaseConds.channels = selectedChannels
+        ctrl.data.channels = selectedChannels
+        
+    }
 
 }

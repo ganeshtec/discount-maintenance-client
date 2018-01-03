@@ -37,7 +37,12 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                 }
 
                 var selectedSellingChannels = scope.previewData.data.channelsWithCheckedFields.filter(function(channel) {return channel.checked})
+                scope.previewData.data.purchaseConds.channels = scope.previewData.data.channels
                 scope.selectedChannels = selectedSellingChannels.map(function(channel){ return channel.name}).join(', ')
+
+                delete scope.previewData.data.channelsWithCheckedFields;
+                delete scope.previewData.data.channels;
+                
                 if ($cookies.get('currentUserRole') != null) {
                     var currentUserRole = $cookies.get('currentUserRole');
                     scope.userType = parseInt(currentUserRole);
@@ -74,24 +79,17 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                         // scope.previewData.data.promoType = 'ITEMPROMO';
                     }
 
-                    var selectedSellingChannels = scope.previewData.data.channelsWithCheckedFields
-                    .filter(function(channel) {
-                        return channel.checked
-                    }).map(function(channel){
-                        return channel.id
-                    })
 
-                    delete scope.previewData.data.channelsWithCheckedFields;
-                    
+
+
+                    console.log(scope.previewData)
+
 
                     var promotion = $.extend(true, {}, scope.previewData.data);
 
                     utilService.setDefaultsForSaveAsDraft(promotion);
                     utilService.transformPromotionRequest(promotion);
 
-                    if (scope.previewData.data.purchaseConds.channels[0] !== 57 && scope.data.channelToggle == true) {
-                        promotion.purchaseConds.channels = selectedSellingChannels;
-                    }  
 
                     var missingLocation = utilService.requiredLocationsOrMarkets(promotion);
                     var missing = utilService.requiredFieldsMissing(promotion);
@@ -128,8 +126,10 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                     scope.submitStatus = 'Saving as draft';
                     var save = function () {
                         var promise = promotionDataService.saveAsDraft(promotion);
+                        console.log("promotion", promotion)
                         promise.then(
                             function (data) {
+                                console.log("data", data)
                                 if (data.data.promoId) {
                                     scope.submitStatus = 'Submitting promotion';
                                     scope.savedPromoId = data.data.promoId;

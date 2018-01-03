@@ -63,49 +63,9 @@ fdescribe('Unit testing channelSelect component', function () {
             }
         );
 
-        // spyOn(promotionDataService, 'getSelectionChannels').and.callFake(function () {
-        //     return {
-        //         then: function (callback) {
-        //             return callback([
-        //                 {
-        //                     "name": "Internet Sales",
-        //                     "id": 57,
-        //                     "code": "INET"
-        //                 },
-        //                 {
-        //                     "name": "Point Of Sale",
-        //                     "id": 87,
-        //                     "code": "POS"
-        //                 },
-        //                 {
-        //                     "name": "Order Up",
-        //                     "id": 100,
-        //                     "code": "ORDERUP"
-        //                 },
-        //                 {
-        //                     "name": "Pro Desk",
-        //                     "id": 105,
-        //                     "code": "PRODSK"
-        //                 },
-        //                 {
-        //                     "name": "Quote Center",
-        //                     "id": 110,
-        //                     "code": "QC"
-        //                 },
-        //                 {
-        //                     "name": "Pro eCommerce",
-        //                     "id": 130,
-        //                     "code": "PEC"
-        //                 }
-        //             ])
-        //         }
-        //     }
-        // })
-
     }));
 
     it('updates one checkbox by toggling the model value', function () {
-        // var element = $compile("<channel-select view-prop='viewProp' data='data'></channel-select>")($scope);
         var channel = {
             "name": "Pro eCommerce",
             "id": 130,
