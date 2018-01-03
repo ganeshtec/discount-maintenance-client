@@ -42,9 +42,6 @@ function ChannelSelectController($scope, promotionDataService) {
     
     ctrl.updateSingleChannelCheckBoxValue = function(channel){
         channel.checked = !channel.checked;
-        console.log(channel.name + channel.checked)
-
-        // UPDATE CHANNEL OBJECT ON SCOPE WITH NEW INPUT **ONLY IF MFA IS LOGGED IN && FF IS TRUE**
         ctrl.updateScopeWithNewChannels()
     }
     
@@ -72,7 +69,6 @@ function ChannelSelectController($scope, promotionDataService) {
                 channel.checked = true;
             }
         });
-         // UPDATE CHANNEL OBJECT ON SCOPE WITH NEW INPUT **ONLY IF MFA IS LOGGED IN && FF IS TRUE**
          ctrl.updateScopeWithNewChannels()
     };
 
@@ -82,13 +78,6 @@ function ChannelSelectController($scope, promotionDataService) {
         }).map(function(channel){
             return channel.id
         })
-
-        console.log(selectedChannels)
-
-        //set scope to be selected channels
-
-        // $scope.$ctrl.data.purchaseConds.channels = selectedChannels
-        // $scope.previewData.purchaseConds.channels = selectedChannels
         ctrl.data.channels = selectedChannels
         
     }

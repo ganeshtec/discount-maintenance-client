@@ -42,7 +42,7 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
 
                 delete scope.previewData.data.channelsWithCheckedFields;
                 delete scope.previewData.data.channels;
-                
+
                 if ($cookies.get('currentUserRole') != null) {
                     var currentUserRole = $cookies.get('currentUserRole');
                     scope.userType = parseInt(currentUserRole);
@@ -78,12 +78,6 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                         scope.previewData.data.promoSubTypeDesc = 'TypeLess-Discounts';
                         // scope.previewData.data.promoType = 'ITEMPROMO';
                     }
-
-
-
-
-                    console.log(scope.previewData)
-
 
                     var promotion = $.extend(true, {}, scope.previewData.data);
 
@@ -126,10 +120,8 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                     scope.submitStatus = 'Saving as draft';
                     var save = function () {
                         var promise = promotionDataService.saveAsDraft(promotion);
-                        console.log("promotion", promotion)
                         promise.then(
                             function (data) {
-                                console.log("data", data)
                                 if (data.data.promoId) {
                                     scope.submitStatus = 'Submitting promotion';
                                     scope.savedPromoId = data.data.promoId;
