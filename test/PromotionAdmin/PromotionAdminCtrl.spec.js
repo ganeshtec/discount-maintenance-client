@@ -34,7 +34,8 @@ describe('promotionAdminCtrl', function () {
                 displayCustomerSegment: true,
                 promotionSubTypesForMFA: true,
                 displayFilterSkuTypes: true,
-                displayBasketThreshold: true
+                displayBasketThreshold: true,
+                displayChannelSelect: true
             }
             controller.setViewProperties(allowedPermissionIds.STORE);
             expect($scope.viewProperties).toEqual(expectedResult);
@@ -61,7 +62,8 @@ describe('promotionAdminCtrl', function () {
                 displayCustomerSegment: false,
                 promotionSubTypesForMFA: false,
                 displayFilterSkuTypes: false,
-                displayBasketThreshold: false
+                displayBasketThreshold: false,
+                displayChannelSelect: false
             }
             controller.setViewProperties(allowedPermissionIds.ONLINE);
             expect($scope.viewProperties).toEqual(expectedResult);

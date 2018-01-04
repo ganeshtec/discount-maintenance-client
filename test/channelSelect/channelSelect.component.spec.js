@@ -1,4 +1,4 @@
-fdescribe('Unit testing channelSelect component', function () {
+describe('Unit testing channelSelect component', function () {
     var $componentController,
         $compile,
         $rootScope,
@@ -94,7 +94,6 @@ fdescribe('Unit testing channelSelect component', function () {
                     }
                 ];
         
-        console.log(ctrl.data.channelsWithCheckedFields);
         ctrl.updateAllChannelCheckBoxValues();
         expect(ctrl.data.channelsWithCheckedFields[0].checked).toBe(true);
         expect(ctrl.data.channelsWithCheckedFields[1].checked).toBe(true);
@@ -114,8 +113,7 @@ fdescribe('Unit testing channelSelect component', function () {
                         "checked": false
                     }
                 ];
-        
-        console.log(ctrl.data.channelsWithCheckedFields);
+    
         ctrl.updateAllChannelCheckBoxValues();
         expect(ctrl.data.channelsWithCheckedFields[0].checked).toBe(true);
         expect(ctrl.data.channelsWithCheckedFields[1].checked).toBe(true);
@@ -136,10 +134,34 @@ fdescribe('Unit testing channelSelect component', function () {
                         "checked": true
                     }
                 ];
-        
-        console.log(ctrl.data.channelsWithCheckedFields);
         ctrl.updateAllChannelCheckBoxValues();
         expect(ctrl.data.channelsWithCheckedFields[0].checked).toBe(false);
         expect(ctrl.data.channelsWithCheckedFields[1].checked).toBe(false);
     });
+
+    it('filters for only true channels, and only returns the id for each true channel', function () {
+        ctrl.data.channelsWithCheckedFields = [{
+            "name": "Internet Sales",
+            "id": 57,
+            "code": "INET",
+            "checked": false
+        },
+        {
+            "name": "Pro Desk",
+            "id": 105,
+            "code": "PRODSK",
+            "checked": true
+        },
+        {
+            "name": "Pro eCommerce",
+            "id": 130,
+            "code": "PEC",
+            "checked": true
+        }
+    ];
+    ctrl.updateScopeWithNewChannels()
+    expect(ctrl.data.channels.length).toBe(2)
+    expect(ctrl.data.channels[0]).toBe(105)
+    expect(ctrl.data.channels[1]).toBe(130)
+    })
 });

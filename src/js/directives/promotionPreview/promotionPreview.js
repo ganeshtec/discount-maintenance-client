@@ -37,7 +37,7 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                 }
 
                 var selectedSellingChannels = scope.previewData.data.channelsWithCheckedFields.filter(function(channel) {return channel.checked})
-                scope.previewData.data.purchaseConds.channels = scope.previewData.data.channels
+                scope.previewData.data.purchaseConds.channels = scope.previewData.data.channels   
                 scope.selectedChannels = selectedSellingChannels.map(function(channel){ return channel.name}).join(', ')
 
                 delete scope.previewData.data.channelsWithCheckedFields;
@@ -102,6 +102,9 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                     } else if (isBuyAandBHasOverlap != null) {
                         setError(isBuyAandBHasOverlap);
                         return;
+                    } else if(scope.previewData.data.purchaseConds.channels != null && selectedSellingChannels.length == 0){
+                        setError('ERROR: Please select at least one selling channel');
+                        return
                     } else {
                         scope.requiredFieldsMissing = false;
                     }

@@ -47,27 +47,11 @@ function ChannelSelectController($scope, promotionDataService) {
     
     ctrl.updateAllChannelCheckBoxValues = function(){
 
-        // var indexOfFalse = ctrl.data.channelsWithCheckedFields.findIndex(function(channel) {
-        //     return channel.checked === false;
-        // })
-
-        var indexOfFalse = [];
-        for (i=0; i<ctrl.data.channelsWithCheckedFields.length; i++) {
-            if (ctrl.data.channelsWithCheckedFields[i].checked !== true) {
-                indexOfFalse.push(i);
-            }
-        }
-        console.log("INDEX OF FALSE - ", indexOfFalse);
-        // ctrl.data.channelsWithCheckedFields.forEach(function(channel){
-        //     channel.checked = (indexOfFalse !== -1);
-        // });
-
+        var falseChannels = ctrl.data.channelsWithCheckedFields.filter(function(channel){
+            return !channel.checked
+        })
         ctrl.data.channelsWithCheckedFields.forEach(function(channel){
-            if (indexOfFalse.length === 0) {
-                channel.checked = false;
-            } else {
-                channel.checked = true;
-            }
+            channel.checked = falseChannels.length != 0 ? true : false
         });
          ctrl.updateScopeWithNewChannels()
     };
