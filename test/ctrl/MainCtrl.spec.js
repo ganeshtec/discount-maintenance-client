@@ -4,7 +4,7 @@ describe('MainCtrl', function () {
     var username = 'MFA';
     var userPermValue =   [{id:'228', description:'SKU: Discount Engine-Store MFA', shortDesc:'Store MFA'} ,{id:'229', description:'SKU: Discount Engine-Online DCM', shortDesc: 'Online DCM'}];
 
-    var currentUserRole = 228;
+    var currentUserRole = '228';
 
     var $controller;
     var $scope = {};
