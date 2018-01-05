@@ -40,9 +40,6 @@ app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$sco
                     params.channels = channels.map(function(channel) {
                         return channel.id
                     })
-                    //REMOVE INDEXOF AND SPLICE ONCE 57 IS REMOVED
-                    var index = params.channels.indexOf(57)
-                    params.channels.splice(index, 1)
                     $scope.search(params.channels,
                         params.keyword || '',
                         params.page || 1,
