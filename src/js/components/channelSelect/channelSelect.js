@@ -27,14 +27,14 @@ function ChannelSelectController($scope, promotionDataService) {
             })
 
             $scope.$$postDigest(function () {
-                new CheckboxGroup('cbg1').init();
+                new CheckboxGroup('cbg1').init();// eslint-disable-line no-undef
                 ctrl.data.channelsWithCheckedFields.forEach(function(channel, index){
                     if(channel.checked === true){
                         var elementOfTrueChannel = angular.element( document.querySelector( '#cond' + (index + 1) ) );
-                        elementOfTrueChannel.attr('aria-checked',"true");
+                        elementOfTrueChannel.attr('aria-checked','true');
                     }  
                 })
-             });
+            });
         }
     )
 
@@ -53,7 +53,7 @@ function ChannelSelectController($scope, promotionDataService) {
         ctrl.data.channelsWithCheckedFields.forEach(function(channel){
             channel.checked = falseChannels.length != 0 ? true : false
         });
-         ctrl.updateScopeWithNewChannels()
+        ctrl.updateScopeWithNewChannels()
     };
 
     ctrl.updateScopeWithNewChannels = function(){
