@@ -273,6 +273,22 @@ app.service('promotionDataService', ['$http', '$q', 'dataService', 'DataFactory'
             return result.promise;
         }
 
+        publicApi.getSelectionChannels = function () {
+            var config = {
+                    method: 'GET',
+                    url: '/sellingChannels/all'
+                },
+                result = $q.defer();
+            dataService.httpRequest(config).then(
+                function (response) {
+                    result.resolve(response.data);
+                },
+                function (error) {
+                    result.reject(error);
+                });
+            return result.promise;
+        }
+
         return publicApi;
     }
 ]);

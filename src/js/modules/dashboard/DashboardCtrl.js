@@ -34,17 +34,34 @@ app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$sco
         $scope.searchWithUrlParams = function () {
             var params = $location.search();
             $rootScope.searchParams = params;
-
-            $scope.search(params.channels,
-                params.keyword || '',
-                params.page || 1,
-                params.size || $scope.DEFAULT_RECORDS_PER_PG,
-                params.status || 'all',
-                params.type || 'all',
-                params.sortby || 'none',
-                params.order || 'asc',
-                params.searchType || 'discountName'
-            );
+            if($scope.userRoleSelected.id == 228){
+                var promise = promotionDataService.getSelectionChannels()
+                promise.then(function (channels) {
+                    params.channels = channels.map(function(channel) {
+                        return channel.id
+                    })
+                    $scope.search(params.channels,
+                        params.keyword || '',
+                        params.page || 1,
+                        params.size || $scope.DEFAULT_RECORDS_PER_PG,
+                        params.status || 'all',
+                        params.type || 'all',
+                        params.sortby || 'none',
+                        params.order || 'asc',
+                        params.searchType || 'discountName'
+                    );
+                })
+            } else {
+                $scope.search(params.channels,
+                    params.keyword || '',
+                    params.page || 1,
+                    params.size || $scope.DEFAULT_RECORDS_PER_PG,
+                    params.status || 'all',
+                    params.type || 'all',
+                    params.sortby || 'none',
+                    params.order || 'asc',
+                    params.searchType || 'discountName')
+            }
         }
 
         $scope.computeSelectedArray = function () {

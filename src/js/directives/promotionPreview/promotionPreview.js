@@ -36,6 +36,13 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                     scope.headerErrorMsg = msg;
                 }
 
+                var selectedSellingChannels = scope.previewData.data.channelsWithCheckedFields.filter(function(channel) {return channel.checked})
+                scope.previewData.data.purchaseConds.channels = scope.previewData.data.channels   
+                scope.selectedChannels = selectedSellingChannels.map(function(channel){ return channel.name}).join(', ')
+
+                delete scope.previewData.data.channelsWithCheckedFields;
+                delete scope.previewData.data.channels;
+
                 if ($cookies.get('currentUserRole') != null) {
                     var currentUserRole = $cookies.get('currentUserRole');
                     scope.userType = parseInt(currentUserRole);
@@ -73,9 +80,11 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                     }
 
                     var promotion = $.extend(true, {}, scope.previewData.data);
-                    //var promotion = scope.previewData.data;
+
                     utilService.setDefaultsForSaveAsDraft(promotion);
                     utilService.transformPromotionRequest(promotion);
+
+
                     var missingLocation = utilService.requiredLocationsOrMarkets(promotion);
                     var missing = utilService.requiredFieldsMissing(promotion);
                     var isBuyAandBHasSource = utilService.validateBuyAandB(promotion);
@@ -93,6 +102,9 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                     } else if (isBuyAandBHasOverlap != null) {
                         setError(isBuyAandBHasOverlap);
                         return;
+                    } else if(scope.previewData.data.purchaseConds.channels != null && selectedSellingChannels.length == 0){
+                        setError('ERROR: Please select at least one selling channel');
+                        return
                     } else {
                         scope.requiredFieldsMissing = false;
                     }

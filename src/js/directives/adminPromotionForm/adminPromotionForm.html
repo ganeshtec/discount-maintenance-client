@@ -4,7 +4,7 @@
 		
 			<div class="md-text-field">
 				<label for="name">
-					Discount Name {{isDisabled}} {{userType}}
+					Discount Name {{isDisabled}}
 				</label>
 				<input type="text" id="name" name="name" ng-model="data.name" title="Discount Name" placeholder="Enter 254 characters or fewer" ng-trim="false" ng-maxlength="254" ng-required="preview" ng-disabled="preview" replace-special-characters />
 				<span class='error-message' ng-show="promoForm.name.$invalid">
@@ -71,8 +71,13 @@
 				</span>
 				
 				<span class='error-message' ng-show="validationErrors.priorityRange.isError">{{validationErrors.priorityRange.message}}</span>
-				
+
 			</div>
+
+			<!-- <CHANNEL SELECT PLACEHOLDER -->	
+			<channel-select ng-if="!preview && data.channelToggle" view-prop="viewProp" data="data"></channel-select>
+
+			<!-- <CHANNEL SELECT PLACEHOLDER -->	
 		</section>
 		<section class="admin__promotion__section" ng-show="index == 1 || preview">
 			<purchase-condition-rewards preview="preview" data="data" view-prop="viewProp" promoform="promoForm" validation-errors="validationErrors" is-disabled="isDisabled">
