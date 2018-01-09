@@ -35,6 +35,7 @@ function ChannelSelectController($scope, promotionDataService) {
                     }  
                 })
             });
+            ctrl.updateScopeWithNewChannels();
         }
     )
 
