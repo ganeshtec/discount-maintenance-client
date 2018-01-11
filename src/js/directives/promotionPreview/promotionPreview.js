@@ -63,6 +63,9 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
 
                     scope.headerErrorMsg = '';
                     delete scope.errorMessages;
+                    if (scope.userType === 229) {
+                        scope.previewData.data.purchaseConds.channels = [57];
+                    }
 
                     if (scope.userType === 229 && scope.previewData.data.promoSubTypeCd == 'ProductLevelPerItemPercentDiscount') {
                         scope.previewData.data.reward.reasonCode = 49;
@@ -102,7 +105,7 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                     } else if (isBuyAandBHasOverlap != null) {
                         setError(isBuyAandBHasOverlap);
                         return;
-                    } else if(scope.previewData.data.purchaseConds.channels != null && selectedSellingChannels.length == 0){
+                    } else if(scope.userType === 228 && scope.previewData.data.purchaseConds.channels != null && selectedSellingChannels.length == 0){
                         setError('ERROR: Please select at least one selling channel');
                         return
                     } else {
