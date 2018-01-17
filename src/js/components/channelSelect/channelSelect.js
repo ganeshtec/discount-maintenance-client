@@ -9,7 +9,7 @@ app.component('channelSelect', {
     controller: ChannelSelectController
 });
 
-function ChannelSelectController($scope, promotionDataService) {
+function ChannelSelectController($scope, promotionDataService, utilService) {
     var ctrl = this;
     var promise = promotionDataService.getSelectionChannels()
 
@@ -38,8 +38,6 @@ function ChannelSelectController($scope, promotionDataService) {
             ctrl.updateScopeWithNewChannels();
         }
     )
-
- 
     
     ctrl.updateSingleChannelCheckBoxValue = function(channel){
         channel.checked = !channel.checked;
@@ -64,7 +62,7 @@ function ChannelSelectController($scope, promotionDataService) {
             return channel.id
         })
         ctrl.data.channels = selectedChannels
-        
+        utilService.updatePrintLabel(ctrl.data);
     }
 
 }
