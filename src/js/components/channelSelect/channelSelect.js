@@ -41,7 +41,8 @@ function ChannelSelectController($scope, promotionDataService, utilService) {
     
     ctrl.updateSingleChannelCheckBoxValue = function(channel){
         channel.checked = !channel.checked;
-        ctrl.updateScopeWithNewChannels()
+        ctrl.updateScopeWithNewChannels();
+        utilService.updatePrintLabel(ctrl.data);
     }
     
     ctrl.updateAllChannelCheckBoxValues = function(){
@@ -52,7 +53,8 @@ function ChannelSelectController($scope, promotionDataService, utilService) {
         ctrl.data.channelsWithCheckedFields.forEach(function(channel){
             channel.checked = falseChannels.length != 0 ? true : false
         });
-        ctrl.updateScopeWithNewChannels()
+        ctrl.updateScopeWithNewChannels();
+        utilService.updatePrintLabel(ctrl.data);
     };
 
     ctrl.updateScopeWithNewChannels = function(){
@@ -62,7 +64,6 @@ function ChannelSelectController($scope, promotionDataService, utilService) {
             return channel.id
         })
         ctrl.data.channels = selectedChannels
-        utilService.updatePrintLabel(ctrl.data);
     }
 
 }

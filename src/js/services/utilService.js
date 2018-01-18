@@ -455,7 +455,13 @@ app.service('utilService', ['$filter', 'leadTimeService','$cookies', function ($
     }
 
     publicApi.updatePrintLabel = function (promotion) {
+        /* Code to fix clearing of label text while editing active promotion that has an active label
+           pending bug fix request.
+
         if ((!publicApi.isLabelLocked(promotion)) && publicApi.isPrintLabelDisabled(promotion)) {
+        */
+        
+        if (publicApi.isPrintLabelDisabled(promotion)) {
             promotion.printLabel = false;
             promotion.labelText = '';
         }
