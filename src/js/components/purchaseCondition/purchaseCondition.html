@@ -1,4 +1,104 @@
 
+<div class="md-select md-select-space" ng-show="$ctrl.viewProp.displayCustomerSegment">
+	<label for="promocustomersegment"><h3>Customer Segment (Optional)</h3></label>
+
+
+
+	<select name="segment" ng-options="segment as segment.name for segment in $ctrl.segmentDetails track by segment.name" ng-model="$ctrl.data.custSegment"
+			ng-change="$ctrl.onSegmentSelection();$ctrl.updatePrintLabel()" ng-disabled="$ctrl.preview">
+		<option value="">
+			-- Select a Customer Segment --
+		</option>
+	</select>
+
+</div>
+<div class="basketThresholdDiv" ng-show="$ctrl.viewProp.displayBasketThreshold" ng-if="$ctrl.showBasketThreshold">
+	<h3 class = "basketThresholdHeader"> Basket Threshold (Optional) </h3>
+	<span class="basketThresholdText"> Enter the dollar amount a customer's order must reach to be assessed for this discount</span>
+	<br>
+	<span class="md-text-field basket">
+			<input type="text" class="basketThresholdTextBox" ng-model="$ctrl.data.purchaseConds.basketThreshold" ng-blur="$ctrl.validatePromotion()" allow-pattern="^[\d.]+$" ng-disabled="preview" placeholder="$0.00"/>
+			</span>
+</div>
+
+
+
+<div ng-if="$ctrl.data.promoCdRqrd != false  && $ctrl.data.promoSubTypeCd != 'MultipleItemsPercentDiscount' && $ctrl.data.promoSubTypeCd != 'MultipleItemsValueDiscount'">
+	<div class="md-text-field">
+		<label for="name">Site wide promotion </label>
+		<div class="md-radio">
+			<input for="sitewide" type="radio" name="sitepromotion" ng-model="$ctrl.data.isSitewideDeal" ng-value="true" ng-disabled="$ctrl.preview" />
+			<label><span><span></span></span>Yes</label>
+		</div>
+		<div class="md-radio">
+			<input for="sitewide" type="radio" name="sitepromotion" ng-model="$ctrl.data.isSitewideDeal" ng-value="false" ng-disabled="$ctrl.preview"/>
+			<label><span><span></span></span>No </label>
+		</div>
+	</div>
+</div>
+
+<div ng-repeat="item in $ctrl.data.purchaseConds.sources track by $index" ng-init="$ctrl.initializePurchaseOption($index,item,$ctrl.data)">
+
+	<div class="md-text-field">
+		<h3>Inclusion</h3>
+		<div ng-show="item.purchaseoption == 'category' && $ctrl.viewProp.displayFilterSkuTypes" class="filter_sku_types_link">
+			<a class="editOption thd-orange" ng-click="$ctrl.showSkuTypeModal($event,item)" href="">
+				<i class="fa fa-filter thd-orange" aria-hidden="true"></i>
+				Filter SKU Types
+			</a>
+		</div>
+		<label ng-show="$ctrl.data.purchaseConds.sources.length > 1">Definition for "{{$ctrl.alphabet[$index]}}" *</label>
+		<div class="md-radio" id="itemsoms_div_{{$index}}" ng-show="$ctrl.viewProp.displayOMSId">
+			<input type="radio" id="itemsoms_{{$index}}" name="purchaseoption_{{$index}}" ng-model="$ctrl.data.purchaseConds.sources[$index].purchaseoption"
+				   title="Items/OMS ID's" value="itemoms" ng-change="$ctrl.updatePrintLabel()" ng-disabled="$ctrl.preview" />
+			<label for="itemsoms_{{$index}}"><span><span></span></span>Items/OMS ID's</label>
+		</div>
+		<div class="md-radio" id="itemssku_div_{{$index}}" ng-show="$ctrl.viewProp.displayItemsSku">
+			<!--<div class="md-radio">-->
+			<input type="radio" id="itemssku_{{$index}}" name="purchaseoption_{{$index}}" ng-model="$ctrl.data.purchaseConds.sources[$index].purchaseoption"
+				   title="Items/SKU" value="itemsku" ng-change="$ctrl.updatePrintLabel();removeAll()" ng-disabled="$ctrl.preview" />
+			<label for="itemssku_{{$index}}"><span><span></span></span>Items/SKU</label>
+		</div>
+		<div class="md-radio">
+			<input type="radio" id="category_{{$index}}" name="purchaseoption_{{$index}}" ng-model="$ctrl.data.purchaseConds.sources[$index].purchaseoption"
+				   title="Category" value="category" ng-change="$ctrl.updatePrintLabel();removeAll()" ng-disabled="$ctrl.preview"/>
+			<label for="category_{{$index}}"><span><span></span></span>Category </label>
+		</div>
+	</div>
+	<!-- Item view Codes Component -->
+	<!--<item-inclusion data="item.inclusions.partnumbers" is-disabled="isDisabled" promoform="promoform" ng-show="$ctrl.data.purchaseConds.sources[$index].purchaseoption == 'itemoms'"></item-inclusion>-->
+	<item-inclusion data="item.inclusions.partnumbers" preview="$ctrl.preview" itemtype="item.inclusions.itemtype" purchaseoption="item.purchaseoption"
+					is-disabled="isDisabled" promoform="$ctrl.promoform" ng-show="item.purchaseoption == 'itemoms' || item.purchaseoption == 'itemsku'" show-sku-type-filter="true"></item-inclusion>
+	<!-- Category view Codes Component -->
+	<category-view data="item.inclusions.hierarchies" preview="$ctrl.preview" is-disabled="$ctrl.isDisabled" promoform="$ctrl.promoform" ng-show="item.purchaseoption == 'category' && $ctrl.viewProp.displayWebHierarchy">
+	</category-view>
+
+
+
+	<!-- NXK8980  MerchCategory-CodeChanges-START -->
+	<merch-hierarchy-view data="item.inclusions.hierarchies"  preview="$ctrl.preview" source="item" is-disabled="$ctrl.isDisabled" promoform="$ctrl.promoform" view-prop="$ctrl.viewProp" promo-status="$ctrl.data.status" ng-show="item.purchaseoption == 'category' && $ctrl.viewProp.displayItemsSku">
+	</merch-hierarchy-view>
+	<!-- NXK8980  MerchCategory-CodeChanges-END -->
+	<category-exclusion data="item.exclusions" itemtype="item.exclusions.itemtype" preview="preview" is-disabled="$ctrl.isDisabled" promoform="$ctrl.promoform"
+						view-prop="$ctrl.viewProp" ng-show="$ctrl.data.purchaseConds.sources[$index].purchaseoption == 'category'"></category-exclusion>
+	<div class="md-text-field" ng-if="$ctrl.data.purchaseConds.sources.length > 1">
+		<label for="promocombo">Quantity of "{{$ctrl.alphabet[$index]}}"</label>
+		<input type="number" class="buyAorB" name="minPurchaseQty" ng-model="item.minPurchaseQty" title="Quantity of {{$ctrl.alphabet[$index]}}"
+			   placeholder="Quantity of {{$ctrl.alphabet[$index]}}" allow-pattern="(^[0-9]\d*$)" ng-init="item.minPurchaseQty=  item.minPurchaseQty || 1" ng-disabled="$ctrl.preview"
+		/>
+	</div>
+
+</div>
+
+<div class="md-text-field" ng-show="$ctrl.viewProp.displayPaymentType">
+	<label for="promocombo">Target payment type</label>
+	<input type="text" name="promocombo" ng-model="$ctrl.data.promocombo" title="Promotion Combiantions" placeholder="Any payment type"
+		   disabled/>
+</div>
+
+
+
+
 <div ng-if="$ctrl.isSingleSourcePurchaseCondition()">
 	
 	<div id="rewardsId" class="md-text-field">
