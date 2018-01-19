@@ -212,70 +212,68 @@ describe('utilService', function () {
     expect(promotion.purchaseConds.sources[0].inclusions.partnumbers.length).toEqual(0);
   });
 
-  it('return true if promotion is Active and print label is true', function() {
+  it('verify isPrintLabelDisabled returns true if promotion is Active and print label is true', function() {
     var promotion = {
       "status": 61,
-      "originalPrintLabel": true
+      "originalPrintLabel": true,
+      "channels": [87]
     }
-    utilService.updatePrintLabel(promotion);
-    utilService.isPromotionActive(promotion);
     expect(utilService.isPrintLabelDisabled(promotion)).toEqual(true);
   });
 
-  it('return false if promotion is not Active and print label is true', function() {
+  it('verify isPrintLabelDisabled returns false if promotion is Active and print label is false', function() {
+    var promotion = {
+      "status": 61,
+      "originalPrintLabel": false,
+      "channels": [87]
+    }
+    expect(utilService.isPrintLabelDisabled(promotion)).toEqual(false);
+  });
+
+  it('verify isPrintLabelDisabled returns false if promotion is not Active and print label is true', function() {
     var promotion = {
       "status": 57,
-      "origiPrintLabel": true
+      "originalPrintLabel": true,
+      "channels": [87]
     }
-    utilService.updatePrintLabel(promotion);
-    utilService.isPromotionActive(promotion);
     expect(utilService.isPrintLabelDisabled(promotion)).toEqual(false);
   });
-it('return true if item/sku is selected', function() {
-   var promotion = {"promoId":18116,"promoSubTypeCd":"MultipleItemsPercentDiscount","status":61,"purchaseConds":{"sources":[{"inclusions":{"partnumbers":[100169919],"itemtype":null,"hierarchies":[]}},{"inclusions":{"partnumbers":[100169919],"itemtype":null,"hierarchies":[]}}]}};
-    utilService.updatePrintLabel(promotion);
-    utilService.isPromotionActive(promotion);
+  
+  
+  it('verify isPrintLabelDisabled returns true if item/sku is selected', function() {
+   var promotion = {"promoId":18116,"promoSubTypeCd":"MultipleItemsPercentDiscount", "channels": [87],"status":61,"purchaseConds":{"sources":[{"inclusions":{"partnumbers":[100169919],"itemtype":null,"hierarchies":[]}},{"inclusions":{"partnumbers":[100169919],"itemtype":null,"hierarchies":[]}}]}};
     expect(utilService.isPrintLabelDisabled(promotion)).toEqual(true);
   });
 
-  it('return true if customer segment is selected', function() {
-   var promotion = {"custSegment":{id:11136},"promoId":18116,"promoSubTypeCd":"MultipleItemsPercentDiscount","status":61,"purchaseConds":{"sources":[{"purchaseoption":"itemsku","inclusions":{"partnumbers":[100169919],"itemtype":null,"hierarchies":[]}},{"inclusions":{"partnumbers":[100169919],"itemtype":null,"hierarchies":[]}}]}};
-    utilService.updatePrintLabel(promotion);
-    utilService.isPromotionActive(promotion);
+  it('verify isPrintLabelDisabled returns true if customer segment is selected', function() {
+   var promotion = {"custSegment":{id:11136},"promoId":18116,"promoSubTypeCd":"MultipleItemsPercentDiscount","channels": [87],"status":61,"purchaseConds":{"sources":[{"purchaseoption":"itemsku","inclusions":{"partnumbers":[100169919],"itemtype":null,"hierarchies":[]}},{"inclusions":{"partnumbers":[100169919],"itemtype":null,"hierarchies":[]}}]}};
     expect(utilService.isPrintLabelDisabled(promotion)).toEqual(true);
   });
 
-  it('return false if customer segment is not selected', function() {
-   var promotion = {"custSegment":{id:0},"promoId":18116,"promoSubTypeCd":"MultipleItemsPercentDiscount","status":61,"purchaseConds":{"sources":[{"purchaseoption":"itemsku","inclusions":{"partnumbers":[100169919],"itemtype":null,"hierarchies":[]}},{"inclusions":{"partnumbers":[100169919],"itemtype":null,"hierarchies":[]}}]}};
-    utilService.updatePrintLabel(promotion);
-    utilService.isPromotionActive(promotion);
+  it('verify isPrintLabelDisabled returns false if customer segment is not selected', function() {
+   var promotion = {"custSegment":{id:0},"promoId":18116,"promoSubTypeCd":"MultipleItemsPercentDiscount","channels": [87],"status":61,"purchaseConds":{"sources":[{"purchaseoption":"itemsku","inclusions":{"partnumbers":[100169919],"itemtype":null,"hierarchies":[]}},{"inclusions":{"partnumbers":[100169919],"itemtype":null,"hierarchies":[]}}]}};
     expect(utilService.isPrintLabelDisabled(promotion)).toEqual(false);
   });
 
-  it('return true if quantity threshold is not selected', function() {
-   var promotion = {"promoId":18116,"reward":{"type":"PERCNTOFF","details":[{"qualUOM":"Amount","value":"10.00","seq":1,"max":-1.0,"min":100.0,"maxAllowedVal":10.0}]}};
-    utilService.updatePrintLabel(promotion);
-   //utilService.isPromotionActive(promotion);
+  it('verify isPrintLabelDisabled returns true if quantity threshold is not selected', function() {
+   var promotion = {"promoId":18116,"channels": [87],"reward":{"type":"PERCNTOFF","details":[{"qualUOM":"Amount","value":"10.00","seq":1,"max":-1.0,"min":100.0,"maxAllowedVal":10.0}]}};
     expect(utilService.isPrintLabelDisabled(promotion)).toEqual(true);
   });
 
-  it('return false if quantity threshold is selected', function() {
-   var promotion = {"promoId":18116,"reward":{"type":"PERCNTOFF","details":[{"qualUOM":"Quantity","value":"10.00","seq":1,"max":-1.0,"min":100.0,"maxAllowedVal":10.0}]}};
-    utilService.updatePrintLabel(promotion);
-   //utilService.isPromotionActive(promotion);
+  it('verify isPrintLabelDisabled returns false if quantity threshold is selected', function() {
+   var promotion = {"promoId":18116,"channels": [87],"reward":{"type":"PERCNTOFF","details":[{"qualUOM":"Quantity","value":"10.00","seq":1,"max":-1.0,"min":100.0,"maxAllowedVal":10.0}]}};
     expect(utilService.isPrintLabelDisabled(promotion)).toEqual(false);
   });
 
-  it('Print Label should be disabled if reward type is not PERCNTOFF', function() {
-    var promotion = {"promoId":18116,"reward":{"type":"AMTOFF","details":[{"qualUOM":"Quantity","value":"10.00","seq":1,"max":-1.0,"min":100.0,"maxAllowedVal":10.0}]}};
-     utilService.updatePrintLabel(promotion);
-    //utilService.isPromotionActive(promotion);
+  it('verify isPrintLabelDisabled returns true if reward type is not PERCNTOFF', function() {
+    var promotion = {"promoId":18116,"channels": [87],"reward":{"type":"AMTOFF","details":[{"qualUOM":"Quantity","value":"10.00","seq":1,"max":-1.0,"min":100.0,"maxAllowedVal":10.0}]}};
      expect(utilService.isPrintLabelDisabled(promotion)).toEqual(true);
    });
 
-  it('returns true if discount reward is multi tier', function() {
+  it('verify isPrintLabelDisabled returns true if discount reward is multi tier', function() {
     var promotion = {
-     "reward": {
+      "channels": [87],
+      "reward": {
        "type": "PERCNTOFF",
        "method": "INDVDLAFFECTEDITMS",
        "reasonCode": 49,
@@ -305,14 +303,12 @@ it('return true if item/sku is selected', function() {
        ]
      }
     }
- 
-    utilService.updatePrintLabel(promotion);
-    utilService.isPromotionActive(promotion);
     expect(utilService.isPrintLabelDisabled(promotion)).toEqual(true);
    });
  
-   it('returns false if discount reward is single tier', function() {
+   it('verify isPrintLabelDisabled returns false if discount reward is single tier', function() {
      var promotion = {
+      "channels": [87],
       "reward": {
         "type": "PERCNTOFF",
         "method": "INDVDLAFFECTEDITMS",
@@ -328,13 +324,87 @@ it('return true if item/sku is selected', function() {
           }
         ]
       }
-     }
-  
-     utilService.updatePrintLabel(promotion);
-     utilService.isPromotionActive(promotion);
+     } 
      expect(utilService.isPrintLabelDisabled(promotion)).toEqual(false);
     });
  
+    it('verify isPrintLabelDisabled returns true if channels does not contain POS (87)', function() {
+      var promotion = {
+       "channels": [100,105,110,130],
+       "reward": {
+          "type": "PERCNTOFF","method": "INDVDLAFFECTEDITMS","reasonCode": 49,
+          "details": [{"qualUOM": "Quantity","min": 10,"max": 14,"maxAllowedVal": "","seq": 1,"value": 10}]
+        }
+      }
+      expect(utilService.isPrintLabelDisabled(promotion)).toEqual(true);
+     });
+
+     it('verify isPrintLabelDisabled returns false if channels contains POS (87)', function() {
+      var promotion = {
+       "channels": [87,100,105,110,130],
+       "reward": {
+         "type": "PERCNTOFF","method": "INDVDLAFFECTEDITMS","reasonCode": 49,
+         "details": [{"qualUOM": "Quantity","min": 10,"max": 14,"maxAllowedVal": "","seq": 1,"value": 10}]
+       }
+      }
+      expect(utilService.isPrintLabelDisabled(promotion)).toEqual(false);
+     });
+
+    /* Code to fix clearing of label text while editing active promotion that has an active label
+       pending bug fix request. 
+
+     it('verify updatePrintLabel does not modify the label for active promotions that already have a label', function() {
+      var promotion = {
+       "status": 61,
+       "originalPrintLabel": true,
+       "printLabel":true,
+       "labelText":"Label Text",
+       "channels": [100],
+       "reward": {
+         "type": "PERCNTOFF","method": "INDVDLAFFECTEDITMS","reasonCode": 49,
+         "details": [{"qualUOM": "Quantity","min": 10,"max": 14,"maxAllowedVal": "","seq": 1,"value": 10}]
+       }
+      }
+      utilService.updatePrintLabel(promotion);
+      expect(promotion.printLabel).toEqual(true);
+      expect(promotion.labelText).toEqual("Label Text"); 
+     });
+    */
+    
+     it('verify updatePrintLabel clears the label for active promotions that do not already have a label', function() {
+      var promotion = {
+       "status": 61,
+       "originalPrintLabel": false,
+       "printLabel":true,
+       "labelText":"Label Text",
+       "channels": [100],
+       "reward": {
+         "type": "PERCNTOFF","method": "INDVDLAFFECTEDITMS","reasonCode": 49,
+         "details": [{"qualUOM": "Quantity","min": 10,"max": 14,"maxAllowedVal": "","seq": 1,"value": 10}]
+       }
+      }
+      utilService.updatePrintLabel(promotion);
+      expect(promotion.printLabel).toEqual(false);
+      expect(promotion.labelText).toEqual(''); 
+     });
+
+     it('verify updatePrintLabel clears the label for non-active promotions that already have a label', function() {
+      var promotion = {
+       "status": 21,
+       "originalPrintLabel": true,
+       "printLabel":true,
+       "labelText":"Label Text",
+       "channels": [100],
+       "reward": {
+         "type": "PERCNTOFF","method": "INDVDLAFFECTEDITMS","reasonCode": 49,
+         "details": [{"qualUOM": "Quantity","min": 10,"max": 14,"maxAllowedVal": "","seq": 1,"value": 10}]
+       }
+      }
+      utilService.updatePrintLabel(promotion);
+      expect(promotion.printLabel).toEqual(false);
+      expect(promotion.labelText).toEqual(''); 
+     });
+
     it('populates subtype code with typeless information for store channel (MFA) promotions when setting defaults for save as draft', function() {
       var promotion = {
         "reward": {},

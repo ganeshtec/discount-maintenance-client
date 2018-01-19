@@ -450,26 +450,42 @@ app.service('utilService', ['$filter', 'leadTimeService','$cookies', function ($
         return leadTimeService.fetchLeadTime();
     }
 
-    publicApi.updatePrintLabel = function (promotion) {
+    publicApi.isLabelLocked = function (promotion) {
+        return publicApi.isPromotionActive(promotion) && promotion.originalPrintLabel == true;
+    }
 
+    publicApi.updatePrintLabel = function (promotion) {
+        /* Code to fix clearing of label text while editing active promotion that has an active label
+           pending bug fix request.
+
+        if ((!publicApi.isLabelLocked(promotion)) && publicApi.isPrintLabelDisabled(promotion)) {
+        */
+        
         if (publicApi.isPrintLabelDisabled(promotion)) {
             promotion.printLabel = false;
             promotion.labelText = '';
         }
+    }
+ 
+    publicApi.hasPosChannel = function (promotion){
+        return promotion.channels && (promotion.channels.indexOf(87) > -1);
     }
 
     publicApi.isPrintLabelDisabled = function (promotion) {
 
         var disabled = false;
 
-        if (publicApi.isPromotionActive(promotion) && promotion.originalPrintLabel == true) {
+        if (publicApi.isLabelLocked(promotion)) {
+            disabled = true;
+        }
+
+        if(!publicApi.hasPosChannel(promotion)){
             disabled = true;
         }
 
         if (promotion.purchaseConds && promotion.purchaseConds.sources && promotion.purchaseConds.sources[0]
             && promotion.purchaseConds.sources[0].purchaseoption != 'itemsku') {
             disabled = true;
-
         }
 
         if (promotion.custSegment && promotion.custSegment.id != 0) {
@@ -487,6 +503,7 @@ app.service('utilService', ['$filter', 'leadTimeService','$cookies', function ($
         if (promotion.reward && promotion.reward.type != 'PERCNTOFF') {
             disabled = true;
         }
+        
         return disabled;
     }
 
