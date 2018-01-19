@@ -79,30 +79,30 @@
 
 			<!-- <CHANNEL SELECT PLACEHOLDER -->	
 		</section>
-		<section class="admin__promotion__section" ng-show="viewProp.displayLocations && (index == 1 || preview)">
+		<section class="admin__promotion__section" ng-show="viewProp.displayLocations && (index == SECTION_INDEX.LOCATION || preview)">
 				<promo-location locations="data.purchaseConds.locations" markets="data.purchaseConds.markets"  preview="preview" promoform="promoForm">
 				</promo-location>
 		</section>
-		<section class="admin__promotion__section" ng-show="index == 2 || preview">
+		<section class="admin__promotion__section" ng-show="index == SECTION_INDEX.REWARDS || preview">
 				<purchase-condition data="data" preview="preview" view-prop="viewProp" qualuom = "data.purchaseConds.qualUOM" promoform="promoForm" validation-errors="validationErrors" purchase-condition="data.purchaseConds" is-disabled="isDisabled" promotype="data.promoSubTypeCd">
 				</purchase-condition>
 		</section>
-		<section class="admin__promotion__section" ng-show="viewProp.displayPromoDescription && (index == 2 || preview)">
+		<section class="admin__promotion__section" ng-show="viewProp.displayPromoDescription && (index == SECTION_INDEX.DESCRIPTIONS || preview)">
 				<promo-description data="data" preview="preview">
 				</promo-description>
 		</section>
-		<section class="admin__promotion__section" ng-show="viewProp.displayRedemptionLimits && (index == 4 || preview)">
+		<section class="admin__promotion__section" ng-show="viewProp.displayRedemptionLimits && (index == SECTION_INDEX.REDEMPTION_LIMITS || preview)">
 				<redemption-limit data="data.redmptnLmt" promoform="promoForm" preview="preview">
 				</redemption-limit>
 		</section>
 
 
-		<section class ="admin__promotion__section" ng-show="viewProp.displayPrintLabel && (index == 5 || preview)">
+		<section class ="admin__promotion__section" ng-show="viewProp.displayPrintLabel && (index == SECTION_INDEX.LABELS || preview)">
 			<promo-labels data ="data" preview="preview" validation-errors="validationErrors" promoform="promoForm">
 			</promo-labels>
 		</section>
 
-		<section class="admin__promotion__section" ng-show="index == 6 || preview">
+		<section class="admin__promotion__section" ng-show="index == SECTION_INDEX.SCHEDULE || preview">
 				<promo-schedule data="data" preview="preview" promoform="promoForm" form-holder="formHolder" validation-errors="validationErrors" view-prop="viewProp">
 
 				</promo-schedule>

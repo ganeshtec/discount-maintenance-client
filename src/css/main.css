@@ -298,6 +298,13 @@ md-dialog.md-default-theme.md-transition-in {
   margin-left: -184px !important;  
 }
 
+.mandatory-icon {
+    color: #ff0000;
+    font-size: 6pt;
+    margin-top: -3pt;
+    position: absolute;
+    margin-left: 5px;
+}
 .ptn {
     padding-top: 0px;
 }

@@ -40,7 +40,7 @@
 <div ng-repeat="item in $ctrl.data.purchaseConds.sources track by $index" ng-init="$ctrl.initializePurchaseOption($index,item,$ctrl.data)">
 
 	<div class="md-text-field">
-		<h3>Inclusion</h3>
+		<h3>Included Product<span class="mandatory-icon"><i class="fa fa-star" aria-hidden="true"></i></span></h3>
 		<div ng-show="item.purchaseoption == 'category' && $ctrl.viewProp.displayFilterSkuTypes" class="filter_sku_types_link">
 			<a class="editOption thd-orange" ng-click="$ctrl.showSkuTypeModal($event,item)" href="">
 				<i class="fa fa-filter thd-orange" aria-hidden="true"></i>
@@ -106,7 +106,7 @@
 			<tr ng-if="$ctrl.isMFAUser"><td class="prxxl" colspan="2"><h3 class="pbl">Discount</h3></td></tr>
 			<tr><td class="prxxl">
 				<div>
-					<label>{{$ctrl.thresholdHeaderLabel}}</label>
+					<label>{{$ctrl.thresholdHeaderLabel}} <span class="mandatory-icon"><i class="fa fa-star" aria-hidden="true"></i></span></label>
 					<div class="md-radio">
 						<input type="radio" id="quantity" name="minpurchase" ng-model="$ctrl.qualuom" title="Quantity Purchase" value="Quantity" ng-change="$ctrl.setQualUOM($ctrl.qualuom);$ctrl.updatePrintLabel()" ng-disabled="$ctrl.preview"/>
 						<label for="quantity"><span><span></span></span>{{$ctrl.thresholdQuantityLabel}}</label>
@@ -120,7 +120,7 @@
 			</td>
 			<td>
 				<div ng-if="$ctrl.isMFAUser">
-					<label>Discount Type</label>
+					<label>Discount Type <span class="mandatory-icon"><i class="fa fa-star" aria-hidden="true"></i></span></label>
 					<div class="md-radio">
 						<input type="radio" id="quantity" name="discountType" ng-model="$ctrl.data.reward.type" title="Quantity Purchase" value="PERCNTOFF" ng-change="$ctrl.updatePrintLabel()" ng-disabled="$ctrl.preview"/>
 						<label for="quantity"><span><span></span></span>Percent Off</label>
@@ -144,10 +144,10 @@
 			<tr class="odd">
 					<td class="md-text-field"></td>
 					<td class="md-text-field">
-							<label for="name">Minimum Purchase ({{$ctrl.qualuom}})</label>
+							<label for="name">Minimum Purchase ({{$ctrl.qualuom}})<span class="mandatory-icon"><i class="fa fa-star" aria-hidden="true"></i></span></label>
 					</td>
 					<td class="md-text-field">
-							<label for="name" ng-if="$ctrl.data.reward.type">{{$ctrl.getRewardLabel()}} Off</label>
+							<label for="name" ng-if="$ctrl.data.reward.type">{{$ctrl.getRewardLabel()}} Off<span class="mandatory-icon"><i class="fa fa-star" aria-hidden="true"></i></span></label>
 					</td>
 					<td class="md-text-field" ng-if="$ctrl.data.reward.type=='PERCNTOFF'">
 							<label for="name">Maximum Discount Amount</label>
@@ -220,7 +220,7 @@
 
 <div class="md-text-field">
 	<div ng-if="$ctrl.isMFAUser">
-		<label for="discountLevel">Discount Application</label>
+		<label for="discountLevel" class="prxl">Discount Application<span class="mandatory-icon"><i class="fa fa-star" aria-hidden="true"></i></span></label>
 		<tool-tipper tooltiptitle="Priority">
 			 <table class="discountLevelToolTip">
 				<tr>
