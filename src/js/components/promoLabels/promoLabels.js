@@ -29,6 +29,10 @@ function PromoLabelsController(validationService, utilService, featureFlagServic
         return utilService.isPrintLabelDisabled(this.data);
     }
 
+    this.isPrintLabelChecked = function() {
+        return utilService.isPrintLabelChecked(this.data);
+    }
+
     this.isReceiptTextActive = function() {
         var promise = featureFlagService.getFeatureFlags();
         promise.then(function(res) {

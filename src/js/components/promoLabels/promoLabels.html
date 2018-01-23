@@ -7,7 +7,7 @@
 
         <input type="checkbox" id="labelId" 
         ng-disabled="$ctrl.isPrintLabelDisabled() || $ctrl.preview"
-         name="labelCheckbox" ng-model="$ctrl.data.printLabel" title="label" ng-click="$ctrl.data.labelText = null; $ctrl.validatePromotion()" 
+         name="labelCheckbox" ng-model="$ctrl.data.printLabel" title="label" ng-click="$ctrl.data.labelText = null; $ctrl.validatePromotion(); $ctrl.isPrintLabelChecked();" 
          />
 
         <label for="label"><span><span></span></span>Print Labels</label>

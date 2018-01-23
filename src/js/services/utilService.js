@@ -471,6 +471,24 @@ app.service('utilService', ['$filter', 'leadTimeService','$cookies', function ($
         return promotion.channels && (promotion.channels.indexOf(87) > -1);
     }
 
+
+    publicApi.isPrintLabelChecked = function (promotion) { 
+        if (promotion.printLabel) {
+            if(publicApi.hasPosChannel){
+                var elementOfTrueChannel = angular.element(document.querySelector( '#cond' + (promotion.channels.indexOf(87) + 1)));
+                elementOfTrueChannel.attr('aria-disabled','true');
+            }
+            return true;
+        }else {
+            if(publicApi.hasPosChannel){
+                var elementOfTrueChannel = angular.element(document.querySelector( '#cond' + (promotion.channels.indexOf(87) + 1)));
+                elementOfTrueChannel.attr('aria-disabled','false');
+            }
+            return false;
+        }
+       
+    }
+
     publicApi.isPrintLabelDisabled = function (promotion) {
 
         var disabled = false;

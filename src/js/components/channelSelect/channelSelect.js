@@ -9,19 +9,25 @@ app.component('channelSelect', {
     controller: ChannelSelectController
 });
 
-function ChannelSelectController($scope, promotionDataService, utilService) {
+function ChannelSelectController($scope,$filter, promotionDataService, utilService) {
     var ctrl = this;
-    var promise = promotionDataService.getSelectionChannels()
+    var promise = promotionDataService.getSelectionChannels();
 
     promise.then(
         function(channels) {
             ctrl.data.channelsWithCheckedFields = channels.map(function(channel) {
                 var newChannel = channel;
-                
                 if(ctrl.data.purchaseConds.channels.includes(channel.id)){
-                    newChannel.checked = true
+                    newChannel.checked = true;
+                    if(channel.id === 87){
+                        newChannel.disabled = true;
+                    }else{
+                        newChannel.disabled = false;
+                    }      
                 } else {
-                    newChannel.checked = false
+                    
+                    newChannel.checked = false;
+                    newChannel.disabled = false;
                 }
                 return newChannel;
             })
@@ -29,20 +35,36 @@ function ChannelSelectController($scope, promotionDataService, utilService) {
             $scope.$$postDigest(function () {
                 new CheckboxGroup('cbg1').init();// eslint-disable-line no-undef
                 ctrl.data.channelsWithCheckedFields.forEach(function(channel, index){
-                    if(channel.checked === true){
+                    if(channel.checked){
                         var elementOfTrueChannel = angular.element( document.querySelector( '#cond' + (index + 1) ) );
                         elementOfTrueChannel.attr('aria-checked','true');
-                    }  
-                })
+                        if(utilService.isPrintLabelChecked(ctrl.data) && channel.id === 87){
+                            elementOfTrueChannel.attr('aria-disabled','true');
+                            channel.disabled = true;
+                        }else{
+                            elementOfTrueChannel.attr('aria-disabled','false');
+                            channel.disabled = false;
+                        }
+                    }
+                })    
+                console.log('channelsWithCheckedFields', ctrl.data.channelsWithCheckedFields)
             });
             ctrl.updateScopeWithNewChannels();
         }
     )
     
     ctrl.updateSingleChannelCheckBoxValue = function(channel){
-        channel.checked = !channel.checked;
-        ctrl.updateScopeWithNewChannels();
-        utilService.updatePrintLabel(ctrl.data);
+            channel.checked = !channel.checked;
+            ctrl.updateScopeWithNewChannels();
+            utilService.updatePrintLabel(ctrl.data);
+    }
+
+    ctrl.CheckToClick = function(channel){
+        if(utilService.isPrintLabelChecked(ctrl.data) && channel.id === 87){
+            return false
+        }else{
+            return true
+        }    
     }
     
     ctrl.updateAllChannelCheckBoxValues = function(){
@@ -65,5 +87,4 @@ function ChannelSelectController($scope, promotionDataService, utilService) {
         })
         ctrl.data.channels = selectedChannels
     }
-
 }
