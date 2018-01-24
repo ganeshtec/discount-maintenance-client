@@ -28,7 +28,7 @@ var input = {
         ],
         'vendor_css': [
             'node_modules/angular-material/angular-material.min.css',
-            'node_modules/font-awesome/css/_font-awesome.scss'
+            'node_modules/font-awesome/css/font-awesome.min.css'
         ],
         'static_assets': [
             'src/**/*'
