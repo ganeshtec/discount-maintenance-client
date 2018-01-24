@@ -1,6 +1,6 @@
 // Purpose is to build promotion data
-app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService', 'redemptionMethodTypes', 'validationService','DataFactory', 'itemCategorySourceData', '$cookies', 'featureFlagService','SECTION_INDEX',
-    function (promotionSubTypes, promotionDataService, redemptionMethodTypes, validationService, DataFactory, itemCategorySourceData, $cookies, featureFlagService, SECTION_INDEX) {
+app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService', 'redemptionMethodTypes', 'validationService','DataFactory', 'itemCategorySourceData', '$cookies', 'featureFlagService','sectionsIndex',
+    function (promotionSubTypes, promotionDataService, redemptionMethodTypes, validationService, DataFactory, itemCategorySourceData, $cookies, featureFlagService, sectionsIndex) {
 
         return {
             restrict: 'E',
@@ -18,7 +18,7 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
             },
             link: function (scope) {
 
-                scope.SECTION_INDEX = SECTION_INDEX;
+                scope.sectionsIndex = sectionsIndex;
 
                 var featureFlagPromise = featureFlagService.getFeatureFlags();
                 featureFlagPromise.then(function(res) {

@@ -1,4 +1,4 @@
-app.constant('SECTION_INDEX', {
+app.constant('sectionsIndex', {
     DISCOUNT_PROPERTIES:0,
     LOCATION:1,
     REWARDS:2,

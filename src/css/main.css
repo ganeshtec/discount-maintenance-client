@@ -301,7 +301,7 @@ md-dialog.md-default-theme.md-transition-in {
 .mandatory-icon {
     color: #ff0000;
     font-size: 6pt;
-    margin-top: -3pt;
+    margin-top: -3px;
     position: absolute;
     margin-left: 5px;
 }
