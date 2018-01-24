@@ -24,7 +24,7 @@ var input = {
             'src/js/**/*.js'
         ],
         'source_css': [
-            'src/**/*.scss'
+            'src/scss/sass/main.scss'
         ],
         'vendor_css': [
             'node_modules/angular-material/angular-material.min.css',
