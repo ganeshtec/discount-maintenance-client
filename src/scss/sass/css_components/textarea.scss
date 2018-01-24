@@ -1,0 +1,53 @@
+.md-textarea {
+  box-sizing: border-box;
+  position: relative;
+  margin: 35px 0;
+  &:first-of-type {
+    margin-top: 25px;
+  }
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+  textarea {
+    outline: none;
+    position: relative;
+    border: 1px solid #DDDDDD;
+    background: #FFFFFF;
+    border-radius: 2px;
+    padding: 10px;
+    font-size: 18px;
+    color: #222222;
+    min-width: 100%;
+    box-sizing: border-box;
+    + label {
+      display: block;
+      position: absolute;
+      font-size: 16px;
+      color: #555555;
+      top: -25;
+    }
+    &:focus {
+      border: 1px solid #00AF4D;
+      + label {
+        color: #00AF4D;
+      }
+    }
+    &.missed {
+      border: 1px solid #ED1C24;
+      background: #FEF4F4;
+      + label {
+        color: #ED1C24;
+      }
+    }
+    &:disabled {
+      background: #F5F5F5;
+      color: #999999;
+      border: none;
+      cursor: not-allowed;
+      + label {
+        color: #999999;
+        cursor: not-allowed;
+      }
+    }
+  }
+}

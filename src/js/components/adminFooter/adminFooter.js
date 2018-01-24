@@ -16,6 +16,7 @@ app.component('adminFooter', {
         var inprogress = false;
         var isEndDtWithinLeadTime = false;
         var ctrl=this;
+
         if (tempData) {
             var isEndDtWithinLeadTimePromise = utilService.isSubmitEligibleForDisable(tempData);
             isEndDtWithinLeadTimePromise.then(function (value) {

@@ -1,0 +1,117 @@
+.md-text-field {
+    box-sizing: border-box;
+    position: relative;
+    margin: 35px 0;
+}
+
+.md-text-field-padding {
+    margin: 12px 0;
+    padding: 18px;
+}
+
+.md-text-field-border input[type=text] {
+    border: 1px solid #DDDDDD !important;
+}
+
+.md-ext-field:first-of-type {
+    margin-top: 25px;
+}
+
+.md-text-field {
+    &:last-of-type {
+        margin-bottom: 0;
+    }
+    input {
+        &[type=text], &[type=password], &[type=tel], &[type=number], &[type=date] {
+            outline: none;
+            position: relative;
+            border: 1px solid #DDDDDD;
+            background-color: #FFFFFF;
+            border-radius: 2px;
+            padding: 10px;
+            font-size: 18px;
+            color: #222222;
+            min-width: 100%;
+            box-sizing: border-box;
+        }
+        &[type=text] + label, &[type=password] + label, &[type=tel] + label, &[type=number] + label, &[type=date] + label {
+            display: block;
+            position: absolute;
+            font-size: 16px;
+            color: #555555;
+            top: -25;
+        }
+    }
+    &.missed input[type=text]:focus {
+        border: 1px solid #00AF4D;
+        background-color: #FFFFFF;
+    }
+    input {
+        &[type=text]:focus, &[type=password]:focus, &[type=tel]:focus, &[type=number]:focus, &[type=date]:focus {
+            border: 1px solid #00AF4D;
+            background-color: #FFFFFF;
+        }
+        &[type=text]:focus + label {
+            color: #00AF4D;
+        }
+    }
+    &.missed input {
+        &[type=text]:focus + label, &[type=password]:focus + label {
+            color: #00AF4D;
+        }
+    }
+    input {
+        &[type=tel]:focus + label, &[type=date]:focus + label {
+            color: #00AF4D;
+        }
+    }
+    &.missed input {
+        &[type=text], &[type=password], &[type=tel], &[type=number], &[type=date] {
+            border: 1px solid #ED1C24;
+            background-color: #FEF4F4;
+        }
+        &[type=text] + label, &[type=password] + label, &[type=tel] + label, &[type=data] + label {
+            color: #ED1C24;
+        }
+    }
+    input {
+        &[type=text]:disabled, &[type=password]:disabled, &[type=tel]:disabled, &[type=number]:disabled, &[type=date]:disabled {
+            background-color: #F5F5F5;
+            color: #999999;
+            border: none;
+            cursor: not-allowed;
+        }
+        &[type=text]:disabled + label, &[type=password]:disabled, &[type=tel]:disabled + label, &[type=number]:disabled + label, &[type=date]:disabled + label {
+            color: #999999;
+            cursor: not-allowed;
+        }
+    }
+}
+
+.md-text-prefixed input {
+    &[type=text], &[type=password], &[type=tel], &[type=number], &[type=date] {
+        padding: 10px 10px 10px 20px;
+    }
+}
+
+.md-text-suffixed input {
+    &[type=text], &[type=password], &[type=tel], &[type=number], &[type=date] {
+        padding: 10px 24px 10px 10px;
+    }
+}
+
+.md-text-prefix {
+    position: relative;
+    float: left;
+    margin-top: -35px;
+    margin-left: 9px;
+    z-index: 1;
+}
+
+.md-text-suffix {
+    position: relative;
+    float: right;
+    margin-top: -35px;
+    margin-right: 9px;
+    z-index: 1;
+}

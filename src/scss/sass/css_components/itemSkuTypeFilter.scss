@@ -1,0 +1,37 @@
+.skyType__table {
+    width: 70%;
+    margin: 35px 0;
+    /*box-shadow: 0 0 5px 0 rgba(0,0,0,0.15);*/
+    text-align: left;
+    background: #fff;
+    tr, td, th {
+        border-right: none;
+        border-left: none;
+        border-spacing: 0;
+        vertical-align: middle;
+    }
+}
+
+.skyType__table__browse {
+    text-align: right;
+}
+
+tr.skyType__table__row-notopborder {
+    border-top: none;
+}
+
+.skyType__table__row-notopborder {
+    td, th {
+        border-top: none;
+    }
+}
+
+tr.skyType__table__row-nobottomborder {
+    border-bottom: none;
+}
+
+.skyType__table__row-nobottomborder {
+    td, th {
+        border-bottom: none;
+    }
+}
