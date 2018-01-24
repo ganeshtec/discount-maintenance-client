@@ -1,40 +1,3 @@
-//------------------------------------------------
-// Button mixins 
-
-// 2 types - btn-default, btn-secondary
-
-// btn-default takes the following variables:
-
-  //   $bgcolor,
-  //   $fontcolor, 
-  //   $btnwidth, 
-  //   $btnheight,
-  //   $fontsize
-
-  // example:
-  // .Some-Thing__btn { // orange button - animated
-  //   @include btn-default($brand, $reverse, 100%, 38px, $font-size-base);
-  // }
-
-// btn-secondary takes the following variables:
-
-  //  $bgcolor
-  //  $color, 
-  //  $btnwidth,
-  //  $btnheight,
-  //  $fontsize
-
-  // example:
-  // .Some-Thing__btn { // white button, orange border, orange text
-  //   @include btn-secondary($reverse, $brand, 100%, 42px, $font-size-base);
-  // }
-  
-// So you can build up the button with these params
-// The idea is that you can use a class to create a btn 
-// - like .btn--reverse-brand, or .btn--brand - 
-// or you can create your own class and build the button.
-//------------------------------------------------
-
 @mixin btn-default(
   $bgcolor: $primary, 
   $fontcolor: $reverse,  
@@ -110,4 +73,4 @@
   @extend %align-items-center;
   @extend %justify-center;
 }
-//------------------------------------------------
+

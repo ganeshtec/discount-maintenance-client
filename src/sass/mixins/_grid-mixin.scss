@@ -1,6 +1,3 @@
-//------------------------------------------------
-// GRID MIXIN
-
 // calculates each grid column
 @mixin calc-grid-column($index, $class, $columns) {
   @if ($index > 0) and ($class != null){

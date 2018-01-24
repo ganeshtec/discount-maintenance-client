@@ -1,84 +1,42 @@
-//// global variables and placeholders
-//@import "compass";
-//@import "components/variables";
-//@import "components/placeholders";
-//
-//
-////mixins
-//@import "mixins/grid-mixin";
-//
-//
-///* -----------------------------------------------
-//  1. Defaults, Resets & Generics
-//  2. Layout & Grid
-//  3. Typography
-//  4. Generics
-//  5. Tables
-//  6. Buttons & Icons
-//  7. Forms
-//  8. Alerts
-//------------------------------------------------ */
-//
-//
-///* 1. Defaults & Resets
-//========================== */
-//@import "components/defaults";
-//@import "components/reset";
-//
-//
-///* 2. Layout & Grid
-//==========================*/
-//@import "components/grid";
-//
-//
-///* 3. Typography
-//==========================*/
-//// Typography located on global-utility
+@import "helpers/typography";
+@import "helpers/layout";
+@import "helpers/resets";
 
+@import "vendors/font-awesome";
 
-@import "css_components/_adminContent.scss";
-@import "css_components/searchContent.scss";
-@import "css_components/browseCatalog";
-@import "css_components/buttons";
-@import "css_components/categoryTable";
-@import "css_components/channelSelect";
-@import "css_components/checkbox";
-@import "css_components/collapseComponent";
-@import "css_components/dashboard";
-@import "css_components/infoBanner";
-@import "css_components/itemInclusion";
-@import "css_components/itemSkuTypeFilter";
-@import "css_components/leftmenu";
-@import "css_components/login";
-@import "css_components/pagination";
-@import "css_components/popup";
-@import "css_components/previewPromotion";
-@import "css_components/promotionCodes";
-@import "css_components/purchaseCondition";
-@import "css_components/radiobutton";
-@import "css_components/selectinput";
-@import "css_components/skuTypeModal";
-@import "css_components/table";
-@import "css_components/textarea";
-@import "css_components/textinput";
-@import "css_components/toolbar";
-@import "css_components/toolTipper";
-@import "css_components/typography";
-@import "css_components/utilityBar";
-
-@import "css_icons/font-awesome.scss";
-@import "css_icons/icons.scss";
-@import "css_layout/layout.scss";
-@import "css_reset/resets.scss";
-
+@import "components/adminContent.scss";
+@import "components/searchContent.scss";
+@import "components/browseCatalog";
+@import "components/buttons";
+@import "components/categoryTable";
+@import "components/channelSelect";
+@import "components/checkbox";
+@import "components/collapseComponent";
+@import "components/dashboard";
+@import "components/infoBanner";
+@import "components/itemSkuTypeFilter";
+@import "components/leftmenu";
+@import "components/login";
+@import "components/pagination";
+@import "components/popup";
+@import "components/previewPromotion";
+@import "components/promotionCodes";
+@import "components/purchaseCondition";
+@import "components/radiobutton";
+@import "components/selectinput";
+@import "components/skuTypeModal";
+@import "components/table";
+@import "components/textarea";
+@import "components/textinput";
+@import "components/toolbar";
+@import "components/toolTipper";
+@import "components/utilityBar";
 
 html {
   font-size: 62.5%;
   -webkit-tap-highlight-color: transparent;
   height: auto !important;
 }
-
-/* line 13, ../../scss/sass/components/_defaults.scss */
 
 body {
   font-family: "Helvetica Neue", Helvetica-, Arial, sans-serif;
@@ -89,16 +47,12 @@ body {
   border-bottom: 30px solid #eee;
 }
 
-/* line 22, ../../scss/sass/components/_defaults.scss */
-
 .disabled {
   pointer-events: none !important;
   cursor: not-allowed !important;
   opacity: 0.25 !important;
   filter: alpha(opacity = 25) !important;
 }
-
-/* line 5, ../../scss/sass/components/_reset.scss */
 
 html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video {
   margin: 0;
@@ -108,25 +62,17 @@ html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pr
   background: transparent;
 }
 
-/* line 24, ../../scss/sass/components/_reset.scss */
-
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
   display: block;
 }
-
-/* line 29, ../../scss/sass/components/_reset.scss */
 
 nav ul {
   list-style: none;
 }
 
-/* line 33, ../../scss/sass/components/_reset.scss */
-
 blockquote, q {
   quotes: none;
 }
-
-/* line 37, ../../scss/sass/components/_reset.scss */
 
 blockquote {
   &:before, &:after {
@@ -142,16 +88,12 @@ q {
   }
 }
 
-/* line 43, ../../scss/sass/components/_reset.scss */
-
 a {
   margin: 0;
   padding: 0;
   background: transparent;
   text-decoration: none;
 }
-
-/* line 55, ../../scss/sass/components/_reset.scss */
 
 img {
   height: auto;
@@ -160,33 +102,23 @@ img {
   -ms-interpolation-mode: bicubic;
 }
 
-/* line 62, ../../scss/sass/components/_reset.scss */
-
 a img {
   border: none;
 }
 
-/* line 66, ../../scss/sass/components/_reset.scss */
-
 del {
   text-decoration: line-through;
 }
-
-/* line 70, ../../scss/sass/components/_reset.scss */
 
 abbr[title], dfn[title] {
   border-bottom: 1px dotted;
   cursor: help;
 }
 
-/* line 75, ../../scss/sass/components/_reset.scss */
-
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
-
-/* line 80, ../../scss/sass/components/_reset.scss */
 
 hr {
   display: block;
@@ -197,13 +129,9 @@ hr {
   padding: 0;
 }
 
-/* line 89, ../../scss/sass/components/_reset.scss */
-
 input, select {
   vertical-align: middle;
 }
-
-/* line 94, ../../scss/sass/components/_reset.scss */
 
 button, input, select, textarea {
   font-family: inherit;
@@ -214,13 +142,9 @@ button, input, select, textarea {
   margin: 0;
 }
 
-/* line 103, ../../scss/sass/components/_reset.scss */
-
 button::-moz-focus-inner, input::-moz-focus-inner {
   border: 0;
 }
-
-/* line 108, ../../scss/sass/components/_reset.scss */
 
 button, html input[type="button"] {
   cursor: pointer;
@@ -233,8 +157,6 @@ input {
     -webkit-appearance: button;
   }
 }
-
-/* line 113, ../../scss/sass/components/_reset.scss */
 
 label, select, button {
   cursor: pointer;
@@ -258,14 +180,6 @@ input {
   }
 }
 
-/* line 117, ../../scss/sass/components/_reset.scss */
-
-/* line 123, ../../scss/sass/components/_reset.scss */
-
-/* line 129, ../../scss/sass/components/_reset.scss */
-
-/* line 136, ../../scss/sass/components/_reset.scss */
-
 textarea:focus {
   outline: 0;
 }
@@ -280,15 +194,10 @@ input {
   }
 }
 
-/* line 140, ../../scss/sass/components/_reset.scss */
-
-/* line 144, ../../scss/sass/components/_reset.scss */
-
 button[disabled], html input[disabled] {
   cursor: pointer;
 }
 
-/* line 149, ../../scss/sass/components/_reset.scss */
 
 textarea {
   overflow: auto;
@@ -452,11 +361,12 @@ ol, ul {
 .promo__container {
   margin-top: 85px;
 }
-
-
-
-
-
-
+.icon-large:before {
+  font-size: 2em;
+}
+#itemCountDiv{
+  float: right;
+  margin-top: -25px;
+}
 
 
