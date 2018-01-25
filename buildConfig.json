@@ -34,7 +34,7 @@
 },
 
 "slack": {
-	"channel": "#snowshoe-devs",
+	"channel": "#snowshoe-deploybot",
 	"botName": "DeployBot",
 	"emoji": ":robot_face:"
 },
