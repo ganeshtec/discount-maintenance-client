@@ -11,11 +11,12 @@ app.component('adminFooter', {
 
 
     templateUrl: 'adminFooter.html',
-    controller: function FooterCtrl(PromotionData, utilService, leadTimeService, promotionDataService, modalService, validationService, $scope) {
+    controller: function FooterCtrl(PromotionData, utilService, leadTimeService, promotionDataService, modalService, validationService, $scope, sectionsIndex) {
         var tempData = $.extend(true, {}, this.data);
         var inprogress = false;
         var isEndDtWithinLeadTime = false;
         var ctrl=this;
+        ctrl.sectionsIndex = sectionsIndex;
         if (tempData) {
             var isEndDtWithinLeadTimePromise = utilService.isSubmitEligibleForDisable(tempData);
             isEndDtWithinLeadTimePromise.then(function (value) {

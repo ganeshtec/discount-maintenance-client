@@ -14,14 +14,14 @@ describe('Unit test for Sections factory', function() {
 
   it('Verify Sections for Store user', function() {
     var sections=SECTIONS(allowedPermissionIds.STORE);
-    expect(sections[0].name).toBe('Discount Properties');
+    expect(sections[0].name).toBe('Properties');
     expect(sections[0].shouldDisplay).toBe(true);
     expect(sections[2].name).toBe('Location');
     expect(sections[2].shouldDisplay).toBe(true);
   });
   it('Verify Sections for Online user', function() {
     var sections=SECTIONS(allowedPermissionIds.ONLINE);
-    expect(sections[0].name).toBe('Discount Properties');
+    expect(sections[0].name).toBe('Properties');
     expect(sections[0].shouldDisplay).toBe(true);
     expect(sections[2].name).toBe('Location');
     expect(sections[2].shouldDisplay).toBe(false);

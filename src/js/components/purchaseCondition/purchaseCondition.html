@@ -1,12 +1,78 @@
 
+<div>
+	<h3 class="bold">Define Discount Reward</h3>
+</div>
+
+<div ng-repeat="item in $ctrl.data.purchaseConds.sources track by $index" ng-init="$ctrl.initializePurchaseOption($index,item,$ctrl.data)">
+
+	<div class="md-text-field">
+		<label>Included Product<span class="mandatory-icon"><i class="fa fa-star" aria-hidden="true"></i></span></label>
+		<div ng-show="item.purchaseoption == 'category' && $ctrl.viewProp.displayFilterSkuTypes" class="filter_sku_types_link">
+			<a class="editOption thd-orange" ng-click="$ctrl.showSkuTypeModal($event,item)" href="">
+				<i class="fa fa-filter thd-orange" aria-hidden="true"></i>
+				Filter SKU Types
+			</a>
+		</div>
+		<label ng-show="$ctrl.data.purchaseConds.sources.length > 1">Definition for "{{$ctrl.alphabet[$index]}}" *</label>
+		<div class="md-radio" id="itemsoms_div_{{$index}}" ng-show="$ctrl.viewProp.displayOMSId">
+			<input type="radio" id="itemsoms_{{$index}}" name="purchaseoption_{{$index}}" ng-model="$ctrl.data.purchaseConds.sources[$index].purchaseoption"
+				   title="Items/OMS ID's" value="itemoms" ng-change="$ctrl.updatePrintLabel()" ng-disabled="$ctrl.preview" />
+			<label for="itemsoms_{{$index}}"><span><span></span></span>Items/OMS ID's</label>
+		</div>
+		<div class="md-radio" id="itemssku_div_{{$index}}" ng-show="$ctrl.viewProp.displayItemsSku">
+			<!--<div class="md-radio">-->
+			<input type="radio" id="itemssku_{{$index}}" name="purchaseoption_{{$index}}" ng-model="$ctrl.data.purchaseConds.sources[$index].purchaseoption"
+				   title="Items/SKU" value="itemsku" ng-change="$ctrl.updatePrintLabel();removeAll()" ng-disabled="$ctrl.preview" />
+			<label for="itemssku_{{$index}}"><span><span></span></span>Items/SKU</label>
+		</div>
+		<div class="md-radio">
+			<input type="radio" id="category_{{$index}}" name="purchaseoption_{{$index}}" ng-model="$ctrl.data.purchaseConds.sources[$index].purchaseoption"
+				   title="Category" value="category" ng-change="$ctrl.updatePrintLabel();removeAll()" ng-disabled="$ctrl.preview"/>
+			<label for="category_{{$index}}"><span><span></span></span>Category </label>
+		</div>
+	</div>
+	<!-- Item view Codes Component -->
+	<!--<item-inclusion data="item.inclusions.partnumbers" is-disabled="isDisabled" promoform="promoform" ng-show="$ctrl.data.purchaseConds.sources[$index].purchaseoption == 'itemoms'"></item-inclusion>-->
+	<item-inclusion data="item.inclusions.partnumbers" preview="$ctrl.preview" itemtype="item.inclusions.itemtype" purchaseoption="item.purchaseoption"
+					is-disabled="isDisabled" promoform="$ctrl.promoform" ng-show="item.purchaseoption == 'itemoms' || item.purchaseoption == 'itemsku'" show-sku-type-filter="true"></item-inclusion>
+	<!-- Category view Codes Component -->
+	<category-view data="item.inclusions.hierarchies" preview="$ctrl.preview" is-disabled="$ctrl.isDisabled" promoform="$ctrl.promoform" ng-show="item.purchaseoption == 'category' && $ctrl.viewProp.displayWebHierarchy">
+	</category-view>
+
+
+
+	<!-- NXK8980  MerchCategory-CodeChanges-START -->
+	<merch-hierarchy-view data="item.inclusions.hierarchies"  preview="$ctrl.preview" source="item" is-disabled="$ctrl.isDisabled" promoform="$ctrl.promoform" view-prop="$ctrl.viewProp" promo-status="$ctrl.data.status" ng-show="item.purchaseoption == 'category' && $ctrl.viewProp.displayItemsSku">
+	</merch-hierarchy-view>
+	<!-- NXK8980  MerchCategory-CodeChanges-END -->
+	<category-exclusion data="item.exclusions" itemtype="item.exclusions.itemtype" preview="preview" is-disabled="$ctrl.isDisabled" promoform="$ctrl.promoform"
+						view-prop="$ctrl.viewProp" ng-show="$ctrl.data.purchaseConds.sources[$index].purchaseoption == 'category'"></category-exclusion>
+	<div class="md-text-field" ng-if="$ctrl.data.purchaseConds.sources.length > 1">
+		<label for="promocombo">Quantity of "{{$ctrl.alphabet[$index]}}"</label>
+		<input type="number" class="buyAorB" name="minPurchaseQty" ng-model="item.minPurchaseQty" title="Quantity of {{$ctrl.alphabet[$index]}}"
+			   placeholder="Quantity of {{$ctrl.alphabet[$index]}}" allow-pattern="(^[0-9]\d*$)" ng-init="item.minPurchaseQty=  item.minPurchaseQty || 1" ng-disabled="$ctrl.preview"
+		/>
+	</div>
+
+</div>
+
+<div class="md-text-field" ng-show="$ctrl.viewProp.displayPaymentType">
+	<label for="promocombo">Target payment type</label>
+	<input type="text" id="promocombo" name="promocombo" ng-model="$ctrl.data.promocombo" title="Promotion Combiantions" placeholder="Any payment type"
+		   disabled/>
+</div>
+
+
+
+
 <div ng-if="$ctrl.isSingleSourcePurchaseCondition()">
 	
 	<div id="rewardsId" class="md-text-field">
 		<table>
-			<tr ng-if="$ctrl.isMFAUser"><td class="prxxl" colspan="2"><h3 class="pbl">Discount</h3></td></tr>
+			<tr ng-if="$ctrl.isMFAUser"><td class="prxxl" colspan="2"><label class="pbl">Discount</label></td></tr>
 			<tr><td class="prxxl">
 				<div>
-					<label>{{$ctrl.thresholdHeaderLabel}}</label>
+					<label>{{$ctrl.thresholdHeaderLabel}} <span class="mandatory-icon"><i class="fa fa-star" aria-hidden="true"></i></span></label>
 					<div class="md-radio">
 						<input type="radio" id="quantity" name="minpurchase" ng-model="$ctrl.qualuom" title="Quantity Purchase" value="Quantity" ng-change="$ctrl.setQualUOM($ctrl.qualuom);$ctrl.updatePrintLabel()" ng-disabled="$ctrl.preview"/>
 						<label for="quantity"><span><span></span></span>{{$ctrl.thresholdQuantityLabel}}</label>
@@ -20,7 +86,7 @@
 			</td>
 			<td>
 				<div ng-if="$ctrl.isMFAUser">
-					<label>Discount Type</label>
+					<label >Discount Type <span class="mandatory-icon"><i class="fa fa-star" aria-hidden="true"></i></span></label>
 					<div class="md-radio">
 						<input type="radio" id="quantity" name="discountType" ng-model="$ctrl.data.reward.type" title="Quantity Purchase" value="PERCNTOFF" ng-change="$ctrl.updatePrintLabel()" ng-disabled="$ctrl.preview"/>
 						<label for="quantity"><span><span></span></span>Percent Off</label>
@@ -44,13 +110,13 @@
 			<tr class="odd">
 					<td class="md-text-field"></td>
 					<td class="md-text-field">
-							<label for="name">Minimum Purchase ({{$ctrl.qualuom}})</label>
+							<label for="minamount">Minimum Purchase ({{$ctrl.qualuom}})<span class="mandatory-icon"><i class="fa fa-star" aria-hidden="true"></i></span></label>
 					</td>
 					<td class="md-text-field">
-							<label for="name" ng-if="$ctrl.data.reward.type">{{$ctrl.getRewardLabel()}} Off</label>
+							<label for="itemvalue" ng-if="$ctrl.data.reward.type">{{$ctrl.getRewardLabel()}} Off<span class="mandatory-icon"><i class="fa fa-star" aria-hidden="true"></i></span></label>
 					</td>
 					<td class="md-text-field" ng-if="$ctrl.data.reward.type=='PERCNTOFF'">
-							<label for="name">Maximum Discount Amount</label>
+							<label for="maxval">Maximum Discount Amount</label>
 					</td>
 					<td class="md-text-field"></td>
 			</tr>
@@ -67,9 +133,9 @@
 					</td>
 					<td ng-class="$ctrl.data.reward.type=='PERCNTOFF' ? 'md-text-field md-text-suffixed' : 'md-text-field md-text-prefixed'">
 							<!-- <td class="md-text-field md-text-suffixed"> -->
-							<input type="text" id="value" name="value_{{$index}}" ng-model="item.value" ng-required="$ctrl.preview" ng-blur="$ctrl.roundPercentage($index); $ctrl.validatePromotion()" allow-pattern="^[\d.]+$" ng-if="$ctrl.data.reward.type=='AMTOFF'" ng-disabled="$ctrl.preview"/>
+							<input type="text" id="itemvalue" name="value_{{$index}}" ng-model="item.value" ng-required="$ctrl.preview" ng-blur="$ctrl.roundPercentage($index); $ctrl.validatePromotion()" allow-pattern="^[\d.]+$" ng-if="$ctrl.data.reward.type=='AMTOFF'" ng-disabled="$ctrl.preview"/>
 							<div class="md-text-prefix" ng-if="$ctrl.data.reward.type=='AMTOFF'">$</div>									
-							<input type="text" id="value" name="value_{{$index}}" ng-model="item.value" ng-required="$ctrl.preview" ng-blur="$ctrl.roundPercentage($index); $ctrl.validatePromotion()" allow-pattern="^[\d.]+$" ng-if="$ctrl.data.reward.type=='PERCNTOFF'" class="tooltiphead" ng-disabled="$ctrl.preview"/>
+							<input type="text" id="itemvalue" name="value_{{$index}}" ng-model="item.value" ng-required="$ctrl.preview" ng-blur="$ctrl.roundPercentage($index); $ctrl.validatePromotion()" allow-pattern="^[\d.]+$" ng-if="$ctrl.data.reward.type=='PERCNTOFF'" class="tooltiphead" ng-disabled="$ctrl.preview"/>
 							<div class="md-text-suffix" ng-if="$ctrl.data.reward.type=='PERCNTOFF'">%</div>
 							<span class='error-message' ng-show="$ctrl.promoform['value_' + $index].$invalid || $ctrl.preview">
 										<span ng-show="$ctrl.promoform['value_' + $index].$error.min">
@@ -100,13 +166,13 @@
 <div ng-if="$ctrl.isMultiSourcePurchaseCondition()">
     <div class="md-text-field" ng-if="$ctrl.promotype=='MultipleItemsPercentDiscount'">
       <label for="percentoff">Percentage discount off each combination</label>
-      <input type="text" ng-model="$ctrl.data.reward.details[0].value" name="percentoff" ng-blur="$ctrl.validatePromotion()" ng-required="$ctrl.preview" required allow-pattern="(\d)" ng-disabled="$ctrl.preview"/>
+      <input type="text" ng-model="$ctrl.data.reward.details[0].value" id="percentoff" name="percentoff" ng-blur="$ctrl.validatePromotion()" ng-required="$ctrl.preview" required allow-pattern="(\d)" ng-disabled="$ctrl.preview"/>
 		<span class='error-message' ng-show="$ctrl.validationErrors.rewards[0].isError">{{$ctrl.validationErrors.rewards[0].message}}	</span>
     </div>
 
     <div class="md-text-field" ng-if="$ctrl.promotype=='MultipleItemsValueDiscount'">
       <label for="amountoff">Amount off each combination</label>
-      <input type="text" ng-model="$ctrl.data.reward.details[0].value" name="amountoff" ng-blur="$ctrl.validatePromotion()" ng-required="$ctrl.preview" required allow-pattern="^[\d.]+$" ng-disabled="$ctrl.preview" />
+      <input type="text" ng-model="$ctrl.data.reward.details[0].value" id="amountoff" name="amountoff" ng-blur="$ctrl.validatePromotion()" ng-required="$ctrl.preview" required allow-pattern="^[\d.]+$" ng-disabled="$ctrl.preview" />
        <span class='error-message' ng-show="$ctrl.promoform.amountoff.$invalid ">
 			<span ng-show="$ctrl.promoform.amountoff.$error.required">Please enter a valid amount</span>
 	</span>
@@ -114,13 +180,13 @@
 
     <div class="md-text-field">
       <label for="maxdiscount">Maximum discount amount</label>
-      <input type="text" ng-model="$ctrl.data.reward.details[0].maxAllowedVal"   name="maxdiscount" allow-pattern="^[\d.]+$" ng-disabled="$ctrl.preview" />
+      <input type="text" ng-model="$ctrl.data.reward.details[0].maxAllowedVal" id="maxdiscount" name="maxdiscount" allow-pattern="^[\d.]+$" ng-disabled="$ctrl.preview" />
     </div>	
 </div>
 
 <div class="md-text-field">
 	<div ng-if="$ctrl.isMFAUser">
-		<label for="discountLevel">Discount Application</label>
+		<label for="itemLevel" class="prxl">Discount Application<span class="mandatory-icon"><i class="fa fa-star" aria-hidden="true"></i></span></label>
 		<tool-tipper tooltiptitle="Priority">
 			 <table class="discountLevelToolTip">
 				<tr>
