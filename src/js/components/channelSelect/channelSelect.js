@@ -1,90 +1,103 @@
+/* eslint-disable no-unused-vars */
 app.component('channelSelect', {
+    templateUrl: 'channelSelect.html',
     bindings: {
         data: '=',
-        uistate: '<',
-        preview: '=',
+        preview: '=',   
         viewProp: '='
     },
-    templateUrl: 'channelSelect.html',
     controller: ChannelSelectController
+
 });
 
-function ChannelSelectController($scope,$filter, promotionDataService, utilService) {
+function ChannelSelectController($filter, $scope, promotionDataService, utilService) {
     var ctrl = this;
-    var promise = promotionDataService.getSelectionChannels();
+    ctrl.selectionChanged = selectionChanged;
+    ctrl.selectAll = selectAll;
+    ctrl.setCheckAll = setCheckAll;
+    ctrl.checkAll = false;
 
-    promise.then(
-        function(channels) {
-            ctrl.data.channelsWithCheckedFields = channels.map(function(channel) {
+    ctrl.$onInit = function () {
+        var promise = promotionDataService.getSelectionChannels();
+        promise.then(
+        function (channels) {
+            ctrl.data.channelsWithCheckedFields = channels.map(function (channel) {
                 var newChannel = channel;
-                if(ctrl.data.purchaseConds.channels.includes(channel.id)){
+                if (ctrl.data.purchaseConds.channels.includes(channel.id)) {
                     newChannel.checked = true;
-                    if(channel.id === 87){
-                        newChannel.disabled = true;
-                    }else{
-                        newChannel.disabled = false;
-                    }      
                 } else {
-                    
                     newChannel.checked = false;
-                    newChannel.disabled = false;
                 }
                 return newChannel;
             })
 
-            $scope.$$postDigest(function () {
-                new CheckboxGroup('cbg1').init();// eslint-disable-line no-undef
-                ctrl.data.channelsWithCheckedFields.forEach(function(channel, index){
-                    if(channel.checked){
-                        var elementOfTrueChannel = angular.element( document.querySelector( '#cond' + (index + 1) ) );
-                        elementOfTrueChannel.attr('aria-checked','true');
-                        if(utilService.isPrintLabelChecked(ctrl.data) && channel.id === 87){
-                            elementOfTrueChannel.attr('aria-disabled','true');
-                            channel.disabled = true;
-                        }else{
-                            elementOfTrueChannel.attr('aria-disabled','false');
-                            channel.disabled = false;
-                        }
-                    }
-                })    
-                console.log('channelsWithCheckedFields', ctrl.data.channelsWithCheckedFields)
-            });
+            $scope.$watch('$ctrl.data.printLabel', function(value) {
+                ctrl.data.channelsWithCheckedFields.forEach(function (channel, index) {
+                    ctrl.enableDisableChannel(channel);
+                    ctrl.selectionChanged();
+                })
+            }, true);
             ctrl.updateScopeWithNewChannels();
         }
     )
-    
-    ctrl.updateSingleChannelCheckBoxValue = function(channel){
-            channel.checked = !channel.checked;
-            ctrl.updateScopeWithNewChannels();
-            utilService.updatePrintLabel(ctrl.data);
-    }
-
-    ctrl.CheckToClick = function(channel){
-        if(utilService.isPrintLabelChecked(ctrl.data) && channel.id === 87){
-            return false
-        }else{
-            return true
-        }    
-    }
-    
-    ctrl.updateAllChannelCheckBoxValues = function(){
-
-        var falseChannels = ctrl.data.channelsWithCheckedFields.filter(function(channel){
-            return !channel.checked
-        })
-        ctrl.data.channelsWithCheckedFields.forEach(function(channel){
-            channel.checked = falseChannels.length != 0 ? true : false
-        });
-        ctrl.updateScopeWithNewChannels();
-        utilService.updatePrintLabel(ctrl.data);
     };
 
-    ctrl.updateScopeWithNewChannels = function(){
-        var selectedChannels = ctrl.data.channelsWithCheckedFields.filter(function(channel){
+    ctrl.enableDisableChannel = function(channel) {
+        if(channel.checked && ctrl.data.printLabel && channel.id === 87){  
+            channel.disable=true;
+        } else {
+            channel.disable=false;
+        }
+    }
+
+    ctrl.updateSingleChannelCheckBoxValue = function (channel) {
+        ctrl.enableDisableChannel(channel);
+        ctrl.selectionChanged();
+    }
+
+    ctrl.updateScopeWithNewChannels = function () {
+        var selectedChannels = ctrl.data.channelsWithCheckedFields.filter(function (channel) {
             return channel.checked
-        }).map(function(channel){
+        }).map(function (channel) {
             return channel.id
         })
         ctrl.data.channels = selectedChannels
     }
+
+    function selectionChanged() {
+        ctrl.selectedOptions = [];
+        for (var i = 0; i < ctrl.data.channelsWithCheckedFields.length; i++) {
+            if (ctrl.data.channelsWithCheckedFields[i].checked) {
+                ctrl.selectedOptions.push(ctrl.data.channelsWithCheckedFields[i]);
+            }
+        }
+        ctrl.setCheckAll();
+        ctrl.updateScopeWithNewChannels();
+        utilService.updatePrintLabel(ctrl.data);
+    }
+
+    function setCheckAll() {
+        if (ctrl.selectedOptions.length === 0) {
+            ctrl.checkAll = false;
+        } else if (ctrl.selectedOptions.length == ctrl.data.channelsWithCheckedFields.length) {
+            ctrl.checkAll = true;
+        } else {
+            ctrl.checkAll = 'mixed';
+        }
+    }
+
+    function selectAll() {
+        ctrl.selectedOptions = [];
+        for (var i = 0; i < ctrl.data.channelsWithCheckedFields.length; i++) {
+            ctrl.data.channelsWithCheckedFields[i].checked = ctrl.checkAll;
+            if (ctrl.checkAll) {
+                ctrl.selectedOptions.push(ctrl.data.channelsWithCheckedFields[i]);
+            }
+        }
+        if (!ctrl.checkAll) {
+            ctrl.selectedOptions.splice(0, ctrl.selectedOptions.length);
+        }
+        ctrl.selectionChanged();
+    }
 }
+

@@ -1,12 +1,14 @@
-<div id="cbg1" class="checkbox-group" ng-show="$ctrl.viewProp.displayChannelSelect">
+<div class="ms-dropdown" style="margin-top:28px">
 	<h4>Selling System Channels</h4>
-
-	 <div ng-click="$ctrl.updateAllChannelCheckBoxValues()" role="checkbox" class="select-all" aria-checked="false" tabindex="0" id="cond0">
-		<label>All</label>
-	</div> 
-	 
-	 <div ng-repeat="channel in $ctrl.data.channelsWithCheckedFields track by $index" ng-click="$ctrl.updateSingleChannelCheckBoxValue(channel)" role="checkbox"  aria-checked="false" tabindex="-1" id="cond{{$index + 1}}" class="channelSelectChannels">
-		<label>{{channel.name}}</label>
-	</div> 
+    <div ng-style="style">
+        <div>
+            <md-checkbox role="checkbox" ng-model="$ctrl.checkAll"
+            ng-change="$ctrl.selectAll()" aria-checked="{{$ctrl.checkAll}}">All</md-checkbox>     
+        </div>
+        <div ng-repeat="channel in $ctrl.data.channelsWithCheckedFields track by $index" ng-if="!option.hide" class="plxxl">
+            <md-checkbox ng-true-value="true" ng-false-value="false" ng-model="channel.checked"
+            ng-change="$ctrl.updateSingleChannelCheckBoxValue(channel)" aria-checked="false" ng-disabled="channel.disable">{{channel.name}}</md-checkbox>     
+        </div>
+	</div>
 	<div>Select the Selling System Channel(s) where this discount will be made available</div>
 </div>
