@@ -1,0 +1,39 @@
+<div class="md-select md-select-space" ng-show="viewProp.displayCustomerSegment">
+    <label for="promocustomersegment"><h3>Customer Segment (Optional)</h3></label>
+
+
+
+    <select name="segment" ng-options="segment as segment.name for segment in segmentDetails track by segment.name" ng-model="data.custSegment"
+            ng-change="onSegmentSelection();updatePrintLabel()" ng-disabled="preview">
+        <option value="">
+            -- Select a Customer Segment --
+        </option>
+    </select>
+
+</div>
+<div class="basketThresholdDiv" ng-show="viewProp.displayBasketThreshold" ng-if="showBasketThreshold">
+    <h3 class = "basketThresholdHeader"> Basket Threshold (Optional) </h3>
+    <span class="basketThresholdText"> Enter the dollar amount a customer's order must reach to be assessed for this discount</span>
+    <br>
+    <span class="md-text-field basket">
+			<input type="text" class="basketThresholdTextBox" ng-model="data.purchaseConds.basketThreshold" ng-blur="validatePromotion()" allow-pattern="^[\d.]+$" ng-disabled="preview" placeholder="$0.00"/>
+			</span>
+    <br>
+    <br>
+</div>
+
+
+
+<div ng-if="data.promoCdRqrd != false  && data.promoSubTypeCd != 'MultipleItemsPercentDiscount' && data.promoSubTypeCd != 'MultipleItemsValueDiscount'">
+    <div class="md-text-field">
+        <label for="name">Site wide promotion </label>
+        <div class="md-radio">
+            <input for="sitewide" type="radio" name="sitepromotion" ng-model="data.isSitewideDeal" ng-value="true" ng-disabled="preview" />
+            <label><span><span></span></span>Yes</label>
+        </div>
+        <div class="md-radio">
+            <input for="sitewide" type="radio" name="sitepromotion" ng-model="data.isSitewideDeal" ng-value="false" ng-disabled="preview"/>
+            <label><span><span></span></span>No </label>
+        </div>
+    </div>
+</div>

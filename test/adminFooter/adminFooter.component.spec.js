@@ -1,4 +1,4 @@
-describe('Unit testing adminFooter.directive.spec.js', function () {
+describe('Unit testing adminFooter.component.spec.js', function () {
   var $compile,
     $rootScope,
     $scope,
@@ -7,11 +7,25 @@ describe('Unit testing adminFooter.directive.spec.js', function () {
     $componentController,
     modalService;
   var app = module('app');
-  // Load the myApp module, which contains the directive
+    // Load the myApp module, which contains the directive
   beforeEach(app);
+  beforeEach(function(){
+      module('app', function($provide) {
+          $provide.constant('sectionsIndex', {
+              DISCOUNT_PROPERTIES:0,
+              QUALIFIERS:1,
+              LOCATION:2,
+              REWARDS:3,
+              DESCRIPTIONS:4,
+              REDEMPTION_LIMITS:5,
+              LABELS:6,
+              SCHEDULE:7
+          });
+      });
+  });
   // Store references to $rootScope and $compile
   // so they are available to all tests in this describe block
-  beforeEach(inject(function (_$compile_, _$rootScope_, _promotionDataService_, _utilService_, _$componentController_, _modalService_) {
+  beforeEach(inject(function (_$compile_, _$rootScope_, _promotionDataService_, _utilService_, _$componentController_, _modalService_, sectionsIndex) {
     // The injector unwraps the underscores (_) from around the parameter names when matching
     $compile = _$compile_;
     $rootScope = _$rootScope_;
