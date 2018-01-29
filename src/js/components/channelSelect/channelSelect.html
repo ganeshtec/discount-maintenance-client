@@ -7,7 +7,7 @@
         </div>
         <div ng-repeat="channel in $ctrl.data.channelsWithCheckedFields track by $index" ng-if="!option.hide" class="plxxl">
             <md-checkbox ng-true-value="true" ng-false-value="false" ng-model="channel.checked"
-            ng-change="$ctrl.updateSingleChannelCheckBoxValue(channel)" aria-checked="false" ng-disabled="channel.disable">{{channel.name}}</md-checkbox>     
+            ng-change="$ctrl.updateSingleChannelCheckBoxValue(channel)" aria-checked="{{channel.checked}}" ng-disabled="channel.disable">{{channel.name}}</md-checkbox>     
         </div>
 	</div>
 	<div>Select the Selling System Channel(s) where this discount will be made available</div>

@@ -64,7 +64,7 @@ function ChannelSelectController($filter, $scope, promotionDataService, utilServ
         ctrl.data.channels = selectedChannels
     }
 
-    function selectionChanged() {
+    function selectionChanged () {
         ctrl.selectedOptions = [];
         for (var i = 0; i < ctrl.data.channelsWithCheckedFields.length; i++) {
             if (ctrl.data.channelsWithCheckedFields[i].checked) {
@@ -76,7 +76,7 @@ function ChannelSelectController($filter, $scope, promotionDataService, utilServ
         utilService.updatePrintLabel(ctrl.data);
     }
 
-    function setCheckAll() {
+    function setCheckAll () {
         if (ctrl.selectedOptions.length === 0) {
             ctrl.checkAll = false;
         } else if (ctrl.selectedOptions.length == ctrl.data.channelsWithCheckedFields.length) {
@@ -86,12 +86,14 @@ function ChannelSelectController($filter, $scope, promotionDataService, utilServ
         }
     }
 
-    function selectAll() {
+    function selectAll () {
         ctrl.selectedOptions = [];
         for (var i = 0; i < ctrl.data.channelsWithCheckedFields.length; i++) {
+            if(!(ctrl.data.channelsWithCheckedFields[i].checked && ctrl.data.printLabel && ctrl.data.channelsWithCheckedFields[i].id === 87)){ 
             ctrl.data.channelsWithCheckedFields[i].checked = ctrl.checkAll;
-            if (ctrl.checkAll) {
-                ctrl.selectedOptions.push(ctrl.data.channelsWithCheckedFields[i]);
+                if (ctrl.checkAll) {
+                    ctrl.selectedOptions.push(ctrl.data.channelsWithCheckedFields[i]);
+                }
             }
         }
         if (!ctrl.checkAll) {
