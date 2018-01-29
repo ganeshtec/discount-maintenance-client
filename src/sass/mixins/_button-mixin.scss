@@ -1,0 +1,76 @@
+@mixin btn-default(
+  $bgcolor: $primary, 
+  $fontcolor: $reverse,  
+  $btnwidth: 100%, 
+  $btnheight: 38px,
+  $fontsize: $font-size-base
+  ) {
+
+  color: $fontcolor;
+  width: $btnwidth;
+  height: $btnheight;
+  font-size: $fontsize;
+
+  text-shadow: none;
+  text-decoration: none;
+
+  text-align: center;
+  // font-weight: bold;
+  // text-transform: uppercase;
+  line-height: 1em;
+  box-sizing: content-box;
+  $bordercolor: darken($bgcolor, 5%);
+  $borderheight: calc(#{$btnheight} * .1267);
+  margin-bottom: calc(#{$btnheight} * .1267);
+
+  @extend %flex;
+  @extend %align-items-center;
+  @extend %justify-center;
+  @include box-shadow(0 $borderheight 0 $bordercolor);
+  @include transition(box-shadow .1s ease-in-out);
+  & span {
+    @extend %flex;
+    @extend %justify-center;
+    @extend %align-items-center;
+    @include flex-grow(1);
+    height: $btnheight;
+    background-color: $bgcolor;
+    @include transition(background-color .2s ease-in-out, transform .1s ease-in-out);
+  }
+  &:active {
+    @include box-shadow(0 $borderheight 0 $bordercolor);
+    & span {
+      @include transform(translate(0, $borderheight));
+    }
+  }
+
+}
+
+@mixin btn-secondary(
+  $bgcolor: $reverse, 
+  $color: $brand,  
+  $btnwidth: 100%, 
+  $btnheight: 42px,
+  $fontsize: $font-size-base
+  ) {
+
+  color: $color;
+  width: $btnwidth;
+  height: $btnheight;
+  font-size: $fontsize;
+
+  text-shadow: none;
+  text-decoration: none;
+
+  text-align: center;
+  font-weight: bold;
+  text-transform: uppercase;
+  line-height: 1em;
+  box-sizing: border-box;
+  border: 3px solid $color;
+
+  @extend %flex;
+  @extend %align-items-center;
+  @extend %justify-center;
+}
+

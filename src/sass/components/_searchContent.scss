@@ -1,0 +1,98 @@
+.searchButton, .search, .filterButton {
+  border: 1px solid #e7e3e3;
+  border-radius: 3px;
+  padding: 5px;
+}
+
+.search {
+  width: 522px;
+  height: 36px;
+  background-color: #f5f5f5;
+  font-family: 'OpenSans', 'Open Sans';
+  font-weight: 400;
+  font-style: normal;
+  font-size: 18px;
+  text-decoration: none;
+  color: #222222;
+  text-align: left;
+  outline-style: none;
+  margin-bottom: 5px;
+  border-right-width: 0px;
+}
+
+#searchFilterContainerHeader {
+  margin: auto;
+  width: 100%;
+}
+
+#searchTypeContainer {
+  top: -23px;
+  float: left;
+  margin: auto;
+  width: 250px;
+  padding-bottom: 20px;
+}
+
+#searchFilterSearchBox {
+  float: left;
+  padding-bottom: 20px;
+  input {
+    width: 600px;
+  }
+}
+
+#searchFilterSearchButton {
+  float: left;
+  width: 50px;
+}
+
+#searchFilterFilterButton {
+  float: left;
+  width: 50px;
+  left: 80px;
+  position: relative;
+}
+
+#searchFilter {
+  position: absolute;
+  min-width: 160px;
+  padding: 20px;
+  z-index: 100;
+  width: 300px;
+  background: #fff;
+  top: 50px;
+  left: -5px;
+  box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.12), 0px 1px 2px 0px rgba(0, 0, 0, 0.24);
+  select {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}
+
+#searchFilterHeader {
+  margin: auto;
+  width: 100%;
+}
+
+#searchFilterHeaderTitle {
+  width: 80%;
+  float: left;
+  height: 50px;
+  h1 {
+    font-family: 'OpenSans-Light', 'Open Sans Light', 'Open Sans';
+    font-weight: 200;
+    font-style: normal;
+    font-size: 25px;
+  }
+}
+
+#searchFilterHeaderClose {
+  position: absolute;
+  right: 20px;
+  height: 50px;
+  float: left;
+}
+
+#filterApplyButton {
+  margin-left: 0 !important;
+}

@@ -1,0 +1,99 @@
+.dashBoardActions {
+  td {
+    border-bottom: 1px solid #DDDDDD;
+    font-size: 14px;
+  }
+  input {
+    font-size: 14px;
+  }
+  th {
+    border-bottom: 1px solid #DDDDDD;
+    box-shadow: 0 4px 2px -2px #DDDDDD;
+    text-align: left;
+    font-size: 14px;
+    white-space: nowrap;
+    color: #999999;
+    font-weight: 400;
+  }
+  input {
+    outline-color: green;
+  }
+}
+
+.promotions {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.promotionName, .promotionDate {
+  border: 1px solid #DDDDDD;
+  padding: 5px;
+}
+
+.promotionName.ng-invalid {
+  border-color: red;
+}
+
+.promotionDate {
+  &.ng-invalid {
+    border-color: red;
+  }
+  width: 150px;
+}
+
+.mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  background-color: grey;
+  opacity: .8;
+}
+
+.promotions {
+  th {
+    white-space: nowrap;
+    color: #999999;
+  }
+  td {
+    font-size: 14px;
+    word-wrap: break-word;
+  }
+}
+
+.promotionName {
+  width: 95%;
+}
+
+.promotions {
+  th, td {
+    padding: 5px !important;
+  }
+}
+
+.error {
+  font-size: 15px;
+  margin-top: -15px;
+  color: red;
+}
+
+.nopromotion {
+  font-size: 20px;
+  color: #DDDDDD;
+  text-align: center;
+  padding: 20px;
+  height: 200px;
+}
+
+.clearSearch {
+  margin-top: 20px;
+  min-width: 105px;
+  color: #F96302;
+  cursor: pointer;
+}
+
+.discountButton {
+  text-align: right;
+}

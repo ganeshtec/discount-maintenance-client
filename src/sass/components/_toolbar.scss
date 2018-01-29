@@ -1,0 +1,116 @@
+.md-toolbar {
+  position: relative;
+  font-family: 'Open Sans', sans-serif;
+  background-color: #2B3134;
+  padding: 5px 20px;
+  div {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .brand {
+    span {
+      display: inline-block;
+      vertical-align: middle;
+      img {
+        margin-right: 20px;
+      }
+    }
+    h1 {
+      display: block;
+      margin: 0;
+      padding: 0;
+      font-size: 20px;
+      font-weight: 400;
+      color: #EEEEEE;
+    }
+  }
+}
+
+.md-toolbar-search {
+  input {
+    vertical-align: text-top;
+    border: solid 1px #DDDDDD;
+    min-width: 250px;
+    background-color: #EEEEEE;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 18px;
+    color: #555555;
+    padding: 0 15px;
+    line-height: 46px;
+    position: relative;
+    &:focus {
+      background-color: #FFFFFF;
+      outline: none;
+    }
+    &.error {
+      color: red;
+      margin-top: 1px;
+    }
+  }
+  .md-button {
+    vertical-align: text-top;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    line-height: 46px;
+    margin-left: -5px;
+  }
+}
+
+.md-toolbar-actions {
+  position: absolute;
+  top: 8px;
+  right: 20px;
+  a {
+    position: relative;
+    display: inline-block;
+    border-radius: 3px;
+    color: #FFFFFF;
+    font-size: 24px;
+    line-height: 53px;
+    min-width: 53px;
+    text-align: center;
+    margin-left: 10px;
+    .badge {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+    }
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.5);
+      text-decoration: none;
+    }
+  }
+  .user {
+    color: #EEEEEE;
+  }
+  a {
+    &.search:before {
+      font-family: "FontAwesome";
+      content: "\f002";
+    }
+    &.mail:before {
+      font-family: "FontAwesome";
+      content: "\f0e0";
+    }
+    &.notifications:before {
+      font-family: "FontAwesome";
+      content: "\f0f3";
+    }
+    &.profile:before {
+      font-family: "FontAwesome";
+      content: "\f007";
+      font-family: "FontAwesome";
+      content: "\f007";
+    }
+    &.shopping-cart:before {
+      font-family: "FontAwesome";
+      content: "\f07a";
+    }
+    &.logout:before {
+      font-family: "FontAwesome";
+      content: "\f023";
+    }
+  }
+}

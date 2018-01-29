@@ -1,0 +1,66 @@
+/* Table Styles */
+
+table.table {
+    width: 100%;
+    border: solid 1px #eee;
+    border-spacing: 0;
+    vertical-align: middle;
+}
+
+.table {
+    tr, td {
+        border: solid 1px #eee;
+        border-spacing: 0;
+        vertical-align: middle;
+    }
+    th {
+        border: solid 1px #eee;
+        border-spacing: 0;
+        vertical-align: middle;
+        font-size: 14px;
+        font-weight: bold;
+        padding: 1em;
+    }
+    td {
+        padding: 1em;
+    }
+    &.noborder {
+        border-spacing: none;
+        border: none;
+    }
+}
+
+.odd {
+    background-color: #fbfbfb;
+}
+
+.sortorder {
+    &:after {
+        content: '\25b2';
+    }
+    &.reverse:after {
+        content: '\25bc';
+    }
+}
+
+.sortOption {
+    text-decoration: none;
+    color: #000;
+}
+
+.editOption {
+    text-decoration: none;
+}
+
+.table {
+    td:nth-child(1), th:nth-child(1) {
+        border-left: none;
+    }
+    td:last-of-type, th:last-of-type {
+        border-right: none;
+    }
+}
+
+.table__search {
+    width: 50%;
+}

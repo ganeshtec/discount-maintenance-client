@@ -17,7 +17,6 @@ app.service('promotionDataService', ['$http', '$q', 'dataService', 'DataFactory'
             return new redemptionMethodTypes();
         }
 
-        // Takes data to get promotion, Test if recieves data and promise resolve
         publicApi.getPromotionByID = function (id) {
             var config = {
                     method: 'GET',
