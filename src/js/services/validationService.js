@@ -165,6 +165,7 @@ app.service('validationService', ['$filter', 'utilService', '$cookies', function
         var rounded = number.toFixed(2);
         var floatRounded = parseFloat(rounded);
         promotion.purchaseConds.basketThreshold = floatRounded;
+        promotion.purchaseConds.basketThreshold <= 0 ? promotion.purchaseConds.basketThreshold = null : promotion.purchaseConds.basketThreshold;
         return promotion;
     }
 
