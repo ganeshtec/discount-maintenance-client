@@ -15,6 +15,14 @@ describe('purchaseCondition', function () {
         $scope = $rootScope.$new();
         _$httpBackend_.when('GET', '/labels/leadTime')
             .respond(200, 3);
+        _$httpBackend_.when('GET', '/customersegment/segments')
+            .respond(200, { segments: [] });
+        _$httpBackend_.when('GET', '/skutypes/')
+            .respond(200, []);
+        _$httpBackend_.when('GET', '/merchHierarchy/departments')
+            .respond(200, []);
+        _$httpBackend_.when('GET', '/featureFlags')
+            .respond(200, {});
     }));
     describe('dcm user', function () {
         beforeEach(inject(function () {
@@ -26,25 +34,35 @@ describe('purchaseCondition', function () {
                     },
                     purchaseConds: {
                         channels: [57],
-                        sources: []
+                        sources: [{purchaseoption: 'category' }]
                     }
                 },
+                promoform : {},
+                preview : false,
+                isDisabled : false,
                 validationErrors: {
                     minQtyThreshold: {
                         isError: false,
                         message: ''
                     }
                 },
+                viewProp : {displayOMSIdExclusion: false, displayItemsSku: true },
                 purchaseCondition: { sources: [1] }
             });
         }));
 
         it('verify Rewards radio button should be invisible for MFA User ', function () {
+            $scope.data = { purchaseConds: { sources: [{ purchaseoption: 'category' }] }, reward:{details:[{}]} };
             $scope.promoform = {};
             $scope.preview = false;
             $scope.isDisabled = false;
-            var element = $compile("<purchase-condition data='data' promoform='promoform' preview='preview' purchase-condition='data.purchaseConds' is-disabled='isDisabled' ></purchase-condition>")($scope);
+            $scope.viewProp = { displayOMSIdExclusion: false, displayItemsSku: true , displayOMSId:true};
+            var element = $compile("<purchase-condition data='data' promoform='promoform' view-prop='viewProp' preview='preview' purchase-condition='data.purchaseConds' is-disabled='isDisabled' ></purchase-condition>")($scope);
+            $scope.$digest();
             expect(element.find('.md-text-field').is(':visible')).toBe(false);
+            expect(element.find(".filter_sku_types_link").is(':visible')).toBe(false);
+            expect(element.find("div[id='itemsoms_div_0']").is(':visible')).toBe(false);
+            expect(element.find("div[id='itemssku_div_0']").is(':visible')).toBe(false);
         });
 
         it('verify $onInit function', function () {
@@ -106,6 +124,17 @@ describe('purchaseCondition', function () {
 
             expect(ctrl.validationErrors.minimumThreshold[1].isError).toBe(false);
             expect(ctrl.validationErrors.minimumThreshold[1].message).toBe('');
+        });
+
+        it('updatePrintLabel should set printLabel to false if item/sku selected', function () {
+            ctrl.updatePrintLabel();
+            expect(ctrl.data.printLabel).toBe(false);
+        });
+
+        it('updatePrintLabel should set printLabel to false if category selected', function () {
+            ctrl.updatePrintLabel();
+            expect(ctrl.data.printLabel).toBe(false);
+            expect(ctrl.data.labelText).toBe('');
         });
     });
 

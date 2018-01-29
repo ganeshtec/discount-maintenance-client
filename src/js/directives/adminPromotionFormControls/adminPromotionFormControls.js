@@ -8,7 +8,6 @@ app.directive('adminPromotionFormControls', ['stateService','$location','$anchor
             index: '='
         },
         link: function(scope){
-            $location.hash('promoTop');
             
             scope.$on('horizontalTabClicked', function () {
                 scope.setActive(0);   

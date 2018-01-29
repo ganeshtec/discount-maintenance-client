@@ -509,10 +509,10 @@ app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$sco
             $scope.searchWithUrlParams();
         });
         $scope.edit = function (id) {
-            window.location = '#/discount-admin/' + (id || $scope.sel[0]) + '#promoTop';
+            window.location = '#/discount-admin/' + (id || $scope.sel[0]);
         }
         $scope.duplicate = function (id) {
-            window.location = '#/discount-admin/clone/' + (id || $scope.sel[0]) + '#promoTop';
+            window.location = '#/discount-admin/clone/' + (id || $scope.sel[0]);
         }
 
         $scope.compare = function (id1, id2) {
