@@ -1,4 +1,4 @@
-describe('purchaseCondition', function () {
+describe('rewards', function () {
 
     var $componentController;
     var $compile;
@@ -26,7 +26,7 @@ describe('purchaseCondition', function () {
     }));
     describe('dcm user', function () {
         beforeEach(inject(function () {
-            ctrl = $componentController('purchaseCondition', null, {
+            ctrl = $componentController('rewards', null, {
                 data: {
                     reward: {
                         details: [{}],
@@ -57,7 +57,7 @@ describe('purchaseCondition', function () {
             $scope.preview = false;
             $scope.isDisabled = false;
             $scope.viewProp = { displayOMSIdExclusion: false, displayItemsSku: true , displayOMSId:true};
-            var element = $compile("<purchase-condition data='data' promoform='promoform' view-prop='viewProp' preview='preview' purchase-condition='data.purchaseConds' is-disabled='isDisabled' ></purchase-condition>")($scope);
+            var element = $compile("<rewards data='data' promoform='promoform' view-prop='viewProp' preview='preview' purchase-condition='data.purchaseConds' is-disabled='isDisabled' ></rewards>")($scope);
             $scope.$digest();
             expect(element.find('.md-text-field').is(':visible')).toBe(false);
             expect(element.find(".filter_sku_types_link").is(':visible')).toBe(false);
@@ -66,7 +66,7 @@ describe('purchaseCondition', function () {
         });
 
         it('verify $onInit function', function () {
-            var element = $compile("<purchase-condition data='data' promoform='promoform' preview='preview' purchase-condition='data.purchaseConds' is-disabled='isDisabled' ></purchase-condition>")($scope);
+            var element = $compile("<rewards data='data' promoform='promoform' preview='preview' purchase-condition='data.purchaseConds' is-disabled='isDisabled' ></rewards>")($scope);
             ctrl.userType = 229;
             ctrl.$onInit();
             expect(ctrl.isDCMUser).toBe(true);
@@ -140,7 +140,7 @@ describe('purchaseCondition', function () {
 
     describe('mfa user', function () {
         beforeEach(inject(function () {
-            ctrl = $componentController('purchaseCondition', null, {
+            ctrl = $componentController('rewards', null, {
                 data: {
                     reward: {
                         details: [{ qualUOM: 'Quantity' }],
@@ -161,7 +161,7 @@ describe('purchaseCondition', function () {
         }));
 
         it('verify $onInit function', function () {
-            var element = $compile("<purchase-condition data='data' promoform='promoform' preview='preview' purchase-condition='data.purchaseConds' is-disabled='isDisabled' ></purchase-condition>")($scope);
+            var element = $compile("<rewards data='data' promoform='promoform' preview='preview' purchase-condition='data.purchaseConds' is-disabled='isDisabled' ></rewards>")($scope);
             ctrl.userType = 228;
             ctrl.$onInit();
             expect(ctrl.isMFAUser).toBe(true);
