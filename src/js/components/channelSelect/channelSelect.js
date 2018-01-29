@@ -33,7 +33,7 @@ function ChannelSelectController($filter, $scope, promotionDataService, utilServ
 
             $scope.$watch('$ctrl.data.printLabel', function(value) {
                 ctrl.data.channelsWithCheckedFields.forEach(function (channel, index) {
-                    ctrl.enableDisableChannel(channel);
+                    ctrl.disableChannel(channel);
                     ctrl.selectionChanged();
                 })
             }, true);
@@ -42,7 +42,7 @@ function ChannelSelectController($filter, $scope, promotionDataService, utilServ
     )
     };
 
-    ctrl.enableDisableChannel = function(channel) {
+    ctrl.disableChannel = function(channel) {
         if(channel.checked && ctrl.data.printLabel && channel.id === 87){  
             channel.disable=true;
         } else {
@@ -51,7 +51,7 @@ function ChannelSelectController($filter, $scope, promotionDataService, utilServ
     }
 
     ctrl.updateSingleChannelCheckBoxValue = function (channel) {
-        ctrl.enableDisableChannel(channel);
+        ctrl.disableChannel(channel);
         ctrl.selectionChanged();
     }
 

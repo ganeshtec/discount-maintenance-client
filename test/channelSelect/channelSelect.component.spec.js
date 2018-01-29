@@ -124,7 +124,7 @@ describe('Unit testing channelSelect component', function () {
             "code": "PEC",
             "checked": false
         }
-        ctrl.enableDisableChannel(channel);
+        ctrl.disableChannel(channel);
 
         expect(channel.disable).toBe(false);
 
@@ -139,7 +139,7 @@ describe('Unit testing channelSelect component', function () {
             "checked": true
         }
        
-        ctrl.enableDisableChannel(channel);
+        ctrl.disableChannel(channel);
         expect(channel.disable).toBe(true);
 
     });
@@ -152,7 +152,7 @@ describe('Unit testing channelSelect component', function () {
             "checked": false
         }
         
-        ctrl.enableDisableChannel(channel);
+        ctrl.disableChannel(channel);
         expect(channel.disable).toBe(false);
 
     });
