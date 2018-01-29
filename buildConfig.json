@@ -35,7 +35,7 @@
 
 "slack": {
 	"channel": "#snowshoe-deploybot",
-	"botName": "DeployBot",
+	"botName": "Discount Maintenance Client",
 	"emoji": ":robot_face:"
 },
 
