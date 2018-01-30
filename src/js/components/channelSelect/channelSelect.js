@@ -90,7 +90,7 @@ function ChannelSelectController($filter, $scope, promotionDataService, utilServ
         ctrl.selectedOptions = [];
         for (var i = 0; i < ctrl.data.channelsWithCheckedFields.length; i++) {
             if(!(ctrl.data.channelsWithCheckedFields[i].checked && ctrl.data.printLabel && ctrl.data.channelsWithCheckedFields[i].id === 87)){ 
-            ctrl.data.channelsWithCheckedFields[i].checked = ctrl.checkAll;
+                ctrl.data.channelsWithCheckedFields[i].checked = ctrl.checkAll;
                 if (ctrl.checkAll) {
                     ctrl.selectedOptions.push(ctrl.data.channelsWithCheckedFields[i]);
                 }
