@@ -1,5 +1,5 @@
-app.component('purchaseCondition', {
-    templateUrl: 'purchaseCondition.html',
+app.component('rewards', {
+    templateUrl: 'rewards.html',
     bindings: {
         data: '=',
         qualUOM: '=',
@@ -11,12 +11,12 @@ app.component('purchaseCondition', {
         viewProp: '=',
         validationErrors: '='
     },
-    controller: PurchaseConditionController
+    controller: rewardsController
 });
 
-PurchaseConditionController.$inject = ['$rootScope', '$mdDialog', 'SourceData', 'validationService', 'utilService', '$cookies', 'customerSegmentDataService', 'featureFlagService'];
+rewardsController.$inject = ['$rootScope', '$mdDialog', 'SourceData', 'validationService', 'utilService', '$cookies', 'featureFlagService'];
 
-function PurchaseConditionController($rootScope, $mdDialog, SourceData, validationService, utilService, $cookies, customerSegmentDataService, featureFlagService) {
+function rewardsController($rootScope, $mdDialog, SourceData, validationService, utilService, $cookies, featureFlagService) {
     var ctrl = this;
     ctrl.setQualUOM = setQualUOM;
     ctrl.addPurchaseCondition = addPurchaseCondition;
@@ -28,8 +28,6 @@ function PurchaseConditionController($rootScope, $mdDialog, SourceData, validati
     ctrl.setRewardMethod = setRewardMethod;
     ctrl.isSingleSourcePurchaseCondition = isSingleSourcePurchaseCondition;
     ctrl.isMultiSourcePurchaseCondition = isMultiSourcePurchaseCondition;
-    ctrl.getAllSegments = getAllSegments;
-    ctrl.onSegmentSelection = onSegmentSelection;
     ctrl.initializePurchaseOption = initializePurchaseOption;
     ctrl.showSkuTypeModal = showSkuTypeModal;
     ctrl.removeAll = removeAll;
@@ -47,7 +45,6 @@ function PurchaseConditionController($rootScope, $mdDialog, SourceData, validati
     }
 
     function $onInit() {
-        ctrl.getAllSegments();
         switch (ctrl.userType) {
         case 229:
             ctrl.isDCMUser = true;
@@ -156,48 +153,6 @@ function PurchaseConditionController($rootScope, $mdDialog, SourceData, validati
     function roundPercentage(dataIndex) {
         if (ctrl.data.reward.details[dataIndex].value) {
             ctrl.data.reward.details[dataIndex].value = parseFloat((Math.round(ctrl.data.reward.details[dataIndex].value * 100) / 100).toFixed(2));
-        }
-    }
-
-    function getAllSegments() {
-        var getCusSegmentPromise = customerSegmentDataService.getAllSegments();
-        getCusSegmentPromise.then(
-            function (data) {
-                ctrl.segmentListfromWebservice = data.segments;
-                var objearraySize = ctrl.segmentListfromWebservice.length;
-                ctrl.segmentDetails = [];
-                for (var i = 0; i < objearraySize; i++) {
-                    var segment = {};
-                    segment.name = ctrl.segmentListfromWebservice[i].name;
-                    segment.id = ctrl.segmentListfromWebservice[i].id;
-
-                    // If condition for Edit Customer Segment
-
-                    if (ctrl.data.purchaseConds.customerSegmentId) {
-                        if (ctrl.data.purchaseConds.customerSegmentId == ctrl.segmentListfromWebservice[i].id) {
-                            ctrl.data.custSegment = segment;
-                        }
-                    } else {
-                        ctrl.data.purchaseConds.customerSegmentId = 0;
-                    }
-                    ctrl.segmentDetails.push(segment);
-                }
-            },
-            function () {
-                // Should we have some error handling logic here?
-            }
-        );
-
-    }
-    function onSegmentSelection() {
-        if (ctrl.data.custSegment) {
-            ctrl.data.purchaseConds.customerSegmentId = ctrl.data.custSegment.id;
-            if (ctrl.useCustSegReasonCode && ctrl.data.custSegment.id != 0) {
-                ctrl.data.reward.reasonCode = 70;
-            }
-        } else {
-            ctrl.data.reward.reasonCode = 49;
-            ctrl.data.purchaseConds.customerSegmentId = 0;
         }
     }
 
