@@ -80,16 +80,16 @@
 			<!-- <CHANNEL SELECT PLACEHOLDER -->	
 		</section>
 		<section class="admin__promotion__section" ng-show="index == sectionsIndex.QUALIFIERS || preview">
-			<purchase-condition-rewards preview="preview" data="data" view-prop="viewProp" promoform="promoForm" validation-errors="validationErrors" is-disabled="isDisabled">
-			</purchase-condition-rewards>
+			<qualifiers preview="preview" data="data" view-prop="viewProp" promoform="promoForm" validation-errors="validationErrors" is-disabled="isDisabled">
+			</qualifiers>
 		</section>
 		<section class="admin__promotion__section" ng-show="viewProp.displayLocations && (index == sectionsIndex.LOCATION || preview)">
 				<promo-location locations="data.purchaseConds.locations" markets="data.purchaseConds.markets"  preview="preview" promoform="promoForm">
 				</promo-location>
 		</section>
 		<section class="admin__promotion__section" ng-show="index == sectionsIndex.REWARDS || preview">
-				<purchase-condition data="data" preview="preview" view-prop="viewProp" qualuom = "data.purchaseConds.qualUOM" promoform="promoForm" validation-errors="validationErrors" purchase-condition="data.purchaseConds" is-disabled="isDisabled" promotype="data.promoSubTypeCd">
-				</purchase-condition>
+				<rewards data="data" preview="preview" view-prop="viewProp" qualuom = "data.purchaseConds.qualUOM" promoform="promoForm" validation-errors="validationErrors" purchase-condition="data.purchaseConds" is-disabled="isDisabled" promotype="data.promoSubTypeCd">
+				</rewards>
 		</section>
 		<section class="admin__promotion__section" ng-show="viewProp.displayPromoDescription && (index == sectionsIndex.DESCRIPTIONS || preview)">
 				<promo-description data="data" preview="preview">

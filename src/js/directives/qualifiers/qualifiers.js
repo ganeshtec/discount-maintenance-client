@@ -1,9 +1,9 @@
 // Purpose is to build promotion code spec.
-app.directive('purchaseConditionRewards', ['SourceData', 'customerSegmentDataService', '$mdDialog', '$rootScope', 'utilService', 'validationService', 'featureFlagService',
+app.directive('qualifiers', ['SourceData', 'customerSegmentDataService', '$mdDialog', '$rootScope', 'utilService', 'validationService', 'featureFlagService',
     function (SourceData, customerSegmentDataService, $mdDialog, $rootScope, utilService, validationService, featureFlagService) {
         return {
             restrict: 'E',
-            templateUrl: 'purchaseConditionRewards.html',
+            templateUrl: 'qualifiers.html',
             scope: {
                 data: '=',
                 promoform: '=',
@@ -16,27 +16,23 @@ app.directive('purchaseConditionRewards', ['SourceData', 'customerSegmentDataSer
             link: function (scope) {
                 // Customer Segment JS code
 
-                var getCusSegmentPromise = customerSegmentDataService.getAllSegments();
-                getCusSegmentPromise.then(
+                var getCustomerSegmentPromise = customerSegmentDataService.getAllSegments();
+                getCustomerSegmentPromise.then(
                     function (data) {
-                        scope.segmentListfromWebservice = data.segments;
-                        var objearraySize = scope.segmentListfromWebservice.length;
                         scope.segmentDetails = [];
-                        for (var i = 0; i < objearraySize; i++) {
+                        angular.forEach(data.segments, function(segmentFromWebService){
                             var segment = {};
-                            segment.name = scope.segmentListfromWebservice[i].name;
-                            segment.id = scope.segmentListfromWebservice[i].id;
+                            segment.name = segmentFromWebService.name;
+                            segment.id = segmentFromWebService.id;
+                            scope.segmentDetails.push(segment);
 
                             // If condition for Edit Customer Segment
-
-                            if (scope.data.purchaseConds.customerSegmentId) {
-                                if (scope.data.purchaseConds.customerSegmentId == scope.segmentListfromWebservice[i].id) {
-                                    scope.data.custSegment = segment;
-                                }
-                            } else {
-                                scope.data.purchaseConds.customerSegmentId = 0;
+                            if (scope.data.purchaseConds.customerSegmentId && scope.data.purchaseConds.customerSegmentId == segmentFromWebService.id) {
+                                scope.data.custSegment = segment;
                             }
-                            scope.segmentDetails.push(segment);
+                        });
+                        if(!scope.data.custSegment) {
+                            scope.data.purchaseConds.customerSegmentId = 0;
                         }
                     },
                     function () {
@@ -50,7 +46,6 @@ app.directive('purchaseConditionRewards', ['SourceData', 'customerSegmentDataSer
                         if (scope.useCustSegReasonCode && scope.data.custSegment.id != 0) {
                             scope.data.reward.reasonCode = 70;
                         }
-
                     } else {
                         scope.data.reward.reasonCode = 49;
                         scope.data.purchaseConds.customerSegmentId = 0;
