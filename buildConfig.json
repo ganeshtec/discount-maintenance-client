@@ -19,7 +19,7 @@
 
 "fortify":{
 	"foldersToScan": "src",
-	"project-name" : "Pricing_Discount_Maintenance_Extended_UI",
+	"project-name" : "DiscountEngine_discount-maintenance-client",
 	"emailList": "e9w3d9v7m8a6f1r3@thdengops.slack.com"
 },
 
