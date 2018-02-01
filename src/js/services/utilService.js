@@ -460,8 +460,7 @@ app.service('utilService', ['$filter', 'leadTimeService','$cookies', function ($
 
         if ((!publicApi.isLabelLocked(promotion)) && publicApi.isPrintLabelDisabled(promotion)) {
         */
-        
-        if (publicApi.isPrintLabelDisabled(promotion)) {
+        if (publicApi.isPrintLabelDisabled(promotion) && !publicApi.isLabelLocked(promotion)) {
             promotion.printLabel = false;
             promotion.labelText = '';
         }

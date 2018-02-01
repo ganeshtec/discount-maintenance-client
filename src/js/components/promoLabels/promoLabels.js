@@ -10,33 +10,34 @@ app.component('promoLabels', {
     controller: PromoLabelsController
 });
 
-PromoLabelsController.$inject = ['validationService', 'utilService', 'featureFlagService'];
+PromoLabelsController.$inject = ['$scope','validationService', 'utilService', 'featureFlagService'];
 
-function PromoLabelsController(validationService, utilService, featureFlagService) {
+function PromoLabelsController($scope,validationService, utilService, featureFlagService) {
 
     var ctrl = this;
     ctrl.showReceiptText = false;
     
-    this.validatePromotion = function() {
-        this.validationErrors = validationService.validatePromotion(this.data);
+    ctrl.validatePromotion = function() {
+        ctrl.validationErrors = validationService.validatePromotion(ctrl.data);
     }
 
-    this.isPromotionActive = function(){
-        return utilService.isPromotionActive(this.data);
+    ctrl.isPromotionActive = function(){
+        return utilService.isPromotionActive(ctrl.data);
     }
 
-    this.isPrintLabelDisabled = function(){
-        return utilService.isPrintLabelDisabled(this.data);
+    ctrl.isPrintLabelDisabled = function(){
+        return utilService.isPrintLabelDisabled(ctrl.data);
     }
 
-    this.isReceiptTextActive = function() {
+
+    ctrl.isReceiptTextActive = function() {
         var promise = featureFlagService.getFeatureFlags();
         promise.then(function(res) {
             ctrl.showReceiptText = res.receiptText;
         })
     }
 
-    this.isReceiptTextActive();
+    ctrl.isReceiptTextActive();
 
 }
 
