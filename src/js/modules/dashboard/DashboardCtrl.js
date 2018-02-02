@@ -35,7 +35,7 @@ app.controller('DashboardCtrl', ['$cookies', '$filter', 'leadTimeService', '$sco
             var params = $location.search();
             $rootScope.searchParams = params;
             if($scope.userRoleSelected.id == 228){
-                var promise = promotionDataService.getSelectionChannels()
+                var promise = promotionDataService.getSelectionChannels($scope.userRoleSelected.id)
                 promise.then(function (channels) {
                     params.channels = channels.map(function(channel) {
                         return channel.id

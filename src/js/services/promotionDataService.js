@@ -272,10 +272,10 @@ app.service('promotionDataService', ['$http', '$q', 'dataService', 'DataFactory'
             return result.promise;
         }
 
-        publicApi.getSelectionChannels = function () {
+        publicApi.getSelectionChannels = function (userRole) {
             var config = {
                     method: 'GET',
-                    url: '/sellingChannels/all'
+                    url: '/sellingChannels/all/' + userRole
                 },
                 result = $q.defer();
             dataService.httpRequest(config).then(
