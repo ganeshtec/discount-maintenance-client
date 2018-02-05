@@ -18,9 +18,9 @@ function ChannelSelectController($filter, $scope, $cookies, promotionDataService
     ctrl.checkAll = false;
 
     if ($cookies.get('currentUserRole') != null) {
-      var currentUserRole = $cookies.get('currentUserRole');
-      ctrl.userType = parseInt(currentUserRole);
-         }
+        var currentUserRole = $cookies.get('currentUserRole');
+        ctrl.userType = parseInt(currentUserRole);
+    }
 
 
 

@@ -275,7 +275,7 @@ app.service('promotionDataService', ['$http', '$q', 'dataService', 'DataFactory'
         publicApi.getSelectionChannels = function (userRole) {
             var config = {
                     method: 'GET',
-                    url: '/sellingChannels/all/' + userRole
+                    url: '/sellingChannels/all?' + (userRole != null ? 'userRole='+userRole : '')
                 },
                 result = $q.defer();
             dataService.httpRequest(config).then(
