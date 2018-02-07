@@ -10,15 +10,23 @@ app.component('channelSelect', {
 
 });
 
-function ChannelSelectController($filter, $scope, promotionDataService, utilService) {
+function ChannelSelectController($filter, $scope, $cookies, promotionDataService, utilService) {
     var ctrl = this;
     ctrl.selectionChanged = selectionChanged;
     ctrl.selectAll = selectAll;
     ctrl.setCheckAll = setCheckAll;
     ctrl.checkAll = false;
 
+    if ($cookies.get('currentUserRole') != null) {
+        var currentUserRole = $cookies.get('currentUserRole');
+        ctrl.userType = parseInt(currentUserRole);
+    }
+
+
+
+
     ctrl.$onInit = function () {
-        var promise = promotionDataService.getSelectionChannels();
+        var promise = promotionDataService.getSelectionChannels(ctrl.userType);
         promise.then(
         function (channels) {
             ctrl.data.channelsWithCheckedFields = channels.map(function (channel) {
