@@ -198,11 +198,17 @@ gulp.task('test', ['srcbuild'], function (done) {
     });
 });
 
+// gulp.task('buildArtifact', () =>
+//     gulp.src(['!./node_modules/**', 'node_modules','**' ])
+//         .pipe(tar('archive.tar'))
+//         .pipe(gzip())
+//         .pipe(gulp.dest('public'))
+// );
+
 gulp.task('buildArtifact', () =>
-    gulp.src(['!./node_modules/**', 'node_modules','**' ])
-        .pipe(tar('archive.tar'))
-        .pipe(gzip())
-        .pipe(gulp.dest('public'))
+gulp.src(['!./node_modules/**', 'node_modules','**' ])
+    .pipe(zip('archive.zip'))
+    .pipe(gulp.dest('public'))
 );
 
 gulp.task('srcbuild', ['lint', 'concat:vendor-js', 'concat:js', 'build:vendor-css', 'build:css', 'copy:index', 'copy:html', 'copy:fonts']);
