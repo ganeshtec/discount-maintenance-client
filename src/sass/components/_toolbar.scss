@@ -1,5 +1,5 @@
 .md-toolbar {
-  position: relative;
+  position: static;
   font-family: 'Open Sans', sans-serif;
   background-color: #2B3134;
   padding: 5px 20px;
@@ -55,6 +55,14 @@
     border-bottom-left-radius: 0px;
     line-height: 46px;
     margin-left: -5px;
+  }
+}
+
+.header {
+  .header-info {
+    a {
+      color: #eee;
+    }
   }
 }
 
