@@ -12,8 +12,9 @@ var nodemon = require('gulp-nodemon');
 var karma = require('karma').Server;
 var flatten = require('gulp-flatten');
 var eslint = require('gulp-eslint');;
-var tar = require('gulp-tar');
-var gzip = require('gulp-gzip');
+// var tar = require('gulp-tar');
+// var gzip = require('gulp-gzip');
+var zip = require('gulp-zip');
 
 var input = {
         'source_html': [
