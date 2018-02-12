@@ -3,11 +3,9 @@
  */
 app.service('customerSegmentDataService', ['$http', '$q', 'dataService',
     function ($http, $q, dataService) {
-        var publicApi = {};
+        var customerSegmentDataService = {};
 
-        /*Customer Segment - START*/
-
-        publicApi.getAllSegments = function () {
+        customerSegmentDataService.getAllSegments = function () {
 
             var config = {
                     method: 'GET',
@@ -19,16 +17,26 @@ app.service('customerSegmentDataService', ['$http', '$q', 'dataService',
                 function (response) {
 
                     result.resolve(response.data);
-                },
-                function (error) {
-
-                    result.reject(error);
-                });
+                }, function (error) { result.reject(error); });
 
             return result.promise;
         }
-        /*Customer Segment - END*/
 
-        return publicApi;
+        customerSegmentDataService.getAllSegmentsV2EndPoint = function () {
+
+            var config = {
+                    method: 'GET',
+                    url: '/customersegment/v2/segments',
+                },
+                result = $q.defer();
+
+            dataService.httpRequest(config).then(
+                function (response) {
+                    result.resolve(response.data);
+                }, function (error) { result.reject(error); });
+
+            return result.promise;
+        }
+        return customerSegmentDataService;
     }
 ]);
