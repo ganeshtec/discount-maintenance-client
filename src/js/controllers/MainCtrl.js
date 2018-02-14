@@ -14,7 +14,8 @@ app.controller('MainCtrl', ['$rootScope', '$scope', '$location', '$cookies', 'Da
         $scope.previewOverlayConfig.mask(true);
         $scope.userRoleSelected = {
             id: null,
-        }
+        };
+        $scope.discountEngineErrors = [];
 
         $scope.setLoginInfo = function() {
             

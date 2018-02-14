@@ -1,7 +1,7 @@
 {
-  "name": "promo-admin-ui",
+  "name": "discount-maintenance-client",
   "version": "1.0.0",
-  "description": "Promotions Admin UI",
+  "description": "Discount Maintenance Client",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",

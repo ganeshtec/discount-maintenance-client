@@ -14,31 +14,68 @@ app.directive('qualifiers', ['SourceData', 'customerSegmentDataService', '$mdDia
             },
 
             link: function (scope) {
-                // Customer Segment JS code
 
-                var getCustomerSegmentPromise = customerSegmentDataService.getAllSegments();
-                getCustomerSegmentPromise.then(
-                    function (data) {
-                        scope.segmentDetails = [];
-                        angular.forEach(data.segments, function(segmentFromWebService){
-                            var segment = {};
-                            segment.name = segmentFromWebService.name;
-                            segment.id = segmentFromWebService.id;
-                            scope.segmentDetails.push(segment);
+                scope.showBasketThreshold = false;
 
-                            // If condition for Edit Customer Segment
-                            if (scope.data.purchaseConds.customerSegmentId && scope.data.purchaseConds.customerSegmentId == segmentFromWebService.id) {
-                                scope.data.custSegment = segment;
+                var featureTogglePromise = featureFlagService.getFeatureFlags();
+                featureTogglePromise.then(function (data) {
+                    scope.showBasketThreshold = data.basketThreshold;
+                    scope.useCustSegReasonCode = data.useCustSegReasonCode;
+                });
+
+                featureTogglePromise.then(function (data) {
+                    scope.segmentsFromV2Endpoint = data.segmentsFromV2Endpoint;
+
+                    if (!scope.segmentsFromV2Endpoint) {
+                        var segmentsFromV1EndpointPromise = customerSegmentDataService.getAllSegments();
+                        segmentsFromV1EndpointPromise.then(
+                            function (data) {
+                                scope.segmentDetails = [];
+                                angular.forEach(data.segments, function(segmentFromWebService){
+                                    var segment = {};
+                                    segment.name = segmentFromWebService.name;
+                                    segment.id = segmentFromWebService.id;
+                                    scope.segmentDetails.push(segment);
+
+                                    // If condition for Edit Customer Segment
+                                    if (scope.data.purchaseConds.customerSegmentId && scope.data.purchaseConds.customerSegmentId == segmentFromWebService.id) {
+                                        scope.data.custSegment = segment;
+                                    }
+                                });
+                                if(!scope.data.custSegment) {
+                                    scope.data.purchaseConds.customerSegmentId = 0;
+                                }
+                            }, function (error) { scope.discountEngineErrors.push(error); }
+                        );
+                    } else {
+                        var segmentsFromV2EndpointPromise = customerSegmentDataService.getAllSegmentsV2EndPoint();
+                        segmentsFromV2EndpointPromise.then(
+                            function (data) {
+                                scope.segmentListfromWebservice = data.segments;
+                                var arrayLength = scope.segmentListfromWebservice.length;
+                                scope.segmentDetails = [];
+                                for (var i = 0; i < arrayLength; i++) {
+                                    var segment = {};
+                                    segment.name = scope.segmentListfromWebservice[i].segmentName;
+                                    segment.id = scope.segmentListfromWebservice[i].segmentId;
+
+                                    // If condition for Edit Customer Segment
+                                    if (scope.data.purchaseConds.customerSegmentId) {
+                                        if (scope.data.purchaseConds.customerSegmentId == scope.segmentListfromWebservice[i].id) {
+                                            scope.data.custSegment = segment;
+                                        }
+                                    } else {
+                                        scope.data.purchaseConds.customerSegmentId = 0;
+                                    }
+                                    scope.segmentDetails.push(segment);
+                                }
+                            },
+                            function (error) {
+                                scope.discountEngineErrors.push(error);
                             }
-                        });
-                        if(!scope.data.custSegment) {
-                            scope.data.purchaseConds.customerSegmentId = 0;
-                        }
-                    },
-                    function () {
-                        // Should we have some error handling logic here?
+                        );
                     }
-                );
+                });
 
                 scope.onSegmentSelection = function () {
                     if (scope.data.custSegment) {
@@ -51,23 +88,14 @@ app.directive('qualifiers', ['SourceData', 'customerSegmentDataService', '$mdDia
                         scope.data.purchaseConds.customerSegmentId = 0;
                     }
                 };
-                // End of Customer Segment
 
                 scope.updatePrintLabel = function () {
                     utilService.updatePrintLabel(scope.data);
-                }
+                };
 
                 scope.validatePromotion = function () {
                     scope.validationErrors = validationService.validatePromotion(scope.data);
-                }
-
-                scope.showBasketThreshold = false;
-
-                var featureTogglePromise = featureFlagService.getFeatureFlags();
-                featureTogglePromise.then(function (data) {
-                    scope.showBasketThreshold = data.basketThreshold;
-                    scope.useCustSegReasonCode = data.useCustSegReasonCode;
-                })
+                };
             }
         }
     }
