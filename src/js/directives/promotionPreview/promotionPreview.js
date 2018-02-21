@@ -36,7 +36,7 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                     scope.headerErrorMsg = msg;
                 }
 
-                var selectedSellingChannels = scope.previewData.data.channelsWithCheckedFields.filter(function(channel) {return channel.checked})
+                var selectedSellingChannels = scope.previewData.data.channelsWithCheckedFields ? scope.previewData.data.channelsWithCheckedFields.filter(function(channel) {return channel.checked}) : [];
                 scope.previewData.data.purchaseConds.channels = scope.previewData.data.channels   
                 scope.selectedChannels = selectedSellingChannels.map(function(channel){ return channel.name}).join(', ')
 
