@@ -1,6 +1,6 @@
 // Purpose is to build promotion data.
-app.directive('systemGeneratedCodes', ['$filter', 'promotionDataService', 'DataFactory',
-    function ($filter, promotionDataService, DataFactory) {
+app.directive('systemGeneratedCodes', ['MaxCouponGenerationLimit','$filter', 'promotionDataService', 'DataFactory',
+    function (MaxCouponGenerationLimit, $filter, promotionDataService, DataFactory) {
         return {
             restrict: 'E',
             templateUrl: 'systemGeneratedCodes.html',
@@ -12,13 +12,14 @@ app.directive('systemGeneratedCodes', ['$filter', 'promotionDataService', 'DataF
                 completed: '='
             },
             link: function (scope) {
-
+                scope.MaxCouponGenerationLimit = MaxCouponGenerationLimit;
                 function getSystemGenrateCodes(data) {
                     var getPromotionPromise = promotionDataService.getSystemGenrateCodes(data);
                     getPromotionPromise.then(
                         function (data) {
                             scope.systemGenCodes = data.data.promoCodes;
                             scope.uniquenumbercode = data.data.systemGen.numberOfUniqueCodes;
+                            scope.couponCodeGenerationLimit = scope.uniquenumbercode < MaxCouponGenerationLimit? scope.uniquenumbercode : MaxCouponGenerationLimit;
                         },
                         function (error) {
                             DataFactory.messageModal.message = error;

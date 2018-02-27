@@ -8,6 +8,11 @@ describe('validationService', function () {
 
     // Load the myApp module, which contains the directive
     beforeEach(module('app'));
+    beforeEach(function(){
+        module('app', function($provide) {
+            $provide.constant('MaxCouponGenerationLimit', 300000);
+        });
+    });
     // Store references to $rootScope and $compile
     // so they are available to all tests in this describe block
     beforeEach(inject(function (_$compile_, _$rootScope_, _validationService_, _$filter_, _leadTimeService_) {
@@ -41,8 +46,30 @@ describe('validationService', function () {
             expect(response.isError).toBe(true);
             expect(response.message).not.toBe('');
         });
-    })
+    });
 
+    it('returns a coupon code limit error with over limit.', function () {
+        var promotion = {
+            promoCdSpec:{systemGen:{uniqueCdCnt: 300001}}
+        }
+
+        var response = validationService.validateSystemGeneratedCouponCount(promotion);
+        expect(response.isError).toBe(true);
+        expect(response.message).not.toBe('');
+        
+    });
+
+    it('returns a false/empty coupon code when with in the limit.', function () {
+        var promotion = {
+            promoCdSpec:{systemGen:{uniqueCdCnt: 300000}}
+        }
+
+        var response = validationService.validateSystemGeneratedCouponCount(promotion);
+        expect(response.isError).toBe(false);
+        expect(response.message).toBe('');
+        
+    });
+    
     it('returns a false/empty start date error when selected start date is in the future.', function () {
         var promotion = {
             startDt: moment().add(3, 'days').toDate()
