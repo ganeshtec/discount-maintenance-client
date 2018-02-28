@@ -1,0 +1,40 @@
+<div class="md-select md-select-space" ng-show="$ctrl.viewProp.displayCustomerSegment">
+    <label for="promocustomersegment"><h3>Customer Segment (Optional)</h3></label>
+    <select name="segment" ng-options="segment as segment.name for segment in $ctrl.segmentDetails track by segment.name"
+            ng-model="$ctrl.data.segment"
+            ng-change="$ctrl.onSegmentSelection();$ctrl.updatePrintLabel()" ng-disabled="$ctrl.preview">
+        <option value="">
+            -- Select a Customer Segment --
+        </option>
+    </select>
+
+</div>
+
+<div class="basketThresholdDiv" ng-show="$ctrl.viewProp.displayBasketThreshold" ng-if="$ctrl.showBasketThreshold">
+    <h3 class="basketThresholdHeader"> Basket Threshold (Optional) </h3>
+    <span class="basketThresholdText"> Enter the dollar amount a customer's order must reach to be assessed for this discount</span>
+    <br>
+    <span class="md-text-field basket">
+			<input type="text" class="basketThresholdTextBox" ng-model="$ctrl.data.purchaseConds.basketThreshold"
+                   ng-blur="$ctrl.validatePromotion()" allow-pattern="^[\d.]+$" ng-disabled="$ctrl.preview" placeholder="$0.00"/>
+			</span>
+    <br>
+    <br>
+</div>
+
+
+<div ng-if="$ctrl.data.promoCdRqrd != false  && $ctrl.data.promoSubTypeCd != 'MultipleItemsPercentDiscount' && $ctrl.data.promoSubTypeCd != 'MultipleItemsValueDiscount'">
+    <div class="md-text-field">
+        <label for="name">Site wide promotion </label>
+        <div class="md-radio">
+            <input for="sitewide" type="radio" name="sitepromotion" ng-model="$ctrl.data.isSitewideDeal" ng-value="true"
+                   ng-disabled="$ctrl.preview"/>
+            <label><span><span></span></span>Yes</label>
+        </div>
+        <div class="md-radio">
+            <input for="sitewide" type="radio" name="sitepromotion" ng-model="$ctrl.data.isSitewideDeal" ng-value="false"
+                   ng-disabled="$ctrl.preview"/>
+            <label><span><span></span></span>No </label>
+        </div>
+    </div>
+</div>
