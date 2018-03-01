@@ -27,7 +27,7 @@ describe('Unit testing qualifiers component', function () {
     it('No Segment Selected', function () {
         ctrl.onSegmentSelection();
         expect(ctrl.data.purchaseConds.customerSegmentId).toBe(0);
-        expect(ctrl.data.purchaseConds.program.progId).toBe(0);
+        expect(ctrl.data.purchaseConds.program.id).toBe(0);
         expect(ctrl.data.purchaseConds.program.tierId).toBe(0);
         expect(ctrl.data.reward.reasonCode).toBe(49);
     });
@@ -36,7 +36,7 @@ describe('Unit testing qualifiers component', function () {
         ctrl.data.segment = {"segmentName":"PRO XTRA PAINT REWARDS-Bronze","progId":2,"tierId":8};
         ctrl.onSegmentSelection();
         expect(ctrl.data.purchaseConds.customerSegmentId).toBe(0);
-        expect(ctrl.data.purchaseConds.program.progId).toBe(2);
+        expect(ctrl.data.purchaseConds.program.id).toBe(2);
         expect(ctrl.data.purchaseConds.program.tierId).toBe(8);
         expect(ctrl.data.reward.reasonCode).toBe(49);
     });
@@ -46,7 +46,7 @@ describe('Unit testing qualifiers component', function () {
         ctrl.useCustSegReasonCode = true;
         ctrl.onSegmentSelection();
         expect(ctrl.data.purchaseConds.customerSegmentId).toBe(13550);
-        expect(ctrl.data.purchaseConds.program.progId).toBe(0);
+        expect(ctrl.data.purchaseConds.program.id).toBe(0);
         expect(ctrl.data.purchaseConds.program.tierId).toBe(0);
         expect(ctrl.data.reward.reasonCode).toBe(70);
     });

@@ -39,7 +39,8 @@ app.factory('PromotionData', ['ALLOWED_PERMISSION_IDS',function (ALLOWED_PERMISS
                 'customerSegmentId': 0,
                 'program':{
                     'tierId': 0,
-                    'progId': 0
+                    'id': 0
+
                 },
                 'basketThreshold': null,
                 'isInclusionsOrExclusionsExist': false, // if has inclusion or exclusion set true

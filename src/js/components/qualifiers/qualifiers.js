@@ -65,15 +65,15 @@ function QualifiersController(customerSegmentDataService, utilService, validatio
                             segment.tierId = ctrl.segmentListfromWebservice[i].tierId;
 
                             // If condition for Edit Customer Segment
-                            if (ctrl.data.purchaseConds.customerSegmentId || (ctrl.data.purchaseConds.program.progId && ctrl.data.purchaseConds.program.tierId)) {
+                            if (ctrl.data.purchaseConds.customerSegmentId || (ctrl.data.purchaseConds.program.id && ctrl.data.purchaseConds.program.tierId)) {
                                 if ((ctrl.data.purchaseConds.customerSegmentId == ctrl.segmentListfromWebservice[i].segmentId) ||
-                                    (((ctrl.data.purchaseConds.program.progId == ctrl.segmentListfromWebservice[i].programId)
+                                    (((ctrl.data.purchaseConds.program.id == ctrl.segmentListfromWebservice[i].programId)
                                         && (ctrl.data.purchaseConds.program.tierId == ctrl.segmentListfromWebservice[i].tierId)))) {
                                     ctrl.data.segment = segment;
                                 }
                             } else {
                                 ctrl.data.purchaseConds.customerSegmentId = 0;
-                                ctrl.data.purchaseConds.program.progId = 0;
+                                ctrl.data.purchaseConds.program.id = 0;
                                 ctrl.data.purchaseConds.program.tierId = 0;
                             }
                             ctrl.segmentDetails.push(segment);
@@ -99,10 +99,12 @@ function QualifiersController(customerSegmentDataService, utilService, validatio
                 ctrl.data.purchaseConds.customerSegmentId = 0;
             }
             if (ctrl.data.segment.progId) {
-                ctrl.data.purchaseConds.program.progId = ctrl.data.segment.progId;
+
+                ctrl.data.purchaseConds.program.id = ctrl.data.segment.progId;
             }
             else {
-                ctrl.data.purchaseConds.program.progId = 0;
+                ctrl.data.purchaseConds.program.id = 0;
+
             }
             if (ctrl.data.segment.tierId) {
                 ctrl.data.purchaseConds.program.tierId = ctrl.data.segment.tierId;
@@ -121,7 +123,9 @@ function QualifiersController(customerSegmentDataService, utilService, validatio
         } else {
             ctrl.data.reward.reasonCode = 49;
             ctrl.data.purchaseConds.customerSegmentId = 0;
-            ctrl.data.purchaseConds.program.progId = 0;
+
+            ctrl.data.purchaseConds.program.id = 0;
+
             ctrl.data.purchaseConds.program.tierId = 0;
         }
     };
