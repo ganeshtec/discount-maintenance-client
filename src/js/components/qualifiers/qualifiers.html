@@ -23,7 +23,7 @@
 </div>
 
 
-<div ng-if="$ctrl.data.promoCdRqrd != false  && $ctrl.data.promoSubTypeCd != 'MultipleItemsPercentDiscount' && $ctrl.data.promoSubTypeCd != 'MultipleItemsValueDiscount'">
+<div ng-if="$ctrl.data.promoCdRqrd == true  && $ctrl.data.promoSubTypeCd != 'MultipleItemsPercentDiscount' && $ctrl.data.promoSubTypeCd != 'MultipleItemsValueDiscount'">
     <div class="md-text-field">
         <label for="name">Site wide promotion </label>
         <div class="md-radio">
