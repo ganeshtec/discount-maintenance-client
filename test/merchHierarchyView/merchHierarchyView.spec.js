@@ -7,7 +7,11 @@ describe('Unit testing merchHierarchyView directive', function () {
 
     // Load the myApp module, which contains the directive
     beforeEach(module('app'));
-
+    beforeEach(function(){
+        module('app', function($provide) {
+            $provide.constant('MaxCouponGenerationLimit', 300000);
+        });
+    });
     // Store references to $rootScope and $compile
     // so they are available to all tests in this describe block
     beforeEach(inject(function (_$compile_, _$q_, _$rootScope_, _$httpBackend_, _merchHierarchyDataService_) {

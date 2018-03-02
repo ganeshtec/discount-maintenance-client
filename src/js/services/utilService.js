@@ -487,7 +487,7 @@ app.service('utilService', ['$filter', 'leadTimeService','$cookies', function ($
             disabled = true;
         }
 
-        if (promotion.custSegment && promotion.custSegment.id != 0) {
+        if (promotion.segment && promotion.segment.id != 0) {
             disabled = true;
         }
 

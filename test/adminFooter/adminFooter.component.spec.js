@@ -21,6 +21,7 @@ describe('Unit testing adminFooter.component.spec.js', function () {
               LABELS:6,
               SCHEDULE:7
           });
+          $provide.constant('MaxCouponGenerationLimit', 300000);
       });
   });
   // Store references to $rootScope and $compile

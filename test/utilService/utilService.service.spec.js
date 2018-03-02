@@ -246,12 +246,12 @@ describe('utilService', function () {
   });
 
   it('verify isPrintLabelDisabled returns true if customer segment is selected', function() {
-   var promotion = {"custSegment":{id:11136},"promoId":18116,"promoSubTypeCd":"MultipleItemsPercentDiscount","channels": [87],"status":61,"purchaseConds":{"sources":[{"purchaseoption":"itemsku","inclusions":{"partnumbers":[100169919],"itemtype":null,"hierarchies":[]}},{"inclusions":{"partnumbers":[100169919],"itemtype":null,"hierarchies":[]}}]}};
+   var promotion = {"segment":{id:11136},"promoId":18116,"promoSubTypeCd":"MultipleItemsPercentDiscount","channels": [87],"status":61,"purchaseConds":{"sources":[{"purchaseoption":"itemsku","inclusions":{"partnumbers":[100169919],"itemtype":null,"hierarchies":[]}},{"inclusions":{"partnumbers":[100169919],"itemtype":null,"hierarchies":[]}}]}};
     expect(utilService.isPrintLabelDisabled(promotion)).toEqual(true);
   });
 
   it('verify isPrintLabelDisabled returns false if customer segment is not selected', function() {
-   var promotion = {"custSegment":{id:0},"promoId":18116,"promoSubTypeCd":"MultipleItemsPercentDiscount","channels": [87],"status":61,"purchaseConds":{"sources":[{"purchaseoption":"itemsku","inclusions":{"partnumbers":[100169919],"itemtype":null,"hierarchies":[]}},{"inclusions":{"partnumbers":[100169919],"itemtype":null,"hierarchies":[]}}]}};
+   var promotion = {"segment":{id:0},"promoId":18116,"promoSubTypeCd":"MultipleItemsPercentDiscount","channels": [87],"status":61,"purchaseConds":{"sources":[{"purchaseoption":"itemsku","inclusions":{"partnumbers":[100169919],"itemtype":null,"hierarchies":[]}},{"inclusions":{"partnumbers":[100169919],"itemtype":null,"hierarchies":[]}}]}};
     expect(utilService.isPrintLabelDisabled(promotion)).toEqual(false);
   });
 
