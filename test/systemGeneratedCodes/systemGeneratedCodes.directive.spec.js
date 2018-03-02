@@ -8,7 +8,11 @@ describe('Unit testing  system-generated-codes directive', function () {
 
     // Load the myApp module, which contains the directive
     beforeEach(module('app'));
-
+    beforeEach(function(){
+        module('app', function($provide) {
+            $provide.constant('MaxCouponGenerationLimit', 300000);
+        });
+    });
     // Store references to $rootScope and $compile
     // so they are available to all tests in this describe block
     beforeEach(inject(function (_$compile_, _$rootScope_, _$httpBackend_) {

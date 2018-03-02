@@ -6,6 +6,11 @@ describe('Promo schedule', function() {
 
   // Load the myApp module, which contains the directive
   beforeEach(module('app'));
+  beforeEach(function(){
+    module('app', function($provide) {
+        $provide.constant('MaxCouponGenerationLimit', 300000);
+    });
+  });
 
   beforeEach(inject(function(_$componentController_, _$filter_){
     $componentController = _$componentController_;

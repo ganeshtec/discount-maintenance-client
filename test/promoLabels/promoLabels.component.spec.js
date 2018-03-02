@@ -6,7 +6,11 @@ describe('promoLabels', function () {
 
     // Load the myApp module, which contains the directive
     beforeEach(module('app'));
-
+    beforeEach(function(){
+        module('app', function($provide) {
+            $provide.constant('MaxCouponGenerationLimit', 300000);
+        });
+    });
     beforeEach(inject(function (_$componentController_, _$compile_, _$rootScope_) {
         $componentController = _$componentController_;
         $compile = _$compile_;

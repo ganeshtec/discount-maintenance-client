@@ -3,7 +3,7 @@
 	Services that will handle validation of promotion attributes
 */
 
-app.service('validationService', ['$filter', 'utilService', '$cookies', function ($filter, utilService, $cookies) {
+app.service('validationService', ['$filter', 'utilService', '$cookies', 'MaxCouponGenerationLimit', function ($filter, utilService, $cookies, MaxCouponGenerationLimit) {
     var publicApi = {};
 
     var leadTime = null;
@@ -322,6 +322,20 @@ app.service('validationService', ['$filter', 'utilService', '$cookies', function
 
     }
 
+    publicApi.validateSystemGeneratedCouponCount = function (promotion) {
+        var couponLimitError = {
+            isError: false,
+            message: ''
+        };
+
+        if(promotion.promoCdSpec && promotion.promoCdSpec.systemGen && promotion.promoCdSpec.systemGen.uniqueCdCnt > MaxCouponGenerationLimit) {
+            couponLimitError = {
+                isError: true,
+                message: 'max limit.'
+            };
+        }
+        return couponLimitError;
+    }
     publicApi.validatePromotion = function (promotion, checkForUndefined) {
         var validationErrors = {};
         validationErrors.startDt = publicApi.validateStartDate(promotion, checkForUndefined);
@@ -332,6 +346,7 @@ app.service('validationService', ['$filter', 'utilService', '$cookies', function
         validationErrors.percentageWarning = publicApi.validatePercentageWarning(promotion.reward.details);
         validationErrors.threeMonthsWarning = publicApi.validateThreeMonthsWarning(promotion.startDt);
         validationErrors.skuTypeFilter = publicApi.validateSkyTypeFilter(promotion.purchaseConds.sources[0], checkForUndefined);
+        validationErrors.couponLimitError = publicApi.validateSystemGeneratedCouponCount(promotion);
         publicApi.validateBasketThreshold(promotion);
         return validationErrors;
     }
