@@ -26,14 +26,14 @@
         <div class="md-radio" id="itemssku_div_{{$index}}" ng-show="$ctrl.viewProp.displayItemsSku">
             <input type="radio" id="itemssku_{{$index}}" name="purchaseoption_{{$index}}"
                    ng-model="$ctrl.data.purchaseConds.sources[$index].purchaseoption"
-                   title="Items/SKU" value="itemsku" ng-change="$ctrl.updatePrintLabel();removeAll()"
+                   title="Items/SKU" value="itemsku" ng-change="$ctrl.updatePrintLabel();$ctrl.removeAll()"
                    ng-disabled="$ctrl.preview"/>
             <label for="itemssku_{{$index}}"><span><span></span></span>Items/SKU</label>
         </div>
         <div class="md-radio">
             <input type="radio" id="category_{{$index}}" name="purchaseoption_{{$index}}"
                    ng-model="$ctrl.data.purchaseConds.sources[$index].purchaseoption"
-                   title="Category" value="category" ng-change="$ctrl.updatePrintLabel();removeAll()"
+                   title="Category" value="category" ng-change="$ctrl.updatePrintLabel();$ctrl.removeAll()"
                    ng-disabled="$ctrl.preview"/>
             <label for="category_{{$index}}"><span><span></span></span>Category </label>
         </div>

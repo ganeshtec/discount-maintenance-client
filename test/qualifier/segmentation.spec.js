@@ -3,6 +3,12 @@ describe('Unit testing qualifiers component', function () {
         
     beforeEach(module('app'));
 
+    beforeEach(function(){
+        module("app", function($provide) {
+            $provide.constant("MaxCouponGenerationLimit", 300000);
+        });
+    });
+
     beforeEach(inject(function (_$componentController_ ) {
 
         $componentController = _$componentController_;
