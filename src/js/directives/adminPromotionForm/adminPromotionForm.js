@@ -138,6 +138,8 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                             scope.data.longDesc = '';
                         }
                         scope.data.reward.method = 'WHOLEORDER';
+                    } else {
+                        scope.data.reward.method = '';
                     }
                 }
            
