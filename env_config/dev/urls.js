@@ -1,10 +1,10 @@
-app.factory('URL_CONFIG', [function(){    
+app.factory('URL_CONFIG', [function(){
     var _construct = function URL_CONFIG(){
         var data = {
-            'dashboardUiUrl': 'https://promotionsadmin-ad.apps-np.homedepot.com',
-            'serviceUrl' : 'https://promotionsws-ext-ad.apps-np.homedepot.com/v1',
-            // 'serviceUrl' : 'http://localhost.homedepot.com:8090/v1',
-            'authorizeUrl': 'https://promotionsws-ext-ad.apps-np.homedepot.com/v1/authorization/isAuthorized/',
+            "dashboardUiUrl": "http://localhost.homedepot.com:8002",
+            "serviceUrl" : "https://promotionsws-ext-ad.apps-np.homedepot.com/v1",
+            //"serviceUrl" : "http://localhost.homedepot.com:8080/v1",
+            "authorizeUrl": "https://promotionsws-ext-ad.apps-np.homedepot.com/v1/authorization/isAuthorized/"
         };
         return data;
     };

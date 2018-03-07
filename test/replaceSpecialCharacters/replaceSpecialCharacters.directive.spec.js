@@ -12,15 +12,18 @@ describe('Replace Special character directive', function() {
 
   // Store references to $rootScope and $compile
   // so they are available to all tests in this describe block
-  beforeEach(inject(function(_$compile_, _$rootScope_ ){
+  beforeEach(inject(function(_$compile_, _$rootScope_,_loginService_ ){
     var $compile = _$compile_;
     var $rootScope = _$rootScope_;
+    var loginService = _loginService_;
     $scope = $rootScope.$new();
     $scope.testValue='Hello World';
     element = angular.element('<input ng-model="testValue" replace-special-characters></input>');
     $compile(element)($scope);
     $scope.$digest();
-    ngModelCtrl = element.controller('ngModel');                           
+    ngModelCtrl = element.controller('ngModel');
+    spyOn(loginService, 'intercept').and.callFake(function () {
+    })
   }));
 
   it('Valid characters should not be modified', function() {

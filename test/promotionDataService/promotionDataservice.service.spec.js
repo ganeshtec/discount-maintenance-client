@@ -9,26 +9,28 @@ describe('Unit test for promotionDataService', function() {
   beforeEach(module('app'));
   // Store references to $rootScope and $compile
   // so they are available to all tests in this describe block
-  beforeEach(inject(function(_$compile_, _$rootScope_,_promotionDataService_ ,_$httpBackend_){
+  beforeEach(inject(function(_$compile_, _$rootScope_,_promotionDataService_ ,_$httpBackend_, _loginService_){
     // The injector unwraps the underscores (_) from around the parameter names when matching
     $compile = _$compile_;
     $rootScope = _$rootScope_;
     $scope = $rootScope.$new();
+    loginService = _loginService_;
     promotionDataService = _promotionDataService_;
     $httpBackend = _$httpBackend_;
     var reponse = {};
     var submitResponse = {};
-     // backend definition common for all tests 
+     // backend definition common for all tests
     var authRequestHandler = $httpBackend.when('POST', '/cartPromotionsRequest')
                             .respond(200,reponse);
-                            
-                              // backend definition common for all tests 
+
+                              // backend definition common for all tests
     var submitAuthRequestHandler = $httpBackend.when('POST', '/cartPromotionsRequest/approve')
                             .respond(200,submitResponse);
 
     var getPromotionSubTypes = $httpBackend.when('GET', '/promotionTypes/promotionSubTypes/adminUI.json')
-                            .respond(200,submitResponse);                             
-    
+                            .respond(200,submitResponse);
+    spyOn(loginService, 'intercept').and.callFake(function () {
+    })
   }));
 
   it('Check if saveasdraft method executes in promotiondataservice ', function() {
@@ -36,7 +38,7 @@ describe('Unit test for promotionDataService', function() {
     $httpBackend.flush();
     $scope.$digest();
   });
-  
+
    it('Check if submit method executes in promotiondataservice ', function() {
     var promise = promotionDataService.submit();
     $httpBackend.flush();
@@ -50,7 +52,7 @@ describe('Unit test for promotionDataService', function() {
   });
 
   it('Validate getPromotions Method', function(){
-      var searchResponse={totalCount:0};   
+      var searchResponse={totalCount:0};
       var channels=[87];
       var promoname='';
       var page =1;
@@ -60,13 +62,13 @@ describe('Unit test for promotionDataService', function() {
       var sortby = 'none';
       var order = 'asc';
       var searchType ='discountName';
-      $httpBackend.expectPOST('/search',{"criteria":{"channels":[87],"term":"","searchType":"discountName","page":{"page":1,"size":10}}}).respond(200,searchResponse);    
+      $httpBackend.expectPOST('/search',{"criteria":{"channels":[87],"term":"","searchType":"discountName","page":{"page":1,"size":10}}}).respond(200,searchResponse);
       var promise = promotionDataService.getPromotions(channels, promoname, page, pageSize, status, promoTypeCd, sortby, order,searchType);
       promise.then(function(data){
         expect(data.totalCount).toBe(0);
       })
       $scope.$digest();
-      $httpBackend.flush();   
+      $httpBackend.flush();
   })
- 
+
 });

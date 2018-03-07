@@ -13,6 +13,7 @@ describe('MainCtrl', function () {
     var $controller;
     var $scope = {};
     var controller;
+    var loginService;
 
     beforeEach(inject(function ($injector, _$rootScope_, _$controller_) {
         $scope = _$rootScope_.$new();
@@ -20,24 +21,38 @@ describe('MainCtrl', function () {
         controller = $controller('MainCtrl', {$scope: $scope});
     }));
 
-    beforeEach(inject(function ($cookies) {
-        $cookies.put('userName', username);
-        $cookies.put('userPermissions', JSON.stringify(userPermValue));
-        $cookies.put('currentUserRole', currentUserRole);
+    beforeEach(inject(function (_loginService_) {
+      loginService = _loginService_;
+
+      spyOn(loginService, 'getUserName').and.callFake(function () {
+          return username;
+      })
+      spyOn(loginService, 'getCurrentUserRole').and.callFake(function () {
+          return currentUserRole;
+      })
+      spyOn(loginService, 'getUserPermissions').and.callFake(function () {
+          return userPermValue;
+      })
+      spyOn(loginService, 'logout').and.callFake(function () {
+      })
     }));
 
     describe('UserLogin', function () {
-        it('test logout function clears the username and userpermmision', function () {
+        it('test setLogInfo sets the username, currentUserRole and userpermmision', function () {
             $scope.setLoginInfo();
             expect($scope.username).toBe(username);
             expect($scope.userPermissions).not.toBeNull();
             expect($scope.userRoleSelected.id).toBe(currentUserRole);
-
-            $scope.logout();
-            expect($scope.username).toBe('');
-            expect($scope.userPermissions).toBe('');
-            expect($scope.userRoleSelected.id).toBe(null)
-
         });
+
+
+    });
+    describe('Logout', function () {
+        it('test logout function clears the username and userpermmision', function () {
+            $scope.logout();
+            expect(loginService.logout.calls.count()).toBe(1);
+        });
+
+
     });
 });

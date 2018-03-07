@@ -18,7 +18,7 @@ describe('Promo schedule', function() {
     ctrl = $componentController('promoSchedule',null, {
         data: {},
         validationErrors : {
-            minQtyThreshold :{ 
+            minQtyThreshold :{
                 isError: false,
                 message: ''
             }
@@ -32,13 +32,13 @@ describe('Promo schedule', function() {
       expect(ctrl.endTime).toBe('2:59 AM')
   });
 
-  it('Test init',function(){ 
+  it('Test init',function(){
     ctrl = $componentController('promoSchedule',null, {
         data: {
             startDt: '10/10/2017 02:59:00',
             endDt: '12/10/2017 02:59:00'},
         validationErrors : {
-            minQtyThreshold :{ 
+            minQtyThreshold :{
                 isError: false,
                 message: ''
             }

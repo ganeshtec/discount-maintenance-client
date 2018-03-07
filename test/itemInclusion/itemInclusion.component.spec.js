@@ -13,10 +13,11 @@ describe('Unit testing itemInclusion.component.spec.js', function () {
 
     // Store references to $rootScope and $compile
     // so they are available to all tests in this describe block
-    beforeEach(inject(function (_$compile_, _$componentController_, _$rootScope_, _itemsDataService_, _$q_,_skuTypesDataService_) {
+    beforeEach(inject(function (_$compile_, _$componentController_, _$rootScope_, _itemsDataService_, _$q_,_skuTypesDataService_, _loginService_) {
         // The injector unwraps the underscores (_) from around the parameter names when matching
         $compile = _$compile_;
         $q = _$q_;
+        loginService = _loginService_;
         $componentController = _$componentController_;
         skuTypesDataService=_skuTypesDataService_;
         $rootScope = _$rootScope_;
@@ -27,6 +28,10 @@ describe('Unit testing itemInclusion.component.spec.js', function () {
             deferredResult.resolve([{"skuTypeCode": "N","description": "Normal"},{"skuTypeCode": "S","description": "Special"}]);
             return deferredResult.promise;
         });
+
+        spyOn(loginService, 'intercept').and.callFake(function () {
+        })
+
         ctrl = $componentController('itemInclusion', null, {
             data: {}
 
@@ -409,7 +414,7 @@ describe('Unit testing itemInclusion.component.spec.js', function () {
         ctrl.$onChanges(changes);
         expect(ctrl.isSkuSearch).toBe(true);
     });
-    
+
     it('setItemData should condense multiple omsIds with multiple skus into one', function () {
         ctrl = $componentController('itemInclusion', null, {
             data: []

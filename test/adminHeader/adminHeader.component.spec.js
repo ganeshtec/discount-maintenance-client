@@ -9,11 +9,12 @@ describe('Unit testing adminHeader.directive.spec.js', function () {
 
   // Store references to $rootScope and $compile
   // so they are available to all tests in this describe block
-  beforeEach(inject(function (_$compile_, _$rootScope_, _utilService_) {
+  beforeEach(inject(function (_$compile_, _$rootScope_, _utilService_, _loginService_) {
     // The injector unwraps the underscores (_) from around the parameter names when matching
     $compile = _$compile_;
     $rootScope = _$rootScope_;
     utilService = _utilService_;
+    loginService = _loginService_
     $scope = $rootScope.$new();
 
     spyOn(utilService, 'getLeadTime').and.callFake(function () {
@@ -27,6 +28,10 @@ describe('Unit testing adminHeader.directive.spec.js', function () {
         then: function (callback) { return callback(false) }
       }
     })
+
+    spyOn(loginService, 'intercept').and.callFake(function () {
+    })
+
 
   }));
 

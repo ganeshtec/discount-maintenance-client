@@ -1,5 +1,5 @@
-app.controller('compareViewCtrl', ['$scope', '$routeParams', '$timeout', '$cookies', '$location', 'loginService', 'promotionDataService', 'PromotionData', 'SECTIONS', 'DataFactory', 'createTestRecord', 'OverlayConfigFactory', 'URL_CONFIG',
-    function ($scope, $routeParams, $timeout, $cookies, $location, loginService, promotionDataService, PromotionData, SECTIONS, DataFactory, createTestRecord, OverlayConfigFactory, URL_CONFIG) {
+app.controller('compareViewCtrl', ['$scope', '$routeParams', '$timeout', '$location', 'loginService', 'promotionDataService', 'PromotionData', 'SECTIONS', 'DataFactory', 'createTestRecord', 'OverlayConfigFactory', 'URL_CONFIG',
+    function ($scope, $routeParams, $timeout, $location, loginService, promotionDataService, PromotionData, SECTIONS, DataFactory, createTestRecord, OverlayConfigFactory, URL_CONFIG) {
         var promotionID = $routeParams.id || null;
         var promotionID1 = $routeParams.promotionID1 || null;
         var promotionID2 = $routeParams.promotionID2 || null;

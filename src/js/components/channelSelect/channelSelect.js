@@ -3,28 +3,20 @@ app.component('channelSelect', {
     templateUrl: 'channelSelect.html',
     bindings: {
         data: '=',
-        preview: '=',   
+        preview: '=',
         viewProp: '='
     },
     controller: ChannelSelectController
 
 });
 
-function ChannelSelectController($filter, $scope, $cookies, promotionDataService, utilService) {
+function ChannelSelectController($filter, $scope, loginService, promotionDataService, utilService) {
     var ctrl = this;
     ctrl.selectionChanged = selectionChanged;
     ctrl.selectAll = selectAll;
     ctrl.setCheckAll = setCheckAll;
     ctrl.checkAll = false;
-
-    if ($cookies.get('currentUserRole') != null) {
-        var currentUserRole = $cookies.get('currentUserRole');
-        ctrl.userType = parseInt(currentUserRole);
-    }
-
-
-
-
+    ctrl.userType = loginService.getCurrentUserRole();
     ctrl.$onInit = function () {
         var promise = promotionDataService.getSelectionChannels(ctrl.userType);
         promise.then(
@@ -51,7 +43,7 @@ function ChannelSelectController($filter, $scope, $cookies, promotionDataService
     };
 
     ctrl.disableChannel = function(channel) {
-        if(channel.checked && ctrl.data.printLabel && channel.id === 87){  
+        if(channel.checked && ctrl.data.printLabel && channel.id === 87){
             channel.disable=true;
         } else {
             channel.disable=false;
@@ -97,7 +89,7 @@ function ChannelSelectController($filter, $scope, $cookies, promotionDataService
     function selectAll () {
         ctrl.selectedOptions = [];
         for (var i = 0; i < ctrl.data.channelsWithCheckedFields.length; i++) {
-            if(!(ctrl.data.channelsWithCheckedFields[i].checked && ctrl.data.printLabel && ctrl.data.channelsWithCheckedFields[i].id === 87)){ 
+            if(!(ctrl.data.channelsWithCheckedFields[i].checked && ctrl.data.printLabel && ctrl.data.channelsWithCheckedFields[i].id === 87)){
                 ctrl.data.channelsWithCheckedFields[i].checked = ctrl.checkAll;
                 if (ctrl.checkAll) {
                     ctrl.selectedOptions.push(ctrl.data.channelsWithCheckedFields[i]);
@@ -110,4 +102,3 @@ function ChannelSelectController($filter, $scope, $cookies, promotionDataService
         ctrl.selectionChanged();
     }
 }
-

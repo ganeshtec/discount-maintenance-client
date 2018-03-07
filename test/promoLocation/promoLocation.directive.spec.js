@@ -14,14 +14,14 @@ describe('Unit testing promoLocation.directive.spec.js', function () {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
     $scope = $rootScope.$new();
-    
+
     var itemSearch = [];
     var element = $compile("<promo-location data='itemSearch'></promo-location>")($scope);
     $scope.$digest();
     this.$isolateScope = element.isolateScope();
   }));
 
-  
+
   //Verify item is added to item table if data service response is valid
   //Verify if negative number is added to Store list error is thrown
   //Verify that when Market and Store service does not return correct status code, application does not crash
@@ -51,7 +51,7 @@ describe('Unit testing promoLocation.directive.spec.js', function () {
 
 
   it("Checks isLocationDataValid method functionality returns true for numeric values", function () {
-    
+
     expect(this.$isolateScope.isLocationDataValid(['1', '121', '5'])).toEqual(true);
 
 
@@ -59,13 +59,13 @@ describe('Unit testing promoLocation.directive.spec.js', function () {
 
   // These tests are failing, created a bug#
   // it("Checks isLocationDataValid method functionality returns false for alphanumeric values", function () {
-    
+
   //   expect(this.$isolateScope.isLocationDataValid(['1', '4a', '5'])).toEqual(false);
 
   // });
 
   // it("Checks isLocationDataValid method functionality returns false for negative values", function () {
-    
+
   //   expect(this.$isolateScope.isLocationDataValid(['1','-4'])).toEqual(false);
 
   // });
@@ -74,7 +74,7 @@ describe('Unit testing promoLocation.directive.spec.js', function () {
   it("Checks for checkForInvalidLocations method returns the valid results ", function () {
 
     this.$isolateScope.data  = {"validStoreInfo": [{"storeNumber": 121,"storeName": "CUMBERLAND","marketNumber": 337}],"inValidStoreInfo": [1,2]};
-           
+
     expect(this.$isolateScope.checkForInvalidLocations(this.$isolateScope.data)).toEqual([1,2]);
 
 
@@ -83,7 +83,7 @@ describe('Unit testing promoLocation.directive.spec.js', function () {
   it("Checks for checkForInvalidLocations method returns the valid results with inValidMarketInfo ", function () {
 
     this.$isolateScope.data  = {"validStoreInfo": [{"storeNumber": 121,"storeName": "CUMBERLAND","marketNumber": 337}],"inValidMarketInfo": [1,2]};
-           
+
     expect(this.$isolateScope.checkForInvalidLocations(this.$isolateScope.data)).toEqual([1,2]);
 
 
@@ -92,7 +92,7 @@ describe('Unit testing promoLocation.directive.spec.js', function () {
   it("Checks for checkForInvalidLocations method returns the valid results without inValidStoreInfo and inValidMarketInfo ", function () {
 
     this.$isolateScope.data  = {"validStoreInfo": [{"storeNumber": 121,"storeName": "CUMBERLAND","marketNumber": 337}]};
-           
+
     expect(this.$isolateScope.checkForInvalidLocations(this.$isolateScope.data)).toEqual([]);
 
 
@@ -107,7 +107,7 @@ describe('Unit testing promoLocation.directive.spec.js', function () {
     spyOn(this.$isolateScope, "setStoreData").and.callThrough();
 
     this.$isolateScope.setStoreData(storeData,true);
-           
+
     expect(this.$isolateScope.checkForInvalidLocations(storeData)).toEqual([]);
 
     expect(this.$isolateScope.setStoreData).toHaveBeenCalled();
