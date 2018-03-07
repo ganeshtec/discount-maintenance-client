@@ -300,6 +300,31 @@ describe('validationService', function () {
         expect(response[2].message).not.toBe('');
     });
 
+    it('Returns isError as true and non empty error message when invalid reward method slected', function () {
+        var promotion = { reward: {method: 'INDVDLAFFECTEDITMS'}, promoType: 'ORDERPROMO' };
+        var response = validationService.validateRewardMethod(promotion);
+        console.log('response',response)
+        expect(response.isError).toBe(true);
+        expect(response.message).not.toBe('');
+
+        promotion = { reward: { method:'WHOLEORDER'}, promoType: 'ITEMPROMO' };
+        response = validationService.validateRewardMethod(promotion);
+        expect(response.isError).toBe(true);
+        expect(response.message).not.toBe('');
+    });
+
+    it('Returns isError as false and empty error message when valid reward method slected', function () {
+        var promotion = { reward: {method:'WHOLEORDER'}, promoType: 'ORDERPROMO' };
+        var response = validationService.validateRewardMethod(promotion);
+        expect(response.isError).toBe(false);
+        expect(response.message).toBe('');
+
+        promotion = { reward: {method:'INDVDLAFFECTEDITMS'}, promoType: 'ITEMPROMO' };
+        response = validationService.validateRewardMethod(promotion);
+        expect(response.isError).toBe(false);
+        expect(response.message).toBe('');
+    });
+
     it('Rounds basketThreshold to 2 decimal places', function () {
         var promotion = {
             purchaseConds:

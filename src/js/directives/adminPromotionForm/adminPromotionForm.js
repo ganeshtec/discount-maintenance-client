@@ -148,13 +148,12 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                         scope.data.reward.method = '';
                     }
                 }
-
-                if (scope.userType === 228) {
-                    scope.data.reward.method = 'INDVDLAFFECTEDITMS';
+           
+                if(scope.userType === 228){
+                    scope.data.reward.method = scope.data.reward.method || 'INDVDLAFFECTEDITMS';
                 }
-
-
-                scope.validatePromotion = function () {
+          
+                scope.validatePromotion = function() {
                     scope.validationErrors = validationService.validatePromotion(scope.data);
                 }
 

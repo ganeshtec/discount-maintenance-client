@@ -73,13 +73,13 @@ app.component('adminFooter', {
         });
 
         this.preview = function (data) {
-            var areValidationErrorsPresent;
-            this.validatePromotion(data, function (validationErrors) {
-                areValidationErrorsPresent = validationService.areErrorsPresent(validationErrors);
+            var validationErrors;
+            this.validatePromotion(data, function (errorMsgs) {
+                validationErrors = errorMsgs
             });
 
-            if (areValidationErrorsPresent === true) {
-                modalService.showAlert('Error', 'Please fix all validation errors');
+            if (validationService.areErrorsPresent(validationErrors)) {
+                modalService.showDialog('Error! Please fix all validation errors', validationService.getErrorMessages(validationErrors));
                 return;
             }
             this.previewdata.data = $.extend(true, {}, data);

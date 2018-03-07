@@ -20,6 +20,25 @@ app.service('modalService', ['$mdDialog', function ($mdDialog) {
             .textContent(message)
             .ok('Ok'));
     }
-
+    
+    publicApi.showDialog = function (title, errorMessages) {
+        var parentEl = angular.element(document.body);
+        $mdDialog.show({
+            parent: parentEl,
+            templateUrl: 'errorMessageModalTemplate.html',
+            locals: {
+                title: title,
+                errorMessages: errorMessages
+            },
+            controller: DialogController
+        });
+        function DialogController($scope, $mdDialog, title, errorMessages) {
+            $scope.errorMessages = errorMessages;
+            $scope.title = title;
+            $scope.closeDialog = function() {
+                $mdDialog.hide();
+            }
+        }
+    };
     return publicApi;
 }]);

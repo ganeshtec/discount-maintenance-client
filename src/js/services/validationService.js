@@ -263,6 +263,31 @@ app.service('validationService', ['$filter', 'utilService', '$cookies', 'MaxCoup
         return false;
     }
 
+    publicApi.getErrorMessages = function (validationErrorsObject) {
+        var msg=[]
+        for (var i in validationErrorsObject) {
+            if (validationErrorsObject.hasOwnProperty(i)) {
+                // This is a patch to avoid warnings preventing submit. The warning logic should be moved, either to
+                // the appropriate component or to some sort of warning service.
+                if (i !== 'percentageWarning' && i !== 'threeMonthsWarning') {
+                    // Check for array, and if array, iterate through each
+                    if (Array.isArray(validationErrorsObject[i])) {
+                        for (var j in validationErrorsObject[i]) {
+                            if (validationErrorsObject[i][j].isError === true) {
+                                msg.push(validationErrorsObject[i][j].message);
+                            }
+                        }
+                    } else {
+                        if (validationErrorsObject[i].isError === true) {
+                            msg.push(validationErrorsObject[i].message);
+                        }
+
+                    }
+                }
+            }
+        }
+        return msg;
+    }
     publicApi.validateDiscountEndDate = function (promotion, checkForUndefined) {
         // Calls the appropriate end date validation based on whether or not the discount is MSB
         //return (promotion.promoSubTypeCd == 'ProductLevelPerItemPercentDiscountMSB' && promotion.printLabel == true || promotion.promoSubTypeCd == 'ProductLevelPerItemPercentDiscount' && promotion.printLabel == true)
@@ -293,7 +318,19 @@ app.service('validationService', ['$filter', 'utilService', '$cookies', 'MaxCoup
             }
         }
     }
+    publicApi.validateRewardMethod = function (promotion) {
+        var rewardsErrors = { isError: false, message: '' };
 
+        if (promotion.reward) {
+            if((promotion.promoType === 'ITEMPROMO' && promotion.reward.method !== 'INDVDLAFFECTEDITMS') || (promotion.promoType === 'ORDERPROMO' && promotion.reward.method !== 'WHOLEORDER')){
+                rewardsErrors = {
+                    isError: true,
+                    message: 'Invalid reward method ' + promotion.reward.method + ' for promotion type ' + promotion.promoType
+                };
+            }
+        }
+        return rewardsErrors;
+    }
     publicApi.validateSkyTypeFilter = function (source, checkForUndefined) {
         //If all sku types are excluded return a validation error
         var skuTypeError = {
@@ -347,6 +384,7 @@ app.service('validationService', ['$filter', 'utilService', '$cookies', 'MaxCoup
         validationErrors.threeMonthsWarning = publicApi.validateThreeMonthsWarning(promotion.startDt);
         validationErrors.skuTypeFilter = publicApi.validateSkyTypeFilter(promotion.purchaseConds.sources[0], checkForUndefined);
         validationErrors.couponLimitError = publicApi.validateSystemGeneratedCouponCount(promotion);
+        validationErrors.rewardsErrors = publicApi.validateRewardMethod(promotion);
         publicApi.validateBasketThreshold(promotion);
         return validationErrors;
     }
