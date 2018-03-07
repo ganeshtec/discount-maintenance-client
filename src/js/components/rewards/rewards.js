@@ -134,6 +134,8 @@ function rewardsController($rootScope, $mdDialog, SourceData, validationService,
 
     function addPurchaseCondition() {
         ctrl.data.reward.details = ctrl.data.reward.details || [];
+        ctrl.validatePromotion();
+        ctrl.validationErrors.percentageWarning.isError = {};
         ctrl.data.reward.details.push({});
         ctrl.updatePrintLabel();
     }

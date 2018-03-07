@@ -183,12 +183,12 @@
 								</span>
                 <span class='error-message' ng-show="$ctrl.validationErrors.rewards[$index].isError">{{$ctrl.validationErrors.rewards[$index].message}}	</span>
 
-                <tool-tipper-warning ng-show="$ctrl.validationErrors.percentageWarning[$index].isError"
+                
+                <tool-tipper-warning tooltip-smart="true" ng-show="$ctrl.validationErrors.percentageWarning[$index].isError"
                                      show-tool-tip="true">
-                    <p>
-                        {{$ctrl.validationErrors.percentageWarning[$index].message}}
-                    </p>
+                        <span>{{$ctrl.validationErrors.percentageWarning[$index].message}}</span>
                 </tool-tipper-warning>
+                    
             </td>
             <td class="md-text-field md-text-prefixed" ng-if="$ctrl.data.reward.type=='PERCNTOFF'">
                 <input type="text" id="maxval" name="maxval_{{$index}}" ng-model="item.maxAllowedVal"
