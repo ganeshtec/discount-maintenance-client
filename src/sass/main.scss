@@ -34,7 +34,7 @@
 html {
   font-size: 62.5%;
   -webkit-tap-highlight-color: transparent;
-  height: auto !important;
+  height: 100% !important;
 }
 
 body {
@@ -373,6 +373,11 @@ ol, ul {
     margin-top: -3px;
     position: absolute;
     margin-left: 5px;
+}
+.modal-error {
+  color: #fff;
+  margin: 0px;
+  background-color: #ed1c24;
 }
 
 

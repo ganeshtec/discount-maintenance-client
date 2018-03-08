@@ -14,9 +14,9 @@ app.component('rewards', {
     controller: rewardsController
 });
 
-rewardsController.$inject = ['$rootScope', '$mdDialog', 'SourceData', 'validationService', 'utilService', '$cookies', 'featureFlagService'];
+rewardsController.$inject = ['$rootScope', '$scope', '$mdDialog', 'SourceData', 'validationService', 'utilService', '$cookies', 'featureFlagService'];
 
-function rewardsController($rootScope, $mdDialog, SourceData, validationService, utilService, $cookies, featureFlagService) {
+function rewardsController($rootScope, $scope, $mdDialog, SourceData, validationService, utilService, $cookies, featureFlagService) {
     var ctrl = this;
     ctrl.setQualUOM = setQualUOM;
     ctrl.addPurchaseCondition = addPurchaseCondition;
@@ -134,6 +134,8 @@ function rewardsController($rootScope, $mdDialog, SourceData, validationService,
 
     function addPurchaseCondition() {
         ctrl.data.reward.details = ctrl.data.reward.details || [];
+        ctrl.validatePromotion();
+        ctrl.validationErrors.percentageWarning.isError = {};
         ctrl.data.reward.details.push({});
         ctrl.updatePrintLabel();
     }
@@ -185,18 +187,20 @@ function rewardsController($rootScope, $mdDialog, SourceData, validationService,
     }
 
     function showSkuTypeModal(ev, source, promostatus) {
-        ctrl.source = source;
-        ctrl.promostatus = promostatus;
+        $scope.source = source;
+        $scope.promostatus = promostatus;
         $mdDialog.show({
             template: '<sku-type-modal source="source" promo-status="promostatus"></sku-type-modal>',
             parent: angular.element(document.body),
             targetEvent: ev,
-            scope: ctrl,
+            scope: $scope,
             preserveScope: true
         }).finally(function () {
             $rootScope.$broadcast('refreshSkuTypeValidations');
         });
     }
+
+    
 
     function removeAll() {
         for (var i = 0; i < ctrl.data.purchaseConds.sources.length; i++) {

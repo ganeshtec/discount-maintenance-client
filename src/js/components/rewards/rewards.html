@@ -88,19 +88,19 @@
                         <label>{{$ctrl.thresholdHeaderLabel}} <span class="mandatory-icon"><i class="fa fa-star"
                                                                                               aria-hidden="true"></i></span></label>
                         <div class="md-radio">
-                            <input type="radio" id="quantity" name="minpurchase" ng-model="$ctrl.qualuom"
+                            <input type="radio" id="threshhold_quantity" name="minpurchase" ng-model="$ctrl.qualuom"
                                    title="Quantity Purchase" value="Quantity"
                                    ng-change="$ctrl.setQualUOM($ctrl.qualuom);$ctrl.updatePrintLabel()"
                                    ng-disabled="$ctrl.preview"/>
-                            <label for="quantity"><span><span></span></span>{{$ctrl.thresholdQuantityLabel}}</label>
+                            <label for="threshhold_quantity"><span><span></span></span>{{$ctrl.thresholdQuantityLabel}}</label>
                         </div>
 
                         <div class="md-radio">
-                            <input type="radio" id="amount" name="minpurchase" ng-model="$ctrl.qualuom"
+                            <input type="radio" id="threshold_amount" name="minpurchase" ng-model="$ctrl.qualuom"
                                    title="Amount Spent" value="Amount"
                                    ng-change="$ctrl.setQualUOM($ctrl.qualuom);$ctrl.updatePrintLabel()"
                                    ng-disabled="$ctrl.preview"/>
-                            <label for="amount"><span><span></span></span>{{$ctrl.thresholdAmountLabel}}</label>
+                            <label for="threshold_amount"><span><span></span></span>{{$ctrl.thresholdAmountLabel}}</label>
                         </div>
                     </div>
                 </td>
@@ -108,17 +108,17 @@
                     <div ng-if="$ctrl.isMFAUser">
                         <label>Discount Type <span class="mandatory-icon"><i class="fa fa-star" aria-hidden="true"></i></span></label>
                         <div class="md-radio">
-                            <input type="radio" id="quantity" name="discountType" ng-model="$ctrl.data.reward.type"
+                            <input type="radio" id="discount_type_quantity" name="discountType" ng-model="$ctrl.data.reward.type"
                                    title="Quantity Purchase" value="PERCNTOFF" ng-change="$ctrl.updatePrintLabel()"
                                    ng-disabled="$ctrl.preview"/>
-                            <label for="quantity"><span><span></span></span>Percent Off</label>
+                            <label for="discount_type_quantity"><span><span></span></span>Percent Off</label>
                         </div>
 
                         <div class="md-radio">
-                            <input type="radio" id="amount" name="discountType" ng-model="$ctrl.data.reward.type"
+                            <input type="radio" id="discount_type_amount" name="discountType" ng-model="$ctrl.data.reward.type"
                                    title="Amount Spent" value="AMTOFF" ng-change="$ctrl.updatePrintLabel()"
                                    ng-disabled="$ctrl.preview"/>
-                            <label for="amount"><span><span></span></span>Dollar Off</label>
+                            <label for="discount_type_amount"><span><span></span></span>Dollar Off</label>
                         </div>
                     </div>
                 </td>
@@ -183,12 +183,12 @@
 								</span>
                 <span class='error-message' ng-show="$ctrl.validationErrors.rewards[$index].isError">{{$ctrl.validationErrors.rewards[$index].message}}	</span>
 
-                <tool-tipper-warning ng-show="$ctrl.validationErrors.percentageWarning[$index].isError"
+                
+                <tool-tipper-warning tooltip-smart="true" ng-show="$ctrl.validationErrors.percentageWarning[$index].isError"
                                      show-tool-tip="true">
-                    <p>
-                        {{$ctrl.validationErrors.percentageWarning[$index].message}}
-                    </p>
+                        <span>{{$ctrl.validationErrors.percentageWarning[$index].message}}</span>
                 </tool-tipper-warning>
+                    
             </td>
             <td class="md-text-field md-text-prefixed" ng-if="$ctrl.data.reward.type=='PERCNTOFF'">
                 <input type="text" id="maxval" name="maxval_{{$index}}" ng-model="item.maxAllowedVal"

@@ -1,5 +1,5 @@
 // Purpose is to build promotion data
-app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService', 'redemptionMethodTypes', 'validationService','DataFactory', 'itemCategorySourceData', '$cookies', 'featureFlagService','sectionsIndex',
+app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService', 'redemptionMethodTypes', 'validationService', 'DataFactory', 'itemCategorySourceData', '$cookies', 'featureFlagService', 'sectionsIndex',
     function (promotionSubTypes, promotionDataService, redemptionMethodTypes, validationService, DataFactory, itemCategorySourceData, $cookies, featureFlagService, sectionsIndex) {
 
         return {
@@ -21,26 +21,26 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                 scope.sectionsIndex = sectionsIndex;
 
                 var featureFlagPromise = featureFlagService.getFeatureFlags();
-                featureFlagPromise.then(function(res) {
+                featureFlagPromise.then(function (res) {
                     scope.data.channelToggle = res.channelSelect;
                 })
-                    
+
                 function getPromoSubTypes() {
                     var getPromotionPromise;
-               
+
                     getPromotionPromise = promotionDataService.getPromotionSubTypes();
 
                     getPromotionPromise.then(
-                            function (data) {
-                                DataFactory.promotionSubTypes = data.promotionSubTypes;
-                                scope.promotionSubTypes = DataFactory.promotionSubTypes;
-                            },
-                            function (error) {
-                                DataFactory.messageModal.message = error;
-                                DataFactory.messageModal.title = 'Error';
-                                $('#messageModal').popup();
+                        function (data) {
+                            DataFactory.promotionSubTypes = data.promotionSubTypes;
+                            scope.promotionSubTypes = DataFactory.promotionSubTypes;
+                        },
+                        function (error) {
+                            DataFactory.messageModal.message = error;
+                            DataFactory.messageModal.title = 'Error';
+                            $('#messageModal').popup();
 
-                            });
+                        });
                 }
                 if ($cookies.get('currentUserRole') != null) {
                     var currentUserRole = $cookies.get('currentUserRole');
@@ -53,8 +53,8 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                 function setPromotionSubType(watch) {
                     if (scope.promotionSubTypes && scope.data && scope.data.promoSubTypeCd) {
                         $.each(scope.promotionSubTypes, function (i) {
-                            if (scope.promoMfa &&  !watch) {
-                                if (scope.data.promoType=='ORDERPROMO' && scope.data.promoSubTypeCd=='OrderLevelPercentDiscount') {
+                            if (scope.promoMfa && !watch) {
+                                if (scope.data.promoType == 'ORDERPROMO' && scope.data.promoSubTypeCd == 'OrderLevelPercentDiscount') {
                                     scope.promoSubTypeObject = scope.promotionSubTypes[1];
                                 }
                                 else {
@@ -89,29 +89,35 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                     scope.data.purchaseConds.sources.push(new itemCategorySourceData());
                 }
 
-                scope.validatePromotion = function(){
+                scope.validatePromotion = function () {
                     scope.validationErrors = validationService.validatePromotion(scope.data);
                 };
 
-                scope.resetRewardsOnPromoTypeChange = function() {
+                scope.resetRewardsOnPromoTypeChange = function () {
                     // This removes all but the first reward when switching to "Buy A and B" promotions
-                    if(scope.data.reward.details.length > 1
-                        && (scope.data.promoSubTypeCd == 'MultipleItemsPercentDiscount' 
-                        || scope.data.promoSubTypeCd == 'MultipleItemsValueDiscount')) { 
-                        scope.data.reward.details.splice(1, scope.data.reward.details.length-1);
+                    if (scope.data.reward.details.length > 1
+                        && (scope.data.promoSubTypeCd == 'MultipleItemsPercentDiscount'
+                            || scope.data.promoSubTypeCd == 'MultipleItemsValueDiscount')) {
+                        scope.data.reward.details.splice(1, scope.data.reward.details.length - 1);
                     }
-                    if(scope.data.reward.type === 'AMTOFF') {                        
-                        scope.data.reward.details[0].maxAllowedVal=undefined;
+                    if (scope.data.reward.type === 'AMTOFF') {
+                        scope.data.reward.details[0].maxAllowedVal = undefined;
                     }
                 }
 
                 scope.showMaximumDiscount = false;
-              
-                scope.getSelectedSubTypes = function () {
 
-                    scope.data.promoSubTypeCd = scope.promoSubTypeObject.promoSubTypeCd;
-                    scope.data.promoSubTypeDesc = scope.promoSubTypeObject.promoSubTypeDesc;
-                    scope.data.promoType = scope.promoSubTypeObject.promoType;
+                scope.getSelectedSubTypes = function () {
+                    if (scope.promoSubTypeObject !== null) {
+                        scope.data.promoSubTypeCd = scope.promoSubTypeObject.promoSubTypeCd;
+                        scope.data.promoSubTypeDesc = scope.promoSubTypeObject.promoSubTypeDesc;
+                        scope.data.promoType = scope.promoSubTypeObject.promoType;
+                    } else {
+                        scope.data.promoSubTypeCd = '';
+                        scope.data.promoSubTypeDesc = '';
+                        scope.data.promoType = '';
+                    }
+
                     //AP-573-Promo validations - Buy A And B, get % off both
                     if (scope.data.promoSubTypeCd.indexOf('MultipleItemsPercentDiscount') != -1 || scope.data.promoSubTypeCd.indexOf('MultipleItemsValueDiscount') != -1) {
                         scope.data.isSitewideDeal = false;
@@ -138,14 +144,15 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                             scope.data.longDesc = '';
                         }
                         scope.data.reward.method = 'WHOLEORDER';
+                    } else {
+                        scope.data.reward.method = '';
                     }
                 }
            
                 if(scope.userType === 228){
-                    scope.data.reward.method = 'INDVDLAFFECTEDITMS';
+                    scope.data.reward.method = scope.data.reward.method || 'INDVDLAFFECTEDITMS';
                 }
           
-
                 scope.validatePromotion = function() {
                     scope.validationErrors = validationService.validatePromotion(scope.data);
                 }

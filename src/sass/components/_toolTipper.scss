@@ -33,10 +33,10 @@
 
 .tooltipcontent-warning {
     font-family: 'Open Sans', sans-serif;
-    font-size: 14px;
-    line-height: 18px;
-    margin-top: -65px;
-    margin-left: 270px;
+    font-size: 12px;
+    line-height: 15px;
+    margin-top: -10px;
+    margin-left: -100px;
     float: left;
     position: relative;
     background: inherit;
@@ -44,16 +44,16 @@
     border: none;
     text-align: left;
     overflow: hidden;
-    width: 50%;
+    width: 100%;
 }
 
 .tooltippoint-warning {
     float: left;
     position: absolute;
-    right: 86px;
-    top: -54px;
-    z-index: -1;
-    width: 27px;
+    left: 10px;
+    top: -15px;
+    z-index: -5;
+    width: 6px;
     display: block;
     background-color: #FFC20E;
     -webkit-transform: rotate(45deg);
@@ -67,7 +67,7 @@
     position: absolute;
     float: right;
     cursor: pointer;
-    right: 0px;
+    right: 3px;
     top: 0px;
 }
 
