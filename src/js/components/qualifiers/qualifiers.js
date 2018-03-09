@@ -14,10 +14,11 @@ app.component('qualifiers', {
 });
 
 
-function QualifiersController(customerSegmentDataService, utilService, validationService, featureFlagService) {
+function QualifiersController(customerSegmentDataService, utilService, validationService, featureFlagService, $rootScope) {
     var ctrl = this;
     ctrl.showBasketThreshold = false;
 
+    ctrl.discountEngineErrors = $rootScope.discountEngineErrors;
 
     ctrl.$onInit = function () {
         var featureTogglePromise = featureFlagService.getFeatureFlags();
