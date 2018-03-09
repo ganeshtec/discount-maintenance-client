@@ -1,6 +1,6 @@
 // Purpose is to build promotion data
-app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService', 'redemptionMethodTypes', 'validationService', 'DataFactory', 'itemCategorySourceData', '$cookies', 'featureFlagService', 'sectionsIndex',
-    function (promotionSubTypes, promotionDataService, redemptionMethodTypes, validationService, DataFactory, itemCategorySourceData, $cookies, featureFlagService, sectionsIndex) {
+app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService', 'redemptionMethodTypes', 'utilService', 'validationService', 'DataFactory', 'itemCategorySourceData', '$cookies', 'featureFlagService', 'sectionsIndex',
+    function (promotionSubTypes, promotionDataService, redemptionMethodTypes, utilService, validationService, DataFactory, itemCategorySourceData, $cookies, featureFlagService, sectionsIndex) {
 
         return {
             restrict: 'E',
@@ -145,7 +145,7 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                         }
                         scope.data.reward.method = 'WHOLEORDER';
                     } else {
-                        scope.data.reward.method = '';
+                        scope.data.reward.method = utilService.rewardMethodMapping[scope.data.promoSubTypeCd];
                     }
                 }
            

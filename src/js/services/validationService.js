@@ -322,7 +322,7 @@ app.service('validationService', ['$filter', 'utilService', '$cookies', 'MaxCoup
         var rewardsErrors = { isError: false, message: '' };
 
         if (promotion.reward) {
-            if((promotion.promoType === 'ITEMPROMO' && promotion.reward.method !== 'INDVDLAFFECTEDITMS') || (promotion.promoType === 'ORDERPROMO' && promotion.reward.method !== 'WHOLEORDER')){
+            if((promotion.promoType === 'ITEMPROMO' && (!promotion.reward.method || promotion.reward.method === 'WHOLEORDER')) || (promotion.promoType === 'ORDERPROMO' && promotion.reward.method !== 'WHOLEORDER')){
                 rewardsErrors = {
                     isError: true,
                     message: 'Invalid reward method ' + promotion.reward.method + ' for promotion type ' + promotion.promoType
