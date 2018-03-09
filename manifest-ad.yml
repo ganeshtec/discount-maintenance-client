@@ -1,6 +1,6 @@
 inherit: manifest-base.yml
 applications:
-- name: PromotionsMaintenanceExtUI
+- name: discount-maintenance-client
   hosts:
     - discount-engine-ad
     - promotionsadmin-ext-ad
