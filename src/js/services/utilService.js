@@ -1,7 +1,7 @@
 app.service('utilService', ['$filter', 'leadTimeService','$cookies', function ($filter, leadTimeService, $cookies) {
     var publicApi = {};
     this.leadTime;
-    var rewardMethodMappoing = {
+    publicApi.rewardMethodMapping = {
         'ProductLevelPercentDiscount': 'ALLAFFECTEDITMS',
         'CategoryLevelValueDiscount': 'ALLAFFECTEDITMS',
         'ProductLevelValueDiscount': 'ALLAFFECTEDITMS',
@@ -15,7 +15,6 @@ app.service('utilService', ['$filter', 'leadTimeService','$cookies', function ($
         'ProductLevelPerItemValueDiscount': 'INDVDLAFFECTEDITMS',
         'ProductLevelPerItemPercentDiscount': 'INDVDLAFFECTEDITMS',
         'MultipleItemsValueDiscount': 'ALLAFFECTEDITMS'
-
     }
     if ($cookies.get('currentUserRole') != null) {
         var currentUserRole = $cookies.get('currentUserRole');
@@ -82,7 +81,7 @@ app.service('utilService', ['$filter', 'leadTimeService','$cookies', function ($
         }
         //TODO:  move this to backend this field is not showed anywhere in the UI
         if (promotion.reward && !promotion.reward.method) {
-            promotion.reward.method = rewardMethodMappoing[promotion.promoSubTypeCd];
+            promotion.reward.method = publicApi.rewardMethodMapping[promotion.promoSubTypeCd];
         }
 
         if (this.userType === 229) {

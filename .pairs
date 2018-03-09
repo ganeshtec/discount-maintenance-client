@@ -4,9 +4,6 @@ Example:
 pairs:
         em: Evan Miller; emiller
         sl: Spencer Lewis; slewis
-        cs: Coredelle Smith; csmith
-        jd: Justin Doak; jdoak
-        nk: Nageswararao Kanchepu; nkanchepu
         gt: Ganesan Thangapandian; gthangapandian
         cb: Clifford Burchfield; cburchfield
         sk: Sravanthi Kedarisetti; skedarisetti
@@ -18,6 +15,7 @@ pairs:
         pw: Patrick Woods; Patrick
         as: Anmol Sharma; Anmol_Sharma
         pv: Praveen Valeti; Praveen
+        hr: Hasnain Rangwala;Hasnain
 email:
         prefix: pair
         domain: pivotallabs.com
