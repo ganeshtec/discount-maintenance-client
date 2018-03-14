@@ -1,6 +1,6 @@
 ---
 applications:
-- name: PromotionsMaintenanceExtUI
+- name: discount-maintenance-client
   memory: 256m
   path: .
   buildpack: https://github.com/cloudfoundry/nodejs-buildpack
