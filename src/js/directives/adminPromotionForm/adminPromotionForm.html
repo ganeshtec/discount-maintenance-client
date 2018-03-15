@@ -43,7 +43,7 @@
 					</option>
 				</select>
 			</div> 
-			<promotion-code-specification ng-if="data.promoCdRqrd" test ="{{data.couponId}}" couponId="data.couponId" preview="preview" ng-disabled="preview" data="data.promoCdSpec" require="data.promoCdRqrd" promoform='promoForm'></promotion-code-specification>
+			<promotion-code-specification ng-if="data.promoCdRqrd && data.userType == 229" test ="{{data.couponId}}" couponId="data.couponId" preview="preview" ng-disabled="preview" data="data.promoCdSpec" require="data.promoCdRqrd" promoform='promoForm'></promotion-code-specification>
 			<div class="md-text-field" ng-show="viewProp.displayCombinationPromo">
 				<label for="promocombo">
 					Combination with other discounts

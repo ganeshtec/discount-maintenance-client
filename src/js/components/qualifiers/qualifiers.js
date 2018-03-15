@@ -14,13 +14,18 @@ app.component('qualifiers', {
 });
 
 
-function QualifiersController(customerSegmentDataService, utilService, validationService, featureFlagService) {
+function QualifiersController(customerSegmentDataService, utilService, validationService, featureFlagService, $cookies) {
     var ctrl = this;
     ctrl.showBasketThreshold = false;
 
+    if ($cookies.get('currentUserRole') != null) {
+        var currentUserRole = $cookies.get('currentUserRole');
+        ctrl.userType = parseInt(currentUserRole);
+    }
 
     ctrl.$onInit = function () {
         var featureTogglePromise = featureFlagService.getFeatureFlags();
+        ctrl.initialize();
         featureTogglePromise.then(function (data) {
             ctrl.showBasketThreshold = data.basketThreshold;
             ctrl.useCustSegReasonCode = data.useCustSegReasonCode;
@@ -139,6 +144,40 @@ function QualifiersController(customerSegmentDataService, utilService, validatio
         ctrl.validationErrors = validationService.validatePromotion(ctrl.data);
     };
 
+    ctrl.selectRapidPass = function () {
+        if (ctrl.data.checkRapidPass) {
+            ctrl.data.promoCdSpec = {};
+            ctrl.data.promoCdSpec.type = 'Private';
+            ctrl.data.promoCdSpec.genType = 'Dynamic Generated';
+            ctrl.data.promoCdSpec.cdLength = '13';
+            ctrl.data.promoCdSpec.systemGen = {};
+            ctrl.data.promoCdSpec.systemGen.uniqueCdCnt = '';
+            ctrl.data.promoCdSpec.systemGen.cdPrefix = (ctrl.data.segment && ctrl.data.segment.id && ctrl.data.segment.id > 0) ? '0100' + ctrl.data.segment.id : '0100';
+            ctrl.data.promoCdSpec.systemGen.cdSuffix = '';
+            ctrl.data.promoCdRqrd = true;
+        }
+        else {
+            ctrl.data.promoCdSpec.type = '';
+            ctrl.data.promoCdSpec.genType = '';
+            ctrl.data.promoCdSpec.cdLength = '';
+            delete ctrl.data.promoCdSpec.systemGen;
+            ctrl.data.rapidPassCouponLimit = '';
+            ctrl.data.promoCdRqrd = false;
+        }
+    }
+
+    ctrl.initialize = function () {
+        if ((ctrl.data.promoCdSpec && ctrl.data.promoCdSpec.genType === 'Dynamic Generated' && ctrl.data.promoCdSpec.systemGen && ctrl.data.promoCdSpec.systemGen.uniqueCdCnt && isNaN(ctrl.data.rapidPassCouponLimit))) {
+            ctrl.data.checkRapidPass = true;
+            ctrl.data.rapidPassCouponLimit = ctrl.data.promoCdSpec.systemGen.uniqueCdCnt;
+        }
+        else if (ctrl.data.checkRapidPass == true) {
+            ctrl.data.promoCdSpec.systemGen.uniqueCdCnt = ctrl.data.rapidPassCouponLimit;
+        }
+        else {
+            ctrl.data.checkRapidPass = false;
+        }
+    }
 }
 
 
