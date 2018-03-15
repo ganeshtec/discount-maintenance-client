@@ -7,11 +7,11 @@ app.service('loginService', ['$http', '$location', 'URL_CONFIG','$rootScope','$w
         var userName = null;
         var currentUserRole=null;
         function getRedirectUrl(config) {
-          return config.oAuthAuthorizationUrl + '?client_id='+config.appId
-          + '&response_type=token&redirect_uri='+urls.dashboardUiUrl+'/';
+            return config.oAuthAuthorizationUrl + '?client_id='+config.appId
+            + '&response_type=token&redirect_uri='+urls.dashboardUiUrl+'/';
         }
         function getLogoutUrl(config){
-          return config.oAuthLogoutUrl+'?client_id='+config.appId;
+            return config.oAuthLogoutUrl+'?client_id='+config.appId;
         }
 
         publicApi.getUserInfo =function(){
@@ -31,16 +31,16 @@ app.service('loginService', ['$http', '$location', 'URL_CONFIG','$rootScope','$w
         }
 
         publicApi.intercept =function(){
-          var accessToken=getUrlFragment('access_token');
-          if(accessToken!=null){
-              userInfo={};
-              userInfo.accessToken=accessToken;
-              userInfo.accessTokenDetails=decodeToken(accessToken);
-              userName=userInfo.accessTokenDetails.user_name;
-              authorizeUser(userInfo.accessTokenDetails.user_name);
-          }else if(!userInfo || Date.now()>userInfo.accessTokenDetails.exp*1000){
-              this.redirectToLoginPage();
-          }
+            var accessToken=getUrlFragment('access_token');
+            if(accessToken!=null){
+                userInfo={};
+                userInfo.accessToken=accessToken;
+                userInfo.accessTokenDetails=decodeToken(accessToken);
+                userName=userInfo.accessTokenDetails.user_name;
+                authorizeUser(userInfo.accessTokenDetails.user_name);
+            }else if(!userInfo || Date.now()>userInfo.accessTokenDetails.exp*1000){
+                this.redirectToLoginPage();
+            }
         }
 
         function decodeToken(token){
@@ -57,14 +57,14 @@ app.service('loginService', ['$http', '$location', 'URL_CONFIG','$rootScope','$w
 
         publicApi.redirectToLoginPage=function(){
             configService.getConfig().then(function(config){
-              $window.location.href=getRedirectUrl(config);
+                $window.location.href=getRedirectUrl(config);
             })
 
         }
 
         publicApi.logout = function (){
             configService.getConfig().then(function(config){
-              $window.location.href=getLogoutUrl(config);
+                $window.location.href=getLogoutUrl(config);
             });
 
         }
@@ -93,10 +93,7 @@ app.service('loginService', ['$http', '$location', 'URL_CONFIG','$rootScope','$w
                     userPermissions = response.data;
 
                     //Set default user permission based on the first shortDesc alphabeticly
-                    var defaultUserPerm = userPermissions[0].id;
-
                     var defaultPerm = -1;
-
                     //Set shortDesc and defulat user permission
                     for(var i = 0; i < userPermissions.length; i++){
                         var userPerm = userPermissions[i].description;

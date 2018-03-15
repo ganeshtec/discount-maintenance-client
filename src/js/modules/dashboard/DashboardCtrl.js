@@ -632,7 +632,7 @@ app.controller('DashboardCtrl', [ '$filter', 'leadTimeService', '$scope', 'DataF
                 $scope.searchType = params.searchType;
                 var channels = [];
                 if($scope.channelId != null){
-                  channels.push($scope.channelId);
+                    channels.push($scope.channelId);
                 }
                 params.channels = channels;
 
