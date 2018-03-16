@@ -7,6 +7,7 @@ describe('LoginServiceTests',function(){
   var $location;
   var $window;
   var modalService;
+
   beforeEach(function () {
      module(function($provide) {
          $provide.value('$window', {
@@ -73,6 +74,7 @@ describe('LoginServiceTests',function(){
     // expect(loginService.getUserPermissions()).toEqual({id: "228",description: 'SKU: Discount Engine-Store MFA'});
     // expect(loginService.getCurrentUserRole()).toEqual('228');
   });
+
   it('LoginService.logout should redirect user to logout page',function(){
     spyOn(loginService,'logout').and.callThrough();
     spyOn(configService,'getConfig').and.callFake(function(){
@@ -84,5 +86,14 @@ describe('LoginServiceTests',function(){
     });
     loginService.logout();
     expect($window.location.href).toEqual('http://sso.homedepot.com/logout.do?client_id=123456789');
+  })
+
+  it('LoginService.setCurrentUserRole should always set integer', function(){
+    var stringUserRole = '228';
+    loginService.setCurrentUserRole(stringUserRole);
+    expect(loginService.getCurrentUserRole()).toEqual(228);
+    var numberUserRole = '228';
+    loginService.setCurrentUserRole(numberUserRole);
+    expect(loginService.getCurrentUserRole()).toEqual(228);
   })
 });
