@@ -74,6 +74,14 @@
 
 			</div>
 
+			<div ng-show="viewProp.displayExclusiveCheckbox" class="pbxl">
+				<div>
+					<h4>Exclusivity</h4>
+				</div>
+				<div>
+					<md-checkbox data-ng-click="toggleExclusive()" data-ng-checked="data.exclsve==1" id="exclusivity" ng-disabled="preview">Do not stack with other discounts</md-checkbox>
+				</div>
+			</div>
 			<!-- <CHANNEL SELECT PLACEHOLDER -->	
 			<channel-select ng-if="!preview && viewProp.displayChannelSelect" view-prop="viewProp" data="data"></channel-select>
 

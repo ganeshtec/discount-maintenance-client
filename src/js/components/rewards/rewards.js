@@ -61,6 +61,7 @@ function rewardsController($rootScope, $scope, $mdDialog, SourceData, validation
             ctrl.setRewardMethod();
             break
         }
+        
         ctrl.qualuom = (ctrl.data.reward && ctrl.data.reward.details[0].qualUOM) || 'Quantity';
         ctrl.setQualUOM(ctrl.qualuom);
 
