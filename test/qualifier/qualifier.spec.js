@@ -90,15 +90,31 @@ describe('Unit testing qualifiers component', function () {
         expect(ctrl.data.promoCdRqrd).toBe(true);
     });
 
-    it('initialize for Edit mode of promotion', function () {
+    it('initialize for Edit mode of Active promotion', function () {
         ctrl.data.promoCdSpec.genType = 'Dynamic Generated';
         ctrl.data.rapidPassCouponLimit = NaN;
         ctrl.data.promoCdSpec.systemGen.uniqueCdCnt = 30;
+        ctrl.data.status = 61;
 
         ctrl.initialize();
 
         expect(ctrl.data.checkRapidPass).toBe(true);
         expect(ctrl.data.rapidPassCouponLimit).toBe(30);
+        expect(ctrl.data.disableRapidPass).toBe(true);
+        
+    });
+
+    it('initialize for Edit mode of Non Active promotion', function () {
+        ctrl.data.promoCdSpec.genType = 'Dynamic Generated';
+        ctrl.data.rapidPassCouponLimit = NaN;
+        ctrl.data.promoCdSpec.systemGen.uniqueCdCnt = 30;
+        ctrl.data.status = 57;
+
+        ctrl.initialize();
+
+        expect(ctrl.data.checkRapidPass).toBe(true);
+        expect(ctrl.data.rapidPassCouponLimit).toBe(30);
+        expect(ctrl.data.disableRapidPass).toBe(false);
         
     });
 

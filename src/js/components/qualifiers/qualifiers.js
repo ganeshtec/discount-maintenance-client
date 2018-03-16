@@ -170,8 +170,13 @@ function QualifiersController(customerSegmentDataService, utilService, validatio
         if ((ctrl.data.promoCdSpec && ctrl.data.promoCdSpec.genType === 'Dynamic Generated' && ctrl.data.promoCdSpec.systemGen && ctrl.data.promoCdSpec.systemGen.uniqueCdCnt && isNaN(ctrl.data.rapidPassCouponLimit))) {
             ctrl.data.checkRapidPass = true;
             ctrl.data.rapidPassCouponLimit = ctrl.data.promoCdSpec.systemGen.uniqueCdCnt;
+            if(utilService.isPromotionActive(ctrl.data)){
+                ctrl.data.disableRapidPass = true;
+            }else{
+                ctrl.data.disableRapidPass = false;
+            }
         }
-        else if (ctrl.data.checkRapidPass == true) {
+        else if (ctrl.data.checkRapidPass == true) { 
             ctrl.data.promoCdSpec.systemGen.uniqueCdCnt = ctrl.data.rapidPassCouponLimit;
         }
         else {
