@@ -88,7 +88,7 @@ describe('LoginServiceTests',function(){
     expect($window.location.href).toEqual('http://sso.homedepot.com/logout.do?client_id=123456789');
   })
 
-  it('LoginService.setCurrentUserRole should always set integer', function(){
+  it('LoginService.setCurrentUserRole should always set as number', function(){
     var stringUserRole = '228';
     loginService.setCurrentUserRole(stringUserRole);
     expect(loginService.getCurrentUserRole()).toEqual(228);
