@@ -82,10 +82,10 @@ describe('Unit testing qualifiers component', function () {
         expect(ctrl.data.promoCdSpec.type).toBe('Private');
         expect(ctrl.data.promoCdSpec.genType).toBe('Dynamic Generated');
         expect(ctrl.data.promoCdSpec.cdLength).toBe('13');
-        expect(ctrl.data.rapidPassCouponLimit).toBe('');
+        expect(ctrl.data.rapidPassCouponLimit).toBe(undefined);
 
         expect(ctrl.data.promoCdSpec.systemGen.uniqueCdCnt).toBe('');
-        expect(cctrl.data.promoCdSpec.systemGen.cdPrefix).toBe('010012345');
+        expect(ctrl.data.promoCdSpec.systemGen.cdPrefix).toBe('010012345');
         expect(ctrl.data.promoCdSpec.systemGen.cdSuffix).toBe('');
         expect(ctrl.data.promoCdRqrd).toBe(true);
     });
@@ -112,7 +112,7 @@ describe('Unit testing qualifiers component', function () {
   
     });
 
-    fit('initialize for preview promotion', function () {
+    it('initialize for preview promotion', function () {
         ctrl.data.rapidPassCouponLimit = 50;
         ctrl.data.checkRapidPass = true;
         ctrl.initialize();
