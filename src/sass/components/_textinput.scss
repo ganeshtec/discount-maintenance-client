@@ -115,3 +115,23 @@
     margin-right: 9px;
     z-index: 1;
 }
+
+.input-text-container input[type=text], .input-text-container input[type=password], .input-text-container input[type=tel], .input-text-container input[type=number], .input-text-container input[type=date] {
+    outline: none;
+    position: relative;
+    border: 1px solid #DDDDDD;
+    background-color: #FFFFFF;
+    border-radius: 2px;
+    padding: 10px;
+    font-size: 18px;
+    color: #222222;
+    min-width: 20%;
+    box-sizing: border-box;
+}
+
+.input-text-container input[type=text]:disabled, .input-text-container input[type=password]:disabled, .input-text-container input[type=tel]:disabled, .input-text-container input[type=number]:disabled, .input-text-container input[type=date]:disabled {
+    background-color: #F5F5F5;
+    color: #999999;
+    border: none;
+    cursor: not-allowed;
+}
