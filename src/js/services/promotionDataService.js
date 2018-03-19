@@ -1,5 +1,5 @@
-/* 
-    Data Service 
+/*
+    Data Service
     Services that will handle data http request to web services
 */
 

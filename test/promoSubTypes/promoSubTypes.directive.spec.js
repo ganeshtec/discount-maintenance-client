@@ -15,5 +15,5 @@ describe('Unit testing promoSubTypes.directive.spec.js', function() {
     $rootScope = _$rootScope_;
     $scope = $rootScope.$new();
   }));
- 
+
 });

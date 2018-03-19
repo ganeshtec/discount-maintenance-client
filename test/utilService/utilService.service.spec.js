@@ -4,7 +4,8 @@ describe('utilService', function () {
     $rootScope,
     $scope,
     utilService,
-    leadTimeService;
+    leadTimeService,
+    loginService;
 
 
 
@@ -12,13 +13,14 @@ describe('utilService', function () {
   beforeEach(module('app'));
   // Store references to $rootScope and $compile
   // so they are available to all tests in this describe block
-  beforeEach(inject(function (_$compile_, _$rootScope_, _utilService_, _leadTimeService_) {
+  beforeEach(inject(function (_$compile_, _$rootScope_, _leadTimeService_,_loginService_,_utilService_) {
     // The injector unwraps the underscores (_) from around the parameter names when matching
     $compile = _$compile_;
     $rootScope = _$rootScope_;
     $scope = $rootScope.$new();
     utilService = _utilService_;
     leadTimeService = _leadTimeService_;
+    loginService = _loginService_;
 
     spyOn(leadTimeService, 'fetchLeadTime').and.callFake(function () {
       return {
@@ -36,12 +38,12 @@ describe('utilService', function () {
     expect(leadTime).toBe(3);
   });
 
-  it('Test convertDateStringToDate',function(){      
+  it('Test convertDateStringToDate',function(){
     expect(utilService.convertDateStringToDate('12/10/2017 02:59:00')).toEqual(moment("12/10/2017").toDate());
     expect(utilService.convertDateStringToDate('12/10/2017')).toEqual(moment("12/10/2017").toDate());
     expect(utilService.convertDateStringToDate(undefined)).toBe(undefined);
   });
-  
+
   it('isSubmitEligibleForDisable should return true for active promotion with printlabel and endDt within lead time', function () {
 
     var promotion = {
@@ -164,7 +166,7 @@ describe('utilService', function () {
 
     expect(utilService.validateBuyAandBOverlap(promotion)).toEqual(null);
   });
-  
+
   // Below Test Scenarios to cover multiItem Percentage Promotions
   it('returns error message from validateBuyAandBOverlap (percent) for multi item promotions with overlapping categories (hierarchies).', function() {
     var promotion = {"promoId":18116,"promoSubTypeCd":"MultipleItemsPercentDiscount","status":61,"purchaseConds":{"sources":[{"inclusions":{"partnumbers":null,"itemtype":null,"hierarchies":[{"id":"da80fc04-3857-427c-ada9-8b868b6bb45c","name":"Pipes & Fittings","catalog":"Web"}]}},{"inclusions":{"partnumbers":null,"itemtype":null,"hierarchies":[{"id":"da80fc04-3857-427c-ada9-8b868b6bb45c","name":"Pipes & Fittings","catalog":"Web"}]}}]}};
@@ -238,8 +240,8 @@ describe('utilService', function () {
     }
     expect(utilService.isPrintLabelDisabled(promotion)).toEqual(false);
   });
-  
-  
+
+
   it('verify isPrintLabelDisabled returns true if item/sku is selected', function() {
    var promotion = {"promoId":18116,"promoSubTypeCd":"MultipleItemsPercentDiscount", "channels": [87],"status":61,"purchaseConds":{"sources":[{"inclusions":{"partnumbers":[100169919],"itemtype":null,"hierarchies":[]}},{"inclusions":{"partnumbers":[100169919],"itemtype":null,"hierarchies":[]}}]}};
     expect(utilService.isPrintLabelDisabled(promotion)).toEqual(true);
@@ -305,7 +307,7 @@ describe('utilService', function () {
     }
     expect(utilService.isPrintLabelDisabled(promotion)).toEqual(true);
    });
- 
+
    it('verify isPrintLabelDisabled returns false if discount reward is single tier', function() {
      var promotion = {
       "channels": [87],
@@ -324,10 +326,10 @@ describe('utilService', function () {
           }
         ]
       }
-     } 
+     }
      expect(utilService.isPrintLabelDisabled(promotion)).toEqual(false);
     });
- 
+
     it('verify isPrintLabelDisabled returns true if channels does not contain POS (87)', function() {
       var promotion = {
        "channels": [100,105,110,130],
@@ -351,7 +353,7 @@ describe('utilService', function () {
      });
 
     /* Code to fix clearing of label text while editing active promotion that has an active label
-       pending bug fix request. 
+       pending bug fix request.
 
      it('verify updatePrintLabel does not modify the label for active promotions that already have a label', function() {
       var promotion = {
@@ -367,10 +369,10 @@ describe('utilService', function () {
       }
       utilService.updatePrintLabel(promotion);
       expect(promotion.printLabel).toEqual(true);
-      expect(promotion.labelText).toEqual("Label Text"); 
+      expect(promotion.labelText).toEqual("Label Text");
      });
     */
-    
+
      it('verify updatePrintLabel clears the label for active promotions that do not already have a label', function() {
       var promotion = {
        "status": 61,
@@ -385,7 +387,7 @@ describe('utilService', function () {
       }
       utilService.updatePrintLabel(promotion);
       expect(promotion.printLabel).toEqual(false);
-      expect(promotion.labelText).toEqual(''); 
+      expect(promotion.labelText).toEqual('');
      });
 
      it('verify updatePrintLabel clears the label for non-active promotions that already have a label', function() {
@@ -402,7 +404,7 @@ describe('utilService', function () {
       }
       utilService.updatePrintLabel(promotion);
       expect(promotion.printLabel).toEqual(false);
-      expect(promotion.labelText).toEqual(''); 
+      expect(promotion.labelText).toEqual('');
      });
 
     it('populates subtype code with typeless information for store channel (MFA) promotions when setting defaults for save as draft', function() {
@@ -412,7 +414,7 @@ describe('utilService', function () {
           "channels": [87]
         }
       };
-       utilService.userType = 228;
+      spyOn(loginService,'getCurrentUserRole').and.callFake(function(){return 228});
        utilService.setDefaultsForSaveAsDraft(promotion);
        expect(promotion.promoSubTypeCd).toEqual('TypeLessDiscount');
        expect(promotion.promoSubTypeDesc).toEqual('TypeLess-Discounts');

@@ -14,9 +14,9 @@ app.component('rewards', {
     controller: rewardsController
 });
 
-rewardsController.$inject = ['$rootScope', '$scope', '$mdDialog', 'SourceData', 'validationService', 'utilService', '$cookies', 'featureFlagService'];
+rewardsController.$inject = ['$rootScope', '$scope', '$mdDialog', 'SourceData', 'validationService', 'utilService', 'loginService', 'featureFlagService'];
 
-function rewardsController($rootScope, $scope, $mdDialog, SourceData, validationService, utilService, $cookies, featureFlagService) {
+function rewardsController($rootScope, $scope, $mdDialog, SourceData, validationService, utilService, loginService, featureFlagService) {
     var ctrl = this;
     ctrl.setQualUOM = setQualUOM;
     ctrl.addPurchaseCondition = addPurchaseCondition;
@@ -38,12 +38,7 @@ function rewardsController($rootScope, $scope, $mdDialog, SourceData, validation
     ctrl.showBasketThreshold = false;
 
     ctrl.$onInit = $onInit;
-
-    if ($cookies.get('currentUserRole') != null) {
-        var currentUserRole = $cookies.get('currentUserRole');
-        ctrl.userType = parseInt(currentUserRole);
-    }
-
+    ctrl.userType = loginService.getCurrentUserRole();
     function $onInit() {
         switch (ctrl.userType) {
         case 229:
@@ -101,10 +96,10 @@ function rewardsController($rootScope, $scope, $mdDialog, SourceData, validation
         switch(ctrl.data.reward.type){
         case 'AMTOFF':
             rewardTypeLabel='Amount';
-            break;    
+            break;
         case 'PERCNTOFF':
             rewardTypeLabel='Percentage';
-            break;    
+            break;
         }
         return rewardTypeLabel;
     }
@@ -113,10 +108,10 @@ function rewardsController($rootScope, $scope, $mdDialog, SourceData, validation
         switch(ctrl.data.promoType){
         case 'ITEMPROMO':
             ctrl.data.reward.method = 'INDVDLAFFECTEDITMS';
-            break;    
+            break;
         case 'ORDERPROMO':
             ctrl.data.reward.method = 'WHOLEORDER';
-            break;    
+            break;
         }
     }
 
@@ -200,7 +195,7 @@ function rewardsController($rootScope, $scope, $mdDialog, SourceData, validation
         });
     }
 
-    
+
 
     function removeAll() {
         for (var i = 0; i < ctrl.data.purchaseConds.sources.length; i++) {

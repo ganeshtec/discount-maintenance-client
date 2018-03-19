@@ -15,5 +15,5 @@ describe('Unit testing messageModal.directive.spec.js', function() {
     $rootScope = _$rootScope_;
     $scope = $rootScope.$new();
   }));
- 
+
 });

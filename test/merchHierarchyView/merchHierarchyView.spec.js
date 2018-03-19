@@ -14,11 +14,12 @@ describe('Unit testing merchHierarchyView directive', function () {
     });
     // Store references to $rootScope and $compile
     // so they are available to all tests in this describe block
-    beforeEach(inject(function (_$compile_, _$q_, _$rootScope_, _$httpBackend_, _merchHierarchyDataService_) {
+    beforeEach(inject(function (_$compile_, _$q_, _$rootScope_, _$httpBackend_, _merchHierarchyDataService_, _loginService_) {
         // The injector unwraps the underscores (_) from around the parameter names when matching
         $compile = _$compile_;
         $q = _$q_;
         $rootScope = _$rootScope_;
+        loginService = _loginService_;
         merchHierarchyDataService = _merchHierarchyDataService_;
         $scope = $rootScope.$new();
         spyOn(merchHierarchyDataService, 'getAllDepartments').and.callFake(function () {
@@ -40,6 +41,8 @@ describe('Unit testing merchHierarchyView directive', function () {
         });
         _$httpBackend_.when('GET', '/labels/leadTime')
         .respond(200, 3);
+        spyOn(loginService, 'intercept').and.callFake(function () {
+        })
     }));
 
     describe("verify departmentDetails, classes, subclasses ", function () {
@@ -55,15 +58,15 @@ describe('Unit testing merchHierarchyView directive', function () {
             var element = $compile('<merch-hierarchy-view data="data"  preview="preview" source="item" is-disabled="isDisabled" promoform="promoform" view-prop="viewProp" promo-status="data.status" ng-show="item.purchaseoption == \'category\' && viewProp.displayItemsSku"></merch-hierarchy-view>')($scope);
             $scope.$digest();
 
-            this.$isolateScope = element.isolateScope(); 
+            this.$isolateScope = element.isolateScope();
 
             expect(this.$isolateScope.departmentDetails).toBeDefined();
             expect(this.$isolateScope.departmentDetails.length).toBe(3);
-            
+
             this.$isolateScope.selectedDept = this.$isolateScope.departmentDetails[0];
             this.$isolateScope.getClassesforSelectedDepartment();
             expect(this.$isolateScope.classList).toBeDefined();
-            
+
             this.$isolateScope.selectedClass = this.$isolateScope.classList[0];
             this.$isolateScope.getSubClasses();
             expect(this.$isolateScope.SubClassList).toBeDefined();

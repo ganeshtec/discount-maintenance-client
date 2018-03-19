@@ -55,13 +55,13 @@ describe('Unit testing channelSelect component', function () {
                 ],
             "printLabel": true
             }
-           
+
         }
         );
 
     }));
 
-   
+
 
     it('updates all checkbox values to false if all are true', function () {
         ctrl.data.channelsWithCheckedFields = [
@@ -138,7 +138,7 @@ describe('Unit testing channelSelect component', function () {
             "code": "POS",
             "checked": true
         }
-       
+
         ctrl.disableChannel(channel);
         expect(channel.disable).toBe(true);
 
@@ -151,7 +151,7 @@ describe('Unit testing channelSelect component', function () {
             "code": "POS",
             "checked": false
         }
-        
+
         ctrl.disableChannel(channel);
         expect(channel.disable).toBe(false);
 

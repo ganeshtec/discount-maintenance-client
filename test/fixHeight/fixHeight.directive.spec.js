@@ -30,7 +30,7 @@ describe('Unit testing fix height directive', function() {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
     $scope = $rootScope.$new();
-    
+
   }));
 
   it('Checks if fix height sets min height', function() {

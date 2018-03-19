@@ -13,10 +13,11 @@ describe('rewards', function () {
             $provide.constant('MaxCouponGenerationLimit', 300000);
         });
     });
-    beforeEach(inject(function (_$componentController_, _$compile_, _$rootScope_, _$httpBackend_) {
+    beforeEach(inject(function (_$componentController_, _$compile_, _$rootScope_, _$httpBackend_,_loginService_) {
         $componentController = _$componentController_;
         $compile = _$compile_;
         $rootScope = _$rootScope_;
+        loginService = _loginService_
         $scope = $rootScope.$new();
         _$httpBackend_.when('GET', '/labels/leadTime')
             .respond(200, 3);
@@ -28,6 +29,8 @@ describe('rewards', function () {
             .respond(200, []);
         _$httpBackend_.when('GET', '/featureFlags')
             .respond(200, {});
+        spyOn(loginService, 'intercept').and.callFake(function () {
+            })
     }));
     describe('dcm user', function () {
         beforeEach(inject(function () {
@@ -194,5 +197,5 @@ describe('rewards', function () {
         });
 
     });
-    
+
 });

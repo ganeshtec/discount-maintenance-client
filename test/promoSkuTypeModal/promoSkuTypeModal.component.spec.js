@@ -8,10 +8,11 @@ describe('promoSkuTypeModal', function () {
     // Load the myApp module, which contains the directive
     beforeEach(module('app'));
 
-    beforeEach(inject(function (_$componentController_, _$q_, _skuTypesDataService_, _$rootScope_) {
+    beforeEach(inject(function (_$componentController_, _$q_, _skuTypesDataService_, _$rootScope_, _loginService_) {
         $componentController = _$componentController_;
         $q = _$q_;
         skuTypesDataService = _skuTypesDataService_;
+        loginService = _loginService_;
         scope = _$rootScope_;
         ctrl = $componentController('promoSkuTypeModal', null, {
             data: {}
@@ -27,6 +28,9 @@ describe('promoSkuTypeModal', function () {
             ]);
             return deferredResult.promise;
 
+        })
+
+        spyOn(loginService, 'intercept').and.callFake(function () {
         })
 
     }));
@@ -113,7 +117,7 @@ describe('promoSkuTypeModal', function () {
         expect(ctrl.skuTypes[0].skuTypeCode).toEqual('N');
         expect(ctrl.skuTypes[0].description).toEqual('Normal');
 
-        
+
         expect(ctrl.skuTypes[1].skuTypeCode).toEqual('S');
         expect(ctrl.skuTypes[1].description).toEqual('Special');
         expect(ctrl.skuSelectionMap['S'].count).toEqual(1);

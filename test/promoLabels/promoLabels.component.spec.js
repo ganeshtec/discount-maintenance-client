@@ -27,7 +27,7 @@ describe('promoLabels', function () {
 
     // it('to check printLabel checkbox checked by default', function () {
 
-    //     expect(ctrl.data.printLabel).toBe(true);        
+    //     expect(ctrl.data.printLabel).toBe(true);
     // });
 
     // it('to check printLabel Text is disabled when checkbox is unchecked', function () {

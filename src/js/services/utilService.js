@@ -1,4 +1,4 @@
-app.service('utilService', ['$filter', 'leadTimeService','$cookies', function ($filter, leadTimeService, $cookies) {
+app.service('utilService', ['$filter', 'leadTimeService','loginService', function ($filter, leadTimeService,loginService) {
     var publicApi = {};
     this.leadTime;
     publicApi.rewardMethodMapping = {
@@ -15,10 +15,6 @@ app.service('utilService', ['$filter', 'leadTimeService','$cookies', function ($
         'ProductLevelPerItemValueDiscount': 'INDVDLAFFECTEDITMS',
         'ProductLevelPerItemPercentDiscount': 'INDVDLAFFECTEDITMS',
         'MultipleItemsValueDiscount': 'ALLAFFECTEDITMS'
-    }
-    if ($cookies.get('currentUserRole') != null) {
-        var currentUserRole = $cookies.get('currentUserRole');
-        this.userType = parseInt(currentUserRole);
     }
 
     publicApi.canSaveAsDraft = function (promotion) {
@@ -84,7 +80,7 @@ app.service('utilService', ['$filter', 'leadTimeService','$cookies', function ($
             promotion.reward.method = publicApi.rewardMethodMapping[promotion.promoSubTypeCd];
         }
 
-        if (this.userType === 229) {
+        if (loginService.getCurrentUserRole() === 229) {
             if (promotion.promoSubTypeCd.indexOf('Percent') != -1) {
                 promotion.reward.type = 'PERCNTOFF';
             } else {
@@ -245,7 +241,7 @@ app.service('utilService', ['$filter', 'leadTimeService','$cookies', function ($
 
         if (data.purchaseConds && data.purchaseConds.sources) {
             $(data.purchaseConds.sources).each(function (i, source) {
-                if (data.purchaseConds.qualUOM == 'Quantity' || this.userType === 228) {
+                if (data.purchaseConds.qualUOM == 'Quantity' || loginService.getCurrentUserRole() === 228) {
                     delete source.minTotalPrice;
                     if (data.promoSubTypeCd != 'MultipleItemsPercentDiscount' && data.promoSubTypeCd != 'MultipleItemsValueDiscount') {
                         source.minPurchaseQty = minPurchaseQty;
@@ -287,7 +283,7 @@ app.service('utilService', ['$filter', 'leadTimeService','$cookies', function ($
 
 
     publicApi.requiredFieldsMissing = function (promotion) {
-        if (this.userType === 229) {
+        if (loginService.getCurrentUserRole() === 229) {
             if (checkEmpty(promotion.name) || checkEmpty(promotion.startDt) || checkEmpty(promotion.endDt) || checkEmpty(promotion.promoSubTypeCd)) {
                 return true;
             }
@@ -412,7 +408,7 @@ app.service('utilService', ['$filter', 'leadTimeService','$cookies', function ($
         if (promotion.promoTypeCd == null) {
             promotion.promoTypeCd = 10;
         }
-        if (this.userType === 228) {
+        if (loginService.getCurrentUserRole() === 228) {
             if (promotion.reward.reasonCode != 70) {
                 promotion.reward.reasonCode = 49;
             }
@@ -464,7 +460,7 @@ app.service('utilService', ['$filter', 'leadTimeService','$cookies', function ($
             promotion.labelText = '';
         }
     }
- 
+
     publicApi.hasPosChannel = function (promotion){
         return promotion.channels && (promotion.channels.indexOf(87) > -1);
     }
@@ -501,7 +497,7 @@ app.service('utilService', ['$filter', 'leadTimeService','$cookies', function ($
         if (promotion.reward && promotion.reward.type != 'PERCNTOFF') {
             disabled = true;
         }
-        
+
         return disabled;
     }
 
