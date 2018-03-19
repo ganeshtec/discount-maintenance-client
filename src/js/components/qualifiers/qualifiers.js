@@ -99,6 +99,7 @@ function QualifiersController(customerSegmentDataService, utilService, validatio
         if (ctrl.data.segment) {
             if (ctrl.data.segment.id) {
                 ctrl.data.purchaseConds.customerSegmentId = ctrl.data.segment.id;
+                ctrl.data.purchaseConds.program = {};
             }
             else {
                 ctrl.data.purchaseConds.customerSegmentId = 0;
