@@ -14,15 +14,11 @@ app.component('qualifiers', {
 });
 
 
-function QualifiersController(customerSegmentDataService, utilService, validationService, featureFlagService, $cookies) {
+function QualifiersController(customerSegmentDataService, utilService, validationService, featureFlagService, loginService) {
     var ctrl = this;
     ctrl.showBasketThreshold = false;
-
-    if ($cookies.get('currentUserRole') != null) {
-        var currentUserRole = $cookies.get('currentUserRole');
-        ctrl.userType = parseInt(currentUserRole);
-    }
-
+    ctrl.userType = loginService.getCurrentUserRole();
+    
     ctrl.$onInit = function () {
         var featureTogglePromise = featureFlagService.getFeatureFlags();
         ctrl.initialize();
