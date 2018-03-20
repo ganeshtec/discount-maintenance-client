@@ -25,6 +25,7 @@ function QualifiersController(customerSegmentDataService, utilService, validatio
         featureTogglePromise.then(function (data) {
             ctrl.showBasketThreshold = data.basketThreshold;
             ctrl.useCustSegReasonCode = data.useCustSegReasonCode;
+            ctrl.showRapidPass = data.showRapidPass;
         });
 
         featureTogglePromise.then(function (data) {
