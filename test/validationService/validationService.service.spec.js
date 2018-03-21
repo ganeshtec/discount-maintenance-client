@@ -303,7 +303,6 @@ describe('validationService', function () {
     it('Returns isError as true and non empty error message when invalid reward method slected', function () {
         var promotion = { reward: {method: 'INDVDLAFFECTEDITMS'}, promoType: 'ORDERPROMO' };
         var response = validationService.validateRewardMethod(promotion);
-        console.log('response',response)
         expect(response.isError).toBe(true);
         expect(response.message).not.toBe('');
 

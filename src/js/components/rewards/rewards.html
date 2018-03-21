@@ -3,10 +3,10 @@
 <div ng-repeat="item in $ctrl.data.purchaseConds.sources track by $index"
      ng-init="$ctrl.initializePurchaseOption($index,item,$ctrl.data)">
     <div class="md-text-field">
-        <label>Included Product</label>
+        <h4>Included Product
         <span class="mandatory-icon" ng-hide="$ctrl.data.purchaseConds.sources.length > 1">
 				<i class="fa fa-star" aria-hidden="true" />
-        </span>
+        </span></h4>
         <div ng-show="item.purchaseoption == 'category' && $ctrl.viewProp.displayFilterSkuTypes"
              class="filter_sku_types_link">
             <a class="editOption thd-orange" ng-click="$ctrl.showSkuTypeModal($event,item)" href="">
@@ -80,13 +80,12 @@
     <div id="rewardsId" class="md-text-field">
         <table>
             <tr ng-if="$ctrl.isMFAUser">
-                <td class="prxxl" colspan="2"><label class="pbl">Discount</label></td>
+                <td class="prxxl" colspan="2"><h4 class="pbl">Discount</h4></td>
             </tr>
             <tr>
-                <td class="prxxl">
-                    <div>
-                        <label>{{$ctrl.thresholdHeaderLabel}} <span class="mandatory-icon"><i class="fa fa-star"
-                                                                                              aria-hidden="true"></i></span></label>
+                <td>
+                    <div class="prxxl">
+                        <h4>{{$ctrl.thresholdHeaderLabel}} <span class="mandatory-icon"><i class="fa fa-star" aria-hidden="true"></i></span></h4>
                         <div class="md-radio">
                             <input type="radio" id="threshhold_quantity" name="minpurchase" ng-model="$ctrl.qualuom"
                                    title="Quantity Purchase" value="Quantity"
@@ -106,8 +105,8 @@
                 </td>
                 <td>
                     <div ng-if="$ctrl.isMFAUser">
-                        <label>Discount Type <span class="mandatory-icon"><i class="fa fa-star" aria-hidden="true"></i></span></label>
-                        <div class="md-radio">
+                        <h4>Discount Type <span class="mandatory-icon"><i class="fa fa-star" aria-hidden="true"></i></span></h4>
+                        <div class="md-radio prxxl">
                             <input type="radio" id="discount_type_quantity" name="discountType" ng-model="$ctrl.data.reward.type"
                                    title="Quantity Purchase" value="PERCNTOFF" ng-change="$ctrl.updatePrintLabel()"
                                    ng-disabled="$ctrl.preview"/>
@@ -235,8 +234,7 @@
 
 <div class="md-text-field">
     <div ng-if="$ctrl.isMFAUser">
-        <label for="itemLevel" class="prxl">Discount Application<span class="mandatory-icon">
-            <i class="fa fa-star" aria-hidden="true"></i></span></label>
+        <h4 for="itemLevel" class="prxl">Discount Application <span class="mandatory-icon plxl"><i class="fa fa-star" aria-hidden="true"></i></span>
         <tool-tipper tooltiptitle="Priority">
             <table class="discountLevelToolTip">
                 <tr>
@@ -258,8 +256,8 @@
                     <td>–––– Order Level</td>
                 </tr>
             </table>
-
         </tool-tipper>
+        </h4>
         <div class="md-radio">
             <input type="radio" id="itemLevel" name="discountLevel" ng-model="$ctrl.data.promoType" title="Item Level"
                    value="ITEMPROMO" ng-change="$ctrl.setRewardMethod()" ng-disabled="$ctrl.preview"/>

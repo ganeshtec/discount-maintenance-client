@@ -19,6 +19,9 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
 
                 scope.sectionsIndex = sectionsIndex;
 
+                if(!scope.data.exclsve) {
+                    scope.data.exclsve = 0;
+                }
                 var featureFlagPromise = featureFlagService.getFeatureFlags();
                 featureFlagPromise.then(function (res) {
                     scope.data.channelToggle = res.channelSelect;
@@ -82,6 +85,10 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                 });
                 function addSources() {
                     scope.data.purchaseConds.sources.push(new itemCategorySourceData());
+                }
+
+                scope.toggleExclusive = function() {
+                    scope.data.exclsve = scope.data.exclsve == 1 ? 0 : 1;
                 }
 
                 scope.validatePromotion = function () {
