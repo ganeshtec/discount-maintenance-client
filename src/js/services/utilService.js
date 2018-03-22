@@ -177,15 +177,9 @@ app.service('utilService', ['$filter', 'leadTimeService','loginService', functio
                 } else if (sources[i].inclusions && sources[i].inclusions.hierarchies && purchaseOption != 'category') {
                     sources[i].inclusions.hierarchies = []; //setting Item OMS id empty if user selection is not category radio button
                 }
-                // delete sources[i].purchaseoption;
 
             }
-
-
-
         }
-
-
     }
 
     publicApi.convertStringToInteger = function (data) {
@@ -223,13 +217,9 @@ app.service('utilService', ['$filter', 'leadTimeService','loginService', functio
                 var nextValue = detailsObject2.min;
                 maxValue = nextValue - 1;
                 if (data.purchaseConds.qualUOM == 'Amount') {
-
                     maxValue = Math.round((nextValue - 0.01) * 100) / 100;
-
                 }
-
             }
-
 
             detailsObject1.max = maxValue;
             detailsObject1.seq = i + 1;
@@ -237,11 +227,9 @@ app.service('utilService', ['$filter', 'leadTimeService','loginService', functio
 
         });
 
-
-
         if (data.purchaseConds && data.purchaseConds.sources) {
             $(data.purchaseConds.sources).each(function (i, source) {
-                if (data.purchaseConds.qualUOM == 'Quantity' || loginService.getCurrentUserRole() === 228) {
+                if (data.purchaseConds.qualUOM == 'Quantity') {
                     delete source.minTotalPrice;
                     if (data.promoSubTypeCd != 'MultipleItemsPercentDiscount' && data.promoSubTypeCd != 'MultipleItemsValueDiscount') {
                         source.minPurchaseQty = minPurchaseQty;
