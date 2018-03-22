@@ -80,7 +80,7 @@ describe('Unit testing qualifiers component', function () {
         ctrl.selectRapidPass();
             
         expect(ctrl.data.promoCdSpec.type).toBe('Private');
-        expect(ctrl.data.promoCdSpec.genType).toBe('Dynamic Generated');
+        expect(ctrl.data.promoCdSpec.genType).toBe('Dynamically Generated');
         expect(ctrl.data.promoCdSpec.cdLength).toBe('13');
         expect(ctrl.data.rapidPassCouponLimit).toBe(undefined);
 
@@ -91,7 +91,7 @@ describe('Unit testing qualifiers component', function () {
     });
 
     it('initialize for Edit mode of Active promotion', function () {
-        ctrl.data.promoCdSpec.genType = 'Dynamic Generated';
+        ctrl.data.promoCdSpec.genType = 'Dynamically Generated';
         ctrl.data.rapidPassCouponLimit = NaN;
         ctrl.data.promoCdSpec.systemGen.uniqueCdCnt = 30;
         ctrl.data.status = 61;
@@ -105,7 +105,7 @@ describe('Unit testing qualifiers component', function () {
     });
 
     it('initialize for Edit mode of Non Active promotion', function () {
-        ctrl.data.promoCdSpec.genType = 'Dynamic Generated';
+        ctrl.data.promoCdSpec.genType = 'Dynamically Generated';
         ctrl.data.rapidPassCouponLimit = NaN;
         ctrl.data.promoCdSpec.systemGen.uniqueCdCnt = 30;
         ctrl.data.status = 57;

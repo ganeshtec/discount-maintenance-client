@@ -146,7 +146,7 @@ function QualifiersController(customerSegmentDataService, utilService, validatio
         if (ctrl.data.checkRapidPass) {
             ctrl.data.promoCdSpec = {};
             ctrl.data.promoCdSpec.type = 'Private';
-            ctrl.data.promoCdSpec.genType = 'Dynamic Generated';
+            ctrl.data.promoCdSpec.genType = 'Dynamically Generated';
             ctrl.data.promoCdSpec.cdLength = '13';
             ctrl.data.promoCdSpec.systemGen = {};
             ctrl.data.promoCdSpec.systemGen.uniqueCdCnt = '';
@@ -165,7 +165,7 @@ function QualifiersController(customerSegmentDataService, utilService, validatio
     }
 
     ctrl.initialize = function () {
-        if ((ctrl.data.promoCdSpec && ctrl.data.promoCdSpec.genType === 'Dynamic Generated' && ctrl.data.promoCdSpec.systemGen && ctrl.data.promoCdSpec.systemGen.uniqueCdCnt && isNaN(ctrl.data.rapidPassCouponLimit))) {
+        if ((ctrl.data.promoCdSpec && ctrl.data.promoCdSpec.genType === 'Dynamically Generated' && ctrl.data.promoCdSpec.systemGen && ctrl.data.promoCdSpec.systemGen.uniqueCdCnt && isNaN(ctrl.data.rapidPassCouponLimit))) {
             ctrl.data.checkRapidPass = true;
             ctrl.data.rapidPassCouponLimit = ctrl.data.promoCdSpec.systemGen.uniqueCdCnt;
             if(utilService.isPromotionActive(ctrl.data)){
