@@ -4,6 +4,7 @@ describe('Unit testing adminPromotionForm.directive.spec.js', function () {
     $scope,
     element,
     promotionDataService,
+    loginService,
     $httpBackend;
 
   // Load the myApp module, which contains the directive
@@ -61,29 +62,20 @@ describe('Unit testing adminPromotionForm.directive.spec.js', function () {
                 }]
       }
     }
-    spyOn(loginService, 'intercept').and.callFake(function () {
-    })
 
     $scope.formHolder={}
     $scope.validationErrors={}
     $httpBackend.when('GET', '/labels/leadTime').respond(200,3);
     $httpBackend.when('GET', '/customersegment/segments').respond(200,[]);
     $httpBackend.when('GET', '/featureFlags').respond(200, {});
+    $httpBackend.when('GET', '/ssoConfig.json').respond(200, {});
     $httpBackend.when('GET', '/promotionTypes/promotionSubTypes/adminUI.json').respond(200,[]);
     $httpBackend.when('POST', '/omsInfo/validate.json').respond(200,[]);
     $httpBackend.when('GET', '/skutypes/').respond(200,[]);
     $httpBackend.when('GET', '/merchHierarchy/departments').respond(200,[]);
     $httpBackend.when('POST', '/skuInfo/skus/validate.json').respond(200,[]);
     var element = $compile("<admin-promotion-form data='data' promo-mfa='promoMfa' view-prop='viewProp'  validation-errors='validationErrors' form-holder='formHolder'></admin-promotion-form>")($scope);
-    var leadTime = $httpBackend.when('GET', '/labels/leadTime')
-                            .respond(200,3);
-    var customerSegments = $httpBackend.when('GET', '/customersegment/segments')
-                            .respond(200,[]);
-    var promoSubTypes = $httpBackend.when('GET', 'promotionTypes/promotionSubTypes/adminUI.json')
-                            .respond(200,[]);
-    var element = $compile("<admin-promotion-form data='data' promo-mfa='promoMfa' form-holder='formHolder'></admin-promotion-form>")($scope);
     $rootScope.$digest();
-    this.$isolateScope = element.isolateScope();
     this.$isolateScope = element.isolateScope();
 
   }));
