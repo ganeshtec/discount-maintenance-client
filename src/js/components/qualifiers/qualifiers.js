@@ -14,10 +14,9 @@ app.component('qualifiers', {
 });
 
 
-function QualifiersController(customerSegmentDataService, utilService, validationService, featureFlagService, loginService) {
+function QualifiersController(customerSegmentDataService, utilService, validationService, featureFlagService) {
     var ctrl = this;
     ctrl.showBasketThreshold = false;
-    ctrl.userType = loginService.getCurrentUserRole();
     
     ctrl.$onInit = function () {
         var featureTogglePromise = featureFlagService.getFeatureFlags();

@@ -296,7 +296,7 @@ app.service('validationService', ['$filter', 'utilService','loginService', 'MaxC
         var rewardsErrors;
 
         if (promotion.reward) {
-            if (promotion.reward.type === 'PERCNTOFF' || loginService.getCurrentUserRole() === 228) {
+            if (promotion.reward.type === 'PERCNTOFF') {
                 return publicApi.validatePercentOff(promotion.reward.details, checkForUndefined);
             } else if (promotion.reward.type === 'AMTOFF') {
                 emptyValidaton = { isError: false, message: '' };
