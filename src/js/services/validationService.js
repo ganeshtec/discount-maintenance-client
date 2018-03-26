@@ -23,7 +23,7 @@ app.service('validationService', ['$filter', 'utilService','loginService', 'MaxC
 
         var startDateError = (promotion.startDt === undefined && checkForUndefined) ? {
             isError: true,
-            message: 'Start date is requred.'
+            message: 'Start date is required.'
         } : {
             isError: false,
             message: ''
@@ -41,7 +41,7 @@ app.service('validationService', ['$filter', 'utilService','loginService', 'MaxC
     publicApi.validateEndDateWithoutLeadTime = function (startDt, endDt, checkForUndefined) {
         var endDateError = (endDt === undefined && checkForUndefined) ? {
             isError: true,
-            message: 'End date is requred.'
+            message: 'End date is required.'
         } : {
             isError: false,
             message: ''
@@ -81,7 +81,7 @@ app.service('validationService', ['$filter', 'utilService','loginService', 'MaxC
     publicApi.validateEndDateWithLeadTime = function (startDt, endDt, checkForUndefined) {
         var endDateError = (endDt == null && checkForUndefined) ? {
             isError: true,
-            message: 'End date is requred.'
+            message: 'End date is required.'
         } : {
             isError: false,
             message: ''
