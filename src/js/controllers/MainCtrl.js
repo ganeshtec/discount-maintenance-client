@@ -15,7 +15,8 @@ app.controller('MainCtrl', ['$rootScope', '$scope', '$location', 'DataFactory', 
         $scope.userRoleSelected = {
             id: null,
         };
-        $scope.discountEngineErrors = [];
+        
+        $rootScope.discountEngineErrors = [];
 
         $scope.setLoginInfo = function() {
             $scope.username=loginService.getUserName();
