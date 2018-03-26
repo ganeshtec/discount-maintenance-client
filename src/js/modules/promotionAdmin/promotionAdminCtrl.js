@@ -1,5 +1,5 @@
-app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$cookies', '$location', 'loginService', 'promotionDataService', 'PromotionData', 'SECTIONS', 'DataFactory', 'createTestRecord', 'URL_CONFIG', 'ALLOWED_PERMISSION_IDS',
-    function ($scope, $routeParams, $timeout, $cookies, $location, loginService, promotionDataService, PromotionData, SECTIONS, DataFactory, createTestRecord, URL_CONFIG, ALLOWED_PERMISSION_IDS) {
+app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$location', 'loginService', 'promotionDataService', 'PromotionData', 'SECTIONS', 'DataFactory', 'createTestRecord', 'URL_CONFIG', 'ALLOWED_PERMISSION_IDS',
+    function ($scope, $routeParams, $timeout, $location, loginService, promotionDataService, PromotionData, SECTIONS, DataFactory, createTestRecord, URL_CONFIG, ALLOWED_PERMISSION_IDS) {
 
         var $this = this;
 
@@ -13,15 +13,9 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$co
         $scope.comparemode = (promotionID2) ? true : false;
         $scope.clonemode = (cloneId) ? true : false;
         $scope.urls = new URL_CONFIG();
+        $scope.username=loginService.getUserName();
 
-        if ($cookies.get('userName') != null && $cookies.get('userName') != '') {
-            $scope.username = $cookies.get('userName');
-        }
-
-        if ($cookies.get('currentUserRole') != null) {
-            var currentUserRole = $cookies.get('currentUserRole');
-            $scope.userType = parseInt(currentUserRole);
-        }
+        $scope.userType=loginService.getCurrentUserRole();
 
         // Method to get promotion by id - Test Should return promotion record
         function getPromotionByID(id) {
@@ -34,7 +28,7 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$co
                     if ($scope.clonemode) {
                         $scope.promotionData.origRequestId = data.promoId;
                         $scope.promotionData.promoId = 0;
-                        //clear coupon id 
+                        //clear coupon id
                         delete $scope.promotionData.couponId;
                         //change the status to draft
                         $scope.promotionData.status = 20;
@@ -80,7 +74,9 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$co
                     promotionSubTypesForMFA: true,
                     displayFilterSkuTypes: true,
                     displayBasketThreshold: true,
-                    displayChannelSelect: true
+                    displayChannelSelect: true,
+                    displayRapidPass: true,
+                    displayExclusiveCheckbox: true
                 }
                 //$scope.promotionSubTypesForMFA = true;
             } else if (userType == allowedPermissionIDs.ONLINE) {
@@ -105,7 +101,9 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$co
                     promotionSubTypesForMFA: false,
                     displayFilterSkuTypes: false,
                     displayBasketThreshold: false,
-                    displayChannelSelect: false
+                    displayChannelSelect: false,
+                    displayRapidPass: false,
+                    displayExclusiveCheckbox: false
                 }
                 //$scope.promotionSubTypesForMFA = false;
             }
@@ -166,7 +164,7 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$co
         $scope.isEditable = function (promotion) {
             var editable = {
                 '61': true, // active
-                '57': true, // pending				
+                '57': true, // pending
             }
             return editable[promotion.status]
         }

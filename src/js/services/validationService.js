@@ -1,9 +1,9 @@
-/* 
-	Validation Service 
+/*
+	Validation Service
 	Services that will handle validation of promotion attributes
 */
 
-app.service('validationService', ['$filter', 'utilService', '$cookies', 'MaxCouponGenerationLimit', function ($filter, utilService, $cookies, MaxCouponGenerationLimit) {
+app.service('validationService', ['$filter', 'utilService','loginService', 'MaxCouponGenerationLimit', function ($filter, utilService,loginService, MaxCouponGenerationLimit) {
     var publicApi = {};
 
     var leadTime = null;
@@ -12,12 +12,7 @@ app.service('validationService', ['$filter', 'utilService', '$cookies', 'MaxCoup
     var leadTimePromise = utilService.getLeadTime();
     leadTimePromise.then(function (leadtime) {
         leadTime = leadtime;
-    })
-
-    if ($cookies.get('currentUserRole') != null) {
-        var currentUserRole = $cookies.get('currentUserRole');
-        this.userType = parseInt(currentUserRole);
-    }
+    });
 
     publicApi.validateStartDate = function (promotion, checkForUndefined) {
         // Will skip validation of start date if the promotion is active
@@ -301,7 +296,7 @@ app.service('validationService', ['$filter', 'utilService', '$cookies', 'MaxCoup
         var rewardsErrors;
 
         if (promotion.reward) {
-            if (promotion.reward.type === 'PERCNTOFF' || this.userType === 228) {
+            if (promotion.reward.type === 'PERCNTOFF') {
                 return publicApi.validatePercentOff(promotion.reward.details, checkForUndefined);
             } else if (promotion.reward.type === 'AMTOFF') {
                 emptyValidaton = { isError: false, message: '' };

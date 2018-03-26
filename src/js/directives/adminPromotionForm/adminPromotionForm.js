@@ -1,7 +1,6 @@
 // Purpose is to build promotion data
-app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService', 'redemptionMethodTypes', 'utilService', 'validationService', 'DataFactory', 'itemCategorySourceData', '$cookies', 'featureFlagService', 'sectionsIndex',
-    function (promotionSubTypes, promotionDataService, redemptionMethodTypes, utilService, validationService, DataFactory, itemCategorySourceData, $cookies, featureFlagService, sectionsIndex) {
-
+app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService', 'redemptionMethodTypes', 'utilService', 'validationService', 'DataFactory', 'itemCategorySourceData', 'loginService', 'featureFlagService', 'sectionsIndex',
+    function (promotionSubTypes, promotionDataService, redemptionMethodTypes, utilService, validationService, DataFactory, itemCategorySourceData, loginService, featureFlagService, sectionsIndex) {
         return {
             restrict: 'E',
             templateUrl: 'adminPromotionForm.html',
@@ -20,6 +19,9 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
 
                 scope.sectionsIndex = sectionsIndex;
 
+                if(!scope.data.exclsve) {
+                    scope.data.exclsve = 0;
+                }
                 var featureFlagPromise = featureFlagService.getFeatureFlags();
                 featureFlagPromise.then(function (res) {
                     scope.data.channelToggle = res.channelSelect;
@@ -42,11 +44,7 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
 
                         });
                 }
-                if ($cookies.get('currentUserRole') != null) {
-                    var currentUserRole = $cookies.get('currentUserRole');
-                    scope.userType = parseInt(currentUserRole);
-                }
-
+                scope.userType = loginService.getCurrentUserRole();
                 scope.formHolder.form = scope.promoForm;
                 getPromoSubTypes();
 
@@ -87,6 +85,10 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                 });
                 function addSources() {
                     scope.data.purchaseConds.sources.push(new itemCategorySourceData());
+                }
+
+                scope.toggleExclusive = function() {
+                    scope.data.exclsve = scope.data.exclsve == 1 ? 0 : 1;
                 }
 
                 scope.validatePromotion = function () {
@@ -148,11 +150,11 @@ app.directive('adminPromotionForm', ['promotionSubTypes', 'promotionDataService'
                         scope.data.reward.method = utilService.rewardMethodMapping[scope.data.promoSubTypeCd];
                     }
                 }
-           
+
                 if(scope.userType === 228){
                     scope.data.reward.method = scope.data.reward.method || 'INDVDLAFFECTEDITMS';
                 }
-          
+
                 scope.validatePromotion = function() {
                     scope.validationErrors = validationService.validatePromotion(scope.data);
                 }

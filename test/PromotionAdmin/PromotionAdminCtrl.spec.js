@@ -35,7 +35,9 @@ describe('promotionAdminCtrl', function () {
                 promotionSubTypesForMFA: true,
                 displayFilterSkuTypes: true,
                 displayBasketThreshold: true,
-                displayChannelSelect: true
+                displayChannelSelect: true,
+                displayRapidPass: true,
+                displayExclusiveCheckbox: true
             }
             controller.setViewProperties(allowedPermissionIds.STORE);
             expect($scope.viewProperties).toEqual(expectedResult);
@@ -63,7 +65,9 @@ describe('promotionAdminCtrl', function () {
                 promotionSubTypesForMFA: false,
                 displayFilterSkuTypes: false,
                 displayBasketThreshold: false,
-                displayChannelSelect: false
+                displayChannelSelect: false,
+                displayRapidPass: false,
+                displayExclusiveCheckbox: false
             }
             controller.setViewProperties(allowedPermissionIds.ONLINE);
             expect($scope.viewProperties).toEqual(expectedResult);

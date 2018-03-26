@@ -15,10 +15,11 @@ describe('Unit testing  system-generated-codes directive', function () {
     });
     // Store references to $rootScope and $compile
     // so they are available to all tests in this describe block
-    beforeEach(inject(function (_$compile_, _$rootScope_, _$httpBackend_) {
+    beforeEach(inject(function (_$compile_, _$rootScope_, _$httpBackend_,_loginService_) {
       // The injector unwraps the underscores (_) from around the parameter names when matching
         $compile = _$compile_;
         $rootScope = _$rootScope_;
+        loginService = _loginService_;
         $scope = $rootScope.$new();
         $httpBackend = _$httpBackend_;
         var reponse = {
@@ -40,6 +41,9 @@ describe('Unit testing  system-generated-codes directive', function () {
 
         var authRequestHandler = $httpBackend.when('POST', '/couponRequest/preview')
         .respond(200, reponse);
+
+        spyOn(loginService, 'intercept').and.callFake(function () {
+        })
 
     }));
 

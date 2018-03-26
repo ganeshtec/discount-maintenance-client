@@ -140,7 +140,7 @@ describe('Unit testing adminFooter.component.spec.js', function () {
 
     });
     $scope.$digest();
-    expect(ctrl.disableClick(ctrl.data)).toEqual(false);
+    expect(ctrl.previewSummary(ctrl.data)).toEqual(false);
   })
 
 
@@ -170,7 +170,7 @@ describe('Unit testing adminFooter.component.spec.js', function () {
 
     });
     $scope.$digest();
-    expect(ctrl.disableClick()).toEqual(false);
+    expect(ctrl.previewSummary()).toEqual(false);
   })
 
   it('check if save draft modal gets invocked if required fields are missing', function () {

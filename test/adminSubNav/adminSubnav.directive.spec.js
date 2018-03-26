@@ -21,7 +21,7 @@ describe('Unit testing adminSubnav.directive.spec.js', function() {
     { name:"item1"},
      { name:"item2"}
     ];
-    
+
 
     // Compile a piece of HTML containing the directive
     element = $compile("<admin-subnav data='navData'></admin-subnav>")($scope);

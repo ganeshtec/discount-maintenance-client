@@ -27,5 +27,5 @@ describe('Unit testing user input promotion code creation directive', function()
     // Check that the compiled element contains the templated content
     expect(element.html()).toContain("Please enter a valid promotion code equal to or greater than 9 characters");
   });
-    
+
 });

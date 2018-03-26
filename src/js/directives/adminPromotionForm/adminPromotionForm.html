@@ -43,7 +43,7 @@
 					</option>
 				</select>
 			</div> 
-			<promotion-code-specification ng-if="data.promoCdRqrd" test ="{{data.couponId}}" couponId="data.couponId" preview="preview" ng-disabled="preview" data="data.promoCdSpec" require="data.promoCdRqrd" promoform='promoForm'></promotion-code-specification>
+			<promotion-code-specification ng-if="data.promoCdRqrd && userType == 229" test ="{{data.couponId}}" couponId="data.couponId" preview="preview" ng-disabled="preview" data="data.promoCdSpec" require="data.promoCdRqrd" promoform='promoForm'></promotion-code-specification>
 			<div class="md-text-field" ng-show="viewProp.displayCombinationPromo">
 				<label for="promocombo">
 					Combination with other discounts
@@ -74,6 +74,14 @@
 
 			</div>
 
+			<div ng-show="viewProp.displayExclusiveCheckbox" class="pbxl">
+				<div>
+					<h4>Exclusivity</h4>
+				</div>
+				<div>
+					<md-checkbox data-ng-click="toggleExclusive()" data-ng-checked="data.exclsve==1" id="exclusivity" ng-disabled="preview">Do not stack with other discounts</md-checkbox>
+				</div>
+			</div>
 			<!-- <CHANNEL SELECT PLACEHOLDER -->	
 			<channel-select ng-if="!preview && viewProp.displayChannelSelect" view-prop="viewProp" data="data"></channel-select>
 

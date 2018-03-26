@@ -25,7 +25,7 @@ npm run test
 npm run mutation-test
 ```
 
-//muation coverage report is generated @reports/mutation/html/index.html
+//mutation coverage report is generated @reports/mutation/html/index.html
 
 # Concourse
 [Concourse Repo](https://github.homedepot.com/DiscountEngine/discount-ci-cd)  

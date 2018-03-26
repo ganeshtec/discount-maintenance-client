@@ -1,14 +1,21 @@
-/* 
-	Data Service 
+/*
+	Data Service
 	Services that will handle data http request
 */
 
-app.service('dataService', ['$http', '$rootScope', '$q', '$cookies', 'URL_CONFIG', function ($http, $rootScope, $q, $cookies, URL_CONFIG) {
+app.service('dataService', ['$http', '$rootScope', '$q', 'loginService', 'URL_CONFIG', function ($http, $rootScope, $q, loginService, URL_CONFIG) {
     var publicApi = {};
     var urls = new URL_CONFIG();
     publicApi.httpRequest = function (config) {
         var deferred = $q.defer();
         var serviceUrl = config.service === 'endeca' ? urls.endecaUrl : urls.serviceUrl;
+        var headersObject={
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        };
+        if(loginService.getUserInfo() && loginService.getUserInfo().accessToken){
+            headersObject.Authorization='Bearer '+loginService.getUserInfo().accessToken;
+        }
 
         $http({
             method: config.method,
@@ -17,13 +24,7 @@ app.service('dataService', ['$http', '$rootScope', '$q', '$cookies', 'URL_CONFIG
             params: config.params || {},
             cache: false,
             withCredentials: true,
-            headers: config.headers || {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'X-THDSSO' : $cookies.get('THDSSO')
-                
-            }
-
+            headers: config.headers || headersObject
         }).then(
             function (response) {
                 if (response.data) {
@@ -33,7 +34,7 @@ app.service('dataService', ['$http', '$rootScope', '$q', '$cookies', 'URL_CONFIG
                 }
             },
             function (error) {
-                if(error!=null && error.status == 403){
+                if(error!=null && (error.status == 403 || error.status == 401)){
                     $rootScope.$broadcast('unauth-error');
                 }else{
                     deferred.reject(error);

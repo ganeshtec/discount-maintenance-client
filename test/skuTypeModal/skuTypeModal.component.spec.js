@@ -8,19 +8,23 @@ describe('skuTypeModal', function () {
     // Load the myApp module, which contains the directive
     beforeEach(module('app'));
 
-    beforeEach(inject(function(_$componentController_,_skuTypesDataService_,_$q_,_$rootScope_) {
+    beforeEach(inject(function(_$componentController_,_skuTypesDataService_,_$q_,_$rootScope_, _loginService_) {
     $componentController = _$componentController_;
     skuTypesDataService = _skuTypesDataService_;
+    loginService = _loginService_;
     $q = _$q_;
     scope =_$rootScope_;
     ctrl = $componentController('skuTypeModal',null, {
         source: {},
-        promoStatus: 20       
+        promoStatus: 20
     });
     spyOn(skuTypesDataService, 'fetchSkuTypes').and.callFake(function () {
         deferredResult =$q.defer();
         deferredResult.resolve([{"skuTypeCode": "N","description": "Normal"},{"skuTypeCode": "S","description": "Special"}]);
         return deferredResult.promise;
+    })
+
+    spyOn(loginService, 'intercept').and.callFake(function () {
     })
   }));
 
@@ -33,15 +37,15 @@ describe('skuTypeModal', function () {
         expect(element.html()).toContain("Filter SKU Types");
         expect(element.html()).toContain("N - Normal");
     }));
-    
+
     it('Validate no SKU Types are selected on creating a new promotion', function () {
         ctrl.source.exclusions={initializeSkuTypeExclusions: true};
         ctrl.promoStatus= 20;
         ctrl.$onInit();
         scope.$digest();
-        expect(ctrl.skuSelection['N']).toBe(false);  
-        expect(ctrl.skuSelection['S']).toBe(false);   
-        expect(ctrl.selectionMade).toBe(false);    
+        expect(ctrl.skuSelection['N']).toBe(false);
+        expect(ctrl.skuSelection['S']).toBe(false);
+        expect(ctrl.selectionMade).toBe(false);
     });
 
     it('All SKU Types are selected on editing an existing promotion without any SKU Type Exclusions', function () {
@@ -49,9 +53,9 @@ describe('skuTypeModal', function () {
         ctrl.promoStatus= 70;
         ctrl.$onInit();
         scope.$digest();
-        expect(ctrl.skuSelection['N']).toBe(true);  
-        expect(ctrl.skuSelection['S']).toBe(true);  
-        expect(ctrl.selectionMade).toBe(true);      
+        expect(ctrl.skuSelection['N']).toBe(true);
+        expect(ctrl.skuSelection['S']).toBe(true);
+        expect(ctrl.selectionMade).toBe(true);
     });
 
     it('SKU Types that were previsously selected should be checked on editing', function () {
@@ -59,9 +63,9 @@ describe('skuTypeModal', function () {
         ctrl.promoStatus= 70;
         ctrl.$onInit();
         scope.$digest();
-        expect(ctrl.skuSelection['N']).toBe(true);  
-        expect(ctrl.skuSelection['S']).toBe(false);  
-        expect(ctrl.selectionMade).toBe(true);       
+        expect(ctrl.skuSelection['N']).toBe(true);
+        expect(ctrl.skuSelection['S']).toBe(false);
+        expect(ctrl.selectionMade).toBe(true);
     });
 
     it('Apply should add attributes not selected to exclusions', function () {
@@ -72,11 +76,11 @@ describe('skuTypeModal', function () {
         ctrl.skuSelection['N']=true;
         ctrl.skuSelection['S']=false;
         ctrl.applySkuTypeSelection();
-        expect(ctrl.source.exclusions.attrs.length).toBe(1); 
-        expect(ctrl.source.exclusions.attrs[0].value).toEqual('S'); 
+        expect(ctrl.source.exclusions.attrs.length).toBe(1);
+        expect(ctrl.source.exclusions.attrs[0].value).toEqual('S');
         expect(ctrl.source.exclusions.attrs[0].id).toEqual('bcdfe1a4-626a-4042-9a2e-5298f9b952a8');
-         expect(ctrl.source.exclusions.attrs[0].operator).toEqual('==');  
-         expect(ctrl.source.exclusions.attrs[0].name).toEqual('SKU Type');  
+         expect(ctrl.source.exclusions.attrs[0].operator).toEqual('==');
+         expect(ctrl.source.exclusions.attrs[0].name).toEqual('SKU Type');
     });
 
     it('Apply should be disabled if no selection is made', function () {
@@ -103,7 +107,7 @@ describe('skuTypeModal', function () {
         ctrl.skuSelection['N']=true;
         ctrl.skuSelection['S']=false;
         ctrl.closeSkuTypeModal();
-        expect(ctrl.source.exclusions.attrs.length).toBe(1); 
-        expect(ctrl.source.exclusions.attrs[0].value).toEqual('N');     
-    }); 
+        expect(ctrl.source.exclusions.attrs.length).toBe(1);
+        expect(ctrl.source.exclusions.attrs[0].value).toEqual('N');
+    });
 });

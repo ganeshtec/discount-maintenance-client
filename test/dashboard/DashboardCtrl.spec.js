@@ -6,17 +6,15 @@ describe('DashboardCtrl', function () {
     var controller;
     var promotionDataService;
     var $q;
-    var $cookies;
     var $location;
 
-    beforeEach(inject(function ($injector, _$rootScope_, _$controller_, _promotionDataService_, _$q_, _$cookies_, _$location_) {
+    beforeEach(inject(function ($injector, _$rootScope_, _$controller_, _promotionDataService_, _$q_, _$location_, _loginService_) {
         $scope = _$rootScope_.$new();
         $controller = _$controller_;
         promotionDataService = _promotionDataService_;
+        loginService = _loginService_
         $q = _$q_;
         $location = _$location_;
-        $cookies = _$cookies_;
-        $cookies.put('currentUserRole', 229);
         controller = $controller('DashboardCtrl', { $scope: $scope });
     }));
 
@@ -61,10 +59,18 @@ describe('DashboardCtrl', function () {
 
     describe('Verify channel initialization based on user roles', function () {
         it('DCM user should only see promotions created with channel 57', function () {
+          var currentUserRole = 229;
+          spyOn(loginService, 'getCurrentUserRole').and.callFake(function () {
+              return currentUserRole;
+          })
+            $controller('DashboardCtrl', { $scope: $scope });
             expect($scope.channelId).toEqual(57);
         });
         it('MFA user should only see promotions created with channel 87', function () {
-            $cookies.put('currentUserRole', 228);
+          var currentUserRole = 228;
+          spyOn(loginService, 'getCurrentUserRole').and.callFake(function () {
+              return currentUserRole;
+          })
             $controller('DashboardCtrl', { $scope: $scope });
             expect($scope.channelId).toEqual(87);
         });
@@ -72,6 +78,11 @@ describe('DashboardCtrl', function () {
 
     describe('Discount Search', function () {
         it('Dashboard search method called with channels and searchType', function () {
+          var currentUserRole = 229;
+          spyOn(loginService, 'getCurrentUserRole').and.callFake(function () {
+              return currentUserRole;
+          })
+            $controller('DashboardCtrl', { $scope: $scope });
             var deferredResult = $q.defer();
             deferredResult.resolve(
                 {
@@ -116,7 +127,7 @@ describe('DashboardCtrl', function () {
             $scope.searchType = "sku";
             $scope.updateKeyword();
             var actualResults = $location.search();
-            expect(actualResults.keyword).toEqual(expectedResults.keyword);            
+            expect(actualResults.keyword).toEqual(expectedResults.keyword);
             expect(actualResults.searchType).toEqual(expectedResults.searchType);
         });
 
@@ -163,7 +174,7 @@ describe('DashboardCtrl', function () {
                 type: "all",
                 status: "all"
             };
-            
+
             $location.search(expectedResults)
 
             $scope.clearSearch();
@@ -173,6 +184,6 @@ describe('DashboardCtrl', function () {
             expect($location.search().page).toEqual(1);
             expect($location.search().size).toEqual(10);
         });
-        
+
     });
 });

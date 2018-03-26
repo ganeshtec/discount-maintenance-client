@@ -1,7 +1,7 @@
 // Purpose is to popuplate the modal with a message.
 // Has control to close the modal
-app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'OverlayConfigFactory', 'DataFactory', 'utilService', 'validationService', '$cookies',
-    function (URL_CONFIG, promotionDataService, overlayConfig, DataFactory, utilService, validationService, $cookies) {
+app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'OverlayConfigFactory', 'DataFactory', 'utilService', 'validationService', 'loginService',
+    function (URL_CONFIG, promotionDataService, overlayConfig, DataFactory, utilService, validationService, loginService) {
         return {
             restrict: 'E',
             templateUrl: 'promotionPreview.html',
@@ -37,17 +37,14 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                 }
 
                 var selectedSellingChannels = scope.previewData.data.channelsWithCheckedFields ? scope.previewData.data.channelsWithCheckedFields.filter(function(channel) {return channel.checked}) : [];
-                scope.previewData.data.purchaseConds.channels = scope.previewData.data.channels   
+                scope.previewData.data.purchaseConds.channels = scope.previewData.data.channels
                 scope.selectedChannels = selectedSellingChannels.map(function(channel){ return channel.name}).join(', ')
-
+                scope.previewData.data.checkRapidPass = scope.data.checkRapidPass;
+                scope.previewData.data.rapidPassCouponLimit = scope.data.rapidPassCouponLimit;
+                
                 delete scope.previewData.data.channelsWithCheckedFields;
                 delete scope.previewData.data.channels;
-
-                if ($cookies.get('currentUserRole') != null) {
-                    var currentUserRole = $cookies.get('currentUserRole');
-                    scope.userType = parseInt(currentUserRole);
-                }
-
+                scope.userType = loginService.getCurrentUserRole();
                 scope.saveAndSubmit = function (event) {
                     var unclickableSaveBtn = function (event) {
                         event.handleObj.handler = function () { };
@@ -80,9 +77,12 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                         scope.previewData.data.promoSubTypeCd = 'TypeLessDiscount';
                         scope.previewData.data.promoSubTypeDesc = 'TypeLess-Discounts';
                     }
-
+                    if(scope.data.checkRapidPass == true)
+                    {
+                        scope.previewData.data.promoCdSpec.systemGen.uniqueCdCnt = scope.data.rapidPassCouponLimit;
+                    }
                     var promotion = $.extend(true, {}, scope.previewData.data);
-
+                    
                     utilService.setDefaultsForSaveAsDraft(promotion);
                     utilService.transformPromotionRequest(promotion);
 

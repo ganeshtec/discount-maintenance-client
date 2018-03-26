@@ -1,6 +1,6 @@
 // Main Controller for root scope
-app.controller('MainCtrl', ['$rootScope', '$scope', '$location', '$cookies', 'DataFactory', 'SECTIONS', 'promotionDataService', 'loginService', 'OverlayConfigFactory',
-    function ($rootScope, $scope, $location, $cookies, DataFactory, SECTIONS, promotionDataService, loginService, OverlayConfigFactory) {
+app.controller('MainCtrl', ['$rootScope', '$scope', '$location', 'DataFactory', 'SECTIONS', 'promotionDataService', 'loginService', 'OverlayConfigFactory',
+    function ($rootScope, $scope, $location,  DataFactory, SECTIONS, promotionDataService, loginService, OverlayConfigFactory) {
         $scope.messageModal = DataFactory.messageModal;
         $scope.username = '';
         $scope.userPermissions = '';
@@ -19,31 +19,21 @@ app.controller('MainCtrl', ['$rootScope', '$scope', '$location', '$cookies', 'Da
         $rootScope.discountEngineErrors = [];
 
         $scope.setLoginInfo = function() {
-            
-            if ($cookies.get('userName') != null && $cookies.get('userName') != '') {
-                $scope.username = $cookies.get('userName');
-            }
-            
-            if ($cookies.get('userPermissions') != null) {
-                $scope.userPermissions = JSON.parse($cookies.get('userPermissions'));
-            }
-
-            if ($cookies.get('currentUserRole') != null) {
-                $scope.userRoleSelected.id = $cookies.get('currentUserRole');
-            }
+            $scope.username=loginService.getUserName();
+            $scope.userPermissions=loginService.getUserPermissions();
+            $scope.userRoleSelected.id=loginService.getCurrentUserRole().toString();
         }
 
         $scope.$on('user-login', function(/*event, args*/) {
             $scope.setLoginInfo();
         });
 
-        $scope.setLoginInfo();
+        //$scope.setLoginInfo();
 
         $scope.getUserPerm = function(){
-            var userValue = $scope.userRoleSelected.id;
-            $cookies.put('currentUserRole', userValue, {
-                'domain': '.homedepot.com'
-            });
+            if($scope.userRoleSelected.id){
+                loginService.setCurrentUserRole($scope.userRoleSelected.id);
+            }
             $rootScope.searchParams = null;
             $scope.searchTerm = null;
             $scope.searchType = null;
@@ -59,27 +49,9 @@ app.controller('MainCtrl', ['$rootScope', '$scope', '$location', '$cookies', 'Da
                 $scope.sectionInx = $scope.sections.indexOf(promotionDataService.getSection(model));
             }
         }, true);
-        //session invalidation check
-        if ($cookies.get('THDSSO') != null && $cookies.get('THDSSO') != 'null') {
-            loginService.setErrorStatus('');
-            loginService.sessionValidate($cookies.get('THDSSO'), 'main');
-        } else {
-            loginService.setErrorStatus('invalidsession');
-            $location.path('login');
-        }
-                
+
         $scope.logout = function () {
-
-            $cookies.put('logout', 'true', {
-                'domain': '.homedepot.com'
-            });
-            $rootScope.searchParams = null;
-            $scope.username = '';
-            $scope.userPermissions = '';
-            $scope.userRoleSelected.id = null;
-            loginService.clearLoginData();
-            loginService.setErrorStatus('');
-
+            loginService.logout();
         }
     }
 ]);

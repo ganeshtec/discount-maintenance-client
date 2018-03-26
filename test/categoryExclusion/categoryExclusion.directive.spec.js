@@ -15,7 +15,7 @@ describe('Unit testing categoryExclusion.directive.spec.js', function() {
     $rootScope = _$rootScope_;
     $scope = $rootScope.$new();
     _$httpBackend_.when('GET', '/skutypes/')
-                  .respond(200,[]); 
+                  .respond(200,[]);
   }));
 
   it('verify Items/SKU radio button displays only if displayItemsSku view property is set to true',function(){
@@ -27,5 +27,5 @@ describe('Unit testing categoryExclusion.directive.spec.js', function() {
       $scope.$digest();
       expect(element.find("div[id='itemssku_exclude_div']").attr('aria-hidden')).toBe('false');
   });
-  
+
 });

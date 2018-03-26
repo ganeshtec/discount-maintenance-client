@@ -8,12 +8,15 @@ describe('skuTypesDataService', function () {
   beforeEach(module('app'));
   // Store references to $rootScope and $compile
   // so they are available to all tests in this describe block
-  beforeEach(inject(function (_dataService_,_skuTypesDataService_,_$q_,_$rootScope_) {
+  beforeEach(inject(function (_dataService_,_skuTypesDataService_,_$q_,_$rootScope_, _loginService_) {
     // The injector unwraps the underscores (_) from around the parameter names when matching
-    dataService = _dataService_; 
+    dataService = _dataService_;
     skuTypesDataService = _skuTypesDataService_;
+    loginService = _loginService_;
     $q=_$q_;
     $rootScope=_$rootScope_;
+    spyOn(loginService, 'intercept').and.callFake(function () {
+    })
   }));
 
   it('Fetch Sku Types should return a promise with list of SkuType objects', function () {

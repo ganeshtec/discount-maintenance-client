@@ -2,13 +2,27 @@
     <label for="promocustomersegment"><h3>Customer Segment (Optional)</h3></label>
     <select name="segment" ng-options="segment as segment.name for segment in $ctrl.segmentDetails track by segment.name"
             ng-model="$ctrl.data.segment"
-            ng-change="$ctrl.onSegmentSelection();$ctrl.updatePrintLabel()" ng-disabled="$ctrl.preview">
+            ng-change="$ctrl.onSegmentSelection();$ctrl.updatePrintLabel();$ctrl.selectRapidPass();" ng-disabled="$ctrl.preview">
         <option value="">
             -- Select a Customer Segment --
         </option>
     </select>
 
 </div>
+
+<div ng-if="$ctrl.viewProp.displayRapidPass && $ctrl.showRapidPass">
+        <label>Rapid Pass</label>
+        <div>
+            <md-checkbox role="checkbox" ng-model="$ctrl.data.checkRapidPass"
+            ng-change="$ctrl.selectRapidPass()" ng-disabled="$ctrl.preview || $ctrl.data.disableRapidPass" aria-checked="false" >Redeem through Rapid Pass</md-checkbox>     
+        </div>
+    </div>
+    
+    <div class="input-text-container" ng-if="$ctrl.data.checkRapidPass">
+        <label>Unique Codes Generated</label></br>
+        <input type="text" id="rapidPassCouponLimit" name="rapidPassCouponLimit" ng-model="$ctrl.data.rapidPassCouponLimit" ng-trim="false" ng-disabled="$ctrl.preview || $ctrl.data.disableRapidPass"/>
+    </br></br>
+    </div>
 
 <div class="basketThresholdDiv" ng-show="$ctrl.viewProp.displayBasketThreshold" ng-if="$ctrl.showBasketThreshold">
     <h3 class="basketThresholdHeader"> Basket Threshold (Optional) </h3>
@@ -23,7 +37,7 @@
 </div>
 
 
-<div ng-if="$ctrl.data.promoCdRqrd == true  && $ctrl.data.promoSubTypeCd != 'MultipleItemsPercentDiscount' && $ctrl.data.promoSubTypeCd != 'MultipleItemsValueDiscount'">
+<div ng-if="$ctrl.data.promoCdRqrd == true  && $ctrl.userType == 229 && $ctrl.data.promoSubTypeCd != 'MultipleItemsPercentDiscount' && $ctrl.data.promoSubTypeCd != 'MultipleItemsValueDiscount'">
     <div class="md-text-field">
         <label for="name">Site wide promotion </label>
         <div class="md-radio">

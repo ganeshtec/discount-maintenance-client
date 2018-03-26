@@ -102,7 +102,7 @@ app.component('adminFooter', {
             callback(validationErrors);
         }
 
-        this.disableClick = function (promotion) {
+        this.previewSummary = function (promotion) {
             var isClickable = utilService.canApprove(promotion) && !utilService.isPreviewSubmitClickDisabled(promotion);
             if (isClickable) {
                 this.preview(this.data)

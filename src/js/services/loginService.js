@@ -1,168 +1,71 @@
-app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout', 'DataFactory', 'URL_CONFIG','$rootScope',
-    function ($http, $q, $cookies, $location, $timeout, DataFactory, URL_CONFIG, $rootScope) {
+app.service('loginService', ['$http', '$location', 'URL_CONFIG','$rootScope','$window','configService','modalService',
+    function ($http, $location, URL_CONFIG, $rootScope,$window,configService,modalService) {
         var publicApi = {};
-        var status = null;
         var urls = new URL_CONFIG();
         var userPermissions = null;
-
-        publicApi.getErrorStatus = function () {
-            return status;
+        var userInfo = null;
+        var userName = null;
+        var currentUserRole=null;
+        function getRedirectUrl(config) {
+            return config.oAuthAuthorizationUrl + '?client_id='+config.appId
+            + '&response_type=token&redirect_uri='+urls.dashboardUiUrl+'/';
+        }
+        function getLogoutUrl(config){
+            return config.oAuthLogoutUrl+'?client_id='+config.appId;
         }
 
-        publicApi.setErrorStatus = function (errstatus) {
-            status = errstatus;
+        publicApi.getUserInfo =function(){
+            return userInfo;
         }
 
-        // Method to deactivate all sections, expected to have property .isActive
-        publicApi.authenticate = function (name, password) {
-            var payLoad = {
-                'userName': name,
-                'password': password
-            };
-            return $http({
-                method: 'POST',
-                url: urls.serviceUrl + '/security/validateUserCreds.json',
-                cache: false,
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                data: payLoad
-            }).then(httpSuccess, httpError);
+        publicApi.getUserName = function(){
+            return userName;
+        }
 
-            function httpSuccess(response, status) {
-                if (response.data == null || response.data == undefined || response.data == '') {
-                    
-                    publicApi.clearLoginData();
-                    status = 'invaliduser';
+        publicApi.getCurrentUserRole = function(){
+            return currentUserRole;
+        }
 
-                } else {
-                    var data = response.data;
-                    var THDSSO = data.ssoCookie;
-                    var username = data.userName;
-                    var resstatus = data.status;
-                    if (THDSSO == null || THDSSO == 'null' || resstatus == 'INVALID_CREDENTIALS' || resstatus == 'PASSWORD_EXPIRED') {
+        publicApi.setCurrentUserRole = function(userRole){
+            currentUserRole=parseInt(userRole);
+        }
 
-                        publicApi.clearLoginData();
-                        status = 'invaliduser';
-                        $location.path('login');
-
-                    } else {
-
-                        $cookies.put('THDSSO', THDSSO, {
-                            'domain': '.homedepot.com'
-                        });
-
-                        $cookies.put('userName', username, {
-                            'domain': '.homedepot.com'
-                        });
-
-                        status = '';
-                       //  redirectPage();
-                        publicApi.authorizeUser(username, 'login');
-                    }
-
-                }
-                return status;
+        publicApi.intercept =function(){
+            var accessToken=getUrlFragment('access_token');
+            if(accessToken!=null){
+                userInfo={};
+                userInfo.accessToken=accessToken;
+                userInfo.accessTokenDetails=decodeToken(accessToken);
+                userName=userInfo.accessTokenDetails.user_name;
+                authorizeUser(userInfo.accessTokenDetails.user_name);
+            }else if(!userInfo || Date.now()>userInfo.accessTokenDetails.exp*1000){
+                this.redirectToLoginPage();
             }
+        }
 
-            function httpError(response) {
-                if (response.status === '403') {
-                    status = 'unauthorized';
+        function decodeToken(token){
+            return JSON.parse(atob(token.split('\.')[1]));
+        }
 
-                } else {
-                    status = response.statusText;
-
-
-                }
-                return status;
+        function getUrlFragment(pattern) {
+            var matcher = new RegExp(pattern + '=([^&]+)');
+            var result = matcher.exec($location.path());
+            if (result) {
+                return result[1];
             }
+        }
 
-            /*function redirectPage() {
-                status = '';
-                $location.path('discount-dashboard');
-            }*/
+        publicApi.redirectToLoginPage=function(){
+            configService.getConfig().then(function(config){
+                $window.location.href=getRedirectUrl(config);
+            })
 
         }
 
-        publicApi.clearLoginData = function () {
-
-            $cookies.remove('THDSSO', {
-                'domain': '.homedepot.com'
+        publicApi.logout = function (){
+            configService.getConfig().then(function(config){
+                $window.location.href=getLogoutUrl(config);
             });
-            $cookies.remove('userName', {
-                'domain': '.homedepot.com'
-            });
-            $cookies.remove('userPermissions', {
-                'domain': '.homedepot.com'
-            });
-            $cookies.remove('currentUserRole', {
-                'domain': '.homedepot.com'
-            });
- 
-        }
-
-
-        // Method to deactivate all sections, expected to have property .isActive
-        publicApi.sessionValidate = function (ssoCookie, sourcepage) {
-
-            if (ssoCookie == null || ssoCookie == 'null') {
-                status = 'invalidsession';
-
-                redirectPage();
-            }
-
-            $http({
-                method: 'GET',
-                url: urls.serviceUrl + '/security/isSessionValid.json?thdsso=' + ssoCookie,
-                cache: false,
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-
-
-            }).then(httpSuccess, httpError);
-
-            function httpSuccess(response) {
-
-                if (response.data == null || response.data == undefined || response.data == '') {
-
-                    publicApi.clearLoginData();
-                    status = 'invaliduser';
-                    $location.path('login');
-
-                } else {
-                    var data = response.data;
-                    if (data.valid != 'true') {
-                        status = 'invalidsession';
-                        redirectPage();
-                    } else {
-                        status = 'success';
-                        if (sourcepage === 'login') {
-                            $location.path('discount-dashboard');
-                        }
-
-                    }
-
-                }
-            }
-
-            function httpError(response) {
-                if (response.status === '403') {
-                    status = 'unauthorized';
-
-                } else {
-                    status = response.statusText;
-
-                }
-                redirectPage();
-            }
-
-            function redirectPage() {
-                status = 'invalidsession';
-                $location.path('login');
-            }
 
         }
 
@@ -170,7 +73,7 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
             return userPermissions;
         }
 
-        publicApi.authorizeUser = function (username, sourcepage) {
+        function authorizeUser (username) {
             $http({
                 method: 'GET',
                 url: urls.authorizeUrl + username + '.json',
@@ -180,89 +83,45 @@ app.service('loginService', ['$http', '$q', '$cookies', '$location', '$timeout',
                     'Content-Type': 'application/json'
                 },
             }).then(httpSuccess, httpError);
-
             function httpSuccess(response) {
-
-                if (response.data == null || response.data == undefined || response.data == '') {
-                    status = 'unauthorized';
-                    redirectPage();
-
+                if (response.data == null || response.data == undefined || response.data == ''|| response.data.length == 0) {
+                    showError('Authorization Error','You are not authorized to use this application');
                 } else {
-                    
-                    var data = response.data;
-                    if (data.length === 0) {
-                        status = 'unauthorized';
-                        redirectPage();
+                    // var userPermValue =   [{id:'228', description:'SKU: Discount Engine-Store MFA'} ,{id:'229', description:'SKU: Discount Engine-Online DCM'}];
+                    // userPermissions = userPermValue; // (for testing)
 
-                    } else {
+                    userPermissions = response.data;
 
-                        //var userPermValue =   [{id:'228', description:'SKU: Discount Engine-Store MFA'} ,{id:'229', description:'SKU: Discount Engine-Online DCM'}];
-                        //userPermissions = userPermValue; // (for testing)
+                    //Set default user permission based on the first shortDesc alphabeticly
+                    var defaultPerm = -1;
+                    //Set shortDesc and defulat user permission
+                    for(var i = 0; i < userPermissions.length; i++){
+                        var userPerm = userPermissions[i].description;
+                        var n = userPerm.indexOf('-');
+                        userPermissions[i].shortDesc = userPerm.substring(n+1);
 
-                        userPermissions = data;  
-                        
-                        //Set default user permission based on the first shortDesc alphabeticly 
-                        var defaultUserPerm = userPermissions[0].id;
-
-                        var defaultPerm = -1;
-
-                        //Set shortDesc and defulat user permission
-                        for(var i = 0; i < userPermissions.length; i++){
-                            var userPerm = userPermissions[i].description;
-                            var n = userPerm.indexOf('-');
-                            userPermissions[i].shortDesc = userPerm.substring(n+1);    
-
-                            if(defaultPerm < 0) {
-                                defaultPerm = i;
-                            }else if (userPermissions[i].shortDesc < userPermissions[defaultPerm].shortDesc){
-                                defaultPerm = i;
-                            }                      
-                        }
-
-                        defaultUserPerm = userPermissions[defaultPerm].id;
-                        
-                        $cookies.put('userPermissions', JSON.stringify(userPermissions), {
-                            'domain': '.homedepot.com'
-                        });
-                        
-                        $cookies.put('currentUserRole', defaultUserPerm, {
-                            'domain': '.homedepot.com'
-                        });
-
-                        status = 'success';
-
-                        if (sourcepage === 'login') {
-                            $location.path('discount-dashboard');
+                        if(defaultPerm < 0) {
+                            defaultPerm = i;
+                        }else if (userPermissions[i].shortDesc < userPermissions[defaultPerm].shortDesc){
+                            defaultPerm = i;
                         }
                     }
+                    publicApi.setCurrentUserRole(userPermissions[defaultPerm].id);
                     $rootScope.$broadcast('user-login');
                 }
             }
 
-            function httpError(response) {
-
-                if (response.status === '403') {
-                    status = 'unauthorized';
-
-
-                } else {
-                    status = response.statusText;
-
-                }
-                redirectPage();
+            function httpError() {
+                showError('System Error','Error retrieving user information');
             }
 
-            function redirectPage() {
-                publicApi.clearLoginData();
-                status = 'unauthorized';
-                $location.path('login');
+            function showError(title,errorMessage) {
+                modalService.showAlert(title,errorMessage);
             }
         }
 
         $rootScope.$on('unauth-error',function() {
-            publicApi.clearLoginData();
-            publicApi.setErrorStatus('unauthorized');
-            $location.path('login');
+            modalService.show('Authorization Error','Authorization error. Your security session may have expired');
         });
         return publicApi;
     }
