@@ -14,10 +14,10 @@ app.component('qualifiers', {
 });
 
 
-function QualifiersController(customerSegmentDataService, utilService, validationService, featureFlagService, $rootScope) {
+function QualifiersController(MaxCouponGenerationLimit,customerSegmentDataService, utilService, validationService, featureFlagService, $rootScope) {
     var ctrl = this;
     ctrl.showBasketThreshold = false;
-
+    ctrl.MaxCouponGenerationLimit = MaxCouponGenerationLimit;
     ctrl.discountEngineErrors = $rootScope.discountEngineErrors;
   
     ctrl.$onInit = function () {
@@ -160,27 +160,26 @@ function QualifiersController(customerSegmentDataService, utilService, validatio
             ctrl.data.promoCdSpec.genType = '';
             ctrl.data.promoCdSpec.cdLength = '';
             delete ctrl.data.promoCdSpec.systemGen;
-            ctrl.data.rapidPassCouponLimit = '';
             ctrl.data.promoCdRqrd = false;
         }
     }
 
     ctrl.initialize = function () {
-        if ((ctrl.data.promoCdSpec && ctrl.data.promoCdSpec.genType === 'Dynamically Generated' && ctrl.data.promoCdSpec.systemGen && ctrl.data.promoCdSpec.systemGen.uniqueCdCnt && isNaN(ctrl.data.rapidPassCouponLimit))) {
+        if (ctrl.data.promoCdSpec && ctrl.data.promoCdSpec.genType === 'Dynamically Generated' && ctrl.data.promoCdSpec.systemGen) {
             ctrl.data.checkRapidPass = true;
-            ctrl.data.rapidPassCouponLimit = ctrl.data.promoCdSpec.systemGen.uniqueCdCnt;
             if(utilService.isPromotionActive(ctrl.data)){
                 ctrl.data.disableRapidPass = true;
             }else{
                 ctrl.data.disableRapidPass = false;
             }
         }
-        else if (ctrl.data.checkRapidPass == true) { 
-            ctrl.data.promoCdSpec.systemGen.uniqueCdCnt = ctrl.data.rapidPassCouponLimit;
-        }
         else {
             ctrl.data.checkRapidPass = false;
         }
+    }
+
+    ctrl.checkRapidPassCouponLimit = function () {
+        return ctrl.data.promoCdSpec.systemGen.uniqueCdCnt > ctrl.MaxCouponGenerationLimit;
     }
 }
 

@@ -8,8 +8,8 @@ describe('validationService', function () {
 
     // Load the myApp module, which contains the directive
     beforeEach(module('app'));
-    beforeEach(function(){
-        module('app', function($provide) {
+    beforeEach(function () {
+        module('app', function ($provide) {
             $provide.constant('MaxCouponGenerationLimit', 300000);
         });
     });
@@ -50,26 +50,27 @@ describe('validationService', function () {
 
     it('returns a coupon code limit error with over limit.', function () {
         var promotion = {
-            promoCdSpec:{systemGen:{uniqueCdCnt: 300001}}
+            promoCdSpec: { systemGen: { uniqueCdCnt: 300001 },
+                           genType: 'system generated' }
         }
 
-        var response = validationService.validateSystemGeneratedCouponCount(promotion);
+        var response = validationService.validateGeneratedCouponCount(promotion);
         expect(response.isError).toBe(true);
         expect(response.message).not.toBe('');
-        
+
     });
 
     it('returns a false/empty coupon code when with in the limit.', function () {
         var promotion = {
-            promoCdSpec:{systemGen:{uniqueCdCnt: 300000}}
+            promoCdSpec: { systemGen: { uniqueCdCnt: 300000 } }
         }
 
-        var response = validationService.validateSystemGeneratedCouponCount(promotion);
+        var response = validationService.validateGeneratedCouponCount(promotion);
         expect(response.isError).toBe(false);
         expect(response.message).toBe('');
-        
+
     });
-    
+
     it('returns a false/empty start date error when selected start date is in the future.', function () {
         var promotion = {
             startDt: moment().add(3, 'days').toDate()
@@ -301,24 +302,24 @@ describe('validationService', function () {
     });
 
     it('Returns isError as true and non empty error message when invalid reward method slected', function () {
-        var promotion = { reward: {method: 'INDVDLAFFECTEDITMS'}, promoType: 'ORDERPROMO' };
+        var promotion = { reward: { method: 'INDVDLAFFECTEDITMS' }, promoType: 'ORDERPROMO' };
         var response = validationService.validateRewardMethod(promotion);
         expect(response.isError).toBe(true);
         expect(response.message).not.toBe('');
 
-        promotion = { reward: { method:'WHOLEORDER'}, promoType: 'ITEMPROMO' };
+        promotion = { reward: { method: 'WHOLEORDER' }, promoType: 'ITEMPROMO' };
         response = validationService.validateRewardMethod(promotion);
         expect(response.isError).toBe(true);
         expect(response.message).not.toBe('');
     });
 
     it('Returns isError as false and empty error message when valid reward method slected', function () {
-        var promotion = { reward: {method:'WHOLEORDER'}, promoType: 'ORDERPROMO' };
+        var promotion = { reward: { method: 'WHOLEORDER' }, promoType: 'ORDERPROMO' };
         var response = validationService.validateRewardMethod(promotion);
         expect(response.isError).toBe(false);
         expect(response.message).toBe('');
 
-        promotion = { reward: {method:'INDVDLAFFECTEDITMS'}, promoType: 'ITEMPROMO' };
+        promotion = { reward: { method: 'INDVDLAFFECTEDITMS' }, promoType: 'ITEMPROMO' };
         response = validationService.validateRewardMethod(promotion);
         expect(response.isError).toBe(false);
         expect(response.message).toBe('');
@@ -333,5 +334,33 @@ describe('validationService', function () {
         }
         expect(validationService.validateBasketThreshold(promotion).purchaseConds.basketThreshold).toBe(5.68)
     })
+
+    it('Check Customer segment not selected for Rapid Pass', function () {
+        var promotion = {
+            checkRapidPass: true,
+            purchaseConds:
+            {
+                customerSegmentId: 0
+            }
+        }
+        var response = validationService.validateRapidPass(promotion);
+        expect(response.isError).toBe(true);
+        expect(response.message).not.toBe('');
+
+    });
+
+    it('Check Customer segment selected for Rapid Pass', function () {
+        var promotion = {
+            checkRapidPass: true,
+            purchaseConds:
+            {
+                customerSegmentId: 1000
+            }
+        }
+        var response = validationService.validateRapidPass(promotion);
+        expect(response.isError).toBe(false);
+        expect(response.message).toBe('');
+
+    });
 
 });

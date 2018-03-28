@@ -39,8 +39,7 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                 var selectedSellingChannels = scope.previewData.data.channelsWithCheckedFields ? scope.previewData.data.channelsWithCheckedFields.filter(function(channel) {return channel.checked}) : [];
                 scope.previewData.data.purchaseConds.channels = scope.previewData.data.channels
                 scope.selectedChannels = selectedSellingChannels.map(function(channel){ return channel.name}).join(', ')
-                scope.previewData.data.checkRapidPass = scope.data.checkRapidPass;
-                scope.previewData.data.rapidPassCouponLimit = scope.data.rapidPassCouponLimit;
+                scope.previewData.data.checkRapidPass = scope.data.promoCdSpec && scope.data.promoCdSpec.genType === 'Dynamically Generated';
                 
                 delete scope.previewData.data.channelsWithCheckedFields;
                 delete scope.previewData.data.channels;
@@ -79,7 +78,7 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                     }
                     if(scope.data.checkRapidPass == true)
                     {
-                        scope.previewData.data.promoCdSpec.systemGen.uniqueCdCnt = scope.data.rapidPassCouponLimit;
+                        scope.previewData.data.promoCdSpec.systemGen.uniqueCdCnt = scope.data.promoCdSpec.systemGen.uniqueCdCnt;
                     }
                     var promotion = $.extend(true, {}, scope.previewData.data);
                     

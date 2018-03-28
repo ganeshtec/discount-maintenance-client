@@ -1,8 +1,16 @@
 <div class="md-select md-select-space" ng-show="$ctrl.viewProp.displayCustomerSegment">
-    <label for="promocustomersegment"><h3>Customer Segment (Optional)</h3></label>
-    <select name="segment" ng-options="segment as segment.name for segment in $ctrl.segmentDetails track by segment.name"
-            ng-model="$ctrl.data.segment"
-            ng-change="$ctrl.onSegmentSelection();$ctrl.updatePrintLabel();$ctrl.selectRapidPass();" ng-disabled="$ctrl.preview">
+    <label for="promocustomersegment">
+        <h3 ng-if="!$ctrl.data.checkRapidPass">Customer Segment (Optional)</h3>
+        <h3 ng-if="$ctrl.data.checkRapidPass">Customer Segment
+            <span class="mandatory-icon" ng-show="$ctrl.data.checkRapidPass" aria-hidden="false">
+                <i class="fa fa-star" aria-hidden="true"></i>
+            </span></label>
+    </h3>
+
+
+
+    <select name="segment" ng-options="segment as segment.name for segment in $ctrl.segmentDetails track by segment.name" ng-model="$ctrl.data.segment"
+        ng-change="$ctrl.onSegmentSelection();$ctrl.updatePrintLabel();$ctrl.selectRapidPass();" ng-disabled="$ctrl.preview">
         <option value="">
             -- Select a Customer Segment --
         </option>
@@ -11,18 +19,33 @@
 </div>
 
 <div ng-if="$ctrl.viewProp.displayRapidPass && $ctrl.showRapidPass">
-        <label>Rapid Pass</label>
-        <div>
-            <md-checkbox role="checkbox" ng-model="$ctrl.data.checkRapidPass"
-            ng-change="$ctrl.selectRapidPass()" ng-disabled="$ctrl.preview || $ctrl.data.disableRapidPass" aria-checked="false" >Redeem through Rapid Pass</md-checkbox>     
-        </div>
+    <label>Rapid Pass</label>
+    <div>
+        <md-checkbox role="checkbox" ng-model="$ctrl.data.checkRapidPass" ng-change="$ctrl.selectRapidPass();$ctrl.validatePromotion()"
+            ng-disabled="$ctrl.preview || $ctrl.data.disableRapidPass" aria-checked="false">Redeem through Rapid Pass</md-checkbox>
     </div>
-    
-    <div class="input-text-container" ng-if="$ctrl.data.checkRapidPass">
-        <label>Unique Codes Generated</label></br>
-        <input type="text" id="rapidPassCouponLimit" name="rapidPassCouponLimit" ng-model="$ctrl.data.rapidPassCouponLimit" ng-trim="false" ng-disabled="$ctrl.preview || $ctrl.data.disableRapidPass"/>
-    </br></br>
+
+</div>
+
+<div class="input-text-container" ng-if="$ctrl.data.checkRapidPass">
+    <label>Unique Codes Generated</label></br>
+    <input type="number" id="rapidPassCouponLimit" name="rapidPassCouponLimit" allow-pattern="(\d)" ng-pattern="/^[0-9]*$/" ng-model="$ctrl.data.promoCdSpec.systemGen.uniqueCdCnt" ng-trim="false"
+        ng-disabled="$ctrl.preview || $ctrl.data.disableRapidPass" />
+    <div>
+        <span class='error-message' ng-show="$ctrl.validationErrors.custSegmentErrors.isError">
+            {{$ctrl.validationErrors.custSegmentErrors.message}}   
+        </span>
+
     </div>
+    <div>
+        <span class='error-message' ng-show="$ctrl.checkRapidPassCouponLimit()">
+			Maximum coupon limit is {{$ctrl.MaxCouponGenerationLimit}}. Email MERCH_IT_DISCOUNT_SUPPORT@homedepot.com for request larger than {{$ctrl.MaxCouponGenerationLimit}}. 
+			<br>Please enter an number less than {{$ctrl.MaxCouponGenerationLimit}}.
+		</span>
+    </div>
+    </br>
+    </br>
+</div>
 
 <div class="basketThresholdDiv" ng-show="$ctrl.viewProp.displayBasketThreshold" ng-if="$ctrl.showBasketThreshold">
     <h3 class="basketThresholdHeader"> Basket Threshold (Optional) </h3>

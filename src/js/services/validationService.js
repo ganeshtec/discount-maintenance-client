@@ -3,7 +3,7 @@
 	Services that will handle validation of promotion attributes
 */
 
-app.service('validationService', ['$filter', 'utilService','loginService', 'MaxCouponGenerationLimit', function ($filter, utilService,loginService, MaxCouponGenerationLimit) {
+app.service('validationService', ['$filter', 'utilService', 'loginService', 'MaxCouponGenerationLimit', function ($filter, utilService, loginService, MaxCouponGenerationLimit) {
     var publicApi = {};
 
     var leadTime = null;
@@ -23,8 +23,9 @@ app.service('validationService', ['$filter', 'utilService','loginService', 'MaxC
 
         var startDateError = (promotion.startDt === undefined && checkForUndefined) ? {
             isError: true,
-            message: 'Start date is required.'
-        } : {
+            message: 'Start date is requred.'
+        } : 
+        {
             isError: false,
             message: ''
         };
@@ -41,8 +42,9 @@ app.service('validationService', ['$filter', 'utilService','loginService', 'MaxC
     publicApi.validateEndDateWithoutLeadTime = function (startDt, endDt, checkForUndefined) {
         var endDateError = (endDt === undefined && checkForUndefined) ? {
             isError: true,
-            message: 'End date is required.'
-        } : {
+            message: 'End date is requred.'
+        } :
+        {
             isError: false,
             message: ''
         };
@@ -81,12 +83,12 @@ app.service('validationService', ['$filter', 'utilService','loginService', 'MaxC
     publicApi.validateEndDateWithLeadTime = function (startDt, endDt, checkForUndefined) {
         var endDateError = (endDt == null && checkForUndefined) ? {
             isError: true,
-            message: 'End date is required.'
-        } : {
+            message: 'End date is requred.'
+        } :
+        {
             isError: false,
             message: ''
         };
-
 
         var minEndDate = publicApi.getMinEndDate(startDt, leadTime);
 
@@ -162,6 +164,23 @@ app.service('validationService', ['$filter', 'utilService','loginService', 'MaxC
         promotion.purchaseConds.basketThreshold = floatRounded;
         promotion.purchaseConds.basketThreshold <= 0 ? promotion.purchaseConds.basketThreshold = null : promotion.purchaseConds.basketThreshold;
         return promotion;
+    }
+
+    publicApi.validateRapidPass = function (promotion) {
+        var customerSegmentErrorObject = {
+            isError: false,
+            message: ''
+        };
+            
+        if (promotion.checkRapidPass && (promotion.purchaseConds.customerSegmentId == null || promotion.purchaseConds.customerSegmentId <= 0)) {
+            customerSegmentErrorObject = {
+                isError: true,
+                message: 'A customer segment must be selected before Rapid Pass can be applied to this discount.'
+            };
+
+        }
+        
+        return customerSegmentErrorObject;
     }
 
     publicApi.validatePercentOff = function (rewards, checkForUndefined) {
@@ -354,7 +373,7 @@ app.service('validationService', ['$filter', 'utilService','loginService', 'MaxC
 
     }
 
-    publicApi.validateSystemGeneratedCouponCount = function (promotion) {
+    publicApi.validateGeneratedCouponCount = function (promotion) {
         var couponLimitError = {
             isError: false,
             message: ''
@@ -363,7 +382,7 @@ app.service('validationService', ['$filter', 'utilService','loginService', 'MaxC
         if(promotion.promoCdSpec && promotion.promoCdSpec.systemGen && promotion.promoCdSpec.systemGen.uniqueCdCnt > MaxCouponGenerationLimit) {
             couponLimitError = {
                 isError: true,
-                message: 'max limit.'
+                message: 'Exceeds max coupon limit.'
             };
         }
         return couponLimitError;
@@ -378,8 +397,9 @@ app.service('validationService', ['$filter', 'utilService','loginService', 'MaxC
         validationErrors.percentageWarning = publicApi.validatePercentageWarning(promotion.reward.details);
         validationErrors.threeMonthsWarning = publicApi.validateThreeMonthsWarning(promotion.startDt);
         validationErrors.skuTypeFilter = publicApi.validateSkyTypeFilter(promotion.purchaseConds.sources[0], checkForUndefined);
-        validationErrors.couponLimitError = publicApi.validateSystemGeneratedCouponCount(promotion);
+        validationErrors.couponLimitError = publicApi.validateGeneratedCouponCount(promotion);
         validationErrors.rewardsErrors = publicApi.validateRewardMethod(promotion);
+        validationErrors.custSegmentErrors = publicApi.validateRapidPass(promotion);
         publicApi.validateBasketThreshold(promotion);
         return validationErrors;
     }
