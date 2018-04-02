@@ -79,6 +79,7 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                     if(scope.data.checkRapidPass == true)
                     {
                         scope.previewData.data.promoCdSpec.systemGen.uniqueCdCnt = scope.data.promoCdSpec.systemGen.uniqueCdCnt;
+                        scope.previewData.data.redmptnLmt.maxUsesOfPromo = scope.data.promoCdSpec.systemGen.uniqueCdCnt;
                     }
                     var promotion = $.extend(true, {}, scope.previewData.data);
                     
