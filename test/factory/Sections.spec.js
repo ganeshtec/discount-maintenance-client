@@ -16,16 +16,16 @@ describe('Unit test for Sections factory', function() {
     var sections=SECTIONS(allowedPermissionIds.STORE);
     expect(sections[0].name).toBe('Properties');
     expect(sections[0].shouldDisplay).toBe(true);
-    expect(sections[2].name).toBe('Location');
+    expect(sections[2].name).toBe('Rewards');
     expect(sections[2].shouldDisplay).toBe(true);
   });
   it('Verify Sections for Online user', function() {
     var sections=SECTIONS(allowedPermissionIds.ONLINE);
     expect(sections[0].name).toBe('Properties');
     expect(sections[0].shouldDisplay).toBe(true);
-    expect(sections[2].name).toBe('Location');
-    expect(sections[2].shouldDisplay).toBe(false);
-    expect(sections[6].name).toBe('Labels');
-    expect(sections[6].shouldDisplay).toBe(false);
+    expect(sections[2].name).toBe('Rewards');
+    expect(sections[2].shouldDisplay).toBe(true);
+    expect(sections[5].name).toBe('Labels');
+    expect(sections[5].shouldDisplay).toBe(false);
   });
 });

@@ -37,6 +37,7 @@ describe('promotionAdminCtrl', function () {
                 displayBasketThreshold: true,
                 displayChannelSelect: true,
                 displayRapidPass: true,
+                displayLocation: true,
                 displayExclusiveCheckbox: true
             }
             controller.setViewProperties(allowedPermissionIds.STORE);
@@ -67,6 +68,7 @@ describe('promotionAdminCtrl', function () {
                 displayBasketThreshold: false,
                 displayChannelSelect: false,
                 displayRapidPass: false,
+                displayLocation: false,
                 displayExclusiveCheckbox: false
             }
             controller.setViewProperties(allowedPermissionIds.ONLINE);

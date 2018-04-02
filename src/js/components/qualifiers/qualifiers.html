@@ -1,3 +1,130 @@
+<!-- LOCATIONS START -->
+<div  ng-if="$ctrl.viewProp.displayLocation">
+    <!-- Markets code START -->
+    <div class="md-text-field">
+        <label for="location">Location Types</label>
+        <div class="md-radio">
+            <input type="radio" id="markets" name="locations1" ng-model="$ctrl.locationType" title="markets" value="markets" ng-change="$ctrl.removeAll();$ctrl.clearInput();" ng-disabled="$ctrl.preview"/>
+            <label for="markets"><span><span></span></span>Markets</label>
+        </div>
+
+        <div class="md-radio">
+            <input type="radio" id="stores" name="locations2" ng-model="$ctrl.locationType" title="stores" value="stores" ng-change="$ctrl.removeAll(); $ctrl.clearInput();" ng-disabled="$ctrl.preview"/>
+            <label for="stores"><span><span></span></span>Stores</label>
+        </div>
+    </div> 
+    <!-- Markets code END -->
+
+    <!-- <table class="table category__table" ng-hide="locationType == 'markets' "> -->
+    <table class="table category__table">
+
+    <tr class="category__table__row-nobottomborder">
+    <td colspan="4" ng-hide="$ctrl.preview">
+
+        
+        <div class="md-toolbar-search l">
+            <label for="StoreLocation" ng-if="$ctrl.locationType=='stores'" ><h3>Store Location</h3></label>
+            <label for="MarketLocation" ng-if="$ctrl.locationType=='markets'"><h3>Market Location</h3></label>
+            <input class="table__search" ng-show="$ctrl.locationType=='stores'" ng-keypress="($event.keyCode === 13) && $ctrl.search($ctrl.locationSearch)" placeholder="Search and Add Store Number" type="text" ng-model="$ctrl.locationSearch" ng-class="{'error': $ctrl.inValidStoreInfo}"
+                ng-change="$ctrl.clear()" allow-pattern="(\d|[a-z A-Z\(\?\-\_\.\'\,\%\$\!\@\)])" ng-disabled="$ctrl.preview" />
+            <a class="md-button secondary no-padding" href="" ng-show="$ctrl.locationType=='stores'" ng-click="$ctrl.search($ctrl.locationSearch)">
+                Search
+            </a>
+            <ul>
+                <span class='error-message' ng-show="$ctrl.showInvalidError" ng-if="$ctrl.locationType=='stores'">
+                <span>
+                        Please enter a valid Store Number
+                </span>
+                </span>
+            </ul>
+            <input class="table__search" ng-show="$ctrl.locationType=='markets'" ng-keypress="($event.keyCode === 13) && $ctrl.search($ctrl.locationSearch)" placeholder="Search and Add Market Number" type="text" ng-model="$ctrl.locationSearch" ng-class="{'error': $ctrl.inValidMarketInfo}"
+                ng-change="clear()" allow-pattern="(\d|[a-z A-Z\(\?\-\_\.\'\,\%\$\!\@\)])" ng-disabled="$ctrl.preview"/>
+            <a class="md-button secondary no-padding" ng-show="$ctrl.locationType=='markets'" href="" ng-click="$ctrl.search($ctrl.locationSearch)">
+                Search
+            </a>
+            <ul>
+                <span class='error-message' ng-show="$ctrl.showInvalidError" ng-if="$ctrl.locationType=='markets'">
+                <span>
+                        Please enter a valid Market Number
+                </span>
+                </span>
+            </ul>
+        </div>
+    </td>
+    </tr>
+
+    <tr class="category__table__row-notopborder" ng-if="$ctrl.locationType=='stores'">
+    <th>
+        Store Number
+    </th>
+    <th>
+        Store Name
+    </th>
+    <th>
+        Market Number
+    </th>
+    <th class="r">
+        <a class="editOption thd-orange" ng-if="$ctrl.validStoreInfo && $ctrl.validStoreInfo.length >0" ng-click="$ctrl.removeAll()" href="" ng-hide="$ctrl.preview">
+            Remove All
+        </a>
+    </th>
+    </tr>
+    <tr ng-repeat="item in $ctrl.validStoreInfo track by $index" ng-class="{odd:($index % 2)}" ng-if="$ctrl.locationType=='stores'">
+
+    <td>
+        {{item.storeNumber}}
+    </td>
+    <td>
+        {{item.storeName}}
+    </td>
+    <td>
+        {{item.marketNumber}}
+    </td>
+    <td class="r" ng-hide="$ctrl.preview">
+        <a class="editOption thd-orange" ng-click="$ctrl.isDisabled || $ctrl.removeItem($index)" href="">
+            Remove
+        </a>
+    </td>
+    </tr>
+    <tr class="category__table__row-notopborder" ng-if="$ctrl.locationType=='markets'">
+
+    <th>
+        Market Number
+    </th>
+    <th>
+        MarketName
+    </th>
+    <th>
+        
+    </th>
+    <th class="r">
+        <a class="editOption thd-orange" ng-if="$ctrl.validMarketInfo && $ctrl.validMarketInfo.length >0" ng-click="$ctrl.removeAll()" href="" ng-hide="$ctrl.preview">
+            Remove All
+        </a>
+    </th>
+    </tr>
+    <tr ng-repeat="market in $ctrl.validMarketInfo track by $index" ng-class="{odd:($index % 2)}" ng-if="$ctrl.locationType=='markets'">
+
+    <td>
+        {{market.marketNumber}}
+    </td>
+    <td>
+        {{market.marketName}}
+    </td>
+    <td>
+        <!--{{item.marketNumber}}-->
+    </td>
+
+    <td class="r" ng-hide="$ctrl.preview">
+        <a class="editOption thd-orange" ng-click="$ctrl.isDisabled || $ctrl.removeItem($index)" href="" ng-disabled="$ctrl.preview">
+            Remove
+        </a>
+    </td>
+    </tr>
+    </table>
+</div>
+<!-- LOCATIONS END -->
+
 <div class="md-select md-select-space" ng-show="$ctrl.viewProp.displayCustomerSegment">
     <label for="promocustomersegment">
         <h3 ng-if="!$ctrl.data.checkRapidPass">Customer Segment (Optional)</h3>

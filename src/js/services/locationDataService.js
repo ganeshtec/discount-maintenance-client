@@ -1,19 +1,18 @@
 app.service('locationDataService', ['$http', '$q', 'dataService',
     function ($http, $q, dataService) {
         var publicApi = {};
-
+        var result;
         publicApi.getStoreIdCodes = function (data) {
 
             var config = {
-                    method: 'POST',
-                    url: '/location/store/validate.json',
-                    data: { locationNumbers: publicApi.parseIds(data.locationNumbers) }
-                },
-                result = $q.defer();
+                method: 'POST',
+                url: '/location/store/validate.json',
+                data: { locationNumbers: publicApi.parseIds(data.locationNumbers) }
+            };
+            result = $q.defer();
             dataService.httpRequest(config).then(
                 function (response) {
                     result.resolve(response.data);
-
                 },
                 function (error) {
                     result.reject(error);
@@ -25,11 +24,11 @@ app.service('locationDataService', ['$http', '$q', 'dataService',
         publicApi.validateMarketIds = function (data) {
 
             var config = {
-                    method: 'POST',
-                    url: '/location/market/validate.json',
-                    data: { locationNumbers: publicApi.parseIds(data.locationNumbers) }
-                },
-                result = $q.defer();
+                method: 'POST',
+                url: '/location/market/validate.json',
+                data: { locationNumbers: publicApi.parseIds(data.locationNumbers) }
+            };
+            result = $q.defer();
             dataService.httpRequest(config).then(
                 function (response) {
                     result.resolve(response.data);
