@@ -64,11 +64,8 @@ describe('Unit testing qualifiers component', function () {
         ctrl.data.checkRapidPass = false;
         ctrl.selectRapidPass();
 
-        expect(ctrl.data.promoCdSpec.type).toBe('');
-        expect(ctrl.data.promoCdSpec.genType).toBe('');
-        expect(ctrl.data.promoCdSpec.cdLength).toBe('');
         expect(ctrl.data.promoCdRqrd).toBe(false);
-        expect(ctrl.data.promoCdSpec.systemGen).toBe(undefined);
+        expect(ctrl.data.promoCdSpec).toBe(undefined);
 
 
     });

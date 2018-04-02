@@ -98,8 +98,10 @@ function QualifiersController(MaxCouponGenerationLimit,customerSegmentDataServic
             if (ctrl.data.segment.id) {
                 ctrl.data.purchaseConds.customerSegmentId = ctrl.data.segment.id;
                 ctrl.data.purchaseConds.program = {};
+                ctrl.validationErrors = validationService.validateRapidPass(ctrl.data);
             }
             else {
+               
                 ctrl.data.purchaseConds.customerSegmentId = 0;
             }
             if (ctrl.data.segment.progId) {
@@ -125,12 +127,15 @@ function QualifiersController(MaxCouponGenerationLimit,customerSegmentDataServic
 
 
         } else {
+            
             ctrl.data.reward.reasonCode = 49;
             ctrl.data.purchaseConds.customerSegmentId = 0;
 
             ctrl.data.purchaseConds.program.id = 0;
 
             ctrl.data.purchaseConds.program.tierId = 0;
+            
+            ctrl.validationErrors = validationService.validateRapidPass(ctrl.data);
         }
     };
 
@@ -156,10 +161,7 @@ function QualifiersController(MaxCouponGenerationLimit,customerSegmentDataServic
             ctrl.data.promoCdRqrd = true;
         }
         else {
-            ctrl.data.promoCdSpec.type = '';
-            ctrl.data.promoCdSpec.genType = '';
-            ctrl.data.promoCdSpec.cdLength = '';
-            delete ctrl.data.promoCdSpec.systemGen;
+            delete ctrl.data.promoCdSpec;
             ctrl.data.promoCdRqrd = false;
         }
     }
