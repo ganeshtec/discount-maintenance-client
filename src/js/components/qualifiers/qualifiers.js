@@ -14,12 +14,12 @@ app.component('qualifiers', {
 });
 
 
-function QualifiersController(MaxCouponGenerationLimit,customerSegmentDataService, utilService, validationService, featureFlagService, $rootScope) {
+function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataService, utilService, validationService, featureFlagService, $rootScope) {
     var ctrl = this;
     ctrl.showBasketThreshold = false;
     ctrl.MaxCouponGenerationLimit = MaxCouponGenerationLimit;
     ctrl.discountEngineErrors = $rootScope.discountEngineErrors;
-  
+
     ctrl.$onInit = function () {
         var featureTogglePromise = featureFlagService.getFeatureFlags();
         ctrl.initialize();
@@ -94,6 +94,7 @@ function QualifiersController(MaxCouponGenerationLimit,customerSegmentDataServic
     };
 
     ctrl.onSegmentSelection = function () {
+        ctrl.setReasonCode();
         if (ctrl.data.segment) {
             if (ctrl.data.segment.id) {
                 ctrl.data.purchaseConds.customerSegmentId = ctrl.data.segment.id;
@@ -101,7 +102,7 @@ function QualifiersController(MaxCouponGenerationLimit,customerSegmentDataServic
                 ctrl.validationErrors = validationService.validateRapidPass(ctrl.data);
             }
             else {
-               
+
                 ctrl.data.purchaseConds.customerSegmentId = 0;
             }
             if (ctrl.data.segment.progId) {
@@ -118,27 +119,31 @@ function QualifiersController(MaxCouponGenerationLimit,customerSegmentDataServic
             else {
                 ctrl.data.purchaseConds.program.tierId = 0;
             }
-            if (ctrl.useCustSegReasonCode && ctrl.data.segment.id != 0) {
-                ctrl.data.reward.reasonCode = 70;
-            }
-            else {
-                ctrl.data.reward.reasonCode = 49;
-            }
-
-
         } else {
-            
-            ctrl.data.reward.reasonCode = 49;
+
             ctrl.data.purchaseConds.customerSegmentId = 0;
 
             ctrl.data.purchaseConds.program.id = 0;
 
             ctrl.data.purchaseConds.program.tierId = 0;
-            
+
             ctrl.validationErrors = validationService.validateRapidPass(ctrl.data);
         }
     };
 
+    ctrl.setReasonCode = function () {
+        if (ctrl.data.checkRapidPass) {
+            ctrl.data.reward.reasonCode = 9;
+        } else if (ctrl.data.segment) {
+            if (ctrl.useCustSegReasonCode && ctrl.data.segment.id != 0) {
+                ctrl.data.reward.reasonCode = 70;
+            } else {
+                ctrl.data.reward.reasonCode = 49;
+            }
+        } else {
+            ctrl.data.reward.reasonCode = 49;
+        }
+    }
 
     ctrl.updatePrintLabel = function () {
         utilService.updatePrintLabel(ctrl.data);
@@ -149,6 +154,7 @@ function QualifiersController(MaxCouponGenerationLimit,customerSegmentDataServic
     };
 
     ctrl.selectRapidPass = function () {
+        ctrl.setReasonCode();
         if (ctrl.data.checkRapidPass) {
             ctrl.data.promoCdSpec = {};
             ctrl.data.promoCdSpec.type = 'Private';
@@ -169,9 +175,9 @@ function QualifiersController(MaxCouponGenerationLimit,customerSegmentDataServic
     ctrl.initialize = function () {
         if (ctrl.data.promoCdSpec && ctrl.data.promoCdSpec.genType === 'Dynamically Generated' && ctrl.data.promoCdSpec.systemGen) {
             ctrl.data.checkRapidPass = true;
-            if(utilService.isPromotionActive(ctrl.data)){
+            if (utilService.isPromotionActive(ctrl.data)) {
                 ctrl.data.disableRapidPass = true;
-            }else{
+            } else {
                 ctrl.data.disableRapidPass = false;
             }
         }

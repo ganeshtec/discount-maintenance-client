@@ -403,6 +403,9 @@ app.service('utilService', ['$filter', 'leadTimeService','loginService', functio
             promotion.promoSubTypeCd = 'TypeLessDiscount';
             promotion.promoSubTypeDesc = 'TypeLess-Discounts';
         }
+        if(promotion.checkRapidPass) {
+            promotion.reward.reasonCode = 9;
+        }
     }
 
     publicApi.isSubmitEligibleForDisable = function (promotion) {
