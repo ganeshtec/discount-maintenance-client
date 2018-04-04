@@ -65,19 +65,17 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
 
                     if (scope.userType === 229 && scope.previewData.data.promoSubTypeCd == 'ProductLevelPerItemPercentDiscount') {
                         scope.previewData.data.reward.reasonCode = 49;
-                    }
-                    else if (scope.userType === 229 && scope.previewData.data.promoSubTypeCd == 'OrderLevelPercentDiscount') {
+                    } else if (scope.userType === 229 && scope.previewData.data.promoSubTypeCd == 'OrderLevelPercentDiscount') {
                         scope.previewData.data.reward.reasonCode = 70;
-                    }
-                    else if (scope.userType === 228) {
+                    } else if (scope.userType === 228) {
                         if (scope.previewData.data.reward.reasonCode != 70) {
                             scope.previewData.data.reward.reasonCode = 49;
                         }
                         scope.previewData.data.promoSubTypeCd = 'TypeLessDiscount';
                         scope.previewData.data.promoSubTypeDesc = 'TypeLess-Discounts';
                     }
-                    if(scope.data.checkRapidPass == true)
-                    {
+                    if(scope.data.checkRapidPass) {
+                        scope.previewData.data.reward.reasonCode = 9;
                         scope.previewData.data.promoCdSpec.systemGen.uniqueCdCnt = scope.data.promoCdSpec.systemGen.uniqueCdCnt;
                         scope.previewData.data.redmptnLmt.maxUsesOfPromo = scope.data.promoCdSpec.systemGen.uniqueCdCnt;
                     }

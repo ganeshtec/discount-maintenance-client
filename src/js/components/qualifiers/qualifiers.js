@@ -96,6 +96,7 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
     };
 
     ctrl.onSegmentSelection = function () {
+        ctrl.setReasonCode();
         if (ctrl.data.segment) {
             if (ctrl.data.segment.id) {
                 ctrl.data.purchaseConds.customerSegmentId = ctrl.data.segment.id;
@@ -103,7 +104,7 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
                 ctrl.validationErrors = validationService.validateRapidPass(ctrl.data);
             }
             else {
-               
+
                 ctrl.data.purchaseConds.customerSegmentId = 0;
             }
             if (ctrl.data.segment.progId) {
@@ -120,27 +121,31 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
             else {
                 ctrl.data.purchaseConds.program.tierId = 0;
             }
-            if (ctrl.useCustSegReasonCode && ctrl.data.segment.id != 0) {
-                ctrl.data.reward.reasonCode = 70;
-            }
-            else {
-                ctrl.data.reward.reasonCode = 49;
-            }
-
-
         } else {
-            
-            ctrl.data.reward.reasonCode = 49;
+
             ctrl.data.purchaseConds.customerSegmentId = 0;
 
             ctrl.data.purchaseConds.program.id = 0;
 
             ctrl.data.purchaseConds.program.tierId = 0;
-            
+
             ctrl.validationErrors = validationService.validateRapidPass(ctrl.data);
         }
     };
 
+    ctrl.setReasonCode = function () {
+        if (ctrl.data.checkRapidPass) {
+            ctrl.data.reward.reasonCode = 9;
+        } else if (ctrl.data.segment) {
+            if (ctrl.useCustSegReasonCode && ctrl.data.segment.id != 0) {
+                ctrl.data.reward.reasonCode = 70;
+            } else {
+                ctrl.data.reward.reasonCode = 49;
+            }
+        } else {
+            ctrl.data.reward.reasonCode = 49;
+        }
+    }
 
     ctrl.updatePrintLabel = function () {
         utilService.updatePrintLabel(ctrl.data);
@@ -151,6 +156,7 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
     };
 
     ctrl.selectRapidPass = function () {
+        ctrl.setReasonCode();
         if (ctrl.data.checkRapidPass) {
             ctrl.data.promoCdSpec = {};
             ctrl.data.promoCdSpec.type = 'Private';

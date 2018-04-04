@@ -409,6 +409,7 @@ describe('utilService', function () {
 
     it('populates subtype code with typeless information for store channel (MFA) promotions when setting defaults for save as draft', function() {
       var promotion = {
+        "checkRapidPass": true,
         "reward": {},
         "purchaseConds": {
           "channels": [87]
@@ -418,6 +419,11 @@ describe('utilService', function () {
        utilService.setDefaultsForSaveAsDraft(promotion);
        expect(promotion.promoSubTypeCd).toEqual('TypeLessDiscount');
        expect(promotion.promoSubTypeDesc).toEqual('TypeLess-Discounts');
+       expect(promotion.reward.reasonCode).toEqual(9);
+
+       promotion.checkRapidPass = false;
+       utilService.setDefaultsForSaveAsDraft(promotion);
+       expect(promotion.reward.reasonCode).toEqual(49);
     })
 
     it('does not populate subtype code with typeless information for online channel (DCM) promotions when setting defaults for save as draft', function() {
