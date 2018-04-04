@@ -76,6 +76,7 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$lo
                     displayBasketThreshold: true,
                     displayChannelSelect: true,
                     displayRapidPass: true,
+                    displayLocation: true,
                     displayExclusiveCheckbox: true
                 }
                 //$scope.promotionSubTypesForMFA = true;
@@ -103,6 +104,7 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$lo
                     displayBasketThreshold: false,
                     displayChannelSelect: false,
                     displayRapidPass: false,
+                    displayLocation: false,
                     displayExclusiveCheckbox: false
                 }
                 //$scope.promotionSubTypesForMFA = false;
