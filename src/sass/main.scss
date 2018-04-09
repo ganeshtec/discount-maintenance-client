@@ -374,10 +374,26 @@ ol, ul {
     position: absolute;
     margin-left: 5px;
 }
+
+.mandatory-icon .inline {
+     display: inline-block;
+}
+
+.span-spacing {
+    color: #ff0000;
+    margin-top: -3px;
+    position: absolute;
+    margin-left: 15px;
+}
 .modal-error {
   color: #fff;
   margin: 0px;
   background-color: #ed1c24;
+}
+
+.h4-inline{
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 

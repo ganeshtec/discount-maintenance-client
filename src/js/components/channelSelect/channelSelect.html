@@ -1,14 +1,14 @@
 <div class="ms-dropdown">
-	<h4>Selling System Channels</h4>
+    <h4 id="channel-select-header">Selling System Channels</h4>
+
     <div ng-style="style">
         <div>
-            <md-checkbox role="checkbox" ng-model="$ctrl.checkAll"
-            ng-change="$ctrl.selectAll()" aria-checked="{{$ctrl.checkAll}}">All</md-checkbox>     
+            <md-checkbox role="checkbox" ng-model="$ctrl.checkAll" ng-change="$ctrl.selectAll()" aria-checked="{{$ctrl.checkAll}}">All</md-checkbox>
         </div>
         <div ng-repeat="channel in $ctrl.data.channelsWithCheckedFields track by $index" ng-if="!option.hide" class="plxxl">
-            <md-checkbox ng-true-value="true" ng-false-value="false" ng-model="channel.checked"
-            ng-change="$ctrl.updateSingleChannelCheckBoxValue(channel)" aria-checked="{{channel.checked}}" ng-disabled="channel.disable">{{channel.name}}</md-checkbox>     
+            <md-checkbox ng-true-value="true" ng-false-value="false" ng-model="channel.checked" ng-change="$ctrl.updateSingleChannelCheckBoxValue(channel)"
+                aria-checked="{{channel.checked}}" ng-disabled="channel.disable">{{channel.name}}</md-checkbox>
         </div>
-	</div>
-	<div>Select the Selling System Channel(s) where this discount will be made available</div>
+    </div>
+    <div>Select the Selling System Channel(s) where this discount will be made available</div>
 </div>
