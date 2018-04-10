@@ -29,7 +29,7 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
             ctrl.showBasketThreshold = data.basketThreshold;
             ctrl.useCustSegReasonCode = data.useCustSegReasonCode;
             ctrl.showRapidPass = data.showRapidPass;
-            ctrl.showAllProDiscount = data.showAllProDiscount
+            ctrl.showAllProDiscount = data.showAllProDiscount;
         });
 
         featureTogglePromise.then(function (data) {
