@@ -125,6 +125,14 @@
 </div>
 <!-- LOCATIONS END -->
 
+
+<div ng-if="$ctrl.viewProp.displayShowAllProDiscount && $ctrl.showAllProDiscount">
+    <div>
+        <md-checkbox role="checkbox" aria-checked="false">All Pro Discount</md-checkbox>
+    </div>
+</div>
+
+
 <div class="md-select md-select-space" ng-show="$ctrl.viewProp.displayCustomerSegment">
     <label for="promocustomersegment">
         <h3 ng-if="!$ctrl.data.checkRapidPass">Customer Segment (Optional)</h3>
