@@ -38,7 +38,8 @@ describe('promotionAdminCtrl', function () {
                 displayChannelSelect: true,
                 displayRapidPass: true,
                 displayLocation: true,
-                displayExclusiveCheckbox: true
+                displayExclusiveCheckbox: true,
+                displayShowAllProDiscount: true
             }
             controller.setViewProperties(allowedPermissionIds.STORE);
             expect($scope.viewProperties).toEqual(expectedResult);
@@ -69,7 +70,8 @@ describe('promotionAdminCtrl', function () {
                 displayChannelSelect: false,
                 displayRapidPass: false,
                 displayLocation: false,
-                displayExclusiveCheckbox: false
+                displayExclusiveCheckbox: false,
+                displayShowAllProDiscount: false
             }
             controller.setViewProperties(allowedPermissionIds.ONLINE);
             expect($scope.viewProperties).toEqual(expectedResult);
