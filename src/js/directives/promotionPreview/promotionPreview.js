@@ -16,6 +16,7 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                 validationErrors: '='
             },
             link: function (scope, element) {
+                scope.formHolder.form = scope.promoForm ? scope.promoForm : scope.formHolder.form;
                 scope.convertDateStringToDate = function (dateString) {
                     return dateString ? moment(dateString).startOf('date').toDate() : undefined;
                 }

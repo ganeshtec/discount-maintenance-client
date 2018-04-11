@@ -71,7 +71,7 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
                             segment.tierId = ctrl.segmentListfromWebservice[i].tierId;
 
                             // If condition for Edit Customer Segment
-                            if (ctrl.data.purchaseConds.customerSegmentId || (ctrl.data.purchaseConds.program.id && ctrl.data.purchaseConds.program.tierId)) {
+                            if (ctrl.data.purchaseConds.customerSegmentId || (ctrl.data.purchaseConds.program && ctrl.data.purchaseConds.program.id && ctrl.data.purchaseConds.program.tierId)) {
                                 if ((ctrl.data.purchaseConds.customerSegmentId == ctrl.segmentListfromWebservice[i].segmentId) ||
                                     (((ctrl.data.purchaseConds.program.id == ctrl.segmentListfromWebservice[i].programId)
                                         && (ctrl.data.purchaseConds.program.tierId == ctrl.segmentListfromWebservice[i].tierId)))) {
@@ -79,8 +79,7 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
                                 }
                             } else {
                                 ctrl.data.purchaseConds.customerSegmentId = 0;
-                                ctrl.data.purchaseConds.program.id = 0;
-                                ctrl.data.purchaseConds.program.tierId = 0;
+                                ctrl.data.purchaseConds.program = {id: 0, tierId: 0};
                             }
                             ctrl.segmentDetails.push(segment);
                         }

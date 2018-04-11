@@ -5,7 +5,7 @@
 			<admin-header class="admin__header" promotype="promotionData" uistate="UiState" urls="urls"></admin-header>
 		</div>
 	</div>
-	<form class="admin__promotion__form" name="promoForm" ng-cloak>
+	<form name="promoForm" ng-cloak>
 		<div layout="row" class="admin__main">
 			<div class="admin__content" flex="50" ng-repeat="promotion in promotions track by $index">
 				<h4>{{promotion.promoSubTypeDesc}} <span class="md-display-1" ng-show="$index == 0">(Read Only)</span></h4>

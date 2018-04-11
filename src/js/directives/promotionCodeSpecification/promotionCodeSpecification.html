@@ -1,14 +1,14 @@
 <div ng-if="require">
 	<div class="md-radio">
-		<input type="radio" name="promospec" ng-change="clearCouponId()" ng-disabled="completed" ng-model="data.type" title="Public Promotion" value="Public" />
+		<input type="radio" name="promospec" ng-change="clearCouponId()" ng-disabled="completed;preview" ng-model="data.type" title="Public Promotion" value="Public" />
 		<label><span><span></span></span>User Generated Promotion codes</label>
 	</div>
 	<div class="md-radio">
-		<input type="radio" name="promospec"  ng-change="clearCouponId()" ng-disabled="completed"  ng-model="data.type" title="Private Promotion" value="Private" />
+		<input type="radio" name="promospec"  ng-change="clearCouponId()" ng-disabled="completed;preview"  ng-model="data.type" title="Private Promotion" value="Private" />
 		<label><span><span></span></span>System-generated unique promotion code </label>
 	</div>
 	<!-- Create Promo Codes Component -->
-	<create-promotion-codes data="data.promoCodes" preview="preview" ng-if="data.type == 'Public'"  promoform='promoform'></create-promotion-codes>
+	<create-promotion-codes data="data.promoCodes" preview="preview" ng-disabled="preview" ng-if="data.type == 'Public'"  promoform='promoform'></create-promotion-codes>
 	<!-- System Generated Codes Component -->
-	<system-generated-codes data="data.systemGen" preview="preview" completed="completed" cdlength="data.cdLength" status="data.status" ng-if="data.type == 'Private'" promoform='promoform'></system-generated-codes>
+	<system-generated-codes data="data.systemGen" preview="preview" ng-disabled="preview" completed="completed" cdlength="data.cdLength" status="data.status" ng-if="data.type == 'Private'" promoform='promoform'></system-generated-codes>
 </div>
