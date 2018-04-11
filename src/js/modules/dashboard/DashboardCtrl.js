@@ -1,5 +1,5 @@
-app.controller('DashboardCtrl', [ '$filter', 'leadTimeService', '$scope', 'DataFactory', 'promotionDataService', '$location', '$routeParams', '$mdDialog', 'dashboardDataService', 'OverlayConfigFactory', '$rootScope','loginService',
-    function ($filter, leadTimeService, $scope, DataFactory, promotionDataService, $location, routeParams, $mdDialog, dashboardDataService, OverlayConfigFactory, $rootScope,loginService) {
+app.controller('DashboardCtrl', ['$filter', 'leadTimeService', '$scope', 'DataFactory', 'promotionDataService', '$location', '$routeParams', '$mdDialog', 'dashboardDataService', 'OverlayConfigFactory', '$rootScope', 'loginService',
+    function ($filter, leadTimeService, $scope, DataFactory, promotionDataService, $location, routeParams, $mdDialog, dashboardDataService, OverlayConfigFactory, $rootScope, loginService) {
 
         $scope.$watchCollection('selected', function () {
             $scope.computeSelectedArray();
@@ -34,11 +34,11 @@ app.controller('DashboardCtrl', [ '$filter', 'leadTimeService', '$scope', 'DataF
         $scope.searchWithUrlParams = function () {
             var params = $location.search();
             $rootScope.searchParams = params;
-            if(params.channels[0]!=null && params.channels.length>0 && params.channels != null){
-                if($scope.userRoleSelected.id == 228){
+            if (params.channels && params.channels[0] != null && params.channels.length > 0) {
+                if ($scope.userRoleSelected.id == 228) {
                     var promise = promotionDataService.getSelectionChannels($scope.userRoleSelected.id)
                     promise.then(function (channels) {
-                        params.channels = channels.map(function(channel) {
+                        params.channels = channels.map(function (channel) {
                             return channel.id
                         })
                         $scope.search(params.channels,
@@ -451,9 +451,9 @@ app.controller('DashboardCtrl', [ '$filter', 'leadTimeService', '$scope', 'DataF
                         wrapper.start = new Date(promotions[i].startDt.split(' ')[0].replace(/-/g, '\/'));
                         wrapper.end = new Date(promotions[i].endDt.split(' ')[0].replace(/-/g, '\/'));
                         if (wrapper.end.getFullYear() == 9999
-                        && wrapper.end.getDate() == 31
-                        // Get month starts at 0 index for January, 11 is December
-                        && wrapper.end.getMonth() == 11) {
+                            && wrapper.end.getDate() == 31
+                            // Get month starts at 0 index for January, 11 is December
+                            && wrapper.end.getMonth() == 11) {
                             wrapper.noEndDate = true;
                             wrapper.end = 'No end date';
                         }
@@ -529,7 +529,8 @@ app.controller('DashboardCtrl', [ '$filter', 'leadTimeService', '$scope', 'DataF
             return editable[promotion.status]
         }
         $scope.filter = function () {
-            var params = {};
+            $scope.clearSearch();
+            var params = $location.search();
             params.keyword = $scope.searchTerm;
             params.searchType = $scope.searchType;
             params.type = $scope.filtertype;
@@ -562,7 +563,7 @@ app.controller('DashboardCtrl', [ '$filter', 'leadTimeService', '$scope', 'DataF
         $scope.isActive = function () {
             var promotion = null;
             var promotions = $scope.promotions;
-            if ($scope.sel==null || $scope.sel.length == 0) {
+            if ($scope.sel == null || $scope.sel.length == 0) {
                 return false;
             }
             for (var i = 0; i < promotions.length; i++) {
@@ -582,7 +583,7 @@ app.controller('DashboardCtrl', [ '$filter', 'leadTimeService', '$scope', 'DataF
         // at least one of the selected promotion is active
         $scope.hasActive = function () {
             var promotions = $scope.promotions;
-            if ($scope.sel==null||$scope.sel.length == 0) {
+            if ($scope.sel == null || $scope.sel.length == 0) {
                 return false;
             }
             var active = {
@@ -631,13 +632,13 @@ app.controller('DashboardCtrl', [ '$filter', 'leadTimeService', '$scope', 'DataF
                 $scope.searchTerm = params.keyword;
                 $scope.searchType = params.searchType;
                 var channels = [];
-                if($scope.channelId != null){
+                if ($scope.channelId != null) {
                     channels.push($scope.channelId);
                 }
                 params.channels = channels;
 
                 $location.search(params);
-            }else{
+            } else {
                 $scope.clearSearch();
             }
 
@@ -648,7 +649,7 @@ app.controller('DashboardCtrl', [ '$filter', 'leadTimeService', '$scope', 'DataF
             $scope.paginationConfig = {};
 
             // Default Search on Load - all status
-            if($scope.dataLoaded == false) {
+            if ($scope.dataLoaded == false) {
                 $scope.searchWithUrlParams();
             }
 
