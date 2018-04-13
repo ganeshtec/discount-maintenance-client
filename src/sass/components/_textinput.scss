@@ -1,7 +1,7 @@
 .md-text-field {
     box-sizing: border-box;
     position: relative;
-    margin: 35px 0;
+    margin: 0 0 25px 0;
 }
 
 .md-text-field-padding {
@@ -80,6 +80,7 @@
             color: #999999;
             border: none;
             cursor: not-allowed;
+            border: 1px solid #DDDDDD;
         }
         &[type=text]:disabled + label, &[type=password]:disabled, &[type=tel]:disabled + label, &[type=number]:disabled + label, &[type=date]:disabled + label {
             color: #999999;
