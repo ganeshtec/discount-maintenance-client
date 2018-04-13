@@ -1,6 +1,7 @@
 .admin__content {
   background: #FFF;
   padding: 2em;
+  height: 750px;
 }
 
 .table__search__results {
@@ -25,6 +26,7 @@
 
 .admin__controls {
   text-align: right;
+  background: white;
 }
 
 .admin__header__content {
@@ -41,7 +43,6 @@
 
 .admin__main {
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.15);
-  margin-bottom: 1em;
 }
 
 /* Promotion Form*/
@@ -69,11 +70,14 @@
 .admin__sidepanel {
   background: #F8F7EE;
   padding: 0 !important;
+  background: transparent;
 }
 
 .admin__subnav {
   list-style: none;
   cursor: pointer;
+  color: #F8F7EE;
+  background: #F8F7EE;
 }
 
 .admin__subnav__item {
@@ -106,4 +110,8 @@
 
 .admin__subnav__item--active .admin__subnav__link {
   color: #F96302;
+}
+
+.form-control {
+  height: 170px;
 }

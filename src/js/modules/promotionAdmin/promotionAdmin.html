@@ -1,30 +1,43 @@
 <div class="admin" flex="100" id="promoTop">
-	<div layout="row">
-		<div flex="100">
-			<!-- Admin Header component -->
-			<admin-header class="admin__header"  ng-if="promotionData" data="promotionData" promotype="promotionData" qa-page-type="{{UiState}}" uistate="UiState" urls="urls"></admin-header>
-		</div>
-	</div>
-	<form name="promoForm">
-		<div layout="row" class="admin__main">
-			<div class="admin__sidepanel" flex="25">
-				<!-- Admin Subnavigation component -->
-				<admin-subnav data="sections"></admin-subnav>
-			</div>
-			<div class="admin__content" flex="75">
-				<!-- Admin Promotion Form -->
-				<admin-promotion-form data="promotionData" view-prop="viewProperties" validation-errors="validationErrors" promo-mfa="viewProperties.promotionSubTypesForMFA" index="sectionInx" form-holder="formHolder" promo-form="promoForm" ng-if="promotionData"></admin-promotion-form>
-				<!-- Admin Promotion Form Controls -->
-				<admin-promotion-form-controls data="sections" index="sectionInx"></admin-promotion-form-controls>
-			</div>
-		</div>
-		<div layout="row">
-			<div flex="100">
-				<!-- Admin Footer component -->
-				<admin-footer ng-if="promotionData" data="promotionData" validation-errors="validationErrors" preview-overlay-config="previewOverlayConfig" previewdata="previewData" class="admin__footer" form-holder="formHolder"  promo-form="promoForm" index="sectionInx"></admin-footer>
-			</div>
-		</div>
-	</form>
+    <div layout="row">
+        <div flex="100">
+            <!-- Admin Header component -->
+            <admin-header class="admin__header" ng-if="promotionData" data="promotionData" promotype="promotionData"
+                          qa-page-type="{{UiState}}" uistate="UiState" urls="urls"></admin-header>
+        </div>
+    </div>
+    <form name="promoForm">
+        <div layout="row" class="admin__main">
+            <div class="admin__sidepanel" flex="25">
+                <admin-subnav data="sections"></admin-subnav>
+            </div>
+            <div class="admin__content" flex="75">
+                <div>
+                    <admin-promotion-form data="promotionData" view-prop="viewProperties"
+                                          validation-errors="validationErrors"
+                                          promo-mfa="viewProperties.promotionSubTypesForMFA" index="sectionInx"
+                                          form-holder="formHolder" promo-form="promoForm"
+                                          ng-if="promotionData">
+                    </admin-promotion-form>
+                </div>
+
+                <div class="form-control">
+                    <admin-promotion-form-controls data="sections" index="sectionInx"></admin-promotion-form-controls>
+                </div>
+                <hr class="margin-collapse-top color-grey"/>
+                <div layout="row" class="pull-right">
+                    <admin-footer ng-if="promotionData" data="promotionData" validation-errors="validationErrors"
+                                  preview-overlay-config="previewOverlayConfig" previewdata="previewData"
+                                  class="admin__footer" form-holder="formHolder" promo-form="promoForm"
+                                  index="sectionInx">
+                    </admin-footer>
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
 
-<promotion-preview validation-errors="validationErrors" data="promotionData" ng-if="previewOverlayConfig.isOpen" promo-mfa="viewProperties.promotionSubTypesForMFA" form-holder="previewFormHolder" preview-overlay-config="previewOverlayConfig" preview-data="previewData" promo-form="promoForm" view-prop="viewProperties"></promotion-preview>
+<promotion-preview validation-errors="validationErrors" data="promotionData" ng-if="previewOverlayConfig.isOpen"
+                   promo-mfa="viewProperties.promotionSubTypesForMFA" form-holder="previewFormHolder"
+                   preview-overlay-config="previewOverlayConfig" preview-data="previewData" promo-form="promoForm"
+                   view-prop="viewProperties"></promotion-preview>
