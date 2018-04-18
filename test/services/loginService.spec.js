@@ -76,9 +76,6 @@ describe('LoginServiceTests',function(){
     expect(loginService.getUserName()).toEqual('MFA0101');
     expect(loginService.getUserInfo().tokenExpiryTime).toEqual(253402262654);
     expect(loginService.redirectToLoginPage).not.toHaveBeenCalled();
-    // $httpBackend.flush();
-    // expect(loginService.getUserPermissions()).toEqual({id: "228",description: 'SKU: Discount Engine-Store MFA'});
-    // expect(loginService.getCurrentUserRole()).toEqual('228');
   });
 
   it('LoginService.logout should redirect user to logout page',function(){
