@@ -1,6 +1,5 @@
 <div class="md-text-field">
-    <h3 class="pbl"><strong class="color-dim-grey">Label Printing & Text</strong></h3>
-    <div></div>
+    <h4 class="pbl padding-bottom-10">Label Printing & Text</h4>
     <div class="md-checkbox">
 
         <input type="checkbox" id="labelId" ng-disabled="$ctrl.isPrintLabelDisabled() || $ctrl.preview"
@@ -8,41 +7,49 @@
                ng-click="$ctrl.data.labelText = null; $ctrl.validatePromotion();"
         />
 
-        <label for="label" class="color-grey">Print Labels</label>
+        <label for="labelId">Print Labels</label>
     </div>
     <div class="md-textarea">
-        <label for="labelText"><strong class="color-dim-grey">Label Text</strong></label>
+        <label for="labelText"><strong>Label Text</strong></label>
         <div>
             <input type="text" id="labelText" name="labelText" title="labelText" ng-model="$ctrl.data.labelText"
                    ng-disabled="$ctrl.isPrintLabelDisabled() || !$ctrl.data.printLabel || $ctrl.preview" rows="1"
-                   allow-pattern="(\d|[a-z A-Z\(\?\-\_\.\'\,\%\$\!\@\)])" maxlength="11" />
+                   allow-pattern="(\d|[a-z A-Z\(\?\-\_\.\'\,\%\$\!\@\)])" maxlength="11"/>
         </div>
-        <span class="color-grey">Please enter 11 characters or fewer</span>
-        <span class="labelCount">{{$ctrl.data.labelText.length || 0}} of 11 Characters</span>
+        <p class="textarea_counter">
+            <span>Please enter 11 characters or fewer</span>
+            <span class="pull-right">{{$ctrl.data.labelText.length || 0}} of 11 Characters</span>
+        </p>
     </div>
 </div>
 <div></div>
 <div class="md-text-field" ng-if="$ctrl.showReceiptText">
     <div class="md-textarea">
-        <h3><strong class="color-dim-grey">Receipt Text</strong></h3>
-        <label for="receiptHeader"><strong class="color-dim-grey">Receipt Header</strong></label>
+        <h4 class="padding-bottom-10">Receipt Text</h4>
+        <div>
+            <label for="receiptHeaderId"><strong>Receipt Header</strong></label>
+        </div>
         <div>
             <input type="text" id="receiptHeaderId" name="receiptHeader" title="receiptHeader"
                    ng-model="$ctrl.data.receiptHeader" ng-disabled="$ctrl.preview" rows="1"
                    allow-pattern="(\d|[a-z A-Z\(\?\-\_\.\'\,\%\$\!\@\)])" maxlength="30"/>
         </div>
-        <span class="color-grey">Please enter 30 characters or fewer</span>
-        <span class="headerCount">{{$ctrl.data.receiptHeader.length || 0}} of 30 Characters</span>
-
+        <p class="textarea_counter">
+            <span>Please enter 30 characters or fewer</span>
+            <span class="pull-right">{{$ctrl.data.receiptHeader.length || 0}} of 30 Characters</span>
+        </p>
     </div>
     <div class="md-textarea">
-        <label for="receiptDesc"><strong class="color-dim-grey">Receipt Description</strong></label>
+        <label for="receiptDescId"><strong>Receipt Description</strong></label>
         <div>
             <input type="text" id="receiptDescId" name="receiptDesc" title="receiptDesc"
                    ng-model="$ctrl.data.receiptDesc" ng-disabled="$ctrl.preview" rows="1"
                    allow-pattern="(\d|[a-z A-Z\(\?\-\_\.\'\,\%\$\!\@\)])" maxlength="30"/>
         </div>
-        <span class="color-grey">Please enter 30 characters or fewer</span>
-        <span class="descCount">{{$ctrl.data.receiptDesc.length || 0}} of 30 Characters</span>
+
+        <p class="textarea_counter">
+            <span>Please enter 30 characters or fewer</span>
+            <span class="pull-right">{{$ctrl.data.receiptDesc.length || 0}} of 30 Characters</span>
+        </p>
     </div>
 </div>
