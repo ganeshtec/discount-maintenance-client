@@ -82,7 +82,7 @@ describe('Unit testing qualifiers component', function () {
 
         expect(ctrl.data.promoCdSpec.type).toBe('Private');
         expect(ctrl.data.promoCdSpec.genType).toBe('Dynamically Generated');
-        expect(ctrl.data.promoCdSpec.cdLength).toBe('13');
+        expect(ctrl.data.promoCdSpec.cdLength).toBe('12');
         expect(ctrl.data.rapidPassCouponLimit).toBe(undefined);
 
         expect(ctrl.data.promoCdSpec.systemGen.uniqueCdCnt).toBe('');
