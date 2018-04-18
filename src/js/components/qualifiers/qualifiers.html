@@ -128,7 +128,7 @@
 
 <div ng-if="$ctrl.viewProp.displayShowAllProDiscount && $ctrl.showAllProDiscount">
     <div>
-        <md-checkbox role="checkbox" aria-checked="false">All Pro Discount</md-checkbox>
+        <md-checkbox role="checkbox"  ng-model="$ctrl.data.purchaseConds.allProDiscount" ng-change="$ctrl.enableCustomerSegmentAndRapidPass()" ng-disabled="$ctrl.preview" aria-checked="false">All Pro Discount</md-checkbox>
     </div>
 </div>
 
@@ -145,7 +145,7 @@
 
 
     <select name="segment" ng-options="segment as segment.name for segment in $ctrl.segmentDetails track by segment.name" ng-model="$ctrl.data.segment"
-        ng-change="$ctrl.onSegmentSelection();$ctrl.updatePrintLabel();$ctrl.selectRapidPass();$ctrl.validatePromotion()" ng-disabled="$ctrl.preview">
+        ng-change="$ctrl.onSegmentSelection();$ctrl.updatePrintLabel();$ctrl.selectRapidPass();$ctrl.validatePromotion()" ng-disabled="$ctrl.preview || $ctrl.data.disableCustomerSegment">
         <option value="">
             -- Select a Customer Segment --
         </option>

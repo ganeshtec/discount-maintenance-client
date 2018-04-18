@@ -16,7 +16,7 @@ app.component('qualifiers', {
 });
 
 
-function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataService, utilService, validationService, featureFlagService, $rootScope, DataFactory, $filter, locationDataService) {
+function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataService, utilService, validationService, featureFlagService, $rootScope, DataFactory, $filter, locationDataService, modalService) {
     var ctrl = this;
     ctrl.showBasketThreshold = false;
     ctrl.MaxCouponGenerationLimit = MaxCouponGenerationLimit;
@@ -87,12 +87,9 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
                     function (error) {
                         ctrl.discountEngineErrors.push(error);
                     }
-                );
-            }
+                );             
+            }          
         });
-
-
-
     };
 
     ctrl.onSegmentSelection = function () {
@@ -124,9 +121,8 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
         } else {
 
             ctrl.data.purchaseConds.customerSegmentId = 0;
-
+            ctrl.data.purchaseConds.program = {};   
             ctrl.data.purchaseConds.program.id = 0;
-
             ctrl.data.purchaseConds.program.tierId = 0;
 
             ctrl.validationErrors = validationService.validateRapidPass(ctrl.data);
@@ -154,6 +150,24 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
     ctrl.validatePromotion = function () {
         ctrl.validationErrors = validationService.validatePromotion(ctrl.data);
     };
+
+    ctrl.enableCustomerSegmentAndRapidPass = function () {
+        if(ctrl.data.purchaseConds.allProDiscount){
+            if(ctrl.data.segment || ctrl.data.checkRapidPass){
+                modalService.showAlert('Warning', 'Customer segment and Rapid Pass selection removed due to selection of All Pros**');
+            }
+            ctrl.data.checkRapidPass = false;
+            ctrl.data.promoCdSpec = {};
+            ctrl.data.promoCdRqrd = false;
+            ctrl.data.disableRapidPass = true;
+            ctrl.data.disableCustomerSegment = true;
+            ctrl.data.segment = '';
+            ctrl.onSegmentSelection();
+        }else{
+            ctrl.data.disableRapidPass = false;
+            ctrl.data.disableCustomerSegment = false;
+        }  
+    }
 
     ctrl.selectRapidPass = function () {
         ctrl.setReasonCode();

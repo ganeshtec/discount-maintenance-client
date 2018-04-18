@@ -92,6 +92,25 @@ describe('Unit testing qualifiers component', function () {
         expect(ctrl.data.reward.reasonCode).toBe(9);
     });
 
+    it('All Pro checked', function () {
+        ctrl.data.purchaseConds.allProDiscount = true;
+        ctrl.enableCustomerSegmentAndRapidPass();
+
+        expect(ctrl.data.checkRapidPass).toBe(false);
+        expect(ctrl.data.disableRapidPass).toBe(true);
+        expect(ctrl.data.promoCdRqrd).toBe(false);
+        expect(ctrl.data.promoCdSpec).toEqual({});
+        expect(ctrl.data.disableCustomerSegment).toBe(true);
+    });
+
+    it('All Pro unchecked', function () {
+        ctrl.data.purchaseConds.allProDiscount = false;
+        ctrl.enableCustomerSegmentAndRapidPass();
+
+        expect(ctrl.data.disableRapidPass).toBe(false);
+        expect(ctrl.data.disableCustomerSegment).toBe(false);
+    });
+
     it('initialize for Edit mode of Active promotion', function () {
         ctrl.data.promoCdSpec.genType = 'Dynamically Generated';
         ctrl.data.promoCdSpec.systemGen.uniqueCdCnt = 30;

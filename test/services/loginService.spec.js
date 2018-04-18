@@ -11,7 +11,13 @@ describe('LoginServiceTests',function(){
   beforeEach(function () {
      module(function($provide) {
          $provide.value('$window', {
-             location: {href: ''}
+             location: {href: ''},
+             sessionStorage: {
+                              storage:{},
+                              setItem: function(key,value){ this.storage[key]=value},
+                              getItem: function(key){return this.storage[key]},
+                              clear: function(){this.storage={}}
+                             }
          });
      });
      module('app');
@@ -66,9 +72,9 @@ describe('LoginServiceTests',function(){
     var userRoles= [{id: "228",description: 'SKU: Discount Engine-Store MFA'}];
     $httpBackend.whenGET('undefinedMFA0101.json').respond(userRoles);
     $rootScope.$apply();
-    expect(loginService.getUserInfo().accessTokenDetails.user_name).toEqual('MFA0101');
+    expect(loginService.getUserInfo().userName).toEqual('MFA0101');
     expect(loginService.getUserName()).toEqual('MFA0101');
-    expect(loginService.getUserInfo().accessTokenDetails.exp).toEqual(253402262654);
+    expect(loginService.getUserInfo().tokenExpiryTime).toEqual(253402262654);
     expect(loginService.redirectToLoginPage).not.toHaveBeenCalled();
     // $httpBackend.flush();
     // expect(loginService.getUserPermissions()).toEqual({id: "228",description: 'SKU: Discount Engine-Store MFA'});
