@@ -49,16 +49,8 @@
 .admin__promotion__form__controls {
   width: 100%;
   margin-top: 3em;
-}
-
-/*Admin promotion form controls*/
-
-.admin__promotion__form__controls--left {
-  float: left;
-}
-
-.admin__promotion__form__controls--right {
-  float: right;
+  display: flex;
+  justify-content: space-between;
 }
 
 .admin {
