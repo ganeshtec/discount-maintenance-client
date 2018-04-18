@@ -1,13 +1,11 @@
 <div class="md-text-field">
     <h4 class="pbl padding-bottom-10">Label Printing & Text</h4>
     <div class="md-checkbox">
-
-        <input type="checkbox" id="labelId" ng-disabled="$ctrl.isPrintLabelDisabled() || $ctrl.preview"
-               name="labelCheckbox" ng-model="$ctrl.data.printLabel" title="label"
-               ng-click="$ctrl.data.labelText = null; $ctrl.validatePromotion();"
-        />
-
-        <label for="labelId">Print Labels</label>
+        <md-checkbox role="checkbox" id="labelId" name="labelCheckbox" ng-model="$ctrl.data.printLabel"
+                     ng-disabled="$ctrl.isPrintLabelDisabled() || $ctrl.preview"
+                     ng-click="$ctrl.data.labelText = null; $ctrl.validatePromotion();"
+                     aria-checked="false">Print Labels
+        </md-checkbox>
     </div>
     <div class="md-textarea">
         <label for="labelText"><strong>Label Text</strong></label>
