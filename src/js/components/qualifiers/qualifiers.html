@@ -69,7 +69,7 @@
         </a>
     </th>
     </tr>
-    <tr ng-repeat="item in $ctrl.validStoreInfo track by $index" ng-class="{odd:($index % 2)}" ng-if="$ctrl.locationType=='stores'">
+    <tr ng-repeat="item in $ctrl.validStoreInfo | orderBy : 'storeNumber' track by item.storeNumber" ng-class="{odd:($index % 2)}" ng-if="$ctrl.locationType=='stores'">
 
     <td>
         {{item.storeNumber}}
@@ -103,7 +103,7 @@
         </a>
     </th>
     </tr>
-    <tr ng-repeat="market in $ctrl.validMarketInfo track by $index" ng-class="{odd:($index % 2)}" ng-if="$ctrl.locationType=='markets'">
+    <tr ng-repeat="market in $ctrl.validMarketInfo | orderBy : 'marketNumber' track by market.marketNumber" ng-class="{odd:($index % 2)}" ng-if="$ctrl.locationType=='markets'">
 
     <td>
         {{market.marketNumber}}
