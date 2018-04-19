@@ -32,6 +32,7 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$lo
                         delete $scope.promotionData.couponId;
                         //change the status to draft
                         $scope.promotionData.status = 20;
+                        $scope.promotionData.name = 'Copy of ' + promoData.name;
                     }else {
                         $scope.promotionData.originalPrintLabel = data.printLabel;
                     }
