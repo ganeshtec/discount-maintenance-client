@@ -94,7 +94,7 @@ describe('Unit testing qualifiers component', function () {
 
     it('All Pro checked', function () {
         ctrl.data.purchaseConds.allProDiscount = true;
-        ctrl.enableCustomerSegmentAndRapidPass();
+        ctrl.toggleCustomerSegmentAndRapidPass();
 
         expect(ctrl.data.checkRapidPass).toBe(false);
         expect(ctrl.data.disableRapidPass).toBe(true);
@@ -105,7 +105,7 @@ describe('Unit testing qualifiers component', function () {
 
     it('All Pro unchecked', function () {
         ctrl.data.purchaseConds.allProDiscount = false;
-        ctrl.enableCustomerSegmentAndRapidPass();
+        ctrl.toggleCustomerSegmentAndRapidPass();
 
         expect(ctrl.data.disableRapidPass).toBe(false);
         expect(ctrl.data.disableCustomerSegment).toBe(false);

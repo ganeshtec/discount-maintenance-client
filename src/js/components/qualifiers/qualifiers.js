@@ -151,7 +151,7 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
         ctrl.validationErrors = validationService.validatePromotion(ctrl.data);
     };
 
-    ctrl.enableCustomerSegmentAndRapidPass = function () {
+    ctrl.toggleCustomerSegmentAndRapidPass = function () {
         if(ctrl.data.purchaseConds.allProDiscount){
             if(ctrl.data.segment || ctrl.data.checkRapidPass){
                 modalService.showAlert('Warning', 'Customer segment and Rapid Pass selection removed due to selection of All Pros**');
@@ -169,6 +169,12 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
         }  
     }
 
+    // Condition to handle toggleCustomerSegmentAndRapidPass during edit.
+    
+    if (ctrl.data.purchaseConds && ctrl.data.purchaseConds.allProDiscount) {
+        ctrl.toggleCustomerSegmentAndRapidPass();
+    }
+    
     ctrl.selectRapidPass = function () {
         ctrl.setReasonCode();
         if (ctrl.data.checkRapidPass) {
