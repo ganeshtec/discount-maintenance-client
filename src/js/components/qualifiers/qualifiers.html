@@ -122,6 +122,8 @@
     </td>
     </tr>
     </table>
+    <div ng-if="$ctrl.locationType=='markets' && $ctrl.validMarketInfo.length > 0" class="itemCountDiv"> {{$ctrl.validMarketInfo.length}} Market(s) </div>
+    <div ng-if="$ctrl.locationType=='stores' && $ctrl.validStoreInfo.length > 0" class="itemCountDiv"> {{$ctrl.validStoreInfo.length}} Store(s) </div>
 </div>
 <!-- LOCATIONS END -->
 
