@@ -118,7 +118,16 @@
     }
     &.logout:before {
       font-family: "FontAwesome";
-      content: "\f023";
+      content: "\f08B";
     }
+
+    span {
+      font-size: 9px;
+      display: inline-block;
+      position: absolute;
+      margin-left: -29px;
+      margin-top:18px;
+    }
+    
   }
 }
