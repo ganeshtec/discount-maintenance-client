@@ -28,7 +28,7 @@
             <input class="table__search" ng-show="$ctrl.locationType=='stores'" ng-keypress="($event.keyCode === 13) && $ctrl.search($ctrl.locationSearch)" placeholder="Search and Add Store Number" type="text" ng-model="$ctrl.locationSearch" ng-class="{'error': $ctrl.inValidStoreInfo}"
                 ng-change="$ctrl.clear()" allow-pattern="(\d|[a-z A-Z\(\?\-\_\.\'\,\%\$\!\@\)])" ng-disabled="$ctrl.preview" />
             <a class="md-button secondary no-padding" href="" ng-show="$ctrl.locationType=='stores'" ng-click="$ctrl.search($ctrl.locationSearch)">
-                Search
+                Add
             </a>
             <ul>
                 <span class='error-message' ng-show="$ctrl.showInvalidError" ng-if="$ctrl.locationType=='stores'">
@@ -40,7 +40,7 @@
             <input class="table__search" ng-show="$ctrl.locationType=='markets'" ng-keypress="($event.keyCode === 13) && $ctrl.search($ctrl.locationSearch)" placeholder="Search and Add Market Number" type="text" ng-model="$ctrl.locationSearch" ng-class="{'error': $ctrl.inValidMarketInfo}"
                 ng-change="clear()" allow-pattern="(\d|[a-z A-Z\(\?\-\_\.\'\,\%\$\!\@\)])" ng-disabled="$ctrl.preview"/>
             <a class="md-button secondary no-padding" ng-show="$ctrl.locationType=='markets'" href="" ng-click="$ctrl.search($ctrl.locationSearch)">
-                Search
+                Add
             </a>
             <ul>
                 <span class='error-message' ng-show="$ctrl.showInvalidError" ng-if="$ctrl.locationType=='markets'">

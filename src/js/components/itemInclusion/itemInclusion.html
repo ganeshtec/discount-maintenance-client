@@ -5,7 +5,7 @@
 				<input class="table__search" placeholder="Search and Add Item OMS ID" type="text" ng-model="$ctrl.itemSearch" ng-keypress="($event.keyCode === 13) && $ctrl.search($ctrl.itemSearch)"
 				ng-class="{'error': inValidOmsInfo}" ng-change="$ctrl.clear()" allow-pattern="[\d\s\,]" ng-disabled="$ctrl.preview"/>
 				<a class="md-button secondary no-padding" href="" ng-click="$ctrl.search($ctrl.itemSearch)">
-					Search
+					Add
 				</a>
 				<ul>
 					<span class='error-message' ng-show="$ctrl.showInvalidError">                   
@@ -72,7 +72,7 @@
 				<input class="table__search" placeholder="Search and Add Item Sku Number" type="text" ng-model="$ctrl.itemSkuSearch" ng-keypress="($event.keyCode === 13) && $ctrl.search($ctrl.itemSkuSearch)"
 				ng-class="{'error': $ctrl.inValidSkuInfo}" ng-change="$ctrl.clear()" allow-pattern="[\d\s\,]" />
 				<a class="md-button secondary no-padding" href="" ng-click="$ctrl.search($ctrl.itemSkuSearch)">
-					Search 
+					Add 
 				</a>
 				<ul>
 					<span class='error-message' ng-show="$ctrl.showInvalidError">                   
