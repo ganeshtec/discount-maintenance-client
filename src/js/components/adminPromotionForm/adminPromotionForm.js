@@ -29,9 +29,14 @@ function adminPromotionFormController(promotionSubTypes, promotionDataService, r
         ctrl.data.exclsve = 0;
     }
 
+    if (!ctrl.data.singleSkuBulk) {
+        ctrl.data.singleSkuBulk = 0;
+    }
+
     var featureFlagPromise = featureFlagService.getFeatureFlags();
     featureFlagPromise.then(function (res) {
         ctrl.data.channelToggle = res.channelSelect;
+        ctrl.data.singleSkuBulkFlag = res.singleSkuBulk;
     })
 
     ctrl.$onInit = function () {
@@ -98,6 +103,10 @@ function adminPromotionFormController(promotionSubTypes, promotionDataService, r
 
     ctrl.toggleExclusive = function () {
         ctrl.data.exclsve = ctrl.data.exclsve == 1 ? 0 : 1;
+    }
+
+    ctrl.toggleSingleSkuBulk = function () {
+        ctrl.data.singleSkuBulk = ctrl.data.singleSkuBulk == 1 ? 0 : 1;
     }
 
     ctrl.validatePromotion = function () {

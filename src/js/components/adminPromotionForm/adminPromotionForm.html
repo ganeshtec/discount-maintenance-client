@@ -89,7 +89,15 @@
 			<!-- <CHANNEL SELECT PLACEHOLDER -->	
 			<channel-select ng-if="!$ctrl.preview && $ctrl.viewProp.displayChannelSelect" view-prop="$ctrl.viewProp" data="$ctrl.data"></channel-select>
 
-			<!-- <CHANNEL SELECT PLACEHOLDER -->	
+			<!-- <CHANNEL SELECT PLACEHOLDER -->
+			<div ng-show="$ctrl.viewProp.displaySingleSkuBulk && $ctrl.data.singleSkuBulkFlag" class="singleSkuBulk">
+				<div>
+					<h4>Single Sku Bulk</h4>
+				</div>
+				<div>
+					<md-checkbox data-ng-click="$ctrl.toggleSingleSkuBulk()" data-ng-checked="$ctrl.data.singleSkuBulk==1" ng-disabled="$ctrl.preview">Redeem through Single SKU Bulk</md-checkbox>
+				</div>
+			</div>		
 		</section>
 		<section class="admin__promotion__section" ng-show="$ctrl.index == $ctrl.sectionsIndex.QUALIFIERS || $ctrl.preview">
 			<qualifiers preview="$ctrl.preview" data="$ctrl.data" view-prop="$ctrl.viewProp" promoform="$ctrl.promoForm" locations="$ctrl.data.purchaseConds.locations" markets="$ctrl.data.purchaseConds.markets" validation-errors="$ctrl.validationErrors" is-disabled="$ctrl.isDisabled">
