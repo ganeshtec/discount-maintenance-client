@@ -108,7 +108,7 @@
 				</rewards>
 		</section>
 		<section class="admin__promotion__section" ng-show="$ctrl.viewProp.displayPromoDescription && ($ctrl.index == $ctrl.sectionsIndex.DESCRIPTIONS || $ctrl.preview)">
-				<promo-description data="data" preview="preview">
+				<promo-description data="$ctrl.data" preview="$ctrl.preview">
 				</promo-description>
 		</section>
 		<section class="admin__promotion__section" ng-show="$ctrl.viewProp.displayRedemptionLimits && ($ctrl.index == $ctrl.sectionsIndex.REDEMPTION_LIMITS || $ctrl.preview)">
