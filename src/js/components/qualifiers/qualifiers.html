@@ -1,18 +1,30 @@
 <!-- LOCATIONS START -->
-<div  ng-if="$ctrl.viewProp.displayLocation">
+<div ng-if="$ctrl.viewProp.displayLocation">
     <!-- Markets code START -->
     <div class="md-text-field">
-        <label for="location">Location Types <span class="mandatory-icon"><i class="fa fa-asterisk"></i></span></label>
+        <label for="location">Location Types
+            <span class="mandatory-icon">
+                <i class="fa fa-asterisk"></i>
+            </span>
+        </label>
         <div class="md-radio">
-            <input type="radio" id="markets" name="locations1" ng-model="$ctrl.locationType" title="markets" value="markets" ng-change="$ctrl.removeAll();$ctrl.clearInput();" ng-disabled="$ctrl.preview"/>
-            <label for="markets"><span><span></span></span>Markets</label>
+            <input type="radio" id="markets" name="locations1" ng-model="$ctrl.locationType" title="markets" value="markets" ng-change="$ctrl.removeAll();$ctrl.clearInput();"
+                ng-disabled="$ctrl.preview" />
+            <label for="markets">
+                <span>
+                    <span></span>
+                </span>Markets</label>
         </div>
 
         <div class="md-radio">
-            <input type="radio" id="stores" name="locations2" ng-model="$ctrl.locationType" title="stores" value="stores" ng-change="$ctrl.removeAll(); $ctrl.clearInput();" ng-disabled="$ctrl.preview"/>
-            <label for="stores"><span><span></span></span>Stores</label>
+            <input type="radio" id="stores" name="locations2" ng-model="$ctrl.locationType" title="stores" value="stores" ng-change="$ctrl.removeAll(); $ctrl.clearInput();"
+                ng-disabled="$ctrl.preview" />
+            <label for="stores">
+                <span>
+                    <span></span>
+                </span>Stores</label>
         </div>
-    </div> 
+    </div>
     <!-- Markets code END -->
 
     <!-- <table class="table category__table" ng-hide="locationType == 'markets' "> -->
@@ -134,25 +146,50 @@
     </div>
 </div>
 
+<div class="customer-segmentation">
+    <div class="md-select md-select-space customer-segment" ng-show="$ctrl.viewProp.displayCustomerSegment">
+        <label for="promocustomersegment">
+            <h3 ng-if="!$ctrl.data.checkRapidPass">Customer Segment (Optional)</h3>
+            <h3 ng-if="$ctrl.data.checkRapidPass">Customer Segment
+                <span class="mandatory-icon" ng-show="$ctrl.data.checkRapidPass" aria-hidden="false">
+                    <i class="fa fa-asterisk" aria-hidden="true"></i>
+                </span>
+        </label>
+        </h3>
 
-<div class="md-select md-select-space" ng-show="$ctrl.viewProp.displayCustomerSegment">
-    <label for="promocustomersegment">
-        <h3 ng-if="!$ctrl.data.checkRapidPass">Customer Segment (Optional)</h3>
-        <h3 ng-if="$ctrl.data.checkRapidPass">Customer Segment
-            <span class="mandatory-icon" ng-show="$ctrl.data.checkRapidPass" aria-hidden="false">
-                <i class="fa fa-asterisk" aria-hidden="true"></i>
-            </span></label>
-    </h3>
 
 
+        <select name="segment" ng-options="segment as segment.name for segment in $ctrl.segmentDetails track by segment.name" ng-model="$ctrl.data.segment"
+            ng-change="$ctrl.onSegmentSelection();$ctrl.updatePrintLabel();$ctrl.selectRapidPass();$ctrl.validatePromotion()"
+            ng-disabled="$ctrl.preview || $ctrl.data.disableCustomerSegment">
+            <option value="">
+                -- Select a Customer Segment --
+            </option>
+        </select>
 
-    <select name="segment" ng-options="segment as segment.name for segment in $ctrl.segmentDetails track by segment.name" ng-model="$ctrl.data.segment"
-        ng-change="$ctrl.onSegmentSelection();$ctrl.updatePrintLabel();$ctrl.selectRapidPass();$ctrl.validatePromotion()" ng-disabled="$ctrl.preview || $ctrl.data.disableCustomerSegment">
-        <option value="">
-            -- Select a Customer Segment --
-        </option>
-    </select>
+    </div>
+    <div ng-if="$ctrl.showProPaintOptions()"  class="md-text-field pro-paint-promo">
+        <label class="h4-inline" for="proPaint">Is this classified as a ProPaint Promo (RC15)?
+            <span class="mandatory-icon">
+                <i class="fa fa-asterisk"></i>
+            </span>
+        </label>
+        <div class="md-radio">
+            <input type="radio" id="proPaintYes" name="proPaintYes" ng-value="true" ng-model="$ctrl.data.purchaseConds.program.proPaint" ng-disabled="$ctrl.preview || $ctrl.data.disableCustomerSegment"/>
+            <label for="proPaintYes">
+                <span>
+                    <span></span>
+                </span>Yes</label>
+        </div>
 
+        <div class="md-radio">
+            <input type="radio" id="proPaintNo" name="proPaintNo" ng-value="false" ng-model="$ctrl.data.purchaseConds.program.proPaint" ng-disabled="$ctrl.preview || $ctrl.data.disableCustomerSegment"/>
+            <label for="proPaintNo">
+                <span>
+                    <span></span>
+                </span>No</label>
+        </div>
+    </div>
 </div>
 
 <div ng-if="$ctrl.viewProp.displayRapidPass && $ctrl.showRapidPass">
@@ -165,20 +202,22 @@
 </div>
 
 <div class="input-text-container" ng-if="$ctrl.data.checkRapidPass">
-    <label>Unique Codes Generated</label></br>
+    <label>Unique Codes Generated</label>
+    </br>
     <input type="number" id="rapidPassCouponLimit" name="rapidPassCouponLimit" allow-pattern="(\d)" ng-pattern="/^[0-9]*$/" ng-model="$ctrl.data.promoCdSpec.systemGen.uniqueCdCnt"
         ng-trim="false" ng-disabled="$ctrl.preview || $ctrl.data.disableRapidPass" />
     <div>
         <span class='error-message' ng-show="$ctrl.validationErrors.custSegmentErrors.isError">
-            {{$ctrl.validationErrors.custSegmentErrors.message}}   
+            {{$ctrl.validationErrors.custSegmentErrors.message}}
         </span>
 
     </div>
     <div>
         <span class='error-message' ng-show="$ctrl.checkRapidPassCouponLimit()">
-			Maximum coupon limit is {{$ctrl.MaxCouponGenerationLimit}}. Email MERCH_IT_DISCOUNT_SUPPORT@homedepot.com for request larger than {{$ctrl.MaxCouponGenerationLimit}}. 
-			<br>Please enter an number less than {{$ctrl.MaxCouponGenerationLimit}}.
-		</span>
+            Maximum coupon limit is {{$ctrl.MaxCouponGenerationLimit}}. Email MERCH_IT_DISCOUNT_SUPPORT@homedepot.com for request larger
+            than {{$ctrl.MaxCouponGenerationLimit}}.
+            <br>Please enter an number less than {{$ctrl.MaxCouponGenerationLimit}}.
+        </span>
     </div>
     </br>
     </br>
@@ -189,9 +228,9 @@
     <span class="basketThresholdText"> Enter the dollar amount a customer's order must reach to be assessed for this discount</span>
     <br>
     <span class="md-text-field basket">
-			<input type="text" class="basketThresholdTextBox" ng-model="$ctrl.data.purchaseConds.basketThreshold"
-                   ng-blur="$ctrl.validatePromotion()" allow-pattern="^[\d.]+$" ng-disabled="$ctrl.preview" placeholder="$0.00"/>
-			</span>
+        <input type="text" class="basketThresholdTextBox" ng-model="$ctrl.data.purchaseConds.basketThreshold" ng-blur="$ctrl.validatePromotion()"
+            allow-pattern="^[\d.]+$" ng-disabled="$ctrl.preview" placeholder="$0.00" />
+    </span>
     <br>
     <br>
 </div>
@@ -203,12 +242,18 @@
         <div class="md-radio">
             <input for="sitewide" type="radio" name="sitepromotion" ng-model="$ctrl.data.isSitewideDeal" ng-value="true" ng-disabled="$ctrl.preview"
             />
-            <label><span><span></span></span>Yes</label>
+            <label>
+                <span>
+                    <span></span>
+                </span>Yes</label>
         </div>
         <div class="md-radio">
             <input for="sitewide" type="radio" name="sitepromotion" ng-model="$ctrl.data.isSitewideDeal" ng-value="false" ng-disabled="$ctrl.preview"
             />
-            <label><span><span></span></span>No </label>
+            <label>
+                <span>
+                    <span></span>
+                </span>No</label>
         </div>
     </div>
 </div>

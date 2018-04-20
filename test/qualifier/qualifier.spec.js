@@ -50,6 +50,17 @@ describe('Unit testing qualifiers component', function () {
         expect(ctrl.data.reward.reasonCode).toBe(49);
     });
 
+    it('Program Segment Selected and ProPaint Set To NULL', function () {
+        ctrl.data.segment = { "segmentName": "PRO XTRA PAINT REWARDS-Bronze", "progId": 2, "tierId": 8 };
+        ctrl.onSegmentSelection();
+        expect(ctrl.data.purchaseConds.program.proPaint).toBeNull();
+    });
+
+    it('Program Segment Selected and ProPaint Set To True', function () {
+        ctrl.data.segment = { "segmentName": "PRO XTRA PAINT REWARDS-Bronze", "progId": 7, "tierId": 8 };
+        expect(ctrl.showProPaintOptions()).toBe(true);
+    });
+
     it('Customer Segment Selected', function () {
         ctrl.data.segment = { "id": 13550, "segmentName": "Segment 919" };
         ctrl.useCustSegReasonCode = true;

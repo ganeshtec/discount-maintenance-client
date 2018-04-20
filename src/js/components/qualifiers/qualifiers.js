@@ -34,7 +34,6 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
 
         featureTogglePromise.then(function (data) {
             ctrl.segmentsFromV2Endpoint = data.segmentsFromV2Endpoint;
-
             if (!ctrl.segmentsFromV2Endpoint) {
                 var segmentsFromV1EndpointPromise = customerSegmentDataService.getAllSegments();
                 segmentsFromV1EndpointPromise.then(
@@ -79,7 +78,7 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
                                 }
                             } else {
                                 ctrl.data.purchaseConds.customerSegmentId = 0;
-                                ctrl.data.purchaseConds.program = {id: 0, tierId: 0};
+                                ctrl.data.purchaseConds.program = { id: 0, tierId: 0 };
                             }
                             ctrl.segmentDetails.push(segment);
                         }
@@ -87,13 +86,14 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
                     function (error) {
                         ctrl.discountEngineErrors.push(error);
                     }
-                );             
-            }          
+                );
+            }
         });
     };
 
     ctrl.onSegmentSelection = function () {
         ctrl.setReasonCode();
+        ctrl.data.purchaseConds.program.proPaint = null;
         if (ctrl.data.segment) {
             if (ctrl.data.segment.id) {
                 ctrl.data.purchaseConds.customerSegmentId = ctrl.data.segment.id;
@@ -121,13 +121,20 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
         } else {
 
             ctrl.data.purchaseConds.customerSegmentId = 0;
-            ctrl.data.purchaseConds.program = {};   
+            ctrl.data.purchaseConds.program = {};
             ctrl.data.purchaseConds.program.id = 0;
             ctrl.data.purchaseConds.program.tierId = 0;
-
             ctrl.validationErrors = validationService.validateRapidPass(ctrl.data);
         }
     };
+
+    ctrl.showProPaintOptions = function () {
+        if (ctrl.data.segment && ctrl.data.segment.progId === 7) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     ctrl.setReasonCode = function () {
         if (ctrl.data.checkRapidPass) {
@@ -163,10 +170,10 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
             ctrl.data.disableCustomerSegment = true;
             ctrl.data.segment = '';
             ctrl.onSegmentSelection();
-        }else{
+        } else {
             ctrl.data.disableRapidPass = false;
             ctrl.data.disableCustomerSegment = false;
-        }  
+        }
     }
 
     // Condition to handle toggleCustomerSegmentAndRapidPass during edit.
@@ -310,10 +317,10 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
             .validateMarketIds(data);
         marketValidationResponsePromise
             .then(
-            function (data) {
-                ctrl.setMarketData(data, clicked);
-            },
-            showErrorMessage
+                function (data) {
+                    ctrl.setMarketData(data, clicked);
+                },
+                showErrorMessage
             );
     }
 
@@ -323,11 +330,11 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
             .getStoreIdCodes(data);
         locationPromise
             .then(
-            function (data) {
-                ctrl.setStoreData(data,
-                    clicked);
-            },
-            showErrorMessage);
+                function (data) {
+                    ctrl.setStoreData(data,
+                        clicked);
+                },
+                showErrorMessage);
     }
 
 

@@ -37,11 +37,11 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                     scope.headerErrorMsg = msg;
                 }
 
-                var selectedSellingChannels = scope.previewData.data.channelsWithCheckedFields ? scope.previewData.data.channelsWithCheckedFields.filter(function(channel) {return channel.checked}) : [];
+                var selectedSellingChannels = scope.previewData.data.channelsWithCheckedFields ? scope.previewData.data.channelsWithCheckedFields.filter(function (channel) { return channel.checked }) : [];
                 scope.previewData.data.purchaseConds.channels = scope.previewData.data.channels
-                scope.selectedChannels = selectedSellingChannels.map(function(channel){ return channel.name}).join(', ')
+                scope.selectedChannels = selectedSellingChannels.map(function (channel) { return channel.name }).join(', ')
                 scope.previewData.data.checkRapidPass = scope.data.promoCdSpec && scope.data.promoCdSpec.genType === 'Dynamically Generated';
-                
+
                 delete scope.previewData.data.channelsWithCheckedFields;
                 delete scope.previewData.data.channels;
                 scope.userType = loginService.getCurrentUserRole();
@@ -75,13 +75,13 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                         scope.previewData.data.promoSubTypeCd = 'TypeLessDiscount';
                         scope.previewData.data.promoSubTypeDesc = 'TypeLess-Discounts';
                     }
-                    if(scope.data.checkRapidPass) {
+                    if (scope.data.checkRapidPass) {
                         scope.previewData.data.reward.reasonCode = 9;
                         scope.previewData.data.promoCdSpec.systemGen.uniqueCdCnt = scope.data.promoCdSpec.systemGen.uniqueCdCnt;
                         scope.previewData.data.redmptnLmt.maxUsesOfPromo = scope.data.promoCdSpec.systemGen.uniqueCdCnt;
                     }
                     var promotion = $.extend(true, {}, scope.previewData.data);
-                    
+
                     utilService.setDefaultsForSaveAsDraft(promotion);
                     utilService.transformPromotionRequest(promotion);
 
@@ -103,9 +103,12 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                     } else if (isBuyAandBHasOverlap != null) {
                         setError(isBuyAandBHasOverlap);
                         return;
-                    } else if(scope.userType === 228 && scope.previewData.data.purchaseConds.channels != null && selectedSellingChannels.length == 0){
+                    } else if (scope.userType === 228 && scope.previewData.data.purchaseConds.channels != null && selectedSellingChannels.length == 0) {
                         setError('ERROR: Please select at least one selling channel');
-                        return
+                        return;
+                    } else if (scope.previewData.data.purchaseConds.program.id === 7 && scope.previewData.data.purchaseConds.program.proPaint === null) {
+                        setError('ERROR: Please select the appropriate ProPaint field');
+                        return;
                     } else {
                         scope.requiredFieldsMissing = false;
                     }
