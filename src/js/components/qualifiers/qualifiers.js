@@ -169,6 +169,7 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
             ctrl.data.disableRapidPass = true;
             ctrl.data.disableCustomerSegment = true;
             ctrl.data.segment = '';
+            ctrl.data.purchaseConds.program = {};
             ctrl.onSegmentSelection();
         } else {
             ctrl.data.disableRapidPass = false;
