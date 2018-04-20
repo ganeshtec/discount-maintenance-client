@@ -59,12 +59,15 @@ function SkuTypeModalController(skuTypesDataService, $mdDialog) {
 
 
     ctrl.applySkuTypeSelection = function () {
-        var attrs = []
+        var attrs = [], selectedSku='';
         ctrl.skuTypes.forEach(function (skuType) {
-            if (!ctrl.skuSelection[skuType.skuTypeCode]) {
+            if (ctrl.skuSelection[skuType.skuTypeCode]) {
+                selectedSku += ', ' + skuType.skuTypeCode;
+            } else {    
                 attrs.push(ctrl.buildSkuTypeAttr(skuType.skuTypeCode));
             }
         });
+        ctrl.source.selectedSku = selectedSku.length > 0 ? selectedSku.substring(1): '';  
         ctrl.source.exclusions.attrs = attrs;
         $mdDialog.hide();
     }
