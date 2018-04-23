@@ -1,6 +1,8 @@
 // Main Controller for root scope
-app.controller('MainCtrl', ['$rootScope', '$scope', '$location', 'DataFactory', 'SECTIONS', 'promotionDataService', 'loginService', 'OverlayConfigFactory',
-    function ($rootScope, $scope, $location,  DataFactory, SECTIONS, promotionDataService, loginService, OverlayConfigFactory) {
+/* eslint-disable */
+
+app.controller('MainCtrl', ['$rootScope', '$scope', '$location', 'DataFactory', 'SECTIONS', 'promotionDataService', 'loginService', 'OverlayConfigFactory', 'featureFlagService',
+    function ($rootScope, $scope, $location, DataFactory, SECTIONS, promotionDataService, loginService, OverlayConfigFactory, featureFlagService) {
         $scope.messageModal = DataFactory.messageModal;
         $scope.username = '';
         $scope.userPermissions = '';
@@ -15,23 +17,21 @@ app.controller('MainCtrl', ['$rootScope', '$scope', '$location', 'DataFactory', 
         $scope.userRoleSelected = {
             id: null,
         };
-        
+
         $rootScope.discountEngineErrors = [];
 
-        $scope.setLoginInfo = function() {
-            $scope.username=loginService.getUserName();
-            $scope.userPermissions=loginService.getUserPermissions();
-            $scope.userRoleSelected.id=loginService.getCurrentUserRole().toString();
+        $scope.setLoginInfo = function () {
+            $scope.username = loginService.getUserName();
+            $scope.userPermissions = loginService.getUserPermissions();
+            $scope.userRoleSelected.id = loginService.getCurrentUserRole().toString();
         }
 
-        $scope.$on('user-login', function(/*event, args*/) {
+        $scope.$on('user-login', function () {
             $scope.setLoginInfo();
         });
 
-        //$scope.setLoginInfo();
-
-        $scope.getUserPerm = function(){
-            if($scope.userRoleSelected.id){
+        $scope.getUserPerm = function () {
+            if ($scope.userRoleSelected.id) {
                 loginService.setCurrentUserRole($scope.userRoleSelected.id);
             }
             $rootScope.searchParams = null;
@@ -52,6 +52,17 @@ app.controller('MainCtrl', ['$rootScope', '$scope', '$location', 'DataFactory', 
 
         $scope.logout = function () {
             loginService.logout();
-        }
+        };
+
+        var featureTogglePromise = featureFlagService.getFeatureFlags();
+        featureTogglePromise.then(function (data) {
+                $rootScope.showBasketThreshold = data.basketThreshold;
+                $rootScope.useCustSegReasonCode = data.useCustSegReasonCode;
+                $rootScope.showRapidPass = data.showRapidPass;
+                $rootScope.showAllProDiscount = data.showAllProDiscount;
+                $rootScope.segmentsFromV2Endpoint = data.segmentsFromV2Endpoint;
+
+            }
+        );
     }
 ]);
