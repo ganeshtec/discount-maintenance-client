@@ -16,19 +16,18 @@ app.component('qualifiers', {
 });
 
 
-function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataService, utilService, validationService, featureFlagService, constantsConfigService, $rootScope, DataFactory, $filter, locationDataService, modalService) {
+function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataService, utilService, validationService, $rootScope, DataFactory, locationDataService, modalService) {
     var ctrl = this;
     ctrl.showBasketThreshold = $rootScope.showBasketThreshold;
     ctrl.useCustSegReasonCode = $rootScope.useCustSegReasonCode;
     ctrl.showRapidPass = $rootScope.showRapidPass;
     ctrl.showAllProDiscount = $rootScope.showAllProDiscount;
     ctrl.discountEngineErrors = $rootScope.discountEngineErrors;
+    ctrl.programIdForProMonthly = $rootScope.programIdForProMonthly;
 
     ctrl.MaxCouponGenerationLimit = MaxCouponGenerationLimit;
-    ctrl.programIdForProMonthly = null;
 
     ctrl.$onInit = function () {
-        var constantsTogglePromise = constantsConfigService.getConstantsFromConfig();
         ctrl.initialize();
 
         if (!$rootScope.segmentsFromV2Endpoint) {
@@ -85,10 +84,6 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
                 }
             );
         }
-
-        constantsTogglePromise.then(function (data) {
-            ctrl.programIdForProMonthly = data.programIdForProMonthly;
-        })
     };
 
     ctrl.onSegmentSelection = function () {

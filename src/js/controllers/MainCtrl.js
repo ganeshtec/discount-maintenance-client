@@ -1,7 +1,8 @@
 // Main Controller for root scope
+/* eslint-disable */
 
-app.controller('MainCtrl', ['$rootScope', '$scope', '$location', 'DataFactory', 'SECTIONS', 'promotionDataService', 'loginService', 'OverlayConfigFactory', 'featureFlagService',
-    function ($rootScope, $scope, $location, DataFactory, SECTIONS, promotionDataService, loginService, OverlayConfigFactory, featureFlagService) {
+app.controller('MainCtrl', ['$q', '$rootScope', '$scope', '$location', 'DataFactory', 'SECTIONS', 'promotionDataService', 'loginService', 'OverlayConfigFactory', 'featureFlagService', 'constantsConfigService',
+    function ($q, $rootScope, $scope, $location, DataFactory, SECTIONS, promotionDataService, loginService, OverlayConfigFactory, featureFlagService, constantsConfigService) {
         $scope.messageModal = DataFactory.messageModal;
         $scope.username = '';
         $scope.userPermissions = '';
@@ -23,7 +24,32 @@ app.controller('MainCtrl', ['$rootScope', '$scope', '$location', 'DataFactory', 
             $scope.username = loginService.getUserName();
             $scope.userPermissions = loginService.getUserPermissions();
             $scope.userRoleSelected.id = loginService.getCurrentUserRole().toString();
+
+            if ($scope.userPermissions && $scope.userRoleSelected.id) {
+                $scope.callGlobalServices();
+            }
         }
+
+        $scope.callGlobalServices = function () {
+            var constantsTogglePromise = constantsConfigService.getConstantsFromConfig();
+            var featureTogglePromise = featureFlagService.getFeatureFlags();
+
+            constantsTogglePromise.then(function (data) {
+                $rootScope.programIdForProMonthly = data.programIdForProMonthly;
+            });
+
+            featureTogglePromise.then(function (data) {
+                $rootScope.showBasketThreshold = data.basketThreshold;
+                $rootScope.useCustSegReasonCode = data.useCustSegReasonCode;
+                $rootScope.showRapidPass = data.showRapidPass;
+                $rootScope.showAllProDiscount = data.showAllProDiscount;
+                $rootScope.segmentsFromV2Endpoint = data.segmentsFromV2Endpoint;
+                $rootScope.channelToggle = data.channelSelect;
+                $rootScope.singleSkuBulk = data.singleSkuBulk;
+                $rootScope.receiptText = data.receiptText;
+            });
+
+        };
 
         $scope.$on('user-login', function () {
             $scope.setLoginInfo();
@@ -52,17 +78,5 @@ app.controller('MainCtrl', ['$rootScope', '$scope', '$location', 'DataFactory', 
         $scope.logout = function () {
             loginService.logout();
         };
-
-        var featureTogglePromise = featureFlagService.getFeatureFlags();
-        featureTogglePromise.then(function (data) {
-            $rootScope.showBasketThreshold = data.basketThreshold;
-            $rootScope.useCustSegReasonCode = data.useCustSegReasonCode;
-            $rootScope.showRapidPass = data.showRapidPass;
-            $rootScope.showAllProDiscount = data.showAllProDiscount;
-            $rootScope.segmentsFromV2Endpoint = data.segmentsFromV2Endpoint;
-            $rootScope.channelToggle = data.channelSelect;
-            $rootScope.singleSkuBulk = data.singleSkuBulk;
-            $rootScope.receiptText = data.receiptText;
-        });
     }
 ]);
