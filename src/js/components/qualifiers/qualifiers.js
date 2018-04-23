@@ -1,4 +1,5 @@
 // Purpose is to build promotion code spec.
+/* eslint-disable */
 app.component('qualifiers', {
     templateUrl: 'qualifiers.html',
     bindings: {
@@ -16,14 +17,16 @@ app.component('qualifiers', {
 });
 
 
-function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataService, utilService, validationService, featureFlagService, $rootScope, DataFactory, $filter, locationDataService, modalService) {
+function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataService, utilService, validationService, featureFlagService, constantsConfigService, $rootScope, DataFactory, $filter, locationDataService, modalService) {
     var ctrl = this;
     ctrl.showBasketThreshold = false;
     ctrl.MaxCouponGenerationLimit = MaxCouponGenerationLimit;
     ctrl.discountEngineErrors = $rootScope.discountEngineErrors;
+    ctrl.programIdForProMonthly = null;
 
     ctrl.$onInit = function () {
         var featureTogglePromise = featureFlagService.getFeatureFlags();
+        var constantsTogglePromise = constantsConfigService.getConstantsFromConfig();
         ctrl.initialize();
         featureTogglePromise.then(function (data) {
             ctrl.showBasketThreshold = data.basketThreshold;
@@ -89,6 +92,10 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
                 );
             }
         });
+
+        constantsTogglePromise.then(function (data) {
+            ctrl.programIdForProMonthly = data.programIdForProMonthly;
+        })
     };
 
     ctrl.onSegmentSelection = function () {
@@ -129,12 +136,12 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
     };
 
     ctrl.showProPaintOptions = function () {
-        if (ctrl.data.segment && ctrl.data.segment.progId === 7) {
+        if (ctrl.data.segment && ctrl.data.segment.progId === parseInt(ctrl.programIdForProMonthly)) {
             return true;
         } else {
             return false;
         }
-    }
+    };
 
     ctrl.setReasonCode = function () {
         if (ctrl.data.checkRapidPass) {
