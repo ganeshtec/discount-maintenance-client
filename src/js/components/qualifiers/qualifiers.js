@@ -124,7 +124,7 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
     };
 
     ctrl.showProPaintOptions = function () {
-        if (ctrl.data.segment && ctrl.data.segment.progId === parseInt(ctrl.programIdForProMonthly)) {
+        if (ctrl.data.segment && ctrl.data.segment.progId && (ctrl.programIdForProMonthly.split(',').indexOf(ctrl.data.segment.progId.toString()) > -1)) {
             return true;
         } else {
             return false;
