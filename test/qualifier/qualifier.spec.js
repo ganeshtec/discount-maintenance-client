@@ -57,8 +57,10 @@ describe('Unit testing qualifiers component', function () {
     });
 
     it('Program Segment Selected and ProPaint Set To True', function () {
-        ctrl.data.segment = { "segmentName": "PRO XTRA PAINT REWARDS-Bronze", "progId": 7, "tierId": 8 };
+        ctrl.data.segment = { "segmentName": "PRO XTRA PAINT REWARDS-Bronze", "progId": 8, "tierId": 8 };
+        ctrl.programIdForProMonthly = "8";
         expect(ctrl.showProPaintOptions()).toBe(true);
+
     });
 
     it('Customer Segment Selected', function () {
