@@ -1,5 +1,4 @@
 // Main Controller for root scope
-/* eslint-disable */
 
 app.controller('MainCtrl', ['$q', '$rootScope', '$scope', '$location', 'DataFactory', 'SECTIONS', 'promotionDataService', 'loginService', 'OverlayConfigFactory', 'featureFlagService', 'constantsConfigService',
     function ($q, $rootScope, $scope, $location, DataFactory, SECTIONS, promotionDataService, loginService, OverlayConfigFactory, featureFlagService, constantsConfigService) {
@@ -17,7 +16,6 @@ app.controller('MainCtrl', ['$q', '$rootScope', '$scope', '$location', 'DataFact
         $scope.userRoleSelected = {
             id: null,
         };
-
         $rootScope.discountEngineErrors = [];
 
         $scope.setLoginInfo = function () {

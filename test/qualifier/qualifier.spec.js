@@ -157,13 +157,6 @@ describe('Unit testing qualifiers component', function () {
 
     });
 
-    // it('initialize for preview promotion', function () {
-    //     ctrl.data.rapidPassCouponLimit = 50;
-    //     ctrl.data.checkRapidPass = true;
-    //     ctrl.initialize();
-    //     expect(ctrl.data.promoCdSpec.systemGen.uniqueCdCnt).toBe(50);
-    // });
-
     it('check rapid pass coupon limit exceeds 300000', function () {
         ctrl.data.promoCdSpec.systemGen.uniqueCdCnt = 300001;
         ctrl.MaxCouponGenerationLimit = 300000;
