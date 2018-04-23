@@ -1,5 +1,4 @@
 // Main Controller for root scope
-/* eslint-disable */
 
 app.controller('MainCtrl', ['$rootScope', '$scope', '$location', 'DataFactory', 'SECTIONS', 'promotionDataService', 'loginService', 'OverlayConfigFactory', 'featureFlagService',
     function ($rootScope, $scope, $location, DataFactory, SECTIONS, promotionDataService, loginService, OverlayConfigFactory, featureFlagService) {
@@ -56,13 +55,14 @@ app.controller('MainCtrl', ['$rootScope', '$scope', '$location', 'DataFactory', 
 
         var featureTogglePromise = featureFlagService.getFeatureFlags();
         featureTogglePromise.then(function (data) {
-                $rootScope.showBasketThreshold = data.basketThreshold;
-                $rootScope.useCustSegReasonCode = data.useCustSegReasonCode;
-                $rootScope.showRapidPass = data.showRapidPass;
-                $rootScope.showAllProDiscount = data.showAllProDiscount;
-                $rootScope.segmentsFromV2Endpoint = data.segmentsFromV2Endpoint;
-
-            }
-        );
+            $rootScope.showBasketThreshold = data.basketThreshold;
+            $rootScope.useCustSegReasonCode = data.useCustSegReasonCode;
+            $rootScope.showRapidPass = data.showRapidPass;
+            $rootScope.showAllProDiscount = data.showAllProDiscount;
+            $rootScope.segmentsFromV2Endpoint = data.segmentsFromV2Endpoint;
+            $rootScope.channelToggle = data.channelSelect;
+            $rootScope.singleSkuBulk = data.singleSkuBulk;
+            $rootScope.receiptText = data.receiptText;
+        });
     }
 ]);

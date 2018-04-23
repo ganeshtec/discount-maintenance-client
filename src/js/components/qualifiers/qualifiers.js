@@ -1,5 +1,4 @@
 // Purpose is to build promotion code spec.
-/* eslint-disable */
 app.component('qualifiers', {
     templateUrl: 'qualifiers.html',
     bindings: {
@@ -51,9 +50,7 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
                     if (!ctrl.data.segment) {
                         ctrl.data.purchaseConds.customerSegmentId = 0;
                     }
-                }, function (error) {
-                    ctrl.discountEngineErrors.push(error);
-                }
+                }, function (error) { ctrl.discountEngineErrors.push(error); }
             );
         } else {
             var segmentsFromV2EndpointPromise = customerSegmentDataService.getAllSegmentsV2EndPoint();
@@ -88,7 +85,6 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
                 }
             );
         }
-
 
         constantsTogglePromise.then(function (data) {
             ctrl.programIdForProMonthly = data.programIdForProMonthly;
