@@ -5,7 +5,6 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$lo
 
         var promotionID = $routeParams.id || null;
         var cloneId = $routeParams.cloneid || null;
-        // var promotionID1 = $routeParams.promotionID1 || null;
         var promotionID2 = $routeParams.promotionID2 || null;
         var allowedPermissionIDs = ALLOWED_PERMISSION_IDS();
         $scope.sections = [];

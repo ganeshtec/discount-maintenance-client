@@ -57,8 +57,10 @@ describe('Unit testing qualifiers component', function () {
     });
 
     it('Program Segment Selected and ProPaint Set To True', function () {
-        ctrl.data.segment = { "segmentName": "PRO XTRA PAINT REWARDS-Bronze", "progId": 7, "tierId": 8 };
+        ctrl.data.segment = { "segmentName": "PRO XTRA PAINT REWARDS-Bronze", "progId": 8, "tierId": 8 };
+        ctrl.programIdForProMonthly = "8";
         expect(ctrl.showProPaintOptions()).toBe(true);
+
     });
 
     it('Customer Segment Selected', function () {
@@ -154,13 +156,6 @@ describe('Unit testing qualifiers component', function () {
         expect(ctrl.data.checkRapidPass).toBe(false);
 
     });
-
-    // it('initialize for preview promotion', function () {
-    //     ctrl.data.rapidPassCouponLimit = 50;
-    //     ctrl.data.checkRapidPass = true;
-    //     ctrl.initialize();
-    //     expect(ctrl.data.promoCdSpec.systemGen.uniqueCdCnt).toBe(50);
-    // });
 
     it('check rapid pass coupon limit exceeds 300000', function () {
         ctrl.data.promoCdSpec.systemGen.uniqueCdCnt = 300001;

@@ -421,10 +421,6 @@ app.service('utilService', ['$filter', 'leadTimeService','loginService', functio
     }
 
     publicApi.isPreviewSubmitClickDisabled = function (promotion) {
-
-        //  var leadTimePromise = leadTimeService.fetchLeadTime();
-        // return leadTimePromise.then(function (leadTime) {
-        //      var minDt = moment(promotion.endDt).subtract(leadTime, 'days');
         if (promotion.status == 61 && promotion.originalPrintLabel === true) {
             return true;
         }
@@ -441,11 +437,6 @@ app.service('utilService', ['$filter', 'leadTimeService','loginService', functio
     }
 
     publicApi.updatePrintLabel = function (promotion) {
-        /* Code to fix clearing of label text while editing active promotion that has an active label
-           pending bug fix request.
-
-        if ((!publicApi.isLabelLocked(promotion)) && publicApi.isPrintLabelDisabled(promotion)) {
-        */
         if (publicApi.isPrintLabelDisabled(promotion) && !publicApi.isLabelLocked(promotion)) {
             promotion.printLabel = false;
             promotion.labelText = '';

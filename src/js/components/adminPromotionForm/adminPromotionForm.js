@@ -17,13 +17,14 @@ app.component('adminPromotionForm', {
 
 });
 
-function adminPromotionFormController(promotionSubTypes, promotionDataService, redemptionMethodTypes, utilService, validationService, DataFactory, itemCategorySourceData, loginService, featureFlagService, sectionsIndex, $scope) {
+function adminPromotionFormController(promotionDataService, redemptionMethodTypes, utilService, validationService, DataFactory, itemCategorySourceData, loginService, featureFlagService, sectionsIndex, $scope, $rootScope) {
     var ctrl = this;
     ctrl.sectionsIndex = sectionsIndex;
     ctrl.userType = loginService.getCurrentUserRole();
     ctrl.formHolder.form = ctrl.promoForm ? ctrl.promoForm : ctrl.formHolder.form;
     ctrl.showMaximumDiscount = false;
-    // ctrl.promotionSubTypes = null;
+    ctrl.data.channelToggle = $rootScope.channelToggle;
+    ctrl.data.singleSkuBulkFlag = $rootScope.singleSkuBulk;
 
     if (!ctrl.data.exclsve) {
         ctrl.data.exclsve = 0;
@@ -32,12 +33,6 @@ function adminPromotionFormController(promotionSubTypes, promotionDataService, r
     if (!ctrl.data.singleSkuBulk) {
         ctrl.data.singleSkuBulk = 0;
     }
-
-    var featureFlagPromise = featureFlagService.getFeatureFlags();
-    featureFlagPromise.then(function (res) {
-        ctrl.data.channelToggle = res.channelSelect;
-        ctrl.data.singleSkuBulkFlag = res.singleSkuBulk;
-    })
 
     ctrl.$onInit = function () {
         var getPromotionPromise;
@@ -57,7 +52,6 @@ function adminPromotionFormController(promotionSubTypes, promotionDataService, r
 
             });
     }
-    //ctrl.getPromoSubTypes();
 
     ctrl.setPromotionSubType = function (watch) {
         if (ctrl.promotionSubTypes && ctrl.data && ctrl.data.promoSubTypeCd) {

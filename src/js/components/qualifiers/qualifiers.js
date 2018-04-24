@@ -16,79 +16,74 @@ app.component('qualifiers', {
 });
 
 
-function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataService, utilService, validationService, featureFlagService, $rootScope, DataFactory, $filter, locationDataService, modalService) {
+function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataService, utilService, validationService, $rootScope, DataFactory, locationDataService, modalService) {
     var ctrl = this;
-    ctrl.showBasketThreshold = false;
-    ctrl.MaxCouponGenerationLimit = MaxCouponGenerationLimit;
+    ctrl.showBasketThreshold = $rootScope.showBasketThreshold;
+    ctrl.useCustSegReasonCode = $rootScope.useCustSegReasonCode;
+    ctrl.showRapidPass = $rootScope.showRapidPass;
+    ctrl.showAllProDiscount = $rootScope.showAllProDiscount;
     ctrl.discountEngineErrors = $rootScope.discountEngineErrors;
+    ctrl.programIdForProMonthly = $rootScope.programIdForProMonthly;
+
+    ctrl.MaxCouponGenerationLimit = MaxCouponGenerationLimit;
 
     ctrl.$onInit = function () {
-        var featureTogglePromise = featureFlagService.getFeatureFlags();
         ctrl.initialize();
-        featureTogglePromise.then(function (data) {
-            ctrl.showBasketThreshold = data.basketThreshold;
-            ctrl.useCustSegReasonCode = data.useCustSegReasonCode;
-            ctrl.showRapidPass = data.showRapidPass;
-            ctrl.showAllProDiscount = data.showAllProDiscount;
-        });
 
-        featureTogglePromise.then(function (data) {
-            ctrl.segmentsFromV2Endpoint = data.segmentsFromV2Endpoint;
-            if (!ctrl.segmentsFromV2Endpoint) {
-                var segmentsFromV1EndpointPromise = customerSegmentDataService.getAllSegments();
-                segmentsFromV1EndpointPromise.then(
-                    function (data) {
-                        ctrl.segmentDetails = [];
-                        angular.forEach(data.segments, function (segmentFromWebService) {
-                            var segment = {};
-                            segment.name = segmentFromWebService.name;
-                            segment.id = segmentFromWebService.id;
-                            ctrl.segmentDetails.push(segment);
+        if (!$rootScope.segmentsFromV2Endpoint) {
+            var segmentsFromV1EndpointPromise = customerSegmentDataService.getAllSegments();
+            segmentsFromV1EndpointPromise.then(
+                function (data) {
+                    ctrl.segmentDetails = [];
+                    angular.forEach(data.segments, function (segmentFromWebService) {
+                        var segment = {};
+                        segment.name = segmentFromWebService.name;
+                        segment.id = segmentFromWebService.id;
+                        ctrl.segmentDetails.push(segment);
 
-                            // If condition for Edit Customer Segment
-                            if (ctrl.data.purchaseConds.customerSegmentId && ctrl.data.purchaseConds.customerSegmentId == segmentFromWebService.id) {
+                        // If condition for Edit Customer Segment
+                        if (ctrl.data.purchaseConds.customerSegmentId && ctrl.data.purchaseConds.customerSegmentId == segmentFromWebService.id) {
+                            ctrl.data.segment = segment;
+                        }
+                    });
+                    if (!ctrl.data.segment) {
+                        ctrl.data.purchaseConds.customerSegmentId = 0;
+                    }
+                }, function (error) { ctrl.discountEngineErrors.push(error); }
+            );
+        } else {
+            var segmentsFromV2EndpointPromise = customerSegmentDataService.getAllSegmentsV2EndPoint();
+            segmentsFromV2EndpointPromise.then(
+                function (data) {
+                    ctrl.segmentListfromWebservice = data.segments;
+                    var arrayLength = ctrl.segmentListfromWebservice.length;
+                    ctrl.segmentDetails = [];
+                    for (var i = 0; i < arrayLength; i++) {
+                        var segment = {};
+                        segment.name = ctrl.segmentListfromWebservice[i].segmentName;
+                        segment.id = ctrl.segmentListfromWebservice[i].segmentId;
+                        segment.progId = ctrl.segmentListfromWebservice[i].programId;
+                        segment.tierId = ctrl.segmentListfromWebservice[i].tierId;
+
+                        // If condition for Edit Customer Segment
+                        if (ctrl.data.purchaseConds.customerSegmentId || (ctrl.data.purchaseConds.program && ctrl.data.purchaseConds.program.id && ctrl.data.purchaseConds.program.tierId)) {
+                            if ((ctrl.data.purchaseConds.customerSegmentId == ctrl.segmentListfromWebservice[i].segmentId) ||
+                                (((ctrl.data.purchaseConds.program.id == ctrl.segmentListfromWebservice[i].programId)
+                                    && (ctrl.data.purchaseConds.program.tierId == ctrl.segmentListfromWebservice[i].tierId)))) {
                                 ctrl.data.segment = segment;
                             }
-                        });
-                        if (!ctrl.data.segment) {
+                        } else {
                             ctrl.data.purchaseConds.customerSegmentId = 0;
+                            ctrl.data.purchaseConds.program = {id: 0, tierId: 0};
                         }
-                    }, function (error) { ctrl.discountEngineErrors.push(error); }
-                );
-            } else {
-                var segmentsFromV2EndpointPromise = customerSegmentDataService.getAllSegmentsV2EndPoint();
-                segmentsFromV2EndpointPromise.then(
-                    function (data) {
-                        ctrl.segmentListfromWebservice = data.segments;
-                        var arrayLength = ctrl.segmentListfromWebservice.length;
-                        ctrl.segmentDetails = [];
-                        for (var i = 0; i < arrayLength; i++) {
-                            var segment = {};
-                            segment.name = ctrl.segmentListfromWebservice[i].segmentName;
-                            segment.id = ctrl.segmentListfromWebservice[i].segmentId;
-                            segment.progId = ctrl.segmentListfromWebservice[i].programId;
-                            segment.tierId = ctrl.segmentListfromWebservice[i].tierId;
-
-                            // If condition for Edit Customer Segment
-                            if (ctrl.data.purchaseConds.customerSegmentId || (ctrl.data.purchaseConds.program && ctrl.data.purchaseConds.program.id && ctrl.data.purchaseConds.program.tierId)) {
-                                if ((ctrl.data.purchaseConds.customerSegmentId == ctrl.segmentListfromWebservice[i].segmentId) ||
-                                    (((ctrl.data.purchaseConds.program.id == ctrl.segmentListfromWebservice[i].programId)
-                                        && (ctrl.data.purchaseConds.program.tierId == ctrl.segmentListfromWebservice[i].tierId)))) {
-                                    ctrl.data.segment = segment;
-                                }
-                            } else {
-                                ctrl.data.purchaseConds.customerSegmentId = 0;
-                                ctrl.data.purchaseConds.program = { id: 0, tierId: 0 };
-                            }
-                            ctrl.segmentDetails.push(segment);
-                        }
-                    },
-                    function (error) {
-                        ctrl.discountEngineErrors.push(error);
+                        ctrl.segmentDetails.push(segment);
                     }
-                );
-            }
-        });
+                },
+                function (error) {
+                    ctrl.discountEngineErrors.push(error);
+                }
+            );
+        }
     };
 
     ctrl.onSegmentSelection = function () {
@@ -129,12 +124,12 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
     };
 
     ctrl.showProPaintOptions = function () {
-        if (ctrl.data.segment && ctrl.data.segment.progId === 7) {
+        if (ctrl.data.segment && ctrl.data.segment.progId && (ctrl.programIdForProMonthly.split(',').indexOf(ctrl.data.segment.progId.toString()) > -1)) {
             return true;
         } else {
             return false;
         }
-    }
+    };
 
     ctrl.setReasonCode = function () {
         if (ctrl.data.checkRapidPass) {
@@ -159,8 +154,8 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
     };
 
     ctrl.toggleCustomerSegmentAndRapidPass = function () {
-        if(ctrl.data.purchaseConds.allProDiscount){
-            if(ctrl.data.segment || ctrl.data.checkRapidPass){
+        if (ctrl.data.purchaseConds.allProDiscount) {
+            if (ctrl.data.segment || ctrl.data.checkRapidPass) {
                 modalService.showAlert('Warning', 'Customer segment and Rapid Pass selection removed due to selection of All Pros**');
             }
             ctrl.data.checkRapidPass = false;
@@ -178,11 +173,11 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
     }
 
     // Condition to handle toggleCustomerSegmentAndRapidPass during edit.
-    
+
     if (ctrl.data.purchaseConds && ctrl.data.purchaseConds.allProDiscount) {
         ctrl.toggleCustomerSegmentAndRapidPass();
     }
-    
+
     ctrl.selectRapidPass = function () {
         ctrl.setReasonCode();
         if (ctrl.data.checkRapidPass) {
@@ -454,11 +449,13 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
         }
 
     }
+
     function setMarketData() {
         ctrl.markets = ctrl.validMarketInfo.reduce(function (data, market) {
             return data.concat(market.marketNumber);
         }, []);
     }
+
     function setData() {
         ctrl.locations = ctrl.validStoreInfo.reduce(function (data, item) {
             return data.concat(item.storeNumber);

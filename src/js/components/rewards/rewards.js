@@ -16,7 +16,7 @@ app.component('rewards', {
 
 rewardsController.$inject = ['$rootScope', '$scope', '$mdDialog', 'SourceData', 'validationService', 'utilService', 'loginService', 'featureFlagService'];
 
-function rewardsController($rootScope, $scope, $mdDialog, SourceData, validationService, utilService, loginService, featureFlagService) {
+function rewardsController($rootScope, $scope, $mdDialog, SourceData, validationService, utilService, loginService) {
     var ctrl = this;
     ctrl.setQualUOM = setQualUOM;
     ctrl.addPurchaseCondition = addPurchaseCondition;
@@ -35,7 +35,9 @@ function rewardsController($rootScope, $scope, $mdDialog, SourceData, validation
     ctrl.isDCMUser;
     ctrl.rewardTypeLabel='Percentage';
     ctrl.alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-    ctrl.showBasketThreshold = false;
+
+    ctrl.showBasketThreshold = $rootScope.showBasketThreshold;
+    ctrl.useCustSegReasonCode = $rootScope.useCustSegReasonCode;
 
     ctrl.$onInit = $onInit;
     ctrl.userType = loginService.getCurrentUserRole();
@@ -208,11 +210,4 @@ function rewardsController($rootScope, $scope, $mdDialog, SourceData, validation
 
         $rootScope.$broadcast('clearCategories');
     }
-
-    var featureTogglePromise = featureFlagService.getFeatureFlags();
-    featureTogglePromise.then(function (data) {
-        ctrl.showBasketThreshold = data.basketThreshold;
-        ctrl.useCustSegReasonCode = data.useCustSegReasonCode;
-    })
-
 }
