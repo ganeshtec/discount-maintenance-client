@@ -24,6 +24,7 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
     ctrl.showAllProDiscount = $rootScope.showAllProDiscount;
     ctrl.discountEngineErrors = $rootScope.discountEngineErrors;
     ctrl.programIdForProMonthly = $rootScope.programIdForProMonthly;
+    ctrl.displayCustomerSegmentInDCM = $rootScope.displayCustomerSegmentInDCM;
 
     ctrl.MaxCouponGenerationLimit = MaxCouponGenerationLimit;
 

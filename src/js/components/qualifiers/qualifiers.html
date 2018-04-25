@@ -137,7 +137,7 @@
 
 <!--Customer Segmentation-->
 <div class="customer-segmentation">
-    <div class="md-select md-select-space customer-segment" ng-show="$ctrl.viewProp.displayCustomerSegment">
+    <div class="md-select md-select-space customer-segment" ng-show="$ctrl.viewProp.displayCustomerSegment && $ctrl.displayCustomerSegmentInDCM">
         <label for="promoCustomerSegment">
             <h3 ng-if="!$ctrl.data.checkRapidPass">Customer Segment (Optional)</h3>
             <h3 ng-if="$ctrl.data.checkRapidPass">Customer Segment

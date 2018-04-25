@@ -43,6 +43,7 @@ app.controller('MainCtrl', ['$q', '$rootScope', '$scope', '$location', 'DataFact
                 $rootScope.showAllProDiscount = data.showAllProDiscount;
                 $rootScope.segmentsFromV2Endpoint = data.segmentsFromV2Endpoint;
                 $rootScope.channelToggle = data.channelSelect;
+                $rootScope.displayCustomerSegmentInDCM = data.displayCustomerSegmentInDCM;
                 $rootScope.singleSkuBulk = data.singleSkuBulk;
                 $rootScope.receiptText = data.receiptText;
             });
