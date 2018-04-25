@@ -1,7 +1,7 @@
 //Merch Hierarchy 
-app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory', 'OverlayConfigFactory','$mdDialog','validationService','$rootScope',
+app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory', 'OverlayConfigFactory', '$mdDialog', 'validationService', '$rootScope', 'skuTypesDataService',
 
-    function (merchHierarchyDataService, DataFactory, OverlayConfigFactory, $mdDialog, validationService, $rootScope) {
+    function (merchHierarchyDataService, DataFactory, OverlayConfigFactory, $mdDialog, validationService, $rootScope, skuTypesDataService) {
         return {
             restrict: 'E',
             templateUrl: 'merchHierarchyView.html',
@@ -33,7 +33,8 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                 scope.deleteAllRows = deleteAllRows;
                 scope.validatePromotion = validatePromotion;
                 scope.showSkuTypeModal = showSkuTypeModal;
-                
+                scope.isSkuExcluded = isSkuExcluded;
+
                 scope.getAllDepartments();
 
                 if (scope.data && scope.data.length > 0) {
@@ -54,13 +55,34 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                     }
                 }
 
+                skuTypesDataService.fetchSkuTypes().then(function (skuTypes) {
+                    var selectedSku = '';
+                    angular.forEach(skuTypes, function (skuType) {
+                        if (!isSkuExcluded(scope.source.exclusions.attrs, skuType)) {
+                            selectedSku += ', ' + skuType.skuTypeCode;
+                        }
+                    })
+                    scope.source.selectedSku = selectedSku.length > 0 ? selectedSku.substring(1) : '';
+                });
+
+                function isSkuExcluded(attrs, skuType) {
+                    var isExcluded = false;
+                    angular.forEach(attrs, function (attr) {
+                        if (attr.value == skuType.skuTypeCode) {
+                            isExcluded = true;
+                            return;
+                        }
+                    })
+                    return isExcluded;
+                }
+
                 $rootScope.$on('clearCategories', function () {
                     scope.deleteAllRows();
-                    
+
                     scope.selectedDept = null;
                     scope.selectedClass = null;
                     scope.selectedSubClasses = [];
-                    
+
                     scope.classList = [];
                     scope.SubClassList = [];
                 });
@@ -86,7 +108,7 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                             }
                             //END
                         },
-                        function () {}
+                        function () { }
                     );
                 }
                 // Classes code STARTs
@@ -119,7 +141,7 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                 function getSubClasses() {
 
                     scope.SubClassList = [];
-                    scope.selectedSubClasses = [];                    
+                    scope.selectedSubClasses = [];
                     if (scope.selectedClass && scope.selectedClass != null) {
                         scope.merchDataLoading = true;
                         var getSubClassesPromise = merchHierarchyDataService.getSubClasses(scope.selectedDept.id, scope.selectedClass.merchandiseClassNumber);
@@ -127,7 +149,7 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                             function (subClassdata) {
                                 scope.SubClassListfromWS = subClassdata.merchSubClasses;
                                 var classArraySize = scope.SubClassListfromWS.length;
-                                
+
                                 for (var j = 0; j < classArraySize; j++) {
                                     var SubClassObject = {};
                                     SubClassObject.merchandiseSubordinateClassNumber = scope.SubClassListfromWS[j].merchandiseSubordinateClassNumber;
@@ -140,21 +162,21 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                             function () {
                                 scope.merchDataLoading = false;
                             });
-                    }                    
+                    }
                 }
                 // getSubClassess Method - END
-                
+
                 function prepareJsondata(dataObject) {
                     var dcsId = '';
                     if (dataObject) {
                         var dptNum = dataObject.deptNum || '';
                         var clasNum = dataObject.clasNum || '';
-                        var subClasNum = dataObject.subClasNum  || '';
+                        var subClasNum = dataObject.subClasNum || '';
                         dcsId = dptNum + delimeter + clasNum + delimeter + subClasNum;
                     }
                     return dcsId;
                 }
-                
+
                 function showData() {
                     if (scope.selectedDept == null) {
                         DataFactory.messageModal.message = 'No Department Selected, Please select  Department';
@@ -162,7 +184,7 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                         $('#messageModal').popup();
                     } else {
                         var isTableDataEmpty = scope.tableData.length === 0;
-                        
+
 
                         if (scope.selectedClass == null) {
                             scope.selectedClass = {
@@ -170,7 +192,7 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                                 merchandiseClassNumber: ''
                             }
                         }
-                        if(scope.selectedSubClasses.length == 0) {
+                        if (scope.selectedSubClasses.length == 0) {
                             if (scope.selectedSubClass == null) {
                                 scope.selectedSubClass = {
                                     merchandiseSubordinateClassDescription: '',
@@ -180,14 +202,14 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                             addData(scope.selectedSubClass);
                         }
 
-                        angular.forEach(scope.selectedSubClasses, function(subClass){
+                        angular.forEach(scope.selectedSubClasses, function (subClass) {
                             addData(subClass);
                             //subClass.hide = true;
                             subClass.checked = false;
                         });
                         scope.selectedSubClasses.splice(0, scope.selectedSubClasses.length);
                         scope.notifyCompletion = '' + Math.random();
-                        if( isTableDataEmpty) {
+                        if (isTableDataEmpty) {
                             scope.showSkuTypeModal();
                         }
                     }
@@ -205,10 +227,10 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
 
                         var subClassName = subClass == null ? '' : subClass.merchandiseSubordinateClassDescription;
                         subClassName = subClassName ? subClassName : '';
-                        
+
                         var classNumber = scope.selectedClass == null ? '' : scope.selectedClass.merchandiseClassNumber;
                         classNumber = classNumber ? classNumber : '';
-                        
+
                         var subClassNumber = subClass == null ? '' : subClass.merchandiseSubordinateClassNumber;
                         subClassNumber = subClassNumber ? subClassNumber : '';
 
@@ -217,7 +239,7 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                         jsondata.id = scope.selectedDept.id + delimeter + classNumber + delimeter + subClassNumber;
                         jsondata.catalog = 'Merch';
                         scope.data.push(jsondata);
-                        
+
                         var tableObject = prepareTableData(jsondata);
                         scope.tableData.push({
                             'dept': tableObject.dept,
@@ -280,11 +302,11 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
 
                 function deleteAllRows() {
                     scope.data.splice(0, scope.data.length);
-                    scope.tableData.splice(0,scope.tableData.length);
+                    scope.tableData.splice(0, scope.tableData.length);
                     scope.validationErrors = {};
                 }
 
-                function validatePromotion(){
+                function validatePromotion() {
                     scope.validationErrors = {};
                     scope.validationErrors.skuTypeFilter = validationService.validateSkyTypeFilter(scope.source);
                 }
@@ -295,8 +317,8 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                         parent: angular.element(document.body),
                         targetEvent: ev,
                         scope: scope,
-                        preserveScope: true       
-                    }).finally(function() {
+                        preserveScope: true
+                    }).finally(function () {
                         scope.validatePromotion();
                     });
                 }

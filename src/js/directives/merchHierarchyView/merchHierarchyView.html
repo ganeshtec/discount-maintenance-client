@@ -35,23 +35,17 @@
 		 </td>
  	</tr>
  	<tr class="category__table__row-notopborder">
-		<th>
-			Department
-		</th>
-		<th>
-			Class 
-		</th>
-		<th>
-			Sub Class 
-		</th>
-		<th>
-			&nbsp; 
-		</th>
+		<th>Department</th>
+		<th>Class</th>
+		<th>Sub Class</th>
+		<th>SKU Type</th>
+		<th>&nbsp;</th>
  	</tr>
  	<tr ng-repeat="hierarchy in tableData" ng-class="{odd:($index % 2)}" >
 	 <td>{{hierarchy.deptNum}}-{{hierarchy.dept}}</td>
 		<td>{{hierarchy.clasNum}}-{{hierarchy.clas}}</td>
 		<td>{{hierarchy.subClasNum}}-{{hierarchy.subClass}}</td>
+		<td>{{source.selectedSku}}</td>
 		<td class="r" ng-hide="preview">
 			<a class="editOption thd-orange" ng-click="isDisabled || deleteRow($index)" href="" >Delete</a>
 		</td>
