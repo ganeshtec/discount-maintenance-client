@@ -106,7 +106,7 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                     } else if (scope.userType === 228 && scope.previewData.data.purchaseConds.channels != null && selectedSellingChannels.length == 0) {
                         setError('ERROR: Please select at least one selling channel');
                         return;
-                    } else if (scope.previewData.data.purchaseConds.program.id === 7 && scope.previewData.data.purchaseConds.program.proPaint === null) {
+                    } else if (scope.$root.programIdForProMonthly.split(',').indexOf(scope.previewData.data.purchaseConds.program.id.toString()) > -1 && scope.previewData.data.purchaseConds.program.proPaint === null) {
                         setError('ERROR: Please select the appropriate ProPaint field');
                         return;
                     } else {
