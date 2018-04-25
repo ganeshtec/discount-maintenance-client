@@ -70,7 +70,6 @@ app.factory('PromotionData', ['ALLOWED_PERMISSION_IDS',function (ALLOWED_PERMISS
             'reward': {
                 'type': '',
                 'method': '',
-                'reasonCode': 49,
                 'details': [{
                     'qualUOM': 'Quantity',
                     'min': null,

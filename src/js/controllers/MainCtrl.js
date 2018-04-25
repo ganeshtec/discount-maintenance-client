@@ -38,7 +38,6 @@ app.controller('MainCtrl', ['$q', '$rootScope', '$scope', '$location', 'DataFact
 
             featureTogglePromise.then(function (data) {
                 $rootScope.showBasketThreshold = data.basketThreshold;
-                $rootScope.useCustSegReasonCode = data.useCustSegReasonCode;
                 $rootScope.showRapidPass = data.showRapidPass;
                 $rootScope.showAllProDiscount = data.showAllProDiscount;
                 $rootScope.segmentsFromV2Endpoint = data.segmentsFromV2Endpoint;
