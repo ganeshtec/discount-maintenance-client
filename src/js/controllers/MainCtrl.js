@@ -45,6 +45,7 @@ app.controller('MainCtrl', ['$q', '$rootScope', '$scope', '$location', 'DataFact
                 $rootScope.channelToggle = data.channelSelect;
                 $rootScope.singleSkuBulk = data.singleSkuBulk;
                 $rootScope.receiptText = data.receiptText;
+                $rootScope.costPlusPercent = data.costPlusPercent;
             });
 
         };
