@@ -85,7 +85,7 @@ describe('rewards', function () {
         });
 
         it('#getRewardLabel function', function () {
-            expect(ctrl.getRewardLabel()).toEqual('Percentage');
+            expect(ctrl.getRewardLabel()).toEqual('Percentage Off');
         });
 
         it('adding object in purchaseCondition array', function () {
