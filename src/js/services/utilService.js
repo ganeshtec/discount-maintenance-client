@@ -397,14 +397,8 @@ app.service('utilService', ['$filter', 'leadTimeService','loginService', functio
             promotion.promoTypeCd = 10;
         }
         if (loginService.getCurrentUserRole() === 228) {
-            if (promotion.reward.reasonCode != 70) {
-                promotion.reward.reasonCode = 49;
-            }
             promotion.promoSubTypeCd = 'TypeLessDiscount';
             promotion.promoSubTypeDesc = 'TypeLess-Discounts';
-        }
-        if(promotion.checkRapidPass) {
-            promotion.reward.reasonCode = 9;
         }
     }
 

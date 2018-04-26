@@ -66,7 +66,6 @@ app.factory('createTestRecord', [function () {
             'startDt': '2016-09-23 00:00:00',
             'name': 'Order Level_Amount Off_Dishwasher',
             'promoPgmId': 0,
-            'reasonCd': 0,
             'expireDtExtDays': 0,
             'promoCdRqrd': false,
             'priorityCd': 0,

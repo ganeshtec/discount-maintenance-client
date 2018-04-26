@@ -19,7 +19,6 @@ app.component('qualifiers', {
 function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataService, utilService, validationService, $rootScope, DataFactory, locationDataService, modalService) {
     var ctrl = this;
     ctrl.showBasketThreshold = $rootScope.showBasketThreshold;
-    ctrl.useCustSegReasonCode = $rootScope.useCustSegReasonCode;
     ctrl.showRapidPass = $rootScope.showRapidPass;
     ctrl.showAllProDiscount = $rootScope.showAllProDiscount;
     ctrl.discountEngineErrors = $rootScope.discountEngineErrors;
@@ -88,7 +87,6 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
     };
 
     ctrl.onSegmentSelection = function () {
-        ctrl.setReasonCode();
         ctrl.data.purchaseConds.program.proPaint = null;
         if (ctrl.data.segment) {
             if (ctrl.data.segment.id) {
@@ -132,20 +130,6 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
         }
     };
 
-    ctrl.setReasonCode = function () {
-        if (ctrl.data.checkRapidPass) {
-            ctrl.data.reward.reasonCode = 9;
-        } else if (ctrl.data.segment) {
-            if (ctrl.useCustSegReasonCode && ctrl.data.segment.id != 0) {
-                ctrl.data.reward.reasonCode = 70;
-            } else {
-                ctrl.data.reward.reasonCode = 49;
-            }
-        } else {
-            ctrl.data.reward.reasonCode = 49;
-        }
-    }
-
     ctrl.updatePrintLabel = function () {
         utilService.updatePrintLabel(ctrl.data);
     };
@@ -180,7 +164,6 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
     }
 
     ctrl.selectRapidPass = function () {
-        ctrl.setReasonCode();
         if (ctrl.data.checkRapidPass) {
             ctrl.data.promoCdSpec = {};
             ctrl.data.promoCdSpec.type = 'Private';

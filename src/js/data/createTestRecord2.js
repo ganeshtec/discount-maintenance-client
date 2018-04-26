@@ -141,7 +141,6 @@ app.factory('createTestRecord2', [function () {
                     'string'
                 ]
             },
-            'reasonCd': 0,
             'reward': {
                 'details': [{
                     'max': 0,

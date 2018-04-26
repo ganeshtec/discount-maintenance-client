@@ -26,7 +26,6 @@ describe('Unit testing qualifiers component', function () {
                 },
                 segment: {}
             },
-            "useCustSegReasonCode": false
         }
         );
     }));
@@ -38,7 +37,6 @@ describe('Unit testing qualifiers component', function () {
         expect(ctrl.data.purchaseConds.customerSegmentId).toBe(0);
         expect(ctrl.data.purchaseConds.program.id).toBe(0);
         expect(ctrl.data.purchaseConds.program.tierId).toBe(0);
-        expect(ctrl.data.reward.reasonCode).toBe(49);
     });
 
     it('Program Segment Selected', function () {
@@ -47,7 +45,6 @@ describe('Unit testing qualifiers component', function () {
         expect(ctrl.data.purchaseConds.customerSegmentId).toBe(0);
         expect(ctrl.data.purchaseConds.program.id).toBe(2);
         expect(ctrl.data.purchaseConds.program.tierId).toBe(8);
-        expect(ctrl.data.reward.reasonCode).toBe(49);
     });
 
     it('Program Segment Selected and ProPaint Set To NULL', function () {
@@ -65,16 +62,11 @@ describe('Unit testing qualifiers component', function () {
 
     it('Customer Segment Selected', function () {
         ctrl.data.segment = { "id": 13550, "segmentName": "Segment 919" };
-        ctrl.useCustSegReasonCode = true;
         ctrl.data.checkRapidPass = false;
         ctrl.onSegmentSelection();
         expect(ctrl.data.purchaseConds.customerSegmentId).toBe(13550);
         expect(ctrl.data.purchaseConds.program.id).toBe(0);
         expect(ctrl.data.purchaseConds.program.tierId).toBe(0);
-        expect(ctrl.data.reward.reasonCode).toBe(70);
-        ctrl.data.checkRapidPass = true;
-        ctrl.onSegmentSelection();
-        expect(ctrl.data.reward.reasonCode).toBe(9);
     });
 
     it('Rapid Pass not selected', function () {
@@ -83,9 +75,6 @@ describe('Unit testing qualifiers component', function () {
 
         expect(ctrl.data.promoCdRqrd).toBe(false);
         expect(ctrl.data.promoCdSpec).toBe(undefined);
-        expect(ctrl.data.reward.reasonCode).toBe(49);
-
-
     });
 
     it('Rapid Pass selected', function () {
@@ -102,7 +91,6 @@ describe('Unit testing qualifiers component', function () {
         expect(ctrl.data.promoCdSpec.systemGen.cdPrefix).toBe('010012345');
         expect(ctrl.data.promoCdSpec.systemGen.cdSuffix).toBe('');
         expect(ctrl.data.promoCdRqrd).toBe(true);
-        expect(ctrl.data.reward.reasonCode).toBe(9);
     });
 
     it('All Pro checked', function () {

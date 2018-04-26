@@ -278,7 +278,6 @@ describe('utilService', function () {
       "reward": {
        "type": "PERCNTOFF",
        "method": "INDVDLAFFECTEDITMS",
-       "reasonCode": 49,
        "details": [
          {
            "qualUOM": "Quantity",
@@ -314,7 +313,6 @@ describe('utilService', function () {
       "reward": {
         "type": "PERCNTOFF",
         "method": "INDVDLAFFECTEDITMS",
-        "reasonCode": 49,
         "details": [
           {
             "qualUOM": "Quantity",
@@ -334,7 +332,7 @@ describe('utilService', function () {
       var promotion = {
        "channels": [100,105,110,130],
        "reward": {
-          "type": "PERCNTOFF","method": "INDVDLAFFECTEDITMS","reasonCode": 49,
+          "type": "PERCNTOFF","method": "INDVDLAFFECTEDITMS",
           "details": [{"qualUOM": "Quantity","min": 10,"max": 14,"maxAllowedVal": "","seq": 1,"value": 10}]
         }
       }
@@ -345,7 +343,7 @@ describe('utilService', function () {
       var promotion = {
        "channels": [87,100,105,110,130],
        "reward": {
-         "type": "PERCNTOFF","method": "INDVDLAFFECTEDITMS","reasonCode": 49,
+         "type": "PERCNTOFF","method": "INDVDLAFFECTEDITMS",
          "details": [{"qualUOM": "Quantity","min": 10,"max": 14,"maxAllowedVal": "","seq": 1,"value": 10}]
        }
       }
@@ -363,7 +361,7 @@ describe('utilService', function () {
        "labelText":"Label Text",
        "channels": [100],
        "reward": {
-         "type": "PERCNTOFF","method": "INDVDLAFFECTEDITMS","reasonCode": 49,
+         "type": "PERCNTOFF","method": "INDVDLAFFECTEDITMS",
          "details": [{"qualUOM": "Quantity","min": 10,"max": 14,"maxAllowedVal": "","seq": 1,"value": 10}]
        }
       }
@@ -381,7 +379,7 @@ describe('utilService', function () {
        "labelText":"Label Text",
        "channels": [100],
        "reward": {
-         "type": "PERCNTOFF","method": "INDVDLAFFECTEDITMS","reasonCode": 49,
+         "type": "PERCNTOFF","method": "INDVDLAFFECTEDITMS",
          "details": [{"qualUOM": "Quantity","min": 10,"max": 14,"maxAllowedVal": "","seq": 1,"value": 10}]
        }
       }
@@ -398,7 +396,7 @@ describe('utilService', function () {
        "labelText":"Label Text",
        "channels": [100],
        "reward": {
-         "type": "PERCNTOFF","method": "INDVDLAFFECTEDITMS","reasonCode": 49,
+         "type": "PERCNTOFF","method": "INDVDLAFFECTEDITMS",
          "details": [{"qualUOM": "Quantity","min": 10,"max": 14,"maxAllowedVal": "","seq": 1,"value": 10}]
        }
       }
@@ -419,11 +417,6 @@ describe('utilService', function () {
        utilService.setDefaultsForSaveAsDraft(promotion);
        expect(promotion.promoSubTypeCd).toEqual('TypeLessDiscount');
        expect(promotion.promoSubTypeDesc).toEqual('TypeLess-Discounts');
-       expect(promotion.reward.reasonCode).toEqual(9);
-
-       promotion.checkRapidPass = false;
-       utilService.setDefaultsForSaveAsDraft(promotion);
-       expect(promotion.reward.reasonCode).toEqual(49);
     })
 
     it('does not populate subtype code with typeless information for online channel (DCM) promotions when setting defaults for save as draft', function() {

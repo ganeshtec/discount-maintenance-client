@@ -39,7 +39,6 @@ function rewardsController($rootScope, $scope, $mdDialog, SourceData, validation
     ctrl.alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
     ctrl.showBasketThreshold = $rootScope.showBasketThreshold;
-    ctrl.useCustSegReasonCode = $rootScope.useCustSegReasonCode;
 
     ctrl.$onInit = $onInit;
     ctrl.userType = loginService.getCurrentUserRole();
