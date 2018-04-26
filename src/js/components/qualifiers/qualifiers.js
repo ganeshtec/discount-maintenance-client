@@ -493,6 +493,11 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
         ctrl.showInvalidError = false;
     }
     // LOCATIONS END
+
+    ctrl.sortStore = function (store){
+        return parseInt(store.storeNumber);
+    }
+
 }
 
 

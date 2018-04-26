@@ -82,9 +82,8 @@
                 </a>
             </th>
         </tr>
-        <tr ng-repeat="item in $ctrl.validStoreInfo | orderBy : 'storeNumber' track by item.storeNumber"
-            ng-class="{odd:($index % 2)}" ng-if="$ctrl.locationType=='stores'">
-
+        <tr ng-repeat="item in $ctrl.validStoreInfo | orderBy : $ctrl.sortStore track by item.storeNumber" 
+        ng-class="{odd:($index % 2)}" ng-if="$ctrl.locationType=='stores'">
             <td>{{item.storeNumber}}</td>
             <td>{{item.storeName}}</td>
             <td>{{item.marketNumber}}</td>
