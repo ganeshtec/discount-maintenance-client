@@ -133,7 +133,7 @@
                         <div class="md-radio">
                             <input type="radio" id="discount_type_costplus" name="discountType"
                                    ng-model="$ctrl.data.reward.type" title="Cost Plus"
-                                   value="COSTPLUSPERCENT" ng-change="$ctrl.updatePrintLabel()" ng-disabled="$ctrl.preview"
+                                   value="COSTPLUSPERCNT" ng-change="$ctrl.updatePrintLabel()" ng-disabled="$ctrl.preview"
                                    ng-if="$ctrl.costPlusPercent"/>
                             <label for="discount_type_costplus"><span><span></span></span>Cost-plus</label>
                         </div>
@@ -196,9 +196,9 @@
 
                 <input type="text" id="itemvalue" name="value_{{$index}}" ng-model="item.value"
                        ng-required="$ctrl.preview" ng-blur="$ctrl.roundPercentage($index); $ctrl.validatePromotion()"
-                       allow-pattern="^[\d.]+$" ng-if="$ctrl.data.reward.type=='COSTPLUSPERCENT'" class="tooltiphead"
+                       allow-pattern="^[\d.]+$" ng-if="$ctrl.data.reward.type=='COSTPLUSPERCNT'" class="tooltiphead"
                        ng-disabled="$ctrl.preview"/>
-                <div class="md-text-suffix" ng-if="$ctrl.data.reward.type=='COSTPLUSPERCENT'">%</div>
+                <div class="md-text-suffix" ng-if="$ctrl.data.reward.type=='COSTPLUSPERCNT'">%</div>
 
                 <span class='error-message' ng-show="$ctrl.promoform['value_' + $index].$invalid || $ctrl.preview">
 										<span ng-show="$ctrl.promoform['value_' + $index].$error.min">
