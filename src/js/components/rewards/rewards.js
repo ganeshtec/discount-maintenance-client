@@ -1,3 +1,4 @@
+/* eslint-disable */
 app.component('rewards', {
     templateUrl: 'rewards.html',
     bindings: {
@@ -33,7 +34,8 @@ function rewardsController($rootScope, $scope, $mdDialog, SourceData, validation
     ctrl.removeAll = removeAll;
     ctrl.isMFAUser;
     ctrl.isDCMUser;
-    ctrl.rewardTypeLabel='Percentage';
+    ctrl.costPlusPercent = $rootScope.costPlusPercent;
+    ctrl.rewardTypeLabel = 'Percentage';
     ctrl.alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
     ctrl.showBasketThreshold = $rootScope.showBasketThreshold;
@@ -41,29 +43,30 @@ function rewardsController($rootScope, $scope, $mdDialog, SourceData, validation
 
     ctrl.$onInit = $onInit;
     ctrl.userType = loginService.getCurrentUserRole();
+
     function $onInit() {
         switch (ctrl.userType) {
-        case 229:
-            ctrl.isDCMUser = true;
-            ctrl.thresholdHeaderLabel = 'Minimum purchase type';
-            ctrl.thresholdQuantityLabel = 'Quantity purchase';
-            ctrl.thresholdAmountLabel = 'Amount spent';
-            break
-        case 228:
-            ctrl.isMFAUser = true;
-            ctrl.thresholdHeaderLabel = 'Threshold';
-            ctrl.thresholdQuantityLabel = 'Quantity';
-            ctrl.thresholdAmountLabel = 'Dollar';
-            if(ctrl.data.reward && !ctrl.data.reward.type) {
-                ctrl.data.reward.type = 'PERCNTOFF';
-            }
-            if(!ctrl.data.promoType) {
-                ctrl.data.promoType = 'ITEMPROMO';
-            }
-            ctrl.setRewardMethod();
-            break
+            case 229:
+                ctrl.isDCMUser = true;
+                ctrl.thresholdHeaderLabel = 'Minimum purchase type';
+                ctrl.thresholdQuantityLabel = 'Quantity purchase';
+                ctrl.thresholdAmountLabel = 'Amount spent';
+                break
+            case 228:
+                ctrl.isMFAUser = true;
+                ctrl.thresholdHeaderLabel = 'Threshold';
+                ctrl.thresholdQuantityLabel = 'Quantity';
+                ctrl.thresholdAmountLabel = 'Dollar';
+                if (ctrl.data.reward && !ctrl.data.reward.type) {
+                    ctrl.data.reward.type = 'PERCNTOFF';
+                }
+                if (!ctrl.data.promoType) {
+                    ctrl.data.promoType = 'ITEMPROMO';
+                }
+                ctrl.setRewardMethod();
+                break
         }
-        
+
         ctrl.qualuom = (ctrl.data.reward && ctrl.data.reward.details[0].qualUOM) || 'Quantity';
         ctrl.setQualUOM(ctrl.qualuom);
 
@@ -85,6 +88,7 @@ function rewardsController($rootScope, $scope, $mdDialog, SourceData, validation
             }
         }
     }
+
     function setQualUOM(qualuom) {
         if (ctrl.data.reward.details) {
             for (var i = 0; i < ctrl.data.reward.details.length; i++) {
@@ -96,25 +100,28 @@ function rewardsController($rootScope, $scope, $mdDialog, SourceData, validation
 
     function getRewardLabel() {
         var rewardTypeLabel = 'Percentage';
-        switch(ctrl.data.reward.type){
-        case 'AMTOFF':
-            rewardTypeLabel='Amount';
-            break;
-        case 'PERCNTOFF':
-            rewardTypeLabel='Percentage';
-            break;
+        switch (ctrl.data.reward.type) {
+            case 'AMTOFF':
+                rewardTypeLabel = 'Amount';
+                break;
+            case 'PERCNTOFF':
+                rewardTypeLabel = 'Percentage Off';
+                break;
+            case 'COSTPLUSPERCENT':
+                rewardTypeLabel = 'Initial Mark-Up (IMU)';
+                break;
         }
         return rewardTypeLabel;
     }
 
     function setRewardMethod() {
-        switch(ctrl.data.promoType){
-        case 'ITEMPROMO':
-            ctrl.data.reward.method = 'INDVDLAFFECTEDITMS';
-            break;
-        case 'ORDERPROMO':
-            ctrl.data.reward.method = 'WHOLEORDER';
-            break;
+        switch (ctrl.data.promoType) {
+            case 'ITEMPROMO':
+                ctrl.data.reward.method = 'INDVDLAFFECTEDITMS';
+                break;
+            case 'ORDERPROMO':
+                ctrl.data.reward.method = 'WHOLEORDER';
+                break;
         }
     }
 
@@ -156,7 +163,7 @@ function rewardsController($rootScope, $scope, $mdDialog, SourceData, validation
         }
     }
 
-    function initializePurchaseOption (index, item, data) {
+    function initializePurchaseOption(index, item, data) {
         if (data.purchaseConds.sources[index].purchaseoption == 'category') {
             data.purchaseConds.sources[index].purchaseoption = 'category'
         } else if (data.purchaseConds.sources[index].purchaseoption == 'itemoms') {
@@ -197,7 +204,6 @@ function rewardsController($rootScope, $scope, $mdDialog, SourceData, validation
             $rootScope.$broadcast('refreshSkuTypeValidations');
         });
     }
-
 
 
     function removeAll() {
