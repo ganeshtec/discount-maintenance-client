@@ -64,7 +64,7 @@ describe('promotionAdminCtrl', function () {
                 displayPrintLabel: false,
                 displayItemsSku:false,
                 displayMerchHiearchy: false,
-                displayCustomerSegment: false,
+                displayCustomerSegment: true,
                 promotionSubTypesForMFA: false,
                 displayFilterSkuTypes: false,
                 displayBasketThreshold: false,
