@@ -107,7 +107,7 @@ function rewardsController($rootScope, $scope, $mdDialog, SourceData, validation
             case 'PERCNTOFF':
                 rewardTypeLabel = 'Percentage Off';
                 break;
-            case 'COSTPLUSPERCNT':
+            case 'COSTPLUSPERCENT':
                 rewardTypeLabel = 'Initial Mark-Up (IMU)';
                 break;
         }
