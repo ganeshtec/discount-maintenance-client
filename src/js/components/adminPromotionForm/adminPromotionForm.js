@@ -34,6 +34,26 @@ function adminPromotionFormController(promotionDataService, redemptionMethodType
         ctrl.data.singleSkuBulk = 0;
     }
 
+    if (ctrl.userType === 228) {
+        ctrl.data.reward.method = ctrl.data.reward.method || 'INDVDLAFFECTEDITMS';
+    }
+
+    $scope.$watch('ctrl.data.promoSubTypeCd', function (model, oldModel) {
+        if (model !== oldModel && !model)
+            ctrl.setPromotionSubType(true);
+    }, true);
+
+    $scope.$watch('ctrl.promotionSubTypes', function (model, oldModel) {
+        if (model !== oldModel && !model)
+            ctrl.setPromotionSubType();
+    }, true);
+
+    $scope.$watch('ctrl.data.promoCdRqrd', function (model, oldModel) {
+        if (model !== oldModel && !model) {
+            delete ctrl.data.promoCdSpec;
+        }
+    });
+
     ctrl.$onInit = function () {
         var getPromotionPromise;
 
@@ -49,7 +69,6 @@ function adminPromotionFormController(promotionDataService, redemptionMethodType
                 DataFactory.messageModal.message = error;
                 DataFactory.messageModal.title = 'Error';
                 $('#messageModal').popup();
-
             });
     }
 
@@ -75,22 +94,6 @@ function adminPromotionFormController(promotionDataService, redemptionMethodType
         }
     }
 
-    $scope.$watch('ctrl.data.promoSubTypeCd', function (model, oldModel) {
-        if (model !== oldModel && !model)
-            ctrl.setPromotionSubType(true);
-    }, true);
-
-    $scope.$watch('ctrl.promotionSubTypes', function (model, oldModel) {
-        if (model !== oldModel && !model)
-            ctrl.setPromotionSubType();
-    }, true);
-
-    $scope.$watch('ctrl.data.promoCdRqrd', function (model, oldModel) {
-        if (model !== oldModel && !model) {
-            delete ctrl.data.promoCdSpec;
-        }
-    });
-
     ctrl.addSources = function () {
         ctrl.data.purchaseConds.sources.push(new itemCategorySourceData());
     }
@@ -101,7 +104,8 @@ function adminPromotionFormController(promotionDataService, redemptionMethodType
 
     ctrl.toggleSingleSkuBulk = function () {
         ctrl.data.singleSkuBulk = ctrl.data.singleSkuBulk == 1 ? 0 : 1;
-    }
+        ctrl.data.locationType = 'markets';
+    };
 
     ctrl.validatePromotion = function () {
         ctrl.validationErrors = validationService.validatePromotion(ctrl.data);
@@ -118,6 +122,7 @@ function adminPromotionFormController(promotionDataService, redemptionMethodType
             ctrl.data.reward.details[0].maxAllowedVal = undefined;
         }
     }
+
     ctrl.getSelectedSubTypes = function () {
         if (ctrl.promoSubTypeObject !== null) {
             ctrl.data.promoSubTypeCd = ctrl.promoSubTypeObject.promoSubTypeCd;
@@ -129,7 +134,7 @@ function adminPromotionFormController(promotionDataService, redemptionMethodType
             ctrl.data.promoType = '';
         }
 
-        //AP-573-Promo validations - Buy A And B, get % off both
+        //Buy A And B, get % off both
         if (ctrl.data.promoSubTypeCd.indexOf('MultipleItemsPercentDiscount') != -1 || ctrl.data.promoSubTypeCd.indexOf('MultipleItemsValueDiscount') != -1) {
             ctrl.data.isSitewideDeal = false;
             ctrl.data.reward.type = (ctrl.data.promoSubTypeCd.indexOf('MultipleItemsPercentDiscount') != -1) ? 'PERCNTOFF' : 'AMTOFF';
@@ -158,17 +163,12 @@ function adminPromotionFormController(promotionDataService, redemptionMethodType
         } else {
             ctrl.data.reward.method = utilService.rewardMethodMapping[ctrl.data.promoSubTypeCd];
         }
-    }
-
-    if (ctrl.userType === 228) {
-        ctrl.data.reward.method = ctrl.data.reward.method || 'INDVDLAFFECTEDITMS';
-    }
+    };
 
     ctrl.validatePromotion = function () {
         ctrl.validationErrors = validationService.validatePromotion(ctrl.data);
-    }
+    };
 
-    // redemption method types
     ctrl.redemptionMethodTypes = new redemptionMethodTypes();
 
 
