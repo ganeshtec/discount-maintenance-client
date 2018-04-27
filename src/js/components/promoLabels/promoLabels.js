@@ -29,7 +29,6 @@ function PromoLabelsController($rootScope,validationService, utilService) {
         return utilService.isPrintLabelDisabled(ctrl.data);
     };
 
-
     ctrl.isReceiptTextActive = function() {
         ctrl.showReceiptText;
     };

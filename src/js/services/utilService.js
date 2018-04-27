@@ -407,7 +407,6 @@ app.service('utilService', ['$filter', 'leadTimeService', 'loginService', functi
     }
 
     publicApi.isSubmitEligibleForDisable = function (promotion) {
-
         var leadTimePromise = leadTimeService.fetchLeadTime();
         return leadTimePromise.then(function (leadTime) {
             var minDt = moment(promotion.endDt).subtract(leadTime, 'days');
@@ -416,7 +415,7 @@ app.service('utilService', ['$filter', 'leadTimeService', 'loginService', functi
             }
             return false;
         });
-    }
+    };
 
     publicApi.isPreviewSubmitClickDisabled = function (promotion) {
         if (promotion.status == 61 && promotion.originalPrintLabel === true) {
@@ -424,31 +423,29 @@ app.service('utilService', ['$filter', 'leadTimeService', 'loginService', functi
         }
         return false;
 
-    }
+    };
 
     publicApi.getLeadTime = function () {
         return leadTimeService.fetchLeadTime();
-    }
+    };
 
     publicApi.isLabelLocked = function (promotion) {
         return publicApi.isPromotionActive(promotion) && promotion.originalPrintLabel == true;
-    }
+    };
 
     publicApi.updatePrintLabel = function (promotion) {
         if (publicApi.isPrintLabelDisabled(promotion) && !publicApi.isLabelLocked(promotion)) {
             promotion.printLabel = false;
             promotion.labelText = '';
         }
-    }
+    };
 
     publicApi.hasPosChannel = function (promotion) {
         return promotion.channels && (promotion.channels.indexOf(87) > -1);
-    }
+    };
 
     publicApi.isPrintLabelDisabled = function (promotion) {
         var disabled = false;
-
-        promotion.singleSkuBulk == 1 ? promotion.printLabel = true : promotion.printLabel = false;
 
         if (publicApi.isLabelLocked(promotion)) {
             disabled = true;
@@ -479,8 +476,10 @@ app.service('utilService', ['$filter', 'leadTimeService', 'loginService', functi
             disabled = true;
         }
 
+        promotion.singleSkuBulk == 1 ? promotion.printLabel = true : promotion.printLabel = false;
+
         return disabled;
-    }
+    };
 
     return publicApi;
 }]);
