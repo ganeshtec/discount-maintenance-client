@@ -106,6 +106,7 @@ function adminPromotionFormController(promotionDataService, redemptionMethodType
         ctrl.data.singleSkuBulk = ctrl.data.singleSkuBulk == 1 ? 0 : 1;
         ctrl.data.locationType = 'markets';
         ctrl.data.checkRapidPass = '';
+        ctrl.data.segment = '';
     };
 
     ctrl.validatePromotion = function () {
