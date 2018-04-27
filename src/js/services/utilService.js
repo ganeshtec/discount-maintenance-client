@@ -1,4 +1,4 @@
-app.service('utilService', ['$filter', 'leadTimeService','loginService', function ($filter, leadTimeService,loginService) {
+app.service('utilService', ['$filter', 'leadTimeService', 'loginService', function ($filter, leadTimeService, loginService) {
     var publicApi = {};
     this.leadTime;
     publicApi.rewardMethodMapping = {
@@ -357,8 +357,12 @@ app.service('utilService', ['$filter', 'leadTimeService','loginService', functio
                 if (promotion.purchaseConds.sources[0].inclusions.hierarchies && promotion.purchaseConds.sources[0].inclusions.hierarchies.length > 0) {
                     if (promotion.purchaseConds.sources[1].inclusions.hierarchies && promotion.purchaseConds.sources[1].inclusions.hierarchies.length > 0) {
 
-                        var h1 = promotion.purchaseConds.sources[0].inclusions.hierarchies.map(function (a) { return a.id; });
-                        var h2 = promotion.purchaseConds.sources[1].inclusions.hierarchies.map(function (a) { return a.id; });
+                        var h1 = promotion.purchaseConds.sources[0].inclusions.hierarchies.map(function (a) {
+                            return a.id;
+                        });
+                        var h2 = promotion.purchaseConds.sources[1].inclusions.hierarchies.map(function (a) {
+                            return a.id;
+                        });
 
                         var overlap = intersect(h1, h2);
                         if (overlap.length > 0) {
@@ -437,19 +441,20 @@ app.service('utilService', ['$filter', 'leadTimeService','loginService', functio
         }
     }
 
-    publicApi.hasPosChannel = function (promotion){
+    publicApi.hasPosChannel = function (promotion) {
         return promotion.channels && (promotion.channels.indexOf(87) > -1);
     }
 
     publicApi.isPrintLabelDisabled = function (promotion) {
-
         var disabled = false;
+
+        promotion.singleSkuBulk == 1 ? promotion.printLabel = true : promotion.printLabel = false;
 
         if (publicApi.isLabelLocked(promotion)) {
             disabled = true;
         }
 
-        if(!publicApi.hasPosChannel(promotion)){
+        if (!publicApi.hasPosChannel(promotion)) {
             disabled = true;
         }
 
