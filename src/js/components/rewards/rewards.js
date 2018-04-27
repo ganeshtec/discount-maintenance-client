@@ -30,6 +30,7 @@ function rewardsController($rootScope, $scope, $mdDialog, SourceData, validation
     ctrl.isSingleSourcePurchaseCondition = isSingleSourcePurchaseCondition;
     ctrl.isMultiSourcePurchaseCondition = isMultiSourcePurchaseCondition;
     ctrl.initializePurchaseOption = initializePurchaseOption;
+    ctrl.setSingleSkuBulkDefault = setSingleSkuBulkDefault;
     ctrl.showSkuTypeModal = showSkuTypeModal;
     ctrl.removeAll = removeAll;
     ctrl.isMFAUser;
@@ -88,6 +89,23 @@ function rewardsController($rootScope, $scope, $mdDialog, SourceData, validation
         }
     }
 
+    ctrl.$doCheck = function () {
+        setSingleSkuBulkDefault();
+    }
+    
+    function setSingleSkuBulkDefault() {
+        if (ctrl.data.singleSkuBulk && ctrl.data.singleSkuBulkChanged) {
+            ctrl.data.singleSkuBulkChanged = false;
+            ctrl.data.reward.type = 'PERCNTOFF';
+            ctrl.qualuom = 'Quantity';
+            ctrl.setQualUOM(ctrl.qualuom);
+            ctrl.getRewardLabel();
+            ctrl.data.reward.details.splice(1, ctrl.data.reward.details.length);
+            if(ctrl.data.reward.details.length==1){
+                ctrl.data.reward.details[0].maxAllowedVal = null;
+            }
+        }
+    }
     function setQualUOM(qualuom) {
         if (ctrl.data.reward.details) {
             for (var i = 0; i < ctrl.data.reward.details.length; i++) {
