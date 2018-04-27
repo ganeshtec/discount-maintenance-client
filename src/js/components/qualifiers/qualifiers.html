@@ -8,19 +8,17 @@
             </span>
         </label>
         <div class="md-radio">
-            <input type="radio" id="markets" name="locations1" ng-model="$ctrl.locationType" title="markets"
-                   value="markets" ng-change="$ctrl.removeAll();$ctrl.clearInput();"
+            <input type="radio" id="markets" name="locations" ng-model="$ctrl.data.locationType" title="markets"
+                   value="markets" ng-change="$ctrl.removeAll(); $ctrl.clearInput();"
                    ng-disabled="$ctrl.preview"/>
             <label for="markets">
                 <span>
                     <span></span>
                 </span>Markets</label>
-        </div>
-
-        <div class="md-radio">
-            <input type="radio" id="stores" name="locations2" ng-model="$ctrl.locationType" title="stores"
+            <br>
+            <input type="radio" id="stores" name="locations" ng-model="$ctrl.data.locationType" title="stores"
                    value="stores" ng-change="$ctrl.removeAll(); $ctrl.clearInput();"
-                   ng-disabled="$ctrl.preview"/>
+                   ng-disabled="$ctrl.preview || $ctrl.data.singleSkuBulk == 1"/>
             <label for="stores">
                 <span>
                     <span></span>
@@ -35,35 +33,35 @@
         <tr class="category__table__row-nobottomborder">
             <td colspan="4" ng-hide="$ctrl.preview">
                 <div class="md-toolbar-search l">
-                    <label for="StoreLocation" ng-if="$ctrl.locationType=='stores'"><h3>Store Location</h3></label>
-                    <label for="MarketLocation" ng-if="$ctrl.locationType=='markets'"><h3>Market Location</h3></label>
-                    <input class="table__search" ng-show="$ctrl.locationType=='stores'"
+                    <label for="StoreLocation" ng-if="$ctrl.data.locationType=='stores'"><h3>Store Location</h3></label>
+                    <label for="MarketLocation" ng-if="$ctrl.data.locationType=='markets'"><h3>Market Location</h3></label>
+                    <input class="table__search" ng-show="$ctrl.data.locationType=='stores'" id="StoreLocation"
                            ng-keypress="($event.keyCode === 13) && $ctrl.search($ctrl.locationSearch)"
                            placeholder="Search and Add Store Number" type="text" ng-model="$ctrl.locationSearch"
                            ng-class="{'error': $ctrl.inValidStoreInfo}"
                            ng-change="$ctrl.clear()" allow-pattern="(\d|[a-z A-Z\(\?\-\_\.\'\,\%\$\!\@\)])"
                            ng-disabled="$ctrl.preview"/>
-                    <a class="md-button secondary no-padding" href="" ng-show="$ctrl.locationType=='stores'"
-                       ng-click="$ctrl.search($ctrl.locationSearch)">
+                    <a class="md-button secondary no-padding" href="" ng-show="$ctrl.data.locationType=='stores'"
+                       id="MarketLocation" ng-click="$ctrl.search($ctrl.locationSearch)">
                         Add
                     </a>
                     <ul>
-                <span class='error-message' ng-show="$ctrl.showInvalidError" ng-if="$ctrl.locationType=='stores'">
+                <span class='error-message' ng-show="$ctrl.showInvalidError" ng-if="$ctrl.data.locationType=='stores'">
                 <span>Please enter a valid Store Number</span>
                 </span>
                     </ul>
-                    <input class="table__search" ng-show="$ctrl.locationType=='markets'"
+                    <input class="table__search" ng-show="$ctrl.data.locationType=='markets'"
                            ng-keypress="($event.keyCode === 13) && $ctrl.search($ctrl.locationSearch)"
                            placeholder="Search and Add Market Number" type="text" ng-model="$ctrl.locationSearch"
                            ng-class="{'error': $ctrl.inValidMarketInfo}"
                            ng-change="clear()" allow-pattern="(\d|[a-z A-Z\(\?\-\_\.\'\,\%\$\!\@\)])"
                            ng-disabled="$ctrl.preview"/>
-                    <a class="md-button secondary no-padding" ng-show="$ctrl.locationType=='markets'" href=""
+                    <a class="md-button secondary no-padding" ng-show="$ctrl.data.locationType=='markets'" href=""
                        ng-click="$ctrl.search($ctrl.locationSearch)">
                         Add
                     </a>
                     <ul>
-                <span class='error-message' ng-show="$ctrl.showInvalidError" ng-if="$ctrl.locationType=='markets'">
+                <span class='error-message' ng-show="$ctrl.showInvalidError" ng-if="$ctrl.data.locationType=='markets'">
                 <span>Please enter a valid Market Number</span>
                 </span>
                     </ul>
@@ -71,7 +69,7 @@
             </td>
         </tr>
 
-        <tr class="category__table__row-notopborder" ng-if="$ctrl.locationType=='stores'">
+        <tr class="category__table__row-notopborder" ng-if="$ctrl.data.locationType=='stores'">
             <th>Store Number</th>
             <th>Store Name</th>
             <th>Market Number</th>
@@ -83,7 +81,7 @@
             </th>
         </tr>
         <tr ng-repeat="item in $ctrl.validStoreInfo | orderBy : 'storeNumber' track by item.storeNumber"
-            ng-class="{odd:($index % 2)}" ng-if="$ctrl.locationType=='stores'">
+            ng-class="{odd:($index % 2)}" ng-if="$ctrl.data.locationType=='stores'">
 
             <td>{{item.storeNumber}}</td>
             <td>{{item.storeName}}</td>
@@ -94,7 +92,7 @@
                 </a>
             </td>
         </tr>
-        <tr class="category__table__row-notopborder" ng-if="$ctrl.locationType=='markets'">
+        <tr class="category__table__row-notopborder" ng-if="$ctrl.data.locationType=='markets'">
 
             <th>Market Number</th>
             <th>MarketName</th>
@@ -106,7 +104,7 @@
             </th>
         </tr>
         <tr ng-repeat="market in $ctrl.validMarketInfo | orderBy : 'marketNumber' track by market.marketNumber"
-            ng-class="{odd:($index % 2)}" ng-if="$ctrl.locationType=='markets'">
+            ng-class="{odd:($index % 2)}" ng-if="$ctrl.data.locationType=='markets'">
             <td>{{market.marketNumber}}</td>
             <td>{{market.marketName}}</td>
             <td class="r" ng-hide="$ctrl.preview">
@@ -117,10 +115,10 @@
             </td>
         </tr>
     </table>
-    <div ng-if="$ctrl.locationType=='markets' && $ctrl.validMarketInfo.length > 0" class="itemCountDiv">
+    <div ng-if="$ctrl.data.locationType=='markets' && $ctrl.validMarketInfo.length > 0" class="itemCountDiv">
         {{$ctrl.validMarketInfo.length}} Market(s)
     </div>
-    <div ng-if="$ctrl.locationType=='stores' && $ctrl.validStoreInfo.length > 0" class="itemCountDiv">
+    <div ng-if="$ctrl.data.locationType=='stores' && $ctrl.validStoreInfo.length > 0" class="itemCountDiv">
         {{$ctrl.validStoreInfo.length}} Store(s)
     </div>
 </div>
@@ -137,7 +135,8 @@
 
 <!--Customer Segmentation-->
 <div class="customer-segmentation">
-    <div class="md-select md-select-space customer-segment" ng-show="$ctrl.viewProp.displayCustomerSegment && $ctrl.displayCustomerSegmentInDCM">
+    <div class="md-select md-select-space customer-segment"
+         ng-show="$ctrl.viewProp.displayCustomerSegment && $ctrl.displayCustomerSegmentInDCM">
         <label for="promoCustomerSegment">
             <h3 ng-if="!$ctrl.data.checkRapidPass">Customer Segment (Optional)</h3>
             <h3 ng-if="$ctrl.data.checkRapidPass">Customer Segment

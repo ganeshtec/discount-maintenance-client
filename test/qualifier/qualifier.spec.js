@@ -218,10 +218,9 @@ describe('Unit testing qualifiers component', function () {
 
 
     it('Checks for search Method to invoke getStoresById when stores are entered as input', function () {
-        ctrl.data = '121';
-        ctrl.locationType = 'stores'
+        ctrl.data = { "locationType": "stores" };
         spyOn(ctrl, "getStoresByID");
-        ctrl.search(ctrl.data);
+        ctrl.search('121');
         expect(ctrl.getStoresByID).toHaveBeenCalled();
 
     });

@@ -16,7 +16,7 @@ app.component('qualifiers', {
 });
 
 
-function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataService, utilService, validationService, $rootScope, DataFactory, locationDataService, modalService) {
+function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataService, utilService, validationService, $rootScope, $scope, DataFactory, locationDataService, modalService) {
     var ctrl = this;
     ctrl.showBasketThreshold = $rootScope.showBasketThreshold;
     ctrl.showRapidPass = $rootScope.showRapidPass;
@@ -26,6 +26,18 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
     ctrl.displayCustomerSegmentInDCM = $rootScope.displayCustomerSegmentInDCM;
 
     ctrl.MaxCouponGenerationLimit = MaxCouponGenerationLimit;
+    ctrl.data.locationType = '';
+    ctrl.searchResults = [];
+    ctrl.validStoreInfo = [];
+    ctrl.validMarketInfo = [];
+    ctrl.inValidStoreInfo = false;
+    ctrl.showInvalidError = false;
+    ctrl.addStoretest = ctrl.addStore;
+
+    var storeData = {};
+    var marketData = {};
+    var existingID = '';
+    var existingMarketNumber = '';
 
     ctrl.$onInit = function () {
         ctrl.initialize();
@@ -157,8 +169,6 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
         }
     }
 
-    // Condition to handle toggleCustomerSegmentAndRapidPass during edit.
-
     if (ctrl.data.purchaseConds && ctrl.data.purchaseConds.allProDiscount) {
         ctrl.toggleCustomerSegmentAndRapidPass();
     }
@@ -199,28 +209,13 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
         return ctrl.data.promoCdSpec.systemGen.uniqueCdCnt > ctrl.MaxCouponGenerationLimit;
     }
 
-    // LOCATIONS START 
-
-    var storeData = {};
-    var marketData = {};
-    var existingID = '';
-    var existingMarketNumber = '';
-    ctrl.locationType = '';
-    ctrl.searchResults = [];
-    ctrl.validStoreInfo = [];
-    ctrl.validMarketInfo = [];
-    ctrl.inValidStoreInfo = false;
-    ctrl.showInvalidError = false;
-    ctrl.addStoretest = ctrl.addStore;
-
     ctrl.search = function (data) {
-        if (ctrl.checkForEmptyValues(data, ctrl.locationType)) {
+        if (ctrl.checkForEmptyValues(data, ctrl.data.locationType)) {
             data = ctrl.formatToCommaSeparatedList(data);
             if (ctrl.isLocationDataValid(data)) {
-                if (ctrl.locationType == 'stores') {
+                if (ctrl.data.locationType == 'stores') {
                     storeData.locationNumbers = data;
                     ctrl.getStoresByID(storeData, true);
-
                 } else {
                     marketData.locationNumbers = data;
                     ctrl.getMarketsByID(marketData, true);
@@ -229,7 +224,7 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
             }
         }
 
-    }
+    };
 
     ctrl.checkForEmptyValues = function (data, locationType) {
         if (!data || data == null || data == '') {
@@ -274,8 +269,6 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
         }
     }
 
-    /* method added to ignore store values > 5 */
-
     ctrl.stripChars = function (data, stripLength) {
         for (var i = 0; i < data.length; i++) {
             if (data[i].length > stripLength) {
@@ -316,7 +309,6 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
                 },
                 showErrorMessage);
     }
-
 
     ctrl.setMarketData = function (data, clicked) {
         existingMarketNumber = '';
@@ -447,15 +439,13 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
     }
 
     //This gets invoked for editing location data for existing promotion
-
     var clicked = true;
     if (ctrl.locations && ctrl.locations.length > 0) {
-        ctrl.locationType = 'stores';
+        ctrl.data.locationType = 'stores';
         storeData.locationNumbers = ctrl.locations;
         ctrl.getStoresByID(storeData, clicked)
-    }
-    else {
-        ctrl.locationType = 'markets';
+    } else {
+        ctrl.data.locationType = 'markets';
         if (ctrl.markets && ctrl.markets.length > 0) {
             marketData.locationNumbers = ctrl.markets;
             ctrl.getMarketsByID(marketData, clicked)
@@ -464,17 +454,15 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
 
     //Removing a individual store
     ctrl.removeItem = function (index) {
-
-        if (ctrl.locationType == 'markets') {
+        if (ctrl.data.locationType == 'markets') {
             ctrl.validMarketInfo.splice(index, 1);
             setMarketData();
-        }
-        else {
+        } else {
             ctrl.validStoreInfo.splice(index, 1);
             setData();
         }
+    };
 
-    }
     //Removing all the stores listed
     ctrl.removeAll = function () {
         ctrl.validStoreInfo = [];
@@ -492,7 +480,6 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
         ctrl.locationSearch = null;
         ctrl.showInvalidError = false;
     }
-    // LOCATIONS END
 }
 
 
