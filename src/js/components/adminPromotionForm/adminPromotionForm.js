@@ -107,6 +107,7 @@ function adminPromotionFormController(promotionDataService, redemptionMethodType
         ctrl.data.locationType = 'markets';
         ctrl.data.checkRapidPass = '';
         ctrl.data.segment = '';
+        ctrl.data.printLabel = !ctrl.data.printLabel;
     };
 
     ctrl.validatePromotion = function () {

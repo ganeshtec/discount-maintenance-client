@@ -447,6 +447,11 @@ app.service('utilService', ['$filter', 'leadTimeService', 'loginService', functi
     publicApi.isPrintLabelDisabled = function (promotion) {
         var disabled = false;
 
+        if (promotion.singleSkuBulk == 1){
+            disabled = true;
+            promotion.printLabel = true;
+        }
+
         if (publicApi.isLabelLocked(promotion)) {
             disabled = true;
         }
@@ -475,8 +480,6 @@ app.service('utilService', ['$filter', 'leadTimeService', 'loginService', functi
         if (promotion.reward && promotion.reward.type != 'PERCNTOFF') {
             disabled = true;
         }
-
-        promotion.singleSkuBulk == 1 ? promotion.printLabel = true : promotion.printLabel = false;
 
         return disabled;
     };
