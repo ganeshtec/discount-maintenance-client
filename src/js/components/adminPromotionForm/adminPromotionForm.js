@@ -1,6 +1,4 @@
 // Purpose is to build promotion data
-/* eslint-disable */
-
 app.component('adminPromotionForm', {
     templateUrl: 'adminPromotionForm.html',
     bindings: {
@@ -35,6 +33,26 @@ function adminPromotionFormController(promotionDataService, redemptionMethodType
     if (!ctrl.data.singleSkuBulk) {
         ctrl.data.singleSkuBulk = 0;
     }
+
+    if (ctrl.userType === 228) {
+        ctrl.data.reward.method = ctrl.data.reward.method || 'INDVDLAFFECTEDITMS';
+    }
+
+    $scope.$watch('ctrl.data.promoSubTypeCd', function (model, oldModel) {
+        if (model !== oldModel && !model)
+            ctrl.setPromotionSubType(true);
+    }, true);
+
+    $scope.$watch('ctrl.promotionSubTypes', function (model, oldModel) {
+        if (model !== oldModel && !model)
+            ctrl.setPromotionSubType();
+    }, true);
+
+    $scope.$watch('ctrl.data.promoCdRqrd', function (model, oldModel) {
+        if (model !== oldModel && !model) {
+            delete ctrl.data.promoCdSpec;
+        }
+    });
 
     ctrl.$onInit = function () {
         var getPromotionPromise;
@@ -76,22 +94,6 @@ function adminPromotionFormController(promotionDataService, redemptionMethodType
         }
     }
 
-    $scope.$watch('ctrl.data.promoSubTypeCd', function (model, oldModel) {
-        if (model !== oldModel && !model)
-            ctrl.setPromotionSubType(true);
-    }, true);
-
-    $scope.$watch('ctrl.promotionSubTypes', function (model, oldModel) {
-        if (model !== oldModel && !model)
-            ctrl.setPromotionSubType();
-    }, true);
-
-    $scope.$watch('ctrl.data.promoCdRqrd', function (model, oldModel) {
-        if (model !== oldModel && !model) {
-            delete ctrl.data.promoCdSpec;
-        }
-    });
-
     ctrl.addSources = function () {
         ctrl.data.purchaseConds.sources.push(new itemCategorySourceData());
     }
@@ -120,6 +122,7 @@ function adminPromotionFormController(promotionDataService, redemptionMethodType
             ctrl.data.reward.details[0].maxAllowedVal = undefined;
         }
     }
+
     ctrl.getSelectedSubTypes = function () {
         if (ctrl.promoSubTypeObject !== null) {
             ctrl.data.promoSubTypeCd = ctrl.promoSubTypeObject.promoSubTypeCd;
@@ -160,17 +163,12 @@ function adminPromotionFormController(promotionDataService, redemptionMethodType
         } else {
             ctrl.data.reward.method = utilService.rewardMethodMapping[ctrl.data.promoSubTypeCd];
         }
-    }
-
-    if (ctrl.userType === 228) {
-        ctrl.data.reward.method = ctrl.data.reward.method || 'INDVDLAFFECTEDITMS';
-    }
+    };
 
     ctrl.validatePromotion = function () {
         ctrl.validationErrors = validationService.validatePromotion(ctrl.data);
     };
 
-    // redemption method types
     ctrl.redemptionMethodTypes = new redemptionMethodTypes();
 
 
