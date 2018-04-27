@@ -1,4 +1,6 @@
 // Purpose is to build promotion data
+/* eslint-disable */
+
 app.component('adminPromotionForm', {
     templateUrl: 'adminPromotionForm.html',
     bindings: {
@@ -49,7 +51,6 @@ function adminPromotionFormController(promotionDataService, redemptionMethodType
                 DataFactory.messageModal.message = error;
                 DataFactory.messageModal.title = 'Error';
                 $('#messageModal').popup();
-
             });
     }
 
@@ -101,7 +102,8 @@ function adminPromotionFormController(promotionDataService, redemptionMethodType
 
     ctrl.toggleSingleSkuBulk = function () {
         ctrl.data.singleSkuBulk = ctrl.data.singleSkuBulk == 1 ? 0 : 1;
-    }
+        ctrl.data.locationType = 'markets';
+    };
 
     ctrl.validatePromotion = function () {
         ctrl.validationErrors = validationService.validatePromotion(ctrl.data);
@@ -129,7 +131,7 @@ function adminPromotionFormController(promotionDataService, redemptionMethodType
             ctrl.data.promoType = '';
         }
 
-        //AP-573-Promo validations - Buy A And B, get % off both
+        //Buy A And B, get % off both
         if (ctrl.data.promoSubTypeCd.indexOf('MultipleItemsPercentDiscount') != -1 || ctrl.data.promoSubTypeCd.indexOf('MultipleItemsValueDiscount') != -1) {
             ctrl.data.isSitewideDeal = false;
             ctrl.data.reward.type = (ctrl.data.promoSubTypeCd.indexOf('MultipleItemsPercentDiscount') != -1) ? 'PERCNTOFF' : 'AMTOFF';
@@ -166,7 +168,7 @@ function adminPromotionFormController(promotionDataService, redemptionMethodType
 
     ctrl.validatePromotion = function () {
         ctrl.validationErrors = validationService.validatePromotion(ctrl.data);
-    }
+    };
 
     // redemption method types
     ctrl.redemptionMethodTypes = new redemptionMethodTypes();
