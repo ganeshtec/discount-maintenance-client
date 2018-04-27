@@ -205,6 +205,7 @@ describe('Unit testing qualifiers component', function () {
         var storeData = { "validStoreInfo": [{ "storeNumber": 121, "storeName": "CUMBERLAND", "marketNumber": 337 }] };
         ctrl.data = [];
         ctrl.locationSearch = 121;
+        ctrl.validStoreInfo = [];
 
         spyOn(ctrl, "setStoreData").and.callThrough();
 

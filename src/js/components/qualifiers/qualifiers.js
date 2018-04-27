@@ -18,21 +18,6 @@ app.component('qualifiers', {
 
 function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataService, utilService, validationService, $rootScope, $scope, DataFactory, locationDataService, modalService) {
     var ctrl = this;
-    ctrl.showBasketThreshold = $rootScope.showBasketThreshold;
-    ctrl.showRapidPass = $rootScope.showRapidPass;
-    ctrl.showAllProDiscount = $rootScope.showAllProDiscount;
-    ctrl.discountEngineErrors = $rootScope.discountEngineErrors;
-    ctrl.programIdForProMonthly = $rootScope.programIdForProMonthly;
-    ctrl.displayCustomerSegmentInDCM = $rootScope.displayCustomerSegmentInDCM;
-
-    ctrl.MaxCouponGenerationLimit = MaxCouponGenerationLimit;
-    ctrl.data.locationType = '';
-    ctrl.searchResults = [];
-    ctrl.validStoreInfo = [];
-    ctrl.validMarketInfo = [];
-    ctrl.inValidStoreInfo = false;
-    ctrl.showInvalidError = false;
-    ctrl.addStoretest = ctrl.addStore;
 
     var storeData = {};
     var marketData = {};
@@ -40,7 +25,41 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
     var existingMarketNumber = '';
 
     ctrl.$onInit = function () {
+        ctrl.showBasketThreshold = $rootScope.showBasketThreshold;
+        ctrl.showRapidPass = $rootScope.showRapidPass;
+        ctrl.showAllProDiscount = $rootScope.showAllProDiscount;
+        ctrl.discountEngineErrors = $rootScope.discountEngineErrors;
+        ctrl.programIdForProMonthly = $rootScope.programIdForProMonthly;
+        ctrl.displayCustomerSegmentInDCM = $rootScope.displayCustomerSegmentInDCM;
+    
+        ctrl.MaxCouponGenerationLimit = MaxCouponGenerationLimit;
+        ctrl.data.locationType = '';
+        ctrl.searchResults = [];
+        ctrl.validStoreInfo = [];
+        ctrl.validMarketInfo = [];
+        ctrl.inValidStoreInfo = false;
+        ctrl.showInvalidError = false;
+        ctrl.addStoretest = ctrl.addStore;
+    
+        if (ctrl.data.purchaseConds && ctrl.data.purchaseConds.allProDiscount) {
+            ctrl.toggleCustomerSegmentAndRapidPass();
+        }
+    
         ctrl.initialize();
+
+        //This gets invoked for editing location data for existing promotion
+        var clicked = true;
+        if (ctrl.locations && ctrl.locations.length > 0) {
+            ctrl.data.locationType = 'stores';
+            storeData.locationNumbers = ctrl.locations;
+            ctrl.getStoresByID(storeData, clicked)
+        } else {
+            ctrl.data.locationType = 'markets';
+            if (ctrl.markets && ctrl.markets.length > 0) {
+                marketData.locationNumbers = ctrl.markets;
+                ctrl.getMarketsByID(marketData, clicked)
+            }
+        }
 
         if (!$rootScope.segmentsFromV2Endpoint) {
             var segmentsFromV1EndpointPromise = customerSegmentDataService.getAllSegments();
@@ -167,10 +186,6 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
             ctrl.data.disableRapidPass = false;
             ctrl.data.disableCustomerSegment = false;
         }
-    }
-
-    if (ctrl.data.purchaseConds && ctrl.data.purchaseConds.allProDiscount) {
-        ctrl.toggleCustomerSegmentAndRapidPass();
     }
 
     ctrl.selectRapidPass = function () {
@@ -436,20 +451,6 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
         ctrl.locations = ctrl.validStoreInfo.reduce(function (data, item) {
             return data.concat(item.storeNumber);
         }, []);
-    }
-
-    //This gets invoked for editing location data for existing promotion
-    var clicked = true;
-    if (ctrl.locations && ctrl.locations.length > 0) {
-        ctrl.data.locationType = 'stores';
-        storeData.locationNumbers = ctrl.locations;
-        ctrl.getStoresByID(storeData, clicked)
-    } else {
-        ctrl.data.locationType = 'markets';
-        if (ctrl.markets && ctrl.markets.length > 0) {
-            marketData.locationNumbers = ctrl.markets;
-            ctrl.getMarketsByID(marketData, clicked)
-        }
     }
 
     //Removing a individual store

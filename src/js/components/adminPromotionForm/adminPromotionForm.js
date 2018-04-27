@@ -7,7 +7,7 @@ app.component('adminPromotionForm', {
         preview: '@',
         isDisabled: '=',
         formHolder: '=',
-        promoForm: '=',
+        promoForm: '=?',
         display: '=',
         viewProp: '=',
         promoMfa: '=',
@@ -19,20 +19,7 @@ app.component('adminPromotionForm', {
 
 function adminPromotionFormController(promotionDataService, redemptionMethodTypes, utilService, validationService, DataFactory, itemCategorySourceData, loginService, featureFlagService, sectionsIndex, $scope, $rootScope) {
     var ctrl = this;
-    ctrl.sectionsIndex = sectionsIndex;
-    ctrl.userType = loginService.getCurrentUserRole();
-    ctrl.formHolder.form = ctrl.promoForm ? ctrl.promoForm : ctrl.formHolder.form;
-    ctrl.showMaximumDiscount = false;
-    ctrl.data.channelToggle = $rootScope.channelToggle;
-    ctrl.data.singleSkuBulkFlag = $rootScope.singleSkuBulk;
-
-    if (!ctrl.data.exclsve) {
-        ctrl.data.exclsve = 0;
-    }
-
-    if (!ctrl.data.singleSkuBulk) {
-        ctrl.data.singleSkuBulk = 0;
-    }
+    
 
     if (ctrl.userType === 228) {
         ctrl.data.reward.method = ctrl.data.reward.method || 'INDVDLAFFECTEDITMS';
@@ -55,9 +42,22 @@ function adminPromotionFormController(promotionDataService, redemptionMethodType
     });
 
     ctrl.$onInit = function () {
-        var getPromotionPromise;
+        ctrl.sectionsIndex = sectionsIndex;
+        ctrl.userType = loginService.getCurrentUserRole();
+        ctrl.formHolder.form = ctrl.promoForm ? ctrl.promoForm : ctrl.formHolder.form;
 
-        getPromotionPromise = promotionDataService.getPromotionSubTypes();
+        ctrl.showMaximumDiscount = false;
+        ctrl.data.channelToggle = $rootScope.channelToggle;
+        ctrl.data.singleSkuBulkFlag = $rootScope.singleSkuBulk;
+    
+        if (!ctrl.data.exclsve) {
+            ctrl.data.exclsve = 0;
+        }
+    
+        if (!ctrl.data.singleSkuBulk) {
+            ctrl.data.singleSkuBulk = 0;
+        }
+        var getPromotionPromise = promotionDataService.getPromotionSubTypes();
 
         getPromotionPromise.then(
             function (data) {
@@ -108,7 +108,8 @@ function adminPromotionFormController(promotionDataService, redemptionMethodType
         ctrl.data.checkRapidPass = '';
         ctrl.data.segment = '';
         ctrl.data.printLabel = !ctrl.data.printLabel;
-    };
+        ctrl.data.singleSkuBulkChanged = true;
+    }
 
     ctrl.validatePromotion = function () {
         ctrl.validationErrors = validationService.validatePromotion(ctrl.data);
