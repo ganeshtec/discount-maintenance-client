@@ -100,7 +100,7 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$lo
                     displayLocations: false,
                     displayItemsSku: false,
                     displayMerchHiearchy: false,
-                    displayCustomerSegment: true,
+                    displayCustomerSegment: false,
                     promotionSubTypesForMFA: false,
                     displayFilterSkuTypes: false,
                     displayBasketThreshold: false,
