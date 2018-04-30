@@ -212,7 +212,6 @@ function rewardsController($rootScope, $scope, $mdDialog, SourceData, validation
             ctrl.data.purchaseConds.sources[i].exclusions.attrs = {};
             ctrl.data.purchaseConds.sources[i].exclusions.initializeSkuTypeExclusions = true;
         }
-
         $rootScope.$broadcast('clearCategories');
     }
 }
