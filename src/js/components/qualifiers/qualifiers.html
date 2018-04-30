@@ -34,7 +34,8 @@
             <td colspan="4" ng-hide="$ctrl.preview">
                 <div class="md-toolbar-search l">
                     <label for="StoreLocation" ng-if="$ctrl.data.locationType=='stores'"><h3>Store Location</h3></label>
-                    <label for="MarketLocation" ng-if="$ctrl.data.locationType=='markets'"><h3>Market Location</h3></label>
+                    <label for="MarketLocation" ng-if="$ctrl.data.locationType=='markets'"><h3>Market Location</h3>
+                    </label>
                     <input class="table__search" ng-show="$ctrl.data.locationType=='stores'" id="StoreLocation"
                            ng-keypress="($event.keyCode === 13) && $ctrl.search($ctrl.locationSearch)"
                            placeholder="Search and Add Store Number" type="text" ng-model="$ctrl.locationSearch"
@@ -190,11 +191,10 @@
     <div>
         <md-checkbox role="checkbox" ng-model="$ctrl.data.checkRapidPass"
                      ng-change="$ctrl.selectRapidPass();$ctrl.validatePromotion()"
-                     ng-disabled="$ctrl.preview || $ctrl.data.disableRapidPass" aria-checked="false">Redeem through
-            Rapid Pass
+                     ng-disabled="$ctrl.preview || $ctrl.data.disableRapidPass || $ctrl.data.singleSkuBulk == 1"
+                     aria-checked="false">Redeem through Rapid Pass
         </md-checkbox>
     </div>
-
 </div>
 
 <div class="input-text-container" ng-if="$ctrl.data.checkRapidPass">
@@ -236,9 +236,10 @@
 
 <div ng-if="$ctrl.data.promoCdRqrd == true  && $ctrl.userType == 229 && $ctrl.data.promoSubTypeCd != 'MultipleItemsPercentDiscount' && $ctrl.data.promoSubTypeCd != 'MultipleItemsValueDiscount'">
     <div class="md-text-field">
-        <label for="name">Site wide promotion </label>
+        <label for="siteWidePromotion">Site wide promotion </label>
         <div class="md-radio">
-            <input for="sitewide" type="radio" name="sitepromotion" ng-model="$ctrl.data.isSitewideDeal" ng-value="true"
+            <input id="siteWidePromotion" type="radio" name="sitepromotion" ng-model="$ctrl.data.isSitewideDeal"
+                   ng-value="true"
                    ng-disabled="$ctrl.preview"
             />
             <label>
