@@ -16,13 +16,14 @@ app.component('qualifiers', {
 });
 
 
-function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataService, utilService, validationService, $rootScope, $scope, DataFactory, locationDataService, modalService) {
+function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataService, utilService, loginService, validationService, $rootScope, $scope, DataFactory, locationDataService, modalService) {
     var ctrl = this;
 
     var storeData = {};
     var marketData = {};
     var existingID = '';
     var existingMarketNumber = '';
+    ctrl.userType = loginService.getCurrentUserRole();
 
     ctrl.$onInit = function () {
         ctrl.showBasketThreshold = $rootScope.showBasketThreshold;
