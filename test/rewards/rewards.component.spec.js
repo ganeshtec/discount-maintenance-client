@@ -196,6 +196,17 @@ describe('rewards', function () {
             expect(ctrl.data.reward.method).toEqual('WHOLEORDER');
         });
 
+        it('verify #setSingleSkuBulkDefault function', function () {
+            ctrl.data.singleSkuBulk = 1;
+            ctrl.data.singleSkuBulkChanged = true;
+            ctrl.setSingleSkuBulkDefault();
+            expect(ctrl.qualuom).toEqual('Quantity');
+            expect(ctrl.data.reward.type).toEqual('PERCNTOFF');
+            expect(ctrl.data.reward.type).toEqual('PERCNTOFF');
+            expect(ctrl.data.reward.details.length).toBe(1);
+            expect(ctrl.data.reward.details[0].maxAllowedVal).toBeNull();
+        });
+
     });
 
 });
