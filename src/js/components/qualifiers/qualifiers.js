@@ -61,6 +61,8 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
                 ctrl.getMarketsByID(marketData, clicked)
             }
         }
+        
+        $rootScope.segmentsFromV2Endpoint = false
 
         if (!$rootScope.segmentsFromV2Endpoint) {
             var segmentsFromV1EndpointPromise = customerSegmentDataService.getAllSegments();
