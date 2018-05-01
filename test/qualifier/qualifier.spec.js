@@ -246,4 +246,18 @@ describe('Unit testing qualifiers component', function () {
     });
     //LOCATIONS END
 
+    it('Verify removeStore removes the correct store', function(){
+       ctrl.validStoreInfo= [{ "storeNumber": 121, "storeName": "CUMBERLAND", "marketNumber": 337 },{ "storeNumber": 123, "storeName": "Some Store", "marketNumber": 337 }] ;
+       ctrl.removeStore(121);
+       expect(ctrl.validStoreInfo.length).toEqual(1);
+       expect(ctrl.validStoreInfo[0].storeNumber).toEqual(123);
+    });
+
+    it('Verify removeMarket removes the correct store', function(){
+        ctrl.validMarketInfo= [{ "marketNumber": 1, "marketName": "ATLANTA" },{ "marketNumber": 2, "marketName": "Some Market"}] ;
+        ctrl.removeMarket(1);
+        expect(ctrl.validMarketInfo.length).toEqual(1);
+        expect(ctrl.validMarketInfo[0].marketNumber).toEqual(2);
+    });
+
 });

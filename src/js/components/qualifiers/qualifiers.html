@@ -88,7 +88,7 @@
             <td>{{item.storeName}}</td>
             <td>{{item.marketNumber}}</td>
             <td class="r" ng-hide="$ctrl.preview">
-                <a class="editOption thd-orange" ng-click="$ctrl.isDisabled || $ctrl.removeItem($index)" href="">
+                <a class="editOption thd-orange" ng-click="$ctrl.isDisabled || $ctrl.removeStore(item.storeNumber)" href="">
                     Remove
                 </a>
             </td>
@@ -109,7 +109,7 @@
             <td>{{market.marketNumber}}</td>
             <td>{{market.marketName}}</td>
             <td class="r" ng-hide="$ctrl.preview">
-                <a class="editOption thd-orange" ng-click="$ctrl.isDisabled || $ctrl.removeItem($index)" href=""
+                <a class="editOption thd-orange" ng-click="$ctrl.isDisabled || $ctrl.removeMarket(market.marketNumber)" href=""
                    ng-disabled="$ctrl.preview">
                     Remove
                 </a>
