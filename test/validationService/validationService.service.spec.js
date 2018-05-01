@@ -48,6 +48,17 @@ describe('validationService', function () {
         });
     });
 
+    it('returns a start date error when selected start date today when single sku bulk is selected.', function () {
+        var promotion = {
+            startDt: moment().toDate(),
+            singleSkuBulk: 1
+        }
+        var response = validationService.validateStartDate(promotion,true) 
+            expect(response.isError).toBe(true);
+            expect(String(response.message)).not.toBe('')
+        
+    });
+
     it('returns a coupon code limit error with over limit.', function () {
         var promotion = {
             promoCdSpec: { systemGen: { uniqueCdCnt: 300001 },

@@ -31,9 +31,23 @@ app.service('validationService', ['$filter', 'utilService', 'loginService', 'Max
         };
 
         var today = moment();
-        if (promotion.startDt && moment(promotion.startDt).isBefore(today, 'day')) {
-            startDateError.isError = true;
-            startDateError.message = 'Start date cannot be earlier than today.';
+
+        if(promotion.singleSkuBulk !== 1){ 
+            if (promotion.startDt && moment(promotion.startDt).isBefore(today, 'day')) {
+                startDateError.isError = true;
+                startDateError.message = 'Start date cannot be earlier than today.';
+            }
+        }
+        else { 
+            if (promotion.startDt && moment(promotion.startDt).date() < today.date()+1 && today.hour()<14) {
+                startDateError.isError = true;
+                startDateError.message = 'Start date cannot be earlier than tomorrow.';
+            }
+        
+            else if (promotion.startDt && moment(promotion.startDt).date() < today.date()+2 && today.hour()>=14) {
+                startDateError.isError = true;
+                startDateError.message = 'Start date cannot be earlier than 2 days from now.';
+            }   
         }
 
         return startDateError;
