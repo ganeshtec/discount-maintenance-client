@@ -16,7 +16,7 @@ app.component('qualifiers', {
 });
 
 
-function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataService, utilService, loginService, validationService, $rootScope, $scope, DataFactory, locationDataService, modalService) {
+function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataService, utilService, loginService, validationService, $rootScope, DataFactory, locationDataService, modalService) {
     var ctrl = this;
 
     var storeData = {};

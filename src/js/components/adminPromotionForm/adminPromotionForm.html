@@ -102,7 +102,8 @@
                     </div>
                     <div>
                         <md-checkbox data-ng-click="$ctrl.toggleExclusive()" data-ng-checked="$ctrl.data.exclsve==1"
-                                     id="exclusivity" ng-disabled="$ctrl.preview || $ctrl.data.singleSkuBulk == 1">Do not stack with other discounts
+                                     id="exclusivity" ng-disabled="$ctrl.preview || $ctrl.data.singleSkuBulk == 1">
+                            Do not stack with other discounts
                         </md-checkbox>
                     </div>
                 </div>
@@ -111,7 +112,7 @@
                                 data="$ctrl.data"></channel-select>
 
                 <!-- <CHANNEL SELECT PLACEHOLDER -->
-                <div ng-show="$ctrl.viewProp.displaySingleSkuBulk && $ctrl.data.singleSkuBulkFlag"
+                <div ng-show="$ctrl.viewProp.displaySingleSkuBulk && $ctrl.singleSkuBulkFlag"
                      class="singleSkuBulk">
                     <div>
                         <h4>Single Sku Bulk</h4>

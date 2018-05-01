@@ -48,7 +48,7 @@ function adminPromotionFormController(promotionDataService, redemptionMethodType
 
         ctrl.showMaximumDiscount = false;
         ctrl.data.channelToggle = $rootScope.channelToggle;
-        ctrl.data.singleSkuBulkFlag = $rootScope.singleSkuBulk;
+        ctrl.singleSkuBulkFlag = $rootScope.singleSkuBulk;
     
         if (!ctrl.data.exclsve) {
             ctrl.data.exclsve = 0;
@@ -106,7 +106,7 @@ function adminPromotionFormController(promotionDataService, redemptionMethodType
         ctrl.data.singleSkuBulk = ctrl.data.singleSkuBulk == 1 ? 0 : 1;
         ctrl.data.locationType = 'markets';
         ctrl.data.checkRapidPass = false;
-        ctrl.data.segment = '';
+        ctrl.data.segment = null;
         ctrl.data.printLabel = !ctrl.data.printLabel;
         ctrl.data.singleSkuBulkChanged = true;
         ctrl.data.exclsve = 0;

@@ -69,6 +69,26 @@ app.component('adminFooter', {
         });
 
         this.preview = function (data) {
+            if (data.singleSkuBulk == 1) {
+                //Rapidpass scenario for Single SkuBulk
+                data.checkRapidPass = false;
+                data.promoCdSpec = null;
+                data.promoCdRqrd = false;
+
+                //Customer Segment scenario for Single SkuBulk
+                data.segment = null;
+                data.purchaseConds.customerSegmentId = 0;
+                data.purchaseConds.program.id = 0;
+                data.purchaseConds.program.tierId = 0;
+
+                //Location types scenario for Single SkuBulk
+                data.locationType = 'markets';
+                data.purchaseConds.locations = [];
+
+                //Print labels scenario for Single SkuBulk
+                data.printLabel = true;
+                data.labelText = '';
+            }
             var validationErrors;
             this.validatePromotion(data, function (errorMsgs) {
                 validationErrors = errorMsgs

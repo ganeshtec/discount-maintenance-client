@@ -131,7 +131,7 @@ describe('Unit testing adminPromotionForm.directive.spec.js', function () {
     ctrl.data.singleSkuBulk = 0;
     ctrl.toggleSingleSkuBulk();
     expect(ctrl.data.singleSkuBulk).toEqual(1);
-    expect(ctrl.data.segment).toEqual('');
+      expect(ctrl.data.segment).toEqual(null);
   });
 
   it('#toggleSingleSkuBulk checks and disabled Printlabel', function () {

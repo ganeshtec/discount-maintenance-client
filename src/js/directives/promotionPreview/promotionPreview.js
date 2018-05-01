@@ -37,9 +37,14 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                     scope.headerErrorMsg = msg;
                 }
 
-                var selectedSellingChannels = scope.previewData.data.channelsWithCheckedFields ? scope.previewData.data.channelsWithCheckedFields.filter(function (channel) { return channel.checked }) : [];
+                var selectedSellingChannels = scope.previewData.data.channelsWithCheckedFields ?
+                    scope.previewData.data.channelsWithCheckedFields.filter(function (channel) {
+                        return channel.checked
+                    }) : [];
                 scope.previewData.data.purchaseConds.channels = scope.previewData.data.channels
-                scope.selectedChannels = selectedSellingChannels.map(function (channel) { return channel.name }).join(', ')
+                scope.selectedChannels = selectedSellingChannels.map(function (channel) {
+                    return channel.name
+                }).join(', ');
                 scope.previewData.data.checkRapidPass = scope.data.promoCdSpec && scope.data.promoCdSpec.genType === 'Dynamically Generated';
 
                 delete scope.previewData.data.channelsWithCheckedFields;
@@ -47,7 +52,8 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                 scope.userType = loginService.getCurrentUserRole();
                 scope.saveAndSubmit = function (event) {
                     var unclickableSaveBtn = function (event) {
-                        event.handleObj.handler = function () { };
+                        event.handleObj.handler = function () {
+                        };
                     }
 
                     var clickableSaveBtn = function (event) {
@@ -72,6 +78,7 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                         scope.previewData.data.promoCdSpec.systemGen.uniqueCdCnt = scope.data.promoCdSpec.systemGen.uniqueCdCnt;
                         scope.previewData.data.redmptnLmt.maxUsesOfPromo = scope.data.promoCdSpec.systemGen.uniqueCdCnt;
                     }
+
                     var promotion = $.extend(true, {}, scope.previewData.data);
 
                     utilService.setDefaultsForSaveAsDraft(promotion);
@@ -98,7 +105,9 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                     } else if (scope.userType === 228 && scope.previewData.data.purchaseConds.channels != null && selectedSellingChannels.length == 0) {
                         setError('ERROR: Please select at least one selling channel');
                         return;
-                    } else if (scope.$root.programIdForProMonthly.split(',').indexOf(scope.previewData.data.purchaseConds.program.id.toString()) > -1 && scope.previewData.data.purchaseConds.program.proPaint === null) {
+                    } else if (scope.previewData.data.purchaseConds.program &&
+                        scope.$root.programIdForProMonthly.split(',').indexOf(scope.previewData.data.purchaseConds.program.id.toString()) > -1
+                        && scope.previewData.data.purchaseConds.program.proPaint === null) {
                         setError('ERROR: Please select the appropriate ProPaint field');
                         return;
                     } else {
