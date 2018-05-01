@@ -101,6 +101,49 @@ describe('Unit testing adminPromotionForm.directive.spec.js', function () {
     expect(ctrl.data.exclsve).toEqual(0);
   });
 
+  it('#toggleSingleSkuBulk function', function () {
+    ctrl.data.singleSkuBulk = 0;
+    ctrl.toggleSingleSkuBulk();
+    expect(ctrl.data.singleSkuBulk).toEqual(1);
 
+    ctrl.data.singleSkuBulk = 1;
+    ctrl.toggleSingleSkuBulk();
+    expect(ctrl.data.singleSkuBulk).toEqual(0);  
+  });
+
+  it('#toggleSingleSkuBulk unchecks and disable Exclusive', function () {
+    ctrl.data.singleSkuBulk = 0;
+    ctrl.data.exclsve = 1
+    ctrl.toggleSingleSkuBulk();
+    expect(ctrl.data.singleSkuBulk).toEqual(1);
+    expect(ctrl.data.exclsve).toEqual(0);
+  });
+
+  it('#toggleSingleSkuBulk unchecks and disable Rapid Pass', function () {
+    ctrl.data.singleSkuBulk = 0;
+    ctrl.data.checkRapidPass = true
+    ctrl.toggleSingleSkuBulk();
+    expect(ctrl.data.singleSkuBulk).toEqual(1);
+    expect(ctrl.data.checkRapidPass).toEqual(false);
+  });
+
+  it('#toggleSingleSkuBulk unchecks and disable Customer Segment', function () {
+    ctrl.data.singleSkuBulk = 0;
+    ctrl.toggleSingleSkuBulk();
+    expect(ctrl.data.singleSkuBulk).toEqual(1);
+    expect(ctrl.data.segment).toEqual('');
+  });
+
+  it('#toggleSingleSkuBulk checks and disabled Printlabel', function () {
+    ctrl.data.singleSkuBulk = 0;
+    ctrl.toggleSingleSkuBulk();
+    expect(ctrl.data.singleSkuBulk).toEqual(1);
+    expect(ctrl.data.printLabel).toEqual(true);
+
+    ctrl.data.singleSkuBulk = 1;
+    ctrl.toggleSingleSkuBulk();
+    expect(ctrl.data.singleSkuBulk).toEqual(0);
+    expect(ctrl.data.printLabel).toEqual(false);
+  });
 
 });

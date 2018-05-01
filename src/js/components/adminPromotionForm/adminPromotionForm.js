@@ -105,10 +105,11 @@ function adminPromotionFormController(promotionDataService, redemptionMethodType
     ctrl.toggleSingleSkuBulk = function () {
         ctrl.data.singleSkuBulk = ctrl.data.singleSkuBulk == 1 ? 0 : 1;
         ctrl.data.locationType = 'markets';
-        ctrl.data.checkRapidPass = '';
+        ctrl.data.checkRapidPass = false;
         ctrl.data.segment = '';
         ctrl.data.printLabel = !ctrl.data.printLabel;
         ctrl.data.singleSkuBulkChanged = true;
+        ctrl.data.exclsve = 0;
     }
 
     ctrl.validatePromotion = function () {
