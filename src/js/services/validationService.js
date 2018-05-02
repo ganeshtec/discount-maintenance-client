@@ -32,35 +32,29 @@ app.service('validationService', ['$filter', 'utilService', 'loginService', 'Max
 
         var today = moment();
 
-        today.day('Tuesday')
-        today.hour(10)
-
         if(promotion.singleSkuBulk === 1) {
             //weekend
             if(today.day() === 0 || today.day() === 6){
-                // var h = today.add(2,'days')
-                // var prom = moment(promotion.startDt); 
-                // console.log(h.date()) 
-                // console.log(prom.date()) 
-                // console.log(h.isBefore(prom))      
-                if(promotion.startDt && moment(promotion.startDt).date() < today.add(2,'days').date() && today.hour()<9){
+                     
+                if(promotion.startDt && moment(promotion.startDt).isBefore(moment().add(2,'days'), 'day') && moment().hour()<9){
                     startDateError.isError = true;
                     startDateError.message = 'Start date cannot be earlier than 2 days from now.';    
                 }
-                else if(promotion.startDt && moment(promotion.startDt).date() < today.add(3,'days').date() && today.hour()>=9){
+                else if(promotion.startDt && moment(promotion.startDt).isBefore(moment().add(3,'days') , 'day') && moment().hour()>=9){
                     startDateError.isError = true;
                     startDateError.message = 'Start date cannot be earlier than 3 days from now.';    
                 }        
             }
             //weekday
             else{ 
-                if (promotion.startDt && moment(promotion.startDt).date() < today.date()+1 && today.hour()<14) {
+                if (promotion.startDt && moment(promotion.startDt).isBefore(moment().add(1,'days'), 'day') && moment().hour()<14) {
                     startDateError.isError = true;
                     startDateError.message = 'Start date cannot be earlier than tomorrow.';
                 }
-                else if (promotion.startDt && moment(promotion.startDt).date() < today.date()+2 && today.hour()>=14) {
+                else if (promotion.startDt && moment(promotion.startDt).isBefore(moment().add(2,'days'), 'day') && moment().hour()>=14) {
                     startDateError.isError = true;
                     startDateError.message = 'Start date cannot be earlier than 2 days from now.';
+                    today.subtract(2,'days')
                 }
             }   
         }
