@@ -455,16 +455,26 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
         }, []);
     }
 
-    //Removing a individual store
-    ctrl.removeItem = function (index) {
-        if (ctrl.data.locationType == 'markets') {
-            ctrl.validMarketInfo.splice(index, 1);
-            setMarketData();
-        } else {
-            ctrl.validStoreInfo.splice(index, 1);
-            setData();
+    ctrl.removeMarket = function(marketNumber){
+        for(var i = 0; i < ctrl.validMarketInfo.length; i++) {
+            if(ctrl.validMarketInfo[i].marketNumber === marketNumber){
+                ctrl.validMarketInfo.splice(i, 1);
+                break;
+            }
         }
-    };
+        setMarketData();
+    }
+
+    ctrl.removeStore = function(storeNumber){
+        for(var i=0;i<ctrl.validStoreInfo.length; i++){
+            if(ctrl.validStoreInfo[i].storeNumber === storeNumber){
+                ctrl.validStoreInfo.splice(i,1);
+                break;
+            }
+        }
+        setData();
+    }
+
 
     //Removing all the stores listed
     ctrl.removeAll = function () {
