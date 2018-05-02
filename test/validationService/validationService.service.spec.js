@@ -48,6 +48,69 @@ describe('validationService', function () {
         });
     });
 
+    it('returns a start date error when selected start date today when single sku bulk is selected.', function () {
+        var promotion = {
+            startDt: moment().toDate(),
+            singleSkuBulk: 1
+        }
+        var response = validationService.validateStartDate(promotion,true) 
+            expect(response.isError).toBe(true);
+            expect(String(response.message)).not.toBe('')
+        
+    });
+
+    it('returns a start date error when selected start date today when single sku bulk is selected on a weekday before 2.', function () {
+        var promotion = {
+            startDt: moment('2018-05-03').toDate(),
+            singleSkuBulk: 1
+        }
+        jasmine.clock().mockDate(moment('2018-05-03').hour(11).toDate());
+
+        var response = validationService.validateStartDate(promotion,true) 
+            expect(response.isError).toBe(true);
+            expect(String(response.message)).toBe('Start date cannot be earlier than tomorrow.')
+        
+    });
+
+    it('returns a start date error when selected start date today when single sku bulk is selected on a weekday after 2.', function () {
+        var promotion = {
+            startDt: moment('2018-05-04').toDate(),
+            singleSkuBulk: 1
+        }
+        jasmine.clock().mockDate(moment('2018-05-03').hour(15).toDate());
+
+        var response = validationService.validateStartDate(promotion,true) 
+            expect(response.isError).toBe(true);
+            expect(String(response.message)).toBe('Start date cannot be earlier than 2 days from now.')
+        
+    });
+
+    it('returns a start date error when selected start date today when single sku bulk is selected on the weekend after 9.', function () {
+        var promotion = {
+            startDt: moment('2018-05-07').toDate(),
+            singleSkuBulk: 1
+        }
+        jasmine.clock().mockDate(moment('2019-05-05').hour(10).toDate());
+
+        var response = validationService.validateStartDate(promotion,true) 
+            expect(response.isError).toBe(true);
+            expect(String(response.message)).toBe('Start date cannot be earlier than 3 days from now.')
+        
+    });
+
+    it('returns a start date error when selected start date today when single sku bulk is selected on the weekend before 9.', function () {
+        var promotion = {
+            startDt: moment('2018-05-06').toDate(),
+            singleSkuBulk: 1
+        }
+        jasmine.clock().mockDate(moment('2019-05-05').hour(8).toDate());
+
+        var response = validationService.validateStartDate(promotion,true) 
+            expect(response.isError).toBe(true);
+            expect(String(response.message)).toBe('Start date cannot be earlier than 2 days from now.')
+        
+    });
+
     it('returns a coupon code limit error with over limit.', function () {
         var promotion = {
             promoCdSpec: { systemGen: { uniqueCdCnt: 300001 },
