@@ -59,7 +59,7 @@ describe('validationService', function () {
         
     });
 
-    fit('returns a start date error when selected start date today when single sku bulk is selected on a weekday before 2.', function () {
+    it('returns a start date error when selected start date today when single sku bulk is selected on a weekday before 2.', function () {
         var promotion = {
             startDt: moment('2018-05-03').toDate(),
             singleSkuBulk: 1
@@ -72,7 +72,7 @@ describe('validationService', function () {
         
     });
 
-    fit('returns a start date error when selected start date today when single sku bulk is selected on a weekday after 2.', function () {
+    it('returns a start date error when selected start date today when single sku bulk is selected on a weekday after 2.', function () {
         var promotion = {
             startDt: moment('2018-05-04').toDate(),
             singleSkuBulk: 1
@@ -85,7 +85,7 @@ describe('validationService', function () {
         
     });
 
-    fit('returns a start date error when selected start date today when single sku bulk is selected on the weekend after 9.', function () {
+    it('returns a start date error when selected start date today when single sku bulk is selected on the weekend after 9.', function () {
         var promotion = {
             startDt: moment('2018-05-07').toDate(),
             singleSkuBulk: 1
