@@ -59,9 +59,9 @@ describe('validationService', function () {
         
     });
 
-    it('returns a start date error when selected start date today when single sku bulk is selected on a weekday before 2.', function () {
+    fit('returns a start date error when selected start date today when single sku bulk is selected on a weekday before 2.', function () {
         var promotion = {
-            startDt: moment('2018-04-28').toDate(),
+            startDt: moment('2018-05-03').toDate(),
             singleSkuBulk: 1
         }
         jasmine.clock().mockDate(moment('2018-05-03').hour(11).toDate());
@@ -72,9 +72,9 @@ describe('validationService', function () {
         
     });
 
-    it('returns a start date error when selected start date today when single sku bulk is selected on a weekday after 2.', function () {
+    fit('returns a start date error when selected start date today when single sku bulk is selected on a weekday after 2.', function () {
         var promotion = {
-            startDt: moment('2018-04-28').toDate(),
+            startDt: moment('2018-05-04').toDate(),
             singleSkuBulk: 1
         }
         jasmine.clock().mockDate(moment('2018-05-03').hour(15).toDate());
@@ -85,9 +85,9 @@ describe('validationService', function () {
         
     });
 
-    it('returns a start date error when selected start date today when single sku bulk is selected on the weekend after 9.', function () {
+    fit('returns a start date error when selected start date today when single sku bulk is selected on the weekend after 9.', function () {
         var promotion = {
-            startDt: moment('2018-04-28').toDate(),
+            startDt: moment('2018-05-07').toDate(),
             singleSkuBulk: 1
         }
         jasmine.clock().mockDate(moment('2019-05-05').hour(10).toDate());
@@ -100,7 +100,7 @@ describe('validationService', function () {
 
     it('returns a start date error when selected start date today when single sku bulk is selected on the weekend before 9.', function () {
         var promotion = {
-            startDt: moment('2018-04-28').toDate(),
+            startDt: moment('2018-05-06').toDate(),
             singleSkuBulk: 1
         }
         jasmine.clock().mockDate(moment('2019-05-05').hour(8).toDate());
