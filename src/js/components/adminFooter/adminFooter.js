@@ -78,8 +78,7 @@ app.component('adminFooter', {
                 //Customer Segment scenario for Single SkuBulk
                 data.segment = null;
                 data.purchaseConds.customerSegmentId = 0;
-                data.purchaseConds.program.id = 0;
-                data.purchaseConds.program.tierId = 0;
+                data.purchaseConds.program = null;
 
                 //Location types scenario for Single SkuBulk
                 data.locationType = 'markets';
