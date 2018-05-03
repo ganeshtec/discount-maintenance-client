@@ -34,6 +34,8 @@ app.controller('MainCtrl', ['$q', '$rootScope', '$scope', '$location', 'DataFact
 
             constantsTogglePromise.then(function (data) {
                 $rootScope.programIdForProMonthly = data.programIdForProMonthly;
+                $rootScope.singleSkuBulkWeekendCutoff = data.singleSkuBulkWeekendCutoff;
+                $rootScope.singleSkuBulkWeekdayCutoff = data.singleSkuBulkWeekdayCutoff;
             });
 
             featureTogglePromise.then(function (data) {
