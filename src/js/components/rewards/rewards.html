@@ -130,11 +130,11 @@
                             <label for="discount_type_amount"><span><span></span></span>Dollar Off</label>
                         </div>
 
-                        <div class="md-radio">
+                        <div class="md-radio" ng-if="$ctrl.costPlusPercent">
                             <input type="radio" id="discount_type_costplus" name="discountType"
                                    ng-model="$ctrl.data.reward.type" title="Cost Plus"
-                                   value="COSTPLUSPERCNT" ng-change="$ctrl.updatePrintLabel()" ng-disabled="$ctrl.preview || $ctrl.data.singleSkuBulk"
-                                   ng-if="$ctrl.costPlusPercent"/>
+                                   value="COSTPLUSPERCNT" ng-change="$ctrl.updatePrintLabel()"
+                                   ng-disabled="$ctrl.preview || $ctrl.data.singleSkuBulk"/>
                             <label for="discount_type_costplus"><span><span></span></span>Cost-plus</label>
                         </div>
                     </div>
