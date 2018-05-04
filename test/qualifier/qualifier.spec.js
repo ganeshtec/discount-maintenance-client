@@ -93,23 +93,30 @@ describe('Unit testing qualifiers component', function () {
         expect(ctrl.data.promoCdRqrd).toBe(true);
     });
 
-    it('All Pro checked', function () {
-        ctrl.data.purchaseConds.allProDiscount = true;
-        ctrl.toggleCustomerSegmentAndRapidPass();
-
-        expect(ctrl.data.checkRapidPass).toBe(false);
-        expect(ctrl.data.disableRapidPass).toBe(true);
-        expect(ctrl.data.promoCdRqrd).toBe(false);
-        expect(ctrl.data.promoCdSpec).toEqual({});
-        expect(ctrl.data.disableCustomerSegment).toBe(true);
+    it('All Pro segment is selected when Rapid Pass Unchecked', function () {
+        ctrl.data.segment = { "id": -1, "segmentName": "Target all Pro Customers" };
+        ctrl.data.purchaseConds.allProDiscount = false;
+        ctrl.data.checkRapidPass = false;
+        ctrl.onSegmentSelection();
+        expect(ctrl.data.purchaseConds.allProDiscount).toBe(true);
+        expect(ctrl.data.purchaseConds.customerSegmentId).toBe(0);
+        expect(ctrl.data.purchaseConds.program.id).toBe(0);
+        expect(ctrl.data.purchaseConds.program.tierId).toBe(0);
     });
 
-    it('All Pro unchecked', function () {
+    it('All Pro segment is selected when Rapid Pass checked', function () {
+        ctrl.data.segment = { "id": -1, "segmentName": "Target all Pro Customers" };
         ctrl.data.purchaseConds.allProDiscount = false;
-        ctrl.toggleCustomerSegmentAndRapidPass();
-
-        expect(ctrl.data.disableRapidPass).toBe(false);
-        expect(ctrl.data.disableCustomerSegment).toBe(false);
+        ctrl.data.checkRapidPass = true;
+        ctrl.onSegmentSelection();
+        expect(ctrl.data.purchaseConds.allProDiscount).toBe(true);
+        expect(ctrl.data.purchaseConds.customerSegmentId).toBe(0);
+        expect(ctrl.data.purchaseConds.program.id).toBe(0);
+        expect(ctrl.data.purchaseConds.program.tierId).toBe(0);
+        expect(ctrl.data.checkRapidPass).toBe(false);
+        expect(ctrl.data.promoCdSpec).toEqual({});
+        expect(ctrl.data.promoCdRqrd).toBe(false);
+        expect(ctrl.data.disableRapidPass).toBe(true);
     });
 
     it('initialize for Edit mode of Active promotion', function () {

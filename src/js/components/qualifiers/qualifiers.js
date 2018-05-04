@@ -43,7 +43,7 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
         ctrl.addStoretest = ctrl.addStore;
     
         if (ctrl.data.purchaseConds && ctrl.data.purchaseConds.allProDiscount) {
-            ctrl.toggleCustomerSegmentAndRapidPass();
+            ctrl.clearRapidPassSelection();
         }
     
         ctrl.initialize();
@@ -79,6 +79,11 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
                             ctrl.data.segment = segment;
                         }
                     });
+
+                    if(ctrl.data.purchaseConds.allProDiscount){
+                        ctrl.data.segment = ctrl.segmentDetails[0];
+                    }
+
                     if (!ctrl.data.segment) {
                         ctrl.data.purchaseConds.customerSegmentId = 0;
                     }
@@ -111,6 +116,9 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
                         }
                         ctrl.segmentDetails.push(segment);
                     }
+                    if(ctrl.data.purchaseConds.allProDiscount){
+                        ctrl.data.segment = ctrl.segmentDetails[0];
+                    }
                 },
                 function (error) {
                     ctrl.discountEngineErrors.push(error);
@@ -120,14 +128,21 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
     };
 
     ctrl.onSegmentSelection = function () {
-        ctrl.data.purchaseConds.program.proPaint = null;
+        if(ctrl.data.purchaseConds.program){
+            ctrl.data.purchaseConds.program.proPaint = null;
+        }
+        ctrl.data.purchaseConds.allProDiscount = false;
         if (ctrl.data.segment) {
-            if (ctrl.data.segment.id) {
+            if (ctrl.data.segment.id && ctrl.data.segment.id != -1) {
                 ctrl.data.purchaseConds.customerSegmentId = ctrl.data.segment.id;
                 ctrl.data.purchaseConds.program = {};
                 ctrl.validationErrors = validationService.validateRapidPass(ctrl.data);
-            }
-            else {
+                ctrl.clearRapidPassSelection();
+            } else if (ctrl.data.segment.id && ctrl.data.segment.id == -1){
+                ctrl.data.purchaseConds.customerSegmentId = 0;
+                ctrl.data.purchaseConds.allProDiscount = true;
+                ctrl.clearRapidPassSelection();
+            }else {
 
                 ctrl.data.purchaseConds.customerSegmentId = 0;
             }
@@ -171,22 +186,17 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
         ctrl.validationErrors = validationService.validatePromotion(ctrl.data);
     };
 
-    ctrl.toggleCustomerSegmentAndRapidPass = function () {
+    ctrl.clearRapidPassSelection = function () {
         if (ctrl.data.purchaseConds.allProDiscount) {
-            if (ctrl.data.segment || ctrl.data.checkRapidPass) {
-                modalService.showAlert('Warning', 'Customer segment and Rapid Pass selection removed due to selection of All Pros**');
+            if (ctrl.data.checkRapidPass) {
+                modalService.showAlert('Warning', 'Rapid Pass selection removed due to selection of All Pros Customer Segment');
             }
             ctrl.data.checkRapidPass = false;
             ctrl.data.promoCdSpec = {};
             ctrl.data.promoCdRqrd = false;
             ctrl.data.disableRapidPass = true;
-            ctrl.data.disableCustomerSegment = true;
-            ctrl.data.segment = '';
-            ctrl.data.purchaseConds.program = {};
-            ctrl.onSegmentSelection();
         } else {
             ctrl.data.disableRapidPass = false;
-            ctrl.data.disableCustomerSegment = false;
         }
     }
 
