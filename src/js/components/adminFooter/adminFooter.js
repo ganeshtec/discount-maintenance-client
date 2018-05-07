@@ -20,10 +20,7 @@ app.component('adminFooter', {
             ctrl.showSummaryTab = $rootScope.showSummaryTab;
             ctrl.sectionsIndex = sectionsIndex;
             if (tempData) {
-                var isEndDtWithinLeadTimePromise = utilService.isSubmitEligibleForDisable(tempData);
-                isEndDtWithinLeadTimePromise.then(function (value) {
-                    isEndDtWithinLeadTime = value;
-                })
+                isEndDtWithinLeadTime = utilService.isSubmitEligibleForDisable(tempData);
             }
         }
         this.cancel = function () {
