@@ -21,27 +21,28 @@ function adminPromotionFormController(promotionDataService, redemptionMethodType
     var ctrl = this;
     
 
-    if (ctrl.userType === 228) {
-        ctrl.data.reward.method = ctrl.data.reward.method || 'INDVDLAFFECTEDITMS';
-    }
 
-    $scope.$watch('ctrl.data.promoSubTypeCd', function (model, oldModel) {
+
+    $scope.$watch('$ctrl.data.promoSubTypeCd', function (model, oldModel) {
         if (model !== oldModel && !model)
             ctrl.setPromotionSubType(true);
     }, true);
 
-    $scope.$watch('ctrl.promotionSubTypes', function (model, oldModel) {
+    $scope.$watch('$ctrl.promotionSubTypes', function (model, oldModel) {
         if (model !== oldModel && !model)
             ctrl.setPromotionSubType();
     }, true);
 
-    $scope.$watch('ctrl.data.promoCdRqrd', function (model, oldModel) {
+    $scope.$watch('$ctrl.data.promoCdRqrd', function (model, oldModel) {
         if (model !== oldModel && !model) {
             delete ctrl.data.promoCdSpec;
         }
     });
 
     ctrl.$onInit = function () {
+        if (ctrl.userType === 228) {
+            ctrl.data.reward.method = ctrl.data.reward.method || 'INDVDLAFFECTEDITMS';
+        }
         ctrl.sectionsIndex = sectionsIndex;
         ctrl.userType = loginService.getCurrentUserRole();
         ctrl.formHolder.form = ctrl.promoForm ? ctrl.promoForm : ctrl.formHolder.form;
