@@ -3,7 +3,7 @@
 	Services that will handle validation of promotion attributes
 */
 
-app.service('validationService', ['$filter', 'utilService', 'loginService', 'MaxCouponGenerationLimit', function ($filter, utilService, loginService, MaxCouponGenerationLimit) {
+app.service('validationService', ['$filter', 'utilService', 'loginService', 'MaxCouponGenerationLimit','$rootScope', function ($filter, utilService, loginService, MaxCouponGenerationLimit,$rootScope) {
     var publicApi = {};
 
     var leadTime = null;
@@ -33,25 +33,28 @@ app.service('validationService', ['$filter', 'utilService', 'loginService', 'Max
         var today = moment();
 
         if(promotion.singleSkuBulk === 1) {
+            promotion.singleSkuBulkWeekendStartDateTime = Number($rootScope.singleSkuBulkWeekendStartDateTime);
+            promotion.singleSkuBulkWeekdayStartDateTime = Number($rootScope.singleSkuBulkWeekdayStartDateTime);
+            promotion.singleSkuBulkWeekendStartDateDay = Number($rootScope.singleSkuBulkWeekendStartDateDay);
+            promotion.singleSkuBulkWeekdayStartDateDay = Number($rootScope.singleSkuBulkWeekdayStartDateDay);
             //weekend
-            if(today.day() === 0 || today.day() === 6){
-                     
-                if(promotion.startDt && moment(promotion.startDt).isBefore(moment().add(2,'days'), 'day') && moment().hour()<9){
+            if(today.day() === 0 || today.day() === 6){       
+                if(promotion.startDt && moment(promotion.startDt).isBefore(moment().add(promotion.singleSkuBulkWeekendStartDateDay,'days'), 'day') && moment().hour()<promotion.singleSkuBulkWeekendStartDateTime){
                     startDateError.isError = true;
                     startDateError.message = 'Start date cannot be earlier than 2 days from now.';    
                 }
-                else if(promotion.startDt && moment(promotion.startDt).isBefore(moment().add(3,'days') , 'day') && moment().hour()>=9){
+                else if(promotion.startDt && moment(promotion.startDt).isBefore(moment().add(promotion.singleSkuBulkWeekendStartDateDay+1,'days') , 'day') && moment().hour()>=promotion.singleSkuBulkWeekendStartDateTime){
                     startDateError.isError = true;
                     startDateError.message = 'Start date cannot be earlier than 3 days from now.';    
                 }        
             }
             //weekday
             else{ 
-                if (promotion.startDt && moment(promotion.startDt).isBefore(moment().add(1,'days'), 'day') && moment().hour()<14) {
+                if (promotion.startDt && moment(promotion.startDt).isBefore(moment().add(promotion.singleSkuBulkWeekdayStartDateDay,'days'), 'day') && moment().hour()<promotion.singleSkuBulkWeekdayStartDateTime) {
                     startDateError.isError = true;
                     startDateError.message = 'Start date cannot be earlier than tomorrow.';
                 }
-                else if (promotion.startDt && moment(promotion.startDt).isBefore(moment().add(2,'days'), 'day') && moment().hour()>=14) {
+                else if (promotion.startDt && moment(promotion.startDt).isBefore(moment().add(promotion.singleSkuBulkWeekdayStartDateDay+1,'days'), 'day') && moment().hour()>=promotion.singleSkuBulkWeekdayStartDateTime) {
                     startDateError.isError = true;
                     startDateError.message = 'Start date cannot be earlier than 2 days from now.';
                     today.subtract(2,'days')

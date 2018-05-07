@@ -36,6 +36,10 @@ app.controller('MainCtrl', ['$q', '$rootScope', '$scope', '$location', 'DataFact
 
             constantsTogglePromise.then(function (data) {
                 $rootScope.programIdForProMonthly = data.programIdForProMonthly;
+                $rootScope.singleSkuBulkWeekendStartDateTime = data.singleSkuBulkWeekendStartDateTime;
+                $rootScope.singleSkuBulkWeekdayStartDateTime = data.singleSkuBulkWeekdayStartDateTime;
+                $rootScope.singleSkuBulkWeekendStartDateDay = data.singleSkuBulkWeekendStartDateDay;
+                $rootScope.singleSkuBulkWeekdayStartDateDay = data.singleSkuBulkWeekdayStartDateDay;
             });
 
             featureTogglePromise.then(function (data) {
