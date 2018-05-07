@@ -19,10 +19,6 @@ app.component('adminPromotionForm', {
 
 function adminPromotionFormController(promotionDataService, redemptionMethodTypes, utilService, validationService, DataFactory, itemCategorySourceData, loginService, featureFlagService, sectionsIndex, $scope, $rootScope) {
     var ctrl = this;
-    
-
-
-
     $scope.$watch('$ctrl.data.promoSubTypeCd', function (model, oldModel) {
         if (model !== oldModel && !model)
             ctrl.setPromotionSubType(true);
@@ -50,7 +46,7 @@ function adminPromotionFormController(promotionDataService, redemptionMethodType
         ctrl.showMaximumDiscount = false;
         ctrl.data.channelToggle = $rootScope.channelToggle;
         ctrl.singleSkuBulkFlag = $rootScope.singleSkuBulk;
-    
+
         if (!ctrl.data.exclsve) {
             ctrl.data.exclsve = 0;
         }
@@ -58,6 +54,7 @@ function adminPromotionFormController(promotionDataService, redemptionMethodType
         if (!ctrl.data.singleSkuBulk) {
             ctrl.data.singleSkuBulk = 0;
         }
+
         var getPromotionPromise = promotionDataService.getPromotionSubTypes();
 
         getPromotionPromise.then(
@@ -148,6 +145,7 @@ function adminPromotionFormController(promotionDataService, redemptionMethodType
                 ctrl.addSources();
             }
         } else {
+
             ctrl.data.purchaseConds.sources.splice(1, 1);
         }
 

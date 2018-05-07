@@ -15,8 +15,9 @@ PromoLabelsController.$inject = ['$rootScope','validationService', 'utilService'
 function PromoLabelsController($rootScope,validationService, utilService) {
 
     var ctrl = this;
-    ctrl.showReceiptText = $rootScope.receiptText;
-
+    ctrl.$onInit = function () {
+        ctrl.showReceiptText = $rootScope.receiptText;
+    }
     ctrl.validatePromotion = function() {
         ctrl.validationErrors = validationService.validatePromotion(ctrl.data);
     };

@@ -11,7 +11,9 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                 isDisabled: '=',
                 source: '=',
                 promoStatus: '=',
-                preview: '='
+                preview: '=',
+                scopedata: '=',
+                inclusiontype: '='
             },
             link: function (scope) {
                 var delimeter = '>>';
@@ -34,7 +36,7 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                 scope.validatePromotion = validatePromotion;
                 scope.showSkuTypeModal = showSkuTypeModal;
                 scope.isSkuExcluded = isSkuExcluded;
-
+                scope.scopedata.merchTableData[scope.inclusiontype] = scope.tableData;
                 scope.getAllDepartments();
 
                 if (scope.data && scope.data.length > 0) {
@@ -249,6 +251,7 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                             'clasNum': tableObject.clasNum,
                             'subClasNum': tableObject.subClasNum
                         });
+                        scope.scopedata.merchTableData[scope.inclusiontype] = scope.tableData;
                     }
                 }
 

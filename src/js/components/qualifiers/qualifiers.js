@@ -15,15 +15,12 @@ app.component('qualifiers', {
 
 });
 
-
-function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataService, utilService, loginService, validationService, $rootScope, DataFactory, locationDataService, modalService) {
+function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataService, utilService, validationService, featureFlagService, $rootScope, DataFactory, $filter, locationDataService, modalService, loginService) {
     var ctrl = this;
-
     var storeData = {};
     var marketData = {};
     var existingID = '';
     var existingMarketNumber = '';
-    ctrl.userType = loginService.getCurrentUserRole();
 
     ctrl.$onInit = function () {
         ctrl.showBasketThreshold = $rootScope.showBasketThreshold;
@@ -32,6 +29,7 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
         ctrl.discountEngineErrors = $rootScope.discountEngineErrors;
         ctrl.programIdForProMonthly = $rootScope.programIdForProMonthly;
         ctrl.displayCustomerSegmentInDCM = $rootScope.displayCustomerSegmentInDCM;
+        ctrl.userType = loginService.getCurrentUserRole();
     
         ctrl.MaxCouponGenerationLimit = MaxCouponGenerationLimit;
         ctrl.data.locationType = '';
@@ -46,6 +44,9 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
             ctrl.clearRapidPassSelection();
         }
     
+        // Add Mark
+        ctrl.data.markets = ctrl.validMarketInfo;
+        ctrl.data.stores = ctrl.validStoreInfo;
         ctrl.initialize();
 
         //This gets invoked for editing location data for existing promotion
@@ -128,10 +129,7 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
     };
 
     ctrl.onSegmentSelection = function () {
-        if(ctrl.data.purchaseConds.program){
-            ctrl.data.purchaseConds.program.proPaint = null;
-        }
-        ctrl.data.purchaseConds.allProDiscount = false;
+        ctrl.data.purchaseConds.program = {proPaint: null};
         if (ctrl.data.segment) {
             if (ctrl.data.segment.id && ctrl.data.segment.id != -1) {
                 ctrl.data.purchaseConds.customerSegmentId = ctrl.data.segment.id;
@@ -454,12 +452,14 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
     }
 
     function setMarketData() {
+        ctrl.data.markets = ctrl.validMarketInfo;
         ctrl.markets = ctrl.validMarketInfo.reduce(function (data, market) {
             return data.concat(market.marketNumber);
         }, []);
     }
 
     function setData() {
+        ctrl.data.stores = ctrl.validStoreInfo;
         ctrl.locations = ctrl.validStoreInfo.reduce(function (data, item) {
             return data.concat(item.storeNumber);
         }, []);
@@ -504,5 +504,3 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
         ctrl.showInvalidError = false;
     }
 }
-
-

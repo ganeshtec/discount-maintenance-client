@@ -33,8 +33,7 @@ describe('Unit testing itemInclusion.component.spec.js', function () {
         })
 
         ctrl = $componentController('itemInclusion', null, {
-            data: {}
-
+            partnumbersparent: { partnumbers: []}
         });
 
 
@@ -43,7 +42,7 @@ describe('Unit testing itemInclusion.component.spec.js', function () {
     }));
 
     it('Checks if item-inclusion component is rendering item skus', function () {
-        var itemData = ['1000317883', '100049'];
+        var itemData = {partnumbers:['1000317883', '100049']};
         spyOn(itemsDataService, 'getSkuIDs').and.returnValue(itemData);
         spyOn(itemsDataService, 'getSkuIdCodes').and.callFake(function () {
             deferredResult = $q.defer();
@@ -85,7 +84,7 @@ describe('Unit testing itemInclusion.component.spec.js', function () {
         // Compile a piece of HTML containing the directive
         $rootScope.itemData = itemData;
         $rootScope.itemtype = 'SKU';
-        var element = $compile("<item-inclusion data='itemData' itemtype='itemtype'></item-inclusion>")($rootScope);
+        var element = $compile("<item-inclusion partnumbersparent='itemData' itemtype='itemtype'></item-inclusion>")($rootScope);
         $rootScope.$digest();
         expect(element.html()).toContain("SKU");
         expect(element.html()).toContain("SKU Type");
@@ -96,7 +95,7 @@ describe('Unit testing itemInclusion.component.spec.js', function () {
     });
 
     it('Checks if item-inclusion component is rendering item oms ids', function () {
-        var itemData = ['1000317883', '100049'];
+        var itemData = {partnumbers:['1000317883', '100049']};
         spyOn(itemsDataService, 'getOmsIDs').and.returnValue(itemData);
         spyOn(itemsDataService, 'getOmsIdCodes').and.callFake(function () {
             deferredResult = $q.defer();
@@ -124,7 +123,7 @@ describe('Unit testing itemInclusion.component.spec.js', function () {
         // Compile a piece of HTML containing the directive
         $rootScope.itemData = itemData;
         $rootScope.itemtype = 'OMS';
-        var element = $compile("<item-inclusion data='itemData' itemtype='itemtype'></item-inclusion>")($rootScope);
+        var element = $compile("<item-inclusion partnumbersparent='itemData' itemtype='itemtype'></item-inclusion>")($rootScope);
         $rootScope.$digest();
         expect(element.html()).toContain("Please enter a valid 9 digit OMS ID");
         expect(element.html()).toContain("OMS ID");
@@ -137,9 +136,6 @@ describe('Unit testing itemInclusion.component.spec.js', function () {
     });
 
     it('Verify addSku adds sku to validSkuInfo', function () {
-        ctrl = $componentController('itemInclusion', null, {
-            data: []
-        });
         ctrl.$onInit();
         var sku = {
             omsId: null,
@@ -156,15 +152,13 @@ describe('Unit testing itemInclusion.component.spec.js', function () {
             skuTypeCode: "D"
         };
         ctrl.addSku(sku);
-        expect(ctrl.validSkuInfo.length).toEqual(1);
+        expect(ctrl.partnumbersparent.validSkuInfo.length).toEqual(1);
         ctrl.addSku(sku2);
-        expect(ctrl.validSkuInfo.length).toEqual(2);
+        expect(ctrl.partnumbersparent.validSkuInfo.length).toEqual(2);
     });
 
     it('Verify addSku adds duplicate skuNumber to existingID', function () {
-        ctrl = $componentController('itemInclusion', null, {
-            data: []
-        });
+        
         ctrl.$onInit();
         var sku = {
             omsId: null,
@@ -175,13 +169,13 @@ describe('Unit testing itemInclusion.component.spec.js', function () {
         };
         ctrl.addSku(sku);
         ctrl.addSku(sku);
-        expect(ctrl.validSkuInfo.length).toEqual(1);
+        expect(ctrl.partnumbersparent.validSkuInfo.length).toEqual(1);
         expect(ctrl.existingID).toEqual("100091, ");
     });
 
     it("Verify skuTypeDescriptionLookup table is properly initalized", function(){
         ctrl = $componentController('itemInclusion', null, {
-            data: []
+            partnumbersparent: {partnumbers:[]}
         });
         ctrl.$onInit();
         $rootScope.$digest();
@@ -190,9 +184,6 @@ describe('Unit testing itemInclusion.component.spec.js', function () {
     })
 
     it('Verify addItem adds item to validOmsInfo', function () {
-        ctrl = $componentController('itemInclusion', null, {
-            data: []
-        });
         ctrl.$onInit();
         var sku = {
             omsId: 12345,
@@ -209,15 +200,13 @@ describe('Unit testing itemInclusion.component.spec.js', function () {
             skuTypeCode: "N"
         };
         ctrl.addItem(sku);
-        expect(ctrl.validOmsInfo.length).toEqual(1);
+        expect(ctrl.partnumbersparent.validOmsInfo.length).toEqual(1);
         ctrl.addItem(sku2);
-        expect(ctrl.validOmsInfo.length).toEqual(2);
+        expect(ctrl.partnumbersparent.validOmsInfo.length).toEqual(2);
     });
 
     it('Verify addItem adds duplicate omsId to existingID', function () {
-        ctrl = $componentController('itemInclusion', null, {
-            data: []
-        });
+        
         ctrl.$onInit();
         var sku = {
             omsId: 12345,
@@ -228,16 +217,14 @@ describe('Unit testing itemInclusion.component.spec.js', function () {
         };
         ctrl.addItem(sku);
         ctrl.addItem(sku);
-        expect(ctrl.validOmsInfo.length).toEqual(1);
+        expect(ctrl.partnumbersparent.validOmsInfo.length).toEqual(1);
         expect(ctrl.existingID).toEqual("12345, ");
     });
 
     it('Verify setData creates an arrayOfOmsIDs and sets it to data', function () {
-        ctrl = $componentController('itemInclusion', null, {
-            data: []
-        });
+        
         ctrl.$onInit();
-        ctrl.validOmsInfo = [{
+        ctrl.partnumbersparent.validOmsInfo = [{
             omsId: 12345,
             prodName: "18/2 100' THERMOSTAT WIRES",
             skuDescription: null,
@@ -252,17 +239,14 @@ describe('Unit testing itemInclusion.component.spec.js', function () {
             skuTypeCode: "N"
         }];
         ctrl.setData()
-        expect(ctrl.data.length).toEqual(2);
-        expect(ctrl.data[0]).toEqual(12345);
-        expect(ctrl.data[1]).toEqual(79879);
+        expect(ctrl.partnumbersparent.partnumbers.length).toEqual(2);
+        expect(ctrl.partnumbersparent.partnumbers[0]).toEqual(12345);
+        expect(ctrl.partnumbersparent.partnumbers[1]).toEqual(79879);
     });
 
     it('Verify setSkuData creates an arrayOfSkus and sets it to data', function () {
-        ctrl = $componentController('itemInclusion', null, {
-            data: []
-        });
         ctrl.$onInit();
-        ctrl.validSkuInfo = [{
+        ctrl.partnumbersparent.validSkuInfo = [{
             omsId: 12345,
             prodName: "18/2 100' THERMOSTAT WIRES",
             skuDescription: null,
@@ -277,15 +261,15 @@ describe('Unit testing itemInclusion.component.spec.js', function () {
             skuTypeCode: "N"
         }];
         ctrl.setSkuData()
-        expect(ctrl.data.length).toEqual(2);
-        expect(ctrl.data[0]).toEqual(100091);
-        expect(ctrl.data[1]).toEqual(100049);
+        expect(ctrl.partnumbersparent.partnumbers.length).toEqual(2);
+        expect(ctrl.partnumbersparent.partnumbers[0]).toEqual(100091);
+        expect(ctrl.partnumbersparent.partnumbers[1]).toEqual(100049);
     });
 
     it('setItemData should  update the model with valid omsInfo', function () {
-        ctrl = $componentController('itemInclusion', null, {
-            data: []
-        });
+        // ctrl = $componentController('itemInclusion', null, {
+        //     data: []
+        // });
         ctrl.$onInit();
 
         var itemData = {
@@ -311,8 +295,8 @@ describe('Unit testing itemInclusion.component.spec.js', function () {
         };
         ctrl.itemSearch = "999999999 , 888888888"
         ctrl.setItemData(itemData, true)
-        expect(ctrl.data.length).toEqual(2);
-        expect(ctrl.validOmsInfo.length).toEqual(2);
+        expect(ctrl.partnumbersparent.partnumbers.length).toEqual(2);
+        expect(ctrl.partnumbersparent.validOmsInfo.length).toEqual(2);
     });
 
     it('setItemData should show a warning message if any of the items are already present', function () {
@@ -341,8 +325,9 @@ describe('Unit testing itemInclusion.component.spec.js', function () {
             return deferredResult.promise;
         });
         ctrl = $componentController('itemInclusion', null, {
-            data: [999999999,888888888]
+            partnumbersparent: {partnumbers: [999999999,888888888]}
         });
+        
         ctrl.$onInit();
         $rootScope.$digest();
         var itemData = {
@@ -375,36 +360,28 @@ describe('Unit testing itemInclusion.component.spec.js', function () {
         spyOn(ctrl, 'showMessageModal');
         ctrl.setItemData(itemData, true);
         expect(ctrl.showMessageModal).toHaveBeenCalledTimes(1);
-        expect(ctrl.data.length).toEqual(3);
-        expect(ctrl.data[0]).toEqual(888888888)
-        expect(ctrl.data[1]).toEqual(999999999)
-        expect(ctrl.data[2]).toEqual(77777777)
-        expect(ctrl.validOmsInfo.length).toEqual(3);
+        expect(ctrl.partnumbersparent.partnumbers.length).toEqual(3);
+        expect(ctrl.partnumbersparent.partnumbers[0]).toEqual(888888888)
+        expect(ctrl.partnumbersparent.partnumbers[1]).toEqual(999999999)
+        expect(ctrl.partnumbersparent.partnumbers[2]).toEqual(77777777)
+        expect(ctrl.partnumbersparent.validOmsInfo.length).toEqual(3);
     });
 
     it('verify that isSkuSearch is initalized to true if the purchaseoption passed is itemsku',function(){
-        ctrl = $componentController('itemInclusion', null, {
-            data: [],
-            purchaseoption: 'itemsku'
-        });
+        ctrl.purchaseoption= 'itemsku'
+        // });
         ctrl.$onInit();
         expect(ctrl.isSkuSearch).toBe(true);
     });
 
     it('verify that isSkuSearch is initalized to false if the purchaseoption passed is itemoms',function(){
-        ctrl = $componentController('itemInclusion', null, {
-            data: [],
-            purchaseoption: 'itemoms'
-        });
+        ctrl.purchaseoption= 'itemoms';
         ctrl.$onInit();
         expect(ctrl.isSkuSearch).toBe(false);
     });
 
     it('verify that isSkuSearch is changes to true if the purchaseoption itemsku is selected', function(){
-        ctrl = $componentController('itemInclusion', null, {
-            data: [],
-            purchaseoption: 'itemoms'
-        });
+        ctrl.purchaseoption= 'itemoms';
         ctrl.$onInit();
         expect(ctrl.isSkuSearch).toBe(false);
         var changes={};
@@ -416,9 +393,9 @@ describe('Unit testing itemInclusion.component.spec.js', function () {
     });
 
     it('setItemData should condense multiple omsIds with multiple skus into one', function () {
-        ctrl = $componentController('itemInclusion', null, {
-            data: []
-        });
+        // ctrl = $componentController('itemInclusion', null, {
+        //     data: []
+        // });
         ctrl.$onInit();
 
         var itemData = {
@@ -450,9 +427,9 @@ describe('Unit testing itemInclusion.component.spec.js', function () {
         };
         ctrl.itemSearch = "999999999 , 888888888"
         ctrl.setItemData(itemData, true)
-        expect(ctrl.data.length).toEqual(2);
-        expect(ctrl.validOmsInfo.length).toEqual(2);
-        expect(ctrl.validOmsInfo[1].skuNumber).toEqual("1000317883 1000317884")
+        expect(ctrl.partnumbersparent.partnumbers.length).toEqual(2);
+        expect(ctrl.partnumbersparent.validOmsInfo.length).toEqual(2);
+        expect(ctrl.partnumbersparent.validOmsInfo[1].skuNumber).toEqual("1000317883 1000317884")
     });
 
 

@@ -28,6 +28,7 @@ describe('Promo schedule', function() {
   }));
 
   it('Test start and end time',function(){
+      ctrl.$onInit();
       expect(ctrl.startTime).toBe('3:00 AM');
       expect(ctrl.endTime).toBe('2:59 AM')
   });

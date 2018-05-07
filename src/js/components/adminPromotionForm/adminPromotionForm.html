@@ -91,27 +91,23 @@
 						Please enter a valid promotion priority (should be numeric)
 					</span>
 				</span>
+				
+				<span class='error-message' ng-show="$ctrl.validationErrors.priorityRange.isError">{{$ctrl.validationErrors.priorityRange.message}}</span>
 
-                    <span class='error-message' ng-show="$ctrl.validationErrors.priorityRange.isError">{{$ctrl.validationErrors.priorityRange.message}}</span>
+			</div>
 
-                </div>
+			<div ng-show="$ctrl.viewProp.displayExclusiveCheckbox" class="pbxl">
+				<div>
+					<h4>Exclusivity</h4>
+				</div>
+				<div>
+					<md-checkbox data-ng-click="$ctrl.toggleExclusive()" data-ng-checked="$ctrl.data.exclsve==1" id="exclusivity" ng-disabled="$ctrl.preview">Do not stack with other discounts</md-checkbox>
+				</div>
+			</div>
+			<!-- <CHANNEL SELECT PLACEHOLDER -->	
+			<channel-select ng-if="!$ctrl.preview && $ctrl.viewProp.displayChannelSelect" view-prop="$ctrl.viewProp" data="$ctrl.data"></channel-select>
 
-                <div ng-show="$ctrl.viewProp.displayExclusiveCheckbox" class="pbxl">
-                    <div>
-                        <h4>Exclusivity</h4>
-                    </div>
-                    <div>
-                        <md-checkbox data-ng-click="$ctrl.toggleExclusive()" data-ng-checked="$ctrl.data.exclsve==1"
-                                     id="exclusivity" ng-disabled="$ctrl.preview || $ctrl.data.singleSkuBulk == 1">
-                            Do not stack with other discounts
-                        </md-checkbox>
-                    </div>
-                </div>
-                <!-- <CHANNEL SELECT PLACEHOLDER -->
-                <channel-select ng-if="!$ctrl.preview && $ctrl.viewProp.displayChannelSelect" view-prop="$ctrl.viewProp"
-                                data="$ctrl.data"></channel-select>
-
-                <!-- <CHANNEL SELECT PLACEHOLDER -->
+			<!-- <CHANNEL SELECT PLACEHOLDER -->	
                 <div ng-show="$ctrl.viewProp.displaySingleSkuBulk && $ctrl.singleSkuBulkFlag"
                      class="singleSkuBulk">
                     <div>
@@ -124,46 +120,39 @@
                         </md-checkbox>
                     </div>
                 </div>
-            </section>
-            <section class="admin__promotion__section"
-                     ng-show="$ctrl.index == $ctrl.sectionsIndex.QUALIFIERS || $ctrl.preview">
-                <qualifiers preview="$ctrl.preview" data="$ctrl.data" view-prop="$ctrl.viewProp"
-                            promoform="$ctrl.promoForm"
-                            locations="$ctrl.data.purchaseConds.locations" markets="$ctrl.data.purchaseConds.markets"
-                            validation-errors="$ctrl.validationErrors" is-disabled="$ctrl.isDisabled">
-                </qualifiers>
-            </section>
-            <section class="admin__promotion__section"
-                     ng-show="$ctrl.index == $ctrl.sectionsIndex.REWARDS || $ctrl.preview">
-                <rewards data="$ctrl.data" preview="$ctrl.preview" view-prop="$ctrl.viewProp"
-                         qualuom="$ctrl.data.purchaseConds.qualUOM" promoform="$ctrl.promoForm"
-                         validation-errors="$ctrl.validationErrors" purchase-condition="$ctrl.data.purchaseConds"
-                         is-disabled="$ctrl.isDisabled" promotype="$ctrl.data.promoSubTypeCd">
-                </rewards>
-            </section>
-            <section class="admin__promotion__section"
-                     ng-show="$ctrl.viewProp.displayPromoDescription && ($ctrl.index == $ctrl.sectionsIndex.DESCRIPTIONS || $ctrl.preview)">
-                <promo-description data="$ctrl.data" preview="$ctrl.preview">
-                </promo-description>
-            </section>
-            <section class="admin__promotion__section"
-                     ng-show="$ctrl.viewProp.displayRedemptionLimits && ($ctrl.index == $ctrl.sectionsIndex.REDEMPTION_LIMITS || $ctrl.preview)">
+		</section>
+		<section class="admin__promotion__section" ng-show="$ctrl.index == $ctrl.sectionsIndex.QUALIFIERS || $ctrl.preview">
+			<qualifiers preview="$ctrl.preview" data="$ctrl.data" view-prop="$ctrl.viewProp" promoform="$ctrl.promoForm" locations="$ctrl.data.purchaseConds.locations" markets="$ctrl.data.purchaseConds.markets" validation-errors="$ctrl.validationErrors" is-disabled="$ctrl.isDisabled">
+			</qualifiers>
+		</section>
+		<section class="admin__promotion__section" ng-show="$ctrl.index == $ctrl.sectionsIndex.REWARDS || $ctrl.preview">
+				<rewards data="$ctrl.data" preview="$ctrl.preview" view-prop="$ctrl.viewProp" qualuom = "$ctrl.data.purchaseConds.qualUOM" promoform="$ctrl.promoForm" validation-errors="$ctrl.validationErrors" purchase-condition="$ctrl.data.purchaseConds" is-disabled="$ctrl.isDisabled" promotype="$ctrl.data.promoSubTypeCd">
+				</rewards>
+		</section>
+		<section class="admin__promotion__section" ng-show="$ctrl.viewProp.displayPromoDescription && ($ctrl.index == $ctrl.sectionsIndex.DESCRIPTIONS || $ctrl.preview)">
+				<promo-description data="$ctrl.data" preview="$ctrl.preview">
+				</promo-description>
+		</section>
+		<section class="admin__promotion__section" ng-show="$ctrl.viewProp.displayRedemptionLimits && ($ctrl.index == $ctrl.sectionsIndex.REDEMPTION_LIMITS || $ctrl.preview)">
                 <redemption-limit data="$ctrl.data.redmptnLmt" promoform="$ctrl.promoForm" preview="$ctrl.preview">
                 </redemption-limit>
             </section>
-            <section class="admin__promotion__section"
-                     ng-show="$ctrl.viewProp.displayPrintLabel && ($ctrl.index == $ctrl.sectionsIndex.LABELS || $ctrl.preview)">
-                <promo-labels data="$ctrl.data" preview="$ctrl.preview" validation-errors="$ctrl.validationErrors"
-                              promoform="$ctrl.promoForm">
+            <section class="admin__promotion__section" ng-show="$ctrl.viewProp.displayPrintLabel && ($ctrl.index == $ctrl.sectionsIndex.LABELS || $ctrl.preview)">
+                <promo-labels data="$ctrl.data" preview="$ctrl.preview" validation-errors="$ctrl.validationErrors" promoform="$ctrl.promoForm">
                 </promo-labels>
             </section>
-            <section class="admin__promotion__section"
-                     ng-show="$ctrl.index == $ctrl.sectionsIndex.SCHEDULE || $ctrl.preview">
-                <promo-schedule data="$ctrl.data" preview="$ctrl.preview" promoform="$ctrl.promoForm"
-                                form-holder="$ctrl.formHolder" validation-errors="$ctrl.validationErrors"
-                                view-prop="$ctrl.viewProp">
-
+            <section class="admin__promotion__section" ng-show="$ctrl.index == $ctrl.sectionsIndex.SCHEDULE || $ctrl.preview">
+                <promo-schedule data="$ctrl.data" preview="$ctrl.preview" promoform="$ctrl.promoForm" form-holder="$ctrl.formHolder" validation-errors="$ctrl.validationErrors"
+                    view-prop="$ctrl.viewProp">
                 </promo-schedule>
             </section>
+
+            <section class="admin__promotion__section" ng-show="$ctrl.index == $ctrl.sectionsIndex.SUMMARY">
+                <summary-page data="$ctrl.data" promo-form="$ctrl.promoForm" form-holder="$ctrl.formHolder" validation-errors="$ctrl.validationErrors"
+                    view-prop="$ctrl.viewProp">
+
+                </summary-page>
+            </section>
         </fieldset>
+    </fieldset>    
 </form>

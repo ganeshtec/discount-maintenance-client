@@ -437,7 +437,7 @@ app.service('utilService', ['$rootScope', '$q', '$filter', 'leadTimeService', 'l
         }
     };
 
-    publicApi.hasPosChannel = function (promotion) {
+    publicApi.hasPosChannel = function (promotion){
         return promotion.channels && (promotion.channels.indexOf(87) > -1);
     };
 

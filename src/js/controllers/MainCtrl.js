@@ -48,6 +48,7 @@ app.controller('MainCtrl', ['$q', '$rootScope', '$scope', '$location', 'DataFact
                 $rootScope.singleSkuBulk = data.singleSkuBulk;
                 $rootScope.receiptText = data.receiptText;
                 $rootScope.costPlusPercent = data.costPlusPercent;
+                $rootScope.showSummaryTab = data.showSummaryTab;
             });
 
             leadTimeServicePromise.then(function (data) {

@@ -226,6 +226,10 @@ function rewardsController($rootScope, $scope, $mdDialog, SourceData, validation
     function removeAll() {
         for (var i = 0; i < ctrl.data.purchaseConds.sources.length; i++) {
             ctrl.data.purchaseConds.sources[i].inclusions.partnumbers = [];
+            ctrl.data.purchaseConds.sources[i].inclusions.validSkuInfo = [];
+            ctrl.data.purchaseConds.sources[i].exclusions.validSkuInfo = [];
+            ctrl.data.purchaseConds.sources[i].inclusions.validOmsInfo = [];
+            ctrl.data.purchaseConds.sources[i].exclusions.validOmsInfo = [];
             ctrl.data.purchaseConds.sources[i].exclusions = {};
             ctrl.data.purchaseConds.sources[i].exclusions.attrs = {};
             ctrl.data.purchaseConds.sources[i].exclusions.initializeSkuTypeExclusions = true;

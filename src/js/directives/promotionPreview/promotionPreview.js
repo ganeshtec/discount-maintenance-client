@@ -78,7 +78,6 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                         scope.previewData.data.promoCdSpec.systemGen.uniqueCdCnt = scope.data.promoCdSpec.systemGen.uniqueCdCnt;
                         scope.previewData.data.redmptnLmt.maxUsesOfPromo = scope.data.promoCdSpec.systemGen.uniqueCdCnt;
                     }
-
                     var promotion = $.extend(true, {}, scope.previewData.data);
 
                     utilService.setDefaultsForSaveAsDraft(promotion);
@@ -105,9 +104,7 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
                     } else if (scope.userType === 228 && scope.previewData.data.purchaseConds.channels != null && selectedSellingChannels.length == 0) {
                         setError('ERROR: Please select at least one selling channel');
                         return;
-                    } else if (scope.previewData.data.purchaseConds.program &&
-                        scope.$root.programIdForProMonthly.split(',').indexOf(scope.previewData.data.purchaseConds.program.id.toString()) > -1
-                        && scope.previewData.data.purchaseConds.program.proPaint === null) {
+                    } else if (scope.previewData.data.purchaseConds.program != null && scope.$root.programIdForProMonthly.split(',').indexOf(scope.previewData.data.purchaseConds.program.id.toString()) > -1 && scope.previewData.data.purchaseConds.program.proPaint === null) {
                         setError('ERROR: Please select the appropriate ProPaint field');
                         return;
                     } else {
@@ -211,6 +208,7 @@ app.directive('promotionPreview', ['URL_CONFIG', 'promotionDataService', 'Overla
 
                     return promise;
                 }
+                
             }
         };
     }]);

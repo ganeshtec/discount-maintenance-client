@@ -74,9 +74,37 @@ describe('Unit testing adminFooter.component.spec.js', function () {
         expect(element.html()).toContain("Preview");
         expect(element.html()).toContain("Save as Draft");
         expect(element.html()).toContain("Submit");
+
+  })
+
+  it('Checks if can disableClick returns false if promotion status is active and printLabel is On', function () {
+    spyOn(utilService, 'canApprove').and.callFake(function () {
+      return {
+        then: function (callback) { return callback(true) }
+      }
+    })
+
+    spyOn(utilService, 'isPreviewSubmitClickDisabled').and.callFake(function () {
+      return {
+        then: function (callback) { return callback(true) }
+      }
+    })
+
+
+    spyOn(utilService, 'isSubmitEligibleForDisable').and.callFake(function () {
+      return {
+        then: function (callback) { return callback(true) }
+      }
+    })
+
+    ctrl = $componentController('adminFooter', null, {
+      data: {}
+
     });
+    ctrl.$onInit();
+    expect(ctrl.canApprove({})).toEqual(false);
 
-
+  });
     it('Checks if can approve returns true if promotion is not within Lead time', function () {
 
         spyOn(utilService, 'isSubmitEligibleForDisable').and.callFake(function () {
@@ -97,7 +125,7 @@ describe('Unit testing adminFooter.component.spec.js', function () {
             data: {}
 
         });
-        expect(ctrl.canApprove({})).toEqual(false);
+        expect(ctrl.canApprove({})).toEqual(true);
 
     })
 
@@ -122,7 +150,7 @@ describe('Unit testing adminFooter.component.spec.js', function () {
 
         });
         $scope.$digest();
-        expect(ctrl.canApprove({})).toEqual(false);
+        expect(ctrl.canApprove({})).toEqual(true);
     })
 
     it('Checks if can disableClick returns false if promotion status is active and printLabel is On', function () {

@@ -54,6 +54,7 @@ describe('Unit testing merchHierarchyView directive', function () {
     describe("verify departmentDetails, classes, subclasses ", function () {
         beforeEach(function () {
             $scope.data = [];
+            $scope.scopedata = {merchTableData:[]};
             $scope.tableData = [];
             $scope.preview = false;
             $scope.isDisabled = false;
@@ -61,7 +62,7 @@ describe('Unit testing merchHierarchyView directive', function () {
         });
         it('verify department', function () {
             $scope.viewProp = { displayOMSIdExclusion: false, displayItemsSku: true }
-            var element = $compile('<merch-hierarchy-view data="data"  preview="preview" source="item" is-disabled="isDisabled" promoform="promoform" view-prop="viewProp" promo-status="data.status" ng-show="item.purchaseoption == \'category\' && viewProp.displayItemsSku"></merch-hierarchy-view>')($scope);
+            var element = $compile('<merch-hierarchy-view data="data"  preview="preview" source="item" is-disabled="isDisabled" scopedata="scopedata" promoform="promoform" view-prop="viewProp" promo-status="data.status" ng-show="item.purchaseoption == \'category\' && viewProp.displayItemsSku"></merch-hierarchy-view>')($scope);
             $scope.$digest();
 
             this.$isolateScope = element.isolateScope();

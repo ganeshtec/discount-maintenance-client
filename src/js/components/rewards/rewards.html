@@ -16,10 +16,8 @@
         <label ng-show="$ctrl.data.purchaseConds.sources.length > 1">Definition for "{{$ctrl.alphabet[$index]}}" <span
                 class="mandatory-icon"><i class="fa fa-asterisk"></i></span></label>
         <div class="md-radio" id="itemsoms_div_{{$index}}" ng-show="$ctrl.viewProp.displayOMSId">
-            <input type="radio" id="itemsoms_{{$index}}" name="purchaseoption_{{$index}}"
-                   ng-model="$ctrl.data.purchaseConds.sources[$index].purchaseoption"
-                   title="Items/OMS ID's" value="itemoms" ng-change="$ctrl.updatePrintLabel()"
-                   ng-disabled="$ctrl.preview"/>
+            <input type="radio" id="itemsoms_{{$index}}" name="purchaseoption_{{$index}}" ng-model="$ctrl.data.purchaseConds.sources[$index].purchaseoption"
+                title="Items/OMS ID's" value="itemoms" ng-change="$ctrl.updatePrintLabel();$ctrl.removeAll()" ng-disabled="$ctrl.preview" />
             <label for="itemsoms_{{$index}}"><span><span></span></span>Items/OMS ID's</label>
         </div>
         <div class="md-radio" id="itemssku_div_{{$index}}" ng-show="$ctrl.viewProp.displayItemsSku">
@@ -40,26 +38,19 @@
         </div>
     </div>
     <!-- Item view Codes Component -->
-    <item-inclusion data="item.inclusions.partnumbers" preview="$ctrl.preview" itemtype="item.inclusions.itemtype"
-                    purchaseoption="item.purchaseoption"
-                    is-disabled="isDisabled" promoform="$ctrl.promoform"
-                    ng-show="item.purchaseoption == 'itemoms' || item.purchaseoption == 'itemsku'"
-                    show-sku-type-filter="true"></item-inclusion>
+    <item-inclusion partnumbersparent="item.inclusions" preview="$ctrl.preview" itemtype="item.inclusions.itemtype" purchaseoption="item.purchaseoption"
+        is-disabled="$ctrl.isDisabled" promoform="$ctrl.promoform" ng-show="item.purchaseoption == 'itemoms' || item.purchaseoption == 'itemsku'"
+        show-sku-type-filter="true"></item-inclusion>
     <!-- Category view Codes Component -->
-    <category-view data="item.inclusions.hierarchies" preview="$ctrl.preview" is-disabled="$ctrl.isDisabled"
-                   promoform="$ctrl.promoform"
-                   ng-show="item.purchaseoption == 'category' && $ctrl.viewProp.displayWebHierarchy"/>
+    <category-view hierarchiesparent="item.inclusions" preview="$ctrl.preview" is-disabled="$ctrl.isDisabled" promoform="$ctrl.promoform"
+        ng-show="item.purchaseoption == 'category' && $ctrl.viewProp.displayWebHierarchy" />
 
-    <merch-hierarchy-view data="item.inclusions.hierarchies" preview="$ctrl.preview" source="item"
-                          is-disabled="$ctrl.isDisabled"
-                          promoform="$ctrl.promoform" view-prop="$ctrl.viewProp" promo-status="$ctrl.data.status"
-                          ng-show="item.purchaseoption == 'category' && $ctrl.viewProp.displayItemsSku"
+    <merch-hierarchy-view data="item.inclusions.hierarchies" inclusiontype="'inclusions'" scopedata="$ctrl.data" preview="$ctrl.preview" source="item" is-disabled="$ctrl.isDisabled"
+        promoform="$ctrl.promoform" view-prop="$ctrl.viewProp" promo-status="$ctrl.data.status" ng-show="item.purchaseoption == 'category' && $ctrl.viewProp.displayItemsSku"
     />
 
-    <category-exclusion data="item.exclusions" itemtype="item.exclusions.itemtype" preview="preview"
-                        is-disabled="$ctrl.isDisabled"
-                        promoform="$ctrl.promoform" view-prop="$ctrl.viewProp"
-                        ng-show="$ctrl.data.purchaseConds.sources[$index].purchaseoption == 'category'"
+    <category-exclusion data="item.exclusions" itemtype="item.exclusions.itemtype" preview="preview" is-disabled="$ctrl.isDisabled"
+        promoform="$ctrl.promoform" view-prop="$ctrl.viewProp" ng-show="$ctrl.data.purchaseConds.sources[$index].purchaseoption == 'category'"
     />
     <div class="md-text-field" ng-if="$ctrl.data.purchaseConds.sources.length > 1">
         <label for="promocombo">Quantity of "{{$ctrl.alphabet[$index]}}"</label>

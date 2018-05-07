@@ -1,46 +1,41 @@
 // Purpose is to build promotion data.
 app.component('itemInclusion', {
-    //'itemsDataService', 'DataFactory', '$mdDialog',
-    // function (itemsDataService, DataFactory, $mdDialog) {
-    //     return {
-    //         restrict: 'E',
     templateUrl: 'itemInclusion.html',
     bindings: {
-        data: '=',
+        partnumbersparent: '=',
         purchaseoption: '<',
         itemtype: '=',
         promoform: '=',
         isDisabled: '=',
         viewProp: '=',
         showSkuTypeFilter: '=',
-        preview: '='
+        preview: '=',
     },
     controller: ItemInclusionsController
 });
-ItemInclusionsController.$inject = ['itemsDataService', 'DataFactory', '$mdDialog', '$scope','skuTypesDataService'];
 function ItemInclusionsController(itemsDataService, DataFactory, $mdDialog, $scope,skuTypesDataService) {
     var ctrl = this;
     var omsData = {};
     var skuData = {};
-    this.existingID = '';
-    this.skuTypeDescriptionLookup = {};
     ctrl.$onInit = function () {
         ctrl.searchResults = [];
+        ctrl.existingID = '';
+        ctrl.skuTypeDescriptionLookup = {};
         ctrl.initializeSkuSearch(ctrl.purchaseoption);
-        ctrl.validOmsInfo = [];
-        ctrl.validSkuInfo = [];
+        ctrl.partnumbersparent.validOmsInfo = [];
+        ctrl.partnumbersparent.validSkuInfo = [];
         ctrl.inValidOmsInfo = false;
         ctrl.inValidSkuInfo = false;
         ctrl.showInvalidError = false;
-        if (ctrl.data && ctrl.data.length) {
+        if (ctrl.partnumbersparent.partnumbers && ctrl.partnumbersparent.partnumbers.length) {
             if (ctrl.itemtype == 'SKU') {
                 ctrl.isSkuSearch = true;
             }
             if (ctrl.isSkuSearch) {
-                skuData.skuIds = ctrl.data;
+                skuData.skuIds = ctrl.partnumbersparent.partnumbers;
                 ctrl.getItemsByID(skuData);
             } else {
-                omsData.omsIds = ctrl.data;
+                omsData.omsIds = ctrl.partnumbersparent.partnumbers;
                 ctrl.getItemsByID(omsData);
             }
         }
@@ -52,15 +47,16 @@ function ItemInclusionsController(itemsDataService, DataFactory, $mdDialog, $sco
                 }
             }
         );
+
     }
     ctrl.$onChanges = function (changes) {
         ctrl.initializeSkuSearch(changes.purchaseoption.currentValue);
         
         if(changes.purchaseoption.currentValue!='itemoms' && changes.purchaseoption.previousValue=='itemoms'){
-            ctrl.validOmsInfo = [];
+            ctrl.partnumbersparent.validOmsInfo = [];
         }
         if(changes.purchaseoption.currentValue!='itemsku' && changes.purchaseoption.previousValue=='itemsku'){
-            ctrl.validSkuInfo = [];
+            ctrl.partnumbersparent.validSkuInfo = [];
         }
 
     }
@@ -68,11 +64,14 @@ function ItemInclusionsController(itemsDataService, DataFactory, $mdDialog, $sco
         ctrl.isSkuSearch=purchaseoption ==='itemsku';
     }
     this.addItem = function (item) {
-        if (!ctrl.data) {
-            ctrl.data = [];
+        if (!ctrl.partnumbersparent.partnumbers) {
+            ctrl.partnumbersparent.partnumbers = [];
         }
-        if (ctrl.data.indexOf(item.omsId) === -1) {
-            ctrl.validOmsInfo.push(item);
+        if (!ctrl.partnumbersparent.validOmsInfo) {
+            ctrl.partnumbersparent.validOmsInfo = [];
+        }
+        if (ctrl.partnumbersparent.partnumbers.indexOf(item.omsId) === -1) {
+            ctrl.partnumbersparent.validOmsInfo.push(item);
             ctrl.setData();
         } else {
             this.existingID += item.omsId + ', ';
@@ -81,11 +80,14 @@ function ItemInclusionsController(itemsDataService, DataFactory, $mdDialog, $sco
     }
 
     this.addSku = function (sku) {
-        if (!ctrl.data) {
-            ctrl.data = [];
+        if (!ctrl.partnumbersparent.partnumbers) {
+            ctrl.partnumbersparent.partnumbers = [];
         }
-        if (ctrl.data.indexOf(sku.skuNumber) === -1) {
-            ctrl.validSkuInfo.push(sku);
+        if (!ctrl.partnumbersparent.validSkuInfo) {
+            ctrl.partnumbersparent.validSkuInfo = [];
+        }
+        if (ctrl.partnumbersparent.partnumbers.indexOf(sku.skuNumber) === -1) {
+            ctrl.partnumbersparent.validSkuInfo.push(sku);
             ctrl.setSkuData();
         } else {
             this.existingID += sku.skuNumber + ', ';
@@ -96,23 +98,26 @@ function ItemInclusionsController(itemsDataService, DataFactory, $mdDialog, $sco
 
     this.setData = function () {
         ctrl.itemtype = 'OMS';
-        ctrl.data = ctrl.validOmsInfo.reduce(function (data, item) {
+        ctrl.partnumbersparent.partnumbers = ctrl.partnumbersparent.validOmsInfo.reduce(function (data, item) {
             return data.concat(item.omsId);
         }, []);
     }
 
     this.setSkuData = function () {
         ctrl.itemtype = 'SKU';
-        ctrl.data = ctrl.validSkuInfo.reduce(function (data, sku) {
+        ctrl.partnumbersparent.partnumbers = ctrl.partnumbersparent.validSkuInfo.reduce(function (data, sku) {
             return data.concat(sku.skuNumber);
         }, []);
     }
 
     this.setItemData = function (data) {
-        this.existingID = '';  
+        this.existingID = '';
+        if (!ctrl.partnumbersparent.validOmsInfo) {
+            ctrl.partnumbersparent.validOmsInfo = [];
+        }
         var condensedList = this.condenseMultipleSkus(data.validOmsInfo);
-        if (!ctrl.validOmsInfo.length && ctrl.data && !ctrl.itemSearch) {
-            $.extend(true, ctrl.validOmsInfo, condensedList);
+        if ((!ctrl.partnumbersparent.validOmsInfo || !ctrl.partnumbersparent.validOmsInfo.length) && ctrl.partnumbersparent.partnumbers && !ctrl.itemSearch) {
+            $.extend(true, ctrl.partnumbersparent.validOmsInfo, condensedList);
         }
         if (data.validOmsInfo && ctrl.itemSearch) {
             for (var i = 0; i < condensedList.length; i++) {
@@ -121,7 +126,7 @@ function ItemInclusionsController(itemsDataService, DataFactory, $mdDialog, $sco
             if (this.existingID != '') {
                 ctrl.showMessageModal('Warning','Following item/s are already added: ' + this.existingID);
             }
-        }    
+        }
     }
 
     this.condenseMultipleSkus= function(data){
@@ -158,8 +163,8 @@ function ItemInclusionsController(itemsDataService, DataFactory, $mdDialog, $sco
 
     this.setSkuValidData = function (data, clicked) {
         this.existingID = '';
-        if (!ctrl.validSkuInfo.length && ctrl.data && !ctrl.itemSkuSearch) {
-            $.extend(true, ctrl.validSkuInfo, data.validSkuInfo);
+        if ((!ctrl.partnumbersparent.validSkuInfo || !ctrl.partnumbersparent.validSkuInfo.length) && ctrl.partnumbersparent.partnumbers && !ctrl.itemSkuSearch) {
+            $.extend(true, ctrl.partnumbersparent.validSkuInfo, data.validSkuInfo);
         }
 
         if (data.validSkuInfo && ctrl.itemSkuSearch) {
@@ -177,7 +182,7 @@ function ItemInclusionsController(itemsDataService, DataFactory, $mdDialog, $sco
         if (clicked && invalidIds && invalidIds.length > 0) {
             ctrl.showInvalidError = true;
 
-        }
+        } 
     }
 
     this.getItemsByID = function (data, clicked) {
@@ -255,10 +260,10 @@ function ItemInclusionsController(itemsDataService, DataFactory, $mdDialog, $sco
     }
     ctrl.removePromoCode = function (index) {
         if (ctrl.isSkuSearch) {
-            ctrl.validSkuInfo.splice(index, 1);
+            ctrl.partnumbersparent.validSkuInfo.splice(index, 1);
             ctrl.setSkuData();
         } else {
-            ctrl.validOmsInfo.splice(index, 1);
+            ctrl.partnumbersparent.validOmsInfo.splice(index, 1);
             ctrl.setData();
         }
 
@@ -309,10 +314,10 @@ function ItemInclusionsController(itemsDataService, DataFactory, $mdDialog, $sco
     }
     ctrl.removeAll = function () {
         if (ctrl.isSkuSearch) {
-            ctrl.validSkuInfo = [];
+            ctrl.partnumbersparent.validSkuInfo = [];
             ctrl.setSkuData();
         } else {
-            ctrl.validOmsInfo = [];
+            ctrl.partnumbersparent.validOmsInfo = [];
             ctrl.setData();
         }
 
