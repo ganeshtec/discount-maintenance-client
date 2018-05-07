@@ -1,4 +1,4 @@
-app.service('utilService', ['$filter', 'leadTimeService', 'loginService', function ($filter, leadTimeService, loginService) {
+app.service('utilService', ['$rootScope', '$q', '$filter', 'leadTimeService', 'loginService', function ($rootScope, $q, $filter, leadTimeService, loginService) {
     var publicApi = {};
     this.leadTime;
     publicApi.rewardMethodMapping = {
@@ -15,7 +15,7 @@ app.service('utilService', ['$filter', 'leadTimeService', 'loginService', functi
         'ProductLevelPerItemValueDiscount': 'INDVDLAFFECTEDITMS',
         'ProductLevelPerItemPercentDiscount': 'INDVDLAFFECTEDITMS',
         'MultipleItemsValueDiscount': 'ALLAFFECTEDITMS'
-    }
+    };
 
     publicApi.canSaveAsDraft = function (promotion) {
         //these promotions can be saved as draft
@@ -376,7 +376,6 @@ app.service('utilService', ['$filter', 'leadTimeService', 'loginService', functi
         return null;
     }
 
-
     publicApi.setDefaultsForSaveAsDraft = function (promotion) {
         if (promotion.promoCdRqrd == null) {
             promotion.promoCdRqrd = true;
@@ -407,14 +406,12 @@ app.service('utilService', ['$filter', 'leadTimeService', 'loginService', functi
     }
 
     publicApi.isSubmitEligibleForDisable = function (promotion) {
-        var leadTimePromise = leadTimeService.fetchLeadTime();
-        return leadTimePromise.then(function (leadTime) {
-            var minDt = moment(promotion.endDt).subtract(leadTime, 'days');
-            if (moment().isAfter(minDt) && promotion.status == 61 && promotion.printLabel === true) {
-                return true;
-            }
-            return false;
-        });
+        var leadTime = $rootScope.leadTime;
+        var minDt = moment(promotion.endDt).subtract(leadTime, 'days');
+        if (moment().isAfter(minDt) && promotion.status == 61 && promotion.printLabel === true) {
+            return true;
+        }
+        return false;
     };
 
     publicApi.isPreviewSubmitClickDisabled = function (promotion) {
@@ -447,7 +444,7 @@ app.service('utilService', ['$filter', 'leadTimeService', 'loginService', functi
     publicApi.isPrintLabelDisabled = function (promotion) {
         var disabled = false;
 
-        if (promotion.singleSkuBulk == 1){
+        if (promotion.singleSkuBulk == 1) {
             disabled = true;
             promotion.printLabel = true;
         }

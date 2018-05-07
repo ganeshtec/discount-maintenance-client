@@ -15,18 +15,16 @@ app.component('adminFooter', {
         var tempData = $.extend(true, {}, this.data);
         var inprogress = false;
         var isEndDtWithinLeadTime = false;
-        var ctrl=this;
+        var ctrl = this;
         ctrl.sectionsIndex = sectionsIndex;
         if (tempData) {
-            var isEndDtWithinLeadTimePromise = utilService.isSubmitEligibleForDisable(tempData);
-            isEndDtWithinLeadTimePromise.then(function (value) {
-                isEndDtWithinLeadTime = value;
-            })
+            isEndDtWithinLeadTime = utilService.isSubmitEligibleForDisable(tempData);
         }
 
         this.cancel = function () {
             this.data = $.extend(true, {}, tempData);
-        }
+        };
+
         this.saveDraft = function (data) {
             tempData = $.extend(true, {}, data);
 
@@ -64,7 +62,7 @@ app.component('adminFooter', {
             )
         }
 
-        $scope.$on('unauth-error',function() {
+        $scope.$on('unauth-error', function () {
             ctrl.previewOverlayConfig.close();
         });
 

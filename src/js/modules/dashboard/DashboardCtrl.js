@@ -309,39 +309,39 @@ app.controller('DashboardCtrl', ['$filter', 'leadTimeService', '$scope', 'DataFa
 
         $scope.deactivate = function () {
             var promoPromise = promotionDataService.getPromotionByID($scope.sel[0]);
-            var leadTimePromise = leadTimeService.fetchLeadTime();
             var promo;
             var inLeadTime;
             var endDate;
+            var leadTime = $rootScope.leadTime;
             promoPromise.then(function (data) {
                 promo = data;
                 endDate = new Date(data.endDt);
-                leadTimePromise.then(function (leadTime) {
-                    inLeadTime = $scope.isInLeadTime(endDate, leadTime);
-                    if ($scope.eligibleLabelForDeactivate(promo.printLabel, promo.status, inLeadTime)) {
-                        $scope.constructAndSavePromo(leadTime, promo);
-                        // call another one for transmit
-                        // as part of savePromo in WS do Transmit call
+                inLeadTime = $scope.isInLeadTime(endDate, leadTime);
+                if ($scope.eligibleLabelForDeactivate(promo.printLabel, promo.status, inLeadTime)) {
+                    $scope.constructAndSavePromo(leadTime, promo);
+                    // call another one for transmit
+                    // as part of savePromo in WS do Transmit call
 
-                        showAlert('Success', promo.name + ' will end on ' + promo.endDt.split(' ')[0] + ' to account for labeling lead time.');
-                        return;
-                    } if ($scope.cannotBeDeactivated(promo.printLabel, promo.status, inLeadTime)) {
-                        showAlert('Failure', 'This discount is already scheduled to end on ' + promo.endDt.split(' ')[0] + ' and cannot be deactivated earlier due to the time to remove labels.');
-                        return;
-                    } else {
-                        if ($scope.activeWithNoLabelDiscount(promo.printLabel, promo.status)) {
-                            $scope.updatePromoEndDateTomorrow(promo);
-                            $scope.deactivatePromotions();
-                        }
-                        else if ($scope.isPromoStatusPending(promo.status)) {
-                            $scope.updateEndDateForPendingDiscount(promo);
-                            $scope.deactivatePromotions();
-                        }
-                        else {
-                            $scope.deactivatePromotions();
-                        }
+                    showAlert('Success', promo.name + ' will end on ' + promo.endDt.split(' ')[0] + ' to account for labeling lead time.');
+                    return;
+                }
+                if ($scope.cannotBeDeactivated(promo.printLabel, promo.status, inLeadTime)) {
+                    showAlert('Failure', 'This discount is already scheduled to end on ' + promo.endDt.split(' ')[0] +
+                        ' and cannot be deactivated earlier due to the time to remove labels.');
+                    return;
+                } else {
+                    if ($scope.activeWithNoLabelDiscount(promo.printLabel, promo.status)) {
+                        $scope.updatePromoEndDateTomorrow(promo);
+                        $scope.deactivatePromotions();
                     }
-                })
+                    else if ($scope.isPromoStatusPending(promo.status)) {
+                        $scope.updateEndDateForPendingDiscount(promo);
+                        $scope.deactivatePromotions();
+                    }
+                    else {
+                        $scope.deactivatePromotions();
+                    }
+                }
             })
         };
 
@@ -368,43 +368,35 @@ app.controller('DashboardCtrl', ['$filter', 'leadTimeService', '$scope', 'DataFa
                 'sortId': 'promoId',
                 'text': 'Id',
                 'width': '3%'
-            },
-            {
+            }, {
                 'sortId': 'name',
                 'text': 'Discount Name',
                 'width': '25%'
-            },
-            {
+            }, {
                 'sortId': 'statusName',
                 'text': 'Status',
                 'width': '5%'
-            },
-            {
+            }, {
                 'sortId': 'promoSubTypeDesc',
                 'text': 'Discount Type',
                 'width': '8%'
-            },
-            {
+            }, {
                 'sortId': 'startDate',
                 'text': 'Start Date',
                 'width': '5%'
-            },
-            {
+            }, {
                 'sortId': 'endDate',
                 'text': 'End Date',
                 'width': '5%'
-            },
-            {
+            }, {
                 'sortId': 'createdBy',
                 'text': 'Created By',
                 'width': '5%'
-            },
-            {
+            }, {
                 'sortId': 'lastModifiedBy',
                 'text': 'Last Modified (ID/Date)',
                 'width': '12%'
-            },
-            {
+            }, {
                 'sortId': 'priority',
                 'text': 'Priority',
                 'width': '4%'
@@ -664,7 +656,8 @@ app.controller('DashboardCtrl', ['$filter', 'leadTimeService', '$scope', 'DataFa
                         $scope.status[status.promoStatusCd] = status.promoStatusDesc || '';
                     }
                 },
-                function () { }
+                function () {
+                }
             )
             if (DataFactory.promotionSubTypes) {
                 $scope.promoSubTypes = setPromoTypes();
