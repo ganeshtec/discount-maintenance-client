@@ -120,6 +120,8 @@
                         </md-checkbox>
                     </div>
                 </div>
+                <promo-description ng-show="$ctrl.viewProp.displayPromoDescription" data="$ctrl.data" preview="$ctrl.preview">
+				</promo-description>
 		</section>
 		<section class="admin__promotion__section" ng-show="$ctrl.index == $ctrl.sectionsIndex.QUALIFIERS || $ctrl.preview">
 			<qualifiers preview="$ctrl.preview" data="$ctrl.data" view-prop="$ctrl.viewProp" promoform="$ctrl.promoForm" locations="$ctrl.data.purchaseConds.locations" markets="$ctrl.data.purchaseConds.markets" validation-errors="$ctrl.validationErrors" is-disabled="$ctrl.isDisabled">
@@ -129,10 +131,7 @@
 				<rewards data="$ctrl.data" preview="$ctrl.preview" view-prop="$ctrl.viewProp" qualuom = "$ctrl.data.purchaseConds.qualUOM" promoform="$ctrl.promoForm" validation-errors="$ctrl.validationErrors" purchase-condition="$ctrl.data.purchaseConds" is-disabled="$ctrl.isDisabled" promotype="$ctrl.data.promoSubTypeCd">
 				</rewards>
 		</section>
-		<section class="admin__promotion__section" ng-show="$ctrl.viewProp.displayPromoDescription && ($ctrl.index == $ctrl.sectionsIndex.DESCRIPTIONS || $ctrl.preview)">
-				<promo-description data="$ctrl.data" preview="$ctrl.preview">
-				</promo-description>
-		</section>
+
 		<section class="admin__promotion__section" ng-show="$ctrl.viewProp.displayRedemptionLimits && ($ctrl.index == $ctrl.sectionsIndex.REDEMPTION_LIMITS || $ctrl.preview)">
                 <redemption-limit data="$ctrl.data.redmptnLmt" promoform="$ctrl.promoForm" preview="$ctrl.preview">
                 </redemption-limit>
