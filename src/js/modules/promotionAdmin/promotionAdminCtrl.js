@@ -127,11 +127,9 @@ app.controller('promotionAdminCtrl', ['$scope', '$rootScope', '$routeParams', '$
             $scope.editMode = ($scope.UiState === 'Edit');
 
             $this.setViewProperties($scope.userType);
-
             $scope.sections = new SECTIONS($scope.userType);
             $scope.section = promotionDataService.getSection($scope.sections);
             $scope.sectionInx = $scope.sections.indexOf($scope.section);
-            $scope.sections[sectionsIndex.SUMMARY].shouldDisplay =  $rootScope.showSummaryTab;
             //get new data
             if (!$scope.editMode) {
 
@@ -167,6 +165,10 @@ app.controller('promotionAdminCtrl', ['$scope', '$rootScope', '$routeParams', '$
             if (model !== oldModel) {
                 $scope.sectionInx = $scope.sections.indexOf(promotionDataService.getSection(model))
             }
+        }, true);
+        
+        $scope.$watch('showSummaryTab', function (model) {
+            $scope.sections[sectionsIndex.SUMMARY].shouldDisplay =  model;
         }, true);
 
         $scope.isEditable = function (promotion) {
