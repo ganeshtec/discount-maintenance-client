@@ -21,7 +21,6 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
     var marketData = {};
     var existingID = '';
     var existingMarketNumber = '';
-
     ctrl.$onInit = function () {
         ctrl.showBasketThreshold = $rootScope.showBasketThreshold;
         ctrl.showRapidPass = $rootScope.showRapidPass;
@@ -213,6 +212,8 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
         else {
             delete ctrl.data.promoCdSpec;
             ctrl.data.promoCdRqrd = false;
+            ctrl.data.receiptHeader = '';
+            ctrl.data.receiptDesc = '';
         }
     }
 

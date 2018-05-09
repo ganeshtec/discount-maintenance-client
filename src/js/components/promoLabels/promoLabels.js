@@ -15,6 +15,7 @@ PromoLabelsController.$inject = ['$rootScope','validationService', 'utilService'
 function PromoLabelsController($rootScope,validationService, utilService) {
 
     var ctrl = this;
+
     ctrl.$onInit = function () {
         ctrl.showReceiptText = $rootScope.receiptText;
     }
@@ -35,6 +36,5 @@ function PromoLabelsController($rootScope,validationService, utilService) {
     };
 
     ctrl.isReceiptTextActive();
-
 }
 
