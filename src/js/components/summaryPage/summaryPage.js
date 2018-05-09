@@ -79,6 +79,7 @@ function summaryPageController(promotionDataService, utilService, validationServ
         }
 
         if (ctrl.userType === 228) {
+            ctrl.data.purchaseConds.channels = ctrl.data.channels;
             ctrl.data.promoSubTypeCd = 'TypeLessDiscount';
             ctrl.data.promoSubTypeDesc = 'TypeLess-Discounts';
         }
