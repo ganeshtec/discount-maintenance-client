@@ -120,6 +120,8 @@
                         </md-checkbox>
                     </div>
                 </div>
+                <redemption-limit  ng-show="$ctrl.viewProp.displayRedemptionLimits" data="$ctrl.data.redmptnLmt" promoform="$ctrl.promoForm" preview="$ctrl.preview">
+                </redemption-limit>
                 <promo-description ng-show="$ctrl.viewProp.displayPromoDescription" data="$ctrl.data" preview="$ctrl.preview">
 				</promo-description>
 		</section>
@@ -132,10 +134,6 @@
 				</rewards>
 		</section>
 
-		<section class="admin__promotion__section" ng-show="$ctrl.viewProp.displayRedemptionLimits && ($ctrl.index == $ctrl.sectionsIndex.REDEMPTION_LIMITS || $ctrl.preview)">
-                <redemption-limit data="$ctrl.data.redmptnLmt" promoform="$ctrl.promoForm" preview="$ctrl.preview">
-                </redemption-limit>
-            </section>
             <section class="admin__promotion__section" ng-show="$ctrl.viewProp.displayPrintLabel && ($ctrl.index == $ctrl.sectionsIndex.LABELS || $ctrl.preview)">
                 <promo-labels data="$ctrl.data" preview="$ctrl.preview" validation-errors="$ctrl.validationErrors" promoform="$ctrl.promoForm">
                 </promo-labels>

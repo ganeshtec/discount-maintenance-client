@@ -44,7 +44,6 @@ app.directive('adminPromotionFormControls', ['stateService', '$location', '$anch
                 }
 
                 scope.showNextButton = function (index) {
-
                     return ((scope.data.showSummaryTab && index < scope.data.length - 1) || (!scope.data.showSummaryTab && index < scope.data.length - 2))
 
                 }

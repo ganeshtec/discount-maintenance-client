@@ -25,7 +25,7 @@ describe('Unit test for Sections factory', function() {
     expect(sections[0].shouldDisplay).toBe(true);
     expect(sections[2].name).toBe('Rewards');
     expect(sections[2].shouldDisplay).toBe(true);
-    expect(sections[4].name).toBe('Labels');
-    expect(sections[4].shouldDisplay).toBe(false);
+    expect(sections[3].name).toBe('Labels');
+    expect(sections[3].shouldDisplay).toBe(false);
   });
 });
