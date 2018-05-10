@@ -274,8 +274,9 @@ app.controller('DashboardCtrl', ['$filter', 'leadTimeService', '$scope', 'DataFa
             var today = new Date();
             var newDate = today.setDate(today.getDate() + 1);
             promo.endDt = $filter('date')(newDate, 'yyyy-MM-dd HH:mm:ss')
-            promo.status = 64;
-            promotionDataService.saveAsDraft(promo);
+            
+            promo.status = 59;
+            return promotionDataService.saveAsDraft(promo);
         }
 
         $scope.isPromoStatusPending = function (status) {
@@ -290,8 +291,8 @@ app.controller('DashboardCtrl', ['$filter', 'leadTimeService', '$scope', 'DataFa
 
         $scope.updateEndDateForPendingDiscount = function (promo) {
             promo.endDt = promo.startDt;
-            promo.status = 64;
-            promotionDataService.saveAsDraft(promo);
+            promo.status = 59;
+            return promotionDataService.saveAsDraft(promo);
         }
 
         $scope.constructAndSavePromo = function (leadTime, promo) {
@@ -330,13 +331,25 @@ app.controller('DashboardCtrl', ['$filter', 'leadTimeService', '$scope', 'DataFa
                         ' and cannot be deactivated earlier due to the time to remove labels.');
                     return;
                 } else {
+                    var promise;
                     if ($scope.activeWithNoLabelDiscount(promo.printLabel, promo.status)) {
-                        $scope.updatePromoEndDateTomorrow(promo);
-                        $scope.deactivatePromotions();
+                        promise = $scope.updatePromoEndDateTomorrow(promo);
+                        
+                        promise.then(
+                            function () {
+                                $scope.deactivatePromotions();
+                            }
+                        )
+                                                    
                     }
                     else if ($scope.isPromoStatusPending(promo.status)) {
-                        $scope.updateEndDateForPendingDiscount(promo);
-                        $scope.deactivatePromotions();
+                        promise = $scope.updateEndDateForPendingDiscount(promo);
+
+                        promise.then(
+                            function () {
+                                $scope.deactivatePromotions();
+                            }
+                        )
                     }
                     else {
                         $scope.deactivatePromotions();
