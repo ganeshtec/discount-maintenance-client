@@ -67,6 +67,7 @@ describe('Unit testing qualifiers component', function () {
         expect(ctrl.data.purchaseConds.customerSegmentId).toBe(13550);
         expect(ctrl.data.purchaseConds.program.id).toBe(0);
         expect(ctrl.data.purchaseConds.program.tierId).toBe(0);
+        expect(ctrl.data.disableRapidPass).toBe(false);
     });
 
     it('Rapid Pass not selected', function () {
@@ -93,7 +94,7 @@ describe('Unit testing qualifiers component', function () {
         expect(ctrl.data.promoCdRqrd).toBe(true);
     });
 
-    it('All Pro segment is selected when Rapid Pass Unchecked', function () {
+    it('All Pro segment is selected and Rapid Pass is unchecked then Rapid Pass disabled', function () {
         ctrl.data.segment = { "id": -1, "segmentName": "Target all Pro Customers" };
         ctrl.data.purchaseConds.allProDiscount = false;
         ctrl.data.checkRapidPass = false;
@@ -102,9 +103,10 @@ describe('Unit testing qualifiers component', function () {
         expect(ctrl.data.purchaseConds.customerSegmentId).toBe(0);
         expect(ctrl.data.purchaseConds.program.id).toBe(0);
         expect(ctrl.data.purchaseConds.program.tierId).toBe(0);
+        expect(ctrl.data.disableRapidPass).toBe(true);
     });
 
-    it('All Pro segment is selected when Rapid Pass checked', function () {
+    it('All Pro segment is selected when Rapid Pass checked then disable and clear Rapid Pass', function () {
         ctrl.data.segment = { "id": -1, "segmentName": "Target all Pro Customers" };
         ctrl.data.purchaseConds.allProDiscount = false;
         ctrl.data.checkRapidPass = true;

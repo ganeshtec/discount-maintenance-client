@@ -132,6 +132,7 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
         if (ctrl.data.segment) {
             if (ctrl.data.segment.id && ctrl.data.segment.id != -1) {
                 ctrl.data.purchaseConds.customerSegmentId = ctrl.data.segment.id;
+                ctrl.data.purchaseConds.allProDiscount = false;
                 ctrl.data.purchaseConds.program = {};
                 ctrl.validationErrors = validationService.validateRapidPass(ctrl.data);
                 ctrl.clearRapidPassSelection();
@@ -163,6 +164,7 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
             ctrl.data.purchaseConds.program = {};
             ctrl.data.purchaseConds.program.id = 0;
             ctrl.data.purchaseConds.program.tierId = 0;
+            ctrl.data.disableRapidPass = false;
             ctrl.validationErrors = validationService.validateRapidPass(ctrl.data);
         }
     };
