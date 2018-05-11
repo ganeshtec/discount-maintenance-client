@@ -175,5 +175,4 @@ function adminPromotionFormController(promotionDataService, redemptionMethodType
 
     ctrl.redemptionMethodTypes = new redemptionMethodTypes();
 
-
 }

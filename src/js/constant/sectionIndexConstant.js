@@ -3,7 +3,6 @@ app.constant('sectionsIndex', {
     QUALIFIERS:1,
     REWARDS:2,
     LABELS:3,
-    SCHEDULE:4,
-    SUMMARY:5
+    SUMMARY:4
 });
 
