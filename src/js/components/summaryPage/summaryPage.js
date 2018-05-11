@@ -49,6 +49,9 @@ function summaryPageController(promotionDataService, utilService, validationServ
     }
 
     ctrl.formatDate = function (date) {
+        if(date === undefined){
+            return ('None')
+        }
         return moment(date).format('MM-DD-YYYY')
     }
 

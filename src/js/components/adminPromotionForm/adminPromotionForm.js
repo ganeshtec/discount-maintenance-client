@@ -50,7 +50,7 @@ function adminPromotionFormController(promotionDataService, redemptionMethodType
         if (!ctrl.data.exclsve) {
             ctrl.data.exclsve = 0;
         }
-    
+
         if (!ctrl.data.singleSkuBulk) {
             ctrl.data.singleSkuBulk = 0;
         }
@@ -102,12 +102,36 @@ function adminPromotionFormController(promotionDataService, redemptionMethodType
 
     ctrl.toggleSingleSkuBulk = function () {
         ctrl.data.singleSkuBulk = ctrl.data.singleSkuBulk == 1 ? 0 : 1;
-        ctrl.data.locationType = 'markets';
-        ctrl.data.checkRapidPass = false;
-        ctrl.data.segment = null;
-        ctrl.data.printLabel = !ctrl.data.printLabel;
-        ctrl.data.singleSkuBulkChanged = true;
+
         ctrl.data.exclsve = 0;
+
+        //Rapidpass scenario for Single SkuBulk
+        ctrl.data.checkRapidPass = false;
+        ctrl.data.promoCdSpec = null;
+        ctrl.data.promoCdRqrd = false;
+
+        //Customer Segment scenario for Single SkuBulk
+        ctrl.data.segment = null;
+        ctrl.data.purchaseConds.customerSegmentId = 0;
+        ctrl.data.purchaseConds.program = null;
+        ctrl.data.purchaseConds.basketThreshold = null;
+
+        //Location types scenario for Single SkuBulk
+        ctrl.data.locationType = 'markets';
+
+        //Print labels scenario for Single SkuBulk
+        ctrl.data.printLabel = (ctrl.data.singleSkuBulk == 1);
+        ctrl.data.labelText = '';
+        ctrl.data.receiptDesc = '';
+        ctrl.data.receiptHeader = '';
+
+
+        //Clear dates for singleSkuBulk
+        ctrl.data.startDt = undefined;
+        ctrl.data.endDt = undefined;
+        ctrl.data.endDtFormatted = undefined;
+        ctrl.data.endDateSelection = false;
+
     }
 
     ctrl.validatePromotion = function () {
