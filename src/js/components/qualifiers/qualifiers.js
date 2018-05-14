@@ -487,7 +487,7 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
         }
         setData();
     }
-    $scope.$watch('$ctrl.data.singleSkuBulk', function () {
+    $rootScope.$on('clearSingleSkuBulk', function(){
         ctrl.removeAll()
     })
 

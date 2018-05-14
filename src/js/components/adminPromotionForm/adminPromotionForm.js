@@ -154,6 +154,7 @@ function adminPromotionFormController($mdDialog, promotionDataService, redemptio
         ctrl.data.endDtFormatted = undefined;
         ctrl.data.endDateSelection = false;
 
+        $rootScope.$broadcast('clearSingleSkuBulk');
     }
 
     ctrl.validatePromotion = function () {

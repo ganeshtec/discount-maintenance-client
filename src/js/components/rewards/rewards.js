@@ -204,7 +204,7 @@ function rewardsController($rootScope, $scope, $mdDialog, SourceData, validation
         });
     }
 
-    $scope.$watch('$ctrl.data.singleSkuBulk', function () {
+    $rootScope.$on('clearSingleSkuBulk', function () {
         ctrl.setSingleSkuBulkDefault();
         ctrl.removeAll()
     })
@@ -235,6 +235,5 @@ function rewardsController($rootScope, $scope, $mdDialog, SourceData, validation
             ctrl.data.purchaseConds.sources[i].exclusions.attrs = {};
             ctrl.data.purchaseConds.sources[i].exclusions.initializeSkuTypeExclusions = true;
         }
-        $rootScope.$broadcast('clearCategories');
     }
 }

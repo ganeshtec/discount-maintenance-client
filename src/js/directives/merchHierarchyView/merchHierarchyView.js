@@ -78,7 +78,7 @@ app.directive('merchHierarchyView', ['merchHierarchyDataService', 'DataFactory',
                     return isExcluded;
                 }
 
-                $rootScope.$on('clearCategories', function () {
+                $rootScope.$on('clearSingleSkuBulk', function () {
                     scope.deleteAllRows();
 
                     scope.selectedDept = null;
