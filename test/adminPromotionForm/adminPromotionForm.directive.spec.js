@@ -98,6 +98,12 @@ describe('Unit testing adminPromotionForm.directive.spec.js', function () {
     expect(ctrl.data.exclsve).toEqual(0);
   });
 
+  it('#singleSkuBulkModalCheck function', function() {
+    ctrl.data.exclsve = 1;
+    var result = ctrl.singleSkuBulkModalCheck();
+    expect(result).toBe(true);
+  })
+
   it('#toggleSingleSkuBulk function', function () {
     ctrl.data.singleSkuBulk = 0;
     ctrl.toggleSingleSkuBulk();

@@ -17,7 +17,7 @@ app.component('adminPromotionForm', {
 
 });
 
-function adminPromotionFormController(promotionDataService, redemptionMethodTypes, utilService, validationService, DataFactory, itemCategorySourceData, loginService, featureFlagService, sectionsIndex, $scope, $rootScope) {
+function adminPromotionFormController($mdDialog, promotionDataService, redemptionMethodTypes, utilService, validationService, DataFactory, itemCategorySourceData, loginService, featureFlagService, sectionsIndex, $scope, $rootScope) {
     var ctrl = this;
     $scope.$watch('$ctrl.data.promoSubTypeCd', function (model, oldModel) {
         if (model !== oldModel && !model)
@@ -100,9 +100,31 @@ function adminPromotionFormController(promotionDataService, redemptionMethodType
         ctrl.data.exclsve = ctrl.data.exclsve == 1 ? 0 : 1;
     }
 
+    ctrl.showSingleSkuBulkModal = function (ev) {
+        if(ctrl.data.singleSkuBulk == 0 && ctrl.singleSkuBulkModalCheck()){
+            $mdDialog.show({
+                template: '<single-sku-bulk-modal data="$ctrl.data" single-sku-bulk-clean-up="$ctrl.toggleSingleSkuBulk()" ng-if="$ctrl.singleSkuBulkFlag"><single-sku-bulk-modal>',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                scope: $scope,
+                preserveScope: true
+            })
+        } else {
+            ctrl.toggleSingleSkuBulk();
+        }   
+    }
+
+    ctrl.singleSkuBulkModalCheck = function () {
+        if(ctrl.data.locationType == 'stores' || ctrl.data.labelText || ctrl.data.exclsve == 1 || ctrl.data.segment || ctrl.data.endDt 
+        || ctrl.data.startDt || ctrl.data.checkRapidPass || ctrl.data.purchaseConds.qualUOM != 'Quantity' || ctrl.data.reward.type != 'PERCNTOFF'){
+            return true;
+        } else{
+            return false;
+        }
+    }
+
     ctrl.toggleSingleSkuBulk = function () {
         ctrl.data.singleSkuBulk = ctrl.data.singleSkuBulk == 1 ? 0 : 1;
-
         ctrl.data.exclsve = 0;
 
         //Rapidpass scenario for Single SkuBulk
