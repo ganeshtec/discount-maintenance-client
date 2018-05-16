@@ -14,12 +14,8 @@ describe('Unit testing adminFooter.component.spec.js', function () {
             $provide.constant('sectionsIndex', {
                 DISCOUNT_PROPERTIES: 0,
                 QUALIFIERS: 1,
-                LOCATION: 2,
-                REWARDS: 3,
-                DESCRIPTIONS: 4,
-                REDEMPTION_LIMITS: 5,
-                LABELS: 6,
-                SCHEDULE: 7
+                REWARDS: 2,
+                SCHEDULE: 3
             });
             $provide.constant('MaxCouponGenerationLimit', 300000);
         });

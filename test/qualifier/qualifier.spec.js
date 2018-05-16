@@ -40,7 +40,7 @@ describe('Unit testing qualifiers component', function () {
     });
 
     it('Program Segment Selected', function () {
-        ctrl.data.segment = { "segmentName": "PRO XTRA PAINT REWARDS-Bronze", "progId": 2, "tierId": 8 };
+        ctrl.data.segment = { id: -1, "segmentName": "PRO XTRA PAINT REWARDS-Bronze", "progId": 2, "tierId": 8 };
         ctrl.onSegmentSelection();
         expect(ctrl.data.purchaseConds.customerSegmentId).toBe(0);
         expect(ctrl.data.purchaseConds.program.id).toBe(2);
@@ -48,13 +48,13 @@ describe('Unit testing qualifiers component', function () {
     });
 
     it('Program Segment Selected and ProPaint Set To NULL', function () {
-        ctrl.data.segment = { "segmentName": "PRO XTRA PAINT REWARDS-Bronze", "progId": 2, "tierId": 8 };
+        ctrl.data.segment = {  id: -1,"segmentName": "PRO XTRA PAINT REWARDS-Bronze", "progId": 2, "tierId": 8 };
         ctrl.onSegmentSelection();
         expect(ctrl.data.purchaseConds.program.proPaint).toBeNull();
     });
 
     it('Program Segment Selected and ProPaint Set To True', function () {
-        ctrl.data.segment = { "segmentName": "PRO XTRA PAINT REWARDS-Bronze", "progId": 8, "tierId": 8 };
+        ctrl.data.segment = {  id: -1,"segmentName": "PRO XTRA PAINT REWARDS-Bronze", "progId": 8, "tierId": 8 };
         ctrl.programIdForProMonthly = "8";
         expect(ctrl.showProPaintOptions()).toBe(true);
 

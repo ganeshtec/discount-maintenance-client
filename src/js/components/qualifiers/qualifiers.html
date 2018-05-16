@@ -2,11 +2,11 @@
 <div ng-if="$ctrl.viewProp.displayLocation">
     <!-- Markets code START -->
     <div class="md-text-field">
-        <label for="location">Location Types
+        <h4 for="location">Location Types
             <span class="mandatory-icon">
                 <i class="fa fa-asterisk"></i>
             </span>
-        </label>
+        </h4>
         <div class="md-radio">
             <input type="radio" id="markets" name="locations" ng-model="$ctrl.data.locationType" title="markets"
                    value="markets" ng-change="$ctrl.removeAll(); $ctrl.clearInput();"
@@ -129,7 +129,7 @@
     <div class="md-select md-select-space customer-segment"
          ng-show="($ctrl.viewProp.displayCustomerSegment || $ctrl.displayCustomerSegmentInDCM)">
         <label for="promoCustomerSegment">
-            <h3 ng-if="!$ctrl.data.checkRapidPass">Customer Segment (Optional)</h3>
+            <h4 ng-if="!$ctrl.data.checkRapidPass">Customer Segment (Optional)</h4>
             <h3 ng-if="$ctrl.data.checkRapidPass">Customer Segment
                 <span class="mandatory-icon" ng-show="$ctrl.data.checkRapidPass" aria-hidden="false">
                     <i class="fa fa-asterisk" aria-hidden="true"></i>
@@ -138,7 +138,7 @@
         </h3>
         <select name="segment"
                 id="promoCustomerSegment"
-                ng-options="segment as segment.name for segment in $ctrl.segmentDetails track by segment.name"
+                ng-options="segment as segment.name for segment in $ctrl.segmentDetails track by segment.id"
                 ng-model="$ctrl.data.segment"
                 ng-change="$ctrl.onSegmentSelection();$ctrl.updatePrintLabel();$ctrl.selectRapidPass();$ctrl.validatePromotion()"
                 ng-disabled="$ctrl.preview || $ctrl.data.disableCustomerSegment || $ctrl.data.singleSkuBulk == 1">
@@ -176,8 +176,8 @@
     </div>
 </div>
 
-<div ng-if="$ctrl.viewProp.displayRapidPass && $ctrl.showRapidPass">
-    <label>Rapid Pass</label>
+<div ng-if="$ctrl.viewProp.displayRapidPass && $ctrl.showRapidPass" class="pbl">
+    <h4>Rapid Pass</h4>
     <div>
         <md-checkbox role="checkbox" ng-model="$ctrl.data.checkRapidPass"
                      ng-change="$ctrl.selectRapidPass();$ctrl.validatePromotion()"
@@ -219,7 +219,7 @@
 </div>
 
 <div class="basketThresholdDiv" ng-show="$ctrl.viewProp.displayBasketThreshold" ng-if="$ctrl.showBasketThreshold">
-    <h3 class="basketThresholdHeader"> Basket Threshold (Optional) </h3>
+    <h4 class="basketThresholdHeader"> Basket Threshold (Optional) </h4>
     <span class="basketThresholdText"> Enter the dollar amount a customer's order must reach to be assessed for this discount</span>
     <br>
     <span class="md-text-field basket">
@@ -233,7 +233,7 @@
 
 <div ng-if="$ctrl.data.promoCdRqrd == true  && $ctrl.userType == 229 && $ctrl.data.promoSubTypeCd != 'MultipleItemsPercentDiscount' && $ctrl.data.promoSubTypeCd != 'MultipleItemsValueDiscount'">
     <div class="md-text-field">
-        <label for="siteWidePromotion">Site wide promotion </label>
+        <h4 for="siteWidePromotion">Site wide promotion </h4>
         <div class="md-radio">
             <input id="siteWidePromotion" type="radio" name="sitepromotion" ng-model="$ctrl.data.isSitewideDeal"
                    ng-value="true"

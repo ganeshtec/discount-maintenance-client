@@ -129,7 +129,7 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
 
     ctrl.onSegmentSelection = function () {
         ctrl.data.purchaseConds.program = { proPaint: null };
-        if (ctrl.data.segment) {
+        if (ctrl.data.segment && ctrl.data.segment.id) {
             if (ctrl.data.segment.id && ctrl.data.segment.id != -1) {
                 ctrl.data.purchaseConds.customerSegmentId = ctrl.data.segment.id;
                 ctrl.data.purchaseConds.allProDiscount = false;

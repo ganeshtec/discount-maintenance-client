@@ -13,7 +13,7 @@ app.component('summaryPage', {
 
 });
 
-function summaryPageController(promotionDataService, utilService, validationService, loginService, $rootScope) {
+function summaryPageController(promotionDataService, utilService, validationService, loginService, $rootScope, modalService) {
     var ctrl = this;
 
     ctrl.$onInit = function () {
@@ -100,6 +100,12 @@ function summaryPageController(promotionDataService, utilService, validationServ
         var missing = utilService.requiredFieldsMissing(promotion);
         var isBuyAandBHasSource = utilService.validateBuyAandB(promotion);
         var isBuyAandBHasOverlap = utilService.validateBuyAandBOverlap(promotion);
+
+        var validationErrors = ctrl.validatePromotion(ctrl.data);
+        if(validationService.areErrorsPresent(validationErrors)) {
+            modalService.showDialog('Error! Please fix all validation errors', validationService.getErrorMessages(validationErrors));
+            return;
+        }
         if (!ctrl.originalSet) {
             ctrl.originalPromoId = promotion.promoId;
             ctrl.originalSet = true;
@@ -217,6 +223,15 @@ function summaryPageController(promotionDataService, utilService, validationServ
         }
 
         return promise;
+    }
+
+    ctrl.validatePromotion = function (promotion) {
+        var isClickable = utilService.canApprove(promotion) && !utilService.isPreviewSubmitClickDisabled(promotion);
+        var validationErrors = null;
+        if (isClickable) {
+            validationErrors = validationService.validatePromotion(promotion, true);
+        }
+        return validationErrors;
     }
 
 }

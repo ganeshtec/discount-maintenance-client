@@ -16,8 +16,7 @@ describe('Unit testing adminPromotionForm.directive.spec.js', function () {
           DISCOUNT_PROPERTIES:0,
           QUALIFIERS:1,
           REWARDS:2,
-          LABELS:3,
-          SUMMARY:4
+          SUMMARY:3
       });
       $provide.constant('MaxCouponGenerationLimit', 300000);
     });
