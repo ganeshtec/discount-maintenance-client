@@ -188,16 +188,24 @@
 </div>
 
 <div class="input-text-container" ng-if="$ctrl.data.checkRapidPass">
-    <label>Unique Codes Generated</label>
+
+    <label>Unique Codes Generated<span class="mandatory-icon" ng-show="$ctrl.data.checkRapidPass" aria-hidden="false">
+        <i class="fa fa-asterisk" aria-hidden="true"></i>
+    </span></label>
+
     </br>
     <input type="number" id="rapidPassCouponLimit" name="rapidPassCouponLimit" allow-pattern="(\d)"
            ng-pattern="/^[0-9]*$/" ng-model="$ctrl.data.promoCdSpec.systemGen.uniqueCdCnt"
-           ng-trim="false" ng-disabled="$ctrl.preview || $ctrl.data.disableRapidPass"/>
+           ng-trim="false" ng-change="$ctrl.validatePromotion()" ng-disabled="$ctrl.preview || $ctrl.data.disableRapidPass"/>
     <div>
-        <span class='error-message' ng-show="$ctrl.validationErrors.custSegmentErrors.isError">
-            {{$ctrl.validationErrors.custSegmentErrors.message}}
+        <span class='error-message' ng-show="$ctrl.validationErrors.custSegmentErrors[0].isError">
+            {{$ctrl.validationErrors.custSegmentErrors[0].message}}
         </span>
-
+    </div>
+    <div>
+        <span class='error-message' ng-show="$ctrl.validationErrors.custSegmentErrors[1].isError">
+            {{$ctrl.validationErrors.custSegmentErrors[1].message}}
+        </span>
     </div>
     <div>
         <span class='error-message' ng-show="$ctrl.checkRapidPassCouponLimit()">

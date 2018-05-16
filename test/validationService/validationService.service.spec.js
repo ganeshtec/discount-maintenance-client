@@ -427,12 +427,15 @@ describe('validationService', function () {
             }
         }
         var response = validationService.validateRapidPass(promotion);
-        expect(response.isError).toBe(true);
-        expect(response.message).not.toBe('');
-
+        
+        expect(response.length).toBe(2);
+        expect(response[0].isError).toBe(true);
+        expect(response[0].message).not.toBe('');
+        expect(response[1].isError).toBe(true);
+        expect(response[1].message).not.toBe('');
     });
 
-    it('Check Customer segment selected for Rapid Pass', function () {
+    it('Check Customer segment selected for Rapid Pass - No Coupon', function () {
         var promotion = {
             checkRapidPass: true,
             purchaseConds:
@@ -441,9 +444,23 @@ describe('validationService', function () {
             }
         }
         var response = validationService.validateRapidPass(promotion);
-        expect(response.isError).toBe(false);
-        expect(response.message).toBe('');
+        expect(response.length).toBe(1);
+        expect(response[0].isError).toBe(true);
+        expect(response[0].message).not.toBe('');                
+    });
 
+    it('Check Customer segment selected for Rapid Pass', function () {
+        var promotion = {
+            checkRapidPass: true,
+            purchaseConds:
+            {
+                customerSegmentId: 1000
+            },
+            promoCdSpec: { systemGen: { uniqueCdCnt: 300000 } }
+        }
+        var response = validationService.validateRapidPass(promotion);
+        expect(response.length).toBe(0);
+        
     });
 
 });

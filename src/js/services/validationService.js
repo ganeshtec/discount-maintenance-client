@@ -199,20 +199,29 @@ app.service('validationService', ['$filter', 'utilService', 'loginService', 'Max
     }
 
     publicApi.validateRapidPass = function (promotion) {
-        var customerSegmentErrorObject = {
-            isError: false,
-            message: ''
-        };
+        var errorObject = [];
+        var rapidPassErrors = [];
             
         if (promotion.checkRapidPass && (promotion.purchaseConds.customerSegmentId == null || promotion.purchaseConds.customerSegmentId <= 0)) {
-            customerSegmentErrorObject = {
+            errorObject = {
                 isError: true,
                 message: 'A customer segment must be selected before Rapid Pass can be applied to this discount.'
             };
 
+            rapidPassErrors.push(errorObject);
         }
-        
-        return customerSegmentErrorObject;
+
+        if (promotion.checkRapidPass && (promotion.promoCdSpec == null || promotion.promoCdSpec.systemGen == null ||
+            promotion.promoCdSpec.systemGen.uniqueCdCnt == null || promotion.promoCdSpec.systemGen.uniqueCdCnt <= 0)) {
+            errorObject = {
+                isError: true,
+                message: 'Unique Codes Generated must be greater than 0.'
+            };
+
+            rapidPassErrors.push(errorObject);
+        }
+
+        return rapidPassErrors;
     }
 
     publicApi.validatePercentOff = function (rewards, checkForUndefined) {
@@ -289,7 +298,7 @@ app.service('validationService', ['$filter', 'utilService', 'loginService', 'Max
             if (validationErrorsObject.hasOwnProperty(i)) {
                 // This is a patch to avoid warnings preventing submit. The warning logic should be moved, either to
                 // the appropriate component or to some sort of warning service.
-                if (i !== 'percentageWarning' && i !== 'threeMonthsWarning') {
+                if (i !== 'percentageWarning' && i !== 'threeMonthsWarning' && i !== 'custSegmentErrors') {
                     // Check for array, and if array, iterate through each
                     if (Array.isArray(validationErrorsObject[i])) {
                         for (var j in validationErrorsObject[i]) {
@@ -315,7 +324,7 @@ app.service('validationService', ['$filter', 'utilService', 'loginService', 'Max
             if (validationErrorsObject.hasOwnProperty(i)) {
                 // This is a patch to avoid warnings preventing submit. The warning logic should be moved, either to
                 // the appropriate component or to some sort of warning service.
-                if (i !== 'percentageWarning' && i !== 'threeMonthsWarning') {
+                if (i !== 'percentageWarning' && i !== 'threeMonthsWarning' && i !== 'custSegmentErrors') {
                     // Check for array, and if array, iterate through each
                     if (Array.isArray(validationErrorsObject[i])) {
                         for (var j in validationErrorsObject[i]) {

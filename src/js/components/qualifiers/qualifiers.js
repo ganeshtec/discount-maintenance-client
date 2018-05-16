@@ -201,15 +201,19 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
 
     ctrl.selectRapidPass = function () {
         if (ctrl.data.checkRapidPass) {
+            
+            var currentUniqueCdCnt = ctrl.data.promoCdSpec &&  ctrl.data.promoCdSpec.systemGen && ctrl.data.promoCdSpec.systemGen.uniqueCdCnt ? ctrl.data.promoCdSpec.systemGen.uniqueCdCnt : '';
+
             ctrl.data.promoCdSpec = {};
             ctrl.data.promoCdSpec.type = 'Private';
             ctrl.data.promoCdSpec.genType = 'Dynamically Generated';
             ctrl.data.promoCdSpec.cdLength = '12';
             ctrl.data.promoCdSpec.systemGen = {};
-            ctrl.data.promoCdSpec.systemGen.uniqueCdCnt = '';
+            ctrl.data.promoCdSpec.systemGen.uniqueCdCnt = currentUniqueCdCnt;
             ctrl.data.promoCdSpec.systemGen.cdPrefix = (ctrl.data.segment && ctrl.data.segment.id && ctrl.data.segment.id > 0) ? '0100' + ctrl.data.segment.id : '0100';
             ctrl.data.promoCdSpec.systemGen.cdSuffix = '';
             ctrl.data.promoCdRqrd = true;
+
         }
         else {
             delete ctrl.data.promoCdSpec;
