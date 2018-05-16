@@ -186,7 +186,7 @@
                 <p ng-if="$ctrl.data.redmptnLmt.maxUsesPerCust == -1"><strong>Maximum redemption by a single customer:</strong> Unlimited</p>
             </div>
         </div>
-        <a class="primary button" id="submit-button" href="" ng-click="$ctrl.saveAndSubmit()">Submit</a>
+        <button class="primary button" id="submit-button" href="" ng-click="$ctrl.saveAndSubmit()" ng-disabled="$ctrl.isSubmitDisabled($ctrl.data)">Submit</button>
         <!--<a class="primary button" id="submit-button" ng-disabled="$ctrl.submitStatus||$ctrl.headerErrorMsg" ng-click="$ctrl.saveAndSubmit($event)">Submit</a> -->
     </content>
 </div>

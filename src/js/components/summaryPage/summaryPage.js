@@ -185,7 +185,7 @@ function summaryPageController(promotionDataService, utilService, validationServ
         }
 
     }
-  //  Submit function
+    //  Submit function
     ctrl.submit = function (promotionData) {
         var promotion = $.extend(true, {}, promotionData);
         if (promotion.status == 20 && promotion.promoSubTypeCd == 20 &&
@@ -225,10 +225,13 @@ function summaryPageController(promotionDataService, utilService, validationServ
         return promise;
     }
 
+    ctrl.isSubmitDisabled = function(promotion) {
+        return !utilService.canApprove(promotion) || utilService.isPreviewSubmitClickDisabled(promotion);
+    }
+
     ctrl.validatePromotion = function (promotion) {
-        var isClickable = utilService.canApprove(promotion) && !utilService.isPreviewSubmitClickDisabled(promotion);
         var validationErrors = null;
-        if (isClickable) {
+        if (!ctrl.isSubmitDisabled(promotion)) {
             validationErrors = validationService.validatePromotion(promotion, true);
         }
         return validationErrors;
