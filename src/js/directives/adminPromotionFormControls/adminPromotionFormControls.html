@@ -9,13 +9,13 @@
 </br>
 <div class="admin__promotion__form__controls">
     <div>
-        <button class="button " ng-click="pageDown(index-1)" ng-show="index>0">
+        <button name="btnBack" id="btnBack" class="button " ng-click="pageDown(index-1)" ng-show="index>0">
             Back
         </button>
     </div>
 
     <div>
-        <button class="button primary" ng-click="pageUp(index + 1)" ng-show="showNextButton(index)">
+        <button name="btnNext" id="btnNext" class="button primary" ng-click="pageUp(index + 1)" ng-show="showNextButton(index)">
             Next
         </button>
     </div>

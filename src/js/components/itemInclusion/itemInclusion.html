@@ -2,7 +2,7 @@
 	<tr class="category__table__row-nobottomborder" ng-hide="$ctrl.preview">
 		<td colspan="4">
 			<div class="md-toolbar-search l">
-				<input class="table__search" placeholder="Search and Add Item OMS ID" type="text" ng-model="$ctrl.itemSearch" ng-keypress="($event.keyCode === 13) && $ctrl.search($ctrl.itemSearch)"
+				<input name="txt" id="txt" class="table__search" placeholder="Search and Add Item OMS ID" type="text" ng-model="$ctrl.itemSearch" ng-keypress="($event.keyCode === 13) && $ctrl.search($ctrl.itemSearch)"
 				ng-class="{'error': inValidOmsInfo}" ng-change="$ctrl.clear()" allow-pattern="[\d\s\,]" ng-disabled="$ctrl.preview"/>
 				<a class="md-button secondary no-padding" href="" ng-click="$ctrl.search($ctrl.itemSearch)">
 					Add

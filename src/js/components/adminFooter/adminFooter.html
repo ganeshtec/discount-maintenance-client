@@ -1,5 +1,5 @@
 <div class="admin__controls">
-	<button class="button" ng-disabled="!$ctrl.canSave($ctrl.data)" ng-click="$ctrl.canSave($ctrl.data) && $ctrl.saveDraft($ctrl.data)">Save as Draft</button>
-	<button class="button" ng-disabled="!$ctrl.canApprove($ctrl.data) || $ctrl.isPreviewSubmitClickDisabled($ctrl.data)"
+	<button class="button" name="btnSaveAsDraft" id="btnSaveAsDraft" ng-disabled="!$ctrl.canSave($ctrl.data)" ng-click="$ctrl.canSave($ctrl.data) && $ctrl.saveDraft($ctrl.data)">Save as Draft</button>
+	<button class="button" name="btnPreviewAndSubmit" id="btnPreviewAndSubmit" ng-disabled="!$ctrl.canApprove($ctrl.data) || $ctrl.isPreviewSubmitClickDisabled($ctrl.data)"
 	ng-click ="$ctrl.previewSummary($ctrl.data)" ng-show="$ctrl.index >= $ctrl.sectionsIndex.REWARDS && !$ctrl.showSummaryTab">Preview & Submit</button>
 </div>

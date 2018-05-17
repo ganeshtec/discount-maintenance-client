@@ -7,13 +7,13 @@
  
  <table class="table category__table">
  	<tr class="category__table__row-nobottomborder" ng-hide="preview">
-		 <label for="MerchHierarchy"><h4>Merch Hierarchy</h4></label> 
+		 <label><h4>Merch Hierarchy</h4></label>
 
 		<span class='error-message' ng-show="validationErrors.skuTypeFilter.isError">{{validationErrors.skuTypeFilter.message}}</span>
 
 		 <td width="35%">
 			<div class="md-select">			  
-				<select name="selectDept" style="margin-top:28px"  ng-options=" dept as dept.id+'-'+dept.name for dept in departmentDetails track by dept.id" ng-model="selectedDept" ng-change="getClassesforSelectedDepartment(selectedDept)">
+				<select name="selectDept" id="selectDept" style="margin-top:28px"  ng-options=" dept as dept.id+'-'+dept.name for dept in departmentDetails track by dept.id" ng-model="selectedDept" ng-change="getClassesforSelectedDepartment(selectedDept)">
 					<option value="">Select Department</option>
 				</select>
 			</div>
@@ -21,14 +21,14 @@
 		 </td>
 		 <td width="30%">
 			<div class="md-select"> 
-				<select name="selectClass" style="margin-top:28px" ng-options="clas as clas.merchandiseClassNumber+'-'+clas.merchandiseClassDescription for clas in classList track by clas.merchandiseClassNumber" ng-model="selectedClass" ng-change="getSubClasses(selectedClass)">
+				<select name="selectClass" id="selectClass" style="margin-top:28px" ng-options="clas as clas.merchandiseClassNumber+'-'+clas.merchandiseClassDescription for clas in classList track by clas.merchandiseClassNumber" ng-model="selectedClass" ng-change="getSubClasses(selectedClass)">
 					<option value="">Select class</option>
 				</select>
 			</div>
 		 </td>
 
 		 <td width="30%">
-			<multiselect-dropdown options="SubClassList" suffix="subclasses" notify-completion="notifyCompletion" selected-options="selectedSubClasses" preview="$ctrl.preview" label="merchandiseSubordinateClassNumber,merchandiseSubordinateClassDescription"></multiselect-dropdown>
+			<multiselect-dropdown name="selectSubClass" id="selectSubClass" options="SubClassList" suffix="subclasses" notify-completion="notifyCompletion" selected-options="selectedSubClasses" preview="$ctrl.preview" label="merchandiseSubordinateClassNumber,merchandiseSubordinateClassDescription"></multiselect-dropdown>
 		 </td>
 		 <td>
 			<a href="" class="md-button secondary " style="margin-top:28px" ng-click="showData()" >Add</a>

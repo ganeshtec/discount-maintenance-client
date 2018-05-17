@@ -3,10 +3,10 @@
 
     <div ng-style="style">
         <div>
-            <md-checkbox role="checkbox" ng-model="$ctrl.checkAll" ng-change="$ctrl.selectAll()" aria-checked="{{$ctrl.checkAll}}">All</md-checkbox>
+            <md-checkbox name="chkboxChannelAll" id="chkboxChannelAll" role="checkbox" ng-model="$ctrl.checkAll" ng-change="$ctrl.selectAll()" aria-checked="{{$ctrl.checkAll}}">All</md-checkbox>
         </div>
         <div ng-repeat="channel in $ctrl.data.channelsWithCheckedFields track by $index" ng-if="!option.hide" class="plxxl">
-            <md-checkbox ng-true-value="true" ng-false-value="false" ng-model="channel.checked" ng-change="$ctrl.updateSingleChannelCheckBoxValue(channel)"
+            <md-checkbox name="chkboxChannel{{channel.name}}" id="chkboxChannel{{channel.name}}" ng-true-value="true" ng-false-value="false" ng-model="channel.checked" ng-change="$ctrl.updateSingleChannelCheckBoxValue(channel)"
                 aria-checked="{{channel.checked}}" ng-disabled="channel.disable">{{channel.name}}</md-checkbox>
         </div>
     </div>

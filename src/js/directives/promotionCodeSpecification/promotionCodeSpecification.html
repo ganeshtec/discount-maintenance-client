@@ -1,10 +1,10 @@
 <div ng-if="require">
 	<div class="md-radio">
-		<input type="radio" name="promospec" ng-change="clearCouponId()" ng-disabled="completed;preview" ng-model="data.type" title="Public Promotion" value="Public" />
+		<input type="radio" name="promospec" id="promospec" ng-change="clearCouponId()" ng-disabled="completed;preview" ng-model="data.type" title="Public Promotion" value="Public" />
 		<label><span><span></span></span>User Generated Promotion codes</label>
 	</div>
 	<div class="md-radio">
-		<input type="radio" name="promospec"  ng-change="clearCouponId()" ng-disabled="completed;preview"  ng-model="data.type" title="Private Promotion" value="Private" />
+		<input type="radio" name="promospec" id="promospec"  ng-change="clearCouponId()" ng-disabled="completed;preview"  ng-model="data.type" title="Private Promotion" value="Private" />
 		<label><span><span></span></span>System-generated unique promotion code </label>
 	</div>
 	<!-- Create Promo Codes Component -->

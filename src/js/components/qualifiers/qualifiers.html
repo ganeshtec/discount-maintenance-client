@@ -178,7 +178,7 @@
 <div ng-if="$ctrl.viewProp.displayRapidPass && $ctrl.showRapidPass" class="pbl">
     <h4>Rapid Pass</h4>
     <div>
-        <md-checkbox role="checkbox" ng-model="$ctrl.data.checkRapidPass"
+        <md-checkbox name="chkboxRapidPass" id="chkboxRapidPass" role="checkbox" ng-model="$ctrl.data.checkRapidPass"
                      ng-change="$ctrl.selectRapidPass();$ctrl.validatePromotion()"
                      ng-disabled="$ctrl.preview || $ctrl.data.disableRapidPass || $ctrl.data.singleSkuBulk == 1"
                      aria-checked="false">Redeem through Rapid Pass
@@ -222,7 +222,7 @@
     <span class="basketThresholdText"> Enter the dollar amount a customer's order must reach to be assessed for this discount</span>
     <br>
     <span class="md-text-field basket">
-        <input type="text" class="basketThresholdTextBox" ng-model="$ctrl.data.purchaseConds.basketThreshold"
+        <input name="textBasketThreshold" id="textBasketThreshold" type="text" class="basketThresholdTextBox" ng-model="$ctrl.data.purchaseConds.basketThreshold"
                ng-blur="$ctrl.validatePromotion()"
                allow-pattern="^[\d.]+$" ng-disabled="$ctrl.preview" placeholder="$0.00"/>
     </span>
@@ -234,7 +234,7 @@
     <div class="md-text-field">
         <h4 for="siteWidePromotion">Site wide promotion </h4>
         <div class="md-radio">
-            <input id="siteWidePromotion" type="radio" name="sitepromotion" ng-model="$ctrl.data.isSitewideDeal"
+            <input id="siteWidePromotionYes" name="siteWidePromotionYes" type="radio" ng-model="$ctrl.data.isSitewideDeal"
                    ng-value="true"
                    ng-disabled="$ctrl.preview"
             />
@@ -244,7 +244,7 @@
                 </span>Yes</label>
         </div>
         <div class="md-radio">
-            <input for="sitewide" type="radio" name="sitepromotion" ng-model="$ctrl.data.isSitewideDeal"
+            <input for="sitewide" type="radio" name="siteWidePromotion" name="siteWidePromotionNo" ng-model="$ctrl.data.isSitewideDeal"
                    ng-value="false" ng-disabled="$ctrl.preview"
             />
             <label>

@@ -1,15 +1,15 @@
 <div class="ms-dropdown" style="margin-top:28px" click-anywhere-but-here="$ctrl.showDropDown = false">
     <span>
         <i class="fa fa-caret-down" ng-click="$ctrl.showDropDown = !$ctrl.showDropDown" role="button" tabindex="0"></i>
-        <input placeholder="Select subclass" id="email" master type="text" ng-model="$ctrl.optionText" ng-click="$ctrl.showDropDown=!$ctrl.showDropDown" readonly="readonly" ng-disabled="$ctrl.preview"/>
+        <input name="txtOptionText" id="txtOptionText" placeholder="Select subclass" master type="text" ng-model="$ctrl.optionText" ng-click="$ctrl.showDropDown=!$ctrl.showDropDown" readonly="readonly" ng-disabled="$ctrl.preview"/>
     </span>
     <ul ng-if="$ctrl.showDropDown" ng-style="style">
         <li>
-            <md-checkbox role="checkbox" ng-model="$ctrl.checkAll"
+            <md-checkbox name="chkboxOptionAll" id="chkboxOptionAll" role="checkbox" ng-model="$ctrl.checkAll"
             ng-change="$ctrl.selectAll()" aria-checked="{{$ctrl.checkAll}}">All</md-checkbox>     
         </li>
         <li ng-repeat="option in $ctrl.options" ng-if="!option.hide">
-            <md-checkbox ng-true-value="true" ng-false-value="false" ng-model="option.checked"
+            <md-checkbox name="chkboxOptionLabel" id="chkboxOptionLabel" ng-true-value="true" ng-false-value="false" ng-model="option.checked"
             ng-change="$ctrl.selectionChanged()">{{$ctrl.getOptionLabel(option)}}</md-checkbox>     
         </li>
     </ul>

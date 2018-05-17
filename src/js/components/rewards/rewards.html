@@ -54,7 +54,7 @@
     />
     <div class="md-text-field" ng-if="$ctrl.data.purchaseConds.sources.length > 1">
         <label for="promocombo">Quantity of "{{$ctrl.alphabet[$index]}}"</label>
-        <input type="number" class="buyAorB" name="minPurchaseQty" ng-model="item.minPurchaseQty"
+        <input type="number" class="buyAorB" name="minPurchaseQty" id="minPurchaseQty" ng-model="item.minPurchaseQty"
                title="Quantity of {{$ctrl.alphabet[$index]}}"
                placeholder="Quantity of {{$ctrl.alphabet[$index]}}" allow-pattern="(^[0-9]\d*$)"
                ng-init="item.minPurchaseQty=  item.minPurchaseQty || 1"
@@ -85,7 +85,7 @@
                         <h4 class="h4-inline">{{$ctrl.thresholdHeaderLabel}} <span class="mandatory-icon"><i
                                 class="fa fa-asterisk"></i></span></h4>
                         <div class="md-radio">
-                            <input type="radio" id="threshhold_quantity" name="minpurchase" ng-model="$ctrl.qualuom"
+                            <input type="radio" id="threshhold_quantity" name="threshhold_quantity" ng-model="$ctrl.qualuom"
                                    title="Quantity Purchase" value="Quantity"
                                    ng-change="$ctrl.setQualUOM($ctrl.qualuom);$ctrl.updatePrintLabel()"
                                    ng-disabled="$ctrl.preview || $ctrl.data.singleSkuBulk"
@@ -94,7 +94,7 @@
                         </div>
 
                         <div class="md-radio">
-                            <input type="radio" id="threshold_amount" name="minpurchase" ng-model="$ctrl.qualuom"
+                            <input type="radio" id="threshold_amount" name="threshold_amount" ng-model="$ctrl.qualuom"
                                    title="Amount Spent" value="Amount"
                                    ng-change="$ctrl.setQualUOM($ctrl.qualuom);$ctrl.updatePrintLabel()"
                                    ng-disabled="$ctrl.preview || $ctrl.data.singleSkuBulk"
@@ -108,21 +108,21 @@
                         <h4>Discount Type<span class="mandatory-icon"><i class="fa fa-asterisk" aria-hidden="true"></i></span>
                         </h4>
                         <div class="md-radio prxxl">
-                            <input type="radio" id="discount_type_quantity" name="discountType"
+                            <input type="radio" id="discount_type_quantity" name="discount_type_quantity"
                                    ng-model="$ctrl.data.reward.type" title="Quantity Purchase"
                                    value="PERCNTOFF" ng-change="$ctrl.updatePrintLabel()" ng-disabled="$ctrl.preview || $ctrl.data.singleSkuBulk"/>
                             <label for="discount_type_quantity"><span><span></span></span>Percent Off</label>
                         </div>
 
                         <div class="md-radio">
-                            <input type="radio" id="discount_type_amount" name="discountType"
+                            <input type="radio" id="discount_type_amount" name="discount_type_amount"
                                    ng-model="$ctrl.data.reward.type" title="Amount Spent"
                                    value="AMTOFF" ng-change="$ctrl.updatePrintLabel()" ng-disabled="$ctrl.preview || $ctrl.data.singleSkuBulk"/>
                             <label for="discount_type_amount"><span><span></span></span>Dollar Off</label>
                         </div>
 
                         <div class="md-radio" ng-if="$ctrl.costPlusPercent">
-                            <input type="radio" id="discount_type_costplus" name="discountType"
+                            <input type="radio" id="discount_type_costplus" name="discount_type_costplus"
                                    ng-model="$ctrl.data.reward.type" title="Cost Plus"
                                    value="COSTPLUSPERCNT" ng-change="$ctrl.updatePrintLabel()"
                                    ng-disabled="$ctrl.preview || $ctrl.data.singleSkuBulk"/>
@@ -206,7 +206,7 @@
 
             </td>
             <td class="md-text-field md-text-prefixed" ng-if="$ctrl.data.reward.type=='PERCNTOFF' && !$ctrl.data.singleSkuBulk">
-                <input type="text" id="maxval" name="maxval_{{$index}}" ng-model="item.maxAllowedVal"
+                <input type="text" id="maxval_{{$index}}" name="maxval_{{$index}}" ng-model="item.maxAllowedVal"
                        ng-blur="$ctrl.validatePromotion()"
                        ng-if="$ctrl.data.reward.type=='PERCNTOFF' || $ctrl.userType == 228" allow-pattern="^[\d.]+$"
                        ng-disabled="$ctrl.preview"
@@ -278,17 +278,17 @@
             </tool-tipper>
         </h4>
         <div class="md-radio">
-            <input type="radio" id="itemLevel" name="discountLevel" ng-model="$ctrl.data.promoType" title="Item Level"
+            <input type="radio" id="discountLevelItem" name="discountLevelItem" ng-model="$ctrl.data.promoType" title="Item Level"
                    value="ITEMPROMO"
                    ng-change="$ctrl.setRewardMethod()" ng-disabled="$ctrl.preview"/>
-            <label for="itemLevel"><span><span></span></span>Item Level</label>
+            <label for="discountLevelItem"><span><span></span></span>Item Level</label>
         </div>
 
         <div class="md-radio">
-            <input type="radio" id="orderLevel" name="discountLevel" ng-model="$ctrl.data.promoType" title="Order Level"
+            <input type="radio" id="discountLevelOrder" name="discountLevelOrder" ng-model="$ctrl.data.promoType" title="Order Level"
                    value="ORDERPROMO"
                    ng-change="$ctrl.setRewardMethod()" ng-disabled="$ctrl.preview"/>
-            <label for="orderLevel"><span><span></span></span>Order Level</label>
+            <label for="discountLevelOrder"><span><span></span></span>Order Level</label>
         </div>
     </div>
 </div>

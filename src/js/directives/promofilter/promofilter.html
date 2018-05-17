@@ -2,15 +2,15 @@
 <div id="searchfilter" >
 	<h1>Promotion Filter<h1>
 	<div>Promotion status<div>
-	<select>
+	<select name="promoStatusDesc" id="promoStatusDesc">
 		<option ng-repeat="status in statuslist" value="status.promoStatusCd">{{status.promoStatusDesc}}</option>
 	</select>
 	<div>Promotion type<div>
-	<select >
+	<select name="promoSubTypeDesc" id="promoSubTypeDesc">
 		<option ng-repeat="promo in typelist"  value="promo.promoSubTypeCd">{{promo.promoSubTypeDesc}}</option>
 	</select>
 	<div>
-		<md-button ng-click="filter" >Apply</md-button>
-		<md-button ng-click="filter" >Cancel</md-button>
+		<md-button name="btnApply" id="btnApply" ng-click="filter" >Apply</md-button>
+		<md-button name="btnCancel" id="btnCancel" ng-click="filter" >Cancel</md-button>
 	</div>
 </divl
