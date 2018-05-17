@@ -52,7 +52,8 @@ describe('promotionAdminCtrl', function () {
                 displayLocation: true,
                 displayExclusiveCheckbox: true,
                 displayShowAllProDiscount: true,
-                displaySingleSkuBulk: true
+                displaySingleSkuBulk: true,
+                displayDiscountTemplate: true
             }
             controller.setViewProperties(allowedPermissionIds.STORE);
             expect($scope.viewProperties).toEqual(expectedResult);
@@ -85,7 +86,8 @@ describe('promotionAdminCtrl', function () {
                 displayLocation: false,
                 displayExclusiveCheckbox: false,
                 displayShowAllProDiscount: false,
-                displaySingleSkuBulk: false
+                displaySingleSkuBulk: false,
+                displayDiscountTemplate: false
             }
             controller.setViewProperties(allowedPermissionIds.ONLINE);
             expect($scope.viewProperties).toEqual(expectedResult);

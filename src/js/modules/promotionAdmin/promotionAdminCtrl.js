@@ -80,7 +80,8 @@ app.controller('promotionAdminCtrl', ['$scope', '$rootScope', '$routeParams', '$
                     displayLocation: true,
                     displayExclusiveCheckbox: true,
                     displayShowAllProDiscount: true,
-                    displaySingleSkuBulk: true
+                    displaySingleSkuBulk: true,
+                    displayDiscountTemplate: true
                 }
                 //$scope.promotionSubTypesForMFA = true;
             } else if (userType == allowedPermissionIDs.ONLINE) {
@@ -110,7 +111,8 @@ app.controller('promotionAdminCtrl', ['$scope', '$rootScope', '$routeParams', '$
                     displayLocation: false,
                     displayExclusiveCheckbox: false,
                     displayShowAllProDiscount: false,
-                    displaySingleSkuBulk: false
+                    displaySingleSkuBulk: false,
+                    displayDiscountTemplate: false
                 }
                 //$scope.promotionSubTypesForMFA = false;
             }
