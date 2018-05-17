@@ -98,6 +98,7 @@ function summaryPageController(promotionDataService, utilService, validationServ
 
         var missingLocation = utilService.requiredLocationsOrMarkets(promotion);
         var missing = utilService.requiredFieldsMissing(promotion);
+        var rapidPassSegCheck = utilService.requiredRapidPassCheck(promotion);
         var isBuyAandBHasSource = utilService.validateBuyAandB(promotion);
         var isBuyAandBHasOverlap = utilService.validateBuyAandBOverlap(promotion);
 
@@ -110,7 +111,7 @@ function summaryPageController(promotionDataService, utilService, validationServ
             ctrl.originalPromoId = promotion.promoId;
             ctrl.originalSet = true;
         }
-        if (missing || missingLocation) {
+        if (missing || missingLocation || rapidPassSegCheck) {
             setError('ERROR: Please fill out all required fields.');
             return;
         } else if (isBuyAandBHasSource != null) {

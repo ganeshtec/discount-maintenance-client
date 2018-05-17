@@ -749,4 +749,37 @@ describe('utilService', function () {
         expect(promotion.promoSubTypeCd).toEqual(20);
     })
 
+    it('does not allow rapid pass to have empty customer segment', function () {
+        var promotion = {
+            "checkRapidPass": true,
+            "purchaseConds": {
+                "customerSegmentId": 0
+            }
+        };
+        var result = utilService.requiredRapidPassCheck(promotion);
+        expect(result).toBe(true);
+    })
+
+    it('Check returns pass if raid pass and segment not selected', function () {
+        var promotion = {
+            "checkRapidPass": false,
+            "purchaseConds": {
+                "customerSegmentId": 0
+            }
+        };
+        var result = utilService.requiredRapidPassCheck(promotion);
+        expect(result).toBe(false);
+    })
+
+    it('Rapid pass passes validation when it has a customer segment', function () {
+        var promotion = {
+            "checkRapidPass": true,
+            "purchaseConds": {
+                "customerSegmentId": 16
+            }
+        };
+        var result = utilService.requiredRapidPassCheck(promotion);
+        expect(result).toBe(false);
+    })
+
 });

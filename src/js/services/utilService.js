@@ -285,6 +285,15 @@ app.service('utilService', ['$rootScope', '$q', '$filter', 'leadTimeService', 'l
 
     }
 
+    publicApi.requiredRapidPassCheck = function(promotion) {
+        if(promotion.checkRapidPass && promotion.purchaseConds.customerSegmentId === 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
     publicApi.invalidSysGenCode = function (promotion) {
         if (promotion && promotion.promoCdSpec && promotion.promoCdSpec.systemGen) {
             var syscode = promotion.promoCdSpec.systemGen;
