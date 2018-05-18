@@ -42,7 +42,7 @@ describe('rewards', function () {
                     },
                     purchaseConds: {
                         channels: [57],
-                        sources: [{purchaseoption: 'category' }]
+                        sources: [{purchaseoption: 'category' , inclusions: {} , exclusions: {}}]
                     }
                 },
                 promoform : {},
@@ -60,7 +60,7 @@ describe('rewards', function () {
         }));
 
         it('verify Rewards radio button should be invisible for MFA User ', function () {
-            $scope.data = { purchaseConds: { sources: [{ purchaseoption: 'category' }] }, reward:{details:[{}]} };
+            $scope.data = { purchaseConds: { sources: [{ purchaseoption: 'category', inclusions: {} , exclusions: {}}] }, reward:{details:[{}]}, merchTableData:[] };
             $scope.promoform = {};
             $scope.preview = false;
             $scope.isDisabled = false;
@@ -194,6 +194,17 @@ describe('rewards', function () {
             ctrl.data.promoType = 'ORDERPROMO';
             ctrl.setRewardMethod();
             expect(ctrl.data.reward.method).toEqual('WHOLEORDER');
+        });
+
+        it('verify #setSingleSkuBulkDefault function', function () {
+            ctrl.data.singleSkuBulk = 1;
+            ctrl.data.singleSkuBulkChanged = true;
+            ctrl.setSingleSkuBulkDefault();
+            expect(ctrl.qualuom).toEqual('Quantity');
+            expect(ctrl.data.reward.type).toEqual('PERCNTOFF');
+            expect(ctrl.data.reward.type).toEqual('PERCNTOFF');
+            expect(ctrl.data.reward.details.length).toBe(1);
+            expect(ctrl.data.reward.details[0].maxAllowedVal).toBeNull();
         });
 
     });

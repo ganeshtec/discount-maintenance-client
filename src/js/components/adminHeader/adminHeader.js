@@ -15,10 +15,7 @@ function HeaderController(utilService) {
     ctrl.isEndDtWithinLeadTime = false;
     ctrl.$onInit = function () {
         if(ctrl.data!=null){
-            var isEndDtWithinLeadTimePromise = ctrl.utilService.isSubmitEligibleForDisable(ctrl.data);
-            isEndDtWithinLeadTimePromise.then(function (value) {
-                ctrl.isEndDtWithinLeadTime = value;
-            })
+            ctrl.isEndDtWithinLeadTime = ctrl.utilService.isSubmitEligibleForDisable(ctrl.data);
         }
     }
 }

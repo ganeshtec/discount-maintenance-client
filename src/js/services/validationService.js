@@ -3,7 +3,7 @@
 	Services that will handle validation of promotion attributes
 */
 
-app.service('validationService', ['$filter', 'utilService', 'loginService', 'MaxCouponGenerationLimit', function ($filter, utilService, loginService, MaxCouponGenerationLimit) {
+app.service('validationService', ['$filter', 'utilService', 'loginService', 'MaxCouponGenerationLimit','$rootScope', function ($filter, utilService, loginService, MaxCouponGenerationLimit,$rootScope) {
     var publicApi = {};
 
     var leadTime = null;
@@ -31,9 +31,41 @@ app.service('validationService', ['$filter', 'utilService', 'loginService', 'Max
         };
 
         var today = moment();
-        if (promotion.startDt && moment(promotion.startDt).isBefore(today, 'day')) {
-            startDateError.isError = true;
-            startDateError.message = 'Start date cannot be earlier than today.';
+
+        if(promotion.singleSkuBulk === 1) {
+            promotion.singleSkuBulkWeekendStartDateTime = Number($rootScope.singleSkuBulkWeekendStartDateTime);
+            promotion.singleSkuBulkWeekdayStartDateTime = Number($rootScope.singleSkuBulkWeekdayStartDateTime);
+            promotion.singleSkuBulkWeekendStartDateDay = Number($rootScope.singleSkuBulkWeekendStartDateDay);
+            promotion.singleSkuBulkWeekdayStartDateDay = Number($rootScope.singleSkuBulkWeekdayStartDateDay);
+            //weekend
+            if(today.day() === 0 || today.day() === 6){       
+                if(promotion.startDt && moment(promotion.startDt).isBefore(moment().add(promotion.singleSkuBulkWeekendStartDateDay,'days'), 'day') && moment().hour()<promotion.singleSkuBulkWeekendStartDateTime){
+                    startDateError.isError = true;
+                    startDateError.message = 'Start date cannot be earlier than 2 days from now.';    
+                }
+                else if(promotion.startDt && moment(promotion.startDt).isBefore(moment().add(promotion.singleSkuBulkWeekendStartDateDay+1,'days') , 'day') && moment().hour()>=promotion.singleSkuBulkWeekendStartDateTime){
+                    startDateError.isError = true;
+                    startDateError.message = 'Start date cannot be earlier than 3 days from now.';    
+                }        
+            }
+            //weekday
+            else{ 
+                if (promotion.startDt && moment(promotion.startDt).isBefore(moment().add(promotion.singleSkuBulkWeekdayStartDateDay,'days'), 'day') && moment().hour()<promotion.singleSkuBulkWeekdayStartDateTime) {
+                    startDateError.isError = true;
+                    startDateError.message = 'Start date cannot be earlier than tomorrow.';
+                }
+                else if (promotion.startDt && moment(promotion.startDt).isBefore(moment().add(promotion.singleSkuBulkWeekdayStartDateDay+1,'days'), 'day') && moment().hour()>=promotion.singleSkuBulkWeekdayStartDateTime) {
+                    startDateError.isError = true;
+                    startDateError.message = 'Start date cannot be earlier than 2 days from now.';
+                    today.subtract(2,'days')
+                }
+            }   
+        }
+        else{ 
+            if (promotion.startDt && moment(promotion.startDt).isBefore(today, 'day')) {
+                startDateError.isError = true;
+                startDateError.message = 'Start date cannot be earlier than today.';
+            }
         }
 
         return startDateError;
@@ -167,20 +199,29 @@ app.service('validationService', ['$filter', 'utilService', 'loginService', 'Max
     }
 
     publicApi.validateRapidPass = function (promotion) {
-        var customerSegmentErrorObject = {
-            isError: false,
-            message: ''
-        };
+        var errorObject = [];
+        var rapidPassErrors = [];
             
         if (promotion.checkRapidPass && (promotion.purchaseConds.customerSegmentId == null || promotion.purchaseConds.customerSegmentId <= 0)) {
-            customerSegmentErrorObject = {
+            errorObject = {
                 isError: true,
                 message: 'A customer segment must be selected before Rapid Pass can be applied to this discount.'
             };
 
+            rapidPassErrors.push(errorObject);
         }
-        
-        return customerSegmentErrorObject;
+
+        if (promotion.checkRapidPass && (promotion.promoCdSpec == null || promotion.promoCdSpec.systemGen == null ||
+            promotion.promoCdSpec.systemGen.uniqueCdCnt == null || promotion.promoCdSpec.systemGen.uniqueCdCnt <= 0)) {
+            errorObject = {
+                isError: true,
+                message: 'Unique Codes Generated must be greater than 0.'
+            };
+
+            rapidPassErrors.push(errorObject);
+        }
+
+        return rapidPassErrors;
     }
 
     publicApi.validatePercentOff = function (rewards, checkForUndefined) {
@@ -257,7 +298,7 @@ app.service('validationService', ['$filter', 'utilService', 'loginService', 'Max
             if (validationErrorsObject.hasOwnProperty(i)) {
                 // This is a patch to avoid warnings preventing submit. The warning logic should be moved, either to
                 // the appropriate component or to some sort of warning service.
-                if (i !== 'percentageWarning' && i !== 'threeMonthsWarning') {
+                if (i !== 'percentageWarning' && i !== 'threeMonthsWarning' && i !== 'custSegmentErrors') {
                     // Check for array, and if array, iterate through each
                     if (Array.isArray(validationErrorsObject[i])) {
                         for (var j in validationErrorsObject[i]) {
@@ -283,7 +324,7 @@ app.service('validationService', ['$filter', 'utilService', 'loginService', 'Max
             if (validationErrorsObject.hasOwnProperty(i)) {
                 // This is a patch to avoid warnings preventing submit. The warning logic should be moved, either to
                 // the appropriate component or to some sort of warning service.
-                if (i !== 'percentageWarning' && i !== 'threeMonthsWarning') {
+                if (i !== 'percentageWarning' && i !== 'threeMonthsWarning' && i !== 'custSegmentErrors') {
                     // Check for array, and if array, iterate through each
                     if (Array.isArray(validationErrorsObject[i])) {
                         for (var j in validationErrorsObject[i]) {

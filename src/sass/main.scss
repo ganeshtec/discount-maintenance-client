@@ -404,6 +404,15 @@ ol, ul {
   margin-right: 15%;
 }
 
+#single-sku-bulk-modal{
+	width: 550px;
+}
+#div-button-align-right{
+  display: flex;
+  justify-content: flex-end;
+  margin-top:28px;
+}
+
 .span-spacing {
   color: #ff0000;
   margin-top: -3px;
@@ -430,4 +439,9 @@ ol, ul {
   padding-bottom: 10px;
 }
 
+#submit-button {
+    float: right;
+    position: relative;
+    top: 160px;
+}
 

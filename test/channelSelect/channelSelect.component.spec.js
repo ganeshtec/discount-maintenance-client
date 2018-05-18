@@ -78,6 +78,7 @@ describe('Unit testing channelSelect component', function () {
                 "checked": true
             }
         ];
+        ctrl.$onInit();
         //ctrl.updateAllChannelCheckBoxValues();
         ctrl.selectAll();
         expect(ctrl.data.channelsWithCheckedFields[0].checked).toBe(false);
@@ -111,7 +112,7 @@ describe('Unit testing channelSelect component', function () {
     })
 
     it('Test #selectionChanged', function () {
-       ctrl.data.channelsWithCheckedFields[0].checked = true;
+        ctrl.data.channelsWithCheckedFields[0].checked = true;
         ctrl.selectionChanged();
         expect(ctrl.selectedOptions.length).toEqual(1);
         expect(ctrl.checkAll).toEqual('mixed');

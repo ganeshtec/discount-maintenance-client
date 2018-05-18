@@ -1,0 +1,9 @@
+<h4>Enter discount descriptions</h4>
+<div class="md-textarea">
+    <label for="shortdesc">Short Description</label>
+    <textarea id="shortdesc" name="shortdesc" ng-model="$ctrl.data.shortDesc" title="Short Description" ng-disabled="$ctrl.data.promoType == 'ORDERPROMO' || $ctrl.preview" rows="4" replace-special-characters></textarea>
+</div>
+<div class="md-textarea">
+    <label for="longdesc">Long Description</label>
+	<textarea id="longdesc" name="longdesc" ng-model="$ctrl.data.longDesc" title="Long Description" ng-disabled="$ctrl.data.promoType == 'ORDERPROMO' || $ctrl.preview" rows="8" replace-special-characters></textarea>
+</div>

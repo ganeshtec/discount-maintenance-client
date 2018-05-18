@@ -1,7 +1,8 @@
 // Main Controller for root scope
 
-app.controller('MainCtrl', ['$q', '$rootScope', '$scope', '$location', 'DataFactory', 'SECTIONS', 'promotionDataService', 'loginService', 'OverlayConfigFactory', 'featureFlagService', 'constantsConfigService',
-    function ($q, $rootScope, $scope, $location, DataFactory, SECTIONS, promotionDataService, loginService, OverlayConfigFactory, featureFlagService, constantsConfigService) {
+
+app.controller('MainCtrl', ['$q', '$rootScope', '$scope', '$location', 'DataFactory', 'SECTIONS', 'promotionDataService', 'loginService', 'leadTimeService', 'OverlayConfigFactory', 'featureFlagService', 'constantsConfigService',
+    function ($q, $rootScope, $scope, $location, DataFactory, SECTIONS, promotionDataService, loginService, leadTimeService, OverlayConfigFactory, featureFlagService, constantsConfigService) {
         $scope.messageModal = DataFactory.messageModal;
         $scope.username = '';
         $scope.userPermissions = '';
@@ -31,9 +32,14 @@ app.controller('MainCtrl', ['$q', '$rootScope', '$scope', '$location', 'DataFact
         $scope.callGlobalServices = function () {
             var constantsTogglePromise = constantsConfigService.getConstantsFromConfig();
             var featureTogglePromise = featureFlagService.getFeatureFlags();
+            var leadTimeServicePromise = leadTimeService.fetchLeadTime();
 
             constantsTogglePromise.then(function (data) {
                 $rootScope.programIdForProMonthly = data.programIdForProMonthly;
+                $rootScope.singleSkuBulkWeekendStartDateTime = data.singleSkuBulkWeekendStartDateTime;
+                $rootScope.singleSkuBulkWeekdayStartDateTime = data.singleSkuBulkWeekdayStartDateTime;
+                $rootScope.singleSkuBulkWeekendStartDateDay = data.singleSkuBulkWeekendStartDateDay;
+                $rootScope.singleSkuBulkWeekdayStartDateDay = data.singleSkuBulkWeekdayStartDateDay;
             });
 
             featureTogglePromise.then(function (data) {
@@ -46,6 +52,11 @@ app.controller('MainCtrl', ['$q', '$rootScope', '$scope', '$location', 'DataFact
                 $rootScope.singleSkuBulk = data.singleSkuBulk;
                 $rootScope.receiptText = data.receiptText;
                 $rootScope.costPlusPercent = data.costPlusPercent;
+                $rootScope.showSummaryTab = data.showSummaryTab;
+            });
+
+            leadTimeServicePromise.then(function (data) {
+                $rootScope.leadTime = data;
             });
 
         };

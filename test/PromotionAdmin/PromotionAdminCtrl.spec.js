@@ -1,13 +1,25 @@
 describe('promotionAdminCtrl', function () {
-    beforeEach(module('app'));
+    beforeEach(module('app', function ($provide) {
+        $provide.constant('sectionsIndex', {
+            DISCOUNT_PROPERTIES:0,
+            QUALIFIERS:1,
+            REWARDS:2,
+            SUMMARY:3
+        });
+        $provide.constant('MaxCouponGenerationLimit', 300000);
+    }));
 
     var $controller;
     var $scope = {};
     var controller;
+    var $rootScope;
+    var SECTIONS;
 
-    beforeEach(inject(function($injector, _$rootScope_, _$controller_){
+    beforeEach(inject(function($injector, _$rootScope_, _$controller_,_SECTIONS_){
         $scope = _$rootScope_.$new();
+        $rootScope  = _$rootScope_;
         $controller = _$controller_;
+        SECTIONS = _SECTIONS_;
         allowedPermissionIds = $injector.get('ALLOWED_PERMISSION_IDS')();
         controller = $controller('promotionAdminCtrl', { $scope: $scope});
     }));
@@ -40,7 +52,8 @@ describe('promotionAdminCtrl', function () {
                 displayLocation: true,
                 displayExclusiveCheckbox: true,
                 displayShowAllProDiscount: true,
-                displaySingleSkuBulk: true
+                displaySingleSkuBulk: true,
+                displayDiscountTemplate: true
             }
             controller.setViewProperties(allowedPermissionIds.STORE);
             expect($scope.viewProperties).toEqual(expectedResult);
@@ -64,7 +77,7 @@ describe('promotionAdminCtrl', function () {
                 displayPrintLabel: false,
                 displayItemsSku:false,
                 displayMerchHiearchy: false,
-                displayCustomerSegment: true,
+                displayCustomerSegment: false,
                 promotionSubTypesForMFA: false,
                 displayFilterSkuTypes: false,
                 displayBasketThreshold: false,
@@ -73,7 +86,8 @@ describe('promotionAdminCtrl', function () {
                 displayLocation: false,
                 displayExclusiveCheckbox: false,
                 displayShowAllProDiscount: false,
-                displaySingleSkuBulk: false
+                displaySingleSkuBulk: false,
+                displayDiscountTemplate: false
             }
             controller.setViewProperties(allowedPermissionIds.ONLINE);
             expect($scope.viewProperties).toEqual(expectedResult);

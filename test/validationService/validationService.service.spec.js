@@ -48,6 +48,89 @@ describe('validationService', function () {
         });
     });
 
+    it('returns a start date error when selected start date today when single sku bulk is selected.', function () {
+        var promotion = {
+            startDt: moment().toDate(),
+            singleSkuBulk: 1,
+        }
+        $rootScope.singleSkuBulkWeekendStartDateTime = 9;
+        $rootScope.singleSkuBulkWeekdayStartDateTime = 14;
+        $rootScope.singleSkuBulkWeekendStartDateDay = 2;
+        $rootScope.singleSkuBulkWeekdayStartDateDay = 1;
+        var response = validationService.validateStartDate(promotion,true) 
+            expect(response.isError).toBe(true);
+            expect(String(response.message)).not.toBe('')
+        
+    });
+
+    it('returns a start date error when selected start date today when single sku bulk is selected on a weekday before 2.', function () {
+        var promotion = {
+            startDt: moment('2018-05-03').toDate(),
+            singleSkuBulk: 1,
+        }
+        $rootScope.singleSkuBulkWeekendStartDateTime = 9;
+        $rootScope.singleSkuBulkWeekdayStartDateTime = 14;
+        $rootScope.singleSkuBulkWeekendStartDateDay = 2;
+        $rootScope.singleSkuBulkWeekdayStartDateDay = 1;
+        jasmine.clock().mockDate(moment('2018-05-03').hour(11).toDate());
+
+        var response = validationService.validateStartDate(promotion,true) 
+            expect(response.isError).toBe(true);
+            expect(String(response.message)).toBe('Start date cannot be earlier than tomorrow.')
+        
+    });
+
+    it('returns a start date error when selected start date today when single sku bulk is selected on a weekday after 2.', function () {
+        var promotion = {
+            startDt: moment('2018-05-04').toDate(),
+            singleSkuBulk: 1,
+        }
+        $rootScope.singleSkuBulkWeekendStartDateTime = 9;
+        $rootScope.singleSkuBulkWeekdayStartDateTime = 14;
+        $rootScope.singleSkuBulkWeekendStartDateDay = 2;
+        $rootScope.singleSkuBulkWeekdayStartDateDay = 1;
+        jasmine.clock().mockDate(moment('2018-05-03').hour(15).toDate());
+
+        var response = validationService.validateStartDate(promotion,true) 
+            expect(response.isError).toBe(true);
+            expect(String(response.message)).toBe('Start date cannot be earlier than 2 days from now.')
+        
+    });
+
+    it('returns a start date error when selected start date today when single sku bulk is selected on the weekend after 9.', function () {
+        var promotion = {
+            startDt: moment('2018-05-07').toDate(),
+            singleSkuBulk: 1,
+        }
+        $rootScope.singleSkuBulkWeekendStartDateTime = 9;
+        $rootScope.singleSkuBulkWeekdayStartDateTime = 14;
+        $rootScope.singleSkuBulkWeekendStartDateDay = 2;
+        $rootScope.singleSkuBulkWeekdayStartDateDay = 1;
+        jasmine.clock().mockDate(moment('2019-05-05').hour(10).toDate());
+
+        var response = validationService.validateStartDate(promotion,true) 
+            expect(response.isError).toBe(true);
+            expect(String(response.message)).toBe('Start date cannot be earlier than 3 days from now.')
+        
+    });
+
+    it('returns a start date error when selected start date today when single sku bulk is selected on the weekend before 9.', function () {
+        var promotion = {
+            startDt: moment('2018-05-06').toDate(),
+            singleSkuBulk: 1,
+        }
+        $rootScope.singleSkuBulkWeekendStartDateTime = 9;
+        $rootScope.singleSkuBulkWeekdayStartDateTime = 14;
+        $rootScope.singleSkuBulkWeekendStartDateDay = 2;
+        $rootScope.singleSkuBulkWeekdayStartDateDay = 1;
+        jasmine.clock().mockDate(moment('2019-05-05').hour(8).toDate());
+
+        var response = validationService.validateStartDate(promotion,true) 
+            expect(response.isError).toBe(true);
+            expect(String(response.message)).toBe('Start date cannot be earlier than 2 days from now.')
+        
+    });
+
     it('returns a coupon code limit error with over limit.', function () {
         var promotion = {
             promoCdSpec: { systemGen: { uniqueCdCnt: 300001 },
@@ -344,12 +427,15 @@ describe('validationService', function () {
             }
         }
         var response = validationService.validateRapidPass(promotion);
-        expect(response.isError).toBe(true);
-        expect(response.message).not.toBe('');
-
+        
+        expect(response.length).toBe(2);
+        expect(response[0].isError).toBe(true);
+        expect(response[0].message).not.toBe('');
+        expect(response[1].isError).toBe(true);
+        expect(response[1].message).not.toBe('');
     });
 
-    it('Check Customer segment selected for Rapid Pass', function () {
+    it('Check Customer segment selected for Rapid Pass - No Coupon', function () {
         var promotion = {
             checkRapidPass: true,
             purchaseConds:
@@ -358,9 +444,23 @@ describe('validationService', function () {
             }
         }
         var response = validationService.validateRapidPass(promotion);
-        expect(response.isError).toBe(false);
-        expect(response.message).toBe('');
+        expect(response.length).toBe(1);
+        expect(response[0].isError).toBe(true);
+        expect(response[0].message).not.toBe('');                
+    });
 
+    it('Check Customer segment selected for Rapid Pass', function () {
+        var promotion = {
+            checkRapidPass: true,
+            purchaseConds:
+            {
+                customerSegmentId: 1000
+            },
+            promoCdSpec: { systemGen: { uniqueCdCnt: 300000 } }
+        }
+        var response = validationService.validateRapidPass(promotion);
+        expect(response.length).toBe(0);
+        
     });
 
 });

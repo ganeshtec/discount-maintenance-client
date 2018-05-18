@@ -48,7 +48,7 @@
 			&nbsp; 
 		</th>
  	</tr>
- 	<tr ng-repeat="item in data track by $index" ng-class="{odd:($index % 2)}" ng-if="item.catalog == 'Web'">
+ 	<tr ng-repeat="item in hierarchiesparent.hierarchies track by $index" ng-class="{odd:($index % 2)}" ng-if="item.catalog == 'Web'">
 		<td>
 			{{item.name}}
 		</td>

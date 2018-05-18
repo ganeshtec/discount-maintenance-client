@@ -23,7 +23,7 @@ describe('Unit testing Promotion Header directive', function() {
   it('Checks if heading is constructed according to input data  ', function() {
     // Compile a piece of HTML containing the directive
 
-    $scope.items = [
+    $scope.items = {hierarchies:[
         {
           'name': 'Sample Name and Description 1',
           'id': 'gh121278023g',
@@ -34,8 +34,8 @@ describe('Unit testing Promotion Header directive', function() {
           'id': 'gh121278023h',
           'inclusions':{'hierarchies':{}}
         },
-      ]
-    var element = $compile("<category-view data='items'></category-view>>")($scope);
+      ]}
+    var element = $compile("<category-view hierarchiesparent='items'></category-view>>")($scope);
     $rootScope.$digest();
 
     expect(element.html()).toContain("Search and Add Category");
@@ -69,7 +69,7 @@ describe('Unit testing Promotion Header directive', function() {
       var jasmineHelpers = new JasmineHelpers();
 
 
-   $scope.items = [
+   $scope.items = {hierarchies:[
         {
           'name': 'Sample Name and Description 1',
           'id': 'gh121278023g',
@@ -80,8 +80,8 @@ describe('Unit testing Promotion Header directive', function() {
           'id': 'gh121278023h',
           'inclusions':{'hierarchies':{}}
         },
-      ]
-    var element = $compile("<category-view data='items'></category-view>>")($scope);
+      ]}
+    var element = $compile("<category-view hierarchiesparent='items'></category-view>>")($scope);
 
    $rootScope.$digest();
    var isolateScope = element.isolateScope();

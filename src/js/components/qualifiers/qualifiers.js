@@ -15,20 +15,53 @@ app.component('qualifiers', {
 
 });
 
-
-function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataService, utilService, validationService, $rootScope, DataFactory, locationDataService, modalService) {
+function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataService, utilService, validationService, featureFlagService, $scope, $rootScope, DataFactory, $filter, locationDataService, modalService, loginService) {
     var ctrl = this;
-    ctrl.showBasketThreshold = $rootScope.showBasketThreshold;
-    ctrl.showRapidPass = $rootScope.showRapidPass;
-    ctrl.showAllProDiscount = $rootScope.showAllProDiscount;
-    ctrl.discountEngineErrors = $rootScope.discountEngineErrors;
-    ctrl.programIdForProMonthly = $rootScope.programIdForProMonthly;
-    ctrl.displayCustomerSegmentInDCM = $rootScope.displayCustomerSegmentInDCM;
-
-    ctrl.MaxCouponGenerationLimit = MaxCouponGenerationLimit;
-
+    var storeData = {};
+    var marketData = {};
+    var existingID = '';
+    var existingMarketNumber = '';
     ctrl.$onInit = function () {
+        ctrl.showBasketThreshold = $rootScope.showBasketThreshold;
+        ctrl.showRapidPass = $rootScope.showRapidPass;
+        ctrl.showAllProDiscount = $rootScope.showAllProDiscount;
+        ctrl.discountEngineErrors = $rootScope.discountEngineErrors;
+        ctrl.programIdForProMonthly = $rootScope.programIdForProMonthly;
+        ctrl.displayCustomerSegmentInDCM = $rootScope.displayCustomerSegmentInDCM;
+        ctrl.userType = loginService.getCurrentUserRole();
+
+        ctrl.MaxCouponGenerationLimit = MaxCouponGenerationLimit;
+        ctrl.data.locationType = '';
+        ctrl.searchResults = [];
+        ctrl.validStoreInfo = [];
+        ctrl.validMarketInfo = [];
+        ctrl.inValidStoreInfo = false;
+        ctrl.showInvalidError = false;
+        ctrl.addStoretest = ctrl.addStore;
+
+        if (ctrl.data.purchaseConds && ctrl.data.purchaseConds.allProDiscount) {
+            ctrl.clearRapidPassSelection();
+        }
+
+        // Add Mark
+        ctrl.data.markets = ctrl.validMarketInfo;
+        ctrl.data.stores = ctrl.validStoreInfo;
         ctrl.initialize();
+
+        //This gets invoked for editing location data for existing promotion
+        var clicked = true;
+        if (ctrl.locations && ctrl.locations.length > 0) {
+            ctrl.data.locationType = 'stores';
+            storeData.locationNumbers = ctrl.locations;
+            ctrl.getStoresByID(storeData, clicked)
+        } else {
+            ctrl.data.locationType = 'markets';
+            if (ctrl.markets && ctrl.markets.length > 0) {
+                marketData.locationNumbers = ctrl.markets;
+                ctrl.getMarketsByID(marketData, clicked)
+            }
+        }
+
 
         if (!$rootScope.segmentsFromV2Endpoint) {
             var segmentsFromV1EndpointPromise = customerSegmentDataService.getAllSegments();
@@ -46,6 +79,11 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
                             ctrl.data.segment = segment;
                         }
                     });
+
+                    if (ctrl.data.purchaseConds.allProDiscount) {
+                        ctrl.data.segment = ctrl.segmentDetails[0];
+                    }
+
                     if (!ctrl.data.segment) {
                         ctrl.data.purchaseConds.customerSegmentId = 0;
                     }
@@ -74,9 +112,12 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
                             }
                         } else {
                             ctrl.data.purchaseConds.customerSegmentId = 0;
-                            ctrl.data.purchaseConds.program = {id: 0, tierId: 0};
+                            ctrl.data.purchaseConds.program = { id: 0, tierId: 0 };
                         }
                         ctrl.segmentDetails.push(segment);
+                    }
+                    if (ctrl.data.purchaseConds.allProDiscount) {
+                        ctrl.data.segment = ctrl.segmentDetails[0];
                     }
                 },
                 function (error) {
@@ -87,14 +128,19 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
     };
 
     ctrl.onSegmentSelection = function () {
-        ctrl.data.purchaseConds.program.proPaint = null;
-        if (ctrl.data.segment) {
-            if (ctrl.data.segment.id) {
+        ctrl.data.purchaseConds.program = { proPaint: null };
+        if (ctrl.data.segment && ctrl.data.segment.id) {
+            if (ctrl.data.segment.id && ctrl.data.segment.id != -1) {
                 ctrl.data.purchaseConds.customerSegmentId = ctrl.data.segment.id;
+                ctrl.data.purchaseConds.allProDiscount = false;
                 ctrl.data.purchaseConds.program = {};
                 ctrl.validationErrors = validationService.validateRapidPass(ctrl.data);
-            }
-            else {
+                ctrl.clearRapidPassSelection();
+            } else if (ctrl.data.segment.id && ctrl.data.segment.id == -1) {
+                ctrl.data.purchaseConds.customerSegmentId = 0;
+                ctrl.data.purchaseConds.allProDiscount = true;
+                ctrl.clearRapidPassSelection();
+            } else {
 
                 ctrl.data.purchaseConds.customerSegmentId = 0;
             }
@@ -118,6 +164,7 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
             ctrl.data.purchaseConds.program = {};
             ctrl.data.purchaseConds.program.id = 0;
             ctrl.data.purchaseConds.program.tierId = 0;
+            ctrl.data.disableRapidPass = false;
             ctrl.validationErrors = validationService.validateRapidPass(ctrl.data);
         }
     };
@@ -138,46 +185,41 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
         ctrl.validationErrors = validationService.validatePromotion(ctrl.data);
     };
 
-    ctrl.toggleCustomerSegmentAndRapidPass = function () {
+    ctrl.clearRapidPassSelection = function () {
         if (ctrl.data.purchaseConds.allProDiscount) {
-            if (ctrl.data.segment || ctrl.data.checkRapidPass) {
-                modalService.showAlert('Warning', 'Customer segment and Rapid Pass selection removed due to selection of All Pros**');
+            if (ctrl.data.checkRapidPass) {
+                modalService.showAlert('Warning', 'Rapid Pass selection removed due to selection of All Pros Customer Segment');
             }
             ctrl.data.checkRapidPass = false;
             ctrl.data.promoCdSpec = {};
             ctrl.data.promoCdRqrd = false;
             ctrl.data.disableRapidPass = true;
-            ctrl.data.disableCustomerSegment = true;
-            ctrl.data.segment = '';
-            ctrl.data.purchaseConds.program = {};
-            ctrl.onSegmentSelection();
         } else {
             ctrl.data.disableRapidPass = false;
-            ctrl.data.disableCustomerSegment = false;
         }
-    }
-
-    // Condition to handle toggleCustomerSegmentAndRapidPass during edit.
-
-    if (ctrl.data.purchaseConds && ctrl.data.purchaseConds.allProDiscount) {
-        ctrl.toggleCustomerSegmentAndRapidPass();
     }
 
     ctrl.selectRapidPass = function () {
         if (ctrl.data.checkRapidPass) {
+            
+            var currentUniqueCdCnt = ctrl.data.promoCdSpec &&  ctrl.data.promoCdSpec.systemGen && ctrl.data.promoCdSpec.systemGen.uniqueCdCnt ? ctrl.data.promoCdSpec.systemGen.uniqueCdCnt : '';
+
             ctrl.data.promoCdSpec = {};
             ctrl.data.promoCdSpec.type = 'Private';
             ctrl.data.promoCdSpec.genType = 'Dynamically Generated';
             ctrl.data.promoCdSpec.cdLength = '12';
             ctrl.data.promoCdSpec.systemGen = {};
-            ctrl.data.promoCdSpec.systemGen.uniqueCdCnt = '';
+            ctrl.data.promoCdSpec.systemGen.uniqueCdCnt = currentUniqueCdCnt;
             ctrl.data.promoCdSpec.systemGen.cdPrefix = (ctrl.data.segment && ctrl.data.segment.id && ctrl.data.segment.id > 0) ? '0100' + ctrl.data.segment.id : '0100';
             ctrl.data.promoCdSpec.systemGen.cdSuffix = '';
             ctrl.data.promoCdRqrd = true;
+
         }
         else {
             delete ctrl.data.promoCdSpec;
             ctrl.data.promoCdRqrd = false;
+            ctrl.data.receiptHeader = '';
+            ctrl.data.receiptDesc = '';
         }
     }
 
@@ -199,28 +241,13 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
         return ctrl.data.promoCdSpec.systemGen.uniqueCdCnt > ctrl.MaxCouponGenerationLimit;
     }
 
-    // LOCATIONS START 
-
-    var storeData = {};
-    var marketData = {};
-    var existingID = '';
-    var existingMarketNumber = '';
-    ctrl.locationType = '';
-    ctrl.searchResults = [];
-    ctrl.validStoreInfo = [];
-    ctrl.validMarketInfo = [];
-    ctrl.inValidStoreInfo = false;
-    ctrl.showInvalidError = false;
-    ctrl.addStoretest = ctrl.addStore;
-
     ctrl.search = function (data) {
-        if (ctrl.checkForEmptyValues(data, ctrl.locationType)) {
+        if (ctrl.checkForEmptyValues(data, ctrl.data.locationType)) {
             data = ctrl.formatToCommaSeparatedList(data);
             if (ctrl.isLocationDataValid(data)) {
-                if (ctrl.locationType == 'stores') {
+                if (ctrl.data.locationType == 'stores') {
                     storeData.locationNumbers = data;
                     ctrl.getStoresByID(storeData, true);
-
                 } else {
                     marketData.locationNumbers = data;
                     ctrl.getMarketsByID(marketData, true);
@@ -229,7 +256,7 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
             }
         }
 
-    }
+    };
 
     ctrl.checkForEmptyValues = function (data, locationType) {
         if (!data || data == null || data == '') {
@@ -274,8 +301,6 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
         }
     }
 
-    /* method added to ignore store values > 5 */
-
     ctrl.stripChars = function (data, stripLength) {
         for (var i = 0; i < data.length; i++) {
             if (data[i].length > stripLength) {
@@ -316,7 +341,6 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
                 },
                 showErrorMessage);
     }
-
 
     ctrl.setMarketData = function (data, clicked) {
         existingMarketNumber = '';
@@ -435,46 +459,42 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
     }
 
     function setMarketData() {
+        ctrl.data.markets = ctrl.validMarketInfo;
         ctrl.markets = ctrl.validMarketInfo.reduce(function (data, market) {
             return data.concat(market.marketNumber);
         }, []);
     }
 
     function setData() {
+        ctrl.data.stores = ctrl.validStoreInfo;
         ctrl.locations = ctrl.validStoreInfo.reduce(function (data, item) {
             return data.concat(item.storeNumber);
         }, []);
     }
 
-    //This gets invoked for editing location data for existing promotion
-
-    var clicked = true;
-    if (ctrl.locations && ctrl.locations.length > 0) {
-        ctrl.locationType = 'stores';
-        storeData.locationNumbers = ctrl.locations;
-        ctrl.getStoresByID(storeData, clicked)
-    }
-    else {
-        ctrl.locationType = 'markets';
-        if (ctrl.markets && ctrl.markets.length > 0) {
-            marketData.locationNumbers = ctrl.markets;
-            ctrl.getMarketsByID(marketData, clicked)
+    ctrl.removeMarket = function (marketNumber) {
+        for (var i = 0; i < ctrl.validMarketInfo.length; i++) {
+            if (ctrl.validMarketInfo[i].marketNumber === marketNumber) {
+                ctrl.validMarketInfo.splice(i, 1);
+                break;
+            }
         }
+        setMarketData();
     }
 
-    //Removing a individual store
-    ctrl.removeItem = function (index) {
-
-        if (ctrl.locationType == 'markets') {
-            ctrl.validMarketInfo.splice(index, 1);
-            setMarketData();
+    ctrl.removeStore = function (storeNumber) {
+        for (var i = 0; i < ctrl.validStoreInfo.length; i++) {
+            if (ctrl.validStoreInfo[i].storeNumber === storeNumber) {
+                ctrl.validStoreInfo.splice(i, 1);
+                break;
+            }
         }
-        else {
-            ctrl.validStoreInfo.splice(index, 1);
-            setData();
-        }
-
+        setData();
     }
+    $rootScope.$on('clearSingleSkuBulk', function(){
+        ctrl.removeAll()
+    })
+
     //Removing all the stores listed
     ctrl.removeAll = function () {
         ctrl.validStoreInfo = [];
@@ -497,7 +517,4 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
     ctrl.sortStore = function (store){
         return parseInt(store.storeNumber);
     }
-
 }
-
-

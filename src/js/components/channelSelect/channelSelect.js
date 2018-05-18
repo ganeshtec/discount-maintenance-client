@@ -15,9 +15,10 @@ function ChannelSelectController($filter, $scope, loginService, promotionDataSer
     ctrl.selectionChanged = selectionChanged;
     ctrl.selectAll = selectAll;
     ctrl.setCheckAll = setCheckAll;
-    ctrl.checkAll = false;
-    ctrl.userType = loginService.getCurrentUserRole();
     ctrl.$onInit = function () {
+        ctrl.checkAll = false;
+        ctrl.data.channels = [];
+        ctrl.userType = loginService.getCurrentUserRole();
         var promise = promotionDataService.getSelectionChannels(ctrl.userType);
         promise.then(
         function (channels) {

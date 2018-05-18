@@ -40,7 +40,7 @@ describe('Unit testing qualifiers component', function () {
     });
 
     it('Program Segment Selected', function () {
-        ctrl.data.segment = { "segmentName": "PRO XTRA PAINT REWARDS-Bronze", "progId": 2, "tierId": 8 };
+        ctrl.data.segment = { id: -1, "segmentName": "PRO XTRA PAINT REWARDS-Bronze", "progId": 2, "tierId": 8 };
         ctrl.onSegmentSelection();
         expect(ctrl.data.purchaseConds.customerSegmentId).toBe(0);
         expect(ctrl.data.purchaseConds.program.id).toBe(2);
@@ -48,13 +48,13 @@ describe('Unit testing qualifiers component', function () {
     });
 
     it('Program Segment Selected and ProPaint Set To NULL', function () {
-        ctrl.data.segment = { "segmentName": "PRO XTRA PAINT REWARDS-Bronze", "progId": 2, "tierId": 8 };
+        ctrl.data.segment = {  id: -1,"segmentName": "PRO XTRA PAINT REWARDS-Bronze", "progId": 2, "tierId": 8 };
         ctrl.onSegmentSelection();
         expect(ctrl.data.purchaseConds.program.proPaint).toBeNull();
     });
 
     it('Program Segment Selected and ProPaint Set To True', function () {
-        ctrl.data.segment = { "segmentName": "PRO XTRA PAINT REWARDS-Bronze", "progId": 8, "tierId": 8 };
+        ctrl.data.segment = {  id: -1,"segmentName": "PRO XTRA PAINT REWARDS-Bronze", "progId": 8, "tierId": 8 };
         ctrl.programIdForProMonthly = "8";
         expect(ctrl.showProPaintOptions()).toBe(true);
 
@@ -67,6 +67,7 @@ describe('Unit testing qualifiers component', function () {
         expect(ctrl.data.purchaseConds.customerSegmentId).toBe(13550);
         expect(ctrl.data.purchaseConds.program.id).toBe(0);
         expect(ctrl.data.purchaseConds.program.tierId).toBe(0);
+        expect(ctrl.data.disableRapidPass).toBe(false);
     });
 
     it('Rapid Pass not selected', function () {
@@ -93,23 +94,31 @@ describe('Unit testing qualifiers component', function () {
         expect(ctrl.data.promoCdRqrd).toBe(true);
     });
 
-    it('All Pro checked', function () {
-        ctrl.data.purchaseConds.allProDiscount = true;
-        ctrl.toggleCustomerSegmentAndRapidPass();
-
-        expect(ctrl.data.checkRapidPass).toBe(false);
+    it('All Pro segment is selected and Rapid Pass is unchecked then Rapid Pass disabled', function () {
+        ctrl.data.segment = { "id": -1, "segmentName": "Target all Pro Customers" };
+        ctrl.data.purchaseConds.allProDiscount = false;
+        ctrl.data.checkRapidPass = false;
+        ctrl.onSegmentSelection();
+        expect(ctrl.data.purchaseConds.allProDiscount).toBe(true);
+        expect(ctrl.data.purchaseConds.customerSegmentId).toBe(0);
+        expect(ctrl.data.purchaseConds.program.id).toBe(0);
+        expect(ctrl.data.purchaseConds.program.tierId).toBe(0);
         expect(ctrl.data.disableRapidPass).toBe(true);
-        expect(ctrl.data.promoCdRqrd).toBe(false);
-        expect(ctrl.data.promoCdSpec).toEqual({});
-        expect(ctrl.data.disableCustomerSegment).toBe(true);
     });
 
-    it('All Pro unchecked', function () {
+    it('All Pro segment is selected when Rapid Pass checked then disable and clear Rapid Pass', function () {
+        ctrl.data.segment = { "id": -1, "segmentName": "Target all Pro Customers" };
         ctrl.data.purchaseConds.allProDiscount = false;
-        ctrl.toggleCustomerSegmentAndRapidPass();
-
-        expect(ctrl.data.disableRapidPass).toBe(false);
-        expect(ctrl.data.disableCustomerSegment).toBe(false);
+        ctrl.data.checkRapidPass = true;
+        ctrl.onSegmentSelection();
+        expect(ctrl.data.purchaseConds.allProDiscount).toBe(true);
+        expect(ctrl.data.purchaseConds.customerSegmentId).toBe(0);
+        expect(ctrl.data.purchaseConds.program.id).toBe(0);
+        expect(ctrl.data.purchaseConds.program.tierId).toBe(0);
+        expect(ctrl.data.checkRapidPass).toBe(false);
+        expect(ctrl.data.promoCdSpec).toEqual({});
+        expect(ctrl.data.promoCdRqrd).toBe(false);
+        expect(ctrl.data.disableRapidPass).toBe(true);
     });
 
     it('initialize for Edit mode of Active promotion', function () {
@@ -205,6 +214,7 @@ describe('Unit testing qualifiers component', function () {
         var storeData = { "validStoreInfo": [{ "storeNumber": 121, "storeName": "CUMBERLAND", "marketNumber": 337 }] };
         ctrl.data = [];
         ctrl.locationSearch = 121;
+        ctrl.validStoreInfo = [];
 
         spyOn(ctrl, "setStoreData").and.callThrough();
 
@@ -218,10 +228,9 @@ describe('Unit testing qualifiers component', function () {
 
 
     it('Checks for search Method to invoke getStoresById when stores are entered as input', function () {
-        ctrl.data = '121';
-        ctrl.locationType = 'stores'
+        ctrl.data = { "locationType": "stores" };
         spyOn(ctrl, "getStoresByID");
-        ctrl.search(ctrl.data);
+        ctrl.search('121');
         expect(ctrl.getStoresByID).toHaveBeenCalled();
 
     });
@@ -245,5 +254,19 @@ describe('Unit testing qualifiers component', function () {
 
     });
     //LOCATIONS END
+
+    it('Verify removeStore removes the correct store', function(){
+       ctrl.validStoreInfo= [{ "storeNumber": 121, "storeName": "CUMBERLAND", "marketNumber": 337 },{ "storeNumber": 123, "storeName": "Some Store", "marketNumber": 337 }] ;
+       ctrl.removeStore(121);
+       expect(ctrl.validStoreInfo.length).toEqual(1);
+       expect(ctrl.validStoreInfo[0].storeNumber).toEqual(123);
+    });
+
+    it('Verify removeMarket removes the correct store', function(){
+        ctrl.validMarketInfo= [{ "marketNumber": 1, "marketName": "ATLANTA" },{ "marketNumber": 2, "marketName": "Some Market"}] ;
+        ctrl.removeMarket(1);
+        expect(ctrl.validMarketInfo.length).toEqual(1);
+        expect(ctrl.validMarketInfo[0].marketNumber).toEqual(2);
+    });
 
 });

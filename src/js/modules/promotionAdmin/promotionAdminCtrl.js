@@ -1,5 +1,5 @@
-app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$location', 'loginService', 'promotionDataService', 'PromotionData', 'SECTIONS', 'DataFactory', 'createTestRecord', 'URL_CONFIG', 'ALLOWED_PERMISSION_IDS',
-    function ($scope, $routeParams, $timeout, $location, loginService, promotionDataService, PromotionData, SECTIONS, DataFactory, createTestRecord, URL_CONFIG, ALLOWED_PERMISSION_IDS) {
+app.controller('promotionAdminCtrl', ['$scope', '$rootScope', '$routeParams', '$timeout', '$location', 'loginService', 'promotionDataService', 'PromotionData', 'SECTIONS', 'sectionsIndex', 'DataFactory', 'createTestRecord', 'URL_CONFIG', 'ALLOWED_PERMISSION_IDS',
+    function ($scope, $rootScope, $routeParams, $timeout, $location, loginService, promotionDataService, PromotionData, SECTIONS, sectionsIndex, DataFactory, createTestRecord, URL_CONFIG, ALLOWED_PERMISSION_IDS) {
 
         var $this = this;
 
@@ -9,12 +9,13 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$lo
         var allowedPermissionIDs = ALLOWED_PERMISSION_IDS();
         $scope.sections = [];
 
+
         $scope.comparemode = (promotionID2) ? true : false;
         $scope.clonemode = (cloneId) ? true : false;
         $scope.urls = new URL_CONFIG();
-        $scope.username=loginService.getUserName();
+        $scope.username = loginService.getUserName();
 
-        $scope.userType=loginService.getCurrentUserRole();
+        $scope.userType = loginService.getCurrentUserRole();
 
         // Method to get promotion by id - Test Should return promotion record
         function getPromotionByID(id) {
@@ -32,7 +33,7 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$lo
                         //change the status to draft
                         $scope.promotionData.status = 20;
                         $scope.promotionData.name = 'Copy of ' + promoData.name;
-                    }else {
+                    } else {
                         $scope.promotionData.originalPrintLabel = data.printLabel;
                     }
                     $scope.promotionData.meta.lastUpdatedBy = $scope.username;
@@ -79,7 +80,8 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$lo
                     displayLocation: true,
                     displayExclusiveCheckbox: true,
                     displayShowAllProDiscount: true,
-                    displaySingleSkuBulk: true
+                    displaySingleSkuBulk: true,
+                    displayDiscountTemplate: true
                 }
                 //$scope.promotionSubTypesForMFA = true;
             } else if (userType == allowedPermissionIDs.ONLINE) {
@@ -100,7 +102,7 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$lo
                     displayLocations: false,
                     displayItemsSku: false,
                     displayMerchHiearchy: false,
-                    displayCustomerSegment: true,
+                    displayCustomerSegment: false,
                     promotionSubTypesForMFA: false,
                     displayFilterSkuTypes: false,
                     displayBasketThreshold: false,
@@ -109,7 +111,8 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$lo
                     displayLocation: false,
                     displayExclusiveCheckbox: false,
                     displayShowAllProDiscount: false,
-                    displaySingleSkuBulk: false
+                    displaySingleSkuBulk: false,
+                    displayDiscountTemplate: false
                 }
                 //$scope.promotionSubTypesForMFA = false;
             }
@@ -117,6 +120,7 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$lo
 
         // Initializes Data Model
         function init(data) {
+
             //checking the session validation.
             $scope.validData = {};
             $scope.messageModal = {};
@@ -125,11 +129,9 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$lo
             $scope.editMode = ($scope.UiState === 'Edit');
 
             $this.setViewProperties($scope.userType);
-
             $scope.sections = new SECTIONS($scope.userType);
             $scope.section = promotionDataService.getSection($scope.sections);
             $scope.sectionInx = $scope.sections.indexOf($scope.section);
-
             //get new data
             if (!$scope.editMode) {
 
@@ -165,6 +167,10 @@ app.controller('promotionAdminCtrl', ['$scope', '$routeParams', '$timeout', '$lo
             if (model !== oldModel) {
                 $scope.sectionInx = $scope.sections.indexOf(promotionDataService.getSection(model))
             }
+        }, true);
+        
+        $scope.$watch('showSummaryTab', function (model) {
+            $scope.sections[sectionsIndex.SUMMARY].shouldDisplay =  model;
         }, true);
 
         $scope.isEditable = function (promotion) {

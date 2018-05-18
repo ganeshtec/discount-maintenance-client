@@ -1,3 +1,4 @@
+<h4>Setup Redemption Rules</h4>
 <div class="radio-spacing" >
     <label for="priority">
         Maximum redemption limits for this promotion
@@ -12,21 +13,21 @@
         </p>
     </tool-tipper>
     <div class="md-radio">
-        <input type="radio" id="promomax_unlimit" name="promomax" ng-model="promomax" value="promounlimt" ng-change="promocheck(value)" ng-disabled="preview"/>
+        <input type="radio" id="promomax_unlimit" name="promomax" ng-model="$ctrl.promomax" value="promounlimt" ng-change="$ctrl.promocheck(value)" ng-disabled="$ctrl.preview"/>
         <label for="promomax_unlimit"><span><span></span></span>Unlimited</label>
     </div>
     <div class="md-radio">
-        <input type="radio" id="promomaxset" name="promomax" ng-model="promomax" value="promoset" ng-change="promocheck(value)"ng-disabled="preview"/>
+        <input type="radio" id="promomaxset" name="promomax" ng-model="$ctrl.promomax" value="promoset" ng-change="$ctrl.promocheck(value)"ng-disabled="$ctrl.preview"/>
         <label for="promomaxset"><span><span></span></span>Set maximum redemption</label>
     </div>
 </div>
-<div ng-if="promomax=='promoset'">
+<div ng-if="$ctrl.promomax=='promoset'">
     <div class="md-text-field md-text-field-padding">
         <label for="promomaxredem">Maximum Redemptions</label>
-        <input type="text" id="promomaxredem" name="promomaxredem" ng-model="data.maxUsesOfPromo" title="promomaxredem" ng-required="true" allow-pattern="(\d)"  ng-pattern="/^[0-9]*$/"/>
-        <span class='error-message' ng-show="  promoform.promomaxredem.$invalid">
-                                <span ng-show="promoform.promomaxredem.$error.required">Please enter a valid redemption limit </span>
-                                <span ng-show="promoform.promomaxredem.$error.pattern">Please enter  numeric characters</span>
+        <input type="text" id="promomaxredem" name="promomaxredem" ng-model="$ctrl.data.maxUsesOfPromo" title="promomaxredem" ng-required="true" allow-pattern="(\d)"  ng-pattern="/^[0-9]*$/"/>
+        <span class='error-message' ng-show="$ctrl.promoform.promomaxredem.$invalid">
+                                <span ng-show="$ctrl.promoform.promomaxredem.$error.required">Please enter a valid redemption limit </span>
+                                <span ng-show="$ctrl.promoform.promomaxredem.$error.pattern">Please enter  numeric characters</span>
         </span>
     </div>
 </div>
@@ -40,21 +41,21 @@
         </p>
     </tool-tipper>
     <div class="md-radio">
-        <input type="radio" id="ordermax_unlimit" name="ordermax" ng-model="ordermax" value="orderunlimt"  ng-change="orderCheck(value)" ng-disabled="preview"/>
+        <input type="radio" id="ordermax_unlimit" name="ordermax" ng-model="$ctrl.ordermax" value="orderunlimt"  ng-change="$ctrl.orderCheck(value)" ng-disabled="$ctrl.preview"/>
         <label for="ordermax_unlimit"><span><span></span></span>Unlimited</label>
     </div>
     <div class="md-radio">
-        <input type="radio" id="ordermaxredem" name="ordermax" ng-model="ordermax" value="setorder"  ng-change="orderCheck(value)" ng-disabled="preview"/>
+        <input type="radio" id="ordermaxredem" name="ordermax" ng-model="$ctrl.ordermax" value="setorder"  ng-change="$ctrl.orderCheck(value)" ng-disabled="$ctrl.preview"/>
         <label for="ordermaxredem"><span><span></span></span>Set maximum redemption</label>
     </div>
 </div>
-<div ng-if="ordermax=='setorder'">
+<div ng-if="$ctrl.ordermax=='setorder'">
     <div class="md-text-field md-text-field-padding">
         <label for="maxordertext">Maximum Redemptions</label>
-        <input type="text" id="maxordertext" name="maxordertext" ng-model="data.maxUsesPerOrd" title="maxordertext" ng-required="true" allow-pattern="(\d)"  ng-pattern="/^[0-9]*$/"/>
-        <span class='error-message' ng-show=" promoform.maxordertext.$invalid">
-                                <span ng-show="promoform.maxordertext.$error.required">Please enter a valid redemption limit </span>
-                                <span ng-show="promoform.maxordertext.$error.pattern">Please enter  numeric characters</span>
+        <input type="text" id="maxordertext" name="maxordertext" ng-model="$ctrl.data.maxUsesPerOrd" title="maxordertext" ng-required="true" allow-pattern="(\d)"  ng-pattern="/^[0-9]*$/"/>
+        <span class='error-message' ng-show="$ctrl.promoform.maxordertext.$invalid">
+                                <span ng-show="$ctrl.promoform.maxordertext.$error.required">Please enter a valid redemption limit </span>
+                                <span ng-show="$ctrl.promoform.maxordertext.$error.pattern">Please enter  numeric characters</span>
         </span>
     </div>
 </div>
@@ -68,21 +69,21 @@
         </p>
     </tool-tipper>
     <div class="md-radio">
-        <input type="radio" id="custmax_unlimit" name="custmax" ng-model="custmax" value="custunlimt"  ng-change="custCheck(value)" ng-disabled="preview"/>
+        <input type="radio" id="custmax_unlimit" name="custmax" ng-model="$ctrl.custmax" value="custunlimt"  ng-change="$ctrl.custCheck(value)" ng-disabled="$ctrl.preview"/>
         <label for="custmax_unlimit"><span><span></span></span>Unlimited</label>
     </div>
     <div class="md-radio">
-        <input type="radio" id="custmaxredem" name="custmax" ng-model="custmax" value="setcust"  ng-change="custCheck(value)" ng-disabled="preview"/>
+        <input type="radio" id="custmaxredem" name="custmax" ng-model="$ctrl.custmax" value="setcust"  ng-change="$ctrl.custCheck(value)" ng-disabled="$ctrl.preview"/>
         <label for="custmaxredem"><span><span></span></span>Set maximum redemption</label>
     </div>
 </div>
-<div ng-if="custmax=='setcust'">
+<div ng-if="$ctrl.custmax=='setcust'">
     <div class="md-text-field md-text-field-padding">
         <label for="maxcusttext">Maximum Redemptions</label>
-        <input type="text" id="maxcusttext" name="maxcusttext" ng-model="data.maxUsesPerCust" title="maxcusttext" ng-required="true" allow-pattern="(\d)"   ng-pattern="/^[0-9]*$/"/>
-        <span class='error-message' ng-show=" promoform.maxcusttext.$invalid">
-                                <span ng-show="promoform.maxcusttext.$error.required">Please enter a valid redemption limit </span>
-                                <span ng-show="promoform.maxcusttext.$error.pattern">Please enter  numeric characters</span>
+        <input type="text" id="maxcusttext" name="maxcusttext" ng-model="$ctrl.data.maxUsesPerCust" title="maxcusttext" ng-required="true" allow-pattern="(\d)"   ng-pattern="/^[0-9]*$/"/>
+        <span class='error-message' ng-show="$ctrl.promoform.maxcusttext.$invalid">
+                                <span ng-show="$ctrl.promoform.maxcusttext.$error.required">Please enter a valid redemption limit </span>
+                                <span ng-show="$ctrl.promoform.maxcusttext.$error.pattern">Please enter  numeric characters</span>
         </span>
     </div>
 </div>

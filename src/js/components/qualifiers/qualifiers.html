@@ -2,25 +2,23 @@
 <div ng-if="$ctrl.viewProp.displayLocation">
     <!-- Markets code START -->
     <div class="md-text-field">
-        <label for="location">Location Types
+        <h4 for="location">Location Types
             <span class="mandatory-icon">
                 <i class="fa fa-asterisk"></i>
             </span>
-        </label>
+        </h4>
         <div class="md-radio">
-            <input type="radio" id="markets" name="locations1" ng-model="$ctrl.locationType" title="markets"
-                   value="markets" ng-change="$ctrl.removeAll();$ctrl.clearInput();"
+            <input type="radio" id="markets" name="locations" ng-model="$ctrl.data.locationType" title="markets"
+                   value="markets" ng-change="$ctrl.removeAll(); $ctrl.clearInput();"
                    ng-disabled="$ctrl.preview"/>
             <label for="markets">
                 <span>
                     <span></span>
                 </span>Markets</label>
-        </div>
-
-        <div class="md-radio">
-            <input type="radio" id="stores" name="locations2" ng-model="$ctrl.locationType" title="stores"
+            <br>
+            <input type="radio" id="stores" name="locations" ng-model="$ctrl.data.locationType" title="stores"
                    value="stores" ng-change="$ctrl.removeAll(); $ctrl.clearInput();"
-                   ng-disabled="$ctrl.preview"/>
+                   ng-disabled="$ctrl.preview || $ctrl.data.singleSkuBulk == 1"/>
             <label for="stores">
                 <span>
                     <span></span>
@@ -35,35 +33,36 @@
         <tr class="category__table__row-nobottomborder">
             <td colspan="4" ng-hide="$ctrl.preview">
                 <div class="md-toolbar-search l">
-                    <label for="StoreLocation" ng-if="$ctrl.locationType=='stores'"><h3>Store Location</h3></label>
-                    <label for="MarketLocation" ng-if="$ctrl.locationType=='markets'"><h3>Market Location</h3></label>
-                    <input class="table__search" ng-show="$ctrl.locationType=='stores'"
+                    <label for="StoreLocation" ng-if="$ctrl.data.locationType=='stores'"><h3>Store Location</h3></label>
+                    <label for="MarketLocation" ng-if="$ctrl.data.locationType=='markets'"><h3>Market Location</h3>
+                    </label>
+                    <input class="table__search" ng-show="$ctrl.data.locationType=='stores'" id="StoreLocation"
                            ng-keypress="($event.keyCode === 13) && $ctrl.search($ctrl.locationSearch)"
                            placeholder="Search and Add Store Number" type="text" ng-model="$ctrl.locationSearch"
                            ng-class="{'error': $ctrl.inValidStoreInfo}"
                            ng-change="$ctrl.clear()" allow-pattern="(\d|[a-z A-Z\(\?\-\_\.\'\,\%\$\!\@\)])"
                            ng-disabled="$ctrl.preview"/>
-                    <a class="md-button secondary no-padding" href="" ng-show="$ctrl.locationType=='stores'"
-                       ng-click="$ctrl.search($ctrl.locationSearch)">
+                    <a class="md-button secondary no-padding" href="" ng-show="$ctrl.data.locationType=='stores'"
+                       id="MarketLocation" ng-click="$ctrl.search($ctrl.locationSearch)">
                         Add
                     </a>
                     <ul>
-                <span class='error-message' ng-show="$ctrl.showInvalidError" ng-if="$ctrl.locationType=='stores'">
+                <span class='error-message' ng-show="$ctrl.showInvalidError" ng-if="$ctrl.data.locationType=='stores'">
                 <span>Please enter a valid Store Number</span>
                 </span>
                     </ul>
-                    <input class="table__search" ng-show="$ctrl.locationType=='markets'"
+                    <input class="table__search" ng-show="$ctrl.data.locationType=='markets'"
                            ng-keypress="($event.keyCode === 13) && $ctrl.search($ctrl.locationSearch)"
                            placeholder="Search and Add Market Number" type="text" ng-model="$ctrl.locationSearch"
                            ng-class="{'error': $ctrl.inValidMarketInfo}"
                            ng-change="clear()" allow-pattern="(\d|[a-z A-Z\(\?\-\_\.\'\,\%\$\!\@\)])"
                            ng-disabled="$ctrl.preview"/>
-                    <a class="md-button secondary no-padding" ng-show="$ctrl.locationType=='markets'" href=""
+                    <a class="md-button secondary no-padding" ng-show="$ctrl.data.locationType=='markets'" href=""
                        ng-click="$ctrl.search($ctrl.locationSearch)">
                         Add
                     </a>
                     <ul>
-                <span class='error-message' ng-show="$ctrl.showInvalidError" ng-if="$ctrl.locationType=='markets'">
+                <span class='error-message' ng-show="$ctrl.showInvalidError" ng-if="$ctrl.data.locationType=='markets'">
                 <span>Please enter a valid Market Number</span>
                 </span>
                     </ul>
@@ -71,7 +70,7 @@
             </td>
         </tr>
 
-        <tr class="category__table__row-notopborder" ng-if="$ctrl.locationType=='stores'">
+        <tr class="category__table__row-notopborder" ng-if="$ctrl.data.locationType=='stores'">
             <th>Store Number</th>
             <th>Store Name</th>
             <th>Market Number</th>
@@ -83,17 +82,17 @@
             </th>
         </tr>
         <tr ng-repeat="item in $ctrl.validStoreInfo | orderBy : $ctrl.sortStore track by item.storeNumber" 
-        ng-class="{odd:($index % 2)}" ng-if="$ctrl.locationType=='stores'">
+            ng-class="{odd:($index % 2)}" ng-if="$ctrl.locationType=='stores'">
             <td>{{item.storeNumber}}</td>
             <td>{{item.storeName}}</td>
             <td>{{item.marketNumber}}</td>
             <td class="r" ng-hide="$ctrl.preview">
-                <a class="editOption thd-orange" ng-click="$ctrl.isDisabled || $ctrl.removeItem($index)" href="">
+                <a class="editOption thd-orange" ng-click="$ctrl.isDisabled || $ctrl.removeStore(item.storeNumber)" href="">
                     Remove
                 </a>
             </td>
         </tr>
-        <tr class="category__table__row-notopborder" ng-if="$ctrl.locationType=='markets'">
+        <tr class="category__table__row-notopborder" ng-if="$ctrl.data.locationType=='markets'">
 
             <th>Market Number</th>
             <th>MarketName</th>
@@ -105,40 +104,31 @@
             </th>
         </tr>
         <tr ng-repeat="market in $ctrl.validMarketInfo | orderBy : 'marketNumber' track by market.marketNumber"
-            ng-class="{odd:($index % 2)}" ng-if="$ctrl.locationType=='markets'">
+            ng-class="{odd:($index % 2)}" ng-if="$ctrl.data.locationType=='markets'">
             <td>{{market.marketNumber}}</td>
             <td>{{market.marketName}}</td>
             <td class="r" ng-hide="$ctrl.preview">
-                <a class="editOption thd-orange" ng-click="$ctrl.isDisabled || $ctrl.removeItem($index)" href=""
+                <a class="editOption thd-orange" ng-click="$ctrl.isDisabled || $ctrl.removeMarket(market.marketNumber)" href=""
                    ng-disabled="$ctrl.preview">
                     Remove
                 </a>
             </td>
         </tr>
     </table>
-    <div ng-if="$ctrl.locationType=='markets' && $ctrl.validMarketInfo.length > 0" class="itemCountDiv">
+    <div ng-if="$ctrl.data.locationType=='markets' && $ctrl.validMarketInfo.length > 0" class="itemCountDiv">
         {{$ctrl.validMarketInfo.length}} Market(s)
     </div>
-    <div ng-if="$ctrl.locationType=='stores' && $ctrl.validStoreInfo.length > 0" class="itemCountDiv">
+    <div ng-if="$ctrl.data.locationType=='stores' && $ctrl.validStoreInfo.length > 0" class="itemCountDiv">
         {{$ctrl.validStoreInfo.length}} Store(s)
-    </div>
-</div>
-
-<!--All Pro-Discount-->
-<div ng-if="$ctrl.viewProp.displayShowAllProDiscount && $ctrl.showAllProDiscount">
-    <div>
-        <md-checkbox role="checkbox" ng-model="$ctrl.data.purchaseConds.allProDiscount"
-                     ng-change="$ctrl.toggleCustomerSegmentAndRapidPass()" ng-disabled="$ctrl.preview"
-                     aria-checked="false">All Pro Discount
-        </md-checkbox>
     </div>
 </div>
 
 <!--Customer Segmentation-->
 <div class="customer-segmentation">
-    <div class="md-select md-select-space customer-segment" ng-show="$ctrl.viewProp.displayCustomerSegment && $ctrl.displayCustomerSegmentInDCM">
+    <div class="md-select md-select-space customer-segment"
+         ng-show="($ctrl.viewProp.displayCustomerSegment || $ctrl.displayCustomerSegmentInDCM)">
         <label for="promoCustomerSegment">
-            <h3 ng-if="!$ctrl.data.checkRapidPass">Customer Segment (Optional)</h3>
+            <h4 ng-if="!$ctrl.data.checkRapidPass">Customer Segment (Optional)</h4>
             <h3 ng-if="$ctrl.data.checkRapidPass">Customer Segment
                 <span class="mandatory-icon" ng-show="$ctrl.data.checkRapidPass" aria-hidden="false">
                     <i class="fa fa-asterisk" aria-hidden="true"></i>
@@ -147,10 +137,10 @@
         </h3>
         <select name="segment"
                 id="promoCustomerSegment"
-                ng-options="segment as segment.name for segment in $ctrl.segmentDetails track by segment.name"
+                ng-options="segment as segment.name for segment in $ctrl.segmentDetails track by segment.id"
                 ng-model="$ctrl.data.segment"
                 ng-change="$ctrl.onSegmentSelection();$ctrl.updatePrintLabel();$ctrl.selectRapidPass();$ctrl.validatePromotion()"
-                ng-disabled="$ctrl.preview || $ctrl.data.disableCustomerSegment">
+                ng-disabled="$ctrl.preview || $ctrl.data.disableCustomerSegment || $ctrl.data.singleSkuBulk == 1">
             <option value="">
                 -- Select a Customer Segment --
             </option>
@@ -185,29 +175,36 @@
     </div>
 </div>
 
-<div ng-if="$ctrl.viewProp.displayRapidPass && $ctrl.showRapidPass">
-    <label>Rapid Pass</label>
+<div ng-if="$ctrl.viewProp.displayRapidPass && $ctrl.showRapidPass" class="pbl">
+    <h4>Rapid Pass</h4>
     <div>
         <md-checkbox role="checkbox" ng-model="$ctrl.data.checkRapidPass"
                      ng-change="$ctrl.selectRapidPass();$ctrl.validatePromotion()"
-                     ng-disabled="$ctrl.preview || $ctrl.data.disableRapidPass" aria-checked="false">Redeem through
-            Rapid Pass
+                     ng-disabled="$ctrl.preview || $ctrl.data.disableRapidPass || $ctrl.data.singleSkuBulk == 1"
+                     aria-checked="false">Redeem through Rapid Pass
         </md-checkbox>
     </div>
-
 </div>
 
 <div class="input-text-container" ng-if="$ctrl.data.checkRapidPass">
-    <label>Unique Codes Generated</label>
+
+    <label>Unique Codes Generated<span class="mandatory-icon" ng-show="$ctrl.data.checkRapidPass" aria-hidden="false">
+        <i class="fa fa-asterisk" aria-hidden="true"></i>
+    </span></label>
+
     </br>
     <input type="number" id="rapidPassCouponLimit" name="rapidPassCouponLimit" allow-pattern="(\d)"
            ng-pattern="/^[0-9]*$/" ng-model="$ctrl.data.promoCdSpec.systemGen.uniqueCdCnt"
-           ng-trim="false" ng-disabled="$ctrl.preview || $ctrl.data.disableRapidPass"/>
+           ng-trim="false" ng-change="$ctrl.validatePromotion()" ng-disabled="$ctrl.preview || $ctrl.data.disableRapidPass"/>
     <div>
-        <span class='error-message' ng-show="$ctrl.validationErrors.custSegmentErrors.isError">
-            {{$ctrl.validationErrors.custSegmentErrors.message}}
+        <span class='error-message' ng-show="$ctrl.validationErrors.custSegmentErrors[0].isError">
+            {{$ctrl.validationErrors.custSegmentErrors[0].message}}
         </span>
-
+    </div>
+    <div>
+        <span class='error-message' ng-show="$ctrl.validationErrors.custSegmentErrors[1].isError">
+            {{$ctrl.validationErrors.custSegmentErrors[1].message}}
+        </span>
     </div>
     <div>
         <span class='error-message' ng-show="$ctrl.checkRapidPassCouponLimit()">
@@ -221,7 +218,7 @@
 </div>
 
 <div class="basketThresholdDiv" ng-show="$ctrl.viewProp.displayBasketThreshold" ng-if="$ctrl.showBasketThreshold">
-    <h3 class="basketThresholdHeader"> Basket Threshold (Optional) </h3>
+    <h4 class="basketThresholdHeader"> Basket Threshold (Optional) </h4>
     <span class="basketThresholdText"> Enter the dollar amount a customer's order must reach to be assessed for this discount</span>
     <br>
     <span class="md-text-field basket">
@@ -233,12 +230,12 @@
     <br>
 </div>
 
-
 <div ng-if="$ctrl.data.promoCdRqrd == true  && $ctrl.userType == 229 && $ctrl.data.promoSubTypeCd != 'MultipleItemsPercentDiscount' && $ctrl.data.promoSubTypeCd != 'MultipleItemsValueDiscount'">
     <div class="md-text-field">
-        <label for="name">Site wide promotion </label>
+        <h4 for="siteWidePromotion">Site wide promotion </h4>
         <div class="md-radio">
-            <input for="sitewide" type="radio" name="sitepromotion" ng-model="$ctrl.data.isSitewideDeal" ng-value="true"
+            <input id="siteWidePromotion" type="radio" name="sitepromotion" ng-model="$ctrl.data.isSitewideDeal"
+                   ng-value="true"
                    ng-disabled="$ctrl.preview"
             />
             <label>

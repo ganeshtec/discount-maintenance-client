@@ -1,4 +1,4 @@
-app.service('utilService', ['$filter', 'leadTimeService','loginService', function ($filter, leadTimeService,loginService) {
+app.service('utilService', ['$rootScope', '$q', '$filter', 'leadTimeService', 'loginService', function ($rootScope, $q, $filter, leadTimeService, loginService) {
     var publicApi = {};
     this.leadTime;
     publicApi.rewardMethodMapping = {
@@ -15,7 +15,7 @@ app.service('utilService', ['$filter', 'leadTimeService','loginService', functio
         'ProductLevelPerItemValueDiscount': 'INDVDLAFFECTEDITMS',
         'ProductLevelPerItemPercentDiscount': 'INDVDLAFFECTEDITMS',
         'MultipleItemsValueDiscount': 'ALLAFFECTEDITMS'
-    }
+    };
 
     publicApi.canSaveAsDraft = function (promotion) {
         //these promotions can be saved as draft
@@ -285,6 +285,15 @@ app.service('utilService', ['$filter', 'leadTimeService','loginService', functio
 
     }
 
+    publicApi.requiredRapidPassCheck = function(promotion) {
+        if(promotion.checkRapidPass && promotion.purchaseConds.customerSegmentId === 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
     publicApi.invalidSysGenCode = function (promotion) {
         if (promotion && promotion.promoCdSpec && promotion.promoCdSpec.systemGen) {
             var syscode = promotion.promoCdSpec.systemGen;
@@ -357,8 +366,12 @@ app.service('utilService', ['$filter', 'leadTimeService','loginService', functio
                 if (promotion.purchaseConds.sources[0].inclusions.hierarchies && promotion.purchaseConds.sources[0].inclusions.hierarchies.length > 0) {
                     if (promotion.purchaseConds.sources[1].inclusions.hierarchies && promotion.purchaseConds.sources[1].inclusions.hierarchies.length > 0) {
 
-                        var h1 = promotion.purchaseConds.sources[0].inclusions.hierarchies.map(function (a) { return a.id; });
-                        var h2 = promotion.purchaseConds.sources[1].inclusions.hierarchies.map(function (a) { return a.id; });
+                        var h1 = promotion.purchaseConds.sources[0].inclusions.hierarchies.map(function (a) {
+                            return a.id;
+                        });
+                        var h2 = promotion.purchaseConds.sources[1].inclusions.hierarchies.map(function (a) {
+                            return a.id;
+                        });
 
                         var overlap = intersect(h1, h2);
                         if (overlap.length > 0) {
@@ -371,7 +384,6 @@ app.service('utilService', ['$filter', 'leadTimeService','loginService', functio
 
         return null;
     }
-
 
     publicApi.setDefaultsForSaveAsDraft = function (promotion) {
         if (promotion.promoCdRqrd == null) {
@@ -403,16 +415,13 @@ app.service('utilService', ['$filter', 'leadTimeService','loginService', functio
     }
 
     publicApi.isSubmitEligibleForDisable = function (promotion) {
-
-        var leadTimePromise = leadTimeService.fetchLeadTime();
-        return leadTimePromise.then(function (leadTime) {
-            var minDt = moment(promotion.endDt).subtract(leadTime, 'days');
-            if (moment().isAfter(minDt) && promotion.status == 61 && promotion.printLabel === true) {
-                return true;
-            }
-            return false;
-        });
-    }
+        var leadTime = $rootScope.leadTime;
+        var minDt = moment(promotion.endDt).subtract(leadTime, 'days');
+        if (moment().isAfter(minDt) && promotion.status == 61 && promotion.printLabel === true) {
+            return true;
+        }
+        return false;
+    };
 
     publicApi.isPreviewSubmitClickDisabled = function (promotion) {
         if (promotion.status == 61 && promotion.originalPrintLabel === true) {
@@ -420,36 +429,40 @@ app.service('utilService', ['$filter', 'leadTimeService','loginService', functio
         }
         return false;
 
-    }
+    };
 
     publicApi.getLeadTime = function () {
         return leadTimeService.fetchLeadTime();
-    }
+    };
 
     publicApi.isLabelLocked = function (promotion) {
         return publicApi.isPromotionActive(promotion) && promotion.originalPrintLabel == true;
-    }
+    };
 
     publicApi.updatePrintLabel = function (promotion) {
         if (publicApi.isPrintLabelDisabled(promotion) && !publicApi.isLabelLocked(promotion)) {
             promotion.printLabel = false;
             promotion.labelText = '';
         }
-    }
+    };
 
     publicApi.hasPosChannel = function (promotion){
         return promotion.channels && (promotion.channels.indexOf(87) > -1);
-    }
+    };
 
     publicApi.isPrintLabelDisabled = function (promotion) {
-
         var disabled = false;
+
+        if (promotion.singleSkuBulk == 1) {
+            disabled = true;
+            promotion.printLabel = true;
+        }
 
         if (publicApi.isLabelLocked(promotion)) {
             disabled = true;
         }
 
-        if(!publicApi.hasPosChannel(promotion)){
+        if (!publicApi.hasPosChannel(promotion)) {
             disabled = true;
         }
 
@@ -475,7 +488,7 @@ app.service('utilService', ['$filter', 'leadTimeService','loginService', functio
         }
 
         return disabled;
-    }
+    };
 
     return publicApi;
 }]);

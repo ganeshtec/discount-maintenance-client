@@ -7,7 +7,7 @@ app.service('featureFlagService', ['$http', '$q', 'dataService',
             
             var config = {
                     method: 'GET',
-                    url: '/featureFlags',
+                    url: '/featureFlagsV2',
                 },
                 result = $q.defer();
 

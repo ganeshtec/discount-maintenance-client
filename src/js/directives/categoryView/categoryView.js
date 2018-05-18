@@ -5,21 +5,18 @@ app.directive('categoryView', ['categoryDataService', 'DataFactory', 'OverlayCon
             restrict: 'E',
             templateUrl: 'categoryView.html',
             scope: {
-                data: '=',
+                hierarchiesparent: '=',
                 promoform: '=',
                 isDisabled: '=',
-                preview: '='
-
+                preview: '=',
             },
             link: function (scope) {
                 scope.categoryDataLoading = false;
-                scope.data = $.extend(true, [], scope.data);
                 scope.searchResults = [];
                 scope.showInvalidError = false;
 
                 scope.browseCatalogOverlayConfig = OverlayConfigFactory.getInstance();
                 scope.browseCatalogOverlayConfig.mask(true);
-
                 scope.addItem = function (item) {
                     var data = {};
                     data.name = item.displayName;
@@ -27,18 +24,18 @@ app.directive('categoryView', ['categoryDataService', 'DataFactory', 'OverlayCon
                     data.catalog = 'Web';
 
                     var index = -1;
-                    if (!scope.data) {
-                        scope.data = [];
+                    if (!scope.hierarchiesparent.hierarchies) {
+                        scope.hierarchiesparent.hierarchies = [];
                     }
-                    for (var i = 0, len = (scope.data).length; i < len; i++) {
-                        if ((scope.data)[i].id === data.id) {
+                    for (var i = 0, len = (scope.hierarchiesparent.hierarchies).length; i < len; i++) {
+                        if ((scope.hierarchiesparent.hierarchies)[i].id === data.id) {
                             index = i;
                             break;
                         }
                     }
 
                     if (index === -1) {
-                        scope.data.push(data);
+                        scope.hierarchiesparent.hierarchies.push(data);
                         scope.itemSearch = '';
                     } else {
                         DataFactory.messageModal.message = 'Category is already added: ' + data.name;
@@ -48,25 +45,26 @@ app.directive('categoryView', ['categoryDataService', 'DataFactory', 'OverlayCon
                 }
 
                 scope.$on('addedCategory', function (event, item) {
-                    scope.data.push(item);
+                    scope.hierarchiesparent.hierarchies.push(item);
+
                 });
 
                 scope.$on('deletedCategory', function (event, item) {
                     var index;
 
-                    for (var i = 0, len = scope.data.length; i < len; i++) {
-                        if (scope.data[i].source === item.source) {
+                    for (var i = 0, len = scope.hierarchiesparent.hierarchies.length; i < len; i++) {
+                        if (scope.hierarchiesparent.hierarchies[i].source === item.source) {
                             index = i;
                             break;
                         }
                     }
 
-                    scope.data.splice(index, 1);
+                    scope.hierarchiesparent.hierarchies.splice(index, 1);
 
                 });
 
                 scope.removePromoCode = function (index) {
-                    scope.data.splice(index, 1);
+                    scope.hierarchiesparent.hierarchies.splice(index, 1);
                 }
 
                 scope.search = function (data) {

@@ -15,6 +15,15 @@ app.factory('PromotionData', ['ALLOWED_PERMISSION_IDS',function (ALLOWED_PERMISS
             'labelText': '',
             'receiptHeader': '',
             'receiptDesc': '',
+            'markets': [],
+            'stores': [],
+            'validSkuInfo': [],
+            'merchTableData': {
+                'inclusions': [],
+                'exclusions': []
+            },
+            'channelsWithCheckedFields': [],
+            'channels': [],
             'redmptnLmt': {
                 'maxUsesPerOrd': '-1',
                 'maxUsesPerCust': '-1',

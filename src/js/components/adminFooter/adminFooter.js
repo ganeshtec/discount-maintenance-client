@@ -11,22 +11,22 @@ app.component('adminFooter', {
 
 
     templateUrl: 'adminFooter.html',
-    controller: function FooterCtrl(PromotionData, utilService, leadTimeService, promotionDataService, modalService, validationService, $scope, sectionsIndex) {
+    controller: function FooterCtrl(PromotionData, utilService, leadTimeService, promotionDataService, modalService, validationService, $scope, sectionsIndex, $rootScope) {
         var tempData = $.extend(true, {}, this.data);
         var inprogress = false;
         var isEndDtWithinLeadTime = false;
-        var ctrl=this;
-        ctrl.sectionsIndex = sectionsIndex;
-        if (tempData) {
-            var isEndDtWithinLeadTimePromise = utilService.isSubmitEligibleForDisable(tempData);
-            isEndDtWithinLeadTimePromise.then(function (value) {
-                isEndDtWithinLeadTime = value;
-            })
+        var ctrl = this;
+        ctrl.$onInit = function () {
+            ctrl.showSummaryTab = $rootScope.showSummaryTab;
+            ctrl.sectionsIndex = sectionsIndex;
+            if (tempData) {
+                isEndDtWithinLeadTime = utilService.isSubmitEligibleForDisable(tempData);
+            }
         }
-
         this.cancel = function () {
             this.data = $.extend(true, {}, tempData);
-        }
+        };
+
         this.saveDraft = function (data) {
             tempData = $.extend(true, {}, data);
 
@@ -64,11 +64,30 @@ app.component('adminFooter', {
             )
         }
 
-        $scope.$on('unauth-error',function() {
+        $scope.$on('unauth-error', function () {
             ctrl.previewOverlayConfig.close();
         });
 
         this.preview = function (data) {
+            if (data.singleSkuBulk == 1) {
+                //Rapidpass scenario for Single SkuBulk
+                data.checkRapidPass = false;
+                data.promoCdSpec = null;
+                data.promoCdRqrd = false;
+
+                //Customer Segment scenario for Single SkuBulk
+                data.segment = null;
+                data.purchaseConds.customerSegmentId = 0;
+                data.purchaseConds.program = null;
+
+                //Location types scenario for Single SkuBulk
+                data.locationType = 'markets';
+                data.purchaseConds.locations = [];
+
+                //Print labels scenario for Single SkuBulk
+                data.printLabel = true;
+                data.labelText = '';
+            }
             var validationErrors;
             this.validatePromotion(data, function (errorMsgs) {
                 validationErrors = errorMsgs

@@ -1,10 +1,10 @@
-describe('Unit testing  promo description directive', function() {
+describe('Unit testing  promo description component', function() {
   var $compile,
       $rootScope,
       $scope,
       element;
 
-  // Load the myApp module, which contains the directive
+  // Load the myApp module, which contains the component
   beforeEach(module('app'));
 
   // Store references to $rootScope and $compile
@@ -17,12 +17,12 @@ describe('Unit testing  promo description directive', function() {
   }));
 
   it('Checks if  nav is rendered', function() {
-    // Compile a piece of HTML containing the directive
+    // Compile a piece of HTML containing the component
     element = $compile("<promo-description ></promo-description>")($scope);
     $scope.$digest();
    // Check that the compiled element contains the templated content
-    expect(element.html()).toContain('ng-model="data.shortDesc"');
-    expect(element.html()).toContain('ng-model="data.longDesc"');
+    expect(element.html()).toContain('ng-model="$ctrl.data.shortDesc"');
+    expect(element.html()).toContain('ng-model="$ctrl.data.longDesc"');
   });
 
 

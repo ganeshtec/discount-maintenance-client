@@ -1,0 +1,192 @@
+<div class="row">
+    <header class="pbxl">
+        <div ng-if="$ctrl.headerErrorMsg" class="banner error modal-error">
+            <span class="message">{{$ctrl.headerErrorMsg}}</span>
+            <span class="close"></span>
+        </div>
+        <div ng-if="$ctrl.errorMessages" class="banner error modal-error">
+            <div ng-repeat="error in $ctrl.errorMessages">{{error.message}}</div>
+        </div>
+        <h4>Summary of Discount</h4>
+        <span>Review selects, make edits and/or submit discounts</span>
+    </header>
+    <content class="pbxl">
+        <div class="pbxl">
+            <h5 class="border">Properties</h5>
+            <div class="plxl">
+                <p><strong>Discount Name:</strong> {{$ctrl.data.name || 'None'}}</p>
+                <p ng-show="$ctrl.viewProp.displayDiscountType"> <strong>Type:</strong> {{$ctrl.data.promoSubTypeDesc}}</p>
+                <p> <strong>Priority:</strong>{{$ctrl.data.priority}}</p>
+                <p ng-show="$ctrl.viewProp.displayExclusiveCheckbox"> <strong>Exclusivity:</strong> {{$ctrl.data.exclsve ? 'Yes': 'No'}}</p>
+                <p ng-show="$ctrl.viewProp.displayChannelSelect"> <strong>Channels:</strong> {{$ctrl.joinChannels()}}</p>
+                <p ng-show="$ctrl.viewProp.displayRedemptionMethod"><strong>Redemption Method:</strong> {{$ctrl.data.promoCdRqrd ? 'Requires Promotion Codes' : 'Qualifying Purchase'}}</p>
+                <div ng-show="$ctrl.data.promoCdRqrd && $ctrl.data.promoCdSpec.type == 'Public' && $ctrl.userType == 229"><strong>User Generated Promotion codes:</strong>
+                    <p class="plxl"><strong>Promotion Code:</strong> {{$ctrl.data.promoCdSpec.promoCodes[0] || 'None'}}</p>
+                </div>
+                <div ng-show="$ctrl.data.promoCdRqrd && $ctrl.data.promoCdSpec.type == 'Private' && $ctrl.userType == 229"><strong>System-generated unique promotion code:</strong>
+                    <p class="plxl"><strong>Prefix:</strong> {{$ctrl.data.promoCdSpec.systemGen.cdPrefix || 'None'}}</p>
+                    <p class="plxl"><strong>Unique System-generated Code Length:</strong> {{$ctrl.data.promoCdSpec.cdLength || 'None'}}</p>
+                    <p class="plxl"><strong>Suffix:</strong> {{$ctrl.data.promoCdSpec.systemGen.cdSuffix || 'None'}}</p>
+                    <p class="plxl"><strong>Number of Unique Codes to be Generated:</strong> {{$ctrl.data.promoCdSpec.systemGen.uniqueCdCnt || 'None'}}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="pbxl">
+
+            <h5 class="border">Qualifiers</h5>
+            <div class="plxl">
+                <p ng-show="$ctrl.viewProp.displayLocation"><strong>Locations:</strong> {{$ctrl.joinLocations()}}</p>
+                <p ng-show="$ctrl.viewProp.displayCustomerSegment || $ctrl.displayCustomerSegmentInDCM"><strong>Customer Segment:</strong> {{$ctrl.data.segment.name || 'None'}}</p>
+                <p ng-show="$ctrl.viewProp.displayRapidPass"><strong>Rapid Pass:</strong> {{$ctrl.data.checkRapidPass ? 'Yes': 'No'}}</p>
+                <p ng-show="$ctrl.data.checkRapidPass"><strong>Rapid Pass Unique Codes:</strong> {{$ctrl.data.promoCdSpec.systemGen.uniqueCdCnt}}</p>
+                <p ng-show="$ctrl.viewProp.displayBasketThreshold"><strong>Basket Threshold:</strong> {{$ctrl.data.purchaseConds.basketThreshold || 'None'}}</p>
+                <p ng-show="$ctrl.data.promoCdRqrd == true  && $ctrl.userType == 229 && $ctrl.data.promoSubTypeCd != 'MultipleItemsPercentDiscount' && $ctrl.data.promoSubTypeCd != 'MultipleItemsValueDiscount'"><strong>Site Wide Promotion:</strong> {{$ctrl.data.isSitewideDeal? 'Yes': 'No'}}</p>
+            </div>
+        </div>
+
+        <div class="pbxl">
+            <h5 class="border">Rewards</h5>
+            <div class="plxl">
+                <p><strong>Discount Application:</strong> {{$ctrl.data.promoType || 'None'}}</p>
+                <div class="pbl">
+                    <span><table>
+                        <tr class="plxl" ng-repeat="tier in $ctrl.data.reward.details track by $index" ng-if="tier.min !== null">
+                            <td class="pls"><strong>Tier {{$index+1}}:</strong></td>
+                            <td class="pls">Minimum Purchase {{tier.qualUOM}}: {{tier.min}}</td>
+                            <td class="pls" ng-if="$ctrl.data.reward.type=='PERCNTOFF'">Percent Off: {{tier.value}}</td>
+                            <td class="pls" ng-if="$ctrl.data.reward.type=='AMTOFF'">Amount Off: {{tier.value}}</td>
+                            <td class="pls" ng-if="tier.maxAllowedVal !== null && $ctrl.userType === 228">Maximum Discount Amount: {{tier.maxAllowedVal}}</td>
+                        </tr>
+                    </table></span>
+                </div>
+                <div ng-repeat="source in $ctrl.data.purchaseConds.sources">
+                    <div class="pbl" ng-if="source.inclusions.validSkuInfo.length > 0 && $ctrl.data.merchTableData.inclusions.length === 0 && $ctrl.userType === 228">
+                        <p><strong>Applied to the following product(s):</strong></p>
+                        <span> <table>
+                                <tr  class="plxl" ng-repeat="item in source.inclusions.validSkuInfo track by $index" >
+                                <td>SKU:	{{item.skuNumber}}</td>
+                                <td>Sku Type:	{{item.skuTypeCode}}</td>
+                                <td>Description:	{{item.skuDescription}}</td>
+                            </tr>
+                        </table></span>
+                    </div>
+                </div>
+                <div class="pbl" ng-if="$ctrl.data.merchTableData.inclusions.length > 0 && $ctrl.userType === 228">
+                    <p><strong>Applied to the following product(s):</strong></p>
+                    <span> <table>
+                        <tr  class="plxl" ng-repeat="item in $ctrl.data.merchTableData.inclusions track by $index" >
+                            <td>Department:	{{item.deptNum}}-{{item.dept}}</td>
+                            <td>Class:	{{item.clasNum}}-{{item.clas}}</td>
+                            <td>Sub Class:	{{item.subClasNum}}-{{item.subClass}}</td>
+                        </tr>
+                    </table></span>
+                </div>
+                <div ng-repeat="source in $ctrl.data.purchaseConds.sources">
+                    <div class="pbl" ng-if="source.exclusions.validSkuInfo.length > 0 && $ctrl.data.purchaseConds.sources.length > 0 && $ctrl.data.merchTableData.inclusions.length > 0 && $ctrl.userType === 228">
+                        <p><strong>Exluded to the following product(s):</strong></p>
+                        <span> <table>
+                            <tr  class="plxl" ng-repeat="item in source.exclusions.validSkuInfo track by $index" >
+                                <td>SKU:	{{item.skuNumber}}</td>
+                                <td>SKU Type:	{{item.skuTypeCode}}</td>
+                                <td>Description:	{{item.skuDescription}}</td>
+                            </tr>
+                        </table></span>
+                    </div>
+                </div>
+                <div ng-repeat="source in $ctrl.data.purchaseConds.sources">
+                    <div class="pbl" ng-if="source.inclusions.validOmsInfo.length > 0 && $ctrl.data.merchTableData.inclusions.length === 0 && $ctrl.userType === 229">
+                        <p><strong>Applied to the following product(s):</strong></p>
+                        <span> <table>
+                            <tr  class="plxl" ng-repeat="item in source.inclusions.validOmsInfo track by $index" >
+                                <td>OMS:	{{item.omsId}}</td>
+                                <td>SKU:	{{item.skuNumber}}</td>
+                                <td>Description:	{{item.prodName}}</td>
+                            </tr>
+                        </table></span>
+                    </div>
+                </div>
+                <div ng-repeat="source in $ctrl.data.purchaseConds.sources">
+                    <div class="pbxxl" ng-if="source.inclusions.hierarchies.length > 0 && source.inclusions.validOmsInfo.length === 0 && $ctrl.userType === 229">
+                        <p><strong>Applied to the following product(s):</strong></p>
+                        <span> <table>
+                            <tr  class="plxl" ng-repeat="item in source.inclusions.hierarchies track by $index" >
+                                <td>Category Name:	{{item.name}}</td>
+                                <td>GUID:	{{item.id}}</td>
+                            </tr>
+                        </table></span>
+                    </div>
+                </div>
+              <div ng-repeat="source in $ctrl.data.purchaseConds.sources">
+                    <div class="pbl" ng-if="source.exclusions.hierarchies.length > 0 && source.inclusions.validOmsInfo.length === 0 && $ctrl.userType === 229">
+                        <p><strong>Exluded to the following product(s):</strong></p>
+                        <span> <table>
+                            <tr  class="plxl" ng-repeat="item in source.exclusions.hierarchies track by $index" >
+                                <td>Category Name:	{{item.name}}</td>
+                                <td>GUID:	{{item.id}}</td>
+                            </tr>
+                        </table></span>
+                    </div>
+                </div>
+               <div ng-repeat="source in $ctrl.data.purchaseConds.sources">
+                    <div class="pbl" ng-if="source.exclusions.validOmsInfo.length > 0 && $ctrl.data.purchaseConds.sources.length > 0 && $ctrl.userType === 229">
+                        <p><strong>Exluded to the following product(s):</strong></p>
+                        <span> <table>
+                            <tr  class="plxl" ng-repeat="item in source.exclusions.validOmsInfo track by $index" >
+                                <td>OMS:	{{item.omsId}}</td>
+                                <td>SKU:	{{item.skuNumber}}</td>
+                                <td>Description:	{{item.prodName}}</td>
+                            </tr>
+                        </table></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="progress-circular indeterminate lg" ng-show="$ctrl.submitStatus">
+            <div class="stroke">
+                <div class="stroke-left"></div>
+                <div class="stroke-right"></div>
+            </div>
+            <!--  <span>{{$ctrl.submitStatus}}</span> -->
+        </div>
+        <div ng-show="$ctrl.viewProp.displayPrintLabel" class="pbxl">
+            <h5 class="border">Labels</h5>
+            <div class="plxl">
+                <p><strong>Label Flag:</strong> {{$ctrl.data.printLabel ? 'Yes': 'No'}}</p>
+                <p ng-if="$ctrl.data.printLabel"><strong>Label Text:</strong> {{$ctrl.data.labelText}}</p>
+                <p><strong>Receipt Header:</strong> {{$ctrl.data.receiptHeader || 'None'}}</p>
+                <p><strong>Receipt Description:</strong> {{$ctrl.data.receiptDesc || 'None'}}</p>
+            </div>
+        </div>
+
+        <div class="pbxl">
+            <h5 class="border">Schedule</h5>
+            <div class="plxl">
+                <p><strong>Start Date:</strong> {{$ctrl.formatDate($ctrl.data.startDt)}}</p>
+                <p><strong>End Date:</strong> {{$ctrl.formatDate($ctrl.data.endDt)}}</p>
+            </div>
+        </div>
+
+        <div ng-show="$ctrl.viewProp.displayPromoDescription" class="pbl">
+            <h5 class="border">Descriptions</h5>
+            <div class="plxl">
+                <p><strong>Short Description:</strong> {{$ctrl.data.shortDesc || 'None'}}</p>
+                <p><strong>Long Description:</strong> {{$ctrl.data.longDesc || 'None'}}</p>
+            </div>
+        </div>
+
+        <div ng-show="$ctrl.viewProp.displayRedemptionLimits" class="pbxl">
+            <h5 class="border">Redemption Limits</h5>
+            <div class="plxl">
+                <p ng-if="$ctrl.data.redmptnLmt.maxUsesOfPromo != -1"><strong>Maximum redemption limits for this promotion:</strong> {{$ctrl.data.redmptnLmt.maxUsesOfPromo}}</p>
+                <p ng-if="$ctrl.data.redmptnLmt.maxUsesOfPromo == -1"><strong>Maximum redemption limits for this promotion:</strong> Unlimited</p>
+                <p ng-if="$ctrl.data.redmptnLmt.maxUsesPerOrd != -1"><strong>Maximum redemption on a single order:</strong> {{$ctrl.data.redmptnLmt.maxUsesPerOrd}}</p>
+                <p ng-if="$ctrl.data.redmptnLmt.maxUsesPerOrd == -1"><strong>Maximum redemption on a single order:</strong> Unlimited</p>
+                <p ng-if="$ctrl.data.redmptnLmt.maxUsesPerCust != -1"><strong>Maximum redemption by a single customer:</strong> {{$ctrl.data.redmptnLmt.maxUsesPerCust}}</p>
+                <p ng-if="$ctrl.data.redmptnLmt.maxUsesPerCust == -1"><strong>Maximum redemption by a single customer:</strong> Unlimited</p>
+            </div>
+        </div>
+        <button type="button" class="primary button" id="submit-button" ng-click="$ctrl.saveAndSubmit()" ng-disabled="$ctrl.isSubmitDisabled($ctrl.data)">Submit</button>
+        <!--<a class="primary button" id="submit-button" ng-disabled="$ctrl.submitStatus||$ctrl.headerErrorMsg" ng-click="$ctrl.saveAndSubmit($event)">Submit</a> -->
+    </content>
+</div>

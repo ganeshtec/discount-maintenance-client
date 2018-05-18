@@ -40,12 +40,12 @@
 			Description
 		</th>
 		<th class="r" width="15%">
-			<a class="editOption thd-orange" ng-if="$ctrl.validOmsInfo && $ctrl.validOmsInfo.length >0" ng-click="$ctrl.removeAll()" href="" ng-hide="$ctrl.preview">
+			<a class="editOption thd-orange" ng-if="$ctrl.partnumbersparent.validOmsInfo && $ctrl.partnumbersparent.validOmsInfo.length >0" ng-click="$ctrl.removeAll()" href="" ng-hide="$ctrl.preview">
 				Remove All
 			</a>
 		</th>
 	</tr>
-	<tr ng-repeat="item in $ctrl.validOmsInfo track by $index" ng-class="{odd:($index % 2)}">
+	<tr ng-repeat="item in $ctrl.partnumbersparent.validOmsInfo track by $index" ng-class="{odd:($index % 2)}">
 		<td>
 			{{item.omsId}}
 		</td>
@@ -96,12 +96,12 @@
 			Description
 		</th>
 		<th class="r">
-			<a class="editOption thd-orange" ng-if="$ctrl.validSkuInfo && $ctrl.validSkuInfo.length >0" ng-click="$ctrl.removeAll()" href="" ng-hide="$ctrl.preview">
+			<a class="editOption thd-orange" ng-if="$ctrl.partnumbersparent.validSkuInfo && $ctrl.partnumbersparent.validSkuInfo.length >0" ng-click="$ctrl.removeAll()" href="" ng-hide="$ctrl.preview">
 				Remove All
 			</a>
 		</th>
 	</tr>
-	<tr ng-repeat="item in $ctrl.validSkuInfo track by $index" ng-class="{odd:($index % 2)}">
+	<tr ng-repeat="item in $ctrl.partnumbersparent.validSkuInfo track by $index" ng-class="{odd:($index % 2)}">
 		<td>
 			{{item.skuNumber}}
 		</td>
@@ -119,6 +119,6 @@
 	</tr>
 </table>
 <div class="itemCountDiv">
-	<span ng-show="$ctrl.validOmsInfo.length > 0 && !$ctrl.isSkuSearch" id="itemCount">{{$ctrl.validOmsInfo.length}} Item(s)</span>
-	<span ng-show="$ctrl.validSkuInfo.length > 0 && $ctrl.isSkuSearch" id="skuCount">{{$ctrl.validSkuInfo.length}} SKU(s)</span>	
+	<span ng-show="$ctrl.partnumbersparent.validOmsInfo.length > 0 && !$ctrl.isSkuSearch" id="itemCount">{{$ctrl.partnumbersparent.validOmsInfo.length}} Item(s)</span>
+	<span ng-show="$ctrl.partnumbersparent.validSkuInfo.length > 0 && $ctrl.isSkuSearch" id="skuCount">{{$ctrl.partnumbersparent.validSkuInfo.length}} SKU(s)</span>
 </div>
