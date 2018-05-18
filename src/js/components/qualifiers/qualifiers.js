@@ -62,12 +62,11 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
             }
         }
 
-
+        ctrl.segmentDetails = [];
         if (!$rootScope.segmentsFromV2Endpoint) {
             var segmentsFromV1EndpointPromise = customerSegmentDataService.getAllSegments();
             segmentsFromV1EndpointPromise.then(
                 function (data) {
-                    ctrl.segmentDetails = [];
                     angular.forEach(data.segments, function (segmentFromWebService) {
                         var segment = {};
                         segment.name = segmentFromWebService.name;
@@ -95,7 +94,6 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
                 function (data) {
                     ctrl.segmentListfromWebservice = data.segments;
                     var arrayLength = ctrl.segmentListfromWebservice.length;
-                    ctrl.segmentDetails = [];
                     for (var i = 0; i < arrayLength; i++) {
                         var segment = {};
                         segment.name = ctrl.segmentListfromWebservice[i].segmentName;
@@ -129,7 +127,7 @@ function QualifiersController(MaxCouponGenerationLimit, customerSegmentDataServi
 
     ctrl.onSegmentSelection = function () {
         ctrl.data.purchaseConds.program = { proPaint: null };
-        if (ctrl.data.segment && ctrl.data.segment.id) {
+        if (ctrl.data.segment) {
             if (ctrl.data.segment.id && ctrl.data.segment.id != -1) {
                 ctrl.data.purchaseConds.customerSegmentId = ctrl.data.segment.id;
                 ctrl.data.purchaseConds.allProDiscount = false;
