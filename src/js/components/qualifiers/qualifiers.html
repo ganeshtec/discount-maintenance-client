@@ -82,7 +82,7 @@
             </th>
         </tr>
         <tr ng-repeat="item in $ctrl.validStoreInfo | orderBy : $ctrl.sortStore track by item.storeNumber" 
-            ng-class="{odd:($index % 2)}" ng-if="$ctrl.locationType=='stores'">
+            ng-class="{odd:($index % 2)}" ng-if="$ctrl.data.locationType =='stores'">
             <td>{{item.storeNumber}}</td>
             <td>{{item.storeName}}</td>
             <td>{{item.marketNumber}}</td>
@@ -95,7 +95,7 @@
         <tr class="category__table__row-notopborder" ng-if="$ctrl.data.locationType=='markets'">
 
             <th>Market Number</th>
-            <th>MarketName</th>
+            <th>Market Name</th>
             <th class="r">
                 <a class="editOption thd-orange" ng-if="$ctrl.validMarketInfo && $ctrl.validMarketInfo.length >0"
                    ng-click="$ctrl.removeAll()" href="" ng-hide="$ctrl.preview">
