@@ -2,7 +2,6 @@ inherit: manifest-base.yml
 applications:
 - name: discount-maintenance-client
   hosts:
-    - discount-engine-qa
     - promotionsadmin-ext-qa
   instances: 2
   env:
