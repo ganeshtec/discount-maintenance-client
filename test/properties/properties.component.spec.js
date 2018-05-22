@@ -1,38 +1,38 @@
-describe('Unit testing adminPromotionForm.directive.spec.js', function () {
-  var $compile,
-    $rootScope,
-    $scope,
-    element,
-    promotionDataService,
-    loginService,
-    $httpBackend,
-    $componentController;
+describe('Unit testing properties.component.spec.js', function () {
+    var $compile,
+        $rootScope,
+        $scope,
+        element,
+        promotionDataService,
+        loginService,
+        $httpBackend,
+        $componentController;
 
-  // Load the myApp module, which contains the directive
-  beforeEach(module('app'));
-  beforeEach(function () {
-    module('app', function ($provide) {
-      $provide.constant('sectionsIndex', {
-          DISCOUNT_PROPERTIES:0,
-          QUALIFIERS:1,
-          REWARDS:2,
-          SUMMARY:3
-      });
-      $provide.constant('MaxCouponGenerationLimit', 300000);
+    // Load the myApp module, which contains the directive
+    beforeEach(module('app'));
+    beforeEach(function () {
+        module('app', function ($provide) {
+            $provide.constant('sectionsIndex', {
+                DISCOUNT_PROPERTIES: 0,
+                QUALIFIERS: 1,
+                REWARDS: 2,
+                SUMMARY: 3
+            });
+            $provide.constant('MaxCouponGenerationLimit', 300000);
+        });
     });
-  });
-  
-  // so they are available to all tests in this describe block
-  beforeEach(inject(function (_$componentController_,_promotionDataService_, _customerSegmentDataService_, _$httpBackend_, _loginService_) {
+
+    // so they are available to all tests in this describe block
+    beforeEach(inject(function (_$componentController_, _promotionDataService_, _customerSegmentDataService_, _$httpBackend_, _loginService_) {
 
     $componentController = _$componentController_;
-  
+
     loginService = loginService;
     promotionDataService = _promotionDataService_;
     customerSegmentDataService = _customerSegmentDataService_;
     $httpBackend = _$httpBackend_;
     var response = {};
-   
+
     $httpBackend.when('GET', '/labels/leadTime').respond(200, 3);
     $httpBackend.when('GET', '/customersegment/segments').respond(200, []);
     $httpBackend.when('GET', '/featureFlags').respond(200, {});
@@ -42,7 +42,7 @@ describe('Unit testing adminPromotionForm.directive.spec.js', function () {
     $httpBackend.when('GET', '/skutypes/').respond(200, []);
     $httpBackend.when('GET', '/merchHierarchy/departments').respond(200, []);
     $httpBackend.when('POST', '/skuInfo/skus/validate.json').respond(200, []);
-    ctrl = $componentController('adminPromotionForm', null, {
+    ctrl = $componentController('properties', null, {
       data: {
         reward: {
           details: []
@@ -73,7 +73,7 @@ describe('Unit testing adminPromotionForm.directive.spec.js', function () {
 
     );
   }));
-  
+
 
   it('resetRewardsOnPromoTypeChange should clear MaxAllowedVal if the reward type is AMTOFF', function () {
     ctrl.data.reward.type = 'AMTOFF';
@@ -97,6 +97,28 @@ describe('Unit testing adminPromotionForm.directive.spec.js', function () {
     expect(ctrl.data.exclsve).toEqual(0);
   });
 
+  it('#templateSelection function when id != 1', function () {
+      ctrl.discountTemplateSelected = {id: 0};
+      ctrl.templateSelection();
+      expect(ctrl.data.singleSkuBulk).toBe(0);
+      expect(ctrl.data.printLabel).toBe(false);
+  });
+
+  it('#templateSelection function when id = 1', function () {
+      ctrl.discountTemplateSelected = {id: 1};
+      ctrl.data.exclsve = 1;
+      ctrl.data.checkRapidPass = true;
+      ctrl.data.segment = {name : "TEST SEGMENT"}
+      ctrl.data.purchaseConds.customerSegmentId = 100091;
+      ctrl.templateSelection();
+      expect(ctrl.data.singleSkuBulk).toBe(1);
+      expect(ctrl.data.exclsve).toBe(0);
+      expect(ctrl.data.segment).toBe(null);
+      expect(ctrl.data.checkRapidPass).toBe(false);
+      expect(ctrl.data.printLabel).toBe(true);
+      expect(ctrl.data.purchaseConds.customerSegmentId).toBe(0);
+  });
+
   it('#singleSkuBulkModalCheck function', function() {
     ctrl.data.exclsve = 1;
     var result = ctrl.singleSkuBulkModalCheck();
@@ -110,12 +132,12 @@ describe('Unit testing adminPromotionForm.directive.spec.js', function () {
 
     ctrl.data.singleSkuBulk = 1;
     ctrl.toggleSingleSkuBulk();
-    expect(ctrl.data.singleSkuBulk).toEqual(0);  
+    expect(ctrl.data.singleSkuBulk).toEqual(0);
   });
 
   it('#toggleSingleSkuBulk unchecks and disable Exclusive', function () {
     ctrl.data.singleSkuBulk = 0;
-    ctrl.data.exclsve = 1
+    ctrl.data.exclsve = 1;
     ctrl.toggleSingleSkuBulk();
     expect(ctrl.data.singleSkuBulk).toEqual(1);
     expect(ctrl.data.exclsve).toEqual(0);

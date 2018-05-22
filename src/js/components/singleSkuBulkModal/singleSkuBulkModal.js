@@ -1,6 +1,7 @@
 app.component('singleSkuBulkModal', {
     bindings: {
         data: '=',
+        template: '=',
         singleSkuBulkCleanUp: '&'
     },
     scope: {},
@@ -13,11 +14,12 @@ function singleSkuBulkModalController($mdDialog) {
 
     ctrl.closeModal = function () {
         ctrl.data.singleSkuBulk = 0;
+        ctrl.template.id = 0;
         $mdDialog.hide();
-    }
+    };
 
     ctrl.singleSkuBulkSelected = function () {
         ctrl.singleSkuBulkCleanUp();
         $mdDialog.hide();
-    }
+    };
 }
