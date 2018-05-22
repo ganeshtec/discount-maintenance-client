@@ -50,6 +50,22 @@ describe('Promo schedule', function() {
     expect(ctrl.data.endDt).toEqual(moment("12/10/2017").toDate());
   });
 
+  it('Test startDateLimit create promo',function(){
+    ctrl = $componentController('promoSchedule',null, {
+        data: {startDt: '10/10/2017 02:59:00', endDt: '12/10/2017 02:59:00'}
+    });
+    ctrl.$onInit();
+    expect(ctrl.startDateLimit).toEqual(moment().format('YYYY-MM-DD'));
+  });
+
+  it('Test startDateLimit edit promo',function(){
+    ctrl = $componentController('promoSchedule',null, {
+        data: {promoId: 1, startDt: '10/10/2017 02:59:00', endDt: '12/10/2017 02:59:00'}
+    });
+    ctrl.$onInit();
+    expect(ctrl.startDateLimit).toEqual("2017-10-10");
+  });
+
   it('Test setEndDtFromUI', function(){
     ctrl = $componentController('promoSchedule',null, {
         data: {

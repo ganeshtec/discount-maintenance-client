@@ -20,9 +20,13 @@ function PromoScheduleController($filter, $scope, validationService, utilService
     this.$onInit = function() {
         this.startTime='3:00 AM';//For display only. see utilService.js for actual time
         this.endTime='2:59 AM';
-        // this.startDateLimit=moment().format('YYYY-MM-DD');
         this.data.startDt =  utilService.convertDateStringToDate(this.data.startDt);
-        this.data.endDt =  utilService.convertDateStringToDate(this.data.endDt);      
+        this.data.endDt =  utilService.convertDateStringToDate(this.data.endDt);
+        if(this.data.promoId){
+            this.startDateLimit = moment(this.data.startDt < moment() ? this.data.startDt : moment()).format('YYYY-MM-DD');
+        } else {
+            this.startDateLimit = moment().format('YYYY-MM-DD');
+        }
         if(utilService.convertDateToDateString(this.data.endDt) === '9999-12-31') {
             this.data.endDateSelection = true;
         } else {
