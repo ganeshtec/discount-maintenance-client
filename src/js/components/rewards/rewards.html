@@ -17,13 +17,13 @@
                 class="mandatory-icon"><i class="fa fa-asterisk"></i></span></label>
         <div class="md-radio" id="itemsoms_div_{{$index}}" ng-show="$ctrl.viewProp.displayOMSId">
             <input type="radio" id="itemsoms_{{$index}}" name="purchaseoption_{{$index}}" ng-model="$ctrl.data.purchaseConds.sources[$index].purchaseoption"
-                title="Items/OMS ID's" value="itemoms" ng-change="$ctrl.updatePrintLabel();$ctrl.removeAll()" ng-disabled="$ctrl.preview" />
+                title="Items/OMS ID's" value="itemoms" ng-change="$ctrl.updatePrintLabel();$ctrl.removeAll($index)" ng-disabled="$ctrl.preview" />
             <label for="itemsoms_{{$index}}"><span><span></span></span>Items/OMS ID's</label>
         </div>
         <div class="md-radio" id="itemssku_div_{{$index}}" ng-show="$ctrl.viewProp.displayItemsSku">
             <input type="radio" id="itemssku_{{$index}}" name="purchaseoption_{{$index}}"
                    ng-model="$ctrl.data.purchaseConds.sources[$index].purchaseoption"
-                   title="Items/SKU" value="itemsku" ng-change="$ctrl.updatePrintLabel();$ctrl.removeAll()"
+                   title="Items/SKU" value="itemsku" ng-change="$ctrl.updatePrintLabel();$ctrl.removeAll($index)"
                    ng-disabled="$ctrl.preview"
             />
             <label for="itemssku_{{$index}}"><span><span></span></span>Items/SKU</label>
@@ -31,7 +31,7 @@
         <div class="md-radio">
             <input type="radio" id="category_{{$index}}" name="purchaseoption_{{$index}}"
                    ng-model="$ctrl.data.purchaseConds.sources[$index].purchaseoption"
-                   title="Category" value="category" ng-change="$ctrl.updatePrintLabel();$ctrl.removeAll()"
+                   title="Category" value="category" ng-change="$ctrl.updatePrintLabel();$ctrl.removeAll($index)"
                    ng-disabled="$ctrl.preview"
             />
             <label for="category_{{$index}}"><span><span></span></span>Category </label>
@@ -46,7 +46,7 @@
         ng-show="item.purchaseoption == 'category' && $ctrl.viewProp.displayWebHierarchy" />
 
     <merch-hierarchy-view data="item.inclusions.hierarchies" inclusiontype="'inclusions'" scopedata="$ctrl.data" preview="$ctrl.preview" source="item" is-disabled="$ctrl.isDisabled"
-        promoform="$ctrl.promoform" view-prop="$ctrl.viewProp" promo-status="$ctrl.data.status" ng-show="item.purchaseoption == 'category' && $ctrl.viewProp.displayItemsSku"
+        promoform="$ctrl.promoform" view-prop="$ctrl.viewProp" promo-status="$ctrl.data.status" ng-if="item.purchaseoption == 'category' && $ctrl.viewProp.displayItemsSku"
     />
 
     <category-exclusion data="item.exclusions" itemtype="item.exclusions.itemtype" preview="preview" is-disabled="$ctrl.isDisabled"

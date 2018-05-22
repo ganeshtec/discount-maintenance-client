@@ -224,16 +224,27 @@ function rewardsController($rootScope, $scope, $mdDialog, SourceData, validation
         }
     }
 
-    function removeAll() {
-        for (var i = 0; i < ctrl.data.purchaseConds.sources.length; i++) {
-            ctrl.data.purchaseConds.sources[i].inclusions.partnumbers = [];
-            ctrl.data.purchaseConds.sources[i].inclusions.validSkuInfo = [];
-            ctrl.data.purchaseConds.sources[i].exclusions.validSkuInfo = [];
-            ctrl.data.purchaseConds.sources[i].inclusions.validOmsInfo = [];
-            ctrl.data.purchaseConds.sources[i].exclusions.validOmsInfo = [];
-            ctrl.data.purchaseConds.sources[i].exclusions = {};
-            ctrl.data.purchaseConds.sources[i].exclusions.attrs = {};
-            ctrl.data.purchaseConds.sources[i].exclusions.initializeSkuTypeExclusions = true;
+    function removeAll(index) {
+        if(index >= 0 ) {
+            clearAll(index);
+        } else {
+            for (var i = 0; i < ctrl.data.purchaseConds.sources.length; i++) {
+                clearAll(i);
+            }
         }
+    }
+
+    function clearAll(i) {
+        ctrl.data.purchaseConds.sources[i].inclusions.partnumbers = [];
+        ctrl.data.purchaseConds.sources[i].exclusions.partnumbers = [];
+        ctrl.data.purchaseConds.sources[i].inclusions.validSkuInfo = [];
+        ctrl.data.purchaseConds.sources[i].exclusions.validSkuInfo = [];
+        ctrl.data.purchaseConds.sources[i].inclusions.validOmsInfo = [];
+        ctrl.data.purchaseConds.sources[i].exclusions.validOmsInfo = [];
+        ctrl.data.purchaseConds.sources[i].inclusions.hierarchies = [];
+        ctrl.data.purchaseConds.sources[i].exclusions.hierarchies = [];
+        ctrl.data.purchaseConds.sources[i].exclusions = {};
+        ctrl.data.purchaseConds.sources[i].exclusions.attrs = [];
+        ctrl.data.purchaseConds.sources[i].exclusions.initializeSkuTypeExclusions = true;
     }
 }
