@@ -5,7 +5,7 @@
             <i class="fa fa-asterisk"></i>
         </span>
     </h4>
-    <input type="text" id="name" name="name" ng-model="$ctrl.data.name" title="Discount Name"
+    <input type="text" id="txtDiscountName" name="txtDiscountName" ng-model="$ctrl.data.name" title="Discount Name"
            ng-trim="false" ng-maxlength="254" ng-required="$ctrl.preview" ng-disabled="$ctrl.preview"
            replace-special-characters/>
     <label for="placeHolder">Enter 254 characters or fewer</label>
@@ -25,7 +25,7 @@
             <i class="fa fa-asterisk"></i>
         </span>
     </h4>
-    <select name="promotype"
+    <select name="promotype" id="promotype"
             ng-options="promotype as promotype.promoSubTypeDesc for promotype in $ctrl.promotionSubTypes"
             ng-model="$ctrl.promoSubTypeObject"
             ng-change="$ctrl.getSelectedSubTypes(); $ctrl.resetRewardsOnPromoTypeChange(); $ctrl.validatePromotion()"
@@ -48,7 +48,7 @@
             <i class="fa fa-asterisk"></i>
         </span>
     </h4>
-    <select ng-options="method.value as method.label for method in $ctrl.redemptionMethodTypes"
+    <select name="redemptionMethod" id="redemptionMethod" ng-options="method.value as method.label for method in $ctrl.redemptionMethodTypes"
             ng-model="$ctrl.data.promoCdRqrd"
             ng-disabled="$ctrl.preview">
         <option value="">
@@ -75,7 +75,7 @@
 
     <h4>
         Priority
-        <tool-tipper tooltiptitle="Priority">
+        <tool-tipper name="priorityTooltip" id="priorityTooltip" tooltiptitle="Priority">
             <p>
                 Assign a priority by entering a number between zero and one thousand. Zero is the lowest
                 priority and one thousand is the
@@ -85,7 +85,7 @@
         </tool-tipper>
     </h4>
 
-    <input type="number" name="priority" ng-model="$ctrl.data.priority" title="Priority"
+    <input type="number" name="priority" id="priority" ng-model="$ctrl.data.priority" title="Priority"
            placeholder="Enter number between 0 and 1000"
            ng-required="$ctrl.preview" ng-disabled="$ctrl.preview" allow-pattern="(\d)"
            ng-blur="$ctrl.validatePromotion()">
@@ -109,7 +109,7 @@
     <label for="discount-template">
         <h4 class="pbm">Discount Template</h4>
     </label>
-    <select id="discount-template" name="Discount Template" ng-change="$ctrl.templateSelection()"
+    <select name="DiscountTemplate" id="DiscountTemplate" ng-change="$ctrl.templateSelection()"
             ng-disabled="$ctrl.preview" ng-model="$ctrl.discountTemplateSelected"
             ng-options="discountTemplateOption.value for discountTemplateOption in $ctrl.discountTemplateOptions track by discountTemplateOption.id">
     </select>
@@ -121,7 +121,7 @@
     </div>
     <div>
         <md-checkbox data-ng-click="$ctrl.toggleExclusive()" data-ng-checked="$ctrl.data.exclsve==1"
-                     id="exclusivity" ng-disabled="$ctrl.preview || $ctrl.data.singleSkuBulk == 1">Do not stack with
+                     name="exclusivity" id="exclusivity" ng-disabled="$ctrl.preview || $ctrl.data.singleSkuBulk == 1">Do not stack with
             other discounts
         </md-checkbox>
     </div>
@@ -140,7 +140,7 @@
         <h4>Single Sku Bulk</h4>
     </div>
     <div>
-        <md-checkbox data-ng-click="$ctrl.showSingleSkuBulkModal()"
+        <md-checkbox name="chkboxSingleSkuBulk" id="chkboxSingleSkuBulk" data-ng-click="$ctrl.showSingleSkuBulkModal()"
                      data-ng-checked="$ctrl.data.singleSkuBulk == 1" ng-disabled="$ctrl.preview">Redeem
             through Single SKU Bulk
         </md-checkbox>
