@@ -13,10 +13,9 @@ app.component('promoSchedule', {
 
 });
 
-PromoScheduleController.$inject = ['$filter', '$scope','validationService', 'utilService'];
-function PromoScheduleController($filter, $scope, validationService, utilService) {
-    
-
+PromoScheduleController.$inject = ['$filter', '$rootScope','$scope','validationService', 'utilService'];
+function PromoScheduleController($filter, $rootScope, $scope, validationService, utilService) {
+    var ctrl = this;
     this.$onInit = function() {
         this.startTime='3:00 AM';//For display only. see utilService.js for actual time
         this.endTime='2:59 AM';
@@ -37,6 +36,7 @@ function PromoScheduleController($filter, $scope, validationService, utilService
 
     this.setEndDtFromUI = function() {
         this.data.endDt = this.data.endDtFormatted;
+        ctrl.setEndDateMin();
     }
 
     this.updateNoEndDate = function() {
@@ -55,8 +55,19 @@ function PromoScheduleController($filter, $scope, validationService, utilService
     this.isPromotionActive = function(){
         return utilService.isPromotionActive(this.data);
     }
-        
+
+    $scope.$watch('$ctrl.data.printLabel', function (model, oldModel) {
+        if (model !== oldModel) {
+            ctrl.setEndDateMin();
+        }
+    }, true);
+
     this.setEndDateMin = function () {
-        this.data.minEndDt = moment(this.data.startDt).format('YYYY-MM-DD');
+        if(this.data.printLabel){
+            var minEndDt = moment(this.data.startDt ? this.data.startDt : moment()).add($rootScope.leadTime, 'days');
+            this.data.minEndDt = minEndDt.format('YYYY-MM-DD');
+        } else{
+            this.data.minEndDt = moment(this.data.startDt).format('YYYY-MM-DD');
+        }
     }
 }

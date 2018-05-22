@@ -1,7 +1,7 @@
 describe('Promo schedule', function() {
 
   var $componentController,
-      $filter;
+      $filter, $rootScope;
   var ctrl;
 
   // Load the myApp module, which contains the directive
@@ -12,9 +12,10 @@ describe('Promo schedule', function() {
     });
   });
 
-  beforeEach(inject(function(_$componentController_, _$filter_){
+  beforeEach(inject(function(_$componentController_, _$filter_, _$rootScope_){
     $componentController = _$componentController_;
     $filter = _$filter_;
+    $rootScope = _$rootScope_;
     ctrl = $componentController('promoSchedule',null, {
         data: {},
         validationErrors : {
@@ -48,6 +49,20 @@ describe('Promo schedule', function() {
     ctrl.$onInit();
     expect(ctrl.data.startDt).toEqual(moment("10/10/2017").toDate());
     expect(ctrl.data.endDt).toEqual(moment("12/10/2017").toDate());
+    expect(ctrl.data.minEndDt).toEqual("2017-10-10");
+  });
+
+ it('Test setEndDateMin',function(){
+    $rootScope.leadTime = 3;
+    ctrl = $componentController('promoSchedule',null, {
+        data: {
+            printLabel: true,
+            startDt: '10/10/2017 02:59:00',
+            endDt: '12/10/2017 02:59:00'
+        },
+    });
+    ctrl.$onInit();
+    expect(ctrl.data.minEndDt).toEqual("2017-10-13");
   });
 
   it('Test startDateLimit create promo',function(){
