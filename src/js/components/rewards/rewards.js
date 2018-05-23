@@ -235,6 +235,7 @@ function rewardsController($rootScope, $scope, $mdDialog, SourceData, validation
     }
 
     function clearAll(i) {
+        ctrl.data.merchTableData.inclusions = [];
         ctrl.data.purchaseConds.sources[i].inclusions.partnumbers = [];
         ctrl.data.purchaseConds.sources[i].exclusions.partnumbers = [];
         ctrl.data.purchaseConds.sources[i].inclusions.validSkuInfo = [];
