@@ -36,14 +36,14 @@
                     <label for="StoreLocation" ng-if="$ctrl.data.locationType=='stores'"><h3>Store Location</h3></label>
                     <label for="MarketLocation" ng-if="$ctrl.data.locationType=='markets'"><h3>Market Location</h3>
                     </label>
-                    <input class="table__search" ng-show="$ctrl.data.locationType=='stores'" id="StoreLocation"
+                    <input class="table__search" ng-show="$ctrl.data.locationType=='stores'" id="StoreLocation" name = "StoreLocation"
                            ng-keypress="($event.keyCode === 13) && $ctrl.search($ctrl.locationSearch)"
                            placeholder="Search and Add Store Number" type="text" ng-model="$ctrl.locationSearch"
                            ng-class="{'error': $ctrl.inValidStoreInfo}"
                            ng-change="$ctrl.clear()" allow-pattern="(\d|[a-z A-Z\(\?\-\_\.\'\,\%\$\!\@\)])"
                            ng-disabled="$ctrl.preview"/>
                     <a class="md-button secondary no-padding" href="" ng-show="$ctrl.data.locationType=='stores'"
-                       id="MarketLocation" ng-click="$ctrl.search($ctrl.locationSearch)">
+                       id="MarketLocation" name="MarketLocation" ng-click="$ctrl.search($ctrl.locationSearch)">
                         Add
                     </a>
                     <ul>
@@ -75,7 +75,7 @@
             <th>Store Name</th>
             <th>Market Number</th>
             <th class="r">
-                <a class="editOption thd-orange" ng-if="$ctrl.validStoreInfo && $ctrl.validStoreInfo.length >0"
+                <a name="removeAllStores" id="removeAllStores" class="editOption thd-orange" ng-if="$ctrl.validStoreInfo && $ctrl.validStoreInfo.length >0"
                    ng-click="$ctrl.removeAll()" href="" ng-hide="$ctrl.preview">
                     Remove All
                 </a>
@@ -87,7 +87,7 @@
             <td>{{item.storeName}}</td>
             <td>{{item.marketNumber}}</td>
             <td class="r" ng-hide="$ctrl.preview">
-                <a class="editOption thd-orange" ng-click="$ctrl.isDisabled || $ctrl.removeStore(item.storeNumber)" href="">
+                <a name="removeStores{{$index}}" id="removeStores{{$index}}" class="editOption thd-orange" ng-click="$ctrl.isDisabled || $ctrl.removeStore(item.storeNumber)" href="">
                     Remove
                 </a>
             </td>
@@ -97,7 +97,7 @@
             <th>Market Number</th>
             <th>Market Name</th>
             <th class="r">
-                <a class="editOption thd-orange" ng-if="$ctrl.validMarketInfo && $ctrl.validMarketInfo.length >0"
+                <a name="removeAllMarket" id="removeAllMarket" class="editOption thd-orange" ng-if="$ctrl.validMarketInfo && $ctrl.validMarketInfo.length >0"
                    ng-click="$ctrl.removeAll()" href="" ng-hide="$ctrl.preview">
                     Remove All
                 </a>
@@ -108,7 +108,7 @@
             <td>{{market.marketNumber}}</td>
             <td>{{market.marketName}}</td>
             <td class="r" ng-hide="$ctrl.preview">
-                <a class="editOption thd-orange" ng-click="$ctrl.isDisabled || $ctrl.removeMarket(market.marketNumber)" href=""
+                <a name="removeMarket{{$index}}" id="removeMarket{{$index}}" class="editOption thd-orange" ng-click="$ctrl.isDisabled || $ctrl.removeMarket(market.marketNumber)" href=""
                    ng-disabled="$ctrl.preview">
                     Remove
                 </a>
@@ -136,7 +136,7 @@
             </h3>
         </label>
 
-        <select name="segment"
+        <select name="promoCustomerSegment"
                 id="promoCustomerSegment"
                 ng-options="segment as segment.name for segment in $ctrl.segmentDetails track by segment.name"
                 ng-model="$ctrl.data.segment"
@@ -244,7 +244,7 @@
                 </span>Yes</label>
         </div>
         <div class="md-radio">
-            <input for="sitewide" type="radio" name="siteWidePromotion" name="siteWidePromotionNo" ng-model="$ctrl.data.isSitewideDeal"
+            <input for="sitewide" type="radio" name="siteWidePromotionNo" id="siteWidePromotionNo" ng-model="$ctrl.data.isSitewideDeal"
                    ng-value="false" ng-disabled="$ctrl.preview"
             />
             <label>

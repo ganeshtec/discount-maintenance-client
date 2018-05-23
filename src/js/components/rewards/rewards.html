@@ -18,7 +18,7 @@
         <div class="md-radio" id="itemsoms_div_{{$index}}" ng-show="$ctrl.viewProp.displayOMSId">
             <input type="radio" id="itemsoms_{{$index}}" name="purchaseoption_{{$index}}" ng-model="$ctrl.data.purchaseConds.sources[$index].purchaseoption"
                 title="Items/OMS ID's" value="itemoms" ng-change="$ctrl.updatePrintLabel();$ctrl.removeAll($index)" ng-disabled="$ctrl.preview" />
-            <label for="itemsoms_{{$index}}"><span><span></span></span>Items/OMS ID's</label>
+            <label for="itemsoms_{{$index}}" id="itemsoms_{{$index}}" name="itemsoms_{{$index}}"><span><span></span></span>Items/OMS ID's</label>
         </div>
         <div class="md-radio" id="itemssku_div_{{$index}}" ng-show="$ctrl.viewProp.displayItemsSku">
             <input type="radio" id="itemssku_{{$index}}" name="purchaseoption_{{$index}}"
@@ -26,7 +26,7 @@
                    title="Items/SKU" value="itemsku" ng-change="$ctrl.updatePrintLabel();$ctrl.removeAll($index)"
                    ng-disabled="$ctrl.preview"
             />
-            <label for="itemssku_{{$index}}"><span><span></span></span>Items/SKU</label>
+            <label for="itemssku_{{$index}}" id="itemssku_{{$index}}" name="itemssku_{{$index}}"><span><span></span></span>Items/SKU</label>
         </div>
         <div class="md-radio">
             <input type="radio" id="category_{{$index}}" name="purchaseoption_{{$index}}"
@@ -34,7 +34,7 @@
                    title="Category" value="category" ng-change="$ctrl.updatePrintLabel();$ctrl.removeAll($index)"
                    ng-disabled="$ctrl.preview"
             />
-            <label for="category_{{$index}}"><span><span></span></span>Category </label>
+            <label for="category_{{$index}}" id="category_{{$index}}" name="category_{{$index}}"><span><span></span></span>Category </label>
         </div>
     </div>
     <!-- Item view Codes Component -->
@@ -53,7 +53,7 @@
         promoform="$ctrl.promoform" view-prop="$ctrl.viewProp" ng-show="$ctrl.data.purchaseConds.sources[$index].purchaseoption == 'category'"
     />
     <div class="md-text-field" ng-if="$ctrl.data.purchaseConds.sources.length > 1">
-        <label for="promocombo">Quantity of "{{$ctrl.alphabet[$index]}}"</label>
+        <label for="promocombo" id="promocombo" name="promocombo">Quantity of "{{$ctrl.alphabet[$index]}}"</label>
         <input type="number" class="buyAorB" name="minPurchaseQty" id="minPurchaseQty" ng-model="item.minPurchaseQty"
                title="Quantity of {{$ctrl.alphabet[$index]}}"
                placeholder="Quantity of {{$ctrl.alphabet[$index]}}" allow-pattern="(^[0-9]\d*$)"
@@ -137,7 +137,7 @@
     <table class="table category__table">
         <tr class="category__table__row-nobottomborder" ng-disabled="$ctrl.data.singleSkuBulk" ng-hide="$ctrl.preview || ($ctrl.data.reward.details.length>0 && $ctrl.data.singleSkuBulk)">
             <td colspan="5">
-                <a href="" class="purchaseCondition__btn md-button" ng-click="$ctrl.addPurchaseCondition()">Add New Tier</a>
+                <a href="" class="purchaseCondition__btn md-button" ng-click="$ctrl.addPurchaseCondition()" id="purchaseCondition__btn" name="purchaseCondition__btn">Add New Tier</a>
             </td>
         </tr>
         <tr class="odd">
