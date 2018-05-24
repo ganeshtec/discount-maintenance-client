@@ -1,11 +1,11 @@
 <div class="admin__header__content">
-	<a class="" ng-href="#/discount-dashboard" name="backToDiscountList" id="backToDiscountList">Back to Discounts List</a>
+	<a ng-href="#/discount-dashboard" name="backToDiscountList" id="backToDiscountList">Back to Discounts List</a>
 </div>
 <div class="admin__header__content admin__header__content--bottom" ng-show="($ctrl.uistate != 'Compare')">
 	<h1 class="md-display-2">{{$ctrl.uistate}} Discount 
-		<span class="" ng-show="$ctrl.promotype.name"> : {{$ctrl.promotype.name}}</span>
+		<span ng-show="$ctrl.promotype.name"> : {{$ctrl.promotype.name}}</span>
 		<br>
-		<span class="" ng-show="$ctrl.promotype.promoSubTypeDesc"> Type: {{$ctrl.promotype.promoSubTypeDesc}}</span>
+		<span ng-show="$ctrl.promotype.promoSubTypeDesc"> Type: {{$ctrl.promotype.promoSubTypeDesc}}</span>
 	</h1>
 	<p>All fields are required except where indicated otherwise.</p>
 </div>

@@ -109,7 +109,7 @@
     <label for="discount-template">
         <h4 class="pbm">Discount Template</h4>
     </label>
-    <select name="DiscountTemplate" id="DiscountTemplate" ng-change="$ctrl.templateSelection()"
+    <select name="discountTemplate" id="discountTemplate" ng-change="$ctrl.templateSelection()"
             ng-disabled="$ctrl.preview" ng-model="$ctrl.discountTemplateSelected"
             ng-options="discountTemplateOption.value for discountTemplateOption in $ctrl.discountTemplateOptions track by discountTemplateOption.id">
     </select>
