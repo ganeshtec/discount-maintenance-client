@@ -135,17 +135,7 @@
     <promo-labels data="$ctrl.data" preview="$ctrl.preview" validation-errors="$ctrl.validationErrors"
                   promoform="$ctrl.promoForm"></promo-labels>
 </div>
-<div ng-show="$ctrl.viewProp.displaySingleSkuBulk && $ctrl.singleSkuBulkFlag" class="ptxl">
-    <div class="pbl">
-        <h4>Single Sku Bulk</h4>
-    </div>
-    <div>
-        <md-checkbox data-ng-click="$ctrl.showSingleSkuBulkModal()"
-                     data-ng-checked="$ctrl.data.singleSkuBulk == 1" ng-disabled="$ctrl.preview">Redeem
-            through Single SKU Bulk
-        </md-checkbox>
-    </div>
-</div>
+
 <redemption-limit ng-show="$ctrl.viewProp.displayRedemptionLimits" data="$ctrl.data.redmptnLmt"
                   promoform="$ctrl.promoForm"
                   preview="$ctrl.preview">
