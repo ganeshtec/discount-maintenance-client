@@ -19,8 +19,9 @@ app.component('properties', {
 
 });
 
-function PropertiesController($mdDialog, promotionDataService, utilService, validationService, DataFactory, itemCategorySourceData, loginService, featureFlagService, sectionsIndex, $scope, $rootScope) {
+function PropertiesController($mdDialog, promotionDataService, utilService, validationService, DataFactory, itemCategorySourceData, loginService, featureFlagService, sectionsIndex, $scope, $rootScope, redemptionMethodTypes) {
     var ctrl = this;
+    ctrl.redemptionMethodTypes = new redemptionMethodTypes();
 
     ctrl.$onInit = function () {
         if (ctrl.userType === 228) {
