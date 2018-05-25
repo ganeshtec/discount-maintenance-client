@@ -10,8 +10,8 @@
 		  
  		<td colspan="4">
  			<div class="md-toolbar-search l">
-				<label for="MerchHierarchy"><h3>Web Hierarchy</h3></label>
- 				<input name="MerchHierarchy" id="MerchHierarchy" class="table__search" placeholder="Search and Add Category" type="text" ng-model="itemSearch" ng-keypress="($event.keyCode === 13) && (!itemSearch || isDisabled || search(itemSearch))" allow-pattern="(\d|[a-z A-Z\(\?\-\_\.\'\,\%\$\!\@\&\)])" ng-disabled="preview" />
+				<label for="webHierarchy"><h3>Web Hierarchy</h3></label>
+ 				<input class="table__search" name="webhHierarchy" id="webHierarchy" placeholder="Search and Add Category" type="text" ng-model="itemSearch" ng-keypress="($event.keyCode === 13) && (!itemSearch || isDisabled || search(itemSearch))" allow-pattern="(\d|[a-z A-Z\(\?\-\_\.\'\,\%\$\!\@\&\)])" ng-disabled="preview" />
 				<a class="md-button secondary no-padding" href="" ng-click="!itemSearch || isDisabled || search(itemSearch)">
 					<!--<a class="md-button secondary no-padding" href="" ng-click="showSkuTypeCountModal($event)">-->
 					Search
