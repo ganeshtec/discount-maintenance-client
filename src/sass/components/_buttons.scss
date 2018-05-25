@@ -39,7 +39,7 @@
     background-color: #FFFFFF;
     color: #F96302;
   }
-  &:disabled, &.disabled {
+  &:disabled, &[disabled="disabled"], &[disabled="disabled"]:hover, &.disabled {
     color: #999999;
     background-color: #FBFBFB;
     box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.12), 0px 1px 2px 0px rgba(0, 0, 0, 0.24);
