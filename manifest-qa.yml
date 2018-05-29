@@ -1,8 +1,13 @@
-inherit: manifest-base.yml
 applications:
 - name: discount-maintenance-client
   hosts:
     - promotionsadmin-ext-qa
+  memory: 256m
+  path: .
+  buildpack: https://github.com/cloudfoundry/nodejs-buildpack
+  command: npm start
   instances: 2
+  disk_quota: 1G
+  random-route: false
   env:
     Node_env: 'QA'
