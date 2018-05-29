@@ -28,7 +28,7 @@
 		 	       			<table id="{{parent.id}}" class="table catalogResultsParent">
 		 	         			<tr ng-repeat="parent in result.parent">
 		 	           				<td ng-style="indent({{parent.level}})">
- 		 	           					<md-checkbox aria-label="Select {{parent.name}}" ng-click="addCategory($event,parent);" ng-model="data" /></md-checkbox>
+ 		 	           					<md-checkbox  name="chkboxCatalog{{parent.id}}" id="chkboxCatalog{{parent.id}}" aria-label="Select {{parent.name}}" ng-click="addCategory($event,parent);" ng-model="data" /></md-checkbox>
  		 	           					<span class="catalogResultsTitleSpan">{{parent.name}}</span>
  		 	           				</td>
  		 	           				<td class="catalogResultsCaret">
@@ -42,7 +42,7 @@
  		 	                <table id="{{result.details.id}}" class="table catalogResultsDetails" ng-show="catalogResultsClick.parent">
  		 	                  <tr ng-model="catalogResultsClick" ng-click="catalogResultsClick.details=!catalogResultsClick.details">
  		 	           				<td ng-style="indent({{result.parent.length + 1}})">
- 		 	           					<md-checkbox aria-label="Select {{result.details.name}}" ng-click="addCategory($event,result.details);" ng-model="check" /></md-checkbox>
+ 		 	           					<md-checkbox name="chkboxCatalogDetails{{parent.id}}" id="chkboxCatalogDetails{{parent.id}}" aria-label="Select {{result.details.name}}" ng-click="addCategory($event,result.details);" ng-model="check" /></md-checkbox>
  		 	           					<span>{{result.details.name}}</span>
  		 	           				</td>
  		 	           				<td class="catalogResultsCaret">
@@ -54,7 +54,7 @@
  		 	                <table id="{{child.id}}" class="table catalogResultsChild" ng-show="catalogResultsClick.details">
  		 	               		<tr ng-repeat="child in result.child">
  		 	           				<td ng-style="indent({{result.parent.length + 2}})">
- 		 	           					<md-checkbox aria-label="Select {{child.name}}" ng-click="addCategory($event,child);" ng-model="box" /></md-checkbox>
+ 		 	           					<md-checkbox name="chkboxCatalogChild{{parent.id}}" id="chkboxCatalogChild{{parent.id}}" aria-label="Select {{child.name}}" ng-click="addCategory($event,child);" ng-model="box" /></md-checkbox>
  		 	           					<span>{{child.name}}</span>
  		 	           				</td>
  		 	           				<td class="catalogResultsCaret">

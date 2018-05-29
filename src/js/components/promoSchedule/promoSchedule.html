@@ -3,7 +3,7 @@
     <div flex="50">
         <div class="md-text-field" flex="80">
             <label for="promoname">Start Date <span class="mandatory-icon"><i class="fa fa-asterisk"></i></span></label>
-            <input class="" type="date" ng-model="$ctrl.data.startDt" placeholder="yyyy-MM-dd" name="start" min="{{$ctrl.startDateLimit}}"
+            <input type="date" ng-model="$ctrl.data.startDt" placeholder="yyyy-MM-dd" name="txtStartDate" id="txtStartDate" min="{{$ctrl.startDateLimit}}"
                 max="9999-12-31" ng-required="$ctrl.preview" ng-blur="$ctrl.validatePromotion()" ng-change="$ctrl.setEndDateMin()"
                 ng-disabled="$ctrl.isPromotionActive() || $ctrl.preview" />
             <span class='error-message' ng-show="promoform.start.$invalid">-->
@@ -17,7 +17,7 @@
     <div flex="50" ng-show="$ctrl.viewProp.displayScheduleTime">
         <div class="md-text-field md-text-field-border" flex="80">
             <label for="promomaxredem">Start Time (EST)</label>
-            <input type="text" id="starttime" name="starttime" ng-model="$ctrl.startTime" disabled/>
+            <input type="text" id="txtStartTime" name="txtStartTime" ng-model="$ctrl.startTime" disabled/>
         </div>
     </div>
 </div>
@@ -25,7 +25,7 @@
     <div flex="50">
         <div class="md-text-field" flex="80">
             <label for="promoname">End Date</label>
-            <input class="endDateBox" type="date" ng-model="$ctrl.data.endDtFormatted" placeholder="yyyy-MM-dd" name="end" min="{{$ctrl.data.minEndDt}}"
+            <input class="endDateBox" type="date" ng-model="$ctrl.data.endDtFormatted" placeholder="yyyy-MM-dd" name="txtEndDate" id="txtEndDate" min="{{$ctrl.data.minEndDt}}"
                 max="9999-12-31" ng-blur="$ctrl.validatePromotion()" ng-change="$ctrl.setEndDtFromUI()" ng-disabled="$ctrl.preview || $ctrl.data.endDateSelection"
             />
             <span class='error-message' ng-show="$ctrl.validationErrors.endDtFormatted.isError">{{$ctrl.validationErrors.endDt.message}} </span>
@@ -35,11 +35,11 @@
     <div flex="50" ng-show="$ctrl.viewProp.displayScheduleTime">
         <div class="md-text-field md-text-field-border" flex="80">
             <label for="promomaxredem">End Time (EST)</label>
-            <input type="text" id="endtime" name="endtime" ng-model="$ctrl.endTime" disabled/>
+            <input type="text" name="txtEndTime" id="txtEndTime" ng-model="$ctrl.endTime" disabled/>
         </div>
     </div>
 </div>
 <div>
-    <md-checkbox aria-label="No end date" ng-change="$ctrl.updateNoEndDate()" ng-true-value="true" ng-false-value="false" ng-disabled="$ctrl.preview"
+    <md-checkbox name="chkboxNoEndDate" id="chkboxNoEndDate" aria-label="No end date" ng-change="$ctrl.updateNoEndDate()" ng-true-value="true" ng-false-value="false" ng-disabled="$ctrl.preview"
         ng-model="$ctrl.data.endDateSelection">No end date</md-checkbox>
 </div>
